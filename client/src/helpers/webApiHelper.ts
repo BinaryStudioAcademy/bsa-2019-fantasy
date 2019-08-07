@@ -5,7 +5,7 @@ function getFetchUrl(args) {
 }
 
 function getFetchArgs(args) {
-    const headers = {};
+    const headers:any = {};
     if (!args.attachment) {
         headers['Content-Type'] = 'application/json';
         headers.Accept = 'application/json';

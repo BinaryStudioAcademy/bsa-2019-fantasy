@@ -1,14 +1,16 @@
 import * as authService from 'services/authService';
 import { SET_USER, SET_IS_LOADING } from './actionTypes';
 
-const setToken = token => localStorage.setItem('token', token);
+const setToken = (token: string) => localStorage.setItem('token', token);
 
-const setUser = user => async dispatch => dispatch({
+//async dispatch
+const setUser = (user) => (dispatch, getRootState) => dispatch({
     type: SET_USER,
     user
 });
 
-const setIsLoading = isLoading => async dispatch => dispatch({
+//async dispatch
+const setIsLoading = (isLoading: boolean) => (dispatch, getRootState) => dispatch({
     type: SET_IS_LOADING,
     isLoading
 });
@@ -18,14 +20,14 @@ const setAuthData = (user = null, token = '') => (dispatch, getRootState) => {
     setUser(user)(dispatch, getRootState);
 };
 
-const handleAuthResponse = authResponsePromise => async (dispatch, getRootState) => {
+const handleAuthResponse = (authResponsePromise) => async (dispatch, getRootState) => {
     const { user, token } = await authResponsePromise;
     setAuthData(user, token)(dispatch, getRootState);
 };
 
-export const login = request => handleAuthResponse(authService.login(request));
+export const login = (request) => handleAuthResponse(authService.login(request));
 
-export const registration = request => handleAuthResponse(authService.registration(request));
+export const registration = (request) => handleAuthResponse(authService.registration(request));
 
 export const logout = () => setAuthData();
 

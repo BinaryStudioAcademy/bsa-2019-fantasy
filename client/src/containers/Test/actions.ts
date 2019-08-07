@@ -3,7 +3,7 @@ import {
     SET_TEST_RESULT
 } from './actionTypes';
 
-const getTestResult = value => ({
+const getTestResult = (value) => ({
     type: SET_TEST_RESULT,
     payload: value
 });

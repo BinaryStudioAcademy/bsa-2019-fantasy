@@ -1,6 +1,6 @@
 import { SET_USER, SET_IS_LOADING } from './actionTypes';
 
-export default (state = {}, action) => {
+export default (state = {}, action: any) => {
     switch (action.type) {
         case SET_USER:
             return {
