@@ -3,11 +3,13 @@ import { Route, Switch } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from 'store/types';
+import { loadCurrentUser } from 'containers/Profile/actions';
 
 import Test from 'containers/Test';
 import NotFound from 'scenes/NotFound';
 import PrivateRoute from 'containers/PrivateRoute';
-import { loadCurrentUser } from 'containers/Profile/actions';
+import LoginPage from 'containers/Auth/Login/LoginPage';
+import RegistartionPage from 'containers/Auth/Registration/RegistartionPage';
 
 const Routing = () => {
     const dispatch = useDispatch();
@@ -28,6 +30,14 @@ const Routing = () => {
                 <Switch>
                     <Route exact path='/'>
                         <Test />
+                    </Route>
+
+                    <Route path='/login'>
+                        <LoginPage />
+                    </Route>
+
+                    <Route path='/registration'>
+                        <RegistartionPage />
                     </Route>
 
                     <PrivateRoute exact path='/private'>
