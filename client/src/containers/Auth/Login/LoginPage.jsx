@@ -16,7 +16,7 @@ class LoginPage extends Component {
                         </h1>
                     </div>
                 </div>
-                <div className="w-full h-full md:w-1/4 flex-col items-center justify-center form-container p-6">
+                <div className="w-full h-full md:w-1/4 login-form p-6">
                     <div className="lables pl-10 mt-48 mb-6">
                         <h2 className="side-lable ">Hey, dude!</h2>
                         <h3 className="side-lable side-lable-small ">
