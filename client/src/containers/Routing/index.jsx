@@ -1,39 +1,50 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import Test from 'src/containers/Test';
-import NotFound from 'src/scenes/NotFound';
-import PrivateRoute from 'src/containers/PrivateRoute';
-import { loadCurrentUser, logout, login, registration } from 'src/containers/Profile/actions';
-import PropTypes from 'prop-types';
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import Test from "src/containers/Test";
+import NotFound from "src/scenes/NotFound";
+import PrivateRoute from "src/containers/PrivateRoute";
+import {
+    loadCurrentUser,
+    logout,
+    login,
+    registration
+} from "src/containers/Profile/actions";
+import PropTypes from "prop-types";
+import LoginPage from "../Auth/Login/LoginPage";
+import RegistartionPage from "../Auth/Registration/RegistartionPage";
 
 class Routing extends React.Component {
     componentDidMount() {
         this.props.loadCurrentUser();
     }
 
+    renderLogin = loginProps => <LoginPage {...loginProps} />;
+
+    renderRegistration = regProps => <RegistartionPage {...regProps} />;
+
     render() {
         const { isLoading, isAuthorized, user, ...props } = this.props;
-        return (
-            isLoading
-                ? <div>SPINNER</div>
-                : (
-                    <div className="fill">
-                        {isAuthorized && (
-                            <header>
-                                HEADER
-                            </header>
-                        )}
-                        <main className="fill">
-                            <Switch>
-                                <Route exact path="/" component={Test} />
-                                <PrivateRoute exact path="/private" component={Test} />
-                                <Route path="*" exact component={NotFound} />
-                            </Switch>
-                        </main>
-                    </div>
-                )
+        return isLoading ? (
+            <div>SPINNER</div>
+        ) : (
+            <div className="fill">
+                {isAuthorized && <header>HEADER</header>}
+                <main className="fill">
+                    <Switch>
+                        <Route exact path="/login" render={this.renderLogin} />
+                        <Route
+                            exact
+                            path="/registration"
+                            render={this.renderRegistration}
+                        />
+                        <Route exact path="/" component={Test} />
+                        <PrivateRoute exact path="/private" component={Test} />
+                        <Route path="*" exact component={NotFound} />
+                    </Switch>
+                </main>
+            </div>
         );
     }
 }
