@@ -6,7 +6,7 @@ import "./responsive.scss";
 class LoginPage extends Component {
     render() {
         return (
-            <div className="flex w-full md:flex-row-reverse flex-wrap login-container">
+            <div className="flex w-full h-full md:flex-row-reverse flex-wrap login-container">
                 <div className="layer" />
                 <div className="w-full h-full flex-col items-center justify-center md:w-3/4 ">
                     <div className="lable-wrapper  ">
