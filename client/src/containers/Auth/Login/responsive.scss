@@ -1,0 +1,11 @@
+@media (max-width: 745px) {
+    .lable-wrapper {
+        margin-top: 1rem;
+        padding-left: 1rem !important;
+        text-align: center;
+    }
+    body {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+}
