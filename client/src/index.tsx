@@ -5,5 +5,4 @@ import Home from './scenes/Home';
 import './styles/reset.scss';
 import './styles/common.scss';
 
-const target = document.getElementById('root');
-render(<Home />, target);
+render(<Home />, document.getElementById('root'));
