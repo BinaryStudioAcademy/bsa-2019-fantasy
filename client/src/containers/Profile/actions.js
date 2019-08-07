@@ -1,4 +1,4 @@
-import * as authService from 'src/services/authService';
+import * as authService from 'services/authService';
 import { SET_USER, SET_IS_LOADING } from './actionTypes';
 
 const setToken = token => localStorage.setItem('token', token);

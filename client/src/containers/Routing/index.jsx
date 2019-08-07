@@ -2,10 +2,10 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Test from 'src/containers/Test';
-import NotFound from 'src/scenes/NotFound';
-import PrivateRoute from 'src/containers/PrivateRoute';
-import { loadCurrentUser, logout, login, registration } from 'src/containers/Profile/actions';
+import Test from 'containers/Test';
+import NotFound from 'scenes/NotFound';
+import PrivateRoute from 'containers/PrivateRoute';
+import { loadCurrentUser, logout, login, registration } from 'containers/Profile/actions';
 import PropTypes from 'prop-types';
 
 class Routing extends React.Component {
