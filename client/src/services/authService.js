@@ -1,8 +1,6 @@
-import callWebApi from 'helpers/webApiHelper';
-import { LoginCredentials, RegisterCredentials } from 'types/auth.types';
-import { User } from 'types/user.type';
+import callWebApi from 'src/helpers/webApiHelper';
 
-export const login = async (request: LoginCredentials) => {
+export const login = async (request) => {
     const response = await callWebApi({
         endpoint: '/api/auth/login',
         type: 'POST',
@@ -11,7 +9,7 @@ export const login = async (request: LoginCredentials) => {
     return response.json();
 };
 
-export const registration = async (request: RegisterCredentials) => {
+export const registration = async (request) => {
     const response = await callWebApi({
         endpoint: '/api/auth/register',
         type: 'POST',
@@ -20,11 +18,11 @@ export const registration = async (request: RegisterCredentials) => {
     return response.json();
 };
 
-export const getCurrentUser = async (): Promise<User | null> => {
+export const getCurrentUser = async () => {
     try {
         const response = await callWebApi({
             endpoint: '/api/auth/user',
-            type: 'GET',
+            type: 'GET'
         });
         return response.json();
     } catch (e) {
