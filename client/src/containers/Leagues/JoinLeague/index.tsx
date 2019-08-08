@@ -3,23 +3,22 @@ import React from 'react';
 import { FaStar } from 'react-icons/fa';
 
 const PrivateLeagues = () => (
-    <div className="w-1/2">
+    <div className="w-full md:w-1/2 px-4">
         <h3 className="title">Private leagues</h3>
         <p>Join a private league if somebody has given you a league code to enter.</p>
         <form className="w-full max-w-lg">
             <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full md:w-1/2 px-3">
                     <label
-                        className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        htmlFor="grid-last-name"
+                        className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                        htmlFor="league-code"
                     >
                         League Code
                     </label>
                     <input
                         className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="grid-last-name"
+                        id="league-code"
                         type="text"
-                        placeholder="Doe"
                     />
                 </div>
             </div>
@@ -29,14 +28,14 @@ const PrivateLeagues = () => (
                 type="submit"
                 disabled={false}
             >
-                Create league
+                Join private league
             </button>
         </form>
     </div>
 );
 
 const PublicLeagues = () => (
-    <div className="w-1/2">
+    <div className="w-full md:w-1/2 px-4">
         <h3 className="title">Public leagues</h3>
         <p className="mb-2">
             Public leagues allow you to compete against 20 randomly assigned game players in a
@@ -47,6 +46,14 @@ const PublicLeagues = () => (
             Note, you can't remove your team from a public league after the league has started, once
             the challenge is on there's no quitting.
         </p>
+        <button
+            className={`shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${false
+                && 'opacity-50 cursor-not-allowed'}`}
+            type="submit"
+            disabled={false}
+        >
+            Join public league
+        </button>
     </div>
 );
 
@@ -64,7 +71,7 @@ const JoinLeague = () => (
                     </h2>
                 </div>
             </div>
-            <div className="paper flex">
+            <div className="paper flex flex-col md:flex-row">
                 <PublicLeagues />
                 <PrivateLeagues />
             </div>

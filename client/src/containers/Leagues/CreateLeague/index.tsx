@@ -48,8 +48,8 @@ class CreateLeague extends Component<any, any> {
                             <div className="flex flex-wrap -mx-3 mb-6">
                                 <div className="w-full px-3">
                                     <label
-                                        className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                        htmlFor="grid-password"
+                                        className="block uppercase text-gray-700 text-xs font-bold mb-2"
+                                        htmlFor="league-name"
                                     >
                                         Name
                                     </label>
@@ -69,7 +69,7 @@ class CreateLeague extends Component<any, any> {
                             <div className="w-full mb-6">
                                 <label
                                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                    htmlFor="grid-state"
+                                    htmlFor="league-gameweek"
                                 >
                                     Scoring starts
                                 </label>
