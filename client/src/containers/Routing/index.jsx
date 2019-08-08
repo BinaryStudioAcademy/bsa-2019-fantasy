@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Header from "src/components/Header";
+import Sidebar from "src/components/Sidebar";
 import Test from "src/containers/Test";
 import NotFound from "src/scenes/NotFound";
 import PrivateRoute from "src/containers/PrivateRoute";
@@ -24,15 +25,24 @@ class Routing extends React.Component {
         return isLoading ? (
             <div>SPINNER</div>
         ) : (
-            <div className="fill">
-                {/*isAuthorized*/ true && <Header />}
-                <main className="fill">
-                    <Switch>
-                        <Route exact path="/" component={Test} />
-                        <PrivateRoute exact path="/private" component={Test} />
-                        <Route path="*" exact component={NotFound} />
-                    </Switch>
-                </main>
+            <div className="flex min-h-screen">
+                <div className="flex-none h-screen">
+                    {/*isAuthorized*/ true && <Sidebar />}
+                </div>
+                <div className="flex-1 bg-background">
+                    {/*isAuthorized*/ true && <Header />}
+                    <main className="mx-16 -mt-32 bg-red-300">
+                        <Switch>
+                            <Route exact path="/" component={Test} />
+                            <PrivateRoute
+                                exact
+                                path="/private"
+                                component={Test}
+                            />
+                            <Route path="*" exact component={NotFound} />
+                        </Switch>
+                    </main>
+                </div>
             </div>
         );
     }

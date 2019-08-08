@@ -1,15 +1,15 @@
-import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { testAction } from './actions';
+import React from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { testAction } from "./actions";
 
-import styles from './styles.module.scss';
+import styles from "./styles.module.scss";
 
 class Test extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { };
+        this.state = {};
     }
 
     componentDidMount() {
@@ -19,7 +19,7 @@ class Test extends React.Component {
     render() {
         const { testRes } = this.props;
         return (
-            <div className={styles.test}>
+            <div className="h-64 bg-white shadow rounded-sm p-12">
                 Welcome to our React app! <br />
                 The test result is: {testRes}
             </div>
@@ -32,11 +32,11 @@ Test.propTypes = {
 };
 
 Test.defaultProps = {
-    testRes: 'not received yet'
+    testRes: "not received yet"
 };
 
 const mapStateToProps = rootState => ({
-    testRes: rootState.test.testRes,
+    testRes: rootState.test.testRes
 });
 
 const actions = {
