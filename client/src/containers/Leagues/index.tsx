@@ -9,7 +9,7 @@ import { LeagueTable } from 'components/Leagues/LeagueTables';
 import './styles.scss';
 
 const mockData = {
-    leagues: ['Barcelona', 'Somethin']
+    leagues: ['Barcelona']
 };
 
 const columns = [

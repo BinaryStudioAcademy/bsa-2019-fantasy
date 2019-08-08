@@ -20,7 +20,7 @@ class PublicLeagues extends Component<any, any> {
                     a classic league and up to 16 in head-to-head leagues. You can join up to 3
                     public leagues.
                 </p>
-                <p className="font-bold mb-6">
+                <p className="font-bold mb-8">
                     Note, you can't remove your team from a public league after the league has
                     started, once the challenge is on there's no quitting.
                 </p>

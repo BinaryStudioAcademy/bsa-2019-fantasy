@@ -1,14 +1,36 @@
 import React, { Component } from 'react';
 
-class PrivateLeagues extends Component {
+class PrivateLeagues extends Component<any, any> {
+    constructor(props: any) {
+        super(props);
+
+        this.state = {
+            code: ''
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event: any) {
+        const { name, value } = event.target;
+        this.setState({ [name]: value });
+    }
+
+    handleSubmit(event: React.SyntheticEvent) {
+        event.preventDefault();
+    }
+
     render() {
+        const { code } = this.state;
+
         return (
             <div className="join-league-item w-full md:w-1/2 px-6">
                 <h3 className="title text-secondary mb-4 font-bold">Private leagues</h3>
                 <p className="mb-4">
                     Join a private league if somebody has given you a league code to enter.
                 </p>
-                <form className="w-full max-w-lg">
+                <form className="w-full max-w-lg" onSubmit={this.handleSubmit}>
                     <div className="flex flex-wrap -mx-3 mb-6">
                         <div className="w-full md:w-1/2 px-3">
                             <label
@@ -21,6 +43,9 @@ class PrivateLeagues extends Component {
                                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 id="league-code"
                                 type="text"
+                                name="code"
+                                onChange={this.handleChange}
+                                value={code}
                             />
                         </div>
                     </div>
