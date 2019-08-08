@@ -8,11 +8,26 @@ class CreateLeague extends Component<any, any> {
 
         this.state = {
             name: '',
-            gameweek: ''
+            gameweek: 'Gameweek 1'
         };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event: any) {
+        const { name, value } = event.target;
+        this.setState({ [name]: value });
+    }
+
+    handleSubmit(event: React.SyntheticEvent) {
+        event.preventDefault();
+        console.log(this.state);
     }
 
     render() {
+        const { name, gameweek } = this.state;
+
         return (
             <div className="create-league">
                 <div className="container">
@@ -22,7 +37,7 @@ class CreateLeague extends Component<any, any> {
                         </div>
                     </div>
                     <div className="paper">
-                        <form className="w-full max-w-lg">
+                        <form className="w-full max-w-lg" onSubmit={this.handleSubmit}>
                             <div className="flex flex-wrap -mx-3 mb-6">
                                 <div className="w-full px-3">
                                     <label
@@ -35,6 +50,9 @@ class CreateLeague extends Component<any, any> {
                                         className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                         id="league-name"
                                         type="text"
+                                        name="name"
+                                        onChange={this.handleChange}
+                                        value={name}
                                     />
                                     <p className="text-gray-600 text-xs italic">
                                         Maximum 30 characters
@@ -51,11 +69,14 @@ class CreateLeague extends Component<any, any> {
                                 <div className="relative">
                                     <select
                                         className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                        id="grid-state"
+                                        id="league-gameweek"
+                                        name="gameweek"
+                                        onChange={this.handleChange}
+                                        value={gameweek}
                                     >
-                                        {times(38, (item) => 
-                                        <option>{`Gameweek ${item+1}`}</option>
-                                        )}
+                                        {times(38, item => (
+                                            <option key={item}>{`Gameweek ${item + 1}`}</option>
+                                        ))}
                                     </select>
                                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                                         <svg
@@ -69,8 +90,10 @@ class CreateLeague extends Component<any, any> {
                                 </div>
                             </div>
                             <button
-                                className="shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-                                type="button"
+                                className={`shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${!name
+                                    && 'opacity-50 cursor-not-allowed'}`}
+                                type="submit"
+                                disabled={!name}
                             >
                                 Create league
                             </button>
