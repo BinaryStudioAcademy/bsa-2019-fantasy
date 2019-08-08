@@ -10,6 +10,7 @@ import NotFound from 'scenes/NotFound';
 import PrivateRoute from 'containers/PrivateRoute';
 import LoginPage from 'containers/Auth/Login/LoginPage';
 import RegistartionPage from 'containers/Auth/Registration/RegistartionPage';
+import Leagues from 'containers/Leagues';
 
 const Routing = () => {
     const dispatch = useDispatch();
@@ -24,27 +25,31 @@ const Routing = () => {
     }
 
     return (
-        <div className='fill'>
+        <div className="fill">
             {isAuthorized && <header>HEADER</header>}
-            <main className='fill'>
+            <main className="fill">
                 <Switch>
-                    <Route exact path='/'>
+                    <Route exact path="/">
                         <Test />
                     </Route>
 
-                    <Route path='/login'>
+                    <Route path="/login">
                         <LoginPage />
                     </Route>
 
-                    <Route path='/registration'>
+                    <Route path="/registration">
                         <RegistartionPage />
                     </Route>
 
-                    <PrivateRoute exact path='/private'>
+                    <Route path="/leagues">
+                        <Leagues />
+                    </Route>
+
+                    <PrivateRoute exact path="/private">
                         <Test />
                     </PrivateRoute>
 
-                    <Route path='*' component={NotFound} />
+                    <Route path="*" component={NotFound} />
                 </Switch>
             </main>
         </div>
