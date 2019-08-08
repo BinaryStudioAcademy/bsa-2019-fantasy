@@ -1,9 +1,7 @@
 {
     "editor.tabSize": 4,
-    
     "typescript.tsdk": "node_modules\\typescript\\lib",
     "typescript.experimental.useSeparateSyntaxServer": true,
-
     "eslint.enable": true,
     "eslint.options": {
         "cache": true
@@ -21,6 +19,8 @@
             "autoFix": true
         }
     ],
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
     "[javascript]": {
         "editor.formatOnSave": false
     },
