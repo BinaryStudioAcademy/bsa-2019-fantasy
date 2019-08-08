@@ -69,14 +69,15 @@
         &-wrapper {
             width: 140px;
             height: 300px;
+            position: relative;
         }
 
         &-shadow {
             position: absolute;
             left: 50%;
-            bottom: 30px;
+            bottom: -25px;
             z-index: 10;
-            margin-left: -34px;
+            margin-left: -35px;
             width: 70px;
             height: 75px;
             background: rgba(20, 20, 20, 0.1);
@@ -101,10 +102,6 @@
 
             &-content {
                 text-align: center;
-            }
-
-            .ball-shadow {
-                bottom: -5px;
             }
         }
     }
