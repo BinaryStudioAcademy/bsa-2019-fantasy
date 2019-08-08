@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import LoginForm from "../../../components/AuthForms/LoginForm";
 import "../styles.scss";
 import "./responsive.scss";
+import { withTranslation } from 'react-i18next';
 
 class LoginPage extends Component {
     render() {
         const { t } = this.props;
+        console.log(t);
         return (
             <div className="flex w-full h-full md:flex-row-reverse flex-wrap login-container">
                 <div className="layer" />
@@ -24,11 +26,11 @@ class LoginPage extends Component {
                             {t('LoginPage.welcome')}
                         </h3>
                     </div>
-                    <LoginForm t={t}/>
+                    <LoginForm/>
                 </div>
             </div>
         );
     }
 }
 
-export default LoginPage;
+export default withTranslation()(LoginPage);

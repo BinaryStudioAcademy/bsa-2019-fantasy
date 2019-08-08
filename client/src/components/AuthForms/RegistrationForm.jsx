@@ -1,7 +1,8 @@
 import React from "react";
 import "./styles.scss";
+import { withTranslation } from 'react-i18next';
 
-const RegistrationForm = () => {
+const RegistrationForm = ({t}) => {
   return (
     <div className="w-full max-w-xs form-registration">
       <form className=" px-8 pt-6 pb-8 ">
@@ -10,7 +11,7 @@ const RegistrationForm = () => {
             className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
             id="first-name"
             type="text"
-            placeholder="First Name"
+            placeholder={t('AuthForms.firstName')}
           />
         </div>
         <div className="mb-4">
@@ -18,7 +19,7 @@ const RegistrationForm = () => {
             className="shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
             id="last-name"
             type="text"
-            placeholder="Last Name"
+            placeholder={t('AuthForms.lastName')}
           />
         </div>
         <div className="mb-2">
@@ -26,10 +27,10 @@ const RegistrationForm = () => {
             className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
             id="email"
             type="email"
-            placeholder="Email address"
+            placeholder={t('AuthForms.email')}
           />
           <p className="mt-1 text-xs italic text-justify">
-            We will send you a confirmation email
+          {t('AuthForms.sendConfirm')}
           </p>
         </div>
         <div className="mb-6">
@@ -40,12 +41,12 @@ const RegistrationForm = () => {
             placeholder="*************"
           />
           <p className="mt-1 text-xs italic text-justify">
-            At least 8 characters
+          {t('AuthForms.atLeast')}
           </p>
         </div>
         <div className="mb-4">
           <label className="block uppercase text-xs font-bold mb-1">
-            Gender
+          {t('AuthForms.gender')}
           </label>
           <select
             className="block appearance-none w-full py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
@@ -58,7 +59,7 @@ const RegistrationForm = () => {
         </div>
         <div className="mb-4">
           <label className="block uppercase text-xs font-bold mb-1">
-            Date of Birth
+          {t('AuthForms.dateBirth')}
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
@@ -69,7 +70,7 @@ const RegistrationForm = () => {
         </div>
         <div className="mb-4">
           <label className="block uppercase text-xs font-bold mb-1">
-            Country
+          {t('AuthForms.country')}
           </label>
           <select
             className="block appearance-none w-full py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
@@ -84,7 +85,7 @@ const RegistrationForm = () => {
         <div className="flex flex-wrap -mx-3 mb-3">
           <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
             <label className="block uppercase text-xs font-bold mb-1">
-              Code
+            {t('AuthForms.code')}
             </label>
             <div className="relative">
               <select
@@ -108,7 +109,7 @@ const RegistrationForm = () => {
           </div>
           <div className="w-full md:w-3/4 px-3 mb-6 md:mb-0">
             <label className="block uppercase text-xs font-bold mb-1">
-              Mobile
+            {t('AuthForms.mobile')}
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
@@ -123,7 +124,7 @@ const RegistrationForm = () => {
             type="button"
             className="font-medium  py-2 px-4 border  sign-up-btn"
           >
-            Sign up
+            {t('AuthForms.signup')}
           </button>
         </div>
       </form>
@@ -131,4 +132,4 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;
+export default withTranslation()(RegistrationForm);

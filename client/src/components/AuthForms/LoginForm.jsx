@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./styles.scss";
 import { Redirect } from "react-router-dom";
+import { withTranslation } from 'react-i18next';
 
 const LoginForm = ({location,t}) => {
     const [registerRedirect, setRedirect] = useState(false);
@@ -31,7 +32,7 @@ const LoginForm = ({location,t}) => {
                         className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                         id="email"
                         type="email"
-                        placeholder="Email address"
+                        placeholder={t('AuthForms.email')}
                     />
                 </div>
                 <div className="mb-4">
@@ -45,10 +46,10 @@ const LoginForm = ({location,t}) => {
                 <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center justify-start">
                         <input className="mr-2 " type="checkbox" />
-                        <span className="text-xs ">Remember me</span>
+                        <span className="text-xs ">{t('AuthForms.remember')}</span>
                     </div>
                     <a className="text-xs" href="/">
-                        Forgot password?
+                        {t('AuthForms.forgot')}
                     </a>
                 </div>
 
@@ -57,7 +58,7 @@ const LoginForm = ({location,t}) => {
                         type="submit"
                         className="font-medium  py-2 px-4 mr-2 border  sign-up-btn"
                     >
-                        Log In
+                        {t('AuthForms.login')}
                     </button>
                     <button
                         type="button"
@@ -66,7 +67,7 @@ const LoginForm = ({location,t}) => {
                             setRedirect(true);
                         }}
                     >
-                        Sign Up
+                        {t('AuthForms.signup')}
                     </button>
                 </div>
                 <div className="block mt-8 cursor-pointer">
@@ -88,4 +89,4 @@ const LoginForm = ({location,t}) => {
     );
 };
 
-export default LoginForm;
+export default withTranslation()(LoginForm);

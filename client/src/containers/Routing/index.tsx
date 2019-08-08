@@ -9,7 +9,7 @@ import Test from 'containers/Test';
 import NotFound from 'scenes/NotFound';
 import PrivateRoute from 'containers/PrivateRoute';
 import LoginPage from 'containers/Auth/Login/LoginPage';
-import RegistartionPage from 'containers/Auth/Registration/RegistartionPage';
+import RegistrationPage from 'containers/Auth/Registration/RegistartionPage';
 
 const Routing = () => {
     const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const Routing = () => {
                     </Route>
 
                     <Route path='/registration'>
-                        <RegistartionPage />
+                        <RegistrationPage />
                     </Route>
 
                     <PrivateRoute exact path='/private'>
