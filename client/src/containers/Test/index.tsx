@@ -1,16 +1,21 @@
 import React from "react";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import { bindActionCreators, Dispatch } from "redux";
+
 import { testAction } from "./actions";
+import { RootState } from "store/types";
 
 import styles from "./styles.module.scss";
 
-class Test extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+type Props = {
+    testRes: string;
+    testAction: typeof testAction;
+};
+
+class Test extends React.Component<Props> {
+    static defaultProps = {
+        testRes: "not received yet"
+    };
 
     componentDidMount() {
         this.props.testAction();
@@ -27,15 +32,7 @@ class Test extends React.Component {
     }
 }
 
-Test.propTypes = {
-    testRes: PropTypes.string
-};
-
-Test.defaultProps = {
-    testRes: "not received yet"
-};
-
-const mapStateToProps = rootState => ({
+const mapStateToProps = (rootState: RootState) => ({
     testRes: rootState.test.testRes
 });
 
@@ -43,7 +40,8 @@ const actions = {
     testAction
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+const mapDispatchToProps = (dispatch: Dispatch) =>
+    bindActionCreators(actions, dispatch);
 
 export default connect(
     mapStateToProps,
