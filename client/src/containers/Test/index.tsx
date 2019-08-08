@@ -5,7 +5,7 @@ import { bindActionCreators, Dispatch } from "redux";
 import { testAction } from "./actions";
 import { RootState } from "store/types";
 
-import styles from "./styles.module.scss";
+//import styles from "./styles.module.scss";
 
 type Props = {
     testRes: string;

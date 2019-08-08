@@ -1,9 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
+//import PropTypes from "prop-types";
+//import { NavLink } from "react-router-dom";
 import Notifications from "../Notifications";
 
-import styles from "./styles.module.scss";
+//import styles from "./styles.module.scss";
 
 const Header = () => (
     <header className="bg-primary pb-32 text-sm text-secondary2">

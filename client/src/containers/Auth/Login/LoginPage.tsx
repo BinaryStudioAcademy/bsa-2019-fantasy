@@ -23,7 +23,7 @@ class LoginPage extends Component {
                             Welcome back! Please, login to your account
                         </h3>
                     </div>
-                    <LoginForm />
+                    <LoginForm location="/" />
                 </div>
             </div>
         );

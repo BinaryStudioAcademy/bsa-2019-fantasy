@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
+// import PropTypes from "prop-types";
+// import { NavLink } from "react-router-dom";
 
-import styles from "./styles.module.scss";
+// import styles from "./styles.module.scss";
 
 const Notifications = () => {
     const [visible, setVisible] = useState(false);
