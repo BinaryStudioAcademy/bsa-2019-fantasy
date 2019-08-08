@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-
 import { map } from 'lodash';
 
+import './styles.scss';
+
 const mockData = {
-    leagues: ['Barcelona', 'Dnipro']
+    leagues: ['One', 'Two']
 };
 
 class Leagues extends Component {
@@ -13,14 +14,14 @@ class Leagues extends Component {
                 <div className="container">
                     <div className="jumbotron paper mt-24 mb-12 rounded">
                         <div className="jumbotron-content">
-                            <h2 className="title">
-                                <div className="sub title">My leagues</div>
+                            <h2 className="title mb-12 text-secondary">
+                                <div className="sub title mb-4">My Leagues</div>
                                 {map(mockData.leagues, (item, index) => (index === mockData.leagues.length - 1 ? item : `${item}, `))}
                             </h2>
-                            <button className="bg-primary hover:bg-teal-400 text-white py-2 px-4 border-2 border-teal-300 rounded mr-3">
+                            <button className="bg-primary hover:bg-teal-400 text-secondary hover:text-white py-2 px-8 border-2 border-teal-300 rounded mr-6">
                                 Join
                             </button>
-                            <button className="g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-4 border-2 border-gray-700 hover:border-transparent rounded">
+                            <button className="g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded">
                                 New League
                             </button>
                         </div>
