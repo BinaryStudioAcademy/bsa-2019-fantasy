@@ -11,8 +11,8 @@ import PrivateRoute from 'containers/PrivateRoute';
 import LoginPage from 'containers/Auth/Login/LoginPage';
 import RegistartionPage from 'containers/Auth/Registration/RegistartionPage';
 import Leagues from 'containers/Leagues';
-import CreateLeague from 'containers/Leagues/CreateLeague/index';
-import JoinLeague from 'containers/Leagues/JoinLeague';
+import CreateLeague from 'components/Leagues/CreateLeague';
+import JoinLeague from 'components/Leagues/JoinLeague';
 
 const Routing = () => {
     const dispatch = useDispatch();

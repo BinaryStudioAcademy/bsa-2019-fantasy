@@ -4,7 +4,7 @@ import { map } from 'lodash';
 
 import { FaStar } from 'react-icons/fa';
 
-import { LeagueTable } from '../../components/LeagueTables';
+import { LeagueTable } from 'components/Leagues/LeagueTables';
 
 import './styles.scss';
 

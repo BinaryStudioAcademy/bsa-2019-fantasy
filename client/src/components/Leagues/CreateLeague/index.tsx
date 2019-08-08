@@ -23,7 +23,6 @@ class CreateLeague extends Component<any, any> {
 
     handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault();
-        console.log(this.state);
     }
 
     render() {
