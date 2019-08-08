@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./styles.scss";
 import { Redirect } from "react-router-dom";
 
-const LoginForm = props => {
+const LoginForm = ({location,t}) => {
     const [registerRedirect, setRedirect] = useState(false);
 
     const onHandleLogin = e => {
@@ -21,7 +21,7 @@ const LoginForm = props => {
                 <Redirect
                     to={{
                         pathname: "registration",
-                        state: { from: props.location }
+                        state: { from: location }
                     }}
                 />
             ) : null}

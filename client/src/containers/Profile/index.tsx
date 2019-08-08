@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 
 import { RootState } from 'store/types';
 
-const Profile = () => {
+const Profile = ({t}:{t:any}) => {
     const user = useSelector((state: RootState) => state.profile.user);
 
-    return <div>Current user name is: ${user ? user.username : 'NULLER'}</div>;
+    return <div>{t('Profile.current-user')}{user ? user.username : 'NULLER'}</div>;
 };
 
 export default Profile;
