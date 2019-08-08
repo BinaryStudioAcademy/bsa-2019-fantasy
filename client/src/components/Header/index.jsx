@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
+import Notifications from "../Notifications";
 
 import styles from "./styles.module.scss";
 
@@ -15,9 +16,7 @@ const Header = () => (
                     >
                         Dashboard
                     </a>
-                    <a href="/notifications" className="block hover:text-white">
-                        Bell icon
-                    </a>
+                    <Notifications />
                 </div>
                 <div className="flex items-center ml-auto">
                     <a href="/leagues" className="block hover:text-white mr-20">
@@ -45,9 +44,8 @@ const Header = () => (
                 <div className="flex">
                     <input
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="username"
                         type="text"
-                        placeholder="Username"
+                        placeholder="Search"
                     />
                 </div>
             </nav>
