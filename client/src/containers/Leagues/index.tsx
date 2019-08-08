@@ -1,4 +1,5 @@
-import React, { Component, useMemo } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { map } from 'lodash';
 
 import { LeagueTable } from '../../components/LeagueTables';
@@ -71,12 +72,12 @@ const Leagues = () => {
                             <div className="sub title mb-4">My Leagues</div>
                             {map(mockData.leagues, (item, index) => (index === mockData.leagues.length - 1 ? item : `${item}, `))}
                         </h2>
-                        <button className="bg-primary hover:bg-teal-400 text-secondary hover:text-white py-2 px-8 border-2 border-teal-300 rounded mr-6">
+                        <Link to="/leagues/join" className="bg-primary hover:bg-teal-400 text-secondary hover:text-white py-2 px-8 border-2 border-teal-300 rounded mr-6">
                             Join
-                        </button>
-                        <button className="g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded">
+                        </Link>
+                        <Link to="/leagues/create" className="g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded">
                             New League
-                        </button>
+                        </Link>
                     </div>
                     {/* TODO: implement images */}
                 </div>

@@ -11,6 +11,8 @@ import PrivateRoute from 'containers/PrivateRoute';
 import LoginPage from 'containers/Auth/Login/LoginPage';
 import RegistartionPage from 'containers/Auth/Registration/RegistartionPage';
 import Leagues from 'containers/Leagues';
+import CreateLeague from 'containers/Leagues/CreateLeague/index';
+import JoinLeague from 'containers/Leagues/JoinLeague';
 
 const Routing = () => {
     const dispatch = useDispatch();
@@ -41,9 +43,11 @@ const Routing = () => {
                         <RegistartionPage />
                     </Route>
 
-                    <Route path="/leagues">
+                    <Route exact path="/leagues">
                         <Leagues />
                     </Route>
+                    <Route path='/leagues/create' component={CreateLeague} />
+                    <Route path='/leagues/join' component={JoinLeague} />
 
                     <PrivateRoute exact path="/private">
                         <Test />
