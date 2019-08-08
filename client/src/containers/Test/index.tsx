@@ -1,11 +1,11 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
+import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators, Dispatch } from "redux";
 
-import { testAction } from './actions';
-import { RootState } from 'store/types';
+import { testAction } from "./actions";
+import { RootState } from "store/types";
 
-import styles from './styles.module.scss';
+//import styles from "./styles.module.scss";
 
 type Props = {
     testRes: string;
@@ -14,7 +14,7 @@ type Props = {
 
 class Test extends React.Component<Props> {
     static defaultProps = {
-        testRes: 'not received yet',
+        testRes: "not received yet"
     };
 
     componentDidMount() {
@@ -24,7 +24,7 @@ class Test extends React.Component<Props> {
     render() {
         const { testRes } = this.props;
         return (
-            <div className={styles.test}>
+            <div className="h-64 bg-white shadow rounded-sm p-12">
                 Welcome to our React app! <br />
                 The test result is: {testRes}
             </div>
@@ -33,14 +33,15 @@ class Test extends React.Component<Props> {
 }
 
 const mapStateToProps = (rootState: RootState) => ({
-    testRes: rootState.test.testRes,
+    testRes: rootState.test.testRes
 });
 
 const actions = {
-    testAction,
+    testAction
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
+const mapDispatchToProps = (dispatch: Dispatch) =>
+    bindActionCreators(actions, dispatch);
 
 export default connect(
     mapStateToProps,

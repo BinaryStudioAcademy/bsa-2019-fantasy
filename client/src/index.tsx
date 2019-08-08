@@ -1,10 +1,10 @@
-import React from 'react';
-import { render } from 'react-dom';
-import Home from './scenes/Home';
+import React from "react";
+import { render } from "react-dom";
+import Home from "./scenes/Home";
 
-import './generated/tailwind.output.css';
-// import './styles/reset.scss';
-// import './styles/common.scss';
+// import "./styles/reset.scss";
+// import "./styles/common.scss";
+import "./index.css";
 
-const target = document.getElementById('root');
+const target = document.getElementById("root");
 render(<Home />, target);

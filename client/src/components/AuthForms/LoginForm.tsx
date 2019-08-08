@@ -1,19 +1,12 @@
 import React, { useState } from "react";
 import "./styles.scss";
 import { Redirect } from "react-router-dom";
+import { LoginFormProps } from "types/auth.types";
 
-const LoginForm = props => {
+const LoginForm = (props: LoginFormProps) => {
     const [registerRedirect, setRedirect] = useState(false);
 
-    const onHandleLogin = e => {
-        let email = e.target.email.value;
-        let password = e.target.password.value;
-
-        const userCredentials = {
-            email,
-            password
-        };
-    };
+    const onHandleLogin = (event: React.SyntheticEvent) => {};
 
     return (
         <div className="w-full h-full max-w-xs form-registration">

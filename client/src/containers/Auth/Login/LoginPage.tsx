@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import LoginForm from "../../../components/AuthForms/LoginForm";
+import LoginForm from "components/AuthForms/LoginForm";
 import "../styles.scss";
 import "./responsive.scss";
 
@@ -23,7 +23,7 @@ class LoginPage extends Component {
                             Welcome back! Please, login to your account
                         </h3>
                     </div>
-                    <LoginForm />
+                    <LoginForm location="/" />
                 </div>
             </div>
         );
