@@ -1,5 +1,1 @@
-export default [
-    '/auth/login',
-    '/auth/register',
-    '/test'
-];
+export default ["/auth/login", "/auth/register", "/test"];
