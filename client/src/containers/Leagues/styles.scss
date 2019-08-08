@@ -1,6 +1,12 @@
 .leagues {
     min-height: 100vh;
     background-color: grey;
+
+    .tables {
+        display: grid;
+        grid-template: 'private public' 'global global';
+        grid-template-columns: repeat(2, minmax(450px, 1fr));
+    }
 }
 
 .paper {

@@ -14,7 +14,7 @@ const columns = [
         Header: () => <span className="table-cell">League</span>,
         accessor: 'league',
 
-        Cell: (props: { value: string }) => <span className="title">{props.value}</span>
+        Cell: (props: { value: string }) => <span className="table-title">{props.value}</span>
     },
     {
         Header: () => <span className="table-cell">Movement</span>,
@@ -50,23 +50,23 @@ const Leagues = () => {
     const titles = [
         {
             title: 'Private classic leagues',
-            id: 0,
+            id: '0'
         },
         {
             title: 'Public classic leagues',
-            id: 1
+            id: '1'
         },
         {
             title: 'Global leagues',
-            id: 2
+            id: '2'
         }
     ];
 
     return (
         <div className="leagues">
             <div className="container">
-                <div className="jumbotron paper mt-24 mb-12 rounded">
-                    <div className="jumbotron-content">
+                <div className="jumbotron paper mb-12 rounded">
+                    <div className="jumbotron-content mt-12">
                         <h2 className="title mb-12 text-secondary">
                             <div className="sub title mb-4">My Leagues</div>
                             {map(mockData.leagues, (item, index) => (index === mockData.leagues.length - 1 ? item : `${item}, `))}
@@ -80,9 +80,16 @@ const Leagues = () => {
                     </div>
                     {/* TODO: implement images */}
                 </div>
-                {map(titles, (item) => 
-                <LeagueTable columns={columns} data={table} title={item.title} key={item.id} />
-                )}
+                <div className="tables">
+                    {map(titles, item => (
+                        <LeagueTable
+                            columns={columns}
+                            data={table}
+                            title={item}
+                            key={item.id}
+                        />
+                    ))}
+                </div>
             </div>
         </div>
     );
