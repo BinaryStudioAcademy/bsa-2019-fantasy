@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-
 import { times } from 'lodash';
+
+import { FaStar } from 'react-icons/fa';
 
 class CreateLeague extends Component<any, any> {
     constructor(props: any) {
@@ -33,7 +34,13 @@ class CreateLeague extends Component<any, any> {
                 <div className="container">
                     <div className="jumbotron paper mb-12 rounded">
                         <div className="jumbotron-content mt-12">
-                            <h2 className="title text-secondary">Create a new classic league</h2>
+                            <h2 className="title text-secondary">
+                                <div className="sub title mb-4 flex items-center">
+                                    <FaStar />
+                                    Create a League
+                                </div>
+                                Create a new classic league
+                            </h2>
                         </div>
                     </div>
                     <div className="paper">

@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { map } from 'lodash';
 
+import { FaStar } from 'react-icons/fa';
+
 import { LeagueTable } from '../../components/LeagueTables';
 
 import './styles.scss';
@@ -69,13 +71,22 @@ const Leagues = () => {
                 <div className="jumbotron paper mb-12 rounded">
                     <div className="jumbotron-content mt-12">
                         <h2 className="title mb-12 text-secondary">
-                            <div className="sub title mb-4">My Leagues</div>
+                            <div className="sub title mb-4 flex items-center">
+                                <FaStar />
+                                My Leagues
+                            </div>
                             {map(mockData.leagues, (item, index) => (index === mockData.leagues.length - 1 ? item : `${item}, `))}
                         </h2>
-                        <Link to="/leagues/join" className="bg-primary hover:bg-teal-400 text-secondary hover:text-white py-2 px-8 border-2 border-teal-300 rounded mr-6">
+                        <Link
+                            to="/leagues/join"
+                            className="bg-primary hover:bg-teal-400 text-secondary hover:text-white py-2 px-8 border-2 border-teal-300 rounded mr-6"
+                        >
                             Join
                         </Link>
-                        <Link to="/leagues/create" className="g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded">
+                        <Link
+                            to="/leagues/create"
+                            className="g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded"
+                        >
                             New League
                         </Link>
                     </div>
@@ -83,12 +94,7 @@ const Leagues = () => {
                 </div>
                 <div className="tables">
                     {map(titles, item => (
-                        <LeagueTable
-                            columns={columns}
-                            data={table}
-                            title={item}
-                            key={item.id}
-                        />
+                        <LeagueTable columns={columns} data={table} title={item} key={item.id} />
                     ))}
                 </div>
             </div>
