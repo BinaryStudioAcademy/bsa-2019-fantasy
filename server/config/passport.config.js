@@ -85,9 +85,10 @@ passport.use(
 passport.use(
     new FacebookStrategy(
         {
-            clientID: process.env["FACEBOOK_CLIENT_ID"],
-            clientSecret: process.env["FACEBOOK_CLIENT_SECRET"],
-            callbackURL: "api/auth/fb/callback"
+            clientID: process.env.FACEBOOK_CLIENT_ID,
+            clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+            callbackURL: "http://localhost:5001/api/auth/fb/callback",
+            profileFields: ["id", "displayName", "photos", "email"]
         },
         (accessToken, refreshToken, user, done) => {
             return user
@@ -96,3 +97,11 @@ passport.use(
         }
     )
 );
+//need for facebook strategy verify-cALLBACK
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+    done(null, obj);
+});
