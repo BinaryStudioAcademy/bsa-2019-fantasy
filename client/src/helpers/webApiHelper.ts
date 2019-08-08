@@ -1,11 +1,23 @@
-import * as queryString from 'query-string';
+import queryString from 'query-string';
 
-function getFetchUrl(args) {
+type FetchArgs = {
+    endpoint: string;
+    type: 'GET' | 'POST' | 'PUT' | 'DELETE';
+    request?: { [k: string]: any };
+    query?: { [k: string]: number | boolean | string | null };
+    attachment?: string;
+    skipAuthorization?: boolean;
+    ct?: any;
+};
+
+function getFetchUrl(args: FetchArgs) {
     return args.endpoint + (args.query ? `?${queryString.stringify(args.query)}` : '');
 }
 
-function getFetchArgs(args) {
-    const headers = {};
+function getFetchArgs(
+    args: FetchArgs
+): Pick<RequestInit, 'method' | 'headers' | 'signal' | 'body'> {
+    const headers: { [header: string]: string } = {};
     if (!args.attachment) {
         headers['Content-Type'] = 'application/json';
         headers.Accept = 'application/json';
@@ -32,11 +44,11 @@ function getFetchArgs(args) {
         method: args.type,
         headers,
         signal: args.ct,
-        ...(args.request === 'GET' ? {} : { body })
+        ...(args.type === 'GET' ? {} : { body }),
     };
 }
 
-export async function throwIfResponseFailed(res) {
+export async function throwIfResponseFailed(res: Response) {
     if (!res.ok) {
         let parsedException = 'Something went wrong with request!';
         try {
@@ -48,12 +60,9 @@ export async function throwIfResponseFailed(res) {
     }
 }
 
-export default async function callWebApi(args) {
+export default async function callWebApi(args: FetchArgs) {
     try {
-        const res = await fetch(
-            getFetchUrl(args),
-            getFetchArgs(args)
-        );
+        const res = await fetch(getFetchUrl(args), getFetchArgs(args));
         await throwIfResponseFailed(res);
         return res;
     } catch (err) {
