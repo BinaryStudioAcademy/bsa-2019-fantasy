@@ -9,7 +9,7 @@ import Test from 'containers/Test';
 import NotFound from 'scenes/NotFound';
 import PrivateRoute from 'containers/PrivateRoute';
 import LoginPage from 'containers/Auth/Login/LoginPage';
-import RegistartionPage from 'containers/Auth/Registration/RegistartionPage';
+import RegistrationPage from 'containers/Auth/Registration/RegistartionPage';
 
 import Header from 'components/Header';
 import Sidebar from 'components/Sidebar';
@@ -17,7 +17,6 @@ import Spinner from 'components/Spinner';
 
 const Routing = () => {
     const dispatch = useDispatch();
-
     const { isLoading, isAuthorized } = useSelector((state: RootState) => state.profile);
 
     useEffect(() => {
@@ -44,7 +43,7 @@ const Routing = () => {
                         </Route>
 
                         <Route path='/registration'>
-                            <RegistartionPage />
+                            <RegistrationPage />
                         </Route>
 
                         <PrivateRoute exact path='/private'>

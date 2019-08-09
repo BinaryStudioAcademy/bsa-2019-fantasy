@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+
 import RegistrationForm from '../../../components/AuthForms/RegistrationForm';
+
 import '../styles.scss';
 import './responsive.scss';
 
-class RegistartionPage extends Component {
+class RegistrationPage extends Component {
     render() {
         return (
             <div className='flex w-full md:flex-row-reverse flex-wrap login-container'>
@@ -28,4 +30,4 @@ class RegistartionPage extends Component {
     }
 }
 
-export default RegistartionPage;
+export default RegistrationPage;
