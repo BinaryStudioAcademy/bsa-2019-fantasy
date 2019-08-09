@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as leagueParticipantService from '../services/leagueParticipant.service';
+import * as leagueParticipantService from '../services/league-participant.service';
 
 const router = Router();
 

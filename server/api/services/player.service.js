@@ -1,11 +1,6 @@
 import playerRepository from '../../data/repositories/player.repository';
 
-export const getPlayers = async () => {
-    const players = await playerRepository.getAll();
-    return players;
-};
+export const getPlayers = async () => await playerRepository.getAll();
 
-export const getPlayerById = async playerId => {
-    const player = await playerRepository.getById(playerId);
-    return player;
-};
+export const getPlayerById = async playerId =>
+    await playerRepository.getById(playerId);

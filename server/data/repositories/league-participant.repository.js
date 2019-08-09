@@ -1,4 +1,4 @@
-import { LeagueParticipantModel } from '../models/index';
+import { LeagueParticipantModel } from '../models';
 import BaseRepository from './base.repository';
 
 class LeagueParticipantRepository extends BaseRepository {}

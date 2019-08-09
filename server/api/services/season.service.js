@@ -1,6 +1,4 @@
 import seasonRepository from '../../data/repositories/season.repository';
 
-export const getSeasonById = async seasonId => {
-    const season = await seasonRepository.getById(seasonId);
-    return season;
-};
+export const getSeasonById = async seasonId =>
+    await seasonRepository.getById(seasonId);
