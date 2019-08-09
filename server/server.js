@@ -1,21 +1,22 @@
-import dotenv from "dotenv";
-import fs from "fs";
-import express from "express";
-import path from "path";
-import passport from "passport";
-import http from "http";
-import socketIO from "socket.io";
+import dotenv from 'dotenv';
+import fs from 'fs';
+import express from 'express';
+import path from 'path';
+import passport from 'passport';
+import http from 'http';
+import socketIO from 'socket.io';
+import socketIOClient from 'socket.io-client';
 
-import routes from "./api/routes/index";
-import authorizationMiddleware from "./api/middlewares/authorization.middleware";
-import errorHandlerMiddleware from "./api/middlewares/error-handler.middleware";
-import routesWhiteList from "./config/routes-white-list.config";
-import socketInjector from "./socket/injector";
-import socketHandlers from "./socket/handlers";
+import routes from './api/routes/index';
+import authorizationMiddleware from './api/middlewares/authorization.middleware';
+import errorHandlerMiddleware from './api/middlewares/error-handler.middleware';
+import routesWhiteList from './config/routes-white-list.config';
+import socketInjector from './socket/injector';
+import socketHandlers from './socket/handlers';
 
-import sequelize from "./data/db/connection";
+import sequelize from './data/db/connection';
 
-import "./config/passport.config";
+import './config/passport.config';
 
 dotenv.config();
 
@@ -23,16 +24,29 @@ const app = express();
 const socketServer = http.Server(app);
 const io = socketIO(socketServer);
 
+const socket = socketIOClient.connect(`http://localhost:${process.env.FAKER_SOCKET_PORT}`, { reconnection: true });
+socket.on('connect', () => {
+    // eslint-disable-next-line no-console
+    console.log('connected');
+
+    socket.on('someEvent', (data) => {
+        // eslint-disable-next-line no-console
+        console.log(`data from faker ${data.success}`);
+    });
+});
+
 sequelize
     .authenticate()
     .then(() => {
-        console.log("Connection has been established successfully.");
+        // eslint-disable-next-line no-console
+        console.log('Connection has been established successfully.');
     })
-    .catch(err => {
-        console.error("Unable to connect to the database:", err);
+    .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.error('Unable to connect to the database:', err);
     });
 
-io.on("connection", socketHandlers);
+io.on('connection', socketHandlers);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -40,14 +54,14 @@ app.use(passport.initialize());
 
 app.use(socketInjector(io));
 
-app.use("/api/", authorizationMiddleware(routesWhiteList));
+app.use('/api/', authorizationMiddleware(routesWhiteList));
 
 routes(app, io);
 
 const staticPath = path.resolve(`${__dirname}/../client/build`);
 app.use(express.static(staticPath));
 
-app.get("*", (req, res) => {
+app.get('*', (req, res) => {
     res.write(fs.readFileSync(`${__dirname}/../client/build/index.html`));
     res.end();
 });
