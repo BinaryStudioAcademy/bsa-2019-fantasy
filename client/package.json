@@ -74,7 +74,7 @@
     },
     "lint-staged": {
         "*.(ts(x)?|js(x)?)": [
-            "eslint --fix",
+            "eslint --quiet --fix",
             "git add"
         ],
         "*.json": [

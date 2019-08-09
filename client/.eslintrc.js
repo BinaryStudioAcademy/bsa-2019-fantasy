@@ -4,13 +4,13 @@ module.exports = {
         'plugin:@typescript-eslint/recommended',
         'plugin:react/recommended',
         'plugin:jsx-a11y/recommended',
-        'plugin:prettier/recommended',
+        'prettier/react',
+        'prettier',
     ],
-    plugins: ['@typescript-eslint', 'react', 'react-hooks', 'jsx-a11y'],
+    plugins: ['@typescript-eslint', 'prettier', 'react', 'react-hooks', 'jsx-a11y'],
     parserOptions: {
         project: __dirname + '/tsconfig.json',
         ecmaVersion: 2018,
-        sourceType: 'module',
         ecmaFeatures: {
             jsx: true,
         },
@@ -18,15 +18,17 @@ module.exports = {
     env: {
         browser: true,
         es6: true,
+        commonjs: true,
     },
     rules: {
+        'prettier/prettier': 'error',
         'react/jsx-boolean-value': ['warn', 'never'],
         'react/no-direct-mutation-state': 'error',
         'react/no-access-state-in-setstate': 'error',
         'react/no-this-in-sfc': 'error',
         'react/prefer-stateless-function': ['warn', { ignorePureComponents: true }],
         'react/self-closing-comp': 'warn',
-        'react/static-property-placement': 'warn',
+        'react/static-property-placement': 'error',
         'react/void-dom-elements-no-children': 'error',
         'react/state-in-constructor': ['error', 'never'],
 
@@ -50,12 +52,13 @@ module.exports = {
         ],
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/prefer-interface': 'off',
-        '@typescript-eslint/no-floating-promises': 'warn',
-        '@typescript-eslint/no-misused-promises': 'warn',
+        '@typescript-eslint/no-floating-promises': 'error',
+        '@typescript-eslint/no-misused-promises': 'error',
         '@typescript-eslint/class-name-casing': 'error',
         '@typescript-eslint/require-await': 'warn',
         '@typescript-eslint/await-thenable': 'warn',
         '@typescript-eslint/explicit-member-accessibility': 'off',
+        '@typescript-eslint/no-var-requires': 'off',
     },
     settings: {
         react: {
