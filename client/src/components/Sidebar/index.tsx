@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faStar,
@@ -53,15 +53,17 @@ const Sidebar = () => {
       <div>Points</div>
       <div className='menu mt-16'>
         {menuItems.map(({ name, icon, link }) => (
-          <Link
+          <NavLink
+            exact
             className='menuItem flex px-4 py-5 h-8 justify-start items-center hover:text-primary'
+            activeClassName='text-primary'
             key={name}
             to={link}
             onClick={noPropagation}
           >
             <FontAwesomeIcon className='fa-fw' icon={icon} />
             {isOpened && <div className='ml-4'>{name}</div>}
-          </Link>
+          </NavLink>
         ))}
       </div>
     </div>
