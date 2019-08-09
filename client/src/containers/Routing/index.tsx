@@ -57,7 +57,7 @@ const Routing = () => {
                         </Route>
                         <Route path="/leagues/join">
                             <JoinLeague />
-                        </Route>                        
+                        </Route>
 
                         <PrivateRoute exact path='/private'>
                             <Test />

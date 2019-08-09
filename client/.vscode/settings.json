@@ -1,0 +1,30 @@
+{
+    "editor.tabSize": 4,
+    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "typescript.experimental.useSeparateSyntaxServer": true,
+    "eslint.enable": true,
+    "eslint.options": {
+        "cache": true
+    },
+    "eslint.autoFixOnSave": true,
+    "eslint.validate": [
+        {
+            "language": "javascript",
+            "autoFix": true
+        },
+        {
+            "language": "javascriptreact",
+            "autoFix": true
+        },
+        {
+            "language": "typescript",
+            "autoFix": true
+        },
+        {
+            "language": "typescriptreact",
+            "autoFix": true
+        }
+    ],
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+}

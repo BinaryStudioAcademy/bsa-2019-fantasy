@@ -4,7 +4,7 @@ body {
 .login-container {
     position: relative;
     height: 100%;
-    background: url("../../assets/images/login-bg.jpg") no-repeat;
+    background: url('../../assets/images/login-bg.jpg') no-repeat;
     background-size: auto 100%;
     text-align: right;
     background-position: right;
@@ -37,7 +37,7 @@ body {
     position: relative;
     z-index: 2;
     max-width: none !important;
-    font-family: "Khula", sans-serif;
+    font-family: 'Khula', sans-serif;
     font-weight: 800;
     font-size: 4.8rem;
     line-height: 6rem;
@@ -51,7 +51,7 @@ body {
     position: relative;
     z-index: 2;
     text-align: left;
-    font-family: "Khula", sans-serif;
+    font-family: 'Khula', sans-serif;
     font-weight: 800;
 
     color: #1ee3cf;

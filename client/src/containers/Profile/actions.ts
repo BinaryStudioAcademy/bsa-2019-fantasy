@@ -17,7 +17,7 @@ const setIsLoading = (isLoading: boolean): UserAction => ({
 });
 
 const setAuthData = (user: User | null = null, token = ''): AsyncUserAction => (
-    dispatch
+    dispatch,
 ) => {
     setToken(token); // token should be set first before user
     dispatch(setUser(user));
@@ -27,7 +27,7 @@ const handleAuthResponse = (
     authResponsePromise: Promise<{
         user: User;
         token: string;
-    }>
+    }>,
 ): AsyncUserAction => async (dispatch, getRootState) => {
     const { user, token } = await authResponsePromise;
     setAuthData(user, token)(dispatch, getRootState);

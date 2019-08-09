@@ -8,3 +8,7 @@ export type RegisterCredentials = {
     password: string;
     email: string;
 };
+
+export type LoginFormProps = {
+    location: string;
+};

@@ -15,7 +15,7 @@ function getFetchUrl(args: FetchArgs) {
 }
 
 function getFetchArgs(
-    args: FetchArgs
+    args: FetchArgs,
 ): Pick<RequestInit, 'method' | 'headers' | 'signal' | 'body'> {
     const headers: { [header: string]: string } = {};
     if (!args.attachment) {
