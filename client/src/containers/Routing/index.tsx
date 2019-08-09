@@ -30,11 +30,9 @@ const Routing = () => {
 
     return (
         <div className='flex min-h-screen'>
-            <div className='flex-none h-screen'>
-                {/*isAuthorized*/ true && <Sidebar />}
-            </div>
+            <div className='flex-none h-screen'>{isAuthorized && <Sidebar />}</div>
             <div className='flex-1 bg-background'>
-                {/*isAuthorized*/ true && <Header />}
+                {isAuthorized && <Header />}
                 <main className='mx-16 -mt-32'>
                     <Switch>
                         <Route exact path='/'>
