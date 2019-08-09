@@ -12,7 +12,7 @@ type Props = {
   testAction: typeof testAction;
 };
 
-class Transfers extends React.Component<Props> {
+class Fixtures extends React.Component<Props> {
   static defaultProps = {
     testRes: 'not received yet',
   };
@@ -25,7 +25,7 @@ class Transfers extends React.Component<Props> {
     const { testRes } = this.props;
     return (
       <div className='h-64 bg-white shadow rounded-sm p-12'>
-        Transfers page <br />
+        Fixtures page <br />
         The test result is: {testRes}
       </div>
     );
@@ -45,4 +45,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, d
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Transfers);
+)(Fixtures);

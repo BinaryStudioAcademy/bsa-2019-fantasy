@@ -14,6 +14,8 @@ import RegistrationPage from 'containers/Auth/Registration/RegistrationPage';
 
 import MyTeam from 'containers/MyTeam';
 import Transfers from 'containers/Transfers';
+import Live from 'containers/Live';
+import Fixtures from 'containers/Fixtures';
 
 import Leagues from 'containers/Leagues';
 import CreateLeague from 'components/Leagues/CreateLeague';
@@ -50,8 +52,10 @@ const Routing = () => {
             <Route path='/' exact component={Test} />
 
             <Route path='/my-team' component={MyTeam} />
+            <Route path='/live' component={Live} />
             <Route path='/players' exact component={Players} />
             <Route path='/transfers' exact component={Transfers} />
+            <Route path='/fixtures' exact component={Fixtures} />
 
             <Route path='/leagues' exact component={Leagues} />
             <Route path='/leagues/create' component={CreateLeague} />

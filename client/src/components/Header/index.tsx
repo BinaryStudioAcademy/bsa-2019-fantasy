@@ -22,22 +22,23 @@ const Header = () => {
             </a>
             <Notifications />
           </div>
-          <div className='flex items-center ml-auto'>
+          <div
+            className='flex flex-initial justify-between items-center ml-auto'
+            style={{ flexBasis: '70%' }}
+          >
             {menuItems.map(({ name, link }) => (
               <div key={name}>
                 <NavLink
                   to={link}
-                  className='block hover:text-white mr-20'
+                  className='block hover:text-white mx-4'
                   activeClassName='text-white'
                 >
                   {name}
                 </NavLink>
               </div>
             ))}
-          </div>
-          <div className='flex'>
             <input
-              className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+              className='shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
               type='text'
               placeholder='Search'
             />
