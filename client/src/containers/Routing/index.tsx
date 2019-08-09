@@ -20,56 +20,56 @@ import Sidebar from 'components/Sidebar';
 import Spinner from 'components/Spinner';
 
 const Routing = () => {
-    const dispatch = useDispatch();
-    const { isLoading, isAuthorized } = useSelector((state: RootState) => state.profile);
+  const dispatch = useDispatch();
+  const { isLoading, isAuthorized } = useSelector((state: RootState) => state.profile);
 
-    useEffect(() => {
-        dispatch(loadCurrentUser());
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(loadCurrentUser());
+  }, [dispatch]);
 
-    if (isLoading) {
-        return <Spinner />;
-    }
+  if (isLoading) {
+    return <Spinner />;
+  }
 
-    return (
-        <div className='flex min-h-screen'>
-            <div className='flex-none h-screen'>{isAuthorized && <Sidebar />}</div>
-            <div className='flex-1 bg-background'>
-                {isAuthorized && <Header />}
-                <main className='mx-16 -mt-32'>
-                    <Switch>
-                        <Route exact path='/'>
-                            <Test />
-                        </Route>
+  return (
+    <div className='flex min-h-screen'>
+      <div className='flex-none h-screen'>{isAuthorized && <Sidebar />}</div>
+      <div className='flex-1 bg-background'>
+        {isAuthorized && <Header />}
+        <main className='mx-16 -mt-32'>
+          <Switch>
+            <Route exact path='/'>
+              <Test />
+            </Route>
 
-                        <Route path='/login'>
-                            <LoginPage />
-                        </Route>
+            <Route path='/login'>
+              <LoginPage />
+            </Route>
 
-                        <Route path='/registration'>
-                            <RegistrationPage />
-                        </Route>
+            <Route path='/registration'>
+              <RegistrationPage />
+            </Route>
 
-                        <Route exact path='/leagues'>
-                            <Leagues />
-                        </Route>
-                        <Route path='/leagues/create'>
-                            <CreateLeague />
-                        </Route>
-                        <Route path='/leagues/join'>
-                            <JoinLeague />
-                        </Route>
+            <Route exact path='/leagues'>
+              <Leagues />
+            </Route>
+            <Route path='/leagues/create'>
+              <CreateLeague />
+            </Route>
+            <Route path='/leagues/join'>
+              <JoinLeague />
+            </Route>
 
-                        <PrivateRoute exact path='/private'>
-                            <Test />
-                        </PrivateRoute>
+            <PrivateRoute exact path='/private'>
+              <Test />
+            </PrivateRoute>
 
-                        <Route path='*' component={NotFound} />
-                    </Switch>
-                </main>
-            </div>
-        </div>
-    );
+            <Route path='*' component={NotFound} />
+          </Switch>
+        </main>
+      </div>
+    </div>
+  );
 };
 
 export default Routing;
