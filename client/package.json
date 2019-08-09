@@ -4,8 +4,8 @@
     "private": true,
     "proxy": "http://localhost:5001/",
     "scripts": {
-        "build:css": "postcss src/styles/index.css -o src/index.css",
-        "watch:css": "postcss src/styles/index.css -o src/index.css -w",
+        "build:css": "postcss src/styles/tailwind.css -o src/generated/tailwind.output.css",
+        "watch:css": "postcss src/styles/tailwind.css -o src/generated/tailwind.output.css -w",
         "scripts:start": "react-scripts start",
         "scripts:build": "react-scripts build",
         "start": "npm-run-all -p watch:css scripts:start",
@@ -55,6 +55,7 @@
         "eslint-plugin-prettier": "^3.1.0",
         "eslint-plugin-react": "^7.14.3",
         "eslint-plugin-react-hooks": "^1.6.1",
+        "eslint_d": "^8.0.0",
         "husky": "^3.0.3",
         "lint-staged": "^9.2.1",
         "node-sass": "^4.12.0",
@@ -74,10 +75,10 @@
     },
     "lint-staged": {
         "*.(ts(x)?|js(x)?)": [
-            "eslint --quiet --fix",
+            "eslint_d --quiet --fix",
             "git add"
         ],
-        "*.json": [
+        "*.(json|scss|css)": [
             "prettier --write",
             "git add"
         ]
