@@ -1,22 +1,46 @@
-export default (orm, Sequelize) => {
-    const User = orm.define('User', {
-        email: {
-            allowNull: false,
-            type: Sequelize.STRING
+export default (orm, DataTypes) => {
+    const User = orm.define(
+        'user',
+        {
+            name: {
+                allowNull: false,
+                type: DataTypes.STRING,
+                unique: true
+            },
+            email: {
+                allowNull: false,
+                type: DataTypes.STRING,
+                unique: true
+            },
+            password: {
+                allowNull: false,
+                type: DataTypes.STRING
+            },
+            money: {
+                allowNull: false,
+                type: DataTypes.FLOAT
+            },
+            score: {
+                allowNull: false,
+                type: DataTypes.FLOAT
+            },
+            team_name: {
+                allowNull: false,
+                type: DataTypes.STRING
+            },
+            chip_used: {
+                allowNull: false,
+                type: DataTypes.ENUM(
+                    'wildcard',
+                    'triple_caption',
+                    'bench_boost'
+                )
+            },
+            createdAt: DataTypes.DATE,
+            updatedAt: DataTypes.DATE
         },
-        username: {
-            allowNull: false,
-            type: Sequelize.STRING,
-            unique: true
-        },
-        password: {
-            allowNull: false,
-            type: Sequelize.STRING,
-            unique: true
-        },
-        createdAt: Sequelize.DATE,
-        updatedAt: Sequelize.DATE
-    }, {});
+        {}
+    );
 
     return User;
 };
