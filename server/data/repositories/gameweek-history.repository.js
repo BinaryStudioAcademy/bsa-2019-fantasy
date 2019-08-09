@@ -1,4 +1,4 @@
-import { GameweekHistory } from '../models/index';
+import { GameweekHistoryModel } from '../models/index';
 import BaseRepository from './base.repository';
 
 class GameweekHistoryRepository extends BaseRepository {
@@ -7,4 +7,4 @@ class GameweekHistoryRepository extends BaseRepository {
     }
 }
 
-export default new GameweekHistoryRepository(GameweekHistory);
+export default new GameweekHistoryRepository(GameweekHistoryModel);

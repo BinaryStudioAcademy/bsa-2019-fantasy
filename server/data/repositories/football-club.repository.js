@@ -1,5 +1,5 @@
-import { FootballClub } from '../models/index';
-import BaseRepository from './base.repository';
+import { FootballClubModel } from "../models/index";
+import BaseRepository from "./base.repository";
 
 class FootballClubRepository extends BaseRepository {
     getById(id) {
@@ -7,4 +7,4 @@ class FootballClubRepository extends BaseRepository {
     }
 }
 
-export default new FootballClubRepository(FootballClub);
+export default new FootballClubRepository(FootballClubModel);

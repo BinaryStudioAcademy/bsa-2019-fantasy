@@ -1,5 +1,5 @@
 import { Router } from "express";
-import * as leagueService from "../services/football-club.service";
+import * as leagueService from "../services/league.service";
 
 const router = Router();
 
@@ -18,7 +18,7 @@ router
     )
     .post("/", (req, res, next) =>
         leagueService
-            .createLeague(req.user.id, req.body)
+            .createLeague(req.body.userId, req.body.body)
             .then(value => res.json(value))
             .catch(next)
     )
@@ -30,7 +30,7 @@ router
     )
     .delete("/:id", (req, res, next) =>
         leagueService
-            .deleteLeagueById(req.params.id, req.user.id)
+            .deleteLeagueById(req.params.id)
             .then(status => res.send({ deleted: status }))
             .catch(next)
     );

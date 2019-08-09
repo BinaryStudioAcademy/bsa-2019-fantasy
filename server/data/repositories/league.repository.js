@@ -1,4 +1,4 @@
-import { League } from '../models/index';
+import { LeagueModel } from '../models/index';
 import BaseRepository from './base.repository';
 
 class LeagueRepository extends BaseRepository {
@@ -7,4 +7,4 @@ class LeagueRepository extends BaseRepository {
     }
 }
 
-export default new LeagueRepository(League);
+export default new LeagueRepository(LeagueModel);

@@ -10,6 +10,7 @@ export const createLeague = (id, data) =>
         id
     });
 
-export const updateLeague = async (id, data) => leagueRepository.updateById(id, data);
+export const updateLeague = async (id, data) =>
+    leagueRepository.updateById(id, data);
 
-export const deleteLeagueById = async (id, userId) => leagueRepository.deleteById(id, userId);
+export const deleteLeagueById = async id => leagueRepository.deleteById(id);

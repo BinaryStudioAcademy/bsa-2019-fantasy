@@ -40,7 +40,7 @@ app.use(passport.initialize());
 
 app.use(socketInjector(io));
 
-app.use("/api/", authorizationMiddleware(routesWhiteList));
+// app.use("/api/", authorizationMiddleware(routesWhiteList));
 
 routes(app, io);
 

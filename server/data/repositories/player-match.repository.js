@@ -1,4 +1,4 @@
-import { PlayerMatchStat } from '../models/index';
+import { PlayerMatchStatModel } from '../models/index';
 import BaseRepository from './base.repository';
 
 class PlayerMatchRepository extends BaseRepository {
@@ -7,4 +7,4 @@ class PlayerMatchRepository extends BaseRepository {
     }
 }
 
-export default new PlayerMatchRepository(PlayerMatchStat);
+export default new PlayerMatchRepository(PlayerMatchStatModel);
