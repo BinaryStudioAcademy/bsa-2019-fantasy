@@ -6,19 +6,24 @@
     }
 }
 
-.league-table[id="0"] {
+.league-table[id='0'] {
     grid-area: public;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0
-} 
 
-.league-table[id="1"] {
+    @media screen and (min-width: 1024px) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+}
+
+.league-table[id='1'] {
     grid-area: private;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0
-} 
 
-.league-table[id="2"] {
+    @media screen and (min-width: 1024px) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+
+.league-table[id='2'] {
     grid-area: global;
-} 
-
+}

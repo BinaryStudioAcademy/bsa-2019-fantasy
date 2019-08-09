@@ -1,8 +1,15 @@
 .leagues {
+    background-color: #f6f6f6;
+
     .tables {
         display: grid;
         grid-template: 'private public' 'global global';
         grid-template-columns: repeat(2, minmax(450px, 1fr));
+
+        @media screen and (max-width: 1023px) {
+            grid-template: 'private' 'public' 'global';
+            grid-template-columns: 100%;
+        }
     }
 }
 
