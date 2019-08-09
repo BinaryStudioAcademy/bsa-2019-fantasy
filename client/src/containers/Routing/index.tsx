@@ -17,6 +17,7 @@ import JoinLeague from 'components/Leagues/JoinLeague';
 
 import Header from 'components/Header';
 import Sidebar from 'components/Sidebar';
+import Spinner from 'components/Spinner';
 
 const Routing = () => {
     const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const Routing = () => {
     }, [dispatch]);
 
     if (isLoading) {
-        return <div>SPINNER</div>;
+        return <Spinner />;
     }
 
     return (
@@ -49,13 +50,13 @@ const Routing = () => {
                             <RegistrationPage />
                         </Route>
 
-                        <Route exact path="/leagues">
+                        <Route exact path='/leagues'>
                             <Leagues />
                         </Route>
-                        <Route path="/leagues/create">
+                        <Route path='/leagues/create'>
                             <CreateLeague />
                         </Route>
-                        <Route path="/leagues/join">
+                        <Route path='/leagues/join'>
                             <JoinLeague />
                         </Route>
 
