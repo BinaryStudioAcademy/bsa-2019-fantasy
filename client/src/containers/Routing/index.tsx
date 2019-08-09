@@ -17,7 +17,7 @@ import Spinner from 'components/Spinner';
 
 const Routing = () => {
     const dispatch = useDispatch();
-    // eslint-disable-next-line
+
     const { isLoading, isAuthorized } = useSelector((state: RootState) => state.profile);
 
     useEffect(() => {
