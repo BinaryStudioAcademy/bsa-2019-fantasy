@@ -15,6 +15,8 @@ import Leagues from 'containers/Leagues';
 import CreateLeague from 'components/Leagues/CreateLeague';
 import JoinLeague from 'components/Leagues/JoinLeague';
 
+import Players from 'containers/Players';
+
 import Header from 'components/Header';
 import Sidebar from 'components/Sidebar';
 import Spinner from 'components/Spinner';
@@ -58,6 +60,10 @@ const Routing = () => {
             </Route>
             <Route path='/leagues/join'>
               <JoinLeague />
+            </Route>
+
+            <Route exact path='/players'>
+              <Players />
             </Route>
 
             <PrivateRoute exact path='/private'>

@@ -1,11 +1,10 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 
 import PlayerHighlight from 'components/PlayerHighlight';
 import Dropdown from 'components/Dropdown';
 
 import './styles.scss';
-import { placeholder } from '@babel/types';
 
 const PlayersPage = () => {
   const allPlayers = [
@@ -33,9 +32,9 @@ const PlayersPage = () => {
       {allPlayers.map((player) => (
         <div className='item flex items-center my-3'>
           <img className='w-5 mr-4' src={player.shirt} alt='Shirt' />
-          <a className='mr-4 font-semibold' href='#'>
+          <Link className='mr-4 font-semibold' to='#'>
             {player.name}
-          </a>
+          </Link>
           <button className='w-4 h-4 justify-center leading-none flex ml-auto bg-background rounded-full text-xs font-semibold'>
             i
           </button>

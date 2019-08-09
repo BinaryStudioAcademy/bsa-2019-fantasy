@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMedal } from '@fortawesome/free-solid-svg-icons';
 
@@ -43,9 +44,9 @@ const PlayerHighlight = () => (
       </div>
 
       <div className='allWinners mt-6 text-sm'>
-        <a className='font-semibold hover:underline' href='#'>
+        <Link className='font-semibold hover:underline' to='/'>
           Browse all winners
-        </a>
+        </Link>
       </div>
     </div>
 
