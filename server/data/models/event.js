@@ -2,10 +2,7 @@ export default (orm, DataTypes) => {
     const Event = orm.define(
         'event',
         {
-            time_stamp: {
-                type: 'TIMESTAMP',
-                defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
-            },
+            time_stamp: DataTypes.DATE,
             event_type: {
                 allowNull: false,
                 type: DataTypes.ENUM(

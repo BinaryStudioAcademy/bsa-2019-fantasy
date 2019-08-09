@@ -26,7 +26,7 @@ export default models => {
 
     Gameweek.hasMany(GameweekHistory);
 
-    League.BelongsToMany(User);
+    // League.belongsToMany(User);
     League.hasMany(LeagueParticipant);
     LeagueParticipant.hasMany(User);
     Season.hasMany(Gameweek);
