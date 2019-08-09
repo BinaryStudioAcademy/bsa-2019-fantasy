@@ -14,29 +14,29 @@ const FootballClub = orm.import('./football-club');
 const Event = orm.import('./event');
 
 associate({
-    User,
-    Season,
-    PlayerStat,
-    PlayerMatchStat,
-    League,
-    LeagueParticipant,
-    Gameweek,
-    GameweekHistory,
-    Game,
-    FootballClub,
-    Event
+  User,
+  Season,
+  PlayerStat,
+  PlayerMatchStat,
+  League,
+  LeagueParticipant,
+  Gameweek,
+  GameweekHistory,
+  Game,
+  FootballClub,
+  Event
 });
 
 export {
-    User as UserModel,
-    Season as SeasonModel,
-    PlayerStat as PlayerStatModel,
-    PlayerMatchStat as PlayerMatchStatModel,
-    League as LeagueModel,
-    LeagueParticipant as LeagueParticipantModel,
-    Gameweek as GameweekModel,
-    GameweekHistory as GameweekHistoryModel,
-    Game as GameModel,
-    FootballClub as FootballClubModel,
-    Event as EventModel
+  User as UserModel,
+  Season as SeasonModel,
+  PlayerStat as PlayerStatModel,
+  PlayerMatchStat as PlayerMatchStatModel,
+  League as LeagueModel,
+  LeagueParticipant as LeagueParticipantModel,
+  Gameweek as GameweekModel,
+  GameweekHistory as GameweekHistoryModel,
+  Game as GameModel,
+  FootballClub as FootballClubModel,
+  Event as EventModel
 };
