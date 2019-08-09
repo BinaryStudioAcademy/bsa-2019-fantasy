@@ -227,8 +227,8 @@
 @keyframes shrinkSmallScreen {
     0% {
         bottom: 30px;
-        margin-left: -30px;
-        width: 30px;
+        margin-left: -10px;
+        width: 20px;
         height: 75px;
         background: rgba(20, 20, 20, 0.1);
         box-shadow: 0px 0 20px 35px rgba(20, 20, 20, 0.1);
@@ -237,8 +237,8 @@
     }
     50% {
         bottom: 60px;
-        margin-left: -8px;
-        width: 20px;
+        margin-left: -3px;
+        width: 5px;
         height: 5px;
         background: rgba(20, 20, 20, 0.3);
         box-shadow: 0px 0 20px 35px rgba(20, 20, 20, 0.3);
@@ -247,8 +247,8 @@
     }
     100% {
         bottom: 30px;
-        margin-left: -30px;
-        width: 30px;
+        margin-left: -10px;
+        width: 20px;
         height: 75px;
         background: rgba(20, 20, 20, 0.1);
         box-shadow: 0px 0 20px 35px rgba(20, 20, 20, 0.1);
