@@ -15,22 +15,19 @@ const Header = () => {
   return (
     <header className='bg-primary pb-32 text-sm text-secondary2'>
       <div className='mx-16'>
-        <nav className='flex items-center flex-wrap py-4 '>
-          <div className='flex items-center'>
+        <nav className='flex items-center py-4 '>
+          <div className='flex flex-initial items-center'>
             <a href='/dashboard' className='block hover:text-white mr-12'>
               Dashboard
             </a>
             <Notifications />
           </div>
-          <div
-            className='flex flex-initial justify-between items-center ml-auto'
-            style={{ flexBasis: '70%' }}
-          >
+          <div className='flex flex-grow items-center justify-end ml-4'>
             {menuItems.map(({ name, link }) => (
-              <div key={name}>
+              <div key={name} className='flex' style={{ flexBasis: '8em' }}>
                 <NavLink
                   to={link}
-                  className='block hover:text-white mx-4'
+                  className='flex hover:text-white mx-2'
                   activeClassName='text-white'
                 >
                   {name}
