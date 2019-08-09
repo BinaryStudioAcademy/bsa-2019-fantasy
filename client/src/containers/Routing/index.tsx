@@ -11,6 +11,10 @@ import PrivateRoute from 'containers/PrivateRoute';
 import LoginPage from 'containers/Auth/Login/LoginPage';
 import RegistrationPage from 'containers/Auth/Registration/RegistrationPage';
 
+import Leagues from 'containers/Leagues';
+import CreateLeague from 'components/Leagues/CreateLeague';
+import JoinLeague from 'components/Leagues/JoinLeague';
+
 import Header from 'components/Header';
 import Sidebar from 'components/Sidebar';
 
@@ -43,6 +47,16 @@ const Routing = () => {
 
                         <Route path='/registration'>
                             <RegistrationPage />
+                        </Route>
+
+                        <Route exact path="/leagues">
+                            <Leagues />
+                        </Route>
+                        <Route path="/leagues/create">
+                            <CreateLeague />
+                        </Route>
+                        <Route path="/leagues/join">
+                            <JoinLeague />
                         </Route>
 
                         <PrivateRoute exact path='/private'>
