@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import * as userService from '../services/user.service';
+import * as leagueParticipantService from '../services/leagueParticipant.service';
 
 const router = Router();
 
 router.get('/:id', (req, res, next) =>
-    userService
-        .getUserById(req.params.id)
+    leagueParticipantService
+        .getleagueParticipantById(req.params.id)
         .then(value => res.json(value))
         .catch(next)
 );

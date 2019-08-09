@@ -1,21 +1,21 @@
-import dotenv from "dotenv";
-import fs from "fs";
-import express from "express";
-import path from "path";
-import passport from "passport";
-import http from "http";
-import socketIO from "socket.io";
+import dotenv from 'dotenv';
+import fs from 'fs';
+import express from 'express';
+import path from 'path';
+import passport from 'passport';
+import http from 'http';
+import socketIO from 'socket.io';
 
-import routes from "./api/routes/index";
-import authorizationMiddleware from "./api/middlewares/authorization.middleware";
-import errorHandlerMiddleware from "./api/middlewares/error-handler.middleware";
-import routesWhiteList from "./config/routes-white-list.config";
-import socketInjector from "./socket/injector";
-import socketHandlers from "./socket/handlers";
+import routes from './api/routes/index';
+// import authorizationMiddleware from './api/middlewares/authorization.middleware';
+import errorHandlerMiddleware from './api/middlewares/error-handler.middleware';
+// import routesWhiteList from './config/routes-white-list.config';
+import socketInjector from './socket/injector';
+import socketHandlers from './socket/handlers';
 
-import sequelize from "./data/db/connection";
+import sequelize from './data/db/connection';
 
-import "./config/passport.config";
+import './config/passport.config';
 
 dotenv.config();
 
@@ -26,13 +26,13 @@ const io = socketIO(socketServer);
 sequelize
     .authenticate()
     .then(() => {
-        console.log("Connection has been established successfully.");
+        console.log('Connection has been established successfully.');
     })
-    .catch(err => {
-        console.error("Unable to connect to the database:", err);
+    .catch((err) => {
+        console.error('Unable to connect to the database:', err);
     });
 
-io.on("connection", socketHandlers);
+io.on('connection', socketHandlers);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -47,7 +47,7 @@ routes(app, io);
 const staticPath = path.resolve(`${__dirname}/../client/build`);
 app.use(express.static(staticPath));
 
-app.get("*", (req, res) => {
+app.get('*', (req, res) => {
     res.write(fs.readFileSync(`${__dirname}/../client/build/index.html`));
     res.end();
 });
