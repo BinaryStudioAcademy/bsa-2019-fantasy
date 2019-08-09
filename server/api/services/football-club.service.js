@@ -4,4 +4,4 @@ export const getAllFootballClubs = async () =>
     await FootballClubRepository.getAll();
 
 export const getFootballClubById = async id =>
-    await FootballClubRepository.FootballClubs(id);
+    await FootballClubRepository.getById(id);
