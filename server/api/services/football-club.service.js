@@ -1,7 +1,7 @@
-import FootballClubRepository from "../../data/repositories/football-club.repository";
+import footballClubRepository from "../../data/repositories/football-club.repository";
 
 export const getAllFootballClubs = async () =>
-    await FootballClubRepository.getAll();
+    await footballClubRepository.getAll();
 
 export const getFootballClubById = async id =>
-    await FootballClubRepository.getById(id);
+    await footballClubRepository.getById(id);
