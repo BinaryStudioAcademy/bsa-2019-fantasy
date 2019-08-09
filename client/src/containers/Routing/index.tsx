@@ -38,9 +38,9 @@ const Routing = () => {
   }
 
   return (
-    <div className='flex min-h-screen'>
-      <div className='flex-none h-screen'>{isAuthorized && <Sidebar />}</div>
-      <div className='flex-1 bg-background'>
+    <div className='flex h-screen'>
+      <div className='flex-none h-full'>{isAuthorized && <Sidebar />}</div>
+      <div className='flex-1 bg-background h-full overflow-y-auto'>
         {isAuthorized && <Header />}
         <main className='mx-16 -mt-32'>
           <Switch>
