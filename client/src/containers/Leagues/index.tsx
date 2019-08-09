@@ -2,47 +2,72 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { map } from 'lodash';
 
-import { FaStar } from 'react-icons/fa';
+import { FaStar, FaArrowUp, FaArrowDown } from 'react-icons/fa';
 
 import { LeagueTable } from 'components/Leagues/LeagueTables';
 
+import FirstPlayer from 'assets/images/player.png';
+import SecondPlayer from 'assets/images/1966.png';
 import './styles.scss';
 
+// mock data
 const mockData = {
     leagues: ['Barcelona']
 };
 
 const columns = [
     {
-        Header: () => <span className="table-cell">League</span>,
+        Header: () => <span className="table-title uppercase font-bold">League</span>,
         accessor: 'league',
 
-        Cell: (props: { value: string }) => <span className="table-title">{props.value}</span>
+        Cell: (props: { value: string }) => <span className="table-title-row">{props.value}</span>
     },
     {
-        Header: () => <span className="table-cell">Movement</span>,
-        accessor: 'movement',
-        Cell: (props: { value: string }) => <span className="movement">{props.value}</span>
-    },
-    {
-        Header: () => <span className="table-cell">Current Rank</span>,
-        accessor: 'rank.current',
+        Header: () => <span className="table-title uppercase font-bold">Current Rank</span>,
+        accessor: 'rank',
 
-        Cell: (props: { value: number }) => <span className="rank">{props.value}</span>
+        Cell: (props: { value: { movement: string; current: number } }) => (
+            <div className="rank flex justify-center items-center">
+                <span className={`movement mr-1 ${props.value.movement === 'up' ? 'up' : 'down'}`}>
+                    {props.value.movement === 'up' ? <FaArrowUp /> : <FaArrowDown />}
+                </span>
+                {' '}
+                {props.value.current}
+            </div>
+        )
     },
     {
-        Header: () => <span className="table-cell">Last Rank</span>,
-        accessor: 'rank.last',
+        Header: () => <span className="table-title uppercase font-bold">Last Rank</span>,
+        accessor: 'rank',
 
-        Cell: (props: { value: number }) => <span className="rank">{props.value}</span>
+        Cell: (props: { value: { movement: string; last: number } }) => (
+            <div className="rank flex justify-center items-center">
+                <span className={`movement mr-1 ${props.value.movement === 'up' ? 'up' : 'down'}`}>
+                    {props.value.movement === 'up' ? <FaArrowUp /> : <FaArrowDown />}
+                </span>
+                {' '}
+                {props.value.last}
+            </div>
+        )
     }
 ];
 
+// mock data
 const table = [
     {
         league: 'Tanner Linsley',
         movement: 'well',
         rank: {
+            movement: 'up',
+            current: 123,
+            last: 23
+        }
+    },
+    {
+        league: 'Tanner Linsley',
+        movement: 'well',
+        rank: {
+            movement: 'down',
             current: 123,
             last: 23
         }
@@ -68,8 +93,8 @@ const Leagues = () => {
     return (
         <div className="leagues">
             <div className="container">
-                <div className="jumbotron paper mb-12 rounded">
-                    <div className="jumbotron-content mt-12">
+                <div className="jumbotron paper mb-12 rounded flex items-end justify-between pt-6">
+                    <div className="jumbotron-content mt-12 mb-12">
                         <h2 className="title mb-12 text-secondary">
                             <div className="sub title mb-4 flex items-center">
                                 <FaStar />
@@ -90,7 +115,10 @@ const Leagues = () => {
                             New League
                         </Link>
                     </div>
-                    {/* TODO: implement images */}
+                    <div className="players flex">
+                        <img src={FirstPlayer} alt="player" />
+                        <img src={SecondPlayer} alt="player" />
+                    </div>
                 </div>
                 <div className="tables">
                     {map(titles, item => (
