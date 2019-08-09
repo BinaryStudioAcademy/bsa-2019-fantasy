@@ -13,21 +13,21 @@ export default models => {
         Event: MyEvent
     } = models;
 
-    Game.hasMany(FootballClub);
-    Game.hasMany(Gameweek);
+    // User.hasMany(LeagueParticipant);
 
-    PlayerMatchStat.hasMany(MyEvent);
-    MyEvent.hasMany(Game);
+    // Game.hasMany(FootballClub);
 
-    PlayerStat.hasMany(GameweekHistory);
+    // PlayerMatchStat.hasMany(MyEvent);
+    // MyEvent.hasMany(Game);
 
-    FootballClub.hasMany(PlayerStat);
-    FootballClub.hasMany(Game);
+    // PlayerStat.hasMany(GameweekHistory);
+    // PlayerStat.hasMany(FootballClub);
 
-    Gameweek.hasMany(GameweekHistory);
+    // FootballClub.hasMany(Game);
 
-    League.BelongsToMany(User);
-    League.hasMany(LeagueParticipant);
-    LeagueParticipant.hasMany(User);
-    Season.hasMany(Gameweek);
+    // Gameweek.hasMany(GameweekHistory);
+    // Gameweek.hasMany(Game);
+
+    // League.hasMany(LeagueParticipant);
+    // Season.hasMany(Gameweek);
 };

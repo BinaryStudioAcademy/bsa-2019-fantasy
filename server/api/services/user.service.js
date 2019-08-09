@@ -1,6 +1,6 @@
-import userRepository from "../../data/repositories/user.repository";
+import userRepository from '../../data/repositories/user.repository';
 
 export const getUserById = async userId => {
-    const { id, username, email } = await userRepository.getUserById(userId);
-    return { id, username, email };
+    const { id, name, email } = await userRepository.getUserById(userId);
+    return { id, name, email };
 };
