@@ -1,8 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/types';
+import { withTranslation } from 'react-i18next';
 
-const Profile = () => {
+const Profile = ({t}:{t:any}) => {
   const user = useSelector((state: RootState) => state.profile.user);
 
   return (
@@ -12,4 +13,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default withTranslation()(Profile);

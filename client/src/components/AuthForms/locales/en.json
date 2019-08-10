@@ -1,0 +1,17 @@
+{
+    "email": "Email address",
+    "remember": "Remember me",
+    "forgot": "Forgot password?",
+    "login": "Log in",
+    "signup": "Sign up",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "sendConfirm": "We will send you a confirmation email",
+    "atLeast": "At least 8 characters",
+    "gender": "Gender",
+    "dateBirth": "Date of Birth",
+    "day": "Day",
+    "country": "Country",
+    "code": "Code",
+    "mobile": "Mobile"
+}

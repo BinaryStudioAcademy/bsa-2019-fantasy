@@ -1,9 +1,10 @@
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import './styles.scss';
 
-const NotFound = () => (
+const NotFound = ({t}:{t:any}) => (
   <div className='notfound'>
     <div className='container'>
       <div className='jumbotron'>
@@ -29,4 +30,4 @@ const NotFound = () => (
   </div>
 );
 
-export default NotFound;
+export default withTranslation()(NotFound);
