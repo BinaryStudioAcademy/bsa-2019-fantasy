@@ -1089,6 +1089,10 @@ video {
   background-color: rgba(18, 39, 55, 0.11);
 }
 
+.bg-modalDimmer {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 .hover\:bg-transparent:hover {
   background-color: transparent;
 }
@@ -1485,6 +1489,10 @@ video {
   background-color: rgba(18, 39, 55, 0.11);
 }
 
+.hover\:bg-modalDimmer:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 .focus\:bg-transparent:focus {
   background-color: transparent;
 }
@@ -1879,6 +1887,10 @@ video {
 
 .focus\:bg-greyBorder:focus {
   background-color: rgba(18, 39, 55, 0.11);
+}
+
+.focus\:bg-modalDimmer:focus {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .bg-bottom {
@@ -2357,6 +2369,10 @@ video {
   border-color: rgba(18, 39, 55, 0.11);
 }
 
+.border-modalDimmer {
+  border-color: rgba(0, 0, 0, 0.5);
+}
+
 .hover\:border-transparent:hover {
   border-color: transparent;
 }
@@ -2753,6 +2769,10 @@ video {
   border-color: rgba(18, 39, 55, 0.11);
 }
 
+.hover\:border-modalDimmer:hover {
+  border-color: rgba(0, 0, 0, 0.5);
+}
+
 .focus\:border-transparent:focus {
   border-color: transparent;
 }
@@ -3147,6 +3167,10 @@ video {
 
 .focus\:border-greyBorder:focus {
   border-color: rgba(18, 39, 55, 0.11);
+}
+
+.focus\:border-modalDimmer:focus {
+  border-color: rgba(0, 0, 0, 0.5);
 }
 
 .rounded-none {
@@ -7589,6 +7613,22 @@ video {
   color: rgba(18, 39, 55, 0.11);
 }
 
+.placeholder-modalDimmer::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.placeholder-modalDimmer::-moz-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.placeholder-modalDimmer::-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.placeholder-modalDimmer::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
 .focus\:placeholder-transparent:focus::-webkit-input-placeholder {
   color: transparent;
 }
@@ -9173,6 +9213,22 @@ video {
   color: rgba(18, 39, 55, 0.11);
 }
 
+.focus\:placeholder-modalDimmer:focus::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.focus\:placeholder-modalDimmer:focus::-moz-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.focus\:placeholder-modalDimmer:focus::-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.focus\:placeholder-modalDimmer:focus::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
 .pointer-events-none {
   pointer-events: none;
 }
@@ -9209,11 +9265,32 @@ video {
   left: 0;
 }
 
-.inset-auto {
-  top: auto;
-  right: auto;
-  bottom: auto;
-  left: auto;
+.inset-20 {
+  top: 20%;
+  right: 20%;
+  bottom: 20%;
+  left: 20%;
+}
+
+.inset-40 {
+  top: 40%;
+  right: 40%;
+  bottom: 40%;
+  left: 40%;
+}
+
+.inset-60 {
+  top: 60%;
+  right: 60%;
+  bottom: 60%;
+  left: 60%;
+}
+
+.inset-80 {
+  top: 80%;
+  right: 80%;
+  bottom: 80%;
+  left: 80%;
 }
 
 .inset-y-0 {
@@ -9226,14 +9303,44 @@ video {
   left: 0;
 }
 
-.inset-y-auto {
-  top: auto;
-  bottom: auto;
+.inset-y-20 {
+  top: 20%;
+  bottom: 20%;
 }
 
-.inset-x-auto {
-  right: auto;
-  left: auto;
+.inset-x-20 {
+  right: 20%;
+  left: 20%;
+}
+
+.inset-y-40 {
+  top: 40%;
+  bottom: 40%;
+}
+
+.inset-x-40 {
+  right: 40%;
+  left: 40%;
+}
+
+.inset-y-60 {
+  top: 60%;
+  bottom: 60%;
+}
+
+.inset-x-60 {
+  right: 60%;
+  left: 60%;
+}
+
+.inset-y-80 {
+  top: 80%;
+  bottom: 80%;
+}
+
+.inset-x-80 {
+  right: 80%;
+  left: 80%;
 }
 
 .top-0 {
@@ -9252,20 +9359,68 @@ video {
   left: 0;
 }
 
-.top-auto {
-  top: auto;
+.top-20 {
+  top: 20%;
 }
 
-.right-auto {
-  right: auto;
+.right-20 {
+  right: 20%;
 }
 
-.bottom-auto {
-  bottom: auto;
+.bottom-20 {
+  bottom: 20%;
 }
 
-.left-auto {
-  left: auto;
+.left-20 {
+  left: 20%;
+}
+
+.top-40 {
+  top: 40%;
+}
+
+.right-40 {
+  right: 40%;
+}
+
+.bottom-40 {
+  bottom: 40%;
+}
+
+.left-40 {
+  left: 40%;
+}
+
+.top-60 {
+  top: 60%;
+}
+
+.right-60 {
+  right: 60%;
+}
+
+.bottom-60 {
+  bottom: 60%;
+}
+
+.left-60 {
+  left: 60%;
+}
+
+.top-80 {
+  top: 80%;
+}
+
+.right-80 {
+  right: 80%;
+}
+
+.bottom-80 {
+  bottom: 80%;
+}
+
+.left-80 {
+  left: 80%;
 }
 
 .resize-none {
@@ -9808,6 +9963,10 @@ video {
   color: rgba(18, 39, 55, 0.11);
 }
 
+.text-modalDimmer {
+  color: rgba(0, 0, 0, 0.5);
+}
+
 .hover\:text-transparent:hover {
   color: transparent;
 }
@@ -10204,6 +10363,10 @@ video {
   color: rgba(18, 39, 55, 0.11);
 }
 
+.hover\:text-modalDimmer:hover {
+  color: rgba(0, 0, 0, 0.5);
+}
+
 .focus\:text-transparent:focus {
   color: transparent;
 }
@@ -10598,6 +10761,10 @@ video {
 
 .focus\:text-greyBorder:focus {
   color: rgba(18, 39, 55, 0.11);
+}
+
+.focus\:text-modalDimmer:focus {
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .text-xs {
@@ -11514,6 +11681,10 @@ video {
     background-color: rgba(18, 39, 55, 0.11);
   }
 
+  .sm\:bg-modalDimmer {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   .sm\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -11910,6 +12081,10 @@ video {
     background-color: rgba(18, 39, 55, 0.11);
   }
 
+  .sm\:hover\:bg-modalDimmer:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   .sm\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -12304,6 +12479,10 @@ video {
 
   .sm\:focus\:bg-greyBorder:focus {
     background-color: rgba(18, 39, 55, 0.11);
+  }
+
+  .sm\:focus\:bg-modalDimmer:focus {
+    background-color: rgba(0, 0, 0, 0.5);
   }
 
   .sm\:bg-bottom {
@@ -12782,6 +12961,10 @@ video {
     border-color: rgba(18, 39, 55, 0.11);
   }
 
+  .sm\:border-modalDimmer {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+
   .sm\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -13178,6 +13361,10 @@ video {
     border-color: rgba(18, 39, 55, 0.11);
   }
 
+  .sm\:hover\:border-modalDimmer:hover {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+
   .sm\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -13572,6 +13759,10 @@ video {
 
   .sm\:focus\:border-greyBorder:focus {
     border-color: rgba(18, 39, 55, 0.11);
+  }
+
+  .sm\:focus\:border-modalDimmer:focus {
+    border-color: rgba(0, 0, 0, 0.5);
   }
 
   .sm\:rounded-none {
@@ -18014,6 +18205,22 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .sm\:placeholder-modalDimmer::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .sm\:placeholder-modalDimmer::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .sm\:placeholder-modalDimmer::-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .sm\:placeholder-modalDimmer::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .sm\:focus\:placeholder-transparent:focus::-webkit-input-placeholder {
     color: transparent;
   }
@@ -19598,6 +19805,22 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .sm\:focus\:placeholder-modalDimmer:focus::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .sm\:focus\:placeholder-modalDimmer:focus::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .sm\:focus\:placeholder-modalDimmer:focus::-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .sm\:focus\:placeholder-modalDimmer:focus::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .sm\:pointer-events-none {
     pointer-events: none;
   }
@@ -19634,11 +19857,32 @@ video {
     left: 0;
   }
 
-  .sm\:inset-auto {
-    top: auto;
-    right: auto;
-    bottom: auto;
-    left: auto;
+  .sm\:inset-20 {
+    top: 20%;
+    right: 20%;
+    bottom: 20%;
+    left: 20%;
+  }
+
+  .sm\:inset-40 {
+    top: 40%;
+    right: 40%;
+    bottom: 40%;
+    left: 40%;
+  }
+
+  .sm\:inset-60 {
+    top: 60%;
+    right: 60%;
+    bottom: 60%;
+    left: 60%;
+  }
+
+  .sm\:inset-80 {
+    top: 80%;
+    right: 80%;
+    bottom: 80%;
+    left: 80%;
   }
 
   .sm\:inset-y-0 {
@@ -19651,14 +19895,44 @@ video {
     left: 0;
   }
 
-  .sm\:inset-y-auto {
-    top: auto;
-    bottom: auto;
+  .sm\:inset-y-20 {
+    top: 20%;
+    bottom: 20%;
   }
 
-  .sm\:inset-x-auto {
-    right: auto;
-    left: auto;
+  .sm\:inset-x-20 {
+    right: 20%;
+    left: 20%;
+  }
+
+  .sm\:inset-y-40 {
+    top: 40%;
+    bottom: 40%;
+  }
+
+  .sm\:inset-x-40 {
+    right: 40%;
+    left: 40%;
+  }
+
+  .sm\:inset-y-60 {
+    top: 60%;
+    bottom: 60%;
+  }
+
+  .sm\:inset-x-60 {
+    right: 60%;
+    left: 60%;
+  }
+
+  .sm\:inset-y-80 {
+    top: 80%;
+    bottom: 80%;
+  }
+
+  .sm\:inset-x-80 {
+    right: 80%;
+    left: 80%;
   }
 
   .sm\:top-0 {
@@ -19677,20 +19951,68 @@ video {
     left: 0;
   }
 
-  .sm\:top-auto {
-    top: auto;
+  .sm\:top-20 {
+    top: 20%;
   }
 
-  .sm\:right-auto {
-    right: auto;
+  .sm\:right-20 {
+    right: 20%;
   }
 
-  .sm\:bottom-auto {
-    bottom: auto;
+  .sm\:bottom-20 {
+    bottom: 20%;
   }
 
-  .sm\:left-auto {
-    left: auto;
+  .sm\:left-20 {
+    left: 20%;
+  }
+
+  .sm\:top-40 {
+    top: 40%;
+  }
+
+  .sm\:right-40 {
+    right: 40%;
+  }
+
+  .sm\:bottom-40 {
+    bottom: 40%;
+  }
+
+  .sm\:left-40 {
+    left: 40%;
+  }
+
+  .sm\:top-60 {
+    top: 60%;
+  }
+
+  .sm\:right-60 {
+    right: 60%;
+  }
+
+  .sm\:bottom-60 {
+    bottom: 60%;
+  }
+
+  .sm\:left-60 {
+    left: 60%;
+  }
+
+  .sm\:top-80 {
+    top: 80%;
+  }
+
+  .sm\:right-80 {
+    right: 80%;
+  }
+
+  .sm\:bottom-80 {
+    bottom: 80%;
+  }
+
+  .sm\:left-80 {
+    left: 80%;
   }
 
   .sm\:resize-none {
@@ -20233,6 +20555,10 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .sm\:text-modalDimmer {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .sm\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -20629,6 +20955,10 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .sm\:hover\:text-modalDimmer:hover {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .sm\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -21023,6 +21353,10 @@ video {
 
   .sm\:focus\:text-greyBorder:focus {
     color: rgba(18, 39, 55, 0.11);
+  }
+
+  .sm\:focus\:text-modalDimmer:focus {
+    color: rgba(0, 0, 0, 0.5);
   }
 
   .sm\:text-xs {
@@ -21940,6 +22274,10 @@ video {
     background-color: rgba(18, 39, 55, 0.11);
   }
 
+  .md\:bg-modalDimmer {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   .md\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -22336,6 +22674,10 @@ video {
     background-color: rgba(18, 39, 55, 0.11);
   }
 
+  .md\:hover\:bg-modalDimmer:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   .md\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -22730,6 +23072,10 @@ video {
 
   .md\:focus\:bg-greyBorder:focus {
     background-color: rgba(18, 39, 55, 0.11);
+  }
+
+  .md\:focus\:bg-modalDimmer:focus {
+    background-color: rgba(0, 0, 0, 0.5);
   }
 
   .md\:bg-bottom {
@@ -23208,6 +23554,10 @@ video {
     border-color: rgba(18, 39, 55, 0.11);
   }
 
+  .md\:border-modalDimmer {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+
   .md\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -23604,6 +23954,10 @@ video {
     border-color: rgba(18, 39, 55, 0.11);
   }
 
+  .md\:hover\:border-modalDimmer:hover {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+
   .md\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -23998,6 +24352,10 @@ video {
 
   .md\:focus\:border-greyBorder:focus {
     border-color: rgba(18, 39, 55, 0.11);
+  }
+
+  .md\:focus\:border-modalDimmer:focus {
+    border-color: rgba(0, 0, 0, 0.5);
   }
 
   .md\:rounded-none {
@@ -28440,6 +28798,22 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .md\:placeholder-modalDimmer::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .md\:placeholder-modalDimmer::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .md\:placeholder-modalDimmer::-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .md\:placeholder-modalDimmer::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .md\:focus\:placeholder-transparent:focus::-webkit-input-placeholder {
     color: transparent;
   }
@@ -30024,6 +30398,22 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .md\:focus\:placeholder-modalDimmer:focus::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .md\:focus\:placeholder-modalDimmer:focus::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .md\:focus\:placeholder-modalDimmer:focus::-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .md\:focus\:placeholder-modalDimmer:focus::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .md\:pointer-events-none {
     pointer-events: none;
   }
@@ -30060,11 +30450,32 @@ video {
     left: 0;
   }
 
-  .md\:inset-auto {
-    top: auto;
-    right: auto;
-    bottom: auto;
-    left: auto;
+  .md\:inset-20 {
+    top: 20%;
+    right: 20%;
+    bottom: 20%;
+    left: 20%;
+  }
+
+  .md\:inset-40 {
+    top: 40%;
+    right: 40%;
+    bottom: 40%;
+    left: 40%;
+  }
+
+  .md\:inset-60 {
+    top: 60%;
+    right: 60%;
+    bottom: 60%;
+    left: 60%;
+  }
+
+  .md\:inset-80 {
+    top: 80%;
+    right: 80%;
+    bottom: 80%;
+    left: 80%;
   }
 
   .md\:inset-y-0 {
@@ -30077,14 +30488,44 @@ video {
     left: 0;
   }
 
-  .md\:inset-y-auto {
-    top: auto;
-    bottom: auto;
+  .md\:inset-y-20 {
+    top: 20%;
+    bottom: 20%;
   }
 
-  .md\:inset-x-auto {
-    right: auto;
-    left: auto;
+  .md\:inset-x-20 {
+    right: 20%;
+    left: 20%;
+  }
+
+  .md\:inset-y-40 {
+    top: 40%;
+    bottom: 40%;
+  }
+
+  .md\:inset-x-40 {
+    right: 40%;
+    left: 40%;
+  }
+
+  .md\:inset-y-60 {
+    top: 60%;
+    bottom: 60%;
+  }
+
+  .md\:inset-x-60 {
+    right: 60%;
+    left: 60%;
+  }
+
+  .md\:inset-y-80 {
+    top: 80%;
+    bottom: 80%;
+  }
+
+  .md\:inset-x-80 {
+    right: 80%;
+    left: 80%;
   }
 
   .md\:top-0 {
@@ -30103,20 +30544,68 @@ video {
     left: 0;
   }
 
-  .md\:top-auto {
-    top: auto;
+  .md\:top-20 {
+    top: 20%;
   }
 
-  .md\:right-auto {
-    right: auto;
+  .md\:right-20 {
+    right: 20%;
   }
 
-  .md\:bottom-auto {
-    bottom: auto;
+  .md\:bottom-20 {
+    bottom: 20%;
   }
 
-  .md\:left-auto {
-    left: auto;
+  .md\:left-20 {
+    left: 20%;
+  }
+
+  .md\:top-40 {
+    top: 40%;
+  }
+
+  .md\:right-40 {
+    right: 40%;
+  }
+
+  .md\:bottom-40 {
+    bottom: 40%;
+  }
+
+  .md\:left-40 {
+    left: 40%;
+  }
+
+  .md\:top-60 {
+    top: 60%;
+  }
+
+  .md\:right-60 {
+    right: 60%;
+  }
+
+  .md\:bottom-60 {
+    bottom: 60%;
+  }
+
+  .md\:left-60 {
+    left: 60%;
+  }
+
+  .md\:top-80 {
+    top: 80%;
+  }
+
+  .md\:right-80 {
+    right: 80%;
+  }
+
+  .md\:bottom-80 {
+    bottom: 80%;
+  }
+
+  .md\:left-80 {
+    left: 80%;
   }
 
   .md\:resize-none {
@@ -30659,6 +31148,10 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .md\:text-modalDimmer {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .md\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -31055,6 +31548,10 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .md\:hover\:text-modalDimmer:hover {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .md\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -31449,6 +31946,10 @@ video {
 
   .md\:focus\:text-greyBorder:focus {
     color: rgba(18, 39, 55, 0.11);
+  }
+
+  .md\:focus\:text-modalDimmer:focus {
+    color: rgba(0, 0, 0, 0.5);
   }
 
   .md\:text-xs {
@@ -32366,6 +32867,10 @@ video {
     background-color: rgba(18, 39, 55, 0.11);
   }
 
+  .lg\:bg-modalDimmer {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   .lg\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -32762,6 +33267,10 @@ video {
     background-color: rgba(18, 39, 55, 0.11);
   }
 
+  .lg\:hover\:bg-modalDimmer:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   .lg\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -33156,6 +33665,10 @@ video {
 
   .lg\:focus\:bg-greyBorder:focus {
     background-color: rgba(18, 39, 55, 0.11);
+  }
+
+  .lg\:focus\:bg-modalDimmer:focus {
+    background-color: rgba(0, 0, 0, 0.5);
   }
 
   .lg\:bg-bottom {
@@ -33634,6 +34147,10 @@ video {
     border-color: rgba(18, 39, 55, 0.11);
   }
 
+  .lg\:border-modalDimmer {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+
   .lg\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -34030,6 +34547,10 @@ video {
     border-color: rgba(18, 39, 55, 0.11);
   }
 
+  .lg\:hover\:border-modalDimmer:hover {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+
   .lg\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -34424,6 +34945,10 @@ video {
 
   .lg\:focus\:border-greyBorder:focus {
     border-color: rgba(18, 39, 55, 0.11);
+  }
+
+  .lg\:focus\:border-modalDimmer:focus {
+    border-color: rgba(0, 0, 0, 0.5);
   }
 
   .lg\:rounded-none {
@@ -38866,6 +39391,22 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .lg\:placeholder-modalDimmer::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .lg\:placeholder-modalDimmer::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .lg\:placeholder-modalDimmer::-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .lg\:placeholder-modalDimmer::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .lg\:focus\:placeholder-transparent:focus::-webkit-input-placeholder {
     color: transparent;
   }
@@ -40450,6 +40991,22 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .lg\:focus\:placeholder-modalDimmer:focus::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .lg\:focus\:placeholder-modalDimmer:focus::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .lg\:focus\:placeholder-modalDimmer:focus::-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .lg\:focus\:placeholder-modalDimmer:focus::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .lg\:pointer-events-none {
     pointer-events: none;
   }
@@ -40486,11 +41043,32 @@ video {
     left: 0;
   }
 
-  .lg\:inset-auto {
-    top: auto;
-    right: auto;
-    bottom: auto;
-    left: auto;
+  .lg\:inset-20 {
+    top: 20%;
+    right: 20%;
+    bottom: 20%;
+    left: 20%;
+  }
+
+  .lg\:inset-40 {
+    top: 40%;
+    right: 40%;
+    bottom: 40%;
+    left: 40%;
+  }
+
+  .lg\:inset-60 {
+    top: 60%;
+    right: 60%;
+    bottom: 60%;
+    left: 60%;
+  }
+
+  .lg\:inset-80 {
+    top: 80%;
+    right: 80%;
+    bottom: 80%;
+    left: 80%;
   }
 
   .lg\:inset-y-0 {
@@ -40503,14 +41081,44 @@ video {
     left: 0;
   }
 
-  .lg\:inset-y-auto {
-    top: auto;
-    bottom: auto;
+  .lg\:inset-y-20 {
+    top: 20%;
+    bottom: 20%;
   }
 
-  .lg\:inset-x-auto {
-    right: auto;
-    left: auto;
+  .lg\:inset-x-20 {
+    right: 20%;
+    left: 20%;
+  }
+
+  .lg\:inset-y-40 {
+    top: 40%;
+    bottom: 40%;
+  }
+
+  .lg\:inset-x-40 {
+    right: 40%;
+    left: 40%;
+  }
+
+  .lg\:inset-y-60 {
+    top: 60%;
+    bottom: 60%;
+  }
+
+  .lg\:inset-x-60 {
+    right: 60%;
+    left: 60%;
+  }
+
+  .lg\:inset-y-80 {
+    top: 80%;
+    bottom: 80%;
+  }
+
+  .lg\:inset-x-80 {
+    right: 80%;
+    left: 80%;
   }
 
   .lg\:top-0 {
@@ -40529,20 +41137,68 @@ video {
     left: 0;
   }
 
-  .lg\:top-auto {
-    top: auto;
+  .lg\:top-20 {
+    top: 20%;
   }
 
-  .lg\:right-auto {
-    right: auto;
+  .lg\:right-20 {
+    right: 20%;
   }
 
-  .lg\:bottom-auto {
-    bottom: auto;
+  .lg\:bottom-20 {
+    bottom: 20%;
   }
 
-  .lg\:left-auto {
-    left: auto;
+  .lg\:left-20 {
+    left: 20%;
+  }
+
+  .lg\:top-40 {
+    top: 40%;
+  }
+
+  .lg\:right-40 {
+    right: 40%;
+  }
+
+  .lg\:bottom-40 {
+    bottom: 40%;
+  }
+
+  .lg\:left-40 {
+    left: 40%;
+  }
+
+  .lg\:top-60 {
+    top: 60%;
+  }
+
+  .lg\:right-60 {
+    right: 60%;
+  }
+
+  .lg\:bottom-60 {
+    bottom: 60%;
+  }
+
+  .lg\:left-60 {
+    left: 60%;
+  }
+
+  .lg\:top-80 {
+    top: 80%;
+  }
+
+  .lg\:right-80 {
+    right: 80%;
+  }
+
+  .lg\:bottom-80 {
+    bottom: 80%;
+  }
+
+  .lg\:left-80 {
+    left: 80%;
   }
 
   .lg\:resize-none {
@@ -41085,6 +41741,10 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .lg\:text-modalDimmer {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .lg\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -41481,6 +42141,10 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .lg\:hover\:text-modalDimmer:hover {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .lg\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -41875,6 +42539,10 @@ video {
 
   .lg\:focus\:text-greyBorder:focus {
     color: rgba(18, 39, 55, 0.11);
+  }
+
+  .lg\:focus\:text-modalDimmer:focus {
+    color: rgba(0, 0, 0, 0.5);
   }
 
   .lg\:text-xs {
@@ -42792,6 +43460,10 @@ video {
     background-color: rgba(18, 39, 55, 0.11);
   }
 
+  .xl\:bg-modalDimmer {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   .xl\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -43188,6 +43860,10 @@ video {
     background-color: rgba(18, 39, 55, 0.11);
   }
 
+  .xl\:hover\:bg-modalDimmer:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   .xl\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -43582,6 +44258,10 @@ video {
 
   .xl\:focus\:bg-greyBorder:focus {
     background-color: rgba(18, 39, 55, 0.11);
+  }
+
+  .xl\:focus\:bg-modalDimmer:focus {
+    background-color: rgba(0, 0, 0, 0.5);
   }
 
   .xl\:bg-bottom {
@@ -44060,6 +44740,10 @@ video {
     border-color: rgba(18, 39, 55, 0.11);
   }
 
+  .xl\:border-modalDimmer {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+
   .xl\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -44456,6 +45140,10 @@ video {
     border-color: rgba(18, 39, 55, 0.11);
   }
 
+  .xl\:hover\:border-modalDimmer:hover {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+
   .xl\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -44850,6 +45538,10 @@ video {
 
   .xl\:focus\:border-greyBorder:focus {
     border-color: rgba(18, 39, 55, 0.11);
+  }
+
+  .xl\:focus\:border-modalDimmer:focus {
+    border-color: rgba(0, 0, 0, 0.5);
   }
 
   .xl\:rounded-none {
@@ -49292,6 +49984,22 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .xl\:placeholder-modalDimmer::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .xl\:placeholder-modalDimmer::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .xl\:placeholder-modalDimmer::-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .xl\:placeholder-modalDimmer::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .xl\:focus\:placeholder-transparent:focus::-webkit-input-placeholder {
     color: transparent;
   }
@@ -50876,6 +51584,22 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .xl\:focus\:placeholder-modalDimmer:focus::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .xl\:focus\:placeholder-modalDimmer:focus::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .xl\:focus\:placeholder-modalDimmer:focus::-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .xl\:focus\:placeholder-modalDimmer:focus::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .xl\:pointer-events-none {
     pointer-events: none;
   }
@@ -50912,11 +51636,32 @@ video {
     left: 0;
   }
 
-  .xl\:inset-auto {
-    top: auto;
-    right: auto;
-    bottom: auto;
-    left: auto;
+  .xl\:inset-20 {
+    top: 20%;
+    right: 20%;
+    bottom: 20%;
+    left: 20%;
+  }
+
+  .xl\:inset-40 {
+    top: 40%;
+    right: 40%;
+    bottom: 40%;
+    left: 40%;
+  }
+
+  .xl\:inset-60 {
+    top: 60%;
+    right: 60%;
+    bottom: 60%;
+    left: 60%;
+  }
+
+  .xl\:inset-80 {
+    top: 80%;
+    right: 80%;
+    bottom: 80%;
+    left: 80%;
   }
 
   .xl\:inset-y-0 {
@@ -50929,14 +51674,44 @@ video {
     left: 0;
   }
 
-  .xl\:inset-y-auto {
-    top: auto;
-    bottom: auto;
+  .xl\:inset-y-20 {
+    top: 20%;
+    bottom: 20%;
   }
 
-  .xl\:inset-x-auto {
-    right: auto;
-    left: auto;
+  .xl\:inset-x-20 {
+    right: 20%;
+    left: 20%;
+  }
+
+  .xl\:inset-y-40 {
+    top: 40%;
+    bottom: 40%;
+  }
+
+  .xl\:inset-x-40 {
+    right: 40%;
+    left: 40%;
+  }
+
+  .xl\:inset-y-60 {
+    top: 60%;
+    bottom: 60%;
+  }
+
+  .xl\:inset-x-60 {
+    right: 60%;
+    left: 60%;
+  }
+
+  .xl\:inset-y-80 {
+    top: 80%;
+    bottom: 80%;
+  }
+
+  .xl\:inset-x-80 {
+    right: 80%;
+    left: 80%;
   }
 
   .xl\:top-0 {
@@ -50955,20 +51730,68 @@ video {
     left: 0;
   }
 
-  .xl\:top-auto {
-    top: auto;
+  .xl\:top-20 {
+    top: 20%;
   }
 
-  .xl\:right-auto {
-    right: auto;
+  .xl\:right-20 {
+    right: 20%;
   }
 
-  .xl\:bottom-auto {
-    bottom: auto;
+  .xl\:bottom-20 {
+    bottom: 20%;
   }
 
-  .xl\:left-auto {
-    left: auto;
+  .xl\:left-20 {
+    left: 20%;
+  }
+
+  .xl\:top-40 {
+    top: 40%;
+  }
+
+  .xl\:right-40 {
+    right: 40%;
+  }
+
+  .xl\:bottom-40 {
+    bottom: 40%;
+  }
+
+  .xl\:left-40 {
+    left: 40%;
+  }
+
+  .xl\:top-60 {
+    top: 60%;
+  }
+
+  .xl\:right-60 {
+    right: 60%;
+  }
+
+  .xl\:bottom-60 {
+    bottom: 60%;
+  }
+
+  .xl\:left-60 {
+    left: 60%;
+  }
+
+  .xl\:top-80 {
+    top: 80%;
+  }
+
+  .xl\:right-80 {
+    right: 80%;
+  }
+
+  .xl\:bottom-80 {
+    bottom: 80%;
+  }
+
+  .xl\:left-80 {
+    left: 80%;
   }
 
   .xl\:resize-none {
@@ -51511,6 +52334,10 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .xl\:text-modalDimmer {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .xl\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -51907,6 +52734,10 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .xl\:hover\:text-modalDimmer:hover {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .xl\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -52301,6 +53132,10 @@ video {
 
   .xl\:focus\:text-greyBorder:focus {
     color: rgba(18, 39, 55, 0.11);
+  }
+
+  .xl\:focus\:text-modalDimmer:focus {
+    color: rgba(0, 0, 0, 0.5);
   }
 
   .xl\:text-xs {

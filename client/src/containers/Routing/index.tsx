@@ -16,6 +16,7 @@ import Profile from 'containers/Profile';
 import MyTeam from 'containers/MyTeam';
 import Transfers from 'containers/Transfers';
 import Live from 'containers/Live';
+import TeamSelection from 'containers/TeamSelection';
 
 import Leagues from 'containers/Leagues';
 import CreateLeague from 'components/Leagues/CreateLeague';
@@ -39,15 +40,14 @@ const Routing = () => {
   if (isLoading) {
     return <Spinner />;
   }
-  
+
   return (
     <div className='flex h-screen'>
       <div className='flex-none h-full'>{isAuthorized && <Sidebar />}</div>
       <div className='flex-1 bg-background h-full overflow-y-auto'>
         {isAuthorized && <Header />}
-        <main className='mx-16 -mt-32'>
+        <main className='mx-16 mt-24'>
           <Switch>
-
             <Route path='/login' component={LoginPage} />
             <Route path='/registration' component={RegistrationPage} />
             <Route path='/profile' component={Profile} />
@@ -56,6 +56,7 @@ const Routing = () => {
 
             <Route path='/my-team' component={MyTeam} />
             <Route path='/live' component={Live} />
+            <Route path='/team-selection' component={TeamSelection} />
 
             <Route path='/players' exact component={Players} />
 

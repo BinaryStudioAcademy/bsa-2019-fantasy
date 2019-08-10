@@ -10,6 +10,7 @@ const Header = () => {
     { name: 'Players', link: '/players' },
     { name: 'Transfers', link: '/transfers' },
     { name: 'Fixtures', link: '/fixtures' },
+    { name: 'Team selection', link: '/team-selection' },
   ];
 
   return (
