@@ -26,7 +26,8 @@ class ResetPasswordForm extends Component<
   passwordChanged = (password: string) =>
     this.setState({ password, isPasswordValid: true });
 
-  handleSubmit = async () => {
+  handleSubmit = async (event: React.SyntheticEvent) => {
+    event.preventDefault();
     const { password } = this.state;
     const { id } = this.props.match.params;
 
@@ -39,7 +40,7 @@ class ResetPasswordForm extends Component<
   };
 
   render() {
-    const { isPasswordValid } = this.state;
+    const { isPasswordValid, password } = this.state;
 
     return (
       <form className='w-full max-w-lg' onSubmit={this.handleSubmit}>
@@ -47,9 +48,9 @@ class ResetPasswordForm extends Component<
           <div className='w-full px-3'>
             <label
               className='block uppercase text-gray-700 text-xs font-bold mb-2'
-              htmlFor='league-name'
+              htmlFor='password'
             >
-              Name
+              New Password
             </label>
             <input
               className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
@@ -62,10 +63,11 @@ class ResetPasswordForm extends Component<
         </div>
         <button
           type='submit'
-          className='font-medium py-2 px-4 border sign-up-btn'
+          className={`shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${!password &&
+            'opacity-50 cursor-not-allowed'}`}
           disabled={!isPasswordValid}
         >
-          Reset Password
+          Change Password
         </button>
       </form>
     );
