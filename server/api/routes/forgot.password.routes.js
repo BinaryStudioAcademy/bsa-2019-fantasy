@@ -66,4 +66,46 @@ router.post('/', (req, res, next) => {
   );
 });
 
+router.post('/:id', (req, res) => {
+  async.waterfall([
+    function(done) {
+      userService.getUserById(req.params.id).then(user => {
+        if (!user) {
+          console.log('error');
+        }
+        // TODO: add changing password to a new one
+
+        let smtpTransport = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: 'fantasy.league.noreply@gmail.com',
+            pass: '1223334444fantasy'
+          },
+          tls: {
+            rejectUnauthorized: false
+          }
+        });
+
+        const mailOptions = {
+          to: user.email,
+          from: 'passwordreset@demo.com',
+          subject: 'Your password has been changed',
+          text:
+            'Hello,\n\n' +
+            'This is a confirmation that the password for your account ' +
+            user.email +
+            ' has just been changed.\n'
+        };
+        smtpTransport.sendMail(mailOptions, function(err) {
+          res.json({
+            status: 'success',
+            message: 'Success! Your password has been changed.'
+          });
+          done(err, 'done');
+        });
+      });
+    }
+  ]);
+});
+
 export default router;
