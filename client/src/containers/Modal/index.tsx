@@ -17,12 +17,14 @@ class Modal extends React.Component<Props> {
       <div>
         <div
           className='dimmer flex absolute inset-0 bg-modalDimmer'
-          onClick={this.props.onDismiss /* eslint-disable-line */}
+          onClick={this.props.onDismiss}
+          tabIndex={-1}
           role='presentation'
         >
           <form
             className='modal m-auto max-w-full max-h-full bg-white'
             onClick={(e) => e.stopPropagation()}
+            role='presentation'
           >
             <div className='header'>
               <h3>{this.props.title}</h3>
