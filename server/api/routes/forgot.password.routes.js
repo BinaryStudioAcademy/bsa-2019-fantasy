@@ -3,6 +3,7 @@ import nodemailer from 'nodemailer';
 import async from 'async';
 import crypto from 'crypto';
 import * as userService from '../services/user.service';
+import * as passwordService from '../services/password.service';
 
 const router = Router();
 /* eslint-disable */
@@ -71,38 +72,45 @@ router.post('/:id', (req, res) => {
     function(done) {
       userService.getUserById(req.params.id).then(user => {
         if (!user) {
-          console.log('error');
+          res.status(400).json({ message: 'Something went wrong!' });
         }
-        // TODO: add changing password to a new one
 
-        let smtpTransport = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: 'fantasy.league.noreply@gmail.com',
-            pass: '1223334444fantasy'
-          },
-          tls: {
-            rejectUnauthorized: false
-          }
-        });
+        userService
+          .updateUserPassword(user.id, req.body.password)
+          .then(data => {
+            if (data) {
+              let smtpTransport = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                  user: 'fantasy.league.noreply@gmail.com',
+                  pass: '1223334444fantasy'
+                },
+                tls: {
+                  rejectUnauthorized: false
+                }
+              });
 
-        const mailOptions = {
-          to: user.email,
-          from: 'passwordreset@demo.com',
-          subject: 'Your password has been changed',
-          text:
-            'Hello,\n\n' +
-            'This is a confirmation that the password for your account ' +
-            user.email +
-            ' has just been changed.\n'
-        };
-        smtpTransport.sendMail(mailOptions, function(err) {
-          res.json({
-            status: 'success',
-            message: 'Success! Your password has been changed.'
+              const mailOptions = {
+                to: user.email,
+                from: 'passwordreset@demo.com',
+                subject: 'Your password has been changed',
+                text:
+                  'Hello,\n\n' +
+                  'This is a confirmation that the password for your account ' +
+                  user.email +
+                  ' has just been changed.\n'
+              };
+              smtpTransport.sendMail(mailOptions, function(err) {
+                res.json({
+                  status: 'success',
+                  message: 'Success! Your password has been changed.'
+                });
+                done(err, 'done');
+              });
+            } else {
+              res.status(400).json({ message: 'Something went wrong!' });
+            }
           });
-          done(err, 'done');
-        });
       });
     }
   ]);
