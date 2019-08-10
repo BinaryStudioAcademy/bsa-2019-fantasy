@@ -4,6 +4,7 @@ export default class BaseRepository {
     }
 
     getAll() {
+        console.log(this.model);
         return this.model.findAll();
     }
 
@@ -26,6 +27,7 @@ export default class BaseRepository {
     }
 
     deleteById(id) {
+        console.log(id);
         return this.model.destroy({
             where: { id }
         });
