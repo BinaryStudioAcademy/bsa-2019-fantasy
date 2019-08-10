@@ -11,6 +11,7 @@ import PrivateRoute from 'containers/PrivateRoute';
 
 import LoginPage from 'containers/Auth/Login/LoginPage';
 import RegistrationPage from 'containers/Auth/Registration/RegistrationPage';
+import Profile from 'containers/Profile';
 
 import MyTeam from 'containers/MyTeam';
 import Transfers from 'containers/Transfers';
@@ -48,12 +49,15 @@ const Routing = () => {
           <Switch>
             <Route path='/login' component={LoginPage} />
             <Route path='/registration' component={RegistrationPage} />
+            <Route path='/profile' component={Profile} />
 
             <Route path='/' exact component={Test} />
 
             <Route path='/my-team' component={MyTeam} />
             <Route path='/live' component={Live} />
+
             <Route path='/players' exact component={Players} />
+
             <Route path='/transfers' exact component={Transfers} />
             <Route path='/fixtures' exact component={Fixtures} />
 

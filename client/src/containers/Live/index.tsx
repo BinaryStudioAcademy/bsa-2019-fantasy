@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
+import Modal from 'containers/Modal';
 import { testAction } from './actions';
 import { RootState } from 'store/types';
 
@@ -17,9 +18,20 @@ class Live extends React.Component<Props> {
     testRes: 'not received yet',
   };
 
+  state = {
+    isModalActive: false,
+  };
+
   componentDidMount() {
     //this.props.testAction();
   }
+
+  showModal = () => {
+    this.setState({ isModalActive: true });
+  };
+  onModalDismiss = () => {
+    this.setState({ isModalActive: false });
+  };
 
   render() {
     const { testRes } = this.props;
@@ -27,6 +39,16 @@ class Live extends React.Component<Props> {
       <div className='h-64 bg-white shadow rounded-sm p-12'>
         Live page <br />
         The test result is: {testRes}
+        <button className='bg-primary rounded mx-5' onClick={this.showModal}>
+          Show modal
+        </button>
+        {this.state.isModalActive && (
+          <Modal
+            title='Modal Title'
+            content='Test modal text'
+            onDismiss={this.onModalDismiss}
+          />
+        )}
       </div>
     );
   }

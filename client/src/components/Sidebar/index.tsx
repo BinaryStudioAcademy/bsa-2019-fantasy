@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faStar,
@@ -48,8 +48,10 @@ const Sidebar = () => {
       onClick={toggleOpened}
     >
       <div className='item'>Logo</div>
-      <div className='mt-32'>Avatar</div>
-      <div>User</div>
+      <Link className='mt-32' to='/profile' onClick={noPropagation}>
+        Avatar
+        {isOpened && <>User</>}
+      </Link>
       <div>Points</div>
       <div className='menu mt-16'>
         {menuItems.map(({ name, icon, link }) => (
