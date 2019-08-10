@@ -218,7 +218,7 @@ export default {
             type: Sequelize.ENUM(
               'goal',
               'assist',
-              'missed_passes',
+              'missed_pass',
               'goal_conceded',
               'save',
               'yellow_card',
@@ -359,10 +359,6 @@ export default {
             type: Sequelize.INTEGER
           },
           played: {
-            allowNull: false,
-            type: Sequelize.INTEGER
-          },
-          code: {
             allowNull: false,
             type: Sequelize.INTEGER
           },
