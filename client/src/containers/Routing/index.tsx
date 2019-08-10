@@ -27,7 +27,7 @@ import Players from 'containers/Players';
 import Header from 'components/Header';
 import Sidebar from 'components/Sidebar';
 import Spinner from 'components/Spinner';
-import ForgotPassword from 'containers/Auth/ForgotPassword/ForgotPassword';
+import ForgotPassword from 'containers/ChangePassword/ForgotPassword';
 
 const Routing = () => {
   const dispatch = useDispatch();

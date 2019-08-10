@@ -1,9 +1,7 @@
 import React from 'react';
 
-import ForgotPasswordForm from 'components/AuthForms/ForgotPasswordForm';
-
-import '../styles.scss';
-
+import ForgotPasswordForm from 'components/ChangePasswordForms/ForgotPasswordForm';
+ 
 const ForgotPassword = () => {
   return (
     <div className='flex w-full h-full md:flex-row-reverse flex-wrap login-container'>
