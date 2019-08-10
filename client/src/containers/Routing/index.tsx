@@ -27,6 +27,7 @@ import Players from 'containers/Players';
 import Header from 'components/Header';
 import Sidebar from 'components/Sidebar';
 import Spinner from 'components/Spinner';
+import ForgotPassword from 'containers/Auth/ForgotPassword/ForgotPassword';
 
 const Routing = () => {
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ const Routing = () => {
           <Switch>
             <Route path='/login' component={LoginPage} />
             <Route path='/registration' component={RegistrationPage} />
+            <Route path='/forgot' component={ForgotPassword} />
             <Route path='/profile' component={Profile} />
 
             <Route path='/' exact component={Test} />
