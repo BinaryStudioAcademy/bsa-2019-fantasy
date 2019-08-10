@@ -17,7 +17,7 @@ const ForgotPassword = () => {
         <div className='lables pl-10 mt-48 mb-6'>
           <h2 className='side-lable'>Changing password</h2>
           <h3 className='side-lable side-lable-small'>
-            Please type your e-mail below. We&aposll send you a letter with further
+            Please type your e-mail below. We&apos;ll send you a letter with further
             instructions
           </h3>
         </div>
