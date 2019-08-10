@@ -1,0 +1,105 @@
+.leagues {
+    .tables {
+        display: grid;
+        grid-template: 'private public' 'global global';
+        grid-template-columns: repeat(2, minmax(450px, 1fr));
+
+        @media screen and (max-width: 1023px) {
+            grid-template: 'private' 'public' 'global';
+            grid-template-columns: 100%;
+        }
+
+        .table-title {
+            font-size: 12px; 
+        }
+
+        .movement {
+            &.up {
+                svg {
+                    fill:  #1EE3CF;
+                }
+            }
+
+            &.down {
+                svg {
+                    fill: #FF482F;
+                }
+            }
+        } 
+
+        .ReactTable {
+            border: none;
+            font-size: 13px;
+
+           .rt-thead.-header {
+                border-bottom: 1px solid rgba(0,0,0,0.1);
+                box-shadow: none;
+            }
+
+            .rt-thead .rt-th {
+                border-right: none;
+            }
+
+            .rt-tbody .rt-td {
+                border-right: none;
+            }
+        }
+    }
+
+    .players {
+        margin-bottom: -60px;
+
+        img {
+            max-height: 400px;
+
+            &:last-child {
+                margin-left: -55px;
+            }
+
+            @media screen and (max-width: 1023px) {
+                display: none;
+            }
+        }
+    }
+}
+
+.paper {
+    background-color: #fff;
+    box-shadow: 0px 0px 19px rgba(0, 0, 0, 0.08);
+    padding: 60px 50px;
+
+    @media screen and (max-width: 374px) {
+        padding: 60px 30px;
+    }
+}
+
+.jumbotron {
+    &.paper {
+        min-height: 250px;
+    }
+
+    .title {
+        font-size: 60px;
+        line-height: 65px;
+        font-weight: 600;
+
+        &.sub {
+            font-size: 14px;
+            line-height: 20px;
+            color: rgba(18, 39, 55, 0.7);
+
+            svg {
+                font-size: 18px;
+                margin-right: 5px;
+            }
+        }
+    }
+
+    a {
+        transition: 0.2s;
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 16px;
+        text-transform: uppercase;
+    }
+}

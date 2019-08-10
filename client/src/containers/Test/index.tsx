@@ -5,7 +5,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { testAction } from './actions';
 import { RootState } from 'store/types';
 
-import styles from './styles.module.scss';
+//import styles from "./styles.module.scss";
 
 type Props = {
     testRes: string;
@@ -24,7 +24,7 @@ class Test extends React.Component<Props> {
     render() {
         const { testRes } = this.props;
         return (
-            <div className={styles.test}>
+            <div className='h-64 bg-white shadow rounded-sm p-12'>
                 Welcome to our React app! <br />
                 The test result is: {testRes}
             </div>
@@ -44,5 +44,5 @@ const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, d
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
 )(Test);
