@@ -1,9 +1,5 @@
 import callWebApi from 'helpers/webApiHelper';
-import {
-  LoginCredentials,
-  RegisterCredentials,
-  ForgotPasswordCredentials,
-} from 'types/auth.types';
+import { LoginCredentials, RegisterCredentials } from 'types/auth.types';
 import { User } from 'types/user.type';
 
 export const login = async (request: LoginCredentials) => {
@@ -34,13 +30,4 @@ export const getCurrentUser = async (): Promise<User | null> => {
   } catch (e) {
     return null;
   }
-};
-
-export const forgotPassword = async (request: ForgotPasswordCredentials) => {
-  const response = await callWebApi({
-    endpoint: '/api/forgot',
-    type: 'POST',
-    request,
-  });
-  return response.json();
 };

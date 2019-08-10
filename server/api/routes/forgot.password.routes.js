@@ -75,7 +75,7 @@ router.post('/:id', (req, res) => {
           res.status(400).json({ message: 'Something went wrong!' });
         }
 
-        userService
+        passwordService
           .updateUserPassword(user.id, req.body.password)
           .then(data => {
             if (data) {

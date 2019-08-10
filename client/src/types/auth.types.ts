@@ -12,7 +12,3 @@ export type RegisterCredentials = {
 export type LoginFormProps = {
   location: string;
 };
-
-export type ForgotPasswordCredentials = {
-  email: string;
-};
