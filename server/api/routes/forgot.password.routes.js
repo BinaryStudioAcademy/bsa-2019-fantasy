@@ -57,7 +57,7 @@ router.post('/', (req, res, next) => {
             });
             done(err, 'done');
           });
-        });
+        }).catch(err => next(err));
       }
     ],
     err => {

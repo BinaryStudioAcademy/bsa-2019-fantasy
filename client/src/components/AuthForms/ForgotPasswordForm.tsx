@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import validator from 'validator';
 
-class ForgotPasswordForm extends Component<{}, { email: string; isEmailValid: boolean }> {
+import { forgotPassword } from 'containers/Profile/actions';
+import { ForgotPasswordCredentials } from 'types/forgot.password.types';
+
+type ActionType = (props: ForgotPasswordCredentials) => Promise<any>;
+class ForgotPasswordForm extends Component<
+  // TODO: change prop types
+  any,
+  { email: string; isEmailValid: boolean; isLoading: boolean }
+> {
   state = {
     email: '',
+    isLoading: false,
     isEmailValid: true,
   };
 
@@ -16,10 +27,21 @@ class ForgotPasswordForm extends Component<{}, { email: string; isEmailValid: bo
 
   emailChanged = (email: string) => this.setState({ email, isEmailValid: true });
 
-  handleSubmit = (event: React.SyntheticEvent) => {
+  handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    const { email } = this.state;
-    console.log('sent');
+    const { isLoading, isEmailValid, email } = this.state;
+    if (!isEmailValid || isLoading) {
+      return;
+    }
+    this.setState({ isLoading: true });
+    // TODO: show loading
+    try {
+      await this.props.forgotPassword({ email });
+    } catch {
+      this.setState({ isLoading: false });
+      // TODO: show error
+      console.log('Something went wrong');
+    }
   };
 
   render() {
@@ -45,4 +67,11 @@ class ForgotPasswordForm extends Component<{}, { email: string; isEmailValid: bo
   }
 }
 
-export default ForgotPasswordForm;
+const actions = { forgotPassword };
+//TODO: fix any type
+const mapDispatchToProps = (dispatch: any) => bindActionCreators(actions, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(ForgotPasswordForm);
