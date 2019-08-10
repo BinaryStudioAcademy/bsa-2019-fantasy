@@ -1,10 +1,10 @@
 import React from 'react';
-import ReactDropdown from 'react-dropdown';
+import ReactDropdown, { ReactDropdownProps } from 'react-dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import './styles.scss';
 
-const Dropdown = (props: any) => (
+const Dropdown = (props: ReactDropdownProps) => (
   <ReactDropdown
     className='bg-white font-semibold text-sm rounded border border-greyBorder relative'
     controlClassName='flex items-baseline cursor-pointer px-6 py-2'

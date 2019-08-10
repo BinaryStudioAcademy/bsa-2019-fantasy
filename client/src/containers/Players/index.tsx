@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import PlayerHighlight from 'components/PlayerHighlight';
 import Dropdown from 'components/Dropdown';
+import { Option } from 'react-dropdown';
 
 import './styles.scss';
 
@@ -22,7 +23,7 @@ const PlayersPage = () => {
     },
   ];
 
-  const onFilterChange = (e: any) => console.log(e);
+  const onFilterChange = (opt: Option) => console.log(opt);
 
   const renderColumn = () => (
     <div className='columnByScore w-1/4 p-6'>
@@ -30,7 +31,7 @@ const PlayersPage = () => {
         All Players
       </div>
       {allPlayers.map((player) => (
-        <div className='item flex items-center my-3'>
+        <div className='item flex items-center my-3' key={player.name}>
           <img className='w-5 mr-4' src={player.shirt} alt='Shirt' />
           <Link className='mr-4 font-semibold' to='#'>
             {player.name}
@@ -76,9 +77,9 @@ const PlayersPage = () => {
 
       <section className='allStats my-6'>
         <div className='filters flex my-6'>
-          {dropdownFilters.map((filter) => (
-            <div className='w-1/4 flex'>
-              <Dropdown {...filter} placeholder={filter.name} />
+          {dropdownFilters.map(({ name, options, onChange }) => (
+            <div className='w-1/4 flex' key={name}>
+              <Dropdown {...{ placeholder: name, options, onChange }} />
             </div>
           ))}
         </div>
