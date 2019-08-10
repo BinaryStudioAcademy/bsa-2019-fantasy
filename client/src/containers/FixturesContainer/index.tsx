@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
 import { testAction } from './actions';
 import { RootState } from 'store/types';
+
+import Fixtures from 'components/Fixtures/Fixtures';
 
 //import styles from "./styles.module.scss";
 
@@ -12,25 +14,17 @@ type Props = {
   testAction: typeof testAction;
 };
 
-class Fixtures extends React.Component<Props> {
-  static defaultProps = {
-    testRes: 'not received yet',
-  };
+const FixturesContainer = () => {
+  const [gameweekId, setGameweekId] = useState(1);
 
-  componentDidMount() {
-    //this.props.testAction();
-  }
-
-  render() {
-    const { testRes } = this.props;
-    return (
-      <div className='h-64 bg-white shadow rounded-sm p-12'>
-        Fixtures page <br />
-        The test result is: {testRes}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <button className='btn'>Prev</button>
+      <button className='btn'>Next</button>
+      <Fixtures />
+    </div>
+  );
+};
 
 const mapStateToProps = (rootState: RootState) => ({
   testRes: rootState.test.testRes,
@@ -45,4 +39,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, d
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Fixtures);
+)(FixturesContainer);

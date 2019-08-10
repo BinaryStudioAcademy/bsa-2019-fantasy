@@ -21,7 +21,7 @@ import Leagues from 'containers/Leagues';
 import CreateLeague from 'components/Leagues/CreateLeague';
 import JoinLeague from 'components/Leagues/JoinLeague';
 
-import Fixtures from 'components/Fixtures/Fixtures';
+import FixturesContainer from 'containers/FixturesContainer';
 import Players from 'containers/Players';
 
 import Header from 'components/Header';
@@ -39,7 +39,7 @@ const Routing = () => {
   if (isLoading) {
     return <Spinner />;
   }
-  
+
   return (
     <div className='flex h-screen'>
       <div className='flex-none h-full'>{isAuthorized && <Sidebar />}</div>
@@ -47,7 +47,6 @@ const Routing = () => {
         {isAuthorized && <Header />}
         <main className='mx-16 -mt-32'>
           <Switch>
-
             <Route path='/login' component={LoginPage} />
             <Route path='/registration' component={RegistrationPage} />
             <Route path='/profile' component={Profile} />
@@ -60,7 +59,7 @@ const Routing = () => {
             <Route path='/players' exact component={Players} />
 
             <Route path='/transfers' exact component={Transfers} />
-            <Route path='/fixtures' exact component={Fixtures} />
+            <Route path='/fixtures' exact component={FixturesContainer} />
 
             <Route path='/leagues' exact component={Leagues} />
             <Route path='/leagues/create' component={CreateLeague} />
