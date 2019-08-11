@@ -15,7 +15,7 @@ export const forgotPassword = async (request: ForgotPasswordCredentials) => {
 
 export const resetPassword = async (request: ResetPasswordCredentials) => {
   const response = await callWebApi({
-    endpoint: `/forgot/${request.id}`,
+    endpoint: `/api/forgot/${request.id}`,
     type: 'POST',
     request,
   });

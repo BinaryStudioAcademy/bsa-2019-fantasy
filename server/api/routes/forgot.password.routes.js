@@ -17,47 +17,50 @@ router.post('/', (req, res, next) => {
         });
       },
       function(token, done) {
-        userService.getUserByEmail(req.body.email).then(user => {
-          if (!user) {
-            return res.redirect('/forgot');
-          }
-
-          let smtpTransport = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-              user: 'fantasy.league.noreply@gmail.com',
-              pass: '1223334444fantasy'
-            },
-            tls: {
-              rejectUnauthorized: false
+        userService
+          .getUserByEmail(req.body.email)
+          .then(user => {
+            if (!user) {
+              return res.redirect('/forgot');
             }
-          });
 
-          const mailOptions = {
-            to: user.email,
-            from: 'passwordreset@demo.com',
-            subject: 'Password Reset',
-            text:
-              'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-              'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-              'http://' +
-              req.headers['x-forwarded-host'] +
-              '/reset/' +
-              user.id +
-              '\n\n' +
-              'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-          };
-          smtpTransport.sendMail(mailOptions, function(err) {
-            res.json({
-              status: 'success',
-              message:
-                'An e-mail has been sent to ' +
-                user.email +
-                ' with further instructions.'
+            let smtpTransport = nodemailer.createTransport({
+              service: 'gmail',
+              auth: {
+                user: 'fantasy.league.noreply@gmail.com',
+                pass: '1223334444fantasy'
+              },
+              tls: {
+                rejectUnauthorized: false
+              }
             });
-            done(err, 'done');
-          });
-        }).catch(err => next(err));
+
+            const mailOptions = {
+              to: user.email,
+              from: 'passwordreset@demo.com',
+              subject: 'Password Reset',
+              text:
+                'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                'http://' +
+                req.headers['x-forwarded-host'] +
+                '/reset/' +
+                user.id +
+                '\n\n' +
+                'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+            };
+            smtpTransport.sendMail(mailOptions, function(err) {
+              res.json({
+                status: 'success',
+                message:
+                  'An e-mail has been sent to ' +
+                  user.email +
+                  ' with further instructions.'
+              });
+              done(err, 'done');
+            });
+          })
+          .catch(err => next(err));
       }
     ],
     err => {
@@ -70,48 +73,53 @@ router.post('/', (req, res, next) => {
 router.post('/:id', (req, res) => {
   async.waterfall([
     function(done) {
-      userService.getUserById(req.params.id).then(user => {
-        if (!user) {
-          res.status(400).json({ message: 'Something went wrong!' });
-        }
+      userService
+        .getUserById(req.params.id)
+        .then(user => {
+          if (!user) {
+            res.status(400).json({ message: 'Something went wrong!' });
+          }
 
-        passwordService
-          .updateUserPassword(user.id, req.body.password)
-          .then(data => {
-            if (data) {
-              let smtpTransport = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                  user: 'fantasy.league.noreply@gmail.com',
-                  pass: '1223334444fantasy'
-                },
-                tls: {
-                  rejectUnauthorized: false
-                }
-              });
-
-              const mailOptions = {
-                to: user.email,
-                from: 'passwordreset@demo.com',
-                subject: 'Your password has been changed',
-                text:
-                  'Hello,\n\n' +
-                  'This is a confirmation that the password for your account ' +
-                  user.email +
-                  ' has just been changed.\n'
-              };
-              smtpTransport.sendMail(mailOptions, function(err) {
-                res.json({
-                  status: 'success',
-                  message: 'Success! Your password has been changed.'
+          passwordService
+            .updateUserPassword(user.id, req.body.password)
+            .then(data => {
+              if (data) {
+                let smtpTransport = nodemailer.createTransport({
+                  service: 'gmail',
+                  auth: {
+                    user: 'fantasy.league.noreply@gmail.com',
+                    pass: '1223334444fantasy'
+                  },
+                  tls: {
+                    rejectUnauthorized: false
+                  }
                 });
-                done(err, 'done');
-              });
-            } else {
-              res.status(400).json({ message: 'Something went wrong!' });
-            }
-          });
-      });
+
+                const mailOptions = {
+                  to: user.email,
+                  from: 'passwordreset@demo.com',
+                  subject: 'Your password has been changed',
+                  text:
+                    'Hello,\n\n' +
+                    'This is a confirmation that the password for your account ' +
+                    user.email +
+                    ' has just been changed.\n'
+                };
+                smtpTransport.sendMail(mailOptions, function(err) {
+                  res.json({
+                    status: 'success',
+                    message: 'Success! Your password has been changed.'
+                  });
+                  done(err, 'done');
+                });
+              } else {
+                res.status(400).json({ message: 'Something went wrong!' });
+              }
+            });
+        })
+        .catch(err => {
+          res.status(400).json({ message: 'Something went wrong!' });
+        });
     }
   ]);
 });
