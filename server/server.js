@@ -5,6 +5,7 @@ import path from 'path';
 import passport from 'passport';
 import http from 'http';
 import socketIO from 'socket.io';
+import socketIOClient from 'socket.io-client';
 
 import routes from './api/routes/index';
 // import authorizationMiddleware from './api/middlewares/authorization.middleware';
@@ -23,14 +24,26 @@ const app = express();
 const socketServer = http.Server(app);
 const io = socketIO(socketServer);
 
+const fakerSocket = socketIOClient.connect(`http://localhost:${process.env.FAKER_SOCKET_PORT}`, { reconnection: true });
+
+fakerSocket.on('connect', () => {
+  // eslint-disable-next-line no-console
+  console.log('connected');
+
+  fakerSocket.on('someEvent', (data) => {
+    // eslint-disable-next-line no-console
+    console.log('Received data from faker ', data.success);
+  });
+});
+
 sequelize
-    .authenticate()
-    .then(() => {
-        console.log('Connection has been established successfully.');
-    })
-    .catch((err) => {
-        console.error('Unable to connect to the database:', err);
-    });
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch((err) => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 io.on('connection', socketHandlers);
 
@@ -40,7 +53,7 @@ app.use(passport.initialize());
 
 app.use(socketInjector(io));
 
-// app.use("/api/", authorizationMiddleware(routesWhiteList));
+// app.use('/api/', authorizationMiddleware(routesWhiteList));
 
 routes(app, io);
 
@@ -48,14 +61,14 @@ const staticPath = path.resolve(`${__dirname}/../client/build`);
 app.use(express.static(staticPath));
 
 app.get('*', (req, res) => {
-    res.write(fs.readFileSync(`${__dirname}/../client/build/index.html`));
-    res.end();
+  res.write(fs.readFileSync(`${__dirname}/../client/build/index.html`));
+  res.end();
 });
 
 app.use(errorHandlerMiddleware);
 app.listen(process.env.APP_PORT, () => {
-    // eslint-disable-next-line no-console
-    console.log(`Server listening on port ${process.env.APP_PORT}!`);
+  // eslint-disable-next-line no-console
+  console.log(`Server listening on port ${process.env.APP_PORT}!`);
 });
 
 socketServer.listen(process.env.SOCKET_PORT);

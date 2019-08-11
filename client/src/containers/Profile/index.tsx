@@ -1,6 +1,7 @@
 import cn from 'classnames';
 import React from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { useTranslation } from 'react-i18next';
 
 import { useSteps } from 'helpers/hooks/steps.hook';
 
@@ -12,6 +13,7 @@ import Progress from './components/Progress';
 import styles from './styles.module.scss';
 
 const Profile = () => {
+  const { t } = useTranslation();
   const { step, nextStep, prevStep, navToStep } = useSteps(3);
 
   let content;

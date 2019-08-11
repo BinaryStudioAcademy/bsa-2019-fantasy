@@ -1,6 +1,11 @@
 import * as authService from 'services/authService';
+import * as forgotPasswordService from 'services/forgotPasswordService';
 import { User } from 'types/user.type';
 import { LoginCredentials, RegisterCredentials } from 'types/auth.types';
+import {
+  ForgotPasswordCredentials,
+  ResetPasswordCredentials,
+} from 'types/forgot.password.types';
 
 import { SET_USER, SET_IS_LOADING, AsyncUserAction, UserAction } from './action.type';
 
@@ -38,6 +43,16 @@ export const login = (request: LoginCredentials) =>
 
 export const registration = (request: RegisterCredentials) =>
   handleAuthResponse(authService.registration(request));
+
+export const forgotPassword = (request: ForgotPasswordCredentials) => async () => {
+  const result = await forgotPasswordService.forgotPassword(request);
+  return result;
+};
+
+export const resetPassword = (request: ResetPasswordCredentials) => async () => {
+  const result = await forgotPasswordService.resetPassword(request);
+  return result;
+};
 
 export const logout = () => setAuthData();
 

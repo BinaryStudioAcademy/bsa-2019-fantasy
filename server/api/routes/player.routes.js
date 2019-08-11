@@ -6,7 +6,7 @@ const router = Router();
 router
     .get('/', (req, res, next) =>
         playerService
-            .getPlayers()
+            .getPlayers(req.query)
             .then(value => res.json(value))
             .catch(next)
     )

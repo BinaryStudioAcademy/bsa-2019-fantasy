@@ -29,6 +29,9 @@ import Spinner from 'components/Spinner';
 import Profile from 'containers/Profile';
 import { loadCurrentUser } from 'containers/Profile/actions';
 
+import ForgotPassword from 'containers/ChangePassword/ForgotPassword';
+import ResetPassword from 'containers/ChangePassword/ResetPassword';
+
 const Routing = () => {
   const dispatch = useDispatch();
   const { isLoading, isAuthorized } = useSelector((state: RootState) => state.profile);
@@ -53,6 +56,9 @@ const Routing = () => {
             <Route path='/login' component={LoginPage} />
             <Route path='/registration' component={RegistrationPage} />
             <Route path='/profile' component={Profile} />
+
+            <Route path='/forgot' component={ForgotPassword} />
+            <Route path='/reset/:id' component={ResetPassword} />
 
             <Route path='/my-team' component={MyTeam} />
             <Route path='/live' component={Live} />
