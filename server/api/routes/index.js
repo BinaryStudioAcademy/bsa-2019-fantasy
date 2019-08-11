@@ -20,7 +20,7 @@ export default (app) => {
   app.use('/api/seasons', seasonRoutes);
   app.use('/api/gameweeks', gameweekRoutes);
   app.use('/api/league-participants', leagueParticipantRoutes);
-  app.use('/api/teams', footballClubRoutes);
+  app.use('/api/clubs', footballClubRoutes);
   app.use('/api/player-match-stats', playerMatchRoutes);
   app.use('/api/leagues', leagueRoutes);
   app.use('/api/gameweek-history', gameweekHistoryRoutes);
