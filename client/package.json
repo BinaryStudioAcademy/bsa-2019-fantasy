@@ -89,7 +89,7 @@
     }
   },
   "lint-staged": {
-    "foo/**/*.(ts(x)?|js(x)?)": [
+    "src/**/*.(ts(x)?|js(x)?)": [
       "eslint_d --quiet --fix",
       "git add"
     ],
