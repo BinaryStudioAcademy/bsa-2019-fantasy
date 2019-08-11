@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import './styles.scss';
 
-const NotFound = ({t}:{t:any}) => (
+const NotFound = ({ t }: { t: any }) => (
   <div className='notfound'>
     <div className='container'>
       <div className='jumbotron'>
