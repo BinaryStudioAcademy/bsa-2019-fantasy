@@ -24,7 +24,7 @@ export default [
   }
 ].map(ev => ({
   ...ev,
-  time_stamp: now,
+  timestamp: now,
   createdAt: now,
   updatedAt: now
 }));

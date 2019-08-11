@@ -210,7 +210,7 @@ export default {
               'gen_random_uuid()'
             )
           },
-          time_stamp: {
+          timestamp: {
             type: Sequelize.DATE
           },
           event_type: {
