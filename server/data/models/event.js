@@ -2,7 +2,7 @@ export default (orm, DataTypes) => {
   const Event = orm.define(
     'event',
     {
-      time_stamp: DataTypes.DATE,
+      timestamp: DataTypes.DATE,
       event_type: {
         allowNull: false,
         type: DataTypes.ENUM(
