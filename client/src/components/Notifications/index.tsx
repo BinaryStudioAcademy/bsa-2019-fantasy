@@ -4,7 +4,6 @@ import { faBell, faCircle } from '@fortawesome/free-solid-svg-icons';
 
 const Notifications = () => {
   const [visible, setVisible] = useState(false);
-
   const toggleVisible = () => setVisible(!visible);
 
   return (
