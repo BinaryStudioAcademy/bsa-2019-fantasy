@@ -1,76 +1,163 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Radar } from 'react-chartjs-2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMedal } from '@fortawesome/free-solid-svg-icons';
 
 import Button from 'components/Button';
 
-//import './styles.scss';
-import sampleChart from 'assets/images/chart.svg';
+import './styles.scss';
 
-const PlayerHighlight = () => (
-  <section className='playerHighlight flex bg-white shadow rounded-sm p-8  text-secondary'>
-    <div className='playerInfo flex flex-col flex-shrink-0 items-start p-4'>
-      <div className='clubLogo rounded-full shadow p-4'>
-        <img className='w-16' src='/images/club-logos/badge_4_80.png' alt='Club logo' />
+// import and cast to any
+// when i use `npm install @types/chart.js`
+// and import in es6 way type errors appear
+const Chart: any = require('chart.js');
+
+// default chart values
+Object.assign(Chart.defaults.global, {
+  defaultFontFamily: 'Gilroy',
+  defaultFontStyle: 'normal',
+  defaultFontColor: '#7d8891',
+  // fontSize is set inside component parameters (chartData)
+});
+
+const PlayerHighlight = () => {
+  let chartRef;
+
+  const chartData = {
+    labels: [
+      'Goals',
+      'Assists',
+      'Missed passes',
+      'Goals conceded',
+      'Saves',
+      'Yellow cards',
+      'Red cards',
+    ],
+    datasets: [
+      {
+        data: [3, 6, 4, 3, 2, 4, 3],
+        backgroundColor: '#1ee3cf',
+        borderColor: '#1ee3cf',
+        pointBackgroundColor: '#fff',
+        pointBorderColor: 'rgba(18, 39, 55, 0.11)',
+        pointBorderWidth: 1,
+        pointRadius: 4,
+      },
+      {
+        data: [6, 6, 6, 6, 6, 6, 6],
+        backgroundColor: '#f1f2f3',
+        borderColor: '#f1f2f3',
+        pointBackgroundColor: '#1ee3cf',
+        pointBorderColor: '#1ee3cf',
+        pointBorderWidth: 1,
+        pointRadius: 4,
+      },
+    ],
+  };
+
+  const chartOptions = {
+    responsive: true,
+    legend: {
+      display: false,
+    },
+    scale: {
+      angleLines: {
+        display: false,
+      },
+      gridLines: {
+        color: 'rgba(18, 39, 55, 0.11)',
+        z: 5,
+        lineWidth: 1,
+      },
+      ticks: {
+        display: false,
+        beginAtZero: true,
+        min: 0,
+        stepSize: 1,
+      },
+      pointLabels: {
+        // fontFamily: 'Gilroy',
+        // fontStyle: 'semibold',
+        // fontColor: '#7d8891',
+        fontSize: '14',
+      },
+    },
+    tooltips: {
+      mode: 'nearest',
+      intersect: false,
+    },
+  };
+
+  return (
+    <section className='playerHighlight flex bg-white shadow rounded-sm p-8  text-secondary'>
+      <div className='playerInfo flex flex-col flex-shrink-0 items-start p-4'>
+        <div className='clubLogo rounded-full shadow p-4'>
+          <img className='w-16' src='/images/club-logos/badge_4_80.png' alt='Club logo' />
+        </div>
+
+        <div className='award text-secondary2 mt-12'>
+          <FontAwesomeIcon icon={faMedal} /> Player of the week
+        </div>
+
+        <h2 className='playerName font-bold text-3xl xl:text-5xl mt-4 leading-none'>
+          Lucas Digne
+        </h2>
+        <h3 className='clubName text-secondary2 text-3xl xl:text-5xl'>Liverpool</h3>
+
+        <div className='actions mt-10 xl:mt-16'>
+          <Button
+            href='/history'
+            type='link'
+            styling='primary'
+            className='text-sm xl:text-base mr-4'
+          >
+            History
+          </Button>
+          <Button
+            href='/fixtures'
+            type='link'
+            styling='secondary'
+            className='text-sm xl:text-base'
+          >
+            Fixtures
+          </Button>
+        </div>
+
+        <div className='allWinners mt-6 text-sm'>
+          <Link className='font-semibold hover:underline' to='/'>
+            Browse all winners
+          </Link>
+        </div>
       </div>
 
-      <div className='award text-secondary2 mt-12'>
-        <FontAwesomeIcon icon={faMedal} /> Player of the week
+      <div className='playerPhoto flex items-end px-0 xl:px-8 pt-4 -mb-8'>
+        <img
+          style={{ maxHeight: '28em' }}
+          src='/images/players/500x500/101188.png'
+          alt='playerPhoto'
+        />
       </div>
 
-      <h2 className='playerName font-bold text-3xl xl:text-5xl mt-4 leading-none'>
-        Lucas Digne
-      </h2>
-      <h3 className='clubName text-secondary2 text-3xl xl:text-5xl'>Liverpool</h3>
+      <div
+        className='statsChart flex flex-auto flex-col justify-center p-0 xl:p-4 xl:border-l border-greyBorder'
+        style={{ maxWidth: '40%' }}
+      >
+        <div className='px-4'>
+          <h4 className='font-bold text-xl'>Summary</h4>
+          <p className='font-semibold text-xs'>Season 1</p>
+        </div>
 
-      <div className='actions mt-10 xl:mt-16'>
-        <Button
-          href='/history'
-          type='link'
-          styling='primary'
-          className='text-sm xl:text-base mr-4'
-        >
-          History
-        </Button>
-        <Button
-          href='/fixtures'
-          type='link'
-          styling='secondary'
-          className='text-sm xl:text-base'
-        >
-          Fixtures
-        </Button>
+        <div className='chart-container' style={{ position: 'relative' }}>
+          <Radar
+            ref={(ref) => (chartRef = ref)}
+            data={chartData}
+            options={chartOptions}
+          />
+        </div>
       </div>
-
-      <div className='allWinners mt-6 text-sm'>
-        <Link className='font-semibold hover:underline' to='/'>
-          Browse all winners
-        </Link>
-      </div>
-    </div>
-
-    <div className='playerPhoto flex items-end px-0 xl:px-8 pt-4 -mb-8'>
-      <img
-        style={{ maxHeight: '28em' }}
-        src='/images/players/500x500/101188.png'
-        alt='playerPhoto'
-      />
-    </div>
-
-    <div
-      className='statsChart flex flex-wrap content-center p-0 xl:p-4 xl:border-l border-greyBorder'
-      style={{ flexShrink: 2 }}
-    >
-      <div className='flex flex-col px-4'>
-        <h4 className='font-bold text-xl'>Summary</h4>
-        <p className='font-semibold text-xs'>Season 1</p>
-      </div>
-      <div className='flex flex-auto flex-shrink-1 justify-center'>
-        <img className='chart px-4' src={sampleChart} alt='Chart' />
-      </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default PlayerHighlight;

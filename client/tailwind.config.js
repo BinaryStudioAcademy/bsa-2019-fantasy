@@ -12,6 +12,10 @@ module.exports = {
       },
       boxShadow: {
         default: '0px 0px 19px rgba(0, 0, 0, 0.08)',
+        outline: '0 0 0px 1px #398083',
+      },
+      borderColor: {
+        secondary: '#122737',
       },
       fontFamily: {
         sans: ['Gilroy', 'sans-serif'],

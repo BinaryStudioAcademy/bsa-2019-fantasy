@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-import PlayerHighlight from 'components/PlayerHighlight';
-import Dropdown from 'components/Dropdown';
 import { Option } from 'react-dropdown';
+
+import Dropdown from 'components/Dropdown';
+import PlayerHighlight from 'components/PlayerHighlight';
+import SearchBar from 'components/SearchBar';
 
 import './styles.scss';
 
@@ -15,11 +16,14 @@ const PlayersPage = () => {
       shirt: '/images/uniforms/field-players/shirt_4-66.png',
       name: 'Zlatan Ibrahimovic',
     },
-    { shirt: '/images/uniforms/field-players/shirt_1-66.png', name: 'Lionel Messi' },
-    { shirt: '/images/uniforms/field-players/shirt_3-66.png', name: 'Mario Balotelli' },
+    { shirt: '/images/uniforms/field-players/shirt_1-66.png', name: 'Lionelo Messi' },
+    {
+      shirt: '/images/uniforms/field-players/shirt_3-66.png',
+      name: 'Mariotto Balotelli',
+    },
     {
       shirt: '/images/uniforms/field-players/shirt_4-66.png',
-      name: 'Zlatan Ibrahimovic',
+      name: 'Zlatanus Ibrahimovic',
     },
   ];
 
@@ -76,10 +80,11 @@ const PlayersPage = () => {
       <PlayerHighlight />
 
       <section className='allStats my-6'>
-        <div className='filters flex my-6'>
-          {dropdownFilters.map(({ name, options, onChange }) => (
-            <div className='w-1/4 flex' key={name}>
+        <div className='filters text-sm flex my-6'>
+          {dropdownFilters.map(({ name, options, onChange }, index) => (
+            <div className='w-1/4 flex justify-between' key={name}>
               <Dropdown {...{ placeholder: name, options, onChange }} />
+              {index === 3 && <SearchBar />}
             </div>
           ))}
         </div>

@@ -39,15 +39,14 @@ const Routing = () => {
   if (isLoading) {
     return <Spinner />;
   }
-  
+
   return (
-    <div className='flex h-screen'>
+    <div className='flex h-screen font-sans font-medium'>
       <div className='flex-none h-full'>{isAuthorized && <Sidebar />}</div>
       <div className='flex-1 bg-background h-full overflow-y-auto'>
         {isAuthorized && <Header />}
         <main className='mx-16 -mt-32'>
           <Switch>
-
             <Route path='/login' component={LoginPage} />
             <Route path='/registration' component={RegistrationPage} />
             <Route path='/profile' component={Profile} />

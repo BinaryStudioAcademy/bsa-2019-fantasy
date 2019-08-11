@@ -1089,6 +1089,10 @@ video {
   background-color: rgba(18, 39, 55, 0.11);
 }
 
+.bg-modalDimmer {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 .hover\:bg-transparent:hover {
   background-color: transparent;
 }
@@ -1485,6 +1489,10 @@ video {
   background-color: rgba(18, 39, 55, 0.11);
 }
 
+.hover\:bg-modalDimmer:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 .focus\:bg-transparent:focus {
   background-color: transparent;
 }
@@ -1879,6 +1887,10 @@ video {
 
 .focus\:bg-greyBorder:focus {
   background-color: rgba(18, 39, 55, 0.11);
+}
+
+.focus\:bg-modalDimmer:focus {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .bg-bottom {
@@ -2357,6 +2369,10 @@ video {
   border-color: rgba(18, 39, 55, 0.11);
 }
 
+.border-modalDimmer {
+  border-color: rgba(0, 0, 0, 0.5);
+}
+
 .hover\:border-transparent:hover {
   border-color: transparent;
 }
@@ -2753,6 +2769,10 @@ video {
   border-color: rgba(18, 39, 55, 0.11);
 }
 
+.hover\:border-modalDimmer:hover {
+  border-color: rgba(0, 0, 0, 0.5);
+}
+
 .focus\:border-transparent:focus {
   border-color: transparent;
 }
@@ -3147,6 +3167,10 @@ video {
 
 .focus\:border-greyBorder:focus {
   border-color: rgba(18, 39, 55, 0.11);
+}
+
+.focus\:border-modalDimmer:focus {
+  border-color: rgba(0, 0, 0, 0.5);
 }
 
 .rounded-none {
@@ -7589,6 +7613,22 @@ video {
   color: rgba(18, 39, 55, 0.11);
 }
 
+.placeholder-modalDimmer::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.placeholder-modalDimmer::-moz-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.placeholder-modalDimmer::-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.placeholder-modalDimmer::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
 .focus\:placeholder-transparent:focus::-webkit-input-placeholder {
   color: transparent;
 }
@@ -9173,6 +9213,22 @@ video {
   color: rgba(18, 39, 55, 0.11);
 }
 
+.focus\:placeholder-modalDimmer:focus::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.focus\:placeholder-modalDimmer:focus::-moz-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.focus\:placeholder-modalDimmer:focus::-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.focus\:placeholder-modalDimmer:focus::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
 .pointer-events-none {
   pointer-events: none;
 }
@@ -9309,7 +9365,7 @@ video {
 }
 
 .shadow-outline {
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  box-shadow: 0 0 0px 1px #398083;
 }
 
 .shadow-none {
@@ -9341,7 +9397,7 @@ video {
 }
 
 .hover\:shadow-outline:hover {
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  box-shadow: 0 0 0px 1px #398083;
 }
 
 .hover\:shadow-none:hover {
@@ -9373,7 +9429,7 @@ video {
 }
 
 .focus\:shadow-outline:focus {
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  box-shadow: 0 0 0px 1px #398083;
 }
 
 .focus\:shadow-none:focus {
@@ -9808,6 +9864,10 @@ video {
   color: rgba(18, 39, 55, 0.11);
 }
 
+.text-modalDimmer {
+  color: rgba(0, 0, 0, 0.5);
+}
+
 .hover\:text-transparent:hover {
   color: transparent;
 }
@@ -10204,6 +10264,10 @@ video {
   color: rgba(18, 39, 55, 0.11);
 }
 
+.hover\:text-modalDimmer:hover {
+  color: rgba(0, 0, 0, 0.5);
+}
+
 .focus\:text-transparent:focus {
   color: transparent;
 }
@@ -10598,6 +10662,10 @@ video {
 
 .focus\:text-greyBorder:focus {
   color: rgba(18, 39, 55, 0.11);
+}
+
+.focus\:text-modalDimmer:focus {
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .text-xs {
@@ -11514,6 +11582,10 @@ video {
     background-color: rgba(18, 39, 55, 0.11);
   }
 
+  .sm\:bg-modalDimmer {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   .sm\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -11910,6 +11982,10 @@ video {
     background-color: rgba(18, 39, 55, 0.11);
   }
 
+  .sm\:hover\:bg-modalDimmer:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   .sm\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -12304,6 +12380,10 @@ video {
 
   .sm\:focus\:bg-greyBorder:focus {
     background-color: rgba(18, 39, 55, 0.11);
+  }
+
+  .sm\:focus\:bg-modalDimmer:focus {
+    background-color: rgba(0, 0, 0, 0.5);
   }
 
   .sm\:bg-bottom {
@@ -12782,6 +12862,10 @@ video {
     border-color: rgba(18, 39, 55, 0.11);
   }
 
+  .sm\:border-modalDimmer {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+
   .sm\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -13178,6 +13262,10 @@ video {
     border-color: rgba(18, 39, 55, 0.11);
   }
 
+  .sm\:hover\:border-modalDimmer:hover {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+
   .sm\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -13572,6 +13660,10 @@ video {
 
   .sm\:focus\:border-greyBorder:focus {
     border-color: rgba(18, 39, 55, 0.11);
+  }
+
+  .sm\:focus\:border-modalDimmer:focus {
+    border-color: rgba(0, 0, 0, 0.5);
   }
 
   .sm\:rounded-none {
@@ -18014,6 +18106,22 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .sm\:placeholder-modalDimmer::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .sm\:placeholder-modalDimmer::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .sm\:placeholder-modalDimmer::-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .sm\:placeholder-modalDimmer::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .sm\:focus\:placeholder-transparent:focus::-webkit-input-placeholder {
     color: transparent;
   }
@@ -19598,6 +19706,22 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .sm\:focus\:placeholder-modalDimmer:focus::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .sm\:focus\:placeholder-modalDimmer:focus::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .sm\:focus\:placeholder-modalDimmer:focus::-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .sm\:focus\:placeholder-modalDimmer:focus::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .sm\:pointer-events-none {
     pointer-events: none;
   }
@@ -19734,7 +19858,7 @@ video {
   }
 
   .sm\:shadow-outline {
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+    box-shadow: 0 0 0px 1px #398083;
   }
 
   .sm\:shadow-none {
@@ -19766,7 +19890,7 @@ video {
   }
 
   .sm\:hover\:shadow-outline:hover {
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+    box-shadow: 0 0 0px 1px #398083;
   }
 
   .sm\:hover\:shadow-none:hover {
@@ -19798,7 +19922,7 @@ video {
   }
 
   .sm\:focus\:shadow-outline:focus {
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+    box-shadow: 0 0 0px 1px #398083;
   }
 
   .sm\:focus\:shadow-none:focus {
@@ -20233,6 +20357,10 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .sm\:text-modalDimmer {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .sm\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -20629,6 +20757,10 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .sm\:hover\:text-modalDimmer:hover {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .sm\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -21023,6 +21155,10 @@ video {
 
   .sm\:focus\:text-greyBorder:focus {
     color: rgba(18, 39, 55, 0.11);
+  }
+
+  .sm\:focus\:text-modalDimmer:focus {
+    color: rgba(0, 0, 0, 0.5);
   }
 
   .sm\:text-xs {
@@ -21940,6 +22076,10 @@ video {
     background-color: rgba(18, 39, 55, 0.11);
   }
 
+  .md\:bg-modalDimmer {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   .md\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -22336,6 +22476,10 @@ video {
     background-color: rgba(18, 39, 55, 0.11);
   }
 
+  .md\:hover\:bg-modalDimmer:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   .md\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -22730,6 +22874,10 @@ video {
 
   .md\:focus\:bg-greyBorder:focus {
     background-color: rgba(18, 39, 55, 0.11);
+  }
+
+  .md\:focus\:bg-modalDimmer:focus {
+    background-color: rgba(0, 0, 0, 0.5);
   }
 
   .md\:bg-bottom {
@@ -23208,6 +23356,10 @@ video {
     border-color: rgba(18, 39, 55, 0.11);
   }
 
+  .md\:border-modalDimmer {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+
   .md\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -23604,6 +23756,10 @@ video {
     border-color: rgba(18, 39, 55, 0.11);
   }
 
+  .md\:hover\:border-modalDimmer:hover {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+
   .md\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -23998,6 +24154,10 @@ video {
 
   .md\:focus\:border-greyBorder:focus {
     border-color: rgba(18, 39, 55, 0.11);
+  }
+
+  .md\:focus\:border-modalDimmer:focus {
+    border-color: rgba(0, 0, 0, 0.5);
   }
 
   .md\:rounded-none {
@@ -28440,6 +28600,22 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .md\:placeholder-modalDimmer::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .md\:placeholder-modalDimmer::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .md\:placeholder-modalDimmer::-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .md\:placeholder-modalDimmer::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .md\:focus\:placeholder-transparent:focus::-webkit-input-placeholder {
     color: transparent;
   }
@@ -30024,6 +30200,22 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .md\:focus\:placeholder-modalDimmer:focus::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .md\:focus\:placeholder-modalDimmer:focus::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .md\:focus\:placeholder-modalDimmer:focus::-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .md\:focus\:placeholder-modalDimmer:focus::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .md\:pointer-events-none {
     pointer-events: none;
   }
@@ -30160,7 +30352,7 @@ video {
   }
 
   .md\:shadow-outline {
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+    box-shadow: 0 0 0px 1px #398083;
   }
 
   .md\:shadow-none {
@@ -30192,7 +30384,7 @@ video {
   }
 
   .md\:hover\:shadow-outline:hover {
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+    box-shadow: 0 0 0px 1px #398083;
   }
 
   .md\:hover\:shadow-none:hover {
@@ -30224,7 +30416,7 @@ video {
   }
 
   .md\:focus\:shadow-outline:focus {
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+    box-shadow: 0 0 0px 1px #398083;
   }
 
   .md\:focus\:shadow-none:focus {
@@ -30659,6 +30851,10 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .md\:text-modalDimmer {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .md\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -31055,6 +31251,10 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .md\:hover\:text-modalDimmer:hover {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .md\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -31449,6 +31649,10 @@ video {
 
   .md\:focus\:text-greyBorder:focus {
     color: rgba(18, 39, 55, 0.11);
+  }
+
+  .md\:focus\:text-modalDimmer:focus {
+    color: rgba(0, 0, 0, 0.5);
   }
 
   .md\:text-xs {
@@ -32366,6 +32570,10 @@ video {
     background-color: rgba(18, 39, 55, 0.11);
   }
 
+  .lg\:bg-modalDimmer {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   .lg\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -32762,6 +32970,10 @@ video {
     background-color: rgba(18, 39, 55, 0.11);
   }
 
+  .lg\:hover\:bg-modalDimmer:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   .lg\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -33156,6 +33368,10 @@ video {
 
   .lg\:focus\:bg-greyBorder:focus {
     background-color: rgba(18, 39, 55, 0.11);
+  }
+
+  .lg\:focus\:bg-modalDimmer:focus {
+    background-color: rgba(0, 0, 0, 0.5);
   }
 
   .lg\:bg-bottom {
@@ -33634,6 +33850,10 @@ video {
     border-color: rgba(18, 39, 55, 0.11);
   }
 
+  .lg\:border-modalDimmer {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+
   .lg\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -34030,6 +34250,10 @@ video {
     border-color: rgba(18, 39, 55, 0.11);
   }
 
+  .lg\:hover\:border-modalDimmer:hover {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+
   .lg\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -34424,6 +34648,10 @@ video {
 
   .lg\:focus\:border-greyBorder:focus {
     border-color: rgba(18, 39, 55, 0.11);
+  }
+
+  .lg\:focus\:border-modalDimmer:focus {
+    border-color: rgba(0, 0, 0, 0.5);
   }
 
   .lg\:rounded-none {
@@ -38866,6 +39094,22 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .lg\:placeholder-modalDimmer::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .lg\:placeholder-modalDimmer::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .lg\:placeholder-modalDimmer::-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .lg\:placeholder-modalDimmer::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .lg\:focus\:placeholder-transparent:focus::-webkit-input-placeholder {
     color: transparent;
   }
@@ -40450,6 +40694,22 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .lg\:focus\:placeholder-modalDimmer:focus::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .lg\:focus\:placeholder-modalDimmer:focus::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .lg\:focus\:placeholder-modalDimmer:focus::-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .lg\:focus\:placeholder-modalDimmer:focus::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .lg\:pointer-events-none {
     pointer-events: none;
   }
@@ -40586,7 +40846,7 @@ video {
   }
 
   .lg\:shadow-outline {
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+    box-shadow: 0 0 0px 1px #398083;
   }
 
   .lg\:shadow-none {
@@ -40618,7 +40878,7 @@ video {
   }
 
   .lg\:hover\:shadow-outline:hover {
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+    box-shadow: 0 0 0px 1px #398083;
   }
 
   .lg\:hover\:shadow-none:hover {
@@ -40650,7 +40910,7 @@ video {
   }
 
   .lg\:focus\:shadow-outline:focus {
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+    box-shadow: 0 0 0px 1px #398083;
   }
 
   .lg\:focus\:shadow-none:focus {
@@ -41085,6 +41345,10 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .lg\:text-modalDimmer {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .lg\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -41481,6 +41745,10 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .lg\:hover\:text-modalDimmer:hover {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .lg\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -41875,6 +42143,10 @@ video {
 
   .lg\:focus\:text-greyBorder:focus {
     color: rgba(18, 39, 55, 0.11);
+  }
+
+  .lg\:focus\:text-modalDimmer:focus {
+    color: rgba(0, 0, 0, 0.5);
   }
 
   .lg\:text-xs {
@@ -42792,6 +43064,10 @@ video {
     background-color: rgba(18, 39, 55, 0.11);
   }
 
+  .xl\:bg-modalDimmer {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   .xl\:hover\:bg-transparent:hover {
     background-color: transparent;
   }
@@ -43188,6 +43464,10 @@ video {
     background-color: rgba(18, 39, 55, 0.11);
   }
 
+  .xl\:hover\:bg-modalDimmer:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
   .xl\:focus\:bg-transparent:focus {
     background-color: transparent;
   }
@@ -43582,6 +43862,10 @@ video {
 
   .xl\:focus\:bg-greyBorder:focus {
     background-color: rgba(18, 39, 55, 0.11);
+  }
+
+  .xl\:focus\:bg-modalDimmer:focus {
+    background-color: rgba(0, 0, 0, 0.5);
   }
 
   .xl\:bg-bottom {
@@ -44060,6 +44344,10 @@ video {
     border-color: rgba(18, 39, 55, 0.11);
   }
 
+  .xl\:border-modalDimmer {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+
   .xl\:hover\:border-transparent:hover {
     border-color: transparent;
   }
@@ -44456,6 +44744,10 @@ video {
     border-color: rgba(18, 39, 55, 0.11);
   }
 
+  .xl\:hover\:border-modalDimmer:hover {
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+
   .xl\:focus\:border-transparent:focus {
     border-color: transparent;
   }
@@ -44850,6 +45142,10 @@ video {
 
   .xl\:focus\:border-greyBorder:focus {
     border-color: rgba(18, 39, 55, 0.11);
+  }
+
+  .xl\:focus\:border-modalDimmer:focus {
+    border-color: rgba(0, 0, 0, 0.5);
   }
 
   .xl\:rounded-none {
@@ -49292,6 +49588,22 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .xl\:placeholder-modalDimmer::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .xl\:placeholder-modalDimmer::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .xl\:placeholder-modalDimmer::-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .xl\:placeholder-modalDimmer::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .xl\:focus\:placeholder-transparent:focus::-webkit-input-placeholder {
     color: transparent;
   }
@@ -50876,6 +51188,22 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .xl\:focus\:placeholder-modalDimmer:focus::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .xl\:focus\:placeholder-modalDimmer:focus::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .xl\:focus\:placeholder-modalDimmer:focus::-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .xl\:focus\:placeholder-modalDimmer:focus::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .xl\:pointer-events-none {
     pointer-events: none;
   }
@@ -51012,7 +51340,7 @@ video {
   }
 
   .xl\:shadow-outline {
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+    box-shadow: 0 0 0px 1px #398083;
   }
 
   .xl\:shadow-none {
@@ -51044,7 +51372,7 @@ video {
   }
 
   .xl\:hover\:shadow-outline:hover {
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+    box-shadow: 0 0 0px 1px #398083;
   }
 
   .xl\:hover\:shadow-none:hover {
@@ -51076,7 +51404,7 @@ video {
   }
 
   .xl\:focus\:shadow-outline:focus {
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+    box-shadow: 0 0 0px 1px #398083;
   }
 
   .xl\:focus\:shadow-none:focus {
@@ -51511,6 +51839,10 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .xl\:text-modalDimmer {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .xl\:hover\:text-transparent:hover {
     color: transparent;
   }
@@ -51907,6 +52239,10 @@ video {
     color: rgba(18, 39, 55, 0.11);
   }
 
+  .xl\:hover\:text-modalDimmer:hover {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
   .xl\:focus\:text-transparent:focus {
     color: transparent;
   }
@@ -52301,6 +52637,10 @@ video {
 
   .xl\:focus\:text-greyBorder:focus {
     color: rgba(18, 39, 55, 0.11);
+  }
+
+  .xl\:focus\:text-modalDimmer:focus {
+    color: rgba(0, 0, 0, 0.5);
   }
 
   .xl\:text-xs {

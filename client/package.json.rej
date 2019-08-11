@@ -1,0 +1,4 @@
+diff a/client/package.json b/client/package.json	(rejected hunks)
+@@ -92 +92 @@
+-    "*.(ts(x)?|js(x)?)": [
++    "src/**/*.(ts(x)?|js(x)?)": [
