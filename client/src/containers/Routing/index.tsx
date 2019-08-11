@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from 'store/types';
@@ -46,38 +46,50 @@ const Routing = () => {
 
   return (
     <div className='flex h-screen'>
-      <div className='flex-none h-full'>{isAuthorized && <Sidebar />}</div>
-      <div className='flex-1 bg-background h-full overflow-y-auto pb-16'>
-        {isAuthorized && <Header />}
-        <main className='mx-16 -mt-32'>
-          <Switch>
-            <Route path='/' exact component={Test} />
+      <Switch>
+        <Route path='/login' component={LoginPage} />
+        <Route path='/registration' component={RegistrationPage} />
+        <Route path='*'>
+          {isAuthorized ? (
+            <>
+              <div className='flex-none h-full'>
+                <Sidebar />
+              </div>
+              <div className='flex-1 bg-background h-full overflow-y-auto pb-16'>
+                <Header />
+                <main className='mx-16 -mt-32'>
+                  <Switch>
+                    <Route path='/' exact component={Test} />
 
-            <Route path='/login' component={LoginPage} />
-            <Route path='/registration' component={RegistrationPage} />
-            <Route path='/profile' component={Profile} />
+                    <Route path='/profile' component={Profile} />
 
-            <Route path='/forgot' component={ForgotPassword} />
-            <Route path='/reset/:id' component={ResetPassword} />
+                    <Route path='/forgot' component={ForgotPassword} />
+                    <Route path='/reset/:id' component={ResetPassword} />
 
-            <Route path='/my-team' component={MyTeam} />
-            <Route path='/live' component={Live} />
+                    <Route path='/my-team' component={MyTeam} />
+                    <Route path='/live' component={Live} />
 
-            <Route path='/players' exact component={Players} />
+                    <Route path='/players' exact component={Players} />
 
-            <Route path='/transfers' exact component={Transfers} />
-            <Route path='/fixtures' exact component={Fixtures} />
+                    <Route path='/transfers' exact component={Transfers} />
+                    <Route path='/fixtures' exact component={Fixtures} />
 
-            <Route path='/leagues' exact component={Leagues} />
-            <Route path='/leagues/create' component={CreateLeague} />
-            <Route path='/leagues/join' component={JoinLeague} />
+                    <Route path='/leagues' exact component={Leagues} />
+                    <Route path='/leagues/create' component={CreateLeague} />
+                    <Route path='/leagues/join' component={JoinLeague} />
 
-            <PrivateRoute exact path='/private' component={Test} />
+                    <PrivateRoute exact path='/private' component={Test} />
 
-            <Route path='*' component={NotFound} />
-          </Switch>
-        </main>
-      </div>
+                    <Route path='*' component={NotFound} />
+                  </Switch>
+                </main>
+              </div>
+            </>
+          ) : (
+            <Redirect to='/login' />
+          )}
+        </Route>
+      </Switch>
     </div>
   );
 };
