@@ -5,6 +5,10 @@ class GameRepository extends BaseRepository {
     getById(id) {
         return this.model.findOne({ where: { id } });
     }
+
+    getByGameweekId(id) {
+        return this.model.findAll({ where: { gameweek_id: id } });
+    }
 }
 
 export default new GameRepository(GameModel);
