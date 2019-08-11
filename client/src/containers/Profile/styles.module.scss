@@ -1,0 +1,14 @@
+:local(.navButton) {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  padding: 1rem;
+
+  font-size: 2rem;
+
+  outline: none;
+  background: white;
+  border-radius: 50%;
+  transition: box-shadow 0.16s;
+}

@@ -3,7 +3,6 @@ import { Route, Switch } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from 'store/types';
-import { loadCurrentUser } from 'containers/Profile/actions';
 
 import Test from 'containers/Test';
 import NotFound from 'scenes/NotFound';
@@ -11,7 +10,6 @@ import PrivateRoute from 'containers/PrivateRoute';
 
 import LoginPage from 'containers/Auth/Login/LoginPage';
 import RegistrationPage from 'containers/Auth/Registration/RegistrationPage';
-import Profile from 'containers/Profile';
 
 import MyTeam from 'containers/MyTeam';
 import Transfers from 'containers/Transfers';
@@ -28,6 +26,9 @@ import Header from 'components/Header';
 import Sidebar from 'components/Sidebar';
 import Spinner from 'components/Spinner';
 
+import Profile from 'containers/Profile';
+import { loadCurrentUser } from 'containers/Profile/actions';
+
 const Routing = () => {
   const dispatch = useDispatch();
   const { isLoading, isAuthorized } = useSelector((state: RootState) => state.profile);
@@ -39,20 +40,19 @@ const Routing = () => {
   if (isLoading) {
     return <Spinner />;
   }
-  
+
   return (
     <div className='flex h-screen'>
       <div className='flex-none h-full'>{isAuthorized && <Sidebar />}</div>
-      <div className='flex-1 bg-background h-full overflow-y-auto'>
+      <div className='flex-1 bg-background h-full overflow-y-auto pb-16'>
         {isAuthorized && <Header />}
         <main className='mx-16 -mt-32'>
           <Switch>
+            <Route path='/' exact component={Test} />
 
             <Route path='/login' component={LoginPage} />
             <Route path='/registration' component={RegistrationPage} />
             <Route path='/profile' component={Profile} />
-
-            <Route path='/' exact component={Test} />
 
             <Route path='/my-team' component={MyTeam} />
             <Route path='/live' component={Live} />
