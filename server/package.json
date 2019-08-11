@@ -13,6 +13,7 @@
         "@babel/polyfill": "^7.4.3",
         "async": "^3.1.0",
         "axios": "^0.18.0",
+        "bcrypt": "^3.0.5",
         "body-parser": "^1.18.3",
         "csv-parser": "^2.3.0",
         "dotenv": "^7.0.0",
