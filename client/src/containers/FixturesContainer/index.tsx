@@ -32,15 +32,18 @@ const FixturesContainer = ({
   useEffect(() => {
     if (gameweeks) {
       setGameweeksList(gameweeks);
-      loadGamesAction(gameweeks[currentGameweek].id);
     }
   }, [gameweeks]);
 
   useEffect(() => {
+    if (gameweeks) {
+      console.log(gameweeks[currentGameweek].id);
+      loadGamesAction(gameweeks[currentGameweek].id);
+    }
     if (games) {
       setGamesList(games);
     }
-  }, [games]);
+  }, [currentGameweek]);
 
   if (!gameweeksList) {
     return <Spinner />;

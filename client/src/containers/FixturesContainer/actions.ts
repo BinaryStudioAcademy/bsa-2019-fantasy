@@ -25,5 +25,6 @@ export const loadGameweeksAction = (): any => async (dispatch: any) => {
 
 export const loadGamesAction = (id: any): any => async (dispatch: any) => {
   const result = await gameweekService.getGamesById(id);
+  console.log(result);
   dispatch(setGames(result));
 };
