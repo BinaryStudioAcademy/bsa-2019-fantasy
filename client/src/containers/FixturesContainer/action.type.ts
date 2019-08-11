@@ -1,11 +1,20 @@
 import { Thunky } from 'store/types';
 
-export const SET_TEST_RESULT = 'TEST_ACTION:SET_TEST_RESULT';
+export const LOAD_GAMEWEEKS = 'GAMEWEEK_ACTION:LOAD_GAMEWEEKS';
+export const SET_GAMEWEEKS = 'GAMEWEEK_ACTION:SET_GAMEWEEKS';
+export const LOAD_GAMES = 'GAME_ACTIONS:LOAD_GAME';
+export const SET_GAMES = 'GAME_ACTIONS:SET_GAME';
 
-type SetTestResult = {
-  type: typeof SET_TEST_RESULT;
+type LoadGameweeks = {
+  type: typeof LOAD_GAMEWEEKS;
   payload: any;
 };
 
-export type TestAction = SetTestResult;
-export type AsyncTestAction = Thunky<TestAction>;
+type SetGameweeks = {
+  type: typeof SET_GAMEWEEKS;
+  payload: any;
+};
+
+export type GameweekAction = LoadGameweeks;
+export type setGameweekAction = SetGameweeks;
+export type AsyncGameweekAction = Thunky<GameweekAction>;
