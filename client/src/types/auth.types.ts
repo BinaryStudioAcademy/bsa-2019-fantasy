@@ -1,14 +1,14 @@
 export type LoginCredentials = {
-    username: string;
-    password: string;
+  username: string;
+  password: string;
 };
 
 export type RegisterCredentials = {
-    username: string;
-    password: string;
-    email: string;
+  username: string;
+  password: string;
+  email: string;
 };
 
 export type LoginFormProps = {
-    location: string;
+  location: string;
 };
