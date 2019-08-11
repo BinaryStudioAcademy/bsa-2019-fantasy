@@ -51,29 +51,21 @@ export default {
         options
       );
 
-      const gameMappedSeeds = gamesSeed.map((game, i) => ({
-        ...game,
-        hometeam_id: footballClubs[randomIndex(footballClubs.length)].id,
-        awayteam_id: footballClubs[randomIndex(footballClubs.length)].id,
-        game_event_id: events[randomIndex(events.length)].id
-      }));
-
-      await queryInterface.bulkInsert('games', gameMappedSeeds, {});
-      const games = await queryInterface.sequelize.query(
-        'SELECT id FROM "games";',
-        options
-      );
-
-      const gameweekMappedSeeds = gameweeksSeed.map(gameweek => ({
-        ...gameweek,
-        game_id: games[randomIndex(games.length)].id
-      }));
-
-      await queryInterface.bulkInsert('gameweeks', gameweekMappedSeeds, {});
+      await queryInterface.bulkInsert('gameweeks', gameweeksSeed);
       const gameweeks = await queryInterface.sequelize.query(
         'SELECT id FROM "gameweeks";',
         options
       );
+
+      const gameMappedSeeds = gamesSeed.map((game, i) => ({
+        ...game,
+        hometeam_id: footballClubs[randomIndex(footballClubs.length)].id,
+        awayteam_id: footballClubs[randomIndex(footballClubs.length)].id,
+        game_event_id: events[randomIndex(events.length)].id,
+        gameweek_id: gameweeks[randomIndex(gameweeks.length)].id
+      }));
+
+      await queryInterface.bulkInsert('games', gameMappedSeeds, {});
 
       const gameweekHistoryMappedSeeds = gameweekHistoriesSeed.map(history => ({
         ...history,
