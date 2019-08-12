@@ -44,8 +44,6 @@ const Sidebar = () => {
     },
   ];
 
-  console.log(isOpened);
-
   return (
     <div
       className={`sidebar flex flex-col py-8 bg-secondary text-primary2 h-screen ${

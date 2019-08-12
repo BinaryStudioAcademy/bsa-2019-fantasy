@@ -53,7 +53,6 @@ const Routing = () => {
 
         <Route path='/forgot' component={ForgotPassword} />
         <Route path='/reset/:id' component={ResetPassword} />
-        {/* <Route component={NotFound} /> */}
 
         <Route path='*'>
           {isAuthorized ? (
@@ -80,6 +79,7 @@ const Routing = () => {
                   <Route path='/leagues' exact component={Leagues} />
                   <Route path='/leagues/create' component={CreateLeague} />
                   <Route path='/leagues/join' component={JoinLeague} />
+                  <Route component={NotFound} />
 
                   <PrivateRoute exact path='/private' component={Test} />
                 </main>
