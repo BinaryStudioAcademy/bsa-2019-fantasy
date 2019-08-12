@@ -2,23 +2,46 @@
   display: flex;
   height: 100%;
   width: 70px;
-  transition: width 0.4s;
+  transition: width 0.3s;
+
+  &-logo {
+    transition: padding 0.3s;
+  }
 
   &.open {
     width: 150px;
 
     .link-title {
-      width: auto;
       visibility: visible;
       opacity: 1;
       margin-left: 5px;
     }
+
+    .username,
+    .points {
+      visibility: visible;
+      opacity: 1;
+    }
   }
 
   .link-title {
+    white-space: nowrap;
     visibility: hidden;
     opacity: 0;
-    width: 0;
-    transition: visibility 0s, opacity 0.4s, width 0.4s;
+    transition: visibility 0s, opacity 0.3s, width 0.3s;
+  }
+
+  .username,
+  .points {
+    white-space: nowrap;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s, padding 0.3s;
+  }
+
+  .username {
+    &-link {
+      transition: padding 0.3s;
+    }
   }
 }

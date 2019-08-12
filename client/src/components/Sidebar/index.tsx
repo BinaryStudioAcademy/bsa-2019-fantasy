@@ -48,24 +48,31 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`sidebar flex flex-col items-center py-8 bg-secondary text-primary2 h-screen ${
+      className={`sidebar flex flex-col py-8 bg-secondary text-primary2 h-screen ${
         isOpened ? 'open' : ''
       }`}
       onClick={toggleOpened}
     >
-      <Link to='/' className='item font-bold'>
+      <Link
+        to='/'
+        className={`sidebar-logo item font-bold ${isOpened ? 'pl-6' : 'pl-4'}`}
+      >
         Logo
       </Link>
-      <Link className='mt-32' to='/profile' onClick={noPropagation}>
+      <Link
+        className={`username-link mt-32 flex-col ${isOpened ? 'pl-6' : 'pl-3'}`}
+        to='/profile'
+        onClick={noPropagation}
+      >
         <img
           src='https://via.placeholder.com/50'
           alt='user'
           style={{ height: 45, width: 45 }}
-          className='rounded-full'
+          className='rounded-full mb-2'
         />
-        {/* {isOpened && <>User</>} */}
+        <p className={`username ${isOpened ? 'open' : ''}`}>John Doe</p>
       </Link>
-      <div>Points</div>
+      <div className={`points ${isOpened ? 'pl-6' : 'pl-4'}`}>Points</div>
       <div className='menu mt-16'>
         {menuItems.map(({ name, icon, link }) => (
           <NavLink
