@@ -4,12 +4,12 @@ export default (orm, DataTypes) => {
     {
       name: {
         allowNull: false,
-        type: DataTypes.String
+        type: DataTypes.STRING,
       },
       createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE
+      updatedAt: DataTypes.DATE,
     },
-    {}
+    {},
   );
 
   return Season;
