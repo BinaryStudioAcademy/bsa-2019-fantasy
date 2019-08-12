@@ -1,5 +1,12 @@
 module.exports = {
   theme: {
+    inset: {
+      '0': 0,
+      '20': '20%',
+      '40': '40%',
+      '60': '60%',
+      '80': '80%',
+    },
     extend: {
       colors: {
         primary: '#1EE3CF',
@@ -12,17 +19,9 @@ module.exports = {
       },
       boxShadow: {
         default: '0px 0px 19px rgba(0, 0, 0, 0.08)',
-        outline: '0 0 0px 1px #398083',
-      },
-      borderColor: {
-        secondary: '#122737',
-        figma: '0px 0px 19px rgba(0, 0, 0, 0.08)',
-      },
-      borderRadius: {
-        default: '3px',
       },
       fontFamily: {
-        sans: ['Source Sans Pro', 'sans-serif'],
+        sans: ['Gilroy', 'sans-serif'],
       },
     },
   },
