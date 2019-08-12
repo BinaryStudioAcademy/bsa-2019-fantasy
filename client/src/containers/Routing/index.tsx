@@ -45,7 +45,7 @@ const Routing = () => {
   }
 
   return (
-    <div className='flex h-screen'>
+    <div className='flex h-screen font-sans font-medium'>
       <Switch>
         <Route path='/login' component={LoginPage} />
         <Route path='/registration' component={RegistrationPage} />
