@@ -2,7 +2,7 @@ import React from 'react';
 
 const MyTeam = () => {
   return (
-    <div className='transfers-page'>
+    <div className='team-page'>
       <div className='jumbotron paper mb-12 rounded flex items-end justify-between pt-6'>
         <div className='jumbotron-content mt-16'>
           <h2 className='title text-secondary mb-6'>
