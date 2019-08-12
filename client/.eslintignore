@@ -1,0 +1,8 @@
+# path/to/project/root/.eslintignore
+# /node_modules/* and /bower_components/* in the project root are ignored by default
+
+# Ignore local build modules
+local_modules/*
+/local_modules/*
+local_modules/
+/local_modules/
