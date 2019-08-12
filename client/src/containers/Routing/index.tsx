@@ -50,47 +50,45 @@ const Routing = () => {
       <Switch>
         <Route path='/login' component={LoginPage} />
         <Route path='/registration' component={RegistrationPage} />
-        <Route path='*'>
-          {isAuthorized ? (
-            <>
-              <div className='flex-none h-full'>
-                <Sidebar />
-              </div>
-              <div className='flex-1 bg-background h-full overflow-y-auto pb-16'>
-                <Header />
-                <main className='mx-16 -mt-32'>
-                  <Switch>
-                    <Route path='/' exact component={Test} />
 
-                    <Route exact path='/profile' component={Profile} />
-                    <Route path='/profile/set/password' component={SetPassword} />
+        <Route path='/forgot' component={ForgotPassword} />
+        <Route path='/reset/:id' component={ResetPassword} />
 
-                    <Route path='/forgot' component={ForgotPassword} />
-                    <Route path='/reset/:id' component={ResetPassword} />
+        {isAuthorized ? (
+          <>
+            <div className='flex-none h-full'>
+              <Sidebar />
+            </div>
+            <div className='flex-1 bg-background h-full overflow-y-auto pb-16'>
+              <Header />
+              <main className='mx-16 -mt-32'>
+                <Switch>
+                  <Route path='/' exact component={Test} />
 
-                    <Route path='/my-team' component={MyTeam} />
-                    <Route path='/live' component={Live} />
+                  <Route exact path='/profile' component={Profile} />
+                  <Route path='/profile/set/password' component={SetPassword} />
 
-                    <Route path='/players' exact component={Players} />
+                  <Route path='/my-team' component={MyTeam} />
+                  <Route path='/live' component={Live} />
 
-                    <Route path='/transfers' exact component={Transfers} />
-                    <Route path='/fixtures' exact component={Fixtures} />
+                  <Route path='/players' exact component={Players} />
 
-                    <Route path='/leagues' exact component={Leagues} />
-                    <Route path='/leagues/create' component={CreateLeague} />
-                    <Route path='/leagues/join' component={JoinLeague} />
+                  <Route path='/transfers' exact component={Transfers} />
+                  <Route path='/fixtures' exact component={Fixtures} />
 
-                    <PrivateRoute exact path='/private' component={Test} />
+                  <Route path='/leagues' exact component={Leagues} />
+                  <Route path='/leagues/create' component={CreateLeague} />
+                  <Route path='/leagues/join' component={JoinLeague} />
+                  <Route path='*' component={NotFound} />
 
-                    <Route path='*' component={NotFound} />
-                  </Switch>
-                </main>
-              </div>
-            </>
-          ) : (
-            <Redirect to='/login' />
-          )}
-        </Route>
+                  <PrivateRoute exact path='/private' component={Test} />
+                </Switch>
+              </main>
+            </div>
+          </>
+        ) : (
+          <Redirect to='/login' />
+        )}
       </Switch>
     </div>
   );
