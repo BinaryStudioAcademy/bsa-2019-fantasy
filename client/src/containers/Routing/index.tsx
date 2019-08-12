@@ -54,15 +54,15 @@ const Routing = () => {
         <Route path='/forgot' component={ForgotPassword} />
         <Route path='/reset/:id' component={ResetPassword} />
 
-        <Route path='*'>
-          {isAuthorized ? (
-            <>
-              <div className='flex-none h-full'>
-                <Sidebar />
-              </div>
-              <div className='flex-1 bg-background h-full overflow-y-auto pb-16'>
-                <Header />
-                <main className='mx-16 -mt-32'>
+        {isAuthorized ? (
+          <>
+            <div className='flex-none h-full'>
+              <Sidebar />
+            </div>
+            <div className='flex-1 bg-background h-full overflow-y-auto pb-16'>
+              <Header />
+              <main className='mx-16 -mt-32'>
+                <Switch>
                   <Route path='/' exact component={Test} />
 
                   <Route exact path='/profile' component={Profile} />
@@ -79,16 +79,16 @@ const Routing = () => {
                   <Route path='/leagues' exact component={Leagues} />
                   <Route path='/leagues/create' component={CreateLeague} />
                   <Route path='/leagues/join' component={JoinLeague} />
-                  <Route component={NotFound} />
+                  <Route path='*' component={NotFound} />
 
                   <PrivateRoute exact path='/private' component={Test} />
-                </main>
-              </div>
-            </>
-          ) : (
-            <Redirect to='/login' />
-          )}
-        </Route>
+                </Switch>
+              </main>
+            </div>
+          </>
+        ) : (
+          <Redirect to='/login' />
+        )}
       </Switch>
     </div>
   );
