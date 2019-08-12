@@ -6,31 +6,25 @@ const now = new Date();
 const results = [];
 
 const promise = new Promise((resolve, reject) => {
-    fs.createReadStream(
-        path.resolve(__dirname, '../seed-data/csv/player_stats.csv')
+  fs.createReadStream(path.resolve(__dirname, '../seed-data/csv/player_stats.csv'))
+    .pipe(
+      csv({
+        mapValues: ({ header, index, value }) => {
+          if (header != 'first_name' && header != 'second_name' && header != 'position') {
+            return parseFloat(value);
+          }
+          return value;
+        }
+      })
     )
-        .pipe(
-            csv({
-                mapValues: ({ header, index, value }) => {
-                    if (
-                        header != 'first_name' &&
-                        header != 'second_name' &&
-                        header != 'position'
-                    ) {
-                        return parseFloat(value);
-                    }
-                    return value;
-                }
-            })
-        )
-        .on('data', data => {
-            data.createdAt = now;
-            data.updatedAt = now;
-            results.push(data);
-        })
-        .on('end', () => {
-            resolve(results);
-        });
+    .on('data', data => {
+      data.createdAt = now;
+      data.updatedAt = now;
+      results.push(data);
+    })
+    .on('end', () => {
+      resolve(results);
+    });
 });
 
 export default promise;

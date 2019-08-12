@@ -22,6 +22,10 @@ export default (orm, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER
       },
+      code: {
+        allowNull: false,
+        type: DataTypes.INTEGER
+      },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE
     },
