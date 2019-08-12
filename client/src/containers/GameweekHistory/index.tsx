@@ -30,8 +30,13 @@ const GameweekHistory = () => {
           </Link>
         </div>
       </div>
-      <div className='paper'>
+      <div className='paper gameweek-history-content'>
         <TeamSelection />
+
+        <div className='gameweek-stats pl-6'>
+          <h3 className='title text-secondary mb-4'>Current Points</h3>
+          <p>Points</p>
+        </div>
       </div>
     </div>
   );

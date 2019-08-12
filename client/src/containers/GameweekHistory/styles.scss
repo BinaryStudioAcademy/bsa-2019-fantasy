@@ -1,7 +1,19 @@
 .gameweek-history {
   svg {
     display: inline;
-    vertical-align: text-top;
+    vertical-align: initial;
     margin-top: 1px;
+    font-size: 10px;
+  }
+
+  &-content {
+    display: grid;
+    grid-template-columns: 75% 25%;
+
+    .title {
+      font-size: 25px;
+      line-height: 27px;
+      font-weight: bold;
+    }
   }
 }
