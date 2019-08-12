@@ -21,6 +21,7 @@ import JoinLeague from 'components/Leagues/JoinLeague';
 
 import Fixtures from 'components/Fixtures/Fixtures';
 import Players from 'containers/Players';
+import GameweekHistory from 'containers/GameweekHistory';
 
 import Header from 'components/Header';
 import Sidebar from 'components/Sidebar';
@@ -59,7 +60,7 @@ const Routing = () => {
                 <Header />
                 <main className='mx-16 -mt-32'>
                   <Switch>
-                    <Route path='/' exact component={Test} />
+                    <Route path='/' exact component={GameweekHistory} />
 
                     <Route path='/profile' component={Profile} />
 

@@ -1,13 +1,9 @@
 import React from 'react';
-import Player from '../../components/PlayerSelection';
+import uuidv4 from 'uuid/v4';
+
+import Player from '../PlayerSelection';
 
 import './styles.scss';
-
-const randomId = () =>
-  '_' +
-  Math.random()
-    .toString(36)
-    .substr(2, 9);
 
 // Mock Data
 const goalkeeper = [
@@ -116,31 +112,31 @@ const TeamSelection = () => {
       {/* Goalkeeper */}
       <div className='flex justify-around absolute team'>
         {goalkeeper.map((el) => (
-          <Player key={randomId()} src={el.src} name={el.name} club={el.club} />
+          <Player key={uuidv4()} src={el.src} name={el.name} club={el.club} />
         ))}
       </div>
       {/* Defenders */}
       <div className='flex justify-between top-20 absolute team'>
         {defenders.map((el) => (
-          <Player key={randomId()} src={el.src} name={el.name} club={el.club} />
+          <Player key={uuidv4()} src={el.src} name={el.name} club={el.club} />
         ))}
       </div>
       {/* Middlefilders */}
       <div className='flex justify-between top-40 absolute team'>
         {middlefilders.map((el) => (
-          <Player key={randomId()} src={el.src} name={el.name} club={el.club} />
+          <Player key={uuidv4()} src={el.src} name={el.name} club={el.club} />
         ))}
       </div>
       {/* Forwards */}
       <div className='flex justify-around top-60 absolute team'>
         {forwards.map((el) => (
-          <Player key={randomId()} src={el.src} name={el.name} club={el.club} />
+          <Player key={uuidv4()} src={el.src} name={el.name} club={el.club} />
         ))}
       </div>
       {/* Bench */}
       <div className='flex justify-around top-80 left-0 w-full m-3 absolute team'>
         {bench.map((el) => (
-          <Player key={randomId()} src={el.src} name={el.name} club={el.club} />
+          <Player key={uuidv4()} src={el.src} name={el.name} club={el.club} />
         ))}
       </div>
       <img src='images/field.svg' alt='field' className='field' />
