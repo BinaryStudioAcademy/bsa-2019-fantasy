@@ -1,33 +1,33 @@
 export default models => {
-    const {
-        User,
-        Season,
-        PlayerStat,
-        PlayerMatchStat,
-        League,
-        LeagueParticipant,
-        Gameweek,
-        GameweekHistory,
-        Game,
-        FootballClub,
-        Event: MyEvent
-    } = models;
+  const {
+    User,
+    Season,
+    PlayerStat,
+    PlayerMatchStat,
+    League,
+    LeagueParticipant,
+    Gameweek,
+    GameweekHistory,
+    Game,
+    FootballClub,
+    Event: MyEvent
+  } = models;
 
-    // User.hasMany(LeagueParticipant);
+  // User.hasMany(LeagueParticipant);
 
-    // Game.hasMany(FootballClub);
+  // Game.hasMany(FootballClub);
 
-    // PlayerMatchStat.hasMany(MyEvent);
-    // MyEvent.hasMany(Game);
+  // PlayerMatchStat.hasMany(MyEvent);
+  // MyEvent.hasMany(Game);
 
-    // PlayerStat.hasMany(GameweekHistory);
-    // PlayerStat.hasMany(FootballClub);
+  // PlayerStat.hasMany(GameweekHistory);
+  // PlayerStat.hasMany(FootballClub);
 
-    // FootballClub.hasMany(Game);
+  // FootballClub.hasMany(Game);
 
-    // Gameweek.hasMany(GameweekHistory);
-    // Gameweek.hasMany(Game);
+  // Gameweek.hasMany(GameweekHistory);
+  // Gameweek.hasMany(Game);
 
-    // League.hasMany(LeagueParticipant);
-    // Season.hasMany(Gameweek);
+  // League.hasMany(LeagueParticipant);
+  // Season.hasMany(Gameweek);
 };

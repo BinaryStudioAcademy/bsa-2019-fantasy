@@ -2,8 +2,8 @@ import NotFoundEn from 'scenes/NotFound/locales/en.json';
 import NotFoundUa from 'scenes/NotFound/locales/ua.json';
 import ProfileEn from 'containers/Profile/locales/en.json';
 import ProfileUa from 'containers/Profile/locales/ua.json';
-import LoginPageEn from 'containers/Auth/Login/locales/en.json'
-import LoginPageUa from 'containers/Auth/Login/locales/ua.json'
+import LoginPageEn from 'containers/Auth/Login/locales/en.json';
+import LoginPageUa from 'containers/Auth/Login/locales/ua.json';
 import AuthFormsEn from 'components/AuthForms/locales/en.json';
 import AuthFormsUa from 'components/AuthForms/locales/ua.json';
 import RegistrationPageEn from 'containers/Auth/Registration/locales/en.json';
@@ -23,7 +23,4 @@ ua.AuthForms = AuthFormsUa;
 en.RegistrationPage = RegistrationPageEn;
 ua.RegistrationPage = RegistrationPageUa;
 
-export {
-    ua,
-    en,
-};
+export { ua, en };
