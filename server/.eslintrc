@@ -1,23 +1,42 @@
 {
-    "env": {
-        "es6": true,
-        "node": true
-    },
-    "extends": "airbnb-base",
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
-    },
-    "parserOptions": {
-        "ecmaVersion": 2018
-    },
-    "rules": {
-        "semi": ["error", "always"],
-        "indent": ["error", 2],
-        "comma-dangle": "off",
-        "object-curly-newline": "off",
-        "class-methods-use-this": "off",
-        "prefer-promise-reject-errors": "off",
-        "import/prefer-default-export": "off"
-    }
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:node/recommended",
+    "airbnb-base",
+    "prettier"
+  ],
+  "plugins": [
+    "prettier"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly",
+    "console": "readonly"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "comma-dangle": "off",
+    "object-curly-newline": "off",
+    "class-methods-use-this": "off",
+    "prefer-promise-reject-errors": [
+      "warn",
+      {
+        "allowEmptyReject": true
+      }
+    ],
+    "no-throw-literal": "warn",
+    "import/prefer-default-export": "off",
+    "linebreak-style": "off",
+    "no-unused-vars": "warn",
+    "camelcase": "off",
+    "no-unused-expressions": "warn",
+    "node/no-unsupported-features/es-syntax": "off",
+  }
 }
