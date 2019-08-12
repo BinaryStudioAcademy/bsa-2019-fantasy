@@ -24,7 +24,10 @@ const app = express();
 const socketServer = http.Server(app);
 const io = socketIO(socketServer);
 
-const fakerSocket = socketIOClient.connect(`http://localhost:${process.env.FAKER_SOCKET_PORT}`, { reconnection: true });
+const fakerSocket = socketIOClient.connect(
+  `http://localhost:${process.env.FAKER_SOCKET_PORT}`,
+  { reconnection: true },
+);
 
 fakerSocket.on('connect', () => {
   // eslint-disable-next-line no-console
