@@ -1,4 +1,4 @@
-export default models => {
+export default (models) => {
   const {
     User,
     Season,
@@ -10,8 +10,11 @@ export default models => {
     GameweekHistory,
     Game,
     FootballClub,
-    Event: MyEvent
+    Event: MyEvent,
+    TeamMemberHistory,
   } = models;
+
+  User.hasOne(FootballClub);
 
   // User.hasMany(LeagueParticipant);
 
