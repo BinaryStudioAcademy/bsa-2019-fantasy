@@ -15,7 +15,7 @@ const Chart: any = require('chart.js');
 
 // default chart values
 Object.assign(Chart.defaults.global, {
-  defaultFontFamily: 'Gilroy',
+  defaultFontFamily: 'Source Sans Pro',
   defaultFontStyle: 'normal',
   defaultFontColor: '#7d8891',
   // fontSize is set inside component parameters (chartData)
