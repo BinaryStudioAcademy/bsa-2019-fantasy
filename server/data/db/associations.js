@@ -14,23 +14,36 @@ export default (models) => {
     TeamMemberHistory,
   } = models;
 
-  User.hasOne(FootballClub);
+  User.belongsTo(FootballClub, { foreignKey: 'favorite_club_id', as: 'football_club' });
+  User.hasMany(LeagueParticipant, {
+    foreignKey: 'participant_id',
+    as: 'league_participants',
+  });
 
-  // User.hasMany(LeagueParticipant);
+  LeagueParticipant.belongsTo(League, { foreignKey: 'league_id', as: 'league' });
+  LeagueParticipant.belongsTo(User, { foreignKey: 'participant_id', as: 'user' });
 
-  // Game.hasMany(FootballClub);
+  League.hasMany(LeagueParticipant, {
+    foreignKey: 'league_id',
+    as: 'league_participants',
+  });
 
-  // PlayerMatchStat.hasMany(MyEvent);
-  // MyEvent.hasMany(Game);
+  // You can use templates below to test associations (run npm start)
 
-  // PlayerStat.hasMany(GameweekHistory);
-  // PlayerStat.hasMany(FootballClub);
+  // User.findOne({
+  //   where: { email: 'demo@demo.com' },
+  //   include: 'football_club',
+  // }).then((findedUser) => {
+  //   console.log(findedUser);
+  // });
 
-  // FootballClub.hasMany(Game);
+  // League.findOne({ where: { name: 'league1' }, include: ['league_participants'] }).then(
+  //   (league) => {
+  //     // Get the League with League participants data included
+  //     console.log(league);
 
-  // Gameweek.hasMany(GameweekHistory);
-  // Gameweek.hasMany(Game);
-
-  // League.hasMany(LeagueParticipant);
-  // Season.hasMany(Gameweek);
+  //     // Get the League participants records only
+  //     // console.log(league.get().league_participants);
+  //   },
+  // );
 };
