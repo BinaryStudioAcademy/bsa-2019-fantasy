@@ -30,12 +30,15 @@ const GameweekHistory = () => {
           </Link>
         </div>
       </div>
-      <div className='paper gameweek-history-content'>
-        <TeamSelection />
-
-        <div className='gameweek-stats pl-6'>
-          <h3 className='title text-secondary mb-4'>Current Points</h3>
-          <p>Points</p>
+      <div className='gameweek-history-content'>
+        <div className='paper rounded mr-2'>
+          <TeamSelection />
+        </div>
+        <div className='paper px-8 pt-12 rounded gameweek-stats ml-2'>
+          <h3 className='title text-secondary mb-1'>Current Points</h3>
+          <p className='pl-3 points'>
+            <span className='font-bold'>47</span> points
+          </p>
         </div>
       </div>
     </div>

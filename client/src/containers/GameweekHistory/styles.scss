@@ -8,12 +8,22 @@
 
   &-content {
     display: grid;
-    grid-template-columns: 75% 25%;
+    grid-template-columns: 70% 30%;
 
     .title {
       font-size: 25px;
       line-height: 27px;
       font-weight: bold;
+    }
+  }
+
+  .gameweek-stats {
+    .points {
+      font-size: 18px;
+
+      span {
+        font-size: 35px;
+      }
     }
   }
 }
