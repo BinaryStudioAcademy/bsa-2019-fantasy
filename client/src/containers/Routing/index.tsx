@@ -27,6 +27,7 @@ import Sidebar from 'components/Sidebar';
 import Spinner from 'components/Spinner';
 
 import Profile from 'containers/Profile';
+import SetPassword from 'containers/Profile/components/SetPassword';
 import { loadCurrentUser } from 'containers/Profile/actions';
 
 import ForgotPassword from 'containers/ChangePassword/ForgotPassword';
@@ -61,7 +62,8 @@ const Routing = () => {
                   <Switch>
                     <Route path='/' exact component={Test} />
 
-                    <Route path='/profile' component={Profile} />
+                    <Route exact path='/profile' component={Profile} />
+                    <Route path='/profile/set/password' component={SetPassword} />
 
                     <Route path='/forgot' component={ForgotPassword} />
                     <Route path='/reset/:id' component={ResetPassword} />
