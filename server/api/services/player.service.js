@@ -1,6 +1,6 @@
 import playerRepository from '../../data/repositories/player.repository';
 
-export const getPlayers = async filter => await playerRepository.getFilteredPlayers(filter);
+export const getPlayers = (filter) => playerRepository.getPlayers(filter);
 
 export const getPlayerById = async (playerId) => {
   const {
@@ -17,7 +17,7 @@ export const getPlayerById = async (playerId) => {
     goals_conceded,
     saves,
     yellow_cards,
-    red_cards
+    red_cards,
   } = await playerRepository.getById(playerId);
   return {
     first_name,
@@ -33,6 +33,6 @@ export const getPlayerById = async (playerId) => {
     goals_conceded,
     saves,
     yellow_cards,
-    red_cards
+    red_cards,
   };
 };
