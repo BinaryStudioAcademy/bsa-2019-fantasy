@@ -12,6 +12,7 @@ const GameweekHistory = orm.import('./gameweek-history');
 const Game = orm.import('./game');
 const FootballClub = orm.import('./football-club');
 const Event = orm.import('./event');
+const TeamMemberHistory = orm.import('/team-member-history');
 
 associate({
   User,
@@ -24,7 +25,8 @@ associate({
   GameweekHistory,
   Game,
   FootballClub,
-  Event
+  Event,
+  TeamMemberHistory
 });
 
 export {
@@ -38,5 +40,6 @@ export {
   GameweekHistory as GameweekHistoryModel,
   Game as GameModel,
   FootballClub as FootballClubModel,
-  Event as EventModel
+  Event as EventModel,
+  TeamMemberHistory as TeamMemberHistoryModel
 };
