@@ -24,7 +24,7 @@ const Header = () => {
         <nav className='flex items-center py-4 '>
           <div className='flex flex-initial items-center mr-4'>
             <NavLink
-              to='/dashboard'
+              to='/'
               className='font-semibold p-1 border-solid border-b border-transparent hover:text-secondary mr-12'
               activeClassName='text-secondary border-secondary'
             >
