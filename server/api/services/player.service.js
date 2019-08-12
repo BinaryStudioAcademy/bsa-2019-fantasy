@@ -1,6 +1,38 @@
 import playerRepository from '../../data/repositories/player.repository';
 
-export const getPlayers = async () => await playerRepository.getAll();
+export const getPlayers = async filter => await playerRepository.getFilteredPlayers(filter);
 
-export const getPlayerById = async playerId =>
-    await playerRepository.getById(playerId);
+export const getPlayerById = async (playerId) => {
+  const {
+    first_name,
+    second_name,
+    player_price,
+    player_score,
+    position,
+    goals,
+    assists,
+    missed_passes,
+    club_id,
+    code,
+    goals_conceded,
+    saves,
+    yellow_cards,
+    red_cards
+  } = await playerRepository.getById(playerId);
+  return {
+    first_name,
+    second_name,
+    player_price,
+    player_score,
+    position,
+    goals,
+    assists,
+    missed_passes,
+    club_id,
+    code,
+    goals_conceded,
+    saves,
+    yellow_cards,
+    red_cards
+  };
+};

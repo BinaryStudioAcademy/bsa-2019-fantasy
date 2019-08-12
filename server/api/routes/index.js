@@ -10,19 +10,21 @@ import leagueRoutes from './league.routes';
 import gameweekHistoryRoutes from './gameweek-history.routes';
 import eventRoutes from './event.routes';
 import gameRoutes from './game.routes';
+import forgotPasswordRoutes from './forgot.password.routes';
 
 // register all routes
 export default (app) => {
-    app.use('/api/auth', authRoutes);
-    app.use('/api/users', userRoutes);
-    app.use('/api/players', playerRoutes);
-    app.use('/api/seasons', seasonRoutes);
-    app.use('/api/gameweeks', gameweekRoutes);
-    app.use('/api/league-participants', leagueParticipantRoutes);
-    app.use('/api/teams', footballClubRoutes);
-    app.use('/api/player-match-stats', playerMatchRoutes);
-    app.use('/api/leagues', leagueRoutes);
-    app.use('/api/gameweek-history', gameweekHistoryRoutes);
-    app.use('/api/events', eventRoutes);
-    app.use('/api/games', gameRoutes);
+  app.use('/api/auth', authRoutes);
+  app.use('/api/users', userRoutes);
+  app.use('/api/players', playerRoutes);
+  app.use('/api/seasons', seasonRoutes);
+  app.use('/api/gameweeks', gameweekRoutes);
+  app.use('/api/league-participants', leagueParticipantRoutes);
+  app.use('/api/clubs', footballClubRoutes);
+  app.use('/api/player-match-stats', playerMatchRoutes);
+  app.use('/api/leagues', leagueRoutes);
+  app.use('/api/gameweek-history', gameweekHistoryRoutes);
+  app.use('/api/events', eventRoutes);
+  app.use('/api/games', gameRoutes);
+  app.use('/api/forgot', forgotPasswordRoutes);
 };

@@ -14,7 +14,7 @@ class Modal extends React.Component<Props> {
     if (!this.target) return;
 
     return ReactDOM.createPortal(
-      <div>
+      <div className='font-sans'>
         <div
           className='dimmer flex absolute inset-0 bg-modalDimmer'
           onClick={this.props.onDismiss}
