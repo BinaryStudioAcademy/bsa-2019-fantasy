@@ -1,16 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
+import { forgotPassword } from 'containers/Profile/actions';
 import styles from './styles.module.scss';
+// TODO: fix any type
+const PersonalDetails = (props: any) => {
+  const [changePasswordRedirect, setRedirect] = useState(false);
 
-const PersonalDetails = () => {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     console.log('Updating personal details:');
   };
 
+  const onClick = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+
+    try {
+      // TODO: pass real email
+      await props.forgotPassword({ email: 'demo@demo.com' });
+      setRedirect(true);
+    } catch {
+      console.log('Something went wrong');
+    }
+  };
+
+  console.log(props);
+
   return (
     <form className='flex flex-col' onSubmit={onSubmit}>
+      {changePasswordRedirect ? (
+        <Redirect
+          to={{
+            pathname: '/profile/set/page',
+          }}
+        />
+      ) : null}
       <h2 className='text-5xl font-bold mb-12'>Personal details</h2>
 
       <div className={styles.items}>
@@ -44,14 +71,16 @@ const PersonalDetails = () => {
             placeholder='Email'
           />
         </label>
-        <label className='mb-8 flex'>
+        <div className='mb-8 flex'>
           <div className='w-1/4 font-bold'>Password</div>
-          <input
-            className='w-2/4 px-4 py-2 bg-gray-100 shadow rounded-sm'
-            type='password'
-            placeholder='Password'
-          />
-        </label>
+          <button
+            type='button'
+            className='hover:text-teal-400 text-secondary font-bold'
+            onClick={onClick}
+          >
+            Set a password
+          </button>
+        </div>
         <div className='mb-8 flex'>
           <div className='w-1/4 font-bold'>
             Gender
@@ -94,4 +123,11 @@ const PersonalDetails = () => {
   );
 };
 
-export default PersonalDetails;
+const actions = { forgotPassword };
+//TODO: fix any type
+const mapDispatchToProps = (dispatch: any) => bindActionCreators(actions, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(PersonalDetails);
