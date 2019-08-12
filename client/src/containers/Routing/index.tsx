@@ -50,6 +50,11 @@ const Routing = () => {
       <Switch>
         <Route path='/login' component={LoginPage} />
         <Route path='/registration' component={RegistrationPage} />
+
+        <Route path='/forgot' component={ForgotPassword} />
+        <Route path='/reset/:id' component={ResetPassword} />
+        {/* <Route component={NotFound} /> */}
+
         <Route path='*'>
           {isAuthorized ? (
             <>
@@ -59,31 +64,24 @@ const Routing = () => {
               <div className='flex-1 bg-background h-full overflow-y-auto pb-16'>
                 <Header />
                 <main className='mx-16 -mt-32'>
-                  <Switch>
-                    <Route path='/' exact component={Test} />
+                  <Route path='/' exact component={Test} />
 
-                    <Route exact path='/profile' component={Profile} />
-                    <Route path='/profile/set/password' component={SetPassword} />
+                  <Route exact path='/profile' component={Profile} />
+                  <Route path='/profile/set/password' component={SetPassword} />
 
-                    <Route path='/forgot' component={ForgotPassword} />
-                    <Route path='/reset/:id' component={ResetPassword} />
+                  <Route path='/my-team' component={MyTeam} />
+                  <Route path='/live' component={Live} />
 
-                    <Route path='/my-team' component={MyTeam} />
-                    <Route path='/live' component={Live} />
+                  <Route path='/players' exact component={Players} />
 
-                    <Route path='/players' exact component={Players} />
+                  <Route path='/transfers' exact component={Transfers} />
+                  <Route path='/fixtures' exact component={Fixtures} />
 
-                    <Route path='/transfers' exact component={Transfers} />
-                    <Route path='/fixtures' exact component={Fixtures} />
+                  <Route path='/leagues' exact component={Leagues} />
+                  <Route path='/leagues/create' component={CreateLeague} />
+                  <Route path='/leagues/join' component={JoinLeague} />
 
-                    <Route path='/leagues' exact component={Leagues} />
-                    <Route path='/leagues/create' component={CreateLeague} />
-                    <Route path='/leagues/join' component={JoinLeague} />
-
-                    <PrivateRoute exact path='/private' component={Test} />
-
-                    <Route path='*' component={NotFound} />
-                  </Switch>
+                  <PrivateRoute exact path='/private' component={Test} />
                 </main>
               </div>
             </>

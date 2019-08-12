@@ -1,0 +1,24 @@
+.sidebar {
+  display: flex;
+  height: 100%;
+  width: 70px;
+  transition: width 0.4s;
+
+  &.open {
+    width: 150px;
+
+    .link-title {
+      width: auto;
+      visibility: visible;
+      opacity: 1;
+      margin-left: 5px;
+    }
+  }
+
+  .link-title {
+    visibility: hidden;
+    opacity: 0;
+    width: 0;
+    transition: visibility 0s, opacity 0.4s, width 0.4s;
+  }
+}
