@@ -1,9 +1,8 @@
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
 import { createBrowserHistory } from 'history';
-// import { composeWithDevTools } from 'redux-devtools-extension';
 
 import testReducer from '../containers/Test/reducer';
 import profileReducer from '../containers/Profile/reducer';
