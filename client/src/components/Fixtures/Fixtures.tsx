@@ -1,10 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-import { flatMap } from 'lodash';
-
 import FixturesItem from './FixturesItem';
-
 import { FixturesType, FixturesItemType } from 'types/fixtures.types';
 
 const Fixtures = ({ games }: FixturesType) => {

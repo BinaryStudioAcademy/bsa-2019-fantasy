@@ -29,13 +29,13 @@ const FixturesContainer = ({
 
   useEffect(() => {
     loadGameweeksAction();
-  }, []);
+  }, [loadGameweeksAction]);
 
   useEffect(() => {
     if (gameweeks) {
       loadGamesAction(gameweeks[currentGameweek].id);
     }
-  }, [currentGameweek, gameweeks]);
+  }, [currentGameweek, gameweeks, loadGamesAction]);
 
   if (!games || !gameweeks) {
     return <Spinner />;

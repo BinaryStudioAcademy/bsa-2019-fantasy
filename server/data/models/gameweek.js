@@ -4,18 +4,22 @@ export default (orm, DataTypes) => {
     {
       name: {
         allowNull: false,
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+      },
+      number: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
       },
       start: {
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
       },
       end: {
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
       },
       createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE
+      updatedAt: DataTypes.DATE,
     },
-    {}
+    {},
   );
 
   return Gameweek;

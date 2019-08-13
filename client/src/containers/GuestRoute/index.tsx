@@ -6,10 +6,10 @@ import { RootState } from 'store/types';
 
 type Props = RouteProps;
 
-const PrivateRoute = (props: Props) => {
+const GuestRoute = (props: Props) => {
   const isAuthorized = useSelector((state: RootState) => state.profile.isAuthorized);
 
-  return isAuthorized ? <Route {...props} /> : <Redirect to='/login' />;
+  return isAuthorized ? <Redirect to='/' /> : <Route {...props} />;
 };
 
-export default PrivateRoute;
+export default GuestRoute;
