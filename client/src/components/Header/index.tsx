@@ -24,7 +24,7 @@ const Header = () => {
               activeClassName='text-secondary border-secondary'
             >
               Dashboard
-            </a>
+            </NavLink>
             <Notifications />
           </div>
           <div className='flex flex-grow items-center justify-end ml-4'>
