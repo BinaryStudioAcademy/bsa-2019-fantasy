@@ -32,7 +32,7 @@ const GameweekHistory = () => {
       </div>
       <div className='gameweek-history-content'>
         <div className='paper rounded mr-2'>
-          <TeamSelection />
+          <TeamSelection isGameweek />
         </div>
         <div className='paper px-8 pt-12 rounded gameweek-stats ml-2'>
           <h3 className='title text-secondary mb-1'>Current Points</h3>
