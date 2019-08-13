@@ -1,7 +1,7 @@
 import gameRepository from '../../data/repositories/game.repository';
 
-export const getAllGames = async () => await gameRepository.getAll();
+export const getAllGames = () => gameRepository.getAll();
 
-export const getGameById = async (id) => await gameRepository.getById(id);
+export const getGameById = (id) => gameRepository.getById(id);
 
-export const getGameByGameweekId = async (id) => await gameRepository.getByGameweekId(id);
+export const getGameByGameweekId = (id) => gameRepository.getByGameweekId(id);
