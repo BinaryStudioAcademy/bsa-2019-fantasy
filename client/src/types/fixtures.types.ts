@@ -15,3 +15,14 @@ export type FixturesItemType = {
 export type FixturesType = {
   games: [FixturesItemType];
 };
+
+export type GameweeksType = [
+  {
+    id: string;
+    name: string;
+    start: string;
+    end: string;
+    createdAt: string;
+    updatedAt: string;
+  },
+];

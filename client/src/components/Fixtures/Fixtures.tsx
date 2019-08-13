@@ -6,7 +6,6 @@ import FixturesItem from './FixturesItem';
 import { FixturesType, FixturesItemType } from 'types/fixtures.types';
 
 const Fixtures = ({ games }: FixturesType) => {
-  console.log(games);
   const renderMessages = () => {
     let currentDate = '';
 
