@@ -1,26 +1,23 @@
 import React from 'react';
 
-import { FaStar } from 'react-icons/fa';
-
 import ResetPasswordForm from 'components/ChangePasswordForms/ResetPasswordForm';
 
 const ResetPassword = () => {
   return (
-    <div className='reset-password'>
-      <div className='container'>
-        <div className='jumbotron paper mb-12 rounded'>
-          <div className='jumbotron-content mt-12'>
-            <h2 className='title text-secondary'>
-              <div className='sub title mb-4 flex items-center'>
-                <FaStar />
-                Changing password
-              </div>
-              Create a new password
-            </h2>
-          </div>
+    <div className='flex w-full h-full md:flex-row-reverse flex-wrap login-container'>
+      <div className='layer' />
+      <div className='w-full h-full flex-col items-center justify-center md:w-3/4 '>
+        <div className='lable-wrapper'>
+          <h1 className='main-lable w-full '>Change your password?</h1>
         </div>
       </div>
-      <div className='paper'>
+      <div className='w-full h-full md:w-1/4 login-form p-6'>
+        <div className='lables pl-10 mt-48 mb-6'>
+          <h2 className='side-lable'>Changing password</h2>
+          <h3 className='side-lable side-lable-small'>
+            Please type your new password below.
+          </h3>
+        </div>
         <ResetPasswordForm />
       </div>
     </div>
