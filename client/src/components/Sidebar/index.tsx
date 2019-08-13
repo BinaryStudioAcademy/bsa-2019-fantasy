@@ -9,6 +9,8 @@ import {
   faAward,
 } from '@fortawesome/free-solid-svg-icons';
 
+import './styles.scss';
+
 const Sidebar = () => {
   const [isOpened, setOpened] = useState(false);
   const toggleOpened = () => setOpened(!isOpened);
@@ -44,27 +46,43 @@ const Sidebar = () => {
 
   return (
     <div
-      className='flex flex-col items-center py-10 bg-secondary text-primary2 h-screen'
+      className={`sidebar flex flex-col py-8 bg-secondary text-primary2 h-screen ${
+        isOpened ? 'open' : ''
+      }`}
       onClick={toggleOpened}
     >
-      <div className='item'>Logo</div>
-      <Link className='mt-32' to='/profile' onClick={noPropagation}>
-        Avatar
-        {isOpened && <>User</>}
+      <Link
+        to='/'
+        className={`sidebar-logo item font-bold ${isOpened ? 'pl-6' : 'pl-4'}`}
+      >
+        Logo
       </Link>
-      <div>Points</div>
+      <Link
+        className={`username-link mt-32 flex-col ${isOpened ? 'pl-6' : 'pl-3'}`}
+        to='/profile'
+        onClick={noPropagation}
+      >
+        <img
+          src='https://via.placeholder.com/50'
+          alt='user'
+          style={{ height: 45, width: 45 }}
+          className='rounded-full mb-2'
+        />
+        <p className={`username ${isOpened ? 'open' : ''}`}>John Doe</p>
+      </Link>
+      <div className={`points ${isOpened ? 'pl-6' : 'pl-4'}`}>Points</div>
       <div className='menu mt-16'>
         {menuItems.map(({ name, icon, link }) => (
           <NavLink
             exact
-            className='menuItem flex px-4 py-5 h-8 justify-start items-center hover:text-primary'
+            className='menuItem flex px-6 py-5 h-8 justify-start items-center hover:text-primary'
             activeClassName='text-primary'
             key={name}
             to={link}
             onClick={noPropagation}
           >
             <FontAwesomeIcon className='fa-fw' icon={icon} />
-            {isOpened && <div className='ml-4'>{name}</div>}
+            <div className='link-title'>{name}</div>
           </NavLink>
         ))}
       </div>

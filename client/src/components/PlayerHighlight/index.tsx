@@ -3,15 +3,11 @@ import { Link } from 'react-router-dom';
 import { Radar } from 'react-chartjs-2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMedal } from '@fortawesome/free-solid-svg-icons';
+import Chart from 'chart.js';
 
 import Button from 'components/Button';
 
 import './styles.scss';
-
-// import and cast to any
-// when i use `npm install @types/chart.js`
-// and import in es6 way type errors appear
-const Chart: any = require('chart.js');
 
 // default chart values
 Object.assign(Chart.defaults.global, {
@@ -22,8 +18,6 @@ Object.assign(Chart.defaults.global, {
 });
 
 const PlayerHighlight = () => {
-  let chartRef;
-
   const chartData = {
     labels: [
       'Goals',
@@ -37,19 +31,10 @@ const PlayerHighlight = () => {
     datasets: [
       {
         data: [3, 6, 4, 3, 2, 4, 3],
-        backgroundColor: '#1ee3cf',
-        borderColor: '#1ee3cf',
+        backgroundColor: 'rgba(30,227,207,.5)',
+        borderColor: 'rgba(30,227,207,.5)',
         pointBackgroundColor: '#fff',
         pointBorderColor: 'rgba(18, 39, 55, 0.11)',
-        pointBorderWidth: 1,
-        pointRadius: 4,
-      },
-      {
-        data: [6, 6, 6, 6, 6, 6, 6],
-        backgroundColor: '#f1f2f3',
-        borderColor: '#f1f2f3',
-        pointBackgroundColor: '#1ee3cf',
-        pointBorderColor: '#1ee3cf',
         pointBorderWidth: 1,
         pointRadius: 4,
       },
@@ -67,7 +52,6 @@ const PlayerHighlight = () => {
       },
       gridLines: {
         color: 'rgba(18, 39, 55, 0.11)',
-        z: 5,
         lineWidth: 1,
       },
       ticks: {
@@ -77,14 +61,11 @@ const PlayerHighlight = () => {
         stepSize: 1,
       },
       pointLabels: {
-        // fontFamily: 'Gilroy',
-        // fontStyle: 'semibold',
-        // fontColor: '#7d8891',
         fontSize: '14',
       },
     },
     tooltips: {
-      mode: 'nearest',
+      mode: 'nearest' as any,
       intersect: false,
     },
   };
@@ -149,11 +130,7 @@ const PlayerHighlight = () => {
         </div>
 
         <div className='chart-container' style={{ position: 'relative' }}>
-          <Radar
-            ref={(ref) => (chartRef = ref)}
-            data={chartData}
-            options={chartOptions}
-          />
+          <Radar data={chartData} options={chartOptions} />
         </div>
       </div>
     </section>
