@@ -273,7 +273,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
         setDroppedPlayerIds([...droppedPlayerIds]);
       }
     },
-    [droppedPlayerIds, droppedPlayerBenchIds, allPlayers, bench],
+    [droppedPlayerIds, droppedPlayerBenchIds, allPlayers, bench, isGameweek],
   );
   return (
     <DndProvider backend={HTML5Backend}>
