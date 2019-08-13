@@ -33,7 +33,7 @@ const FixturesContainer = ({
 
   useEffect(() => {
     if (gameweeks) {
-      loadGamesAction(gameweeks[currentGameweek].id);
+      loadGamesAction(currentGameweek+1);
     }
   }, [currentGameweek, gameweeks, loadGamesAction]);
 

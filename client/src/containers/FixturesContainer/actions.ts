@@ -25,7 +25,7 @@ export const loadGameweeksAction = (): AsyncSetGameweekAction => async (dispatch
   dispatch(setGameweeks(result));
 };
 
-export const loadGamesAction = (id: string): AsyncSetGamesAction => async (dispatch) => {
+export const loadGamesAction = (id: number): AsyncSetGamesAction => async (dispatch) => {
   const result = await gameweekService.getGamesById(id);
   dispatch(setGames(result));
 };
