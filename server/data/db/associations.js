@@ -10,7 +10,7 @@ export default (models) => {
     GameweekHistory,
     Game,
     FootballClub,
-    Event: MyEvent,
+    Event,
     TeamMemberHistory,
   } = models;
 
