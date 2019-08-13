@@ -219,7 +219,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
       const playerPitchIndex = droppedPlayerIds.indexOf(id);
       const playerBenchIndex = droppedPlayerBenchIds.indexOf(id);
 
-      if (playerBenchIndex > -1) {
+      if (playerBenchIndex > -1 && allPlayers !== undefined) {
         setAllPlayers(
           update(allPlayers, {
             [index]: {
@@ -246,7 +246,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
           allPlayers[index].lastDroppedItem.id,
         );
         setDroppedPlayerBenchIds([...droppedPlayerBenchIds]);
-      } else if (playerPitchIndex > -1) {
+      } else if (playerPitchIndex > -1 && bench !== undefined && bench[index]) {
         setBench(
           update(bench, {
             [index]: {
@@ -285,6 +285,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
             if (accept === PlayerTypes.GOALKEEPER) {
               return (
                 <PlayerSelectionDroppable
+                  index={index}
                   key={index}
                   accept={accept}
                   lastDroppedItem={lastDroppedItem}
@@ -303,6 +304,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
             if (accept === PlayerTypes.DEFENDER) {
               return (
                 <PlayerSelectionDroppable
+                  index={index}
                   key={index}
                   accept={accept}
                   lastDroppedItem={lastDroppedItem}
@@ -320,6 +322,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
             if (accept === PlayerTypes.MIDDLEFIELDER) {
               return (
                 <PlayerSelectionDroppable
+                  index={index}
                   key={index}
                   accept={accept}
                   lastDroppedItem={lastDroppedItem}
@@ -337,6 +340,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
             if (accept === PlayerTypes.FORWARD) {
               return (
                 <PlayerSelectionDroppable
+                  index={index}
                   key={index}
                   accept={accept}
                   lastDroppedItem={lastDroppedItem}
@@ -354,6 +358,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
           {bench.map(({ accept, lastDroppedItem }: BenchDroppable, index) => {
             return (
               <PlayerSelectionDroppable
+                index={index}
                 key={index}
                 accept={accept}
                 lastDroppedItem={lastDroppedItem}
