@@ -18,7 +18,10 @@ module.exports = {
         modalDimmer: 'rgba(0, 0, 0, 0.5)',
       },
       boxShadow: {
-        default: '0px 0px 19px rgba(0, 0, 0, 0.08)',
+        figma: '0px 0px 19px rgba(0, 0, 0, 0.08)',
+      },
+      borderRadius: {
+        default: '3px',
       },
       fontFamily: {
         sans: ['Gilroy', 'sans-serif'],

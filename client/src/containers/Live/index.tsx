@@ -37,7 +37,7 @@ class Live extends React.Component<Props> {
   render() {
     const { testRes } = this.props;
     return (
-      <div className='h-64 bg-white shadow rounded-sm p-12'>
+      <div className='h-64 bg-white shadow-figma rounded-sm p-12'>
         Live page <br />
         The test result is: {testRes}
         <Button onClick={this.showModal}>Show modal</Button>

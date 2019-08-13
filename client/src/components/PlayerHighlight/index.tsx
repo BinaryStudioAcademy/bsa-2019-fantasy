@@ -31,12 +31,11 @@ const PlayerHighlight = () => {
     datasets: [
       {
         data: [3, 6, 4, 3, 2, 4, 3],
-        backgroundColor: 'rgba(30,227,207,.5)',
-        borderColor: 'rgba(30,227,207,.5)',
-        pointBackgroundColor: '#fff',
-        pointBorderColor: 'rgba(18, 39, 55, 0.11)',
+        backgroundColor: 'rgba(30, 227, 207, .5)',
+        borderColor: 'rgba(30, 227, 207, .5)',
+        pointBackgroundColor: 'rgba(30, 227, 207, 1)',
         pointBorderWidth: 1,
-        pointRadius: 4,
+        pointRadius: 3,
       },
     ],
   };
@@ -65,15 +64,14 @@ const PlayerHighlight = () => {
       },
     },
     tooltips: {
-      mode: 'nearest' as any,
       intersect: false,
     },
   };
 
   return (
-    <section className='playerHighlight flex bg-white shadow rounded-sm p-8  text-secondary'>
+    <section className='playerHighlight flex bg-white shadow-figma rounded-sm p-8  text-secondary'>
       <div className='playerInfo flex flex-col flex-shrink-0 items-start p-4'>
-        <div className='clubLogo rounded-full shadow p-4'>
+        <div className='clubLogo rounded-full shadow-figma p-4'>
           <img className='w-16' src='/images/club-logos/badge_4_80.png' alt='Club logo' />
         </div>
 
@@ -129,7 +127,7 @@ const PlayerHighlight = () => {
           <p className='font-semibold text-xs'>Season 1</p>
         </div>
 
-        <div className='chart-container' style={{ position: 'relative' }}>
+        <div className='chart-container'>
           <Radar data={chartData} options={chartOptions} />
         </div>
       </div>

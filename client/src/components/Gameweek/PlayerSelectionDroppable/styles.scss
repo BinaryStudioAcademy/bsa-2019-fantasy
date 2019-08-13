@@ -1,0 +1,17 @@
+.player-placeholder {
+  position: relative;
+  height: 6.5rem;
+  width: 7rem;
+}
+
+.player-type {
+  color: white;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  position: absolute;
+  height: 2rem;
+  width: 100%;
+  left: 0;
+  top: calc(50% - 1rem);
+  text-align: center;
+}
