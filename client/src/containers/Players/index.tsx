@@ -9,6 +9,7 @@ import { fetchPlayers } from './actions';
 import Dropdown from 'components/Dropdown';
 import PlayerHighlight from 'components/PlayerHighlight';
 import SearchBar from 'components/SearchBar';
+import PlayerDialog from 'components/PlayerDialog';
 
 import './styles.scss';
 
@@ -18,27 +19,49 @@ type Props = {
 };
 
 class PlayersPage extends React.Component<Props> {
-  state = { players: [], filters: [] };
+  state = {
+    players: [],
+    filters: [],
+    activePlayerId: '',
+  };
 
   allPlayers = [
-    { shirt: '/images/uniforms/field-players/shirt_1-66.png', name: 'Lionel Messi' },
-    { shirt: '/images/uniforms/field-players/shirt_3-66.png', name: 'Mario Balotelli' },
     {
+      id: 'id1',
+      shirt: '/images/uniforms/field-players/shirt_1-66.png',
+      name: 'Lionel Messi',
+    },
+    {
+      id: 'id2',
+      shirt: '/images/uniforms/field-players/shirt_3-66.png',
+      name: 'Mario Balotelli',
+    },
+    {
+      id: 'id3',
       shirt: '/images/uniforms/field-players/shirt_4-66.png',
       name: 'Zlatan Ibrahimovic',
     },
-    { shirt: '/images/uniforms/field-players/shirt_1-66.png', name: 'Lionelo Messi' },
     {
+      id: 'id4',
+      shirt: '/images/uniforms/field-players/shirt_1-66.png',
+      name: 'Lionelo Messi',
+    },
+    {
+      id: 'id5',
       shirt: '/images/uniforms/field-players/shirt_3-66.png',
       name: 'Mariotto Balotelli',
     },
     {
+      id: 'id6',
       shirt: '/images/uniforms/field-players/shirt_4-66.png',
       name: 'Zlatanus Ibrahimovic',
     },
   ];
 
   onFilterChange = (opt: Option) => console.log(opt);
+
+  showModal = (id: string) => this.setState({ activePlayerId: id });
+  onModalDismiss = () => this.setState({ activePlayerId: '' });
 
   renderColumn = () => (
     <div className='columnByScore w-1/4 p-6'>
@@ -51,7 +74,10 @@ class PlayersPage extends React.Component<Props> {
           <Link className='mr-4 font-semibold' to='#'>
             {player.name}
           </Link>
-          <button className='w-4 h-4 justify-center leading-none flex ml-auto bg-background rounded-full text-xs font-semibold'>
+          <button
+            onClick={() => this.setState({ activePlayerId: player.id })}
+            className='w-4 h-4 justify-center leading-none flex ml-auto bg-background rounded-full text-xs font-semibold'
+          >
             i
           </button>
         </div>
@@ -107,6 +133,12 @@ class PlayersPage extends React.Component<Props> {
           <div className='columnsWrapper flex bg-white shadow rounded my-4'>
             {this.dropdownFilters.map((item) => item.render())}
           </div>
+          {this.state.activePlayerId !== '' ? (
+            <PlayerDialog
+              id={this.state.activePlayerId}
+              onDismiss={this.onModalDismiss}
+            />
+          ) : null}
         </section>
       </>
     );
