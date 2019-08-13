@@ -5,6 +5,7 @@ export default class BaseRepository {
 
   getAll() {
     return this.model.findAll();
+
   }
 
   getById(id) {

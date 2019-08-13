@@ -33,6 +33,9 @@ export default (models) => {
     as: 'player_stats',
   });
 
+  Game.belongsTo(FootballClub, { foreignKey: 'hometeam_id', as: 'hometeam' });
+  Game.belongsTo(FootballClub, { foreignKey: 'awayteam_id', as: 'awayteam' });
+
   // You can use templates below to test associations (run npm start)
 
   // User.findOne({
