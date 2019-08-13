@@ -19,10 +19,9 @@ import Leagues from 'containers/Leagues';
 import CreateLeague from 'components/Leagues/CreateLeague';
 import JoinLeague from 'components/Leagues/JoinLeague';
 
-
 import FixturesContainer from 'containers/FixturesContainer';
 import Players from 'containers/Players';
-import PlayersComparison from 'containers/PlayersComparison';
+// import PlayersComparison from 'containers/PlayersComparison';
 import GameweekHistory from 'containers/GameweekHistory';
 
 import Header from 'components/Header';
@@ -63,7 +62,6 @@ const Routing = () => {
                 <Header />
                 <main className='mx-16 -mt-32'>
                   <Switch>
-
                     <Route path='/' exact component={GameweekHistory} />
 
                     <Route exact path='/profile' component={Profile} />
@@ -76,11 +74,11 @@ const Routing = () => {
                     <Route path='/live' component={Live} />
 
                     <Route path='/players' exact component={Players} />
-                    <Route
+                    {/* <Route
                       path='/players/comparison'
                       exact
                       component={PlayersComparison}
-                    />
+                    /> */}
 
                     <Route path='/transfers' exact component={Transfers} />
 

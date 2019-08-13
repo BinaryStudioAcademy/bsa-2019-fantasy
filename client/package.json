@@ -26,6 +26,7 @@
     "@types/chart.js": "^2.7.56",
     "@types/lodash": "^4.14.136",
     "@types/react-table": "^6.8.5",
+    "@types/uuid": "^3.4.5",
     "chart.js": "^2.8.0",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.5.2",
