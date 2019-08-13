@@ -34,16 +34,6 @@ const gameweekScheduler = async () => {
     gameweekScheduler();
   });
   console.log(`>>> Players price recalculation job scheduled on: ${currentGameweek.end}`);
-
-  // TEST@FIXME: Test schedule with following:
-  // const now = new Date();
-  // console.log(now);
-  // now.setMinutes(now.getMinutes() + 1);
-  // schedule.scheduleJob('players-price-recalculation-test', now, (fireDate) => {
-  //   console.log(`>>> [TEST] Players price recalculation! ${fireDate}`);
-  //   gameweekScheduler();
-  // });
-  // console.log(`>>> Players price recalculation job scheduled on: ${now}`);
 };
 
 export default gameweekScheduler;
