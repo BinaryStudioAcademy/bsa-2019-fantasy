@@ -14,11 +14,17 @@ router
   )
   .get('/:userId/gameweek-history/:gameweekId', (req, res, next) => {
     const { userId, gameweekId } = req.params;
-    gameweekHistoryService.getCurrentHistoryById(userId, gameweekId).then(value => {
-        teamMemberHistoryService.getPlayersByGameweekId(value.id).then(players => {
+    gameweekHistoryService
+      .getCurrentHistoryById(userId, gameweekId)
+      .then((value) => {
+        teamMemberHistoryService
+          .getPlayersByGameweekId(value.id)
+          .then((players) => {
             return res.json(players);
-        })
-    });
+          })
+          .catch(next);
+      })
+      .catch(next);
   });
 
 export default router;
