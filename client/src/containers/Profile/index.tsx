@@ -37,7 +37,7 @@ const Profile = () => {
       <div className='flex'>
         <Progress step={step} navToStep={navToStep} />
 
-        <div className='flex-1 bg-white rounded p-12 pl-16 shadow-figma relative min-h-screen'>
+        <div className='flex-1 bg-white rounded py-12 px-16 shadow-figma relative min-h-screen'>
           {content}
 
           <button
