@@ -66,11 +66,11 @@ export default {
               },
               hometeam_score: {
                 allowNull: false,
-                type: Sequelize.FLOAT
+                type: Sequelize.INTEGER
               },
               awayteam_score: {
                 allowNull: false,
-                type: Sequelize.FLOAT
+                type: Sequelize.INTEGER
               },
               createdAt: Sequelize.DATE,
               updatedAt: Sequelize.DATE
@@ -197,9 +197,6 @@ export default {
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.literal('gen_random_uuid()')
               },
-              timestamp: {
-                type: Sequelize.DATE
-              },
               event_type: {
                 allowNull: false,
                 type: Sequelize.ENUM(
@@ -290,6 +287,10 @@ export default {
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.literal('gen_random_uuid()')
               },
+              is_creator: {
+                allowNull: false,
+                type: Sequelize.BOOLEAN
+              },
               createdAt: Sequelize.DATE,
               updatedAt: Sequelize.DATE
             },
@@ -304,6 +305,10 @@ export default {
                 primaryKey: true,
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.literal('gen_random_uuid()')
+              },
+              name: {
+                allowNull: false,
+                type: Sequelize.STRING
               },
               createdAt: Sequelize.DATE,
               updatedAt: Sequelize.DATE
@@ -339,6 +344,33 @@ export default {
                 allowNull: false,
                 type: Sequelize.INTEGER
               },
+              code: {
+                allowNull: false,
+                type: Sequelize.INTEGER
+              },
+              createdAt: Sequelize.DATE,
+              updatedAt: Sequelize.DATE
+            },
+            { transaction }
+          ),
+          queryInterface.createTable(
+            'team_member_histories',
+            {
+              id: {
+                allowNull: false,
+                autoIncrement: false,
+                primaryKey: true,
+                type: Sequelize.UUID,
+                defaultValue: Sequelize.literal('gen_random_uuid()')
+              },
+              is_on_bench: {
+                allowNull: false,
+                type: Sequelize.BOOLEAN
+              },
+              is_captain: {
+                allowNull: false,
+                type: Sequelize.BOOLEAN
+              },
               createdAt: Sequelize.DATE,
               updatedAt: Sequelize.DATE
             },
@@ -363,7 +395,8 @@ export default {
           transaction
         }),
         queryInterface.dropTable('seasons', { transaction }),
-        queryInterface.dropTable('football_clubs', { transaction })
+        queryInterface.dropTable('football_clubs', { transaction }),
+        queryInterface.dropTable('team_member_histories', { transaction })
       ])
     )
 };

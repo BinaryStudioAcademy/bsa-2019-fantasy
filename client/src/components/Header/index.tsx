@@ -17,8 +17,12 @@ const Header = () => {
     <header className='bg-primary pb-32 text-sm text-secondary2'>
       <div className='mx-16'>
         <nav className='flex items-center py-4 '>
-          <div className='flex flex-initial items-center'>
-            <a href='/dashboard' className='block hover:text-white mr-12'>
+          <div className='flex flex-initial items-center mr-4'>
+            <NavLink
+              to='/dashboard'
+              className='font-semibold uppercase p-1 border-solid border-b-2 border-transparent hover:text-secondary mr-12'
+              activeClassName='text-secondary border-secondary'
+            >
               Dashboard
             </a>
             <Notifications />
@@ -28,8 +32,8 @@ const Header = () => {
               <div key={name} className='flex' style={{ flexBasis: '8em' }}>
                 <NavLink
                   to={link}
-                  className='flex hover:text-white mx-2'
-                  activeClassName='text-white'
+                  className='font-semibold uppercase p-1 border-solid border-b-2 border-transparent hover:text-secondary'
+                  activeClassName='text-secondary border-secondary'
                 >
                   {name}
                 </NavLink>

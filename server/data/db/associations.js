@@ -1,4 +1,4 @@
-export default models => {
+export default (models) => {
   const {
     User,
     Season,
@@ -10,24 +10,52 @@ export default models => {
     GameweekHistory,
     Game,
     FootballClub,
-    Event: MyEvent
+    Event: MyEvent,
+    TeamMemberHistory,
   } = models;
 
-  // User.hasMany(LeagueParticipant);
+  User.belongsTo(FootballClub, { foreignKey: 'favorite_club_id', as: 'football_club' });
+  User.hasMany(LeagueParticipant, {
+    foreignKey: 'participant_id',
+    as: 'league_participants',
+  });
 
-  // Game.hasMany(FootballClub);
+  LeagueParticipant.belongsTo(League, { foreignKey: 'league_id', as: 'league' });
+  LeagueParticipant.belongsTo(User, { foreignKey: 'participant_id', as: 'user' });
 
-  // PlayerMatchStat.hasMany(MyEvent);
-  // MyEvent.hasMany(Game);
+  League.hasMany(LeagueParticipant, {
+    foreignKey: 'league_id',
+    as: 'league_participants',
+  });
 
-  // PlayerStat.hasMany(GameweekHistory);
-  // PlayerStat.hasMany(FootballClub);
+  TeamMemberHistory.belongsTo(PlayerStat, {
+    foreignKey: 'player_id',
+    as: 'player_stats',
+  });
 
-  // FootballClub.hasMany(Game);
+  // You can use templates below to test associations (run npm start)
 
-  // Gameweek.hasMany(GameweekHistory);
-  // Gameweek.hasMany(Game);
+  // User.findOne({
+  //   where: { email: 'demo@demo.com' },
+  //   include: 'football_club',
+  // }).then((findedUser) => {
+  //   console.log(findedUser);
+  // });
 
-  // League.hasMany(LeagueParticipant);
-  // Season.hasMany(Gameweek);
+  // League.findOne({ where: { name: 'league1' }, include: ['league_participants'] }).then(
+  //   (league) => {
+  //     // Get the League with League participants data included
+  //     console.log(league);
+
+  //     // Get the League participants records only
+  //     // console.log(league.get().league_participants);
+  //   },
+  // );
+
+  // TeamMemberHistory.findOne({
+  //   where: { is_captain: true },
+  //   include: 'player_stats',
+  // }).then((teamMember) => {
+  //   console.log(teamMember);
+  // });
 };

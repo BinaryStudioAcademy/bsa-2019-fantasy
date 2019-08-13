@@ -10,11 +10,11 @@ export default (orm, DataTypes) => {
       },
       hometeam_score: {
         allowNull: false,
-        type: DataTypes.FLOAT
+        type: DataTypes.INTEGER
       },
       awayteam_score: {
         allowNull: false,
-        type: DataTypes.FLOAT
+        type: DataTypes.INTEGER
       },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE

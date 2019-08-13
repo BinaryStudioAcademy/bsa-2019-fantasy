@@ -21,6 +21,7 @@ import JoinLeague from 'components/Leagues/JoinLeague';
 
 import Fixtures from 'components/Fixtures/Fixtures';
 import Players from 'containers/Players';
+import PlayersComparison from 'containers/PlayersComparison';
 import GameweekHistory from 'containers/GameweekHistory';
 
 import Header from 'components/Header';
@@ -28,6 +29,7 @@ import Sidebar from 'components/Sidebar';
 import Spinner from 'components/Spinner';
 
 import Profile from 'containers/Profile';
+import SetPassword from 'containers/Profile/components/SetPassword';
 import { loadCurrentUser } from 'containers/Profile/actions';
 
 import ForgotPassword from 'containers/ChangePassword/ForgotPassword';
@@ -62,7 +64,8 @@ const Routing = () => {
                   <Switch>
                     <Route path='/' exact component={GameweekHistory} />
 
-                    <Route path='/profile' component={Profile} />
+                    <Route exact path='/profile' component={Profile} />
+                    <Route path='/profile/set/password' component={SetPassword} />
 
                     <Route path='/forgot' component={ForgotPassword} />
                     <Route path='/reset/:id' component={ResetPassword} />
@@ -71,6 +74,11 @@ const Routing = () => {
                     <Route path='/live' component={Live} />
 
                     <Route path='/players' exact component={Players} />
+                    <Route
+                      path='/players/comparison'
+                      exact
+                      component={PlayersComparison}
+                    />
 
                     <Route path='/transfers' exact component={Transfers} />
                     <Route path='/fixtures' exact component={Fixtures} />

@@ -71,7 +71,6 @@ yarn-error.log
 .yarn-integrity
 
 # IDE settings
-server/.vscode/
 /.vscode/
 
 # production
