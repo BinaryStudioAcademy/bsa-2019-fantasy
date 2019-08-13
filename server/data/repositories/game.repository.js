@@ -1,6 +1,6 @@
-import sequelize from "../db/connection";
-import { GameModel, FootballClubModel } from "../models/index";
-import BaseRepository from "./base.repository";
+import sequelize from '../db/connection';
+import { GameModel, FootballClubModel } from '../models/index';
+import BaseRepository from './base.repository';
 
 class GameRepository extends BaseRepository {
   getById(id) {
@@ -11,12 +11,7 @@ class GameRepository extends BaseRepository {
     return this.model.findAll({
       where: { gameweek_id: id },
 
-      include: [
-        {
-          model: FootballClubModel,
-          attributes: ["name"]
-        }
-      ]
+      include: ['hometeam', 'awayteam'],
     });
   }
 }

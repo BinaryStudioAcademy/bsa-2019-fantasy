@@ -3,6 +3,10 @@ export default class BaseRepository {
     this.model = model;
   }
 
+  getAll() {
+    return this.model.findAll();
+  }
+
   async getFilteredPlayers(filter) {
     let { name, position, club } = filter;
 
@@ -39,7 +43,7 @@ export default class BaseRepository {
     const result = await this.model.update(data, {
       where: { id },
       returning: true,
-      plain: true
+      plain: true,
     });
 
     return result[0];
@@ -48,7 +52,7 @@ export default class BaseRepository {
   deleteById(id) {
     console.log(id);
     return this.model.destroy({
-      where: { id }
+      where: { id },
     });
   }
 }
