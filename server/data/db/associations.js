@@ -28,6 +28,11 @@ export default (models) => {
     as: 'league_participants',
   });
 
+  TeamMemberHistory.belongsTo(PlayerStat, {
+    foreignKey: 'player_id',
+    as: 'player_stats',
+  });
+
   // You can use templates below to test associations (run npm start)
 
   // User.findOne({
@@ -46,4 +51,11 @@ export default (models) => {
   //     // console.log(league.get().league_participants);
   //   },
   // );
+
+  // TeamMemberHistory.findOne({
+  //   where: { is_captain: true },
+  //   include: 'player_stats',
+  // }).then((teamMember) => {
+  //   console.log(teamMember);
+  // });
 };
