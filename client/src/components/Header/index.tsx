@@ -25,7 +25,7 @@ const Header = () => {
           <div className='flex flex-initial items-center mr-4'>
             <NavLink
               to='/dashboard'
-              className='font-semibold p-1 border-solid border-b border-transparent hover:text-secondary mr-12'
+              className='font-semibold uppercase p-1 border-solid border-b-2 border-transparent hover:text-secondary mr-12'
               activeClassName='text-secondary border-secondary'
             >
               Dashboard
@@ -43,7 +43,7 @@ const Header = () => {
                 )}
                 <NavLink
                   to={link}
-                  className='font-semibold p-1 border-solid border-b border-transparent hover:text-secondary'
+                  className='font-semibold uppercase p-1 border-solid border-b-2 border-transparent hover:text-secondary'
                   activeClassName='text-secondary border-secondary'
                 >
                   {name}
