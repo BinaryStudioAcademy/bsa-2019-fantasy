@@ -28,7 +28,7 @@ export default (models) => {
       as: 'league_participants',
     });
 
-    Game.belongsTo(FootballClub, { foreignKey: 'hometeam_id', as: 'hometeam' })
+    Game.belongsTo(FootballClub,{ foreignKey: 'hometeam_id', as: 'hometeam' })
     Game.belongsTo(FootballClub, { foreignKey: 'awayteam_id', as: 'awayteam' })
 
     // Game.belongsTo(FootballClub, { foreignKey: 'hometeam_id', as: 'hometeam' });
