@@ -69,9 +69,9 @@ const PlayerHighlight = () => {
   };
 
   return (
-    <section className='playerHighlight flex bg-white shadow rounded-sm p-8  text-secondary'>
+    <section className='playerHighlight flex bg-white shadow-figma rounded-sm p-8  text-secondary'>
       <div className='playerInfo flex flex-col flex-shrink-0 items-start p-4'>
-        <div className='clubLogo rounded-full shadow p-4'>
+        <div className='clubLogo rounded-full shadow-figma p-4'>
           <img className='w-16' src='/images/club-logos/badge_4_80.png' alt='Club logo' />
         </div>
 

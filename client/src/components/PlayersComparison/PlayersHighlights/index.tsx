@@ -68,10 +68,10 @@ const PlayersHighlights = () => {
   };
 
   return (
-    <section className='players-highlights bg-white shadow rounded-sm p-8 text-secondary'>
+    <section className='players-highlights bg-white shadow-figma rounded-sm p-8 text-secondary'>
       <div className='players-wrapper flex justify-between'>
         <div className='player-first flex flex-col items-start text-left'>
-          <div className='player-club-logo rounded-full shadow p-4 mb-8'>
+          <div className='player-club-logo rounded-full shadow-figma p-4 mb-8'>
             <img className='w-8' src='/images/club-logos/badge_6_80.png' alt='' />
           </div>
 
@@ -110,7 +110,7 @@ const PlayersHighlights = () => {
         </div>
 
         <div className='player-second flex flex-col items-end text-right'>
-          <div className='player-club-logo rounded-full shadow p-4 mb-8'>
+          <div className='player-club-logo rounded-full shadow-figma p-4 mb-8'>
             <img className='w-8' src='/images/club-logos/badge_6_80.png' alt='' />
           </div>
 

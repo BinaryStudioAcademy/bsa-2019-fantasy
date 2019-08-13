@@ -24,7 +24,7 @@ const Notifications = () => {
         </span>
       </div>
       {visible && (
-        <div className='absolute rounded shadow left-0 p-4 bg-background'>
+        <div className='absolute rounded shadow-figma left-0 p-4 bg-background'>
           Notifications
         </div>
       )}

@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React from 'react';
 import PlayersHighlights from 'components/PlayersComparison/PlayersHighlights';
 
@@ -93,7 +94,7 @@ const PlayersComparisonPage = () => {
     ];
 
     return (
-      <div className='table-wrapper flex flex-col bg-white shadow rounded my-4 w-full'>
+      <div className='table-wrapper flex flex-col bg-white shadow-figma rounded my-4 w-full'>
         <CompareTable
           columns={columns}
           data={player.matches}

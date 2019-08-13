@@ -130,7 +130,7 @@ class PlayersPage extends React.Component<Props> {
               </div>
             ))}
           </div>
-          <div className='columnsWrapper flex bg-white shadow rounded my-4'>
+          <div className='columnsWrapper flex bg-white shadow-figma rounded my-4'>
             {this.dropdownFilters.map((item) => item.render())}
           </div>
           {this.state.activePlayerId !== '' ? (
