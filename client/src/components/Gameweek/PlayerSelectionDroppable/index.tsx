@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useDrop } from 'react-dnd';
 
 import Player from '../PlayerSelection';
@@ -9,6 +9,7 @@ export interface PlayerDroppable {
   lastDroppedItem: any;
 }
 export interface PlayerDroppableProps {
+  index: number;
   accept: string;
   onDrop: (item: any) => void;
   lastDroppedItem: any;
@@ -19,12 +20,14 @@ export interface BenchDroppable {
   lastDroppedItem: any;
 }
 export interface BenchDroppableProps {
+  index: number;
   accept: string[];
   onDrop: (item: any) => void;
   lastDroppedItem: any;
 }
 const PlayerSelectionDroppable = ({
   accept,
+  index,
   onDrop,
   lastDroppedItem,
 }: PlayerDroppableProps | BenchDroppableProps) => {
@@ -52,12 +55,11 @@ const PlayerSelectionDroppable = ({
       {lastDroppedItem && (
         <Player
           id={lastDroppedItem.id}
-          index={lastDroppedItem.index}
+          index={index}
           src={lastDroppedItem.src}
           name={lastDroppedItem.name}
           club={lastDroppedItem.club}
           type={lastDroppedItem.type}
-          isDropped={lastDroppedItem.isDropped}
         />
       )}
     </div>
