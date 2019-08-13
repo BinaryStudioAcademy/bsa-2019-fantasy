@@ -9,6 +9,7 @@ import testReducer from '../containers/Test/reducer';
 import profileReducer from '../containers/Profile/reducer';
 import playersReducer from 'containers/Players/reducer';
 import fixturesReducer from '../containers/FixturesContainer/reducer';
+import clubsReducer from 'containers/Routing/fetchClubs/reducer';
 
 export const history = createBrowserHistory();
 
@@ -21,6 +22,7 @@ const composedEnhancers = composeWithDevTools(applyMiddleware(...middlewares));
 const reducers = {
   test: testReducer,
   profile: profileReducer,
+  //clubs: clubsReducer,
   players: playersReducer,
   fixtures: fixturesReducer,
 };

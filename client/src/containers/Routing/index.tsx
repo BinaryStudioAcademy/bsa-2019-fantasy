@@ -35,6 +35,8 @@ import { loadCurrentUser } from 'containers/Profile/actions';
 import ForgotPassword from 'containers/ChangePassword/ForgotPassword';
 import ResetPassword from 'containers/ChangePassword/ResetPassword';
 
+import { fetchClubs } from './fetchClubs/actions';
+
 const Routing = () => {
   const dispatch = useDispatch();
   const { isLoading, isAuthorized } = useSelector((state: RootState) => state.profile);
@@ -42,6 +44,10 @@ const Routing = () => {
   useEffect(() => {
     dispatch(loadCurrentUser());
   }, [dispatch]);
+
+  useEffect(() => {
+    isAuthorized && dispatch(fetchClubs());
+  }, [isAuthorized]);
 
   if (isLoading) {
     return <Spinner />;

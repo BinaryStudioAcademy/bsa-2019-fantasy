@@ -1,4 +1,4 @@
-import * as testService from 'services/testService';
+import * as playersService from 'services/playersService';
 import { Player } from 'types/player.types';
 import {
   FETCH_PLAYERS_REQUEST,
@@ -21,7 +21,6 @@ const fetchPlayersFailure = (error: string): FetchPlayersAction => ({
 export const fetchPlayers = (filter: any): AsyncFetchPlayersAction => async (
   dispatch,
 ) => {
-  const result = await testService.getTestResult();
-  const testValue = result.length && result[0].value;
+  const result = await playersService.getPlayers(filter);
   dispatch(fetchPlayersSuccess(result));
 };
