@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from 'store/types';
 
-import Test from 'containers/Test';
 import NotFound from 'scenes/NotFound';
 import PrivateRoute from 'containers/PrivateRoute';
+import GuestRoute from 'containers/GuestRoute';
 
 import LoginPage from 'containers/Auth/Login/LoginPage';
 import RegistrationPage from 'containers/Auth/Registration/RegistrationPage';
@@ -37,7 +37,7 @@ import ResetPassword from 'containers/ChangePassword/ResetPassword';
 
 const Routing = () => {
   const dispatch = useDispatch();
-  const { isLoading, isAuthorized } = useSelector((state: RootState) => state.profile);
+  const isLoading = useSelector((state: RootState) => state.profile.isLoading);
 
   useEffect(() => {
     dispatch(loadCurrentUser());
@@ -50,55 +50,52 @@ const Routing = () => {
   return (
     <div className='flex h-screen font-sans font-medium'>
       <Switch>
-        <Route path='/login' component={LoginPage} />
-        <Route path='/registration' component={RegistrationPage} />
-        <Route path='*'>
-          {isAuthorized ? (
-            <>
-              <div className='flex-none h-full'>
-                <Sidebar />
-              </div>
-              <div className='flex-1 bg-background h-full overflow-y-auto pb-16'>
-                <Header />
-                <main className='mx-16 -mt-32'>
-                  <Switch>
-                    <Route path='/' exact component={GameweekHistory} />
+        <GuestRoute exact path='/login' component={LoginPage} />
+        <GuestRoute exact path='/register' component={RegistrationPage} />
+        <GuestRoute exact path='/forgot' component={ForgotPassword} />
 
-                    <Route exact path='/profile' component={Profile} />
-                    <Route path='/profile/set/password' component={SetPassword} />
+        <Route exact path='/404' component={NotFound} />
 
-                    <Route path='/forgot' component={ForgotPassword} />
-                    <Route path='/reset/:id' component={ResetPassword} />
+        <PrivateRoute path='/'>
+          <div className='flex-none h-full'>
+            <Sidebar />
+          </div>
+          <div className='flex-1 bg-background h-full overflow-y-auto pb-16'>
+            <Header />
+            <main className='mx-16 -mt-32'>
+              <Switch>
+                <Route path='/' exact component={GameweekHistory} />
 
-                    <Route path='/my-team' component={MyTeam} />
-                    <Route path='/live' component={Live} />
+                <Route exact path='/profile' component={Profile} />
+                <Route path='/profile/set/password' component={SetPassword} />
 
-                    <Route path='/players' exact component={Players} />
-                    {/* <Route
+                <Route path='/reset/:id' component={ResetPassword} />
+
+                <Route path='/my-team' component={MyTeam} />
+                <Route path='/live' component={Live} />
+
+                <Route path='/players' exact component={Players} />
+                {/* <Route
                       path='/players/comparison'
                       exact
                       component={PlayersComparison}
                     /> */}
 
-                    <Route path='/transfers' exact component={Transfers} />
+                <Route path='/transfers' exact component={Transfers} />
 
-                    <Route path='/fixtures' exact component={FixturesContainer} />
+                <Route path='/fixtures' exact component={FixturesContainer} />
 
-                    <Route path='/leagues' exact component={Leagues} />
-                    <Route path='/leagues/create' component={CreateLeague} />
-                    <Route path='/leagues/join' component={JoinLeague} />
+                <Route path='/leagues' exact component={Leagues} />
+                <Route path='/leagues/create' component={CreateLeague} />
+                <Route path='/leagues/join' component={JoinLeague} />
 
-                    <PrivateRoute exact path='/private' component={Test} />
+                <Route render={() => <Redirect to='/404' />} />
+              </Switch>
+            </main>
+          </div>
+        </PrivateRoute>
 
-                    <Route path='*' component={NotFound} />
-                  </Switch>
-                </main>
-              </div>
-            </>
-          ) : (
-            <Redirect to='/login' />
-          )}
-        </Route>
+        <Route render={() => <Redirect to='/404' />} />
       </Switch>
     </div>
   );
