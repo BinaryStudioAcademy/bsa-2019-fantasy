@@ -1,4 +1,5 @@
 import React from 'react';
+import { PlayersSelection } from '../../components/PlayersSelection/index';
 
 const Transfers = () => {
   return (
@@ -9,6 +10,7 @@ const Transfers = () => {
             <div className='sub title mb-4 flex items-center'>Transfers Page</div>
             Transfers
           </h2>
+          <PlayersSelection />
         </div>
       </div>
     </div>
