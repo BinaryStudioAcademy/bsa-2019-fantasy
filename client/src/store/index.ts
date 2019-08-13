@@ -21,7 +21,7 @@ const composedEnhancers = composeWithDevTools(applyMiddleware(...middlewares));
 const reducers = {
   test: testReducer,
   profile: profileReducer,
-  //clubs: clubsReducer,
+  clubs: clubsReducer,
   players: playersReducer,
   fixtures: fixturesReducer,
 };

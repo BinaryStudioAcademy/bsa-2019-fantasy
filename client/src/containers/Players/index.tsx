@@ -24,6 +24,7 @@ type Props = {
 
 type State = {
   filters: any;
+  activePlayerId?: string | undefined;
 };
 
 class PlayersPage extends React.Component<Props, State> {
@@ -82,7 +83,6 @@ class PlayersPage extends React.Component<Props, State> {
     },
   ];
 
-<<<<<<< HEAD
   readonly columns = [
     {
       Header: 'img',
@@ -107,36 +107,6 @@ class PlayersPage extends React.Component<Props, State> {
         </Link>
       ),
     },
-=======
-  onFilterChange = (opt: Option) => console.log(opt);
-
-  showModal = (id: string) => this.setState({ activePlayerId: id });
-  onModalDismiss = () => this.setState({ activePlayerId: '' });
-
-  renderColumn = () => (
-    <div className='columnByScore w-1/4 p-6'>
-      <div className='column-header mb-4 font-semibold text-xs text-secondary2'>
-        All Players
-      </div>
-      {this.allPlayers.map((player) => (
-        <div className='item flex items-center my-3' key={player.name}>
-          <img className='w-5 mr-4' src={player.shirt} alt='Shirt' />
-          <Link className='mr-4 font-semibold' to='#'>
-            {player.name}
-          </Link>
-          <button
-            onClick={() => this.setState({ activePlayerId: player.id })}
-            className='w-4 h-4 justify-center leading-none flex ml-auto bg-background rounded-full text-xs font-semibold'
-          >
-            i
-          </button>
-        </div>
-      ))}
-    </div>
-  );
-
-  dropdownFilters = [
->>>>>>> dev
     {
       Header: 'Price',
       accessor: 'player_price',
@@ -161,8 +131,10 @@ class PlayersPage extends React.Component<Props, State> {
   ];
 
   onFilterChange = (opt: Option) => console.log(opt);
-
   onFetchData = (state: any, instance: any) => {};
+
+  showModal = (id: string) => this.setState({ activePlayerId: id });
+  onModalDismiss = () => this.setState({ activePlayerId: '' });
 
   componentDidMount() {
     const req = { order_field: 'player_price', order_direction: 'DESC', limit: '10' };
@@ -175,10 +147,10 @@ class PlayersPage extends React.Component<Props, State> {
   }
 
   renderTable() {
-    if (this.props.players.length < 1) return 'spinner';
+    if (!this.props.players.length) return 'spinner';
     console.log(this.props.players);
     const playerTableData = this.props.players.map((player) => {
-      if (!player) return;
+      if (!player) return {};
       const {
         first_name,
         second_name,
@@ -216,23 +188,18 @@ class PlayersPage extends React.Component<Props, State> {
             ))}
             <SearchBar />
           </div>
-<<<<<<< HEAD
           <div className='bg-white shadow rounded my-4 p-6'>
             <div className='column-header mb-4 font-semibold text-xs text-secondary2'>
               All Players
             </div>
             {this.renderTable()}
-=======
-          <div className='columnsWrapper flex bg-white shadow-figma rounded my-4'>
-            {this.dropdownFilters.map((item) => item.render())}
->>>>>>> dev
           </div>
-          {this.state.activePlayerId !== '' ? (
+          {this.state.activePlayerId && (
             <PlayerDialog
               id={this.state.activePlayerId}
               onDismiss={this.onModalDismiss}
             />
-          ) : null}
+          )}
         </section>
       </>
     );
