@@ -31,12 +31,11 @@ const PlayerHighlight = () => {
     datasets: [
       {
         data: [3, 6, 4, 3, 2, 4, 3],
-        backgroundColor: 'rgba(30,227,207,.5)',
-        borderColor: 'rgba(30,227,207,.5)',
-        pointBackgroundColor: '#fff',
-        pointBorderColor: 'rgba(18, 39, 55, 0.11)',
+        backgroundColor: 'rgba(30, 227, 207, .5)',
+        borderColor: 'rgba(30, 227, 207, .5)',
+        pointBackgroundColor: 'rgba(30, 227, 207, 1)',
         pointBorderWidth: 1,
-        pointRadius: 4,
+        pointRadius: 3,
       },
     ],
   };
@@ -65,7 +64,6 @@ const PlayerHighlight = () => {
       },
     },
     tooltips: {
-      mode: 'nearest' as any,
       intersect: false,
     },
   };
@@ -129,7 +127,7 @@ const PlayerHighlight = () => {
           <p className='font-semibold text-xs'>Season 1</p>
         </div>
 
-        <div className='chart-container' style={{ position: 'relative' }}>
+        <div className='chart-container'>
           <Radar data={chartData} options={chartOptions} />
         </div>
       </div>

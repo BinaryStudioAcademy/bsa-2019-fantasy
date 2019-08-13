@@ -19,10 +19,11 @@ import Leagues from 'containers/Leagues';
 import CreateLeague from 'components/Leagues/CreateLeague';
 import JoinLeague from 'components/Leagues/JoinLeague';
 
+import GameweekHistory from 'containers/GameweekHistory';
+
 import FixturesContainer from 'containers/FixturesContainer';
 import Players from 'containers/Players';
-// import PlayersComparison from 'containers/PlayersComparison';
-import GameweekHistory from 'containers/GameweekHistory';
+import PlayersComparison from 'containers/PlayersComparison';
 
 import Header from 'components/Header';
 import Sidebar from 'components/Sidebar';
@@ -74,11 +75,11 @@ const Routing = () => {
                     <Route path='/live' component={Live} />
 
                     <Route path='/players' exact component={Players} />
-                    {/* <Route
+                    <Route
                       path='/players/comparison'
                       exact
                       component={PlayersComparison}
-                    /> */}
+                    />
 
                     <Route path='/transfers' exact component={Transfers} />
 
