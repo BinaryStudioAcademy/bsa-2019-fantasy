@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ReactDom from 'react-dom';
 import classNames from 'classnames';
-
-import PlayerHighlight from 'components/PlayerHighlight';
 
 import './styles.module.scss';
 
@@ -176,13 +174,13 @@ const PlayerDialog = (props: Props) => {
   const generateRows = () => {
     const result: (string | number)[][] = [];
     data.map(({ name, games }) => {
-      games.map(({ opponent, res, stat }) => {
+      return games.map(({ opponent, res, stat }) => {
         const row: any[] = [{ name }, { opponent }, { res }];
         for (let [key, value] of Object.entries(stat)) {
           if (typeof value === 'string') continue;
           row.push({ [`${key}`]: value });
         }
-        result.push(row);
+        return result.push(row);
       });
     });
     return result;
