@@ -1,5 +1,8 @@
 import React from 'react';
 
+import TeamSelection from 'components/Gameweek/TeamSelection';
+import './styles.scss';
+
 const MyTeam = () => {
   return (
     <div className='team-page'>
@@ -11,6 +14,7 @@ const MyTeam = () => {
           </h2>
         </div>
       </div>
+      <TeamSelection isGameweek={false} />
     </div>
   );
 };
