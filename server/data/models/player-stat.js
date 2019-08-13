@@ -20,7 +20,7 @@ export default (orm, DataTypes) => {
       },
       position: {
         allowNull: false,
-        type: DataTypes.ENUM('1', '2', '3', '4'),
+        type: DataTypes.ENUM(1, 2, 3, 4),
       },
       goals: {
         allowNull: false,
@@ -51,6 +51,10 @@ export default (orm, DataTypes) => {
         type: DataTypes.INTEGER,
       },
       code: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
+      club_id: {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
