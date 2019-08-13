@@ -1,20 +1,20 @@
 export default (orm, DataTypes) => {
-  const GameweekHistory = orm.define(
+  const TeamMemberHistory = orm.define(
     'team_member_history',
     {
       is_on_bench: {
         allowNull: false,
-        type: DataTypes.BOOLEAN
+        type: DataTypes.BOOLEAN,
       },
       is_captain: {
         allowNull: false,
-        type: DataTypes.BOOLEAN
+        type: DataTypes.BOOLEAN,
       },
       createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE
+      updatedAt: DataTypes.DATE,
     },
-    {}
+    {},
   );
 
-  return GameweekHistory;
+  return TeamMemberHistory;
 };

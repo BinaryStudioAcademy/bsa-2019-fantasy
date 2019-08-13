@@ -10,27 +10,55 @@ export default (models) => {
     GameweekHistory,
     Game,
     FootballClub,
-    Event: MyEvent,
+    Event,
     TeamMemberHistory,
   } = models;
 
-  User.hasOne(FootballClub);
+  User.belongsTo(FootballClub, { foreignKey: 'favorite_club_id', as: 'football_club' });
+  User.hasMany(LeagueParticipant, {
+    foreignKey: 'participant_id',
+    as: 'league_participants',
+  });
 
-  // User.hasMany(LeagueParticipant);
+  LeagueParticipant.belongsTo(League, { foreignKey: 'league_id', as: 'league' });
+  LeagueParticipant.belongsTo(User, { foreignKey: 'participant_id', as: 'user' });
 
-  // Game.hasMany(FootballClub);
+  League.hasMany(LeagueParticipant, {
+    foreignKey: 'league_id',
+    as: 'league_participants',
+  });
 
-  // PlayerMatchStat.hasMany(MyEvent);
-  // MyEvent.hasMany(Game);
+  TeamMemberHistory.belongsTo(PlayerStat, {
+    foreignKey: 'player_id',
+    as: 'player_stats',
+  });
 
-  // PlayerStat.hasMany(GameweekHistory);
-  // PlayerStat.hasMany(FootballClub);
+  Game.belongsTo(FootballClub, { foreignKey: 'hometeam_id', as: 'hometeam' });
+  Game.belongsTo(FootballClub, { foreignKey: 'awayteam_id', as: 'awayteam' });
 
-  // FootballClub.hasMany(Game);
+  // You can use templates below to test associations (run npm start)
 
-  // Gameweek.hasMany(GameweekHistory);
-  // Gameweek.hasMany(Game);
+  // User.findOne({
+  //   where: { email: 'demo@demo.com' },
+  //   include: 'football_club',
+  // }).then((findedUser) => {
+  //   console.log(findedUser);
+  // });
 
-  // League.hasMany(LeagueParticipant);
-  // Season.hasMany(Gameweek);
+  // League.findOne({ where: { name: 'league1' }, include: ['league_participants'] }).then(
+  //   (league) => {
+  //     // Get the League with League participants data included
+  //     console.log(league);
+
+  //     // Get the League participants records only
+  //     // console.log(league.get().league_participants);
+  //   },
+  // );
+
+  // TeamMemberHistory.findOne({
+  //   where: { is_captain: true },
+  //   include: 'player_stats',
+  // }).then((teamMember) => {
+  //   console.log(teamMember);
+  // });
 };
