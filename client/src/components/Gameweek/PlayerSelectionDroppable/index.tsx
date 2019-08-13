@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useDrop } from 'react-dnd';
 
 import Player from '../PlayerSelection';

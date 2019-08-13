@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import uuid, { is } from 'uuidv4';
+import uuid from 'uuidv4';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import update from 'immutability-helper';
