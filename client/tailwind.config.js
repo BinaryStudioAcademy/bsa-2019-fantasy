@@ -24,7 +24,7 @@ module.exports = {
         default: '3px',
       },
       fontFamily: {
-        sans: ['Gilroy', 'sans-serif'],
+        sans: ['Source Sans Pro', 'sans-serif'],
       },
     },
   },
