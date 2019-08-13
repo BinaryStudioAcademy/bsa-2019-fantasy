@@ -1,19 +1,13 @@
 import gameweekHistoryRepository from '../../data/repositories/gameweek-history.repository';
 
-export const getAllHistory = async () =>
-  await gameweekHistoryRepository.getAll();
+export const getAllHistory = async () => await gameweekHistoryRepository.getAll();
 
-export const getHistoryById = async id => {
-  const {
-    team_players_id,
-    team_bench_player_id,
-    team_captain_id,
-    gameweek_active_id
-  } = await gameweekHistoryRepository.getById(id);
+export const getCurrentHistoryById = async (userId, gameweekId) => {
+  const { id } = await gameweekHistoryRepository.getByUserGameweekId(
+    userId,
+    gameweekId,
+  );
   return {
-    team_players_id,
-    team_bench_player_id,
-    team_captain_id,
-    gameweek_active_id
+    id
   };
 };

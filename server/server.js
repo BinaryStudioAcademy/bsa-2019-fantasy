@@ -13,6 +13,7 @@ import errorHandlerMiddleware from './api/middlewares/error-handler.middleware';
 // import routesWhiteList from './config/routes-white-list.config';
 import socketInjector from './socket/injector';
 import socketHandlers from './socket/handlers';
+import initSchedulers from './schedulers';
 
 import sequelize from './data/db/connection';
 
@@ -24,7 +25,10 @@ const app = express();
 const socketServer = http.Server(app);
 const io = socketIO(socketServer);
 
-const fakerSocket = socketIOClient.connect(`http://localhost:${process.env.FAKER_SOCKET_PORT}`, { reconnection: true });
+const fakerSocket = socketIOClient.connect(
+  `http://localhost:${process.env.FAKER_SOCKET_PORT}`,
+  { reconnection: true },
+);
 
 fakerSocket.on('connect', () => {
   // eslint-disable-next-line no-console
@@ -40,6 +44,7 @@ sequelize
   .authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
+    initSchedulers();
   })
   .catch((err) => {
     console.error('Unable to connect to the database:', err);
