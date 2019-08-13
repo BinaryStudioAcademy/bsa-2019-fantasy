@@ -3,28 +3,8 @@ export default class BaseRepository {
     this.model = model;
   }
 
-  async getFilteredPlayers(filter) {
-    let { name, position, club } = filter;
-
-    if (!name & !position & !club) {
-      return this.model.findAll();
-    }
-
-    const where = {};
-    if (name) {
-      let [first_name, second_name] = name.split('_');
-      first_name = first_name.split('-').join(' ');
-      second_name = second_name.split('-').join(' ');
-      Object.assign(where, { first_name, second_name });
-    }
-    if (position) {
-      Object.assign(where, { position });
-    }
-    if (club) {
-      Object.assign(where, { club_id: club });
-    }
-
-    return this.model.findAll({ where, raw: true });
+  getAll() {
+    return this.model.findAll();
   }
 
   getById(id) {
@@ -39,16 +19,15 @@ export default class BaseRepository {
     const result = await this.model.update(data, {
       where: { id },
       returning: true,
-      plain: true
+      plain: true,
     });
 
     return result[0];
   }
 
   deleteById(id) {
-    console.log(id);
     return this.model.destroy({
-      where: { id }
+      where: { id },
     });
   }
 }
