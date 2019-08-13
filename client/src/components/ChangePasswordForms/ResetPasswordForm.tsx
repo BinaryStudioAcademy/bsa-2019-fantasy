@@ -62,42 +62,35 @@ class ResetPasswordForm extends Component<
     const { isPasswordValid, password, isSuccess, isError, isLoading } = this.state;
 
     return (
-      <form className='w-full max-w-lg' onSubmit={this.handleSubmit}>
-        <div className='flex flex-wrap -mx-3 mb-6'>
-          <div className='w-full px-3'>
-            {isSuccess && (
-              <p className='text-primary font-bold mb-2'>
-                Successfully changed password!
-              </p>
-            )}
-            {isError && (
-              <p className='text-red-500 font-bold mb-2'>Something went wrong!</p>
-            )}
-            <label
-              className='block uppercase text-gray-700 text-xs font-bold mb-2'
-              htmlFor='password'
-            >
-              New Password
-            </label>
+      <div className='w-full h-full max-w-xs form-registration'>
+        <form className=' px-8 pt-6 pb-8' onSubmit={this.handleSubmit}>
+          <div className='mb-4'>
             <input
-              className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+              className='shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline'
               id='password'
               type='password'
+              placeholder='Your new password'
               onChange={(ev) => this.passwordChanged(ev.target.value)}
               onBlur={this.validatePassword}
             />
           </div>
-        </div>
-        <button
-          type='submit'
-          className={`shadow w-48 bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${(!password ||
-            isLoading) &&
-            'opacity-50 cursor-not-allowed'}`}
-          disabled={!isPasswordValid || isLoading}
-        >
-          {`${isLoading ? 'Wait' : 'Change Password'}`}
-        </button>
-      </form>
+          <button
+            type='submit'
+            className={`font-medium text-base xpy-2 px-4 border sign-up-btn w-48 ${(!password ||
+              isLoading) &&
+              'opacity-50 cursor-not-allowed'}`}
+            disabled={!isPasswordValid || isLoading}
+          >
+            {`${isLoading ? 'Wait' : 'Change password'}`}
+          </button>
+          {isSuccess && (
+            <p className='text-primary font-bold mb-2'>Successfully changed password!</p>
+          )}
+          {isError && (
+            <p className='text-red-500 font-bold mb-2'>Something went wrong!</p>
+          )}
+        </form>
+      </div>
     );
   }
 }

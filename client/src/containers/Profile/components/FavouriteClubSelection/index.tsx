@@ -1,52 +1,56 @@
-import React, { useState } from 'react';
 import cn from 'classnames';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+
+import { RootState } from 'store/types';
+import { useClubs } from 'helpers/hooks/clubs.hook';
+
+import Spinner from 'components/Spinner';
 
 import styles from './styles.module.scss';
 
-type FootballClub = {
-  id: string;
-  name: string;
-  badge: string;
-};
-
-const mockData: FootballClub[] = Array(10)
-  .fill({
-    id: '',
-    name: 'Some football team',
-    badge: 'https://via.placeholder.com/50',
-  })
-  .map((c, idx) => ({ ...c, id: idx + '' }));
-
 const FavouriteClubSelection = () => {
-  const [club, setClub] = useState<null | string>(null);
+  const favoriteClub = useSelector(
+    ({ profile }: RootState) => profile.user && profile.user.favorite_club_id,
+  );
+  const { clubs, loading } = useClubs();
+  const [selectedClubId, setClub] = useState<null | number>(favoriteClub);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (club !== null) {
-      console.log('Submitting fav club:', mockData.find((c) => c.id === club));
+    if (selectedClubId !== null && clubs.find((c) => c.id === selectedClubId)) {
+      console.log('Submitting fav club:', clubs.find((c) => c.id === selectedClubId));
     }
   };
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <form onSubmit={onSubmit}>
       <h2 className='mb-12 text-5xl font-bold'>Favourite club</h2>
 
       <div className={styles.clubsList}>
-        {mockData.map((item) => {
-          const isSelected = item.id === club;
+        {clubs.map((item) => {
+          const isSelected = item.id === selectedClubId;
 
           return (
-            <label className='cursor-pointer' key={`club-${item.id}`}>
+            <label className='cursor-pointer' key={`selectedClubId-${item.id}`}>
               <input
                 className='hidden'
                 type='checkbox'
                 checked={isSelected}
                 value={item.id}
-                onChange={(e) => setClub(e.target.value)}
+                onChange={(e) => setClub(+e.target.value)}
               />
               <div className={cn(styles.clubLabel, 'h-full w-full rounded shadow')}>
-                <img className='rounded' src={item.badge} alt={`Club ${item.name}`} />
+                <img
+                  className='rounded'
+                  src='https://via.placeholder.com/50'
+                  alt={`Club ${item.name}`}
+                />
                 <span className='text-secondary text-sm leading-none font-bold'>
                   {item.name}
                 </span>

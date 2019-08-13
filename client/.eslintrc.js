@@ -41,6 +41,7 @@ module.exports = {
       'error',
       {
         allow: ['^UNSAFE_'],
+        properties: 'never',
       },
     ],
     'no-unused-vars': 'off',

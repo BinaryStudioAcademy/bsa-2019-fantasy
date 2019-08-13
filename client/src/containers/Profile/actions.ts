@@ -61,7 +61,15 @@ export const loadCurrentUser = (): AsyncUserAction => async (dispatch) => {
 
   // bring it back later as authorization will be implemented
   // const user = await authService.getCurrentUser();
-  const user: User = { id: 'dummy_thingy', username: 'Dummy', email: 'dummy@dummy' };
+  const user: User = {
+    id: 'dummy_thingy',
+    username: 'Dummy',
+    email: 'dummy@dummy',
+    money: 130,
+    favorite_club_id: 5,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
 
   setTimeout(() => {
     dispatch(setUser(user));
