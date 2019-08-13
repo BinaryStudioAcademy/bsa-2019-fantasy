@@ -1,30 +1,31 @@
 import * as gameweekService from 'services/gameweekService';
 import {
-  LOAD_GAMEWEEKS,
   SET_GAMEWEEKS,
   SET_GAMES,
   setGameweekAction,
-  GameweekAction,
-  AsyncGameweekAction,
+  setGamesAction,
+  AsyncSetGameweekAction,
+  AsyncSetGamesAction,
 } from './action.type';
 
-const setGameweeks = (gameweeks: any): any => ({
+import { GameweeksType, FixturesItemType } from 'types/fixtures.types';
+
+const setGameweeks = (gameweeks: GameweeksType): setGameweekAction => ({
   type: SET_GAMEWEEKS,
   payload: gameweeks,
 });
 
-const setGames = (games: any): any => ({
+const setGames = (games: [FixturesItemType]): setGamesAction => ({
   type: SET_GAMES,
   payload: games,
 });
 
-export const loadGameweeksAction = (): any => async (dispatch: any) => {
+export const loadGameweeksAction = (): AsyncSetGameweekAction => async (dispatch) => {
   const result = await gameweekService.getGameweeks();
   dispatch(setGameweeks(result));
 };
 
-export const loadGamesAction = (id: any): any => async (dispatch: any) => {
+export const loadGamesAction = (id: string): AsyncSetGamesAction => async (dispatch) => {
   const result = await gameweekService.getGamesById(id);
-  console.log(result);
   dispatch(setGames(result));
 };

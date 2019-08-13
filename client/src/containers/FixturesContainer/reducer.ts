@@ -1,13 +1,20 @@
-import { LOAD_GAMEWEEKS, GameweekAction, SET_GAMEWEEKS, SET_GAMES } from './action.type';
+import {
+  SET_GAMEWEEKS,
+  SET_GAMES,
+  setGamesAction,
+  setGameweekAction,
+} from './action.type';
+
+import { GameweeksType, FixturesItemType } from 'types/fixtures.types';
 
 type State = {
-  gameweeks?: any;
-  games?: any;
+  gameweeks?: GameweeksType;
+  games?: [FixturesItemType];
 };
 
 const initialState: State = {};
 
-export default (state = initialState, action: any) => {
+export default (state = initialState, action: setGamesAction | setGameweekAction) => {
   switch (action.type) {
     case SET_GAMEWEEKS:
       return { ...state, gameweeks: action.payload };
