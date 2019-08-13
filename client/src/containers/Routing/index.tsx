@@ -19,7 +19,7 @@ import Leagues from 'containers/Leagues';
 import CreateLeague from 'components/Leagues/CreateLeague';
 import JoinLeague from 'components/Leagues/JoinLeague';
 
-import Fixtures from 'components/Fixtures/Fixtures';
+import FixturesContainer from 'containers/FixturesContainer';
 import Players from 'containers/Players';
 import PlayersComparison from 'containers/PlayersComparison';
 
@@ -80,7 +80,7 @@ const Routing = () => {
                     />
 
                     <Route path='/transfers' exact component={Transfers} />
-                    <Route path='/fixtures' exact component={Fixtures} />
+                    <Route path='/fixtures' exact component={FixturesContainer} />
 
                     <Route path='/leagues' exact component={Leagues} />
                     <Route path='/leagues/create' component={CreateLeague} />
