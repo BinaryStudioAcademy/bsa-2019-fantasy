@@ -21,7 +21,7 @@ export default (state = initialState, action: FetchPlayersAction) => {
     case FETCH_PLAYERS_SUCCESS:
       return {
         ...state,
-        players: [...state.players, ...action.payload],
+        players: action.payload,
         loading: false,
       };
     case FETCH_PLAYERS_FAILURE:
