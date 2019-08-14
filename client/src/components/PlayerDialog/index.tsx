@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDom from 'react-dom';
 import classNames from 'classnames';
 
@@ -6,7 +6,9 @@ import './styles.module.scss';
 
 type Props = {
   id: string;
+  clubId: string;
   onDismiss: () => void;
+  loadFixturesForPlayer: (playerId: string, clubId: string) => {}[];
 };
 
 const PlayerDialog = (props: Props) => {
@@ -143,6 +145,10 @@ const PlayerDialog = (props: Props) => {
   ];
 
   const player = data[0].games[0].stat;
+
+  useEffect(() => {
+    console.log(props.loadFixturesForPlayer(props.id, props.clubId));
+  });
 
   const backgroundColors: { [key: string]: string } = {
     goalkeeper: 'bg-yellow-400',

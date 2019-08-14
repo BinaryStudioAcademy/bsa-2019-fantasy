@@ -16,3 +16,11 @@ export const getPlayerById = async (id: string) => {
   });
   return response.json();
 };
+
+export const getFixturesForPlayer = async (playerId: string, clubId: string) => {
+  const response = await callWebApi({
+    endpoint: `/api/games/player/${playerId}/${clubId}`,
+    type: 'GET',
+  });
+  return response.json();
+};

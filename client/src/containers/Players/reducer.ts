@@ -3,6 +3,9 @@ import {
   FETCH_PLAYERS_SUCCESS,
   FETCH_PLAYERS_FAILURE,
   FetchPlayersAction,
+  FETCH_PLAYER_FIXTURES_REQUEST,
+  FETCH_PLAYER_FIXTURES_SUCCESS,
+  FetchFixturesForPlayerAction,
 } from './action.type';
 
 type State = {
@@ -14,7 +17,6 @@ type State = {
 const initialState: State = { players: [], loading: false, error: null };
 
 export default (state = initialState, action: FetchPlayersAction) => {
-  console.log(action);
   switch (action.type) {
     case FETCH_PLAYERS_REQUEST:
       return { ...state, loading: true };
