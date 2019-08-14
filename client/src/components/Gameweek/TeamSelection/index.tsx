@@ -16,6 +16,7 @@ export interface TeamSelectionProps {
   isGameweek: boolean;
 }
 const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
+  //set bench drag&drop items, which accept all player types
   const [bench, setBench] = useState<BenchDroppable[]>([
     {
       accept: [
@@ -78,7 +79,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
       },
     },
   ]);
-
+  //set bench drag&drop items, which accept only specific player types
   const [allPlayers, setAllPlayers] = useState<PlayerDroppable[]>([
     {
       accept: PlayerTypes.GOALKEEPER,
@@ -197,84 +198,118 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
     },
   ]);
 
-  const [droppedPlayerIds, setDroppedPlayerIds] = useState<string[]>(
+  //set ids of players on the pitch
+  const [droppedPlayerPitchIds, setdroppedPlayerPitchIds] = useState<string[]>(
     allPlayers.map((el) => {
-      return el.lastDroppedItem.id;
+      if (el.lastDroppedItem.id) {
+        return el.lastDroppedItem.id;
+      } else return null;
     }),
   );
-
+  //set ids of players on the bench
   const [droppedPlayerBenchIds, setDroppedPlayerBenchIds] = useState<string[]>(
     bench.map((el) => {
-      return el.lastDroppedItem.id;
+      if (el.lastDroppedItem.id) {
+        return el.lastDroppedItem.id;
+      } else return null;
     }),
   );
 
+  //handles drop from bench to the pitch
+  const handlePitchDrop = (
+    index: number,
+    item: PlayerDraggableProps,
+    benchIndex: number,
+  ) => {
+    const { id } = item;
+    setAllPlayers(
+      update(allPlayers, {
+        [index]: {
+          lastDroppedItem: {
+            $set: item,
+          },
+        },
+      }),
+    );
+    droppedPlayerPitchIds.splice(index, 1, id);
+    setdroppedPlayerPitchIds([...droppedPlayerPitchIds]);
+    setBench(
+      update(bench, {
+        [benchIndex]: {
+          lastDroppedItem: {
+            $set: allPlayers[index].lastDroppedItem,
+          },
+        },
+      }),
+    );
+    droppedPlayerBenchIds.splice(benchIndex, 1, allPlayers[index].lastDroppedItem.id);
+    setDroppedPlayerBenchIds([...droppedPlayerBenchIds]);
+  };
+
+  //handles drop from pitch to the bench
+  const handleBenchDrop = (
+    index: number,
+    item: PlayerDraggableProps,
+    pitchIndex: number,
+  ) => {
+    const { id } = item;
+    setBench(
+      update(bench, {
+        [index]: {
+          lastDroppedItem: {
+            $set: item,
+          },
+        },
+      }),
+    );
+    droppedPlayerBenchIds.splice(index, 1, id);
+    setDroppedPlayerBenchIds([...droppedPlayerBenchIds]);
+
+    setAllPlayers(
+      update(allPlayers, {
+        [pitchIndex]: {
+          lastDroppedItem: {
+            $set: bench[index].lastDroppedItem,
+          },
+        },
+      }),
+    );
+
+    droppedPlayerPitchIds.splice(pitchIndex, 1, bench[index].lastDroppedItem.id);
+    setdroppedPlayerPitchIds([...droppedPlayerPitchIds]);
+  };
+
+  //handles drag&drop action
   const handleDrop = useCallback(
     (index: number, item: PlayerDraggableProps) => {
+      //do not perform drag&drop when it is gameweek results
       if (isGameweek) {
         return;
       }
-      const { id } = item;
 
-      const playerPitchIndex = droppedPlayerIds.indexOf(id);
+      const { id } = item;
+      const playerPitchIndex = droppedPlayerPitchIds.indexOf(id);
       const playerBenchIndex = droppedPlayerBenchIds.indexOf(id);
 
-      if (playerBenchIndex > -1 && allPlayers !== undefined) {
-        setAllPlayers(
-          update(allPlayers, {
-            [index]: {
-              lastDroppedItem: {
-                $set: item,
-              },
-            },
-          }),
-        );
-        droppedPlayerIds.splice(index, 1, id);
-        setDroppedPlayerIds([...droppedPlayerIds]);
-        setBench(
-          update(bench, {
-            [playerBenchIndex]: {
-              lastDroppedItem: {
-                $set: allPlayers[index].lastDroppedItem,
-              },
-            },
-          }),
-        );
-        droppedPlayerBenchIds.splice(
-          playerBenchIndex,
-          1,
-          allPlayers[index].lastDroppedItem.id,
-        );
-        setDroppedPlayerBenchIds([...droppedPlayerBenchIds]);
+      // when we move from the bench
+      if (playerBenchIndex > -1 && allPlayers !== undefined && allPlayers[index]) {
+        handlePitchDrop(index, item, playerBenchIndex);
+        //when we move from the pitch
       } else if (playerPitchIndex > -1 && bench !== undefined && bench[index]) {
-        setBench(
-          update(bench, {
-            [index]: {
-              lastDroppedItem: {
-                $set: item,
-              },
-            },
-          }),
-        );
-        droppedPlayerBenchIds.splice(index, 1, id);
-        setDroppedPlayerBenchIds([...droppedPlayerBenchIds]);
-
-        setAllPlayers(
-          update(allPlayers, {
-            [playerPitchIndex]: {
-              lastDroppedItem: {
-                $set: bench[index].lastDroppedItem,
-              },
-            },
-          }),
-        );
-
-        droppedPlayerIds.splice(playerPitchIndex, 1, bench[index].lastDroppedItem.id);
-        setDroppedPlayerIds([...droppedPlayerIds]);
+        handleBenchDrop(index, item, playerPitchIndex);
       }
     },
-    [droppedPlayerIds, droppedPlayerBenchIds, allPlayers, bench, isGameweek],
+    [
+      droppedPlayerPitchIds,
+      droppedPlayerBenchIds,
+      allPlayers,
+      bench,
+      isGameweek,
+      handleBenchDrop,
+      handlePitchDrop,
+    ],
   );
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div className='relative team-container'>
@@ -316,6 +351,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
             }
           })}
         </div>
+
         {/* Middlefilders */}
         <div className='flex justify-between top-40 absolute team'>
           {allPlayers.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
@@ -334,6 +370,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
             }
           })}
         </div>
+
         {/* Forwards */}
         <div className='flex justify-around top-60 absolute team'>
           {allPlayers.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
