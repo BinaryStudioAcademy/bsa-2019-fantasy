@@ -11,13 +11,13 @@ type Props = {
 const MatchStats = ({ title, hometeam_stats, awayteam_stats }: Props) => {
   const mapArray = (array: any) =>
     array.map((item: any) => (
-      <div className='stats-item font-thin'>
+      <div className='stats-item'>
         {item.player} <span className='count'>{item.count}</span>
       </div>
     ));
 
   return (
-    <div className='max-w-2xl'>
+    <div className='w-4/5 stats mb-3'>
       <h2 className='text-center bg-green-900 text-white p-1 font-bold'>{title}</h2>
       <div className='flex bg-white p-3'>
         <div className='left-team teamstats'>{mapArray(hometeam_stats)}</div>
