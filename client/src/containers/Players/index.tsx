@@ -4,14 +4,19 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { Link } from 'react-router-dom';
 import { Option } from 'react-dropdown';
 import ReactTable from 'react-table';
+import { animateScroll as scroll } from 'react-scroll';
+
+// import { ReactTableDefaults } from 'react-table';
+// import _ from 'lodash';
 
 import { RootState } from 'store/types';
 import { Player } from 'types/player.types';
 import { fetchPlayers } from './actions';
-import Dropdown from 'components/Dropdown';
 import PlayerHighlight from 'components/PlayerHighlight';
 import SearchBar from 'components/SearchBar';
 import PlayerDialog from 'components/PlayerDialog';
+import { getClubLogoUrl } from 'helpers/images';
+import { Club } from 'types/club.types';
 
 import './styles.scss';
 
@@ -20,135 +25,155 @@ type Props = {
   loading: boolean;
   error: string | null;
   fetchPlayers: typeof fetchPlayers;
+  clubs: [Club?];
 };
 
 type State = {
-  filters: any;
-  activePlayerId?: string | undefined;
+  //filters: any;
+  playerDialogData?: string | undefined;
+  playerHighlightData: any;
 };
 
 class PlayersPage extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      filters: {
-        sortBy: 'price',
-        sortDirection: 'DESC',
-      },
+      playerDialogData: undefined,
+      playerHighlightData: {},
     };
   }
 
-  filtersData = [
-    {
-      name: 'Sort by',
-      options: ['player_price', 'first_name', 'second_name'],
-      onChange: (value: any) => this.setState({ filters: { sortBy: value } }),
-    },
-    {
-      name: 'Sort order',
-      options: ['ASC', 'DESC'],
-      onChange: (value: any) => this.setState({ filters: { sortDirection: value } }),
-    },
-  ];
-  allPlayers = [
-    {
-      id: 'id1',
-      shirt: '/images/uniforms/field-players/shirt_1-66.png',
-      name: 'Lionel Messi',
-    },
-    {
-      id: 'id2',
-      shirt: '/images/uniforms/field-players/shirt_3-66.png',
-      name: 'Mario Balotelli',
-    },
-    {
-      id: 'id3',
-      shirt: '/images/uniforms/field-players/shirt_4-66.png',
-      name: 'Zlatan Ibrahimovic',
-    },
-    {
-      id: 'id4',
-      shirt: '/images/uniforms/field-players/shirt_1-66.png',
-      name: 'Lionelo Messi',
-    },
-    {
-      id: 'id5',
-      shirt: '/images/uniforms/field-players/shirt_3-66.png',
-      name: 'Mariotto Balotelli',
-    },
-    {
-      id: 'id6',
-      shirt: '/images/uniforms/field-players/shirt_4-66.png',
-      name: 'Zlatanus Ibrahimovic',
-    },
-  ];
+  onFetchData = async ({ page, pageSize, sorted }: any) => {
+    console.log('data fetch');
+    const defaultSort = { order_field: 'player_price', order_direction: 'DESC' };
+    const sort = sorted[0]
+      ? { order_field: sorted[0].id, order_direction: sorted[0].desc ? 'DESC' : 'ASC' }
+      : defaultSort;
+    await this.props.fetchPlayers({
+      offset: page * pageSize,
+      limit: pageSize,
+      ...sort,
+    });
+    if (Object.keys(this.state.playerHighlightData).length === 0) {
+      const playerOfTheWeek = this.props.players[0] && this.props.players[0].id;
+      playerOfTheWeek && this.setPlayerHighlight(playerOfTheWeek);
+    }
+  };
+
+  showModal = (id: string) => this.setState({ playerDialogData: id });
+  onModalDismiss = () => this.setState({ playerDialogData: undefined });
+
+  setPlayerHighlight = (id: string) => {
+    console.log(window);
+    const player = this.props.players.find((player) => player && player.id === id);
+    this.setState({
+      playerHighlightData: player,
+    });
+    console.log('animate');
+    const scrollElement = document.querySelector('#root>.flex>.flex-1');
+    scrollElement && scrollElement.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  getClubNameById = (club_id: string) => {
+    const club = this.props.clubs.find(
+      (club: Club | undefined) => club && club.id === club_id,
+    );
+    return (club && club.name) || undefined;
+  };
 
   readonly columns = [
     {
-      Header: 'img',
       accessor: 'club_id',
-      //Cell: (props: any) => <img className='w-5 mr-4' src={props.value} alt='Shirt' />, // Custom cell components!
+      width: 70,
+      className: 'flex justify-center bg-white rounded-l',
+      style: { marginLeft: '5px' },
+      Cell: (props: any) => {
+        return (
+          <div className='rounded-full shadow-figma p-1 bg-white w-10'>
+            <img
+              className='w-full'
+              src={getClubLogoUrl(props.value, '80')}
+              alt='Club logo'
+            />
+          </div>
+        );
+      },
     },
     {
-      Header: 'First Name',
+      Header: () => this.renderHeader('Name'),
       accessor: 'first_name',
+      className: 'flex items-center bg-white',
+
       Cell: (props: any) => (
-        <Link className='mr-4 font-semibold' to='#'>
-          {props.value}
-        </Link>
+        <div
+          className='mr-4 font-semibold hover:text-secondary2 cursor-pointer'
+          role='presentation'
+          onClick={() => this.setPlayerHighlight(props.original.id)}
+        >
+          {props.original.first_name} {props.original.second_name}
+        </div>
       ),
     },
     {
-      Header: 'Last Name',
-      accessor: 'second_name',
-      Cell: (props: any) => (
-        <Link className='mr-4 font-semibold' to='#'>
-          {props.value}
-        </Link>
-      ),
-    },
-    {
-      Header: 'Price',
+      Header: () => this.renderHeader('Price'),
       accessor: 'player_price',
+      className: 'flex items-center bg-white',
     },
     {
-      Header: 'Score',
+      Header: () => this.renderHeader('Score'),
       accessor: 'player_score',
+      className: 'flex items-center bg-white',
     },
     {
-      Header: 'Position',
+      Header: () => this.renderHeader('Position'),
       accessor: 'position',
+      className: 'flex items-center bg-white',
     },
     {
-      Header: 'Info',
-      //accessor: 'name',
-      Cell: () => (
-        <button className='w-4 h-4 justify-center leading-none flex ml-auto bg-background rounded-full text-xs font-semibold'>
+      Header: () => this.renderHeader('Club'),
+      accessor: 'club_id',
+      className: 'flex items-center bg-white',
+      Cell: (props: any) => {
+        return (
+          <Link className='mr-4 font-semibold' to='#'>
+            {this.getClubNameById(props.value)}
+          </Link>
+        );
+      },
+    },
+    {
+      Header: () => this.renderHeader('Info'),
+      className: 'flex items-center bg-white rounded-r',
+      Cell: (props: any) => (
+        <button
+          className='w-4 h-4 justify-center leading-none flex ml-auto bg-background rounded-full text-xs font-semibold'
+          onClick={() => {
+            this.setState({ playerDialogData: props.original.id });
+            console.log('props');
+            console.log(props);
+          }}
+        >
           i
         </button>
       ),
     },
   ];
 
-  onFilterChange = (opt: Option) => console.log(opt);
-  onFetchData = (state: any, instance: any) => {};
+  readonly tableStyle = {
+    border: 'none',
+    boxShadow: 'none',
+  };
 
-  showModal = (id: string) => this.setState({ activePlayerId: id });
-  onModalDismiss = () => this.setState({ activePlayerId: '' });
-
-  componentDidMount() {
-    const req = { order_field: 'player_price', order_direction: 'DESC', limit: '10' };
-    this.props.fetchPlayers(req);
-  }
-
-  componentDidUpdate() {
-    console.log('componentDidUpdate');
-    console.log(this.props.players);
-  }
+  renderHeader = (child: string) => {
+    return (
+      <div className='bg-white shadow-figma font-semibold text-sm rounded border border-greyBorder relative py-2 px-4'>
+        {child}
+      </div>
+    );
+  };
 
   renderTable() {
-    if (!this.props.players.length) return 'spinner';
-    console.log(this.props.players);
+    //if (!this.props.players.length) return 'spinner';
     const playerTableData = this.props.players.map((player) => {
       if (!player) return {};
       const {
@@ -158,15 +183,27 @@ class PlayersPage extends React.Component<Props, State> {
         player_score,
         position,
         club_id,
+        id,
       } = player;
-      return { first_name, second_name, player_price, player_score, position, club_id };
+      return {
+        first_name,
+        second_name,
+        player_price,
+        player_score,
+        position,
+        club_id,
+        id,
+      };
     });
     return (
       <ReactTable
+        style={this.tableStyle}
         data={playerTableData}
-        // pages={this.state.pages} // should default to -1 (which means we don't know how many pages we have)
+        pageSize={10}
+        pages={10} // should default to -1 (which means we don't know how many pages we have)
         manual
         columns={this.columns}
+        //column={this.columnProps}
         onFetchData={this.onFetchData}
       />
     );
@@ -177,26 +214,19 @@ class PlayersPage extends React.Component<Props, State> {
 
     return (
       <>
-        <PlayerHighlight />
+        <PlayerHighlight player={this.state.playerHighlightData} />
 
         <section className='allStats my-6'>
-          <div className='filters text-sm flex my-6'>
-            {this.filtersData.map(({ name, options, onChange }, index) => (
-              <div className='filter' key={name}>
-                <Dropdown {...{ placeholder: name, options, onChange }} />
-              </div>
-            ))}
-            <SearchBar />
-          </div>
-          <div className='bg-white shadow rounded my-4 p-6'>
-            <div className='column-header mb-4 font-semibold text-xs text-secondary2'>
-              All Players
+          <div className='filters text-sm flex mt-6 mb-1'>
+            <div className='ml-auto'>
+              <SearchBar />
             </div>
-            {this.renderTable()}
           </div>
-          {this.state.activePlayerId && (
+          {this.renderTable()}
+
+          {this.state.playerDialogData && (
             <PlayerDialog
-              id={this.state.activePlayerId}
+              id={this.state.playerDialogData}
               onDismiss={this.onModalDismiss}
             />
           )}
@@ -210,7 +240,7 @@ const mapStateToProps = (rootState: RootState) => ({
   players: rootState.players.players,
   loading: rootState.players.loading,
   error: rootState.players.error,
-  /*clubs: rootState.clubs,*/
+  clubs: rootState.clubs.clubs,
 });
 
 const actions = {

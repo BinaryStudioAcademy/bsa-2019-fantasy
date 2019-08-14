@@ -1,11 +1,9 @@
 import React from 'react';
-//import PropTypes from "prop-types";
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 
 import Notifications from 'components/Notifications';
-import SearchBar from 'components/SearchBar';
 
 import './styles.scss';
 
@@ -51,7 +49,6 @@ const Header = () => {
                 </NavLink>
               </div>
             ))}
-            <SearchBar className='py-1' />
           </div>
         </nav>
       </div>

@@ -17,7 +17,7 @@ export type Player = {
   code: number;
   createdAt: string;
   updatedAt: string;
-  club_id: number;
+  club_id: string;
 };
 
 export type PlayerFilter = {

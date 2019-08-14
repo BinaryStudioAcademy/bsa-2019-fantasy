@@ -5,7 +5,6 @@ import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import './styles.scss';
 
 const Dropdown = (props: ReactDropdownProps) => {
-  console.log(props.className);
   return (
     <ReactDropdown
       controlClassName='flex items-baseline cursor-pointer px-6 py-2'

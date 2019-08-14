@@ -32,6 +32,7 @@ import Spinner from 'components/Spinner';
 import Profile from 'containers/Profile';
 import SetPassword from 'containers/Profile/components/SetPassword';
 import { loadCurrentUser } from 'containers/Profile/actions';
+import { fetchClubs } from './fetchClubs/actions';
 
 import ForgotPassword from 'containers/ChangePassword/ForgotPassword';
 import ResetPassword from 'containers/ChangePassword/ResetPassword';
@@ -42,6 +43,10 @@ const Routing = () => {
 
   useEffect(() => {
     dispatch(loadCurrentUser());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchClubs());
   }, [dispatch]);
 
   if (isLoading) {

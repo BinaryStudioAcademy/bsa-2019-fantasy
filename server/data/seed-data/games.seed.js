@@ -1,22 +1,32 @@
-const now = new Date();
+import csv from 'csv-parser';
+import fs from 'fs';
+import path from 'path';
 
-export default [
-    {
-        hometeam_score: 23,
-        awayteam_score: 12
-    },
-    {
-        hometeam_score: 21,
-        awayteam_score: 20
-    },
-    {
-        hometeam_score: 13,
-        awayteam_score: 19
-    }
-].map(game => ({
-    ...game,
-    start: now,
-    end: now,
-    createdAt: now,
-    updatedAt: now
-}));
+const now = new Date();
+const results = [];
+
+const promise = new Promise((resolve, reject) => {
+  fs.createReadStream(path.resolve(__dirname, '../seed-data/csv/fixtures.csv'))
+    .pipe(
+      csv({
+        mapValues: ({ header, index, value }) => {
+          if (header !== 'finished' && header !== 'started' && header !== 'start') {
+            return parseFloat(value);
+          }
+          return value;
+        },
+      }),
+    )
+    .on('data', (data) => {
+      // eslint-disable-next-line no-param-reassign
+      data.createdAt = now;
+      // eslint-disable-next-line no-param-reassign
+      data.updatedAt = now;
+      results.push(data);
+    })
+    .on('end', () => {
+      resolve(results);
+    });
+});
+
+export default promise;
