@@ -1,8 +1,6 @@
 import { Router } from 'express';
 import * as userService from '../services/user.service';
 import * as leagueService from '../services/league.service';
-import * as gameweekHistoryService from '../services/gameweek-history.service';
-import * as teamMemberHistoryService from '../services/team-member-history.service';
 
 const router = Router();
 
@@ -24,21 +22,6 @@ router
           .catch(next),
       )
       .catch(next),
-  )
-
-  .get('/:userId/gameweek-history/:gameweekId', (req, res, next) => {
-    const { userId, gameweekId } = req.params;
-    gameweekHistoryService
-      .getCurrentHistoryById(userId, gameweekId)
-      .then((value) => {
-        teamMemberHistoryService
-          .getPlayersByGameweekId(value.id)
-          .then((players) => {
-            return res.json(players);
-          })
-          .catch(next);
-      })
-      .catch(next);
-  });
+  );
 
 export default router;
