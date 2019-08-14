@@ -30,8 +30,17 @@ router
   )
   .post('/join', (req, res, next) => {
     leagueService
-      .joinLeague(req.user.id, req.body.code)
-      .then((value) => res.json(value))
+      .getLeagueById(req.body.code)
+      .then((league) => {
+        if (league) {
+          leagueService
+            .joinLeague(req.user.id, req.body.code)
+            .then(() => res.json({ message: 'Successfully joined a league' }))
+            .catch(next);
+        } else {
+          res.status(400).json({ message: 'Invalid League Code provided' });
+        }
+      })
       .catch(next);
   })
   .put('/:id', (req, res, next) =>
