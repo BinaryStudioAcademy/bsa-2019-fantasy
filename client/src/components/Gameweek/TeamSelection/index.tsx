@@ -10,8 +10,9 @@ import PlayerSelectionDroppable, {
 } from '../PlayerSelectionDroppable';
 import { PlayerDraggableProps } from '../PlayerSelection';
 import { PlayerTypes } from '../PlayerSelection/types';
-
+import Button from '../../../components/Button';
 import './styles.scss';
+
 export interface TeamSelectionProps {
   isGameweek: boolean;
 }
@@ -219,7 +220,10 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
       } else return null;
     }),
   );
-
+  const saveTeam = (pitch: string[], bench: string[]) => {
+    console.log(`PITCH PLAYERS \n  ${pitch}`);
+    console.log(`BENCH PLAYERS \n  ${bench}`);
+  };
   //handles drop from bench to the pitch
   const handlePitchDrop = useCallback(
     (index: number, item: PlayerDraggableProps, benchIndex: number) => {
@@ -409,6 +413,14 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
         </div>
         <img src='images/field.svg' alt='field' className='field' />
         <div className='w-full h-40 bg-gray-400 rounded-r-sm' />
+        <div className='w-full h-40 top-120 absolute mt-4 flex justify-center align-center'>
+          <Button
+            className='w-3/12 h-12'
+            onClick={(e) => saveTeam(droppedPlayerPitchIds, droppedPlayerBenchIds)}
+          >
+            <p>Save Your Team</p>
+          </Button>
+        </div>
       </div>
     </DndProvider>
   );
