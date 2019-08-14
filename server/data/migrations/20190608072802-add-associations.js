@@ -103,7 +103,7 @@ export default {
         ),
         queryInterface.addColumn(
           'events',
-          'player_id',
+          'player_match_stat_id',
           {
             type: Sequelize.UUID,
             references: {
@@ -185,6 +185,20 @@ export default {
           },
           { transaction },
         ),
+        queryInterface.addColumn(
+          'player_match_stats',
+          'player_id',
+          {
+            type: Sequelize.UUID,
+            references: {
+              model: 'player_stats',
+              key: 'id',
+            },
+            onUpdate: 'CASCADE',
+            onDelete: 'SET NULL',
+          },
+          { transaction },
+        ),
       ]),
     ),
 
@@ -215,7 +229,7 @@ export default {
         queryInterface.removeColumn('gameweek_histories', 'gameweek_id', {
           transaction,
         }),
-        queryInterface.removeColumn('events', 'player_id', {
+        queryInterface.removeColumn('events', 'player_match_stat_id', {
           transaction,
         }),
         queryInterface.removeColumn('events', 'game_id', {
@@ -231,6 +245,9 @@ export default {
           transaction,
         }),
         queryInterface.removeColumn('team_member_histories', 'gameweek_history_id', {
+          transaction,
+        }),
+        queryInterface.removeColumn('player_match_stats', 'player_id', {
           transaction,
         }),
       ]),
