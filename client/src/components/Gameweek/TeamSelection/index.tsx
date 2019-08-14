@@ -15,192 +15,197 @@ import './styles.scss';
 export interface TeamSelectionProps {
   isGameweek: boolean;
 }
+
+const BENCH = [
+  {
+    accept: [
+      PlayerTypes.GOALKEEPER,
+      PlayerTypes.DEFENDER,
+      PlayerTypes.MIDDLEFIELDER,
+      PlayerTypes.FORWARD,
+    ],
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/goalkeepers/shirt_43_1-66.png',
+      name: 'Ederson',
+      club: 'TOT (A)',
+      type: PlayerTypes.GOALKEEPER,
+    },
+  },
+  {
+    accept: [
+      PlayerTypes.GOALKEEPER,
+      PlayerTypes.DEFENDER,
+      PlayerTypes.MIDDLEFIELDER,
+      PlayerTypes.FORWARD,
+    ],
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_43-66.png',
+      name: 'Laporte',
+      club: 'TOT (H)',
+      type: PlayerTypes.DEFENDER,
+    },
+  },
+  {
+    accept: [
+      PlayerTypes.GOALKEEPER,
+      PlayerTypes.DEFENDER,
+      PlayerTypes.MIDDLEFIELDER,
+      PlayerTypes.FORWARD,
+    ],
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_31-66.png',
+      name: 'Townsed',
+      club: 'SHU (A)',
+      type: PlayerTypes.DEFENDER,
+    },
+  },
+  {
+    accept: [
+      PlayerTypes.GOALKEEPER,
+      PlayerTypes.DEFENDER,
+      PlayerTypes.MIDDLEFIELDER,
+      PlayerTypes.FORWARD,
+    ],
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_11-66.png',
+      name: 'Calvert-Lewin',
+      club: 'WAT (H)',
+      type: PlayerTypes.FORWARD,
+    },
+  },
+];
+
+const PITCH = [
+  {
+    accept: PlayerTypes.GOALKEEPER,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/goalkeepers/shirt_14_1-66.png',
+      name: 'Allison',
+      club: 'SOU (A)',
+      type: PlayerTypes.GOALKEEPER,
+    },
+  },
+  {
+    accept: PlayerTypes.DEFENDER,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_14-66.png',
+      name: 'van Dijk',
+      club: 'SOU (A)',
+      type: PlayerTypes.DEFENDER,
+    },
+  },
+
+  {
+    accept: PlayerTypes.DEFENDER,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_14-66.png',
+      name: 'Aleksandr Arnold',
+      club: 'SOU (A)',
+      type: PlayerTypes.DEFENDER,
+    },
+  },
+
+  {
+    accept: PlayerTypes.DEFENDER,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_43-66.png',
+      name: 'Walker',
+      club: 'TOT (H)',
+      type: PlayerTypes.DEFENDER,
+    },
+  },
+  {
+    accept: PlayerTypes.DEFENDER,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_3-66.png',
+      name: 'David Luiz',
+      club: 'BUR (H)',
+      type: PlayerTypes.DEFENDER,
+    },
+  },
+  {
+    accept: PlayerTypes.MIDDLEFIELDER,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_57-66.png',
+      name: 'Doucoure',
+      club: 'EVE (A)',
+      type: PlayerTypes.MIDDLEFIELDER,
+    },
+  },
+
+  {
+    accept: PlayerTypes.MIDDLEFIELDER,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_1-66.png',
+      name: 'Pogba',
+      club: 'WOL (A)',
+      type: PlayerTypes.MIDDLEFIELDER,
+    },
+  },
+  {
+    accept: PlayerTypes.MIDDLEFIELDER,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_13-66.png',
+      name: 'Perez',
+      club: 'CHE (A)',
+      type: PlayerTypes.MIDDLEFIELDER,
+    },
+  },
+
+  {
+    accept: PlayerTypes.MIDDLEFIELDER,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_39-66.png',
+      name: 'Moutinho',
+      club: 'MUN (H)',
+      type: PlayerTypes.MIDDLEFIELDER,
+    },
+  },
+  {
+    accept: PlayerTypes.FORWARD,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_1-66.png',
+      name: 'Rashford',
+      club: 'WOL (A)',
+      type: PlayerTypes.FORWARD,
+    },
+  },
+
+  {
+    accept: PlayerTypes.FORWARD,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_57-66.png',
+      name: 'Deeney',
+      club: 'EVE (A)',
+      type: PlayerTypes.FORWARD,
+    },
+  },
+];
+
 const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
   //set bench drag&drop items, which accept all player types
-  const [bench, setBench] = useState<BenchDroppable[]>([
-    {
-      accept: [
-        PlayerTypes.GOALKEEPER,
-        PlayerTypes.DEFENDER,
-        PlayerTypes.MIDDLEFIELDER,
-        PlayerTypes.FORWARD,
-      ],
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/goalkeepers/shirt_43_1-66.png',
-        name: 'Ederson',
-        club: 'TOT (A)',
-        type: PlayerTypes.GOALKEEPER,
-      },
-    },
-    {
-      accept: [
-        PlayerTypes.GOALKEEPER,
-        PlayerTypes.DEFENDER,
-        PlayerTypes.MIDDLEFIELDER,
-        PlayerTypes.FORWARD,
-      ],
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_43-66.png',
-        name: 'Laporte',
-        club: 'TOT (H)',
-        type: PlayerTypes.DEFENDER,
-      },
-    },
-    {
-      accept: [
-        PlayerTypes.GOALKEEPER,
-        PlayerTypes.DEFENDER,
-        PlayerTypes.MIDDLEFIELDER,
-        PlayerTypes.FORWARD,
-      ],
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_31-66.png',
-        name: 'Townsed',
-        club: 'SHU (A)',
-        type: PlayerTypes.DEFENDER,
-      },
-    },
-    {
-      accept: [
-        PlayerTypes.GOALKEEPER,
-        PlayerTypes.DEFENDER,
-        PlayerTypes.MIDDLEFIELDER,
-        PlayerTypes.FORWARD,
-      ],
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_11-66.png',
-        name: 'Calvert-Lewin',
-        club: 'WAT (H)',
-        type: PlayerTypes.FORWARD,
-      },
-    },
-  ]);
+  const [bench, setBench] = useState<BenchDroppable[]>(BENCH);
   //set bench drag&drop items, which accept only specific player types
-  const [allPlayers, setAllPlayers] = useState<PlayerDroppable[]>([
-    {
-      accept: PlayerTypes.GOALKEEPER,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/goalkeepers/shirt_14_1-66.png',
-        name: 'Allison',
-        club: 'SOU (A)',
-        type: PlayerTypes.GOALKEEPER,
-      },
-    },
-    {
-      accept: PlayerTypes.DEFENDER,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_14-66.png',
-        name: 'van Dijk',
-        club: 'SOU (A)',
-        type: PlayerTypes.DEFENDER,
-      },
-    },
-
-    {
-      accept: PlayerTypes.DEFENDER,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_14-66.png',
-        name: 'Aleksandr Arnold',
-        club: 'SOU (A)',
-        type: PlayerTypes.DEFENDER,
-      },
-    },
-
-    {
-      accept: PlayerTypes.DEFENDER,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_43-66.png',
-        name: 'Walker',
-        club: 'TOT (H)',
-        type: PlayerTypes.DEFENDER,
-      },
-    },
-    {
-      accept: PlayerTypes.DEFENDER,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_3-66.png',
-        name: 'David Luiz',
-        club: 'BUR (H)',
-        type: PlayerTypes.DEFENDER,
-      },
-    },
-    {
-      accept: PlayerTypes.MIDDLEFIELDER,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_57-66.png',
-        name: 'Doucoure',
-        club: 'EVE (A)',
-        type: PlayerTypes.MIDDLEFIELDER,
-      },
-    },
-
-    {
-      accept: PlayerTypes.MIDDLEFIELDER,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_1-66.png',
-        name: 'Pogba',
-        club: 'WOL (A)',
-        type: PlayerTypes.MIDDLEFIELDER,
-      },
-    },
-    {
-      accept: PlayerTypes.MIDDLEFIELDER,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_13-66.png',
-        name: 'Perez',
-        club: 'CHE (A)',
-        type: PlayerTypes.MIDDLEFIELDER,
-      },
-    },
-
-    {
-      accept: PlayerTypes.MIDDLEFIELDER,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_39-66.png',
-        name: 'Moutinho',
-        club: 'MUN (H)',
-        type: PlayerTypes.MIDDLEFIELDER,
-      },
-    },
-    {
-      accept: PlayerTypes.FORWARD,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_1-66.png',
-        name: 'Rashford',
-        club: 'WOL (A)',
-        type: PlayerTypes.FORWARD,
-      },
-    },
-
-    {
-      accept: PlayerTypes.FORWARD,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_57-66.png',
-        name: 'Deeney',
-        club: 'EVE (A)',
-        type: PlayerTypes.FORWARD,
-      },
-    },
-  ]);
+  const [pitch, setPitch] = useState<PlayerDroppable[]>(PITCH);
 
   //set ids of players on the pitch
   const [droppedPlayerPitchIds, setdroppedPlayerPitchIds] = useState<string[]>(
-    allPlayers.map((el) => {
+    pitch.map((el) => {
       if (el.lastDroppedItem.id) {
         return el.lastDroppedItem.id;
       } else return null;
@@ -219,8 +224,8 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
   const handlePitchDrop = useCallback(
     (index: number, item: PlayerDraggableProps, benchIndex: number) => {
       const { id } = item;
-      setAllPlayers(
-        update(allPlayers, {
+      setPitch(
+        update(pitch, {
           [index]: {
             lastDroppedItem: {
               $set: item,
@@ -234,15 +239,15 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
         update(bench, {
           [benchIndex]: {
             lastDroppedItem: {
-              $set: allPlayers[index].lastDroppedItem,
+              $set: pitch[index].lastDroppedItem,
             },
           },
         }),
       );
-      droppedPlayerBenchIds.splice(benchIndex, 1, allPlayers[index].lastDroppedItem.id);
+      droppedPlayerBenchIds.splice(benchIndex, 1, pitch[index].lastDroppedItem.id);
       setDroppedPlayerBenchIds([...droppedPlayerBenchIds]);
     },
-    [droppedPlayerPitchIds, droppedPlayerBenchIds, allPlayers, bench],
+    [droppedPlayerPitchIds, droppedPlayerBenchIds, pitch, bench],
   );
 
   //handles drop from pitch to the bench
@@ -261,8 +266,8 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
       droppedPlayerBenchIds.splice(index, 1, id);
       setDroppedPlayerBenchIds([...droppedPlayerBenchIds]);
 
-      setAllPlayers(
-        update(allPlayers, {
+      setPitch(
+        update(pitch, {
           [pitchIndex]: {
             lastDroppedItem: {
               $set: bench[index].lastDroppedItem,
@@ -274,7 +279,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
       droppedPlayerPitchIds.splice(pitchIndex, 1, bench[index].lastDroppedItem.id);
       setdroppedPlayerPitchIds([...droppedPlayerPitchIds]);
     },
-    [droppedPlayerPitchIds, droppedPlayerBenchIds, allPlayers, bench],
+    [droppedPlayerPitchIds, droppedPlayerBenchIds, pitch, bench],
   );
 
   //handles drag&drop action
@@ -290,7 +295,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
       const playerBenchIndex = droppedPlayerBenchIds.indexOf(id);
 
       // when we move from the bench
-      if (playerBenchIndex > -1 && allPlayers !== undefined && allPlayers[index]) {
+      if (playerBenchIndex > -1 && pitch !== undefined && pitch[index]) {
         handlePitchDrop(index, item, playerBenchIndex);
         //when we move from the pitch
       } else if (playerPitchIndex > -1 && bench !== undefined && bench[index]) {
@@ -300,7 +305,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
     [
       droppedPlayerPitchIds,
       droppedPlayerBenchIds,
-      allPlayers,
+      pitch,
       bench,
       isGameweek,
       handleBenchDrop,
@@ -314,7 +319,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
         {/* Goalkeeper */}
 
         <div className='flex justify-around absolute team'>
-          {allPlayers.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+          {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
             if (accept === PlayerTypes.GOALKEEPER) {
               return (
                 <PlayerSelectionDroppable
@@ -333,7 +338,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
 
         {/* Defenders */}
         <div className='flex justify-between top-20 absolute team'>
-          {allPlayers.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+          {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
             if (accept === PlayerTypes.DEFENDER) {
               return (
                 <PlayerSelectionDroppable
@@ -352,7 +357,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
 
         {/* Middlefilders */}
         <div className='flex justify-between top-40 absolute team'>
-          {allPlayers.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+          {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
             if (accept === PlayerTypes.MIDDLEFIELDER) {
               return (
                 <PlayerSelectionDroppable
@@ -371,7 +376,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
 
         {/* Forwards */}
         <div className='flex justify-around top-60 absolute team'>
-          {allPlayers.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+          {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
             if (accept === PlayerTypes.FORWARD) {
               return (
                 <PlayerSelectionDroppable
