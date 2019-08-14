@@ -41,7 +41,6 @@ export default {
         'SELECT id FROM "games";',
         options,
       );
-
       await queryInterface.bulkInsert('player_match_stats', playerMatchSeed, {});
       const playerMatchStats = await queryInterface.sequelize.query(
         'SELECT id FROM "player_match_stats";',
