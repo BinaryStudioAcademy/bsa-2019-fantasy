@@ -295,10 +295,10 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
       const playerBenchIndex = droppedPlayerBenchIds.indexOf(id);
 
       // when we move from the bench
-      if (playerBenchIndex > -1 && pitch !== undefined && pitch[index]) {
+      if (playerBenchIndex > -1 && pitch[index] && pitch !== undefined) {
         handlePitchDrop(index, item, playerBenchIndex);
         //when we move from the pitch
-      } else if (playerPitchIndex > -1 && bench !== undefined && bench[index]) {
+      } else if (playerPitchIndex > -1 && bench[index] && bench !== undefined) {
         handleBenchDrop(index, item, playerPitchIndex);
       }
     },
