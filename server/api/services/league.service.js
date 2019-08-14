@@ -35,3 +35,15 @@ export const joinLeague = async (participant_id, league_id) => {
 
   return newParticipant;
 };
+
+export const joinGlobalLeague = async (participant_id) => {
+  const { id } = await leagueRepository.getByName('Overall');
+
+  const newParticipant = await leagueParticipantRepository.addParticipant({
+    is_creator: false,
+    league_id: id,
+    participant_id,
+  });
+
+  return newParticipant;
+};

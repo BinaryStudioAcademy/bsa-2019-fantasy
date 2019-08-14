@@ -23,10 +23,10 @@ export default (models) => {
   LeagueParticipant.belongsTo(League, { foreignKey: 'league_id', as: 'league' });
   LeagueParticipant.belongsTo(User, { foreignKey: 'participant_id', as: 'user' });
 
-  // League.hasMany(LeagueParticipant, {
-  //   foreignKey: 'league_id',
-  //   as: 'league_participants',
-  // });
+  League.hasMany(LeagueParticipant, {
+    foreignKey: 'league_id',
+    as: 'league_participants',
+  });
 
   // TeamMemberHistory.belongsTo(PlayerStat, {
   //   foreignKey: 'player_id',

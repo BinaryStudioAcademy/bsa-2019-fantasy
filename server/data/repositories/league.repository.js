@@ -3,7 +3,11 @@ import BaseRepository from './base.repository';
 
 class LeagueRepository extends BaseRepository {
   getById(id) {
-    return this.model.findOne({ where: { id } });
+    return this.model.findOne({ where: { id }, include: ['league_participants'] });
+  }
+
+  getByName(name) {
+    return this.model.findOne({ where: { name } });
   }
 
   getAllPublic() {
