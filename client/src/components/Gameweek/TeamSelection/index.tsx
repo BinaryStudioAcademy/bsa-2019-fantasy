@@ -413,14 +413,16 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
         </div>
         <img src='images/field.svg' alt='field' className='field' />
         <div className='w-full h-40 bg-gray-400 rounded-r-sm' />
-        <div className='w-full h-40 top-120 absolute mt-4 flex justify-center align-center'>
-          <Button
-            className='w-3/12 h-12 my-3'
-            onClick={(e) => saveTeam(droppedPlayerPitchIds, droppedPlayerBenchIds)}
-          >
-            <p>Save Your Team</p>
-          </Button>
-        </div>
+        {isGameweek ? null : (
+          <div className='w-full h-24 absolute flex justify-center'>
+            <Button
+              className='w-3/12 h-12 mt-3'
+              onClick={(e) => saveTeam(droppedPlayerPitchIds, droppedPlayerBenchIds)}
+            >
+              <p>Save Your Team</p>
+            </Button>
+          </div>
+        )}
       </div>
     </DndProvider>
   );
