@@ -71,19 +71,12 @@ class PlayersPage extends React.Component<Props, State> {
     scrollElement && scrollElement.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-<<<<<<< HEAD
   getClubById = (id: number) => {
     return this.props.clubs.find((club: Club | undefined) => club && club.id === id);
   };
 
   getClubNameById = (club_id: number) => {
     const club = this.getClubById(club_id);
-=======
-  getClubNameById = (club_id: number) => {
-    const club = this.props.clubs.find(
-      (club: Club | undefined) => club && club.id === club_id,
-    );
->>>>>>> dev
     return (club && club.name) || undefined;
   };
 
