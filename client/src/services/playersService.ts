@@ -7,6 +7,8 @@ export const getPlayers = async (filter: any) => {
     query: filter,
   });
 
+  console.log(response);
+
   return response.json();
 };
 
