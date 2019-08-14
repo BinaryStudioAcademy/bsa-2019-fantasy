@@ -13,7 +13,7 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
-  .post('/club', (req, res, next) =>
+  .put('/club', (req, res, next) =>
     // TODO: fix updating user favourite club
     userService
       .updateById(req.user.id, req.body.club)

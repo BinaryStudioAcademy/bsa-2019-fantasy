@@ -1,5 +1,9 @@
+import Sequelize from 'sequelize';
+
 import { LeagueModel } from '../models/index';
 import BaseRepository from './base.repository';
+
+const { Op } = Sequelize;
 
 class LeagueRepository extends BaseRepository {
   getById(id) {
@@ -13,6 +17,17 @@ class LeagueRepository extends BaseRepository {
   getAllPublic() {
     return this.model.findAll({
       where: { private: false },
+    });
+  }
+
+  getAllByName(name) {
+    return this.model.findAll({
+      where: {
+        name: {
+          [Op.iLike]: `%${name}%`,
+        },
+        private: false,
+      },
     });
   }
 }
