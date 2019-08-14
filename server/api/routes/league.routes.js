@@ -6,12 +6,6 @@ const router = Router();
 router
   .get('/', (req, res, next) =>
     leagueService
-      .getAllLeagues()
-      .then((value) => res.json(value))
-      .catch(next),
-  )
-  .get('/public', (req, res, next) =>
-    leagueService
       .getPublicLeagues()
       .then((value) => res.json(value))
       .catch(next),
