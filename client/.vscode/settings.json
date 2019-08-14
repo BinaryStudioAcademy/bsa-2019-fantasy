@@ -27,5 +27,6 @@
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "prettier.eslintIntegration": false
+  "prettier.eslintIntegration": false,
+  "files.eol": "\r\n"
 }

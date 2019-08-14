@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import moment from 'moment';
 import schedule from 'node-schedule';
 
@@ -13,6 +14,10 @@ const gameweekScheduler = async () => {
     const now = moment().add(2, 's');
     return moment(w.start).isBefore(now) && moment(w.end).isAfter(now);
   });
+
+  if (!currentGameweek) {
+    return;
+  }
 
   if (!isFirstLaunch) {
     const players = await playerRepository.getAll();

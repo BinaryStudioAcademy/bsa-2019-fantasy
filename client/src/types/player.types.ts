@@ -1,5 +1,3 @@
-import { Identifier } from '@babel/types';
-
 export type Player = {
   id: string;
   first_name: string;
