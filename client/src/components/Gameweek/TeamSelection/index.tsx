@@ -415,7 +415,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
         <div className='w-full h-40 bg-gray-400 rounded-r-sm' />
         <div className='w-full h-40 top-120 absolute mt-4 flex justify-center align-center'>
           <Button
-            className='w-3/12 h-12'
+            className='w-3/12 h-12 my-3'
             onClick={(e) => saveTeam(droppedPlayerPitchIds, droppedPlayerBenchIds)}
           >
             <p>Save Your Team</p>
