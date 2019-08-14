@@ -1,7 +1,5 @@
-import { Identifier } from '@babel/types';
-
 export type Club = {
-  id: number;
+  id: string;
   name: string;
   short_name: string;
   win: number;

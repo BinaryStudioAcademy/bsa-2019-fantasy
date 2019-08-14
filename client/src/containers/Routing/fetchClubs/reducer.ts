@@ -21,7 +21,7 @@ export default (state = initialState, action: FetchClubsAction) => {
     case FETCH_CLUBS_SUCCESS:
       return {
         ...state,
-        clubs: [action.payload],
+        clubs: action.payload,
         loading: false,
       };
     case FETCH_CLUBS_FAILURE:
