@@ -74,11 +74,19 @@ class PlayersPage extends React.Component<Props, State> {
     scrollElement && scrollElement.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  getClubNameById = (club_id: string) => {
-    const club = this.props.clubs.find(
-      (club: Club | undefined) => club && club.id === club_id,
-    );
+  getClubById = (id: number) => {
+    return this.props.clubs.find((club: Club | undefined) => club && club.id === id);
+  };
+
+  getClubNameById = (club_id: number) => {
+    const club = this.getClubById(club_id);
     return (club && club.name) || undefined;
+  };
+
+  getClubImageById = (id: number) => {
+    const club = this.getClubById(id);
+    const url = club && club.code && getClubLogoUrl(club.code, 80);
+    return url || '';
   };
 
   readonly columns = [
@@ -92,7 +100,7 @@ class PlayersPage extends React.Component<Props, State> {
           <div className='rounded-full shadow-figma p-1 bg-white w-10'>
             <img
               className='w-full'
-              src={getClubLogoUrl(props.value, '80')}
+              src={this.getClubImageById(props.value)}
               alt='Club logo'
             />
           </div>

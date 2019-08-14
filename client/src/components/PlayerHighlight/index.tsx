@@ -24,9 +24,17 @@ Object.assign(Chart.defaults.global, {
 
 const PlayerHighlight = ({ player }: { player: Player }) => {
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
-  const getClubNameById = (id: string) => {
-    const club = clubs.find((club: Club) => club.id === id);
+  const getClubById = (id: number) => {
+    return clubs.find((club: Club) => club.id === id);
+  };
+  const getClubNameById = (id: number) => {
+    const club = getClubById(id);
     return club && club.name;
+  };
+
+  const getClubCodeById = (id: number) => {
+    const club = getClubById(id);
+    return club && club.code;
   };
 
   const {
@@ -106,7 +114,11 @@ const PlayerHighlight = ({ player }: { player: Player }) => {
         style={{ maxWidth: '25%', height: '490px' }}
       >
         <div className='clubLogo rounded-full shadow-figma p-4'>
-          <img className='w-16' src={getClubLogoUrl(club_id, '80')} alt='Club logo' />
+          <img
+            className='w-16'
+            src={getClubLogoUrl(getClubCodeById(club_id), 80)}
+            alt='Club logo'
+          />
         </div>
 
         <div className='award text-secondary2 mt-12'>
