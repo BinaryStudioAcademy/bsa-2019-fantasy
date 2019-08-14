@@ -1,11 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { Line as LineChart } from 'react-chartjs-2';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
-
 import './styles.scss';
+
+const mockChartData = {
+  labels: ['GW1', 'GW2', 'GW3', 'GW4', 'GW5', 'GW6', 'GW7'],
+  datasets: [
+    {
+      label: 'points',
+      fill: true,
+      borderColor: '#1EE3CF',
+      backgroundColor: 'rgba(30, 227, 207, 0.3)',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverRadius: 7,
+      data: [10, 59, 80, 81, 56, 55, 40],
+    },
+  ],
+};
 
 const GameweekHistory = () => {
   return (
@@ -28,6 +42,9 @@ const GameweekHistory = () => {
           >
             Next <FaChevronRight />
           </Link>
+        </div>
+        <div className='w-6/12'>
+          <LineChart data={mockChartData} />
         </div>
       </div>
       <div className='gameweek-history-content'>

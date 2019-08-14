@@ -12,7 +12,7 @@ import { RootState } from 'store/types';
 
 import './styles.scss';
 import { Player } from 'types/player.types';
-import { Club } from 'types/club.types';
+import { Club } from 'types/club.type';
 
 // default chart values
 Object.assign(Chart.defaults.global, {
@@ -24,7 +24,7 @@ Object.assign(Chart.defaults.global, {
 
 const PlayerHighlight = ({ player }: { player: Player }) => {
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
-  const getClubNameById = (id: string) => {
+  const getClubNameById = (id: number) => {
     const club = clubs.find((club: Club) => club.id === id);
     return club && club.name;
   };
