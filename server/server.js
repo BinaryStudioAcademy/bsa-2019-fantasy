@@ -36,7 +36,7 @@ fakerSocket.on('connect', () => {
 
   fakerSocket.on('someEvent', (data) => {
     // eslint-disable-next-line no-console
-    console.log('Received data from faker ', data.success);
+    console.log('Received data from faker ', data);
   });
 });
 
