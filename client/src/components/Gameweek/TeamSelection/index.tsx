@@ -216,68 +216,66 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
   );
 
   //handles drop from bench to the pitch
-  const handlePitchDrop = (
-    index: number,
-    item: PlayerDraggableProps,
-    benchIndex: number,
-  ) => {
-    const { id } = item;
-    setAllPlayers(
-      update(allPlayers, {
-        [index]: {
-          lastDroppedItem: {
-            $set: item,
+  const handlePitchDrop = useCallback(
+    (index: number, item: PlayerDraggableProps, benchIndex: number) => {
+      const { id } = item;
+      setAllPlayers(
+        update(allPlayers, {
+          [index]: {
+            lastDroppedItem: {
+              $set: item,
+            },
           },
-        },
-      }),
-    );
-    droppedPlayerPitchIds.splice(index, 1, id);
-    setdroppedPlayerPitchIds([...droppedPlayerPitchIds]);
-    setBench(
-      update(bench, {
-        [benchIndex]: {
-          lastDroppedItem: {
-            $set: allPlayers[index].lastDroppedItem,
+        }),
+      );
+      droppedPlayerPitchIds.splice(index, 1, id);
+      setdroppedPlayerPitchIds([...droppedPlayerPitchIds]);
+      setBench(
+        update(bench, {
+          [benchIndex]: {
+            lastDroppedItem: {
+              $set: allPlayers[index].lastDroppedItem,
+            },
           },
-        },
-      }),
-    );
-    droppedPlayerBenchIds.splice(benchIndex, 1, allPlayers[index].lastDroppedItem.id);
-    setDroppedPlayerBenchIds([...droppedPlayerBenchIds]);
-  };
+        }),
+      );
+      droppedPlayerBenchIds.splice(benchIndex, 1, allPlayers[index].lastDroppedItem.id);
+      setDroppedPlayerBenchIds([...droppedPlayerBenchIds]);
+    },
+    [droppedPlayerPitchIds, droppedPlayerBenchIds, allPlayers, bench],
+  );
 
   //handles drop from pitch to the bench
-  const handleBenchDrop = (
-    index: number,
-    item: PlayerDraggableProps,
-    pitchIndex: number,
-  ) => {
-    const { id } = item;
-    setBench(
-      update(bench, {
-        [index]: {
-          lastDroppedItem: {
-            $set: item,
+  const handleBenchDrop = useCallback(
+    (index: number, item: PlayerDraggableProps, pitchIndex: number) => {
+      const { id } = item;
+      setBench(
+        update(bench, {
+          [index]: {
+            lastDroppedItem: {
+              $set: item,
+            },
           },
-        },
-      }),
-    );
-    droppedPlayerBenchIds.splice(index, 1, id);
-    setDroppedPlayerBenchIds([...droppedPlayerBenchIds]);
+        }),
+      );
+      droppedPlayerBenchIds.splice(index, 1, id);
+      setDroppedPlayerBenchIds([...droppedPlayerBenchIds]);
 
-    setAllPlayers(
-      update(allPlayers, {
-        [pitchIndex]: {
-          lastDroppedItem: {
-            $set: bench[index].lastDroppedItem,
+      setAllPlayers(
+        update(allPlayers, {
+          [pitchIndex]: {
+            lastDroppedItem: {
+              $set: bench[index].lastDroppedItem,
+            },
           },
-        },
-      }),
-    );
+        }),
+      );
 
-    droppedPlayerPitchIds.splice(pitchIndex, 1, bench[index].lastDroppedItem.id);
-    setdroppedPlayerPitchIds([...droppedPlayerPitchIds]);
-  };
+      droppedPlayerPitchIds.splice(pitchIndex, 1, bench[index].lastDroppedItem.id);
+      setdroppedPlayerPitchIds([...droppedPlayerPitchIds]);
+    },
+    [droppedPlayerPitchIds, droppedPlayerBenchIds, allPlayers, bench],
+  );
 
   //handles drag&drop action
   const handleDrop = useCallback(
