@@ -7,4 +7,6 @@ export type Club = {
   loss: number;
   played: number;
   code: number;
+  createdAt: string;
+  updatedAt: string;
 };

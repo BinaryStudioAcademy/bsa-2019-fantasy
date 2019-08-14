@@ -16,7 +16,7 @@ import PlayerHighlight from 'components/PlayerHighlight';
 import SearchBar from 'components/SearchBar';
 import PlayerDialog from 'components/PlayerDialog';
 import { getClubLogoUrl } from 'helpers/images';
-import { Club } from 'types/club.types';
+import { Club } from 'types/club.type';
 
 import './styles.scss';
 
@@ -35,13 +35,10 @@ type State = {
 };
 
 class PlayersPage extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      playerDialogData: undefined,
-      playerHighlightData: {},
-    };
-  }
+  state: State = {
+    playerDialogData: undefined,
+    playerHighlightData: {},
+  };
 
   onFetchData = async ({ page, pageSize, sorted }: any) => {
     console.log('data fetch');
@@ -74,7 +71,7 @@ class PlayersPage extends React.Component<Props, State> {
     scrollElement && scrollElement.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  getClubNameById = (club_id: string) => {
+  getClubNameById = (club_id: number) => {
     const club = this.props.clubs.find(
       (club: Club | undefined) => club && club.id === club_id,
     );

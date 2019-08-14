@@ -1,5 +1,5 @@
 import * as clubsService from 'services/clubsService';
-import { Club } from 'types/club.types';
+import { Club } from 'types/club.type';
 import {
   FETCH_CLUBS_REQUEST,
   FETCH_CLUBS_SUCCESS,
