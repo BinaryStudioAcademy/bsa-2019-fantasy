@@ -18,6 +18,7 @@ const Transfers = ({ loadPlayersAction, players }: Props) => {
     loadPlayersAction();
   }, []);
 
+  console.log(players);
   return (
     <div className='transfers-page'>
       <div className='jumbotron paper mb-12 rounded flex items-end justify-between pt-6'>
@@ -26,8 +27,7 @@ const Transfers = ({ loadPlayersAction, players }: Props) => {
             <div className='sub title mb-4 flex items-center'>Transfers Page</div>
             Transfers
           </h2>
-          {/* TODO: pass players as props */}
-          <PlayersSelection />
+          <PlayersSelection players={players} />
         </div>
       </div>
     </div>

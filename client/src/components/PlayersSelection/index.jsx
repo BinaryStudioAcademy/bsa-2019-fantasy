@@ -1,7 +1,7 @@
 import React from 'react';
 import { PlayerList } from '../PlayersList/index';
 
-export const PlayersSelection = () => {
+export const PlayersSelection = ({players}) => {
   return (
     <div className='bg-gray-300 px-4 py-4'>
       <h3 className='font-bold'>Player Selection</h3>
@@ -149,7 +149,7 @@ export const PlayersSelection = () => {
         <strong>6</strong> players shown
       </p>
 
-      <PlayerList players />
+      <PlayerList players={players} />
 
     </div>
   );
