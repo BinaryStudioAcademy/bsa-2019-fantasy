@@ -1,13 +1,14 @@
 import * as playersService from 'services/playersService';
 import { Player } from 'types/player.types';
 import { Fixture } from 'types/fixture.types';
+import { History } from 'types/history.types';
 import {
   FETCH_PLAYERS_SUCCESS,
   FetchPlayersAction,
   AsyncFetchPlayersAction,
-  FETCH_PLAYER_FIXTURES_SUCCESS,
-  FetchFixturesForPlayerAction,
-  AsyncFetchFixturesForPlayerAction,
+  FETCH_PLAYER_DIALOG_CONTENT_SUCCESS,
+  FetchaDataForPlayerAction,
+  AsyncFetchaDataForPlayerAction,
 } from './action.type';
 
 const fetchPlayersSuccess = (payload: [Player]): FetchPlayersAction => ({
@@ -22,17 +23,19 @@ export const fetchPlayers = (filter: any): AsyncFetchPlayersAction => async (
   dispatch(fetchPlayersSuccess(result));
 };
 
-const fetchFixturesForPlayerSuccess = (
-  payload: [Fixture],
-): FetchFixturesForPlayerAction => ({
-  type: FETCH_PLAYER_FIXTURES_SUCCESS,
+const fetchDataForPlayerSuccess = (payload: {
+  fixtures: [Fixture];
+  history: [History];
+}): FetchaDataForPlayerAction => ({
+  type: FETCH_PLAYER_DIALOG_CONTENT_SUCCESS,
   payload: payload,
 });
 
-export const fetchFixturesForPlayer = (
+export const fetchDataForPlayer = (
   playerId: string,
   clubId: string,
-): AsyncFetchFixturesForPlayerAction => async (dispatch) => {
-  const result = await playersService.getFixturesForPlayer(playerId, clubId);
-  dispatch(fetchFixturesForPlayerSuccess(result));
+): AsyncFetchaDataForPlayerAction => async (dispatch) => {
+  const fixtures = await playersService.getFixturesForPlayer(playerId, clubId);
+  const history = await playersService.getStatsForPlayer(playerId);
+  dispatch(fetchDataForPlayerSuccess({ fixtures, history }));
 };

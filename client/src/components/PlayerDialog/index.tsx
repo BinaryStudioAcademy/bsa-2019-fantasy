@@ -5,10 +5,10 @@ import classNames from 'classnames';
 import './styles.module.scss';
 
 type Props = {
-  id: string;
-  clubId: string;
+  playerDialogData: { id: string; clubId: string };
   onDismiss: () => void;
-  loadFixturesForPlayer: (playerId: string, clubId: string) => {}[];
+  loadDataForPlayer: (playerId: string, clubId: string) => {};
+  loading: boolean;
 };
 
 const PlayerDialog = (props: Props) => {
@@ -147,7 +147,8 @@ const PlayerDialog = (props: Props) => {
   const player = data[0].games[0].stat;
 
   useEffect(() => {
-    console.log(props.loadFixturesForPlayer(props.id, props.clubId));
+    const { id, clubId } = props.playerDialogData;
+    console.log(props.loadDataForPlayer(id, clubId));
   });
 
   const backgroundColors: { [key: string]: string } = {
@@ -240,66 +241,70 @@ const PlayerDialog = (props: Props) => {
 
   return ReactDom.createPortal(
     <div>
-      <div
-        className='dimmer flex absolute inset-0 bg-modalDimmer'
-        onClick={props.onDismiss}
-        tabIndex={-1}
-        role='presentation'
-      >
-        <form
-          className='modal flex flex-col m-auto max-w-xl max-h-full bg-white w-6/12 p-4'
-          onClick={(e) => e.stopPropagation()}
+      {props.loading ? (
+        <div>spinner</div>
+      ) : (
+        <div
+          className='dimmer flex absolute inset-0 bg-modalDimmer'
+          onClick={props.onDismiss}
+          tabIndex={-1}
           role='presentation'
         >
-          <div className='flex justify-between bg-secondary p-4 pb-0'>
-            <div className='text-white'>
-              <div className='text-xl font-semibold mb-2'>
-                <span>{player.firstName}</span>
-                <span>{player.secondName}</span>
+          <form
+            className='modal flex flex-col m-auto max-w-xl max-h-full bg-white w-6/12 p-4'
+            onClick={(e) => e.stopPropagation()}
+            role='presentation'
+          >
+            <div className='flex justify-between bg-secondary p-4 pb-0'>
+              <div className='text-white'>
+                <div className='text-xl font-semibold mb-2'>
+                  <span>{player.firstName}</span>
+                  <span>{player.secondName}</span>
+                </div>
+                <span
+                  className={`${backgroundColors[player.position]} p-1`}
+                  style={{ color: 'black' }}
+                >
+                  {player.position}
+                </span>
+                <div className='text-sm'>{player.club}</div>
               </div>
-              <span
-                className={`${backgroundColors[player.position]} p-1`}
-                style={{ color: 'black' }}
+
+              <div className=''>
+                <img
+                  className='mt-2 mr-10'
+                  style={{ height: '100%', maxHeight: '10rem' }}
+                  src='/images/players/500x500/101188.png'
+                  alt='playerPhoto'
+                />
+              </div>
+            </div>
+
+            <ul className='self-center flex flex-row bg-primary rounded text-sm m-6'>
+              <li
+                onClick={() => setCurrentTab('history')}
+                role='presentation'
+                className={classNames('pl-4', 'pr-4', 'm-1', 'cursor-pointer', {
+                  'bg-white': currentTab === 'history',
+                })}
               >
-                {player.position}
-              </span>
-              <div className='text-sm'>{player.club}</div>
-            </div>
+                History
+              </li>
+              <li
+                onClick={() => setCurrentTab('fixtures')}
+                role='presentation'
+                className={classNames('pl-4', 'pr-4', 'm-1', 'cursor-pointer', {
+                  'bg-white': currentTab === 'fixtures',
+                })}
+              >
+                Fixtures
+              </li>
+            </ul>
 
-            <div className=''>
-              <img
-                className='mt-2 mr-10'
-                style={{ height: '100%', maxHeight: '10rem' }}
-                src='/images/players/500x500/101188.png'
-                alt='playerPhoto'
-              />
-            </div>
-          </div>
-
-          <ul className='self-center flex flex-row bg-primary rounded text-sm m-6'>
-            <li
-              onClick={() => setCurrentTab('history')}
-              role='presentation'
-              className={classNames('pl-4', 'pr-4', 'm-1', 'cursor-pointer', {
-                'bg-white': currentTab === 'history',
-              })}
-            >
-              History
-            </li>
-            <li
-              onClick={() => setCurrentTab('fixtures')}
-              role='presentation'
-              className={classNames('pl-4', 'pr-4', 'm-1', 'cursor-pointer', {
-                'bg-white': currentTab === 'fixtures',
-              })}
-            >
-              Fixtures
-            </li>
-          </ul>
-
-          {currentTab === 'history' ? renderHistory() : renderFixtures()}
-        </form>
-      </div>
+            {currentTab === 'history' ? renderHistory() : renderFixtures()}
+          </form>
+        </div>
+      )}
     </div>,
     document.querySelector('#modal') as Element,
   );

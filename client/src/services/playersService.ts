@@ -6,6 +6,7 @@ export const getPlayers = async (filter: any) => {
     type: 'GET',
     query: filter,
   });
+
   return response.json();
 };
 
@@ -20,6 +21,14 @@ export const getPlayerById = async (id: string) => {
 export const getFixturesForPlayer = async (playerId: string, clubId: string) => {
   const response = await callWebApi({
     endpoint: `/api/games/player/${playerId}/${clubId}`,
+    type: 'GET',
+  });
+  return response.json();
+};
+
+export const getStatsForPlayer = async (playerId: string) => {
+  const response = await callWebApi({
+    endpoint: `/api/player-match-stats/by-gameweeks/${playerId}`,
     type: 'GET',
   });
   return response.json();

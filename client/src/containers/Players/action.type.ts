@@ -13,11 +13,15 @@ export type FetchPlayersAction = {
 };
 export type AsyncFetchPlayersAction = Thunky<FetchPlayersAction>;
 
-export const FETCH_PLAYER_FIXTURES_REQUEST = 'PLAYERS:FETCH_PLAYER_FIXTURES_REQUEST';
-export const FETCH_PLAYER_FIXTURES_SUCCESS = 'PLAYERS:FETCH_PLAYER_FIXTURES_SUCCESS';
+export const FETCH_PLAYER_DIALOG_CONTENT_REQUEST =
+  'PLAYERS:FETCH_PLAYER_DIALOG_CONTENT_REQUEST';
+export const FETCH_PLAYER_DIALOG_CONTENT_SUCCESS =
+  'PLAYERS:FETCH_PLAYER_DIALOG_CONTENT_SUCCESS';
 
-export type FetchFixturesForPlayerAction = {
-  type: typeof FETCH_PLAYER_FIXTURES_REQUEST | typeof FETCH_PLAYER_FIXTURES_SUCCESS;
+export type FetchaDataForPlayerAction = {
+  type:
+    | typeof FETCH_PLAYER_DIALOG_CONTENT_REQUEST
+    | typeof FETCH_PLAYER_DIALOG_CONTENT_SUCCESS;
   payload: any;
 };
-export type AsyncFetchFixturesForPlayerAction = Thunky<FetchFixturesForPlayerAction>;
+export type AsyncFetchaDataForPlayerAction = Thunky<FetchaDataForPlayerAction>;

@@ -11,7 +11,7 @@ import { animateScroll as scroll } from 'react-scroll';
 
 import { RootState } from 'store/types';
 import { Player } from 'types/player.types';
-import { fetchPlayers } from './actions';
+import { fetchPlayers, fetchDataForPlayer } from './actions';
 import PlayerHighlight from 'components/PlayerHighlight';
 import SearchBar from 'components/SearchBar';
 import PlayerDialog from 'components/PlayerDialog';
@@ -26,11 +26,13 @@ type Props = {
   error: string | null;
   fetchPlayers: typeof fetchPlayers;
   clubs: [Club?];
+  fetchDataForPlayer: typeof fetchDataForPlayer;
+  dialogLoading: boolean;
 };
 
 type State = {
   //filters: any;
-  playerDialogData?: string | undefined;
+  playerDialogData?: { id: string; clubId: string } | undefined;
   playerHighlightData: any;
 };
 
@@ -57,7 +59,8 @@ class PlayersPage extends React.Component<Props, State> {
     }
   };
 
-  showModal = (id: string) => this.setState({ playerDialogData: id });
+  showModal = (id: string, clubId: string) =>
+    this.setState({ playerDialogData: { id, clubId } });
   onModalDismiss = () => this.setState({ playerDialogData: undefined });
 
   setPlayerHighlight = (id: string) => {
@@ -153,9 +156,9 @@ class PlayersPage extends React.Component<Props, State> {
         <button
           className='w-4 h-4 justify-center leading-none flex ml-auto bg-background rounded-full text-xs font-semibold'
           onClick={() => {
-            this.setState({ playerDialogData: props.original.id });
-            console.log('props');
-            console.log(props);
+            this.setState({
+              playerDialogData: { id: props.original.id, clubId: props.original.club_id },
+            });
           }}
         >
           i
@@ -231,8 +234,10 @@ class PlayersPage extends React.Component<Props, State> {
 
           {this.state.playerDialogData && (
             <PlayerDialog
-              id={this.state.playerDialogData}
+              playerDialogData={this.state.playerDialogData}
               onDismiss={this.onModalDismiss}
+              loadDataForPlayer={this.props.fetchDataForPlayer}
+              loading={this.props.dialogLoading}
             />
           )}
         </section>
@@ -246,10 +251,13 @@ const mapStateToProps = (rootState: RootState) => ({
   loading: rootState.players.loading,
   error: rootState.players.error,
   clubs: rootState.clubs.clubs,
+  playerData: rootState.players.playerData,
+  dialogLoading: rootState.players.dialogLoading,
 });
 
 const actions = {
   fetchPlayers,
+  fetchDataForPlayer,
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
