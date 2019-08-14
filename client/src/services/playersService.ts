@@ -1,18 +1,17 @@
 import callWebApi from 'helpers/webApiHelper';
 
-export const getPlayers = async () => {
+export const getPlayers = async (filter: any) => {
   const response = await callWebApi({
     endpoint: `/api/players`,
-    query: { limit:40 },
     type: 'GET',
+    query: filter,
   });
   return response.json();
 };
 
-export const getPlayersBy = async (query: any) => {
+export const getPlayerById = async (id: string) => {
   const response = await callWebApi({
-    endpoint: `/api/players`,
-    query: query,
+    endpoint: `/api/players/${id}`,
     type: 'GET',
   });
   return response.json();

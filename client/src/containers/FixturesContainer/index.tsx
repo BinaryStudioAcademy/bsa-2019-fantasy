@@ -17,6 +17,7 @@ type Props = {
   loadGameweeksAction: typeof loadGameweeksAction;
   loadGamesAction: typeof loadGamesAction;
   games?: [FixturesItemType];
+  isLoading: boolean;
 };
 
 const FixturesContainer = ({
@@ -24,31 +25,33 @@ const FixturesContainer = ({
   loadGamesAction,
   gameweeks,
   games,
+  isLoading,
 }: Props) => {
   const [currentGameweek, setCurrentGameweek] = useState<number>(0);
 
   useEffect(() => {
     loadGameweeksAction();
-  }, []);
+  }, [loadGameweeksAction]);
 
   useEffect(() => {
     if (gameweeks) {
-      loadGamesAction(gameweeks[currentGameweek].id);
+      loadGamesAction(currentGameweek + 1);
     }
-  }, [currentGameweek, gameweeks]);
+  }, [currentGameweek, gameweeks, loadGamesAction]);
 
   if (!games || !gameweeks) {
     return <Spinner />;
   }
 
   return (
-    <div className='bg-white py-3'>
+    <div className='bg-white py-3 min-h-screen'>
       <div className='fixtures-list flex flex-col items-stretch text-center max-w-2xl'>
         <h2 className='text-5xl'>Fixtures</h2>
         <p className='mb-3'>
           Gameweek {currentGameweek + 1} -{' '}
           {moment(gameweeks[currentGameweek].start).format('ddd D MMMM YYYY')}
         </p>
+
         <div className='text-center text-white text-2xl mb-4 flex justify-between'>
           {currentGameweek >= 1 && (
             <button
@@ -67,7 +70,7 @@ const FixturesContainer = ({
             </button>
           )}
         </div>
-        <Fixtures games={games} />
+        {!isLoading && <Fixtures games={games} />}
       </div>
     </div>
   );
@@ -76,6 +79,7 @@ const FixturesContainer = ({
 const mapStateToProps = (rootState: RootState) => ({
   gameweeks: rootState.fixtures.gameweeks,
   games: rootState.fixtures.games,
+  isLoading: rootState.fixtures.isLoading,
 });
 
 const actions = {

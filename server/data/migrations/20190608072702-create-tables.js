@@ -1,7 +1,7 @@
 export default {
   up: (queryInterface, Sequelize) =>
     queryInterface.sequelize.query('CREATE EXTENSION IF NOT EXISTS pgcrypto;').then(() =>
-      queryInterface.sequelize.transaction(transaction =>
+      queryInterface.sequelize.transaction((transaction) =>
         Promise.all([
           queryInterface.createTable(
             'users',
@@ -11,42 +11,42 @@ export default {
                 autoIncrement: false,
                 primaryKey: true,
                 type: Sequelize.UUID,
-                defaultValue: Sequelize.literal('gen_random_uuid()')
+                defaultValue: Sequelize.literal('gen_random_uuid()'),
               },
               name: {
                 allowNull: false,
                 type: Sequelize.STRING,
-                unique: true
+                unique: true,
               },
               email: {
                 allowNull: false,
                 type: Sequelize.STRING,
-                unique: true
+                unique: true,
               },
               password: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
               },
               money: {
                 allowNull: false,
-                type: Sequelize.FLOAT
+                type: Sequelize.FLOAT,
               },
               score: {
                 allowNull: false,
-                type: Sequelize.FLOAT
+                type: Sequelize.FLOAT,
               },
               team_name: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
               },
               chip_used: {
                 allowNull: false,
-                type: Sequelize.ENUM('wildcard', 'triple_caption', 'bench_boost')
+                type: Sequelize.ENUM('wildcard', 'triple_caption', 'bench_boost'),
               },
               createdAt: Sequelize.DATE,
-              updatedAt: Sequelize.DATE
+              updatedAt: Sequelize.DATE,
             },
-            { transaction }
+            { transaction },
           ),
           queryInterface.createTable(
             'games',
@@ -56,26 +56,40 @@ export default {
                 autoIncrement: false,
                 primaryKey: true,
                 type: Sequelize.UUID,
-                defaultValue: Sequelize.literal('gen_random_uuid()')
+                defaultValue: Sequelize.literal('gen_random_uuid()'),
               },
               start: {
-                type: Sequelize.DATE
+                type: Sequelize.DATE,
               },
-              end: {
-                type: Sequelize.DATE
+              started: {
+                allowNull: false,
+                type: Sequelize.BOOLEAN,
+              },
+              finished: {
+                allowNull: false,
+                type: Sequelize.BOOLEAN,
+              },
+              minutes: {
+                allowNull: false,
+                type: Sequelize.INTEGER,
               },
               hometeam_score: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               awayteam_score: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
+              gameweek_id: {
+                allowNull: false,
+                type: Sequelize.INTEGER,
+              },
+
               createdAt: Sequelize.DATE,
-              updatedAt: Sequelize.DATE
+              updatedAt: Sequelize.DATE,
             },
-            { transaction }
+            { transaction },
           ),
           queryInterface.createTable(
             'player_stats',
@@ -85,64 +99,64 @@ export default {
                 autoIncrement: false,
                 primaryKey: true,
                 type: Sequelize.UUID,
-                defaultValue: Sequelize.literal('gen_random_uuid()')
+                defaultValue: Sequelize.literal('gen_random_uuid()'),
               },
               first_name: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
               },
               second_name: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
               },
               player_price: {
                 allowNull: false,
-                type: Sequelize.FLOAT
+                type: Sequelize.FLOAT,
               },
               player_score: {
                 allowNull: false,
-                type: Sequelize.FLOAT
+                type: Sequelize.FLOAT,
               },
               position: {
                 allowNull: false,
-                type: Sequelize.ENUM('1', '2', '3', '4')
+                type: Sequelize.ENUM('1', '2', '3', '4'),
               },
               goals: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               assists: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               missed_passes: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               goals_conceded: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               saves: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               yellow_cards: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               red_cards: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               code: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               createdAt: Sequelize.DATE,
-              updatedAt: Sequelize.DATE
+              updatedAt: Sequelize.DATE,
             },
-            { transaction }
+            { transaction },
           ),
           queryInterface.createTable(
             'player_match_stats',
@@ -152,40 +166,40 @@ export default {
                 autoIncrement: false,
                 primaryKey: true,
                 type: Sequelize.UUID,
-                defaultValue: Sequelize.literal('gen_random_uuid()')
+                defaultValue: Sequelize.literal('gen_random_uuid()'),
               },
               goals: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               assists: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               missed_passes: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               goals_conceded: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               saves: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               yellow_cards: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               red_cards: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               createdAt: Sequelize.DATE,
-              updatedAt: Sequelize.DATE
+              updatedAt: Sequelize.DATE,
             },
-            { transaction }
+            { transaction },
           ),
           queryInterface.createTable(
             'events',
@@ -195,7 +209,7 @@ export default {
                 autoIncrement: false,
                 primaryKey: true,
                 type: Sequelize.UUID,
-                defaultValue: Sequelize.literal('gen_random_uuid()')
+                defaultValue: Sequelize.literal('gen_random_uuid()'),
               },
               event_type: {
                 allowNull: false,
@@ -206,13 +220,13 @@ export default {
                   'goal_conceded',
                   'save',
                   'yellow_card',
-                  'red_card'
-                )
+                  'red_card',
+                ),
               },
               createdAt: Sequelize.DATE,
-              updatedAt: Sequelize.DATE
+              updatedAt: Sequelize.DATE,
             },
-            { transaction }
+            { transaction },
           ),
           queryInterface.createTable(
             'gameweeks',
@@ -222,22 +236,26 @@ export default {
                 autoIncrement: false,
                 primaryKey: true,
                 type: Sequelize.UUID,
-                defaultValue: Sequelize.literal('gen_random_uuid()')
+                defaultValue: Sequelize.literal('gen_random_uuid()'),
               },
               name: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
+              },
+              number: {
+                allowNull: false,
+                type: Sequelize.INTEGER,
               },
               start: {
-                type: Sequelize.DATE
+                type: Sequelize.DATE,
               },
               end: {
-                type: Sequelize.DATE
+                type: Sequelize.DATE,
               },
               createdAt: Sequelize.DATE,
-              updatedAt: Sequelize.DATE
+              updatedAt: Sequelize.DATE,
             },
-            { transaction }
+            { transaction },
           ),
           queryInterface.createTable(
             'gameweek_histories',
@@ -247,12 +265,12 @@ export default {
                 autoIncrement: false,
                 primaryKey: true,
                 type: Sequelize.UUID,
-                defaultValue: Sequelize.literal('gen_random_uuid()')
+                defaultValue: Sequelize.literal('gen_random_uuid()'),
               },
               createdAt: Sequelize.DATE,
-              updatedAt: Sequelize.DATE
+              updatedAt: Sequelize.DATE,
             },
-            { transaction }
+            { transaction },
           ),
           queryInterface.createTable(
             'leagues',
@@ -262,20 +280,20 @@ export default {
                 autoIncrement: false,
                 primaryKey: true,
                 type: Sequelize.UUID,
-                defaultValue: Sequelize.literal('gen_random_uuid()')
+                defaultValue: Sequelize.literal('gen_random_uuid()'),
               },
               name: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
               },
               private: {
                 allowNull: false,
-                type: Sequelize.BOOLEAN
+                type: Sequelize.BOOLEAN,
               },
               createdAt: Sequelize.DATE,
-              updatedAt: Sequelize.DATE
+              updatedAt: Sequelize.DATE,
             },
-            { transaction }
+            { transaction },
           ),
           queryInterface.createTable(
             'league_participants',
@@ -285,16 +303,16 @@ export default {
                 autoIncrement: false,
                 primaryKey: true,
                 type: Sequelize.UUID,
-                defaultValue: Sequelize.literal('gen_random_uuid()')
+                defaultValue: Sequelize.literal('gen_random_uuid()'),
               },
               is_creator: {
                 allowNull: false,
-                type: Sequelize.BOOLEAN
+                type: Sequelize.BOOLEAN,
               },
               createdAt: Sequelize.DATE,
-              updatedAt: Sequelize.DATE
+              updatedAt: Sequelize.DATE,
             },
-            { transaction }
+            { transaction },
           ),
           queryInterface.createTable(
             'seasons',
@@ -304,16 +322,16 @@ export default {
                 autoIncrement: false,
                 primaryKey: true,
                 type: Sequelize.UUID,
-                defaultValue: Sequelize.literal('gen_random_uuid()')
+                defaultValue: Sequelize.literal('gen_random_uuid()'),
               },
               name: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
               },
               createdAt: Sequelize.DATE,
-              updatedAt: Sequelize.DATE
+              updatedAt: Sequelize.DATE,
             },
-            { transaction }
+            { transaction },
           ),
           queryInterface.createTable(
             'football_clubs',
@@ -322,36 +340,36 @@ export default {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               name: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
               },
               short_name: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
               },
               win: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               loss: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               played: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               code: {
                 allowNull: false,
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
               },
               createdAt: Sequelize.DATE,
-              updatedAt: Sequelize.DATE
+              updatedAt: Sequelize.DATE,
             },
-            { transaction }
+            { transaction },
           ),
           queryInterface.createTable(
             'team_member_histories',
@@ -361,27 +379,27 @@ export default {
                 autoIncrement: false,
                 primaryKey: true,
                 type: Sequelize.UUID,
-                defaultValue: Sequelize.literal('gen_random_uuid()')
+                defaultValue: Sequelize.literal('gen_random_uuid()'),
               },
               is_on_bench: {
                 allowNull: false,
-                type: Sequelize.BOOLEAN
+                type: Sequelize.BOOLEAN,
               },
               is_captain: {
                 allowNull: false,
-                type: Sequelize.BOOLEAN
+                type: Sequelize.BOOLEAN,
               },
               createdAt: Sequelize.DATE,
-              updatedAt: Sequelize.DATE
+              updatedAt: Sequelize.DATE,
             },
-            { transaction }
-          )
-        ])
-      )
+            { transaction },
+          ),
+        ]),
+      ),
     ),
 
-  down: queryInterface =>
-    queryInterface.sequelize.transaction(transaction =>
+  down: (queryInterface) =>
+    queryInterface.sequelize.transaction((transaction) =>
       Promise.all([
         queryInterface.dropTable('users', { transaction }),
         queryInterface.dropTable('games', { transaction }),
@@ -392,11 +410,11 @@ export default {
         queryInterface.dropTable('gameweek_histories', { transaction }),
         queryInterface.dropTable('leagues', { transaction }),
         queryInterface.dropTable('league_participants', {
-          transaction
+          transaction,
         }),
         queryInterface.dropTable('seasons', { transaction }),
         queryInterface.dropTable('football_clubs', { transaction }),
-        queryInterface.dropTable('team_member_histories', { transaction })
-      ])
-    )
+        queryInterface.dropTable('team_member_histories', { transaction }),
+      ]),
+    ),
 };

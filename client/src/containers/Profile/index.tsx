@@ -1,7 +1,6 @@
 import cn from 'classnames';
 import React from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
-import { useTranslation } from 'react-i18next';
 
 import { useSteps } from 'helpers/hooks/steps.hook';
 
@@ -13,7 +12,6 @@ import Progress from './components/Progress';
 import styles from './styles.module.scss';
 
 const Profile = () => {
-  const { t } = useTranslation();
   const { step, nextStep, prevStep, navToStep } = useSteps(3);
 
   let content;
@@ -39,7 +37,7 @@ const Profile = () => {
       <div className='flex'>
         <Progress step={step} navToStep={navToStep} />
 
-        <div className='flex-1 bg-white rounded p-12 pl-16 shadow-figma relative min-h-screen'>
+        <div className='flex-1 bg-white rounded py-12 px-16 shadow-figma relative min-h-screen'>
           {content}
 
           <button

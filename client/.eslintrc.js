@@ -37,12 +37,7 @@ module.exports = {
 
     '@typescript-eslint/indent': 'off',
     camelcase: 'off',
-    '@typescript-eslint/camelcase': [
-      'error',
-      {
-        allow: ['^UNSAFE_'],
-      },
-    ],
+    '@typescript-eslint/camelcase': 'off',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': [
       'warn',

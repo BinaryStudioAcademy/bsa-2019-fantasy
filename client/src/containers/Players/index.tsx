@@ -3,110 +3,238 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { Link } from 'react-router-dom';
 import { Option } from 'react-dropdown';
+import ReactTable from 'react-table';
+import { animateScroll as scroll } from 'react-scroll';
+
+// import { ReactTableDefaults } from 'react-table';
+// import _ from 'lodash';
 
 import { RootState } from 'store/types';
+import { Player } from 'types/player.types';
 import { fetchPlayers } from './actions';
-import Dropdown from 'components/Dropdown';
 import PlayerHighlight from 'components/PlayerHighlight';
 import SearchBar from 'components/SearchBar';
+import PlayerDialog from 'components/PlayerDialog';
+import { getClubLogoUrl } from 'helpers/images';
+import { Club } from 'types/club.type';
 
 import './styles.scss';
 
 type Props = {
-  players: any;
+  players: [Player?];
+  loading: boolean;
+  error: string | null;
   fetchPlayers: typeof fetchPlayers;
+  clubs: [Club?];
 };
 
-class PlayersPage extends React.Component<Props> {
-  state = { players: [], filters: [] };
+type State = {
+  //filters: any;
+  playerDialogData?: string | undefined;
+  playerHighlightData: any;
+};
 
-  allPlayers = [
-    { shirt: '/images/uniforms/field-players/shirt_1-66.png', name: 'Lionel Messi' },
-    { shirt: '/images/uniforms/field-players/shirt_3-66.png', name: 'Mario Balotelli' },
-    {
-      shirt: '/images/uniforms/field-players/shirt_4-66.png',
-      name: 'Zlatan Ibrahimovic',
-    },
-    { shirt: '/images/uniforms/field-players/shirt_1-66.png', name: 'Lionelo Messi' },
-    {
-      shirt: '/images/uniforms/field-players/shirt_3-66.png',
-      name: 'Mariotto Balotelli',
-    },
-    {
-      shirt: '/images/uniforms/field-players/shirt_4-66.png',
-      name: 'Zlatanus Ibrahimovic',
-    },
-  ];
+class PlayersPage extends React.Component<Props, State> {
+  state: State = {
+    playerDialogData: undefined,
+    playerHighlightData: {},
+  };
 
-  onFilterChange = (opt: Option) => console.log(opt);
+  onFetchData = async ({ page, pageSize, sorted }: any) => {
+    console.log('data fetch');
+    const defaultSort = { order_field: 'player_price', order_direction: 'DESC' };
+    const sort = sorted[0]
+      ? { order_field: sorted[0].id, order_direction: sorted[0].desc ? 'DESC' : 'ASC' }
+      : defaultSort;
+    await this.props.fetchPlayers({
+      offset: page * pageSize,
+      limit: pageSize,
+      ...sort,
+    });
+    if (Object.keys(this.state.playerHighlightData).length === 0) {
+      const playerOfTheWeek = this.props.players[0] && this.props.players[0].id;
+      playerOfTheWeek && this.setPlayerHighlight(playerOfTheWeek);
+    }
+  };
 
-  renderColumn = () => (
-    <div className='columnByScore w-1/4 p-6'>
-      <div className='column-header mb-4 font-semibold text-xs text-secondary2'>
-        All Players
-      </div>
-      {this.allPlayers.map((player) => (
-        <div className='item flex items-center my-3' key={player.name}>
-          <img className='w-5 mr-4' src={player.shirt} alt='Shirt' />
-          <Link className='mr-4 font-semibold' to='#'>
-            {player.name}
-          </Link>
-          <button className='w-4 h-4 justify-center leading-none flex ml-auto bg-background rounded-full text-xs font-semibold'>
-            i
-          </button>
+  showModal = (id: string) => this.setState({ playerDialogData: id });
+  onModalDismiss = () => this.setState({ playerDialogData: undefined });
+
+  setPlayerHighlight = (id: string) => {
+    console.log(window);
+    const player = this.props.players.find((player) => player && player.id === id);
+    this.setState({
+      playerHighlightData: player,
+    });
+    console.log('animate');
+    const scrollElement = document.querySelector('#root>.flex>.flex-1');
+    scrollElement && scrollElement.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  getClubById = (id: number) => {
+    return this.props.clubs.find((club: Club | undefined) => club && club.id === id);
+  };
+
+  getClubNameById = (club_id: number) => {
+    const club = this.getClubById(club_id);
+    return (club && club.name) || undefined;
+  };
+
+  getClubImageById = (id: number) => {
+    const club = this.getClubById(id);
+    const url = club && club.code && getClubLogoUrl(club.code, 80);
+    return url || '';
+  };
+
+  readonly columns = [
+    {
+      accessor: 'club_id',
+      width: 70,
+      className: 'flex justify-center bg-white rounded-l',
+      style: { marginLeft: '5px' },
+      Cell: (props: any) => {
+        return (
+          <div className='rounded-full shadow-figma p-1 bg-white w-10'>
+            <img
+              className='w-full'
+              src={this.getClubImageById(props.value)}
+              alt='Club logo'
+            />
+          </div>
+        );
+      },
+    },
+    {
+      Header: () => this.renderHeader('Name'),
+      accessor: 'first_name',
+      className: 'flex items-center bg-white',
+
+      Cell: (props: any) => (
+        <div
+          className='mr-4 font-semibold hover:text-secondary2 cursor-pointer'
+          role='presentation'
+          onClick={() => this.setPlayerHighlight(props.original.id)}
+        >
+          {props.original.first_name} {props.original.second_name}
         </div>
-      ))}
-    </div>
-  );
-
-  dropdownFilters = [
-    {
-      name: 'Player selection',
-      options: ['Lionel Messi', 'Mario Balotelli', 'Christiano Ronaldo'],
-      onChange: this.onFilterChange,
-      render: this.renderColumn,
+      ),
     },
     {
-      name: 'SortBy',
-      options: ['Total score', 'Last rank'],
-      onChange: this.onFilterChange,
-      render: this.renderColumn,
+      Header: () => this.renderHeader('Price'),
+      accessor: 'player_price',
+      className: 'flex items-center bg-white',
     },
     {
-      name: 'Price',
-      options: ['High to low', 'Low to high'],
-      onChange: this.onFilterChange,
-      render: this.renderColumn,
+      Header: () => this.renderHeader('Score'),
+      accessor: 'player_score',
+      className: 'flex items-center bg-white',
     },
     {
-      name: 'Club',
-      options: ['Arsenal', 'Manchester United', 'Chelsea'],
-      onChange: this.onFilterChange,
-      render: this.renderColumn,
+      Header: () => this.renderHeader('Position'),
+      accessor: 'position',
+      className: 'flex items-center bg-white',
+    },
+    {
+      Header: () => this.renderHeader('Club'),
+      accessor: 'club_id',
+      className: 'flex items-center bg-white',
+      Cell: (props: any) => {
+        return (
+          <Link className='mr-4 font-semibold' to='#'>
+            {this.getClubNameById(props.value)}
+          </Link>
+        );
+      },
+    },
+    {
+      Header: () => this.renderHeader('Info'),
+      className: 'flex items-center bg-white rounded-r',
+      Cell: (props: any) => (
+        <button
+          className='w-4 h-4 justify-center leading-none flex ml-auto bg-background rounded-full text-xs font-semibold'
+          onClick={() => {
+            this.setState({ playerDialogData: props.original.id });
+            console.log('props');
+            console.log(props);
+          }}
+        >
+          i
+        </button>
+      ),
     },
   ];
 
-  componentDidMount() {
-    this.props.fetchPlayers('123');
+  readonly tableStyle = {
+    border: 'none',
+    boxShadow: 'none',
+  };
+
+  renderHeader = (child: string) => {
+    return (
+      <div className='bg-white shadow-figma font-semibold text-sm rounded border border-greyBorder relative py-2 px-4'>
+        {child}
+      </div>
+    );
+  };
+
+  renderTable() {
+    //if (!this.props.players.length) return 'spinner';
+    const playerTableData = this.props.players.map((player) => {
+      if (!player) return {};
+      const {
+        first_name,
+        second_name,
+        player_price,
+        player_score,
+        position,
+        club_id,
+        id,
+      } = player;
+      return {
+        first_name,
+        second_name,
+        player_price,
+        player_score,
+        position,
+        club_id,
+        id,
+      };
+    });
+    return (
+      <ReactTable
+        style={this.tableStyle}
+        data={playerTableData}
+        pageSize={10}
+        pages={10} // should default to -1 (which means we don't know how many pages we have)
+        manual
+        columns={this.columns}
+        //column={this.columnProps}
+        onFetchData={this.onFetchData}
+      />
+    );
   }
 
   render() {
+    if (this.props.loading) return 'spinner';
+
     return (
       <>
-        <PlayerHighlight />
+        <PlayerHighlight player={this.state.playerHighlightData} />
 
         <section className='allStats my-6'>
-          <div className='filters text-sm flex my-6'>
-            {this.dropdownFilters.map(({ name, options, onChange }, index) => (
-              <div className='w-1/4 flex justify-between' key={name}>
-                <Dropdown {...{ placeholder: name, options, onChange }} />
-                {index === 3 && <SearchBar />}
-              </div>
-            ))}
+          <div className='filters text-sm flex mt-6 mb-1'>
+            <div className='ml-auto'>
+              <SearchBar />
+            </div>
           </div>
-          <div className='columnsWrapper flex bg-white shadow rounded my-4'>
-            {this.dropdownFilters.map((item) => item.render())}
-          </div>
+          {this.renderTable()}
+
+          {this.state.playerDialogData && (
+            <PlayerDialog
+              id={this.state.playerDialogData}
+              onDismiss={this.onModalDismiss}
+            />
+          )}
         </section>
       </>
     );
@@ -114,7 +242,10 @@ class PlayersPage extends React.Component<Props> {
 }
 
 const mapStateToProps = (rootState: RootState) => ({
-  players: rootState.test.testRes,
+  players: rootState.players.players,
+  loading: rootState.players.loading,
+  error: rootState.players.error,
+  clubs: rootState.clubs.clubs,
 });
 
 const actions = {
