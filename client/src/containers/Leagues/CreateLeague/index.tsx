@@ -1,25 +1,40 @@
 import React, { Component } from 'react';
+import validator from 'validator';
 import { times } from 'lodash';
 
 import { FaStar } from 'react-icons/fa';
 
-class CreateLeague extends Component<any, any> {
+class CreateLeague extends Component<
+  {},
+  { name: string; gameweek: string; isNameValid: boolean }
+> {
   state = {
     name: '',
     gameweek: 'Gameweek 1',
+    isNameValid: true,
   };
 
   handleChange = (event: any) => {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    // @ts-ignore
+    this.setState({ [name]: value, isNameValid: true });
+  };
+
+  validateName = () => {
+    const { name } = this.state;
+    const isNameValid = validator.isLength(name, { min: 1, max: 30 });
+    this.setState({ isNameValid });
+    return isNameValid;
   };
 
   handleSubmit = (event: React.SyntheticEvent) => {
+    this.validateName();
     event.preventDefault();
   };
 
   render() {
-    const { name, gameweek } = this.state;
+    const { name, gameweek, isNameValid } = this.state;
+    console.log('this.state: ', this.state);
 
     return (
       <div className='create-league'>
@@ -46,14 +61,21 @@ class CreateLeague extends Component<any, any> {
                     Name
                   </label>
                   <input
-                    className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+                    className={`appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 ${
+                      !isNameValid ? 'border-red-500' : ''
+                    }`}
                     id='league-name'
                     type='text'
                     name='name'
                     onChange={this.handleChange}
-                    value={name}
                   />
-                  <p className='text-gray-600 text-xs italic'>Maximum 30 characters</p>
+                  <p
+                    className={`text-gray-600 text-xs italic ${
+                      !isNameValid ? 'text-red-500' : ''
+                    }`}
+                  >
+                    Maximum 30 characters
+                  </p>
                 </div>
               </div>
               <div className='w-full mb-6'>
@@ -68,6 +90,7 @@ class CreateLeague extends Component<any, any> {
                     className='block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
                     id='league-gameweek'
                     name='gameweek'
+                    onChange={this.handleChange}
                     onBlur={this.handleChange}
                     value={gameweek}
                   >
@@ -87,13 +110,19 @@ class CreateLeague extends Component<any, any> {
                 </div>
               </div>
               <button
-                className={`shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${!name &&
+                className={`shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${(!name ||
+                  !isNameValid) &&
                   'opacity-50 cursor-not-allowed'}`}
                 type='submit'
-                disabled={!name}
+                disabled={!name || !isNameValid}
               >
                 Create league
               </button>
+              {!isNameValid && (
+                <span className=' ml-2 font-bold text-red-600'>
+                  Maximum length exceeded!
+                </span>
+              )}
             </form>
           </div>
         </div>
