@@ -61,8 +61,17 @@ export default {
               start: {
                 type: Sequelize.DATE,
               },
-              end: {
-                type: Sequelize.DATE,
+              started: {
+                allowNull: false,
+                type: Sequelize.BOOLEAN,
+              },
+              finished: {
+                allowNull: false,
+                type: Sequelize.BOOLEAN,
+              },
+              minutes: {
+                allowNull: false,
+                type: Sequelize.INTEGER,
               },
               hometeam_score: {
                 allowNull: false,
@@ -72,6 +81,11 @@ export default {
                 allowNull: false,
                 type: Sequelize.INTEGER,
               },
+              gameweek_id: {
+                allowNull: false,
+                type: Sequelize.INTEGER,
+              },
+
               createdAt: Sequelize.DATE,
               updatedAt: Sequelize.DATE,
             },

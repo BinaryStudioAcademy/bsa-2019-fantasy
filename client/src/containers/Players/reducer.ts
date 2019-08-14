@@ -14,12 +14,16 @@ type State = {
 const initialState: State = { players: [], loading: false, error: null };
 
 export default (state = initialState, action: FetchPlayersAction) => {
-  console.log(state);
+  console.log(action);
   switch (action.type) {
     case FETCH_PLAYERS_REQUEST:
       return { ...state, loading: true };
     case FETCH_PLAYERS_SUCCESS:
-      return { ...state, players: [...state.players, ...action.payload], loading: false };
+      return {
+        ...state,
+        players: action.payload,
+        loading: false,
+      };
     case FETCH_PLAYERS_FAILURE:
       return { ...state, loading: false, error: action.payload };
     default:
