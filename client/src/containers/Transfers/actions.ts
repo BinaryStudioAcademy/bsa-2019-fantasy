@@ -9,7 +9,9 @@ const setPlayers = (players: Player[]): setPlayersAction => ({
   payload: players,
 });
 
-export const loadPlayersAction = (): AsyncSetPlayersAction => async (dispatch) => {
-  const result = await playersService.getPlayers();
+export const loadPlayersAction = (filter: any): AsyncSetPlayersAction => async (
+  dispatch,
+) => {
+  const result = await playersService.getPlayers(filter);
   dispatch(setPlayers(result));
 };

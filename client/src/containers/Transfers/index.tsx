@@ -15,10 +15,10 @@ type Props = {
 
 const Transfers = ({ loadPlayersAction, players }: Props) => {
   useEffect(() => {
-    loadPlayersAction();
+    const filter = { limit: 10 };
+    loadPlayersAction(filter);
   }, []);
 
-  console.log(players);
   return (
     <div className='transfers-page'>
       <div className='jumbotron paper mb-12 rounded flex items-end justify-between pt-6'>
@@ -45,4 +45,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Transfers);
- 

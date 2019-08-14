@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PlayerList } from '../PlayersList/index';
+import Dropdown from 'components/Dropdown';
 
-export const PlayersSelection = ({players}) => {
+export const PlayersSelection = ({ players }: any) => {
+  const [filter, setFilter] = useState({
+    order_by: 'player_price',
+  });
+
+  // useEffect(() => {
+  //   const filter = { limit: 10 };
+  //   loadPlayersAction(filter);
+  // }, []);
+
+  const options = ['one', 'two', 'three'];
+  const onFilterPriceChange = ({ value }: any) => {
+    setFilter({ ...filter, order_by: value });
+  };
   return (
     <div className='bg-gray-300 px-4 py-4'>
       <h3 className='font-bold'>Player Selection</h3>
       <form>
+        <Dropdown options={options} onChange={onFilterPriceChange} />
         <div className='mt-2'>
-          <label className='font-bold' for='filter'>
+          <label className='font-bold'>
             <span>View</span>
           </label>
           <div>
@@ -98,7 +113,7 @@ export const PlayersSelection = ({players}) => {
         </div>
 
         <div className='mt-2'>
-          <label className='font-bold' for='sort'>
+          <label className='font-bold'>
             <span>Sorted by</span>
           </label>
           <div>
@@ -135,7 +150,7 @@ export const PlayersSelection = ({players}) => {
         </div>
 
         <div className='mt-2'>
-          <label className='font-bold' for='search'>
+          <label className='font-bold'>
             <span>Search</span>
           </label>
           <div>
@@ -150,7 +165,6 @@ export const PlayersSelection = ({players}) => {
       </p>
 
       <PlayerList players={players} />
-
     </div>
   );
 };

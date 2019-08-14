@@ -6,7 +6,9 @@ type State = {
   players?: Player[];
 };
 
-const initialState: State = {};
+const initialState: State = {
+  players: [],
+};
 
 export default (state = initialState, action: setPlayersAction) => {
   switch (action.type) {
