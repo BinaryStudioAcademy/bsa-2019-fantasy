@@ -28,6 +28,12 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
+  .post('/join', (req, res, next) => {
+    leagueService
+      .joinLeague(req.user.id, req.body.code)
+      .then((value) => res.json(value))
+      .catch(next);
+  })
   .put('/:id', (req, res, next) =>
     leagueService
       .updateLeague(req.params.id, req.body)

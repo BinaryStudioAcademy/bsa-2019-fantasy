@@ -1,4 +1,5 @@
 import leagueRepository from '../../data/repositories/league.repository';
+import leagueParticipantRepository from '../../data/repositories/league-participant.repository';
 
 export const getAllLeagues = async () => {
   const result = await leagueRepository.getAll();
@@ -24,3 +25,13 @@ export const createLeague = (id, data) =>
 export const updateLeague = async (id, data) => leagueRepository.updateById(id, data);
 
 export const deleteLeagueById = async (id) => leagueRepository.deleteById(id);
+
+export const joinLeague = async (participant_id, league_id) => {
+  const newParticipant = await leagueParticipantRepository.addParticipant({
+    is_creator: false,
+    league_id,
+    participant_id,
+  });
+
+  return newParticipant;
+};
