@@ -14,24 +14,24 @@ export default (models) => {
     TeamMemberHistory,
   } = models;
 
-  // User.belongsTo(FootballClub, { foreignKey: 'favorite_club_id', as: 'football_club' });
-  // User.hasMany(LeagueParticipant, {
-  //   foreignKey: 'participant_id',
-  //   as: 'league_participants',
-  // });
+  User.belongsTo(FootballClub, { foreignKey: 'favorite_club_id', as: 'football_club' });
+  User.hasMany(LeagueParticipant, {
+    foreignKey: 'participant_id',
+    as: 'league_participants',
+  });
 
-  // LeagueParticipant.belongsTo(League, { foreignKey: 'league_id', as: 'league' });
-  // LeagueParticipant.belongsTo(User, { foreignKey: 'participant_id', as: 'user' });
+  LeagueParticipant.belongsTo(League, { foreignKey: 'league_id', as: 'league' });
+  LeagueParticipant.belongsTo(User, { foreignKey: 'participant_id', as: 'user' });
 
-  // League.hasMany(LeagueParticipant, {
-  //   foreignKey: 'league_id',
-  //   as: 'league_participants',
-  // });
+  League.hasMany(LeagueParticipant, {
+    foreignKey: 'league_id',
+    as: 'league_participants',
+  });
 
-  // TeamMemberHistory.belongsTo(PlayerStat, {
-  //   foreignKey: 'player_id',
-  //   as: 'player_stats',
-  // });
+  TeamMemberHistory.belongsTo(PlayerStat, {
+    foreignKey: 'player_id',
+    as: 'player_stats',
+  });
 
   Game.belongsTo(FootballClub, { foreignKey: 'hometeam_id', as: 'hometeam' });
   Game.belongsTo(FootballClub, { foreignKey: 'awayteam_id', as: 'awayteam' });
