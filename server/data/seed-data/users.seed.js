@@ -1,3 +1,5 @@
+import cryptoHelper from '../../helpers/crypto.helper';
+
 const now = new Date();
 
 export default [
@@ -8,7 +10,7 @@ export default [
     money: 55,
     score: 100,
     team_name: 'Liverpool',
-    chip_used: 'wildcard'
+    chip_used: 'wildcard',
   },
   {
     email: 'gbottoms1@arizona.edu',
@@ -17,7 +19,7 @@ export default [
     money: 55,
     score: 100,
     team_name: 'Manchester City',
-    chip_used: 'wildcard'
+    chip_used: 'wildcard',
   },
   {
     email: 'cclears2@state.gov',
@@ -26,7 +28,7 @@ export default [
     money: 55,
     score: 100,
     team_name: 'Manchester United',
-    chip_used: 'wildcard'
+    chip_used: 'wildcard',
   },
   {
     email: 'htie3@chronoengine.com',
@@ -35,7 +37,7 @@ export default [
     money: 55,
     score: 100,
     team_name: 'Arsenal',
-    chip_used: 'wildcard'
+    chip_used: 'wildcard',
   },
   {
     email: 'bbirmingham4@guardian.co.uk',
@@ -44,10 +46,11 @@ export default [
     money: 55,
     score: 100,
     team_name: 'Tottenham',
-    chip_used: 'wildcard'
-  }
-].map(user => ({
+    chip_used: 'wildcard',
+  },
+].map((user) => ({
   ...user,
+  password: cryptoHelper.encryptSync(user.password),
   createdAt: now,
-  updatedAt: now
+  updatedAt: now,
 }));
