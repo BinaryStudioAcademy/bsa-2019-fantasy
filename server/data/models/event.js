@@ -11,13 +11,13 @@ export default (orm, DataTypes) => {
           'goal_conceded',
           'save',
           'yellow_card',
-          'red_card'
-        )
+          'red_card',
+        ),
       },
       createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE
+      updatedAt: DataTypes.DATE,
     },
-    {}
+    {},
   );
 
   return Event;

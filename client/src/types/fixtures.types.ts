@@ -1,3 +1,5 @@
+import { Club } from './club.type';
+
 export type FixturesItemType = {
   id: string;
   start: string;
@@ -8,12 +10,12 @@ export type FixturesItemType = {
   updatedAt: string;
   hometeam_id: number;
   awaytema_id: number;
-  hometeam: any;
-  awayteam: any;
+  hometeam: Club;
+  awayteam: Club;
 };
 
 export type FixturesType = {
-  games: [FixturesItemType];
+  games: FixturesItemType[];
 };
 
 export type GameweeksType = [
