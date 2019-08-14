@@ -26,7 +26,7 @@ router
       .register(req.user)
       .then((data) =>
         leagueService
-          .joinGlobalLeague(data.user.id)
+          .joinGlobalLeague(data.user.id, 'Overall')
           .then(() => res.send(data))
           .catch(next),
       )
