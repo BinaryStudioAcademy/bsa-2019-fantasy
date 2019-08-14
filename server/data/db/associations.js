@@ -35,6 +35,7 @@ export default (models) => {
 
   Game.belongsTo(FootballClub, { foreignKey: 'hometeam_id', as: 'hometeam' });
   Game.belongsTo(FootballClub, { foreignKey: 'awayteam_id', as: 'awayteam' });
+  Event.belongsTo(PlayerMatchStat, { foreignKey: 'player_id', as: 'player' })
 
   // You can use templates below to test associations (run npm start)
 
