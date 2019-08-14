@@ -11,7 +11,7 @@ const mockChartData = {
   datasets: [
     {
       label: 'points',
-      fill: false,
+      fill: true,
       borderColor: '#1EE3CF',
       backgroundColor: 'rgba(30, 227, 207, 0.3)',
       pointHoverBackgroundColor: '#fff',
