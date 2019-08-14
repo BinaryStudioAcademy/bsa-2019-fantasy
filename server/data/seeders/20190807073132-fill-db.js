@@ -38,7 +38,7 @@ export default {
       seedsData = await gamesSeed;
       await queryInterface.bulkInsert('games', seedsData, {});
       const games = await queryInterface.sequelize.query(
-        'SELECT id FROM "games";',
+        'SELECT id FROM "games" WHERE finished;',
         options,
       );
 
