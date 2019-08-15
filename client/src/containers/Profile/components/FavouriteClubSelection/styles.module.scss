@@ -1,6 +1,6 @@
 :local(.clubsList) {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
   align-content: center;
   gap: 1rem;
 }
