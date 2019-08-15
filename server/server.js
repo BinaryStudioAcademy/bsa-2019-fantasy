@@ -8,9 +8,7 @@ import socketIO from 'socket.io';
 import socketIOClient from 'socket.io-client';
 
 import routes from './api/routes/index';
-// import authorizationMiddleware from './api/middlewares/authorization.middleware';
 import errorHandlerMiddleware from './api/middlewares/error-handler.middleware';
-// import routesWhiteList from './config/routes-white-list.config';
 import socketInjector from './socket/injector';
 import socketHandlers from './socket/handlers';
 import initSchedulers from './schedulers';
@@ -57,8 +55,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 
 app.use(socketInjector(io));
-
-// app.use('/api/', authorizationMiddleware(routesWhiteList));
 
 routes(app, io);
 

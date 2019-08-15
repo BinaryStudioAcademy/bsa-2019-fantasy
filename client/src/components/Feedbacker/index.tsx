@@ -18,7 +18,7 @@ export const Feedbacker = () => (
                 {
                   'border-red-600': item.kind === 'error',
                   'border-yellow-600': item.kind === 'warning',
-                  'border-green-600': item.kind === 'success',
+                  'border-green-500': item.kind === 'success',
                 },
               )}
             >

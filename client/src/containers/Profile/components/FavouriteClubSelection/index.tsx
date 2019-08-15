@@ -1,14 +1,16 @@
 import cn from 'classnames';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from 'store/types';
+import { updateFavoriteClub } from 'containers/Profile/actions';
 
 import Spinner from 'components/Spinner';
 
 import styles from './styles.module.scss';
 
 const FavouriteClubSelection = () => {
+  const dispatch = useDispatch();
   const favoriteClub = useSelector(
     ({ profile }: RootState) => profile.user && profile.user.favorite_club_id,
   );
@@ -18,8 +20,12 @@ const FavouriteClubSelection = () => {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (selectedClubId !== null && clubs.find((c) => c.id === selectedClubId)) {
-      console.log('Submitting fav club:', clubs.find((c) => c.id === selectedClubId));
+    if (
+      selectedClubId !== null &&
+      selectedClubId !== favoriteClub &&
+      clubs.find((c) => c.id === selectedClubId)
+    ) {
+      dispatch(updateFavoriteClub(selectedClubId));
     }
   };
 
