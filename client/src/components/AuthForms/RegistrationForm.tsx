@@ -13,8 +13,14 @@ const RegistrationForm = withRouter(({ history }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isNameValid, setIsNameValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordlValid] = useState(true);
+
+  const nameChanged = (name: string) => {
+    setName(name);
+    setIsNameValid(true);
+  };
 
   const emailChanged = (email: string) => {
     setEmail(email);
@@ -38,9 +44,15 @@ const RegistrationForm = withRouter(({ history }) => {
     return isPasswordValid;
   };
 
+  const validateName = () => {
+    const isNameValid = validator.isByteLength(name, { min: 5, max: undefined });
+    setIsNameValid(isNameValid);
+    return isNameValid;
+  };
+
   const handleClickRegister = async (ev: React.FormEvent) => {
     ev.preventDefault();
-    const valid = [validateEmail(), validatePassword()].every(Boolean);
+    const valid = [validateEmail(), validatePassword(), validateName()].every(Boolean);
 
     if (!valid) {
       return;
@@ -60,13 +72,19 @@ const RegistrationForm = withRouter(({ history }) => {
           <label>
             Name
             <input
-              className={firstNameClass}
+              className={isNameValid ? firstNameClass : (firstNameClass += ' error')}
               id='first-name'
               type='text'
               placeholder='Name'
               value={name}
-              onChange={(ev) => setName(ev.target.value)}
+              onChange={(ev) => nameChanged(ev.target.value)}
+              onBlur={validateName}
             />
+            {!isNameValid && (
+              <p className='mt-1 text-red-500 text-xs italic text-justify'>
+                Shoud be at least 5 characters
+              </p>
+            )}
           </label>
         </div>
         <div className='mb-2'>
