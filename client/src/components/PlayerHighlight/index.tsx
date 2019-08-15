@@ -7,7 +7,7 @@ import { faMedal } from '@fortawesome/free-solid-svg-icons';
 import Chart from 'chart.js';
 
 import Button from 'components/Button';
-import { getClubLogoUrl } from 'helpers/images';
+import { getClubLogoUrl, getPlayerImageUrl } from 'helpers/images';
 import { RootState } from 'store/types';
 
 import './styles.scss';
@@ -164,7 +164,7 @@ const PlayerHighlight = ({ player }: { player: Player }) => {
       <div className='playerPhoto flex items-end px-0 xl:px-8 pt-4 -mb-8'>
         <img
           style={{ maxHeight: '28em' }}
-          src={`/images/players/500x500/${player.code}.png`}
+          src={getPlayerImageUrl(player.code, 500)}
           alt='playerPhoto'
         />
       </div>
