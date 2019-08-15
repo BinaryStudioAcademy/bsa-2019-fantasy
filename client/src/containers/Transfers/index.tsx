@@ -1,8 +1,9 @@
 import React from 'react';
-import PlayersSelection from '../../components/PlayersSelection/index';
+import PlayersSelection from 'components/PlayersSelection';
+import TeamSelection from 'components/Gameweek/TeamSelection';
+import FixturesContainer from 'containers/FixturesContainer';
 
 const Transfers = () => {
-
   return (
     <div className='transfers-page'>
       <div className='jumbotron paper mb-12 rounded flex items-end justify-between pt-6'>
@@ -13,7 +14,9 @@ const Transfers = () => {
           </h2>
           <PlayersSelection />
         </div>
+        <TeamSelection isGameweek={false} />
       </div>
+      <FixturesContainer />
     </div>
   );
 };
