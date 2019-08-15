@@ -1,10 +1,14 @@
 /* eslint-disable react/display-name */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PlayersHighlights from 'components/PlayersComparison/PlayersHighlights';
 
 import CompareTable from 'components/PlayersComparison/CompareTable';
 
 const PlayersComparisonPage = () => {
+  useEffect(() => {
+    document.title = 'Players Comparison | Fantasy Football League';
+  }, []);
+
   const renderTable = (player: any) => {
     const columns = [
       {

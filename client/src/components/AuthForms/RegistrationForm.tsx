@@ -133,7 +133,7 @@ const RegistrationForm = withRouter(({ history }) => {
             className='opacity-50 hover:opacity-100 font-bold rounded py-1 px-6 border border-primary bg-transparent shadow uppercase'
             onClick={() => history.push('/login')}
           >
-            Login
+            Sign In
           </button>
         </div>
       </form>

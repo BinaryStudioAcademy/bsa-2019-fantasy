@@ -24,6 +24,7 @@ const Profile = withRouter(({ history }) => {
   const { step, nextStep, prevStep, navToStep } = useSteps(3);
 
   useEffect(() => {
+    document.title = 'Profile | Fantasy Football League';
     navToStep(stepRouteMap.indexOf(history.location.pathname) || 1);
   }, []);
 

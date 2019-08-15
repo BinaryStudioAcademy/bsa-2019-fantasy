@@ -12,9 +12,9 @@ const Header = () => {
     { name: 'Leagues', link: '/leagues' },
     { name: 'Live', link: '/live', dot: true },
     { name: 'Players', link: '/players' },
+    { name: 'Players Comparison', link: '/players-comparison' },
     { name: 'Transfers', link: '/transfers' },
     { name: 'Fixtures', link: '/fixtures' },
-    { name: 'Team Selection', link: '/team-selection' },
   ];
 
   return (
@@ -23,11 +23,12 @@ const Header = () => {
         <nav className='flex items-center py-4 '>
           <div className='flex flex-initial items-center mr-4'>
             <NavLink
-              to='/dashboard'
+              exact
+              to='/'
               className='font-semibold uppercase p-1 border-solid border-b-2 border-transparent hover:text-secondary mr-12'
               activeClassName='text-secondary border-secondary'
             >
-              Dashboard
+              Home
             </NavLink>
             <Notifications />
           </div>

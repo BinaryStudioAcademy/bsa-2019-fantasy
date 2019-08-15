@@ -1,29 +1,30 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { RootState } from 'store/types';
+import { Position } from 'types/player.types';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 
 import { PlayerItem } from '../PlayerItem/index';
-import info from '../../assets/images/info.svg';
-import { Player } from 'types/player.types';
 import { PlayerTypes } from 'components/Gameweek/PlayerSelection/types';
-import { RootState } from 'store/types';
 import { getFieldPlayersUniformUrl, getGoalkeepersUniformUrl } from 'helpers/images';
+import info from 'assets/images/info.svg';
 
 export const PlayerList = ({ players }: any) => {
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
 
+  const { GKP, DEF, MID, FWD } = Position;
   const goalkeepers = players.filter((player: any) => {
-    return player.position === '1' ? true : false;
+    return player.position === GKP ? true : false;
   });
   const defenders = players.filter((player: any) => {
-    return player.position === '2' ? true : false;
+    return player.position === DEF ? true : false;
   });
   const midfielders = players.filter((player: any) => {
-    return player.position === '3' ? true : false;
+    return player.position === MID ? true : false;
   });
   const forwards = players.filter((player: any) => {
-    return player.position === '4' ? true : false;
+    return player.position === FWD ? true : false;
   });
   return (
     <DndProvider backend={HTML5Backend}>
