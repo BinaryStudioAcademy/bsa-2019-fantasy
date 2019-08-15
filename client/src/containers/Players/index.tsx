@@ -6,7 +6,12 @@ import ReactTable from 'react-table';
 
 import { RootState } from 'store/types';
 import { Player } from 'types/player.types';
-import { fetchPlayers } from './actions';
+import {
+  fetchPlayers,
+  fetchDataForPlayer,
+  resetPlayerDialogData,
+  PlayerDataType,
+} from './actions';
 import PlayerHighlight from 'components/PlayerHighlight';
 import SearchBar from 'components/SearchBar';
 import PlayerDialog from 'components/PlayerDialog';
@@ -21,18 +26,20 @@ type Props = {
   error: string | null;
   fetchPlayers: typeof fetchPlayers;
   clubs: Club[];
+  fetchDataForPlayer: typeof fetchDataForPlayer;
+  dialogLoading: boolean;
+  resetPlayerDialogData: typeof resetPlayerDialogData;
+  playerData: PlayerDataType;
 };
 
 type State = {
-  //filters: any;
-  playerDialogData?: string | undefined;
   playerHighlightData: any;
+  currentPlayer?: Player;
   searchBarText: string;
 };
 
 class PlayersPage extends React.Component<Props, State> {
   state: State = {
-    playerDialogData: undefined,
     playerHighlightData: {},
     searchBarText: '',
   };
@@ -61,8 +68,10 @@ class PlayersPage extends React.Component<Props, State> {
     }
   };
 
-  showModal = (id: string) => this.setState({ playerDialogData: id });
-  onModalDismiss = () => this.setState({ playerDialogData: undefined });
+  onModalDismiss = () => {
+    this.props.resetPlayerDialogData();
+    this.setState({ currentPlayer: undefined });
+  };
 
   setPlayerHighlight = (id: string) => {
     const player = this.props.players.find((player) => player && player.id === id);
@@ -161,7 +170,12 @@ class PlayersPage extends React.Component<Props, State> {
         <button
           className='w-4 h-4 justify-center leading-none flex ml-auto bg-background rounded-full text-xs font-semibold'
           onClick={() => {
-            this.setState({ playerDialogData: props.original.id });
+            this.setState({
+              currentPlayer: this.props.players.find(
+                (p: any) => p && props.original.id === p.id,
+              ),
+            });
+            this.props.fetchDataForPlayer(props.original.id, props.original.club_id);
           }}
         >
           i
@@ -237,10 +251,13 @@ class PlayersPage extends React.Component<Props, State> {
           </div>
           {this.renderTable()}
 
-          {this.state.playerDialogData && (
+          {this.state.currentPlayer && (
             <PlayerDialog
-              id={this.state.playerDialogData}
+              playerDialogData={this.props.playerData}
               onDismiss={this.onModalDismiss}
+              loading={this.props.dialogLoading}
+              player={this.state.currentPlayer}
+              clubName={this.getClubNameById(this.state.currentPlayer.club_id)}
             />
           )}
         </section>
@@ -254,10 +271,14 @@ const mapStateToProps = (rootState: RootState) => ({
   loading: rootState.players.loading,
   error: rootState.players.error,
   clubs: rootState.clubs.clubs,
+  playerData: rootState.players.playerData,
+  dialogLoading: rootState.players.dialogLoading,
 });
 
 const actions = {
   fetchPlayers,
+  fetchDataForPlayer,
+  resetPlayerDialogData,
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);

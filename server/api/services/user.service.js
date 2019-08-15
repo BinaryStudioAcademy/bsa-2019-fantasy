@@ -13,3 +13,16 @@ export const getUserByEmail = async (userEmail) => {
 
   return userToSend;
 };
+
+export const updateById = async (id, data) => {
+  try {
+    await userRepository.updateById(id, data);
+    const user = await userRepository.getById(id);
+
+    const { password: _, ...userToSend } = user.dataValues;
+
+    return userToSend;
+  } catch (e) {
+    return null;
+  }
+};

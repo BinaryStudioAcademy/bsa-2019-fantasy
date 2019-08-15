@@ -97,7 +97,6 @@ const stats = [
 ];
 
 const FixturesItem = ({ match }: Props) => {
-
   const [isDisplay, setIsDisplay] = useState(false);
 
   const toggleStats = () => {

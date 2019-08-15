@@ -16,11 +16,17 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
-  .get('/:id/gameweek', (req, res, next) => {
+  .get('/:id/gameweek', (req, res, next) =>
     gameService
       .getGameByGameweekId(req.params.id)
       .then((value) => res.json(value))
-      .catch(next);
-  });
+      .catch(next),
+  )
+  .get('/player/:playerId/:clubId', (req, res, next) =>
+    gameService
+      .getFixturesForPlayer(req.params.playerId, req.params.clubId)
+      .then((value) => res.json(value))
+      .catch(next),
+  );
 
 export default router;

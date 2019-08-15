@@ -46,7 +46,7 @@ export const joinLeague = async (participant_id, league_id) => {
   return newParticipant;
 };
 
-export const JoinGlobalLeague = async (participant_id, league_name) => {
+export const joinGlobalLeague = async (participant_id, league_name) => {
   const { id } = await leagueRepository.getByName(league_name);
 
   const newParticipant = await leagueParticipantRepository.addParticipant({

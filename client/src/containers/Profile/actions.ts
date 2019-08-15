@@ -1,8 +1,10 @@
 import { feedback } from 'react-feedbacker';
 
-import * as authService from 'services/authService';
-import * as forgotPasswordService from 'services/forgotPasswordService';
 import { User } from 'types/user.type';
+import { Club } from 'types/club.types';
+import * as authService from 'services/authService';
+import * as profileService from 'services/profileService';
+import * as forgotPasswordService from 'services/forgotPasswordService';
 import { LoginCredentials, RegisterCredentials } from 'types/auth.types';
 import {
   ForgotPasswordCredentials,
@@ -64,8 +66,10 @@ export const logout = (): AsyncUserAction => (dispatch) => {
   dispatch(setUser(null));
 };
 
-export const loadCurrentUser = (): AsyncUserAction => async (dispatch) => {
-  dispatch(setIsLoading(true));
+export const loadCurrentUser = (soft = false): AsyncUserAction => async (dispatch) => {
+  if (!soft) {
+    dispatch(setIsLoading(true));
+  }
 
   try {
     const user = await authService.getCurrentUser();
@@ -73,6 +77,21 @@ export const loadCurrentUser = (): AsyncUserAction => async (dispatch) => {
   } catch (err) {
     dispatch(setUser(null));
   } finally {
-    dispatch(setIsLoading(false));
+    if (!soft) {
+      dispatch(setIsLoading(false));
+    }
+  }
+};
+
+export const updateFavoriteClub = (id: Club['id']): AsyncUserAction => async (
+  dispatch,
+  getState,
+) => {
+  try {
+    const res = await profileService.updateClub(id);
+    loadCurrentUser(true)(dispatch, getState);
+    feedback.success((res && res.message) || res);
+  } catch (err) {
+    feedback.error('Failed to update favorite club.');
   }
 };

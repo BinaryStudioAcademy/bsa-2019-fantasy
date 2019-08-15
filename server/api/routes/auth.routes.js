@@ -4,7 +4,7 @@ import * as userService from '../services/user.service';
 import * as leagueService from '../services/league.service';
 import facebookAuthRedirectMiddleware from '../middlewares/fb-auth-redirect.middleware';
 import facebookAuthMiddleware from '../middlewares/fb-auth.middleware';
-import authenticationMiddleware from '../middlewares/authentication.middleware';
+import loginMiddleware from '../middlewares/login.middleware';
 import registrationMiddleware from '../middlewares/registration.middleware';
 import jwtMiddleware from '../middlewares/jwt.middleware';
 
@@ -15,7 +15,7 @@ router
   .get('/fb/callback', facebookAuthRedirectMiddleware, (req, res, next) =>
     res.json(req.user),
   )
-  .post('/login', authenticationMiddleware, (req, res, next) =>
+  .post('/login', loginMiddleware, (req, res, next) =>
     authService
       .login(req.user)
       .then((data) => res.send(data))
