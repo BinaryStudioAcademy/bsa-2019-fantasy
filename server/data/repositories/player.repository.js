@@ -39,20 +39,22 @@ class PlayerRepository extends BaseRepository {
       }),
     };
 
-    const whereSearch = {
-      [Op.or]: [
-        {
-          first_name: {
-            [Op.iLike]: `%${search}%`,
-          },
-        },
-        {
-          second_name: {
-            [Op.iLike]: `%${search}%`,
-          },
-        },
-      ],
-    };
+    const whereSearch = search
+      ? {
+          [Op.or]: [
+            {
+              first_name: {
+                [Op.iLike]: `%${search}%`,
+              },
+            },
+            {
+              second_name: {
+                [Op.iLike]: `%${search}%`,
+              },
+            },
+          ],
+        }
+      : {};
 
     const where = { ...whereSearch, ...whereFilter };
     console.log(where);
