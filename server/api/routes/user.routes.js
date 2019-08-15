@@ -5,6 +5,12 @@ import * as leagueService from '../services/league.service';
 const router = Router();
 
 router
+  .get('/leagues', (req, res, next) => {
+    leagueService
+      .getLeaguesByUserId(req.user.id)
+      .then((value) => res.json(value))
+      .catch(next);
+  })
   .get('/:id', (req, res, next) =>
     userService
       .getUserById(req.params.id)
@@ -23,5 +29,4 @@ router
       )
       .catch(next),
   );
-
 export default router;

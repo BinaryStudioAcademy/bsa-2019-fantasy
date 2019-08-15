@@ -11,6 +11,11 @@ export const getLeagueById = async (id) => {
   return result;
 };
 
+export const getLeaguesByUserId = async (id) => {
+  const result = await leagueParticipantRepository.getLeaguesByUserId(id);
+  return result;
+};
+
 export const getLeaguesByName = async (name) => {
   const result = await leagueRepository.getAllByName(name);
   return result;
