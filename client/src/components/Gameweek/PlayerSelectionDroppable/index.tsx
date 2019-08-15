@@ -64,10 +64,10 @@ const PlayerSelectionDroppable = ({
             id={lastDroppedItem.id}
             index={index}
             src={lastDroppedItem.src}
-            name={`${lastDroppedItem.first_name} ${lastDroppedItem.second_name}`}
+            name={lastDroppedItem.name}
             club={lastDroppedItem.club}
             type={lastDroppedItem.type}
-            points={lastDroppedItem.player_score}
+            points={lastDroppedItem.points}
             isGameweek={isGameweek}
           />
         )}
