@@ -10,3 +10,12 @@ export const createLeague = async (request: CreateLeagueCredentials) => {
 
   return response.json();
 };
+
+export const getUserLeagues = async () => {
+  const response = await callWebApi({
+    endpoint: `/api/users/leagues`,
+    type: 'GET',
+  });
+
+  return response.json();
+};
