@@ -1,23 +1,7 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
+import React from 'react';
+import PlayersSelection from '../../components/PlayersSelection/index';
 
-import { loadPlayersAction } from './actions';
-import { RootState } from 'store/types';
-import { Player } from 'types/player.types';
-
-import { PlayersSelection } from '../../components/PlayersSelection/index';
-
-type Props = {
-  loadPlayersAction: typeof loadPlayersAction;
-  players?: Player[];
-};
-
-const Transfers = ({ loadPlayersAction, players }: Props) => {
-  useEffect(() => {
-    const filter = { limit: 10 };
-    loadPlayersAction(filter);
-  }, []);
+const Transfers = () => {
 
   return (
     <div className='transfers-page'>
@@ -27,21 +11,11 @@ const Transfers = ({ loadPlayersAction, players }: Props) => {
             <div className='sub title mb-4 flex items-center'>Transfers Page</div>
             Transfers
           </h2>
-          <PlayersSelection players={players} />
+          <PlayersSelection />
         </div>
       </div>
     </div>
   );
 };
 
-const mapStateToProps = (rootState: RootState) => ({
-  players: rootState.transfer.players,
-});
-
-const actions = { loadPlayersAction };
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Transfers);
+export default Transfers;

@@ -5,18 +5,40 @@ import shirt from '../../assets/images/shirt_8-66.png';
 import { Player } from 'types/player.types';
 
 export const PlayerList = ({ players }: any) => {
-  console.log(players);
+  const clubs = {
+    '1': 'ARS',
+    '2': 'AVL',
+    '3': 'BOU',
+    '4': 'BHA',
+    '5': 'BUR',
+    '6': 'CHE',
+    '7': 'CRY',
+    '8': 'EVE',
+    '9': 'LEI',
+    '10': 'LIV',
+    '11': 'MCI',
+    '12': 'MUN',
+    '13': 'NEW',
+    '14': 'NOR',
+    '15': 'SHU',
+    '16': 'SOU',
+    '17': 'TOT',
+    '18': 'WAT',
+    '19': 'WHU',
+    '20': 'WOL',
+  }
+
   const goalkeepers = players.filter((player: any) => {
-    return player.position === 1 ? true : false;
+    return player.position === '1' ? true : false;
   });
   const defenders = players.filter((player: any) => {
-    return player.position === 2 ? true : false;
+    return player.position === '2' ? true : false;
   });
   const midfielders = players.filter((player: any) => {
-    return player.position === 3 ? true : false;
+    return player.position === '3' ? true : false;
   });
   const forwards = players.filter((player: any) => {
-    return player.position === 4 ? true : false;
+    return player.position === '4' ? true : false;
   });
 
   return (
@@ -37,7 +59,7 @@ export const PlayerList = ({ players }: any) => {
       </tr>
       {goalkeepers.map((player: any) => (
         <PlayerItem
-          name={player.name}
+          name={player.second_name}
           club={player.club_id}
           position='GKP'
           price={player.player_price}
@@ -62,7 +84,7 @@ export const PlayerList = ({ players }: any) => {
       </tr>
       {defenders.map((player: any) => (
         <PlayerItem
-          name={player.name}
+          name={player.second_name}
           club={player.club_id}
           position='DEF'
           price={player.player_price}
@@ -87,7 +109,7 @@ export const PlayerList = ({ players }: any) => {
       </tr>
       {midfielders.map((player: any) => (
         <PlayerItem
-          name={player.name}
+          name={player.second_name}
           club={player.club_id}
           position='MID'
           price={player.player_price}
@@ -112,7 +134,7 @@ export const PlayerList = ({ players }: any) => {
       </tr>
       {forwards.map((player: any) => (
         <PlayerItem
-          name={player.name}
+          name={player.second_name}
           club={player.club_id}
           position='FWD'
           price={player.player_price}
