@@ -12,7 +12,6 @@ const RegistrationForm = withRouter(({ history }) => {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [isEmailUnique, setUniqueEmail] = useState(true);
   const [password, setPassword] = useState('');
   const [isNameValid, setIsNameValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
@@ -25,7 +24,6 @@ const RegistrationForm = withRouter(({ history }) => {
 
   const emailChanged = (email: string) => {
     setEmail(email);
-    setUniqueEmail(true);
     setIsEmailValid(true);
   };
 
@@ -52,18 +50,14 @@ const RegistrationForm = withRouter(({ history }) => {
     return isNameValid;
   };
 
-  const handleClickRegister = async (ev: React.FormEvent) => {
+  const handleClickRegister = (ev: React.FormEvent) => {
     ev.preventDefault();
     const valid = [validateEmail(), validatePassword(), validateName()].every(Boolean);
 
     if (!valid) {
       return;
     }
-    try {
-      await dispatch(registration({ name, email, password }));
-    } catch {
-      setUniqueEmail(false);
-    }
+    dispatch(registration({ name, email, password }));
   };
 
   let [firstNameClass, emailClass, passwordClass] = [[], [], []].map(
@@ -104,11 +98,9 @@ const RegistrationForm = withRouter(({ history }) => {
               onChange={(ev) => emailChanged(ev.target.value)}
               onBlur={validateEmail}
             />
-            {!isEmailUnique && (
-              <p className='mt-1 text-red-500 text-xs italic text-justify'>
-                Email is already taken
-              </p>
-            )}
+            <p className='mt-1 text-xs italic text-justify'>
+              We will send you a confirmation email
+            </p>
           </label>
         </div>
         <div className='mb-6'>

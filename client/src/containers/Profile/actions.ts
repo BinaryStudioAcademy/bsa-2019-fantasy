@@ -48,7 +48,7 @@ const handleAuthResponse = (
 export const login = (request: LoginCredentials) =>
   handleAuthResponse(authService.login(request));
 
-export const registration = async (request: RegisterCredentials) =>
+export const registration = (request: RegisterCredentials) =>
   handleAuthResponse(authService.registration(request));
 
 export const forgotPassword = (request: ForgotPasswordCredentials) => async () => {
