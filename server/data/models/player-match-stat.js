@@ -31,7 +31,14 @@ export default (orm, DataTypes) => {
         type: DataTypes.INTEGER
       },
       createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE
+      updatedAt: DataTypes.DATE,
+      player_id: {
+        type: DataTypes.UUID,
+        references: {
+          model: 'player_stats',
+          key: 'id',
+        },
+      }
     },
     {}
   );
