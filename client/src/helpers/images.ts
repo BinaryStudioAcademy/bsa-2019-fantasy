@@ -7,7 +7,7 @@ export const preloadClubLogos = (clubs: any, size: 40 | 80 | 200) => {
 };
 
 export const getClubLogoUrl = (code: number, size: 40 | 80 | 200) => {
-  return `/images/club-logos/badge_${code}_${size}.png`;
+  return code ? `/images/club-logos/badge_${code}_${size}.png` : '';
 };
 
 export const getPlayerImageUrl = (code: number, size: 220 | 500) => {

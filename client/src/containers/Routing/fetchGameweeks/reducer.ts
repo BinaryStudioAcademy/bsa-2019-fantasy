@@ -14,7 +14,6 @@ type State = {
 const initialState: State = { gameweeks: [], loading: false, error: null };
 
 export default (state = initialState, action: FetchGameweeksAction) => {
-  console.log(action);
   switch (action.type) {
     case FETCH_GAMEWEEKS_REQUEST:
       return { ...state, loading: true };
