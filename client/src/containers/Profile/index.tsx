@@ -1,5 +1,6 @@
+import React, { useEffect } from 'react';
 import cn from 'classnames';
-import React from 'react';
+import { Switch, Route, Redirect, Link, withRouter } from 'react-router-dom';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 import { useSteps } from 'helpers/hooks/steps.hook';
@@ -11,21 +12,23 @@ import Progress from './components/Progress';
 
 import styles from './styles.module.scss';
 
-const Profile = () => {
+const stepRouteMap = [
+  '/profile/details',
+  '/profile/details',
+  '/profile/favorite-club',
+  '/profile/email-preferences',
+  '/profile/email-preferences',
+];
+
+const Profile = withRouter(({ history }) => {
   const { step, nextStep, prevStep, navToStep } = useSteps(3);
 
-  let content;
-  switch (step) {
-    case 1:
-      content = <PersonalDetails />;
-      break;
-    case 2:
-      content = <FavouriteClubSelection />;
-      break;
-    case 3:
-      content = <EmailPreferences />;
-      break;
-  }
+  useEffect(() => {
+    navToStep(stepRouteMap.indexOf(history.location.pathname) || 1);
+  }, []);
+
+  const prevStepLink = stepRouteMap[step - 1];
+  const nextStepLink = stepRouteMap[step + 1];
 
   return (
     <section>
@@ -35,10 +38,26 @@ const Profile = () => {
       </div>
 
       <div className='flex'>
-        <Progress step={step} navToStep={navToStep} />
+        <Progress
+          step={step}
+          navToStep={(step: number) => {
+            navToStep(step);
+            history.push(stepRouteMap[step]);
+          }}
+        />
 
         <div className='flex-1 bg-white rounded py-12 px-16 shadow-figma relative min-h-screen'>
-          {content}
+          <Switch>
+            <Route exact path='/profile'>
+              <Redirect to='/profile/details' />
+            </Route>
+            <Route path='/profile/details' component={PersonalDetails} />
+            <Route path='/profile/favorite-club' component={FavouriteClubSelection} />
+            <Route path='/profile/email-preferences' component={EmailPreferences} />
+            <Route>
+              <Redirect to='/404' />
+            </Route>
+          </Switch>
 
           <button
             className={cn(
@@ -48,7 +67,9 @@ const Profile = () => {
             )}
             onClick={prevStep}
           >
-            <IoIosArrowBack />
+            <Link to={prevStepLink}>
+              <IoIosArrowBack />
+            </Link>
           </button>
           <button
             className={cn(
@@ -58,12 +79,14 @@ const Profile = () => {
             )}
             onClick={nextStep}
           >
-            <IoIosArrowForward />
+            <Link to={nextStepLink}>
+              <IoIosArrowForward />
+            </Link>
           </button>
         </div>
       </div>
     </section>
   );
-};
+});
 
 export default Profile;
