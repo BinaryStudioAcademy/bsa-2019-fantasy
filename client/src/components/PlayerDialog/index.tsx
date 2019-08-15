@@ -79,7 +79,7 @@ const PlayerDialog = (props: Props) => {
       return (
         <div className='self-center' style={{ width: '90%' }}>
           <h3 className='text-lg font-medium'>This season</h3>
-          <h4>Data will appear here once the season is underway</h4>
+          <h4>This player hasn't player any games yet</h4>
         </div>
       );
     }
