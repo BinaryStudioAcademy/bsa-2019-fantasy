@@ -12,25 +12,25 @@ const router = Router();
 router
   .get('/fb', facebookAuthMiddleware)
   .get('/fb/callback', facebookAuthRedirectMiddleware, (req, res, next) =>
-    res.json(req.user)
+    res.json(req.user),
   )
   .post('/login', authenticationMiddleware, (req, res, next) =>
     authService
       .login(req.user)
-      .then(data => res.send(data))
-      .catch(next)
+      .then((data) => res.send(data))
+      .catch(next),
   )
-  .post('/register', registrationMiddleware, (req, res, next) =>
+  .post('/registration', registrationMiddleware, (req, res, next) =>
     authService
       .register(req.user)
-      .then(data => res.send(data))
-      .catch(next)
+      .then((data) => res.send(data))
+      .catch(next),
   )
   .get('/user', jwtMiddleware, (req, res, next) =>
     userService
       .getUserById(req.user.id)
-      .then(data => res.send(data))
-      .catch(next)
+      .then((data) => res.send(data))
+      .catch(next),
   );
 
 export default router;
