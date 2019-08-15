@@ -1,4 +1,7 @@
 import React from 'react';
+import PlayersSelection from 'components/PlayersSelection';
+import TeamSelection from 'components/Gameweek/TeamSelection';
+import FixturesContainer from 'containers/FixturesContainer';
 
 const Transfers = () => {
   return (
@@ -9,8 +12,11 @@ const Transfers = () => {
             <div className='sub title mb-4 flex items-center'>Transfers Page</div>
             Transfers
           </h2>
+          <PlayersSelection />
         </div>
+        <TeamSelection isGameweek={false} />
       </div>
+      <FixturesContainer />
     </div>
   );
 };

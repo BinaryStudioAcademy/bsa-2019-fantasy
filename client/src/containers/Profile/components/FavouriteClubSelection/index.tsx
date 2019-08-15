@@ -57,9 +57,7 @@ const FavouriteClubSelection = () => {
                   src={getClubLogoUrl(item.code, 200)}
                   alt={`Club ${item.name}`}
                 />
-                <span className='text-secondary text-sm leading-none font-bold'>
-                  {item.name}
-                </span>
+                <span className='text-sm leading-none font-bold'>{item.name}</span>
               </div>
             </label>
           );
