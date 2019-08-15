@@ -38,8 +38,7 @@ import ResetPassword from 'containers/ChangePassword/ResetPassword';
 
 // Initial data loading
 import { fetchClubs } from './fetchClubs/actions';
-import { fetchGameweeks } from './fetchGameweeks/actions';
-import { fetchGameweekHistory } from './fetchGameweeksHistory/actions';
+import { fetchGameweeks, fetchGameweekHistory } from './fetchGameweeks/actions';
 import { preloadClubLogos } from 'helpers/images';
 
 const Routing = () => {
@@ -51,12 +50,12 @@ const Routing = () => {
     dispatch(loadCurrentUser());
     dispatch(fetchClubs());
     dispatch(fetchGameweeks());
-    dispatch(
-      fetchGameweekHistory(
-        '1f5899ea-b596-4636-a36b-15d3fb750b42',
-        'ca669cf9-3500-43ea-9343-a4bf4b4d2657',
-      ),
-    );
+    // dispatch(
+    //   fetchGameweekHistory(
+    //     'dfe3c86d-c303-41d2-992a-9e9d62bc87b5',
+    //     '94a2e21a-c317-40d6-836d-9bc3f76810e7',
+    //   ),
+    // );
   }, [dispatch]);
 
   useEffect(() => {

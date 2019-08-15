@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { Line as LineChart } from 'react-chartjs-2';
+import { withRouter } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
+import Spinner from 'components/Spinner';
+import { RootState } from 'store/types';
+import { usePersonalDetails } from '../Profile/components/PersonalDetails';
+import { fetchGameweekHistory } from 'containers/Routing/fetchGameweeks/actions';
 import './styles.scss';
 
 const mockChartData = {
@@ -21,7 +27,22 @@ const mockChartData = {
   ],
 };
 
-const GameweekHistory = () => {
+const GameweekHistory = withRouter(({ history }) => {
+  const dispatch = useDispatch();
+
+  const { user } = usePersonalDetails();
+  if (!user) return <Spinner />;
+  useEffect(() => {
+    dispatch(
+      fetchGameweekHistory(
+        'dfe3c86d-c303-41d2-992a-9e9d62bc87b5',
+        '94a2e21a-c317-40d6-836d-9bc3f76810e7',
+      ),
+    );
+  }, [dispatch]);
+  const gameweekPlayers = useSelector(
+    (state: RootState) => state.gameweeks.gameweeks_history,
+  );
   return (
     <div className='gameweek-history'>
       <div className='jumbotron paper mb-12 rounded flex items-end justify-between pt-6'>
@@ -49,7 +70,7 @@ const GameweekHistory = () => {
       </div>
       <div className='gameweek-history-content'>
         <div className='paper rounded mr-2'>
-          <TeamSelection isGameweek />
+          <TeamSelection isGameweek players={gameweekPlayers} />
         </div>
         <div className='paper px-8 pt-12 rounded gameweek-stats ml-2'>
           <h3 className='title text-secondary mb-1'>Current Points</h3>
@@ -60,6 +81,6 @@ const GameweekHistory = () => {
       </div>
     </div>
   );
-};
+});
 
 export default GameweekHistory;

@@ -14,7 +14,7 @@ const MyTeam = () => {
           </h2>
         </div>
       </div>
-      <TeamSelection isGameweek={false} />
+      <TeamSelection isGameweek={false} players={[]} />
     </div>
   );
 };

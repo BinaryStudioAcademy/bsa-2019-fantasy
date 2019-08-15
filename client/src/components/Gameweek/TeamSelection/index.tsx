@@ -15,6 +15,7 @@ import './styles.scss';
 
 export interface TeamSelectionProps {
   isGameweek: boolean;
+  players: Array<any>;
 }
 
 const BENCH = [
@@ -213,7 +214,8 @@ const PITCH = [
   },
 ];
 
-const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
+const TeamSelection = ({ isGameweek, players }: TeamSelectionProps) => {
+  console.log(players);
   //set bench drag&drop items, which accept all player types
   const [bench, setBench] = useState<BenchDroppable[]>(BENCH);
   //set bench drag&drop items, which accept only specific player types
