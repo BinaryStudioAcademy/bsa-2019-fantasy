@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useDrop } from 'react-dnd';
 
 import Player from '../PlayerSelection';
@@ -13,6 +13,7 @@ export interface PlayerDroppableProps {
   accept: string;
   onDrop: (item: any) => void;
   lastDroppedItem: any;
+  isGameweek: boolean;
 }
 
 export interface BenchDroppable {
@@ -24,13 +25,16 @@ export interface BenchDroppableProps {
   accept: string[];
   onDrop: (item: any) => void;
   lastDroppedItem: any;
+  isGameweek: boolean;
 }
 const PlayerSelectionDroppable = ({
   accept,
   index,
   onDrop,
   lastDroppedItem,
+  isGameweek,
 }: PlayerDroppableProps | BenchDroppableProps) => {
+  const ref = useRef<HTMLDivElement>(null);
   const [{ isOver, canDrop }, drop] = useDrop({
     accept,
     drop: onDrop,
@@ -47,21 +51,27 @@ const PlayerSelectionDroppable = ({
   } else if (canDrop) {
     backgroundColor = 'rgba(118, 124, 37, 0.9)';
   }
-
+  if (!isGameweek) {
+    drop(ref);
+  }
   return (
-    <div ref={drop} className='player-placeholder' style={{ backgroundColor }}>
-      <div className='player-type'>{isActive ? 'Release to drop' : null}</div>
+    <div ref={ref}>
+      <div className='player-placeholder' style={{ backgroundColor }}>
+        <div className='player-type'>{isActive ? 'Release to drop' : null}</div>
 
-      {lastDroppedItem && (
-        <Player
-          id={lastDroppedItem.id}
-          index={index}
-          src={lastDroppedItem.src}
-          name={lastDroppedItem.name}
-          club={lastDroppedItem.club}
-          type={lastDroppedItem.type}
-        />
-      )}
+        {lastDroppedItem && (
+          <Player
+            id={lastDroppedItem.id}
+            index={index}
+            src={lastDroppedItem.src}
+            name={lastDroppedItem.name}
+            club={lastDroppedItem.club}
+            type={lastDroppedItem.type}
+            points={lastDroppedItem.points}
+            isGameweek={isGameweek}
+          />
+        )}
+      </div>
     </div>
   );
 };

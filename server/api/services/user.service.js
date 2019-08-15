@@ -1,11 +1,28 @@
 import userRepository from '../../data/repositories/user.repository';
 
 export const getUserById = async (userId) => {
-  const { id, name, email } = await userRepository.getUserById(userId);
-  return { id, name, email };
+  const user = await userRepository.getUserById(userId);
+  const { password: _, ...userToSend } = user.dataValues;
+
+  return userToSend;
 };
 
 export const getUserByEmail = async (userEmail) => {
-  const { id, name, email } = await userRepository.getByEmail(userEmail);
-  return { id, name, email };
+  const user = await userRepository.getUserByEmail(userEmail);
+  const { password: _, ...userToSend } = user.dataValues;
+
+  return userToSend;
+};
+
+export const updateById = async (id, data) => {
+  try {
+    await userRepository.updateById(id, data);
+    const user = await userRepository.getById(id);
+
+    const { password: _, ...userToSend } = user.dataValues;
+
+    return userToSend;
+  } catch (e) {
+    return null;
+  }
 };

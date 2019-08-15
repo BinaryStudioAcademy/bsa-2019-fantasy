@@ -5,41 +5,40 @@ export default (orm, DataTypes) => {
       name: {
         allowNull: false,
         type: DataTypes.STRING,
-        unique: true
+        unique: true,
       },
       email: {
         allowNull: false,
         type: DataTypes.STRING,
-        unique: true
+        unique: true,
       },
       password: {
         allowNull: false,
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
       },
       money: {
         allowNull: false,
-        type: DataTypes.FLOAT
+        type: DataTypes.FLOAT,
+        defaultValue: 1000,
       },
       score: {
         allowNull: false,
-        type: DataTypes.FLOAT
+        type: DataTypes.FLOAT,
+        defaultValue: 0,
       },
       team_name: {
-        allowNull: false,
-        type: DataTypes.STRING
+        allowNull: true, // FIXME: CHECK THIS ONE
+        type: DataTypes.STRING,
       },
       chip_used: {
         allowNull: false,
-        type: DataTypes.ENUM(
-          'wildcard',
-          'triple_caption',
-          'bench_boost'
-        )
+        type: DataTypes.ENUM('wildcard', 'triple_caption', 'bench_boost'),
+        defaultValue: 'wildcard',
       },
       createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE
+      updatedAt: DataTypes.DATE,
     },
-    {}
+    {},
   );
 
   return User;

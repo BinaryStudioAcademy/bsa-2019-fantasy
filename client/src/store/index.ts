@@ -10,6 +10,7 @@ import playersReducer from 'containers/Players/reducer';
 import fixturesReducer from '../containers/FixturesContainer/reducer';
 import playerSelectionReducer from '../components/PlayersSelection/reducer';
 import clubsReducer from 'containers/Routing/fetchClubs/reducer';
+import gameweeksReducer from 'containers/Routing/fetchGameweeks/reducer';
 
 export const history = createBrowserHistory();
 
@@ -26,6 +27,7 @@ const reducers = {
   players: playersReducer,
   fixtures: fixturesReducer,
   playerSelection: playerSelectionReducer,
+  gameweeks: gameweeksReducer,
 };
 
 const rootReducer = combineReducers({

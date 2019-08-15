@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { Link } from 'react-router-dom';
-import { Option } from 'react-dropdown';
 import ReactTable from 'react-table';
-import { animateScroll as scroll } from 'react-scroll';
-
-// import { ReactTableDefaults } from 'react-table';
-// import _ from 'lodash';
 
 import { RootState } from 'store/types';
 import { Player } from 'types/player.types';
-import { fetchPlayers } from './actions';
+import {
+  fetchPlayers,
+  fetchDataForPlayer,
+  resetPlayerDialogData,
+  PlayerDataType,
+} from './actions';
 import PlayerHighlight from 'components/PlayerHighlight';
 import SearchBar from 'components/SearchBar';
 import PlayerDialog from 'components/PlayerDialog';
@@ -25,23 +25,33 @@ type Props = {
   loading: boolean;
   error: string | null;
   fetchPlayers: typeof fetchPlayers;
-  clubs: [Club?];
+  clubs: Club[];
+  fetchDataForPlayer: typeof fetchDataForPlayer;
+  dialogLoading: boolean;
+  resetPlayerDialogData: typeof resetPlayerDialogData;
+  playerData: PlayerDataType;
 };
 
 type State = {
-  //filters: any;
-  playerDialogData?: string | undefined;
   playerHighlightData: any;
+  currentPlayer?: Player;
+  searchBarText: string;
 };
 
 class PlayersPage extends React.Component<Props, State> {
   state: State = {
-    playerDialogData: undefined,
     playerHighlightData: {},
+    searchBarText: '',
   };
+  table: any;
+
+  constructor(props: any) {
+    super(props);
+    this.table = React.createRef();
+    this.onFetchData = this.onFetchData.bind(this);
+  }
 
   onFetchData = async ({ page, pageSize, sorted }: any) => {
-    console.log('data fetch');
     const defaultSort = { order_field: 'player_price', order_direction: 'DESC' };
     const sort = sorted[0]
       ? { order_field: sorted[0].id, order_direction: sorted[0].desc ? 'DESC' : 'ASC' }
@@ -49,6 +59,7 @@ class PlayersPage extends React.Component<Props, State> {
     await this.props.fetchPlayers({
       offset: page * pageSize,
       limit: pageSize,
+      search: this.state.searchBarText,
       ...sort,
     });
     if (Object.keys(this.state.playerHighlightData).length === 0) {
@@ -57,16 +68,16 @@ class PlayersPage extends React.Component<Props, State> {
     }
   };
 
-  showModal = (id: string) => this.setState({ playerDialogData: id });
-  onModalDismiss = () => this.setState({ playerDialogData: undefined });
+  onModalDismiss = () => {
+    this.props.resetPlayerDialogData();
+    this.setState({ currentPlayer: undefined });
+  };
 
   setPlayerHighlight = (id: string) => {
-    console.log(window);
     const player = this.props.players.find((player) => player && player.id === id);
     this.setState({
       playerHighlightData: player,
     });
-    console.log('animate');
     const scrollElement = document.querySelector('#root>.flex>.flex-1');
     scrollElement && scrollElement.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -84,6 +95,12 @@ class PlayersPage extends React.Component<Props, State> {
     const club = this.getClubById(id);
     const url = club && club.code && getClubLogoUrl(club.code, 80);
     return url || '';
+  };
+
+  onSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
+    this.setState({ searchBarText: e.currentTarget.value }, () =>
+      this.onFetchData({ ...this.table.current.state, page: 0 }),
+    );
   };
 
   readonly columns = [
@@ -153,9 +170,12 @@ class PlayersPage extends React.Component<Props, State> {
         <button
           className='w-4 h-4 justify-center leading-none flex ml-auto bg-background rounded-full text-xs font-semibold'
           onClick={() => {
-            this.setState({ playerDialogData: props.original.id });
-            console.log('props');
-            console.log(props);
+            this.setState({
+              currentPlayer: this.props.players.find(
+                (p: any) => p && props.original.id === p.id,
+              ),
+            });
+            this.props.fetchDataForPlayer(props.original.id, props.original.club_id);
           }}
         >
           i
@@ -202,13 +222,13 @@ class PlayersPage extends React.Component<Props, State> {
     });
     return (
       <ReactTable
+        ref={this.table as any}
         style={this.tableStyle}
         data={playerTableData}
-        pageSize={10}
+        pageSize={playerTableData.length > 10 ? playerTableData.length : 10}
         pages={10} // should default to -1 (which means we don't know how many pages we have)
         manual
         columns={this.columns}
-        //column={this.columnProps}
         onFetchData={this.onFetchData}
       />
     );
@@ -216,7 +236,6 @@ class PlayersPage extends React.Component<Props, State> {
 
   render() {
     if (this.props.loading) return 'spinner';
-
     return (
       <>
         <PlayerHighlight player={this.state.playerHighlightData} />
@@ -224,15 +243,21 @@ class PlayersPage extends React.Component<Props, State> {
         <section className='allStats my-6'>
           <div className='filters text-sm flex mt-6 mb-1'>
             <div className='ml-auto'>
-              <SearchBar />
+              <SearchBar
+                onChange={this.onSearchChange}
+                value={this.state.searchBarText}
+              />
             </div>
           </div>
           {this.renderTable()}
 
-          {this.state.playerDialogData && (
+          {this.state.currentPlayer && (
             <PlayerDialog
-              id={this.state.playerDialogData}
+              playerDialogData={this.props.playerData}
               onDismiss={this.onModalDismiss}
+              loading={this.props.dialogLoading}
+              player={this.state.currentPlayer}
+              clubName={this.getClubNameById(this.state.currentPlayer.club_id)}
             />
           )}
         </section>
@@ -246,10 +271,14 @@ const mapStateToProps = (rootState: RootState) => ({
   loading: rootState.players.loading,
   error: rootState.players.error,
   clubs: rootState.clubs.clubs,
+  playerData: rootState.players.playerData,
+  dialogLoading: rootState.players.dialogLoading,
 });
 
 const actions = {
   fetchPlayers,
+  fetchDataForPlayer,
+  resetPlayerDialogData,
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
