@@ -22,7 +22,7 @@ const createLeagueFailure = (error: any): CreateLeagueAction => ({
   payload: error
 });
 
-export const createLeague = (data: { name: string }): AsyncCreateLeagueAction => async (
+export const createLeagueAction = (data: { name: string }): AsyncCreateLeagueAction => async (
   dispatch,
 ) => {
   try {

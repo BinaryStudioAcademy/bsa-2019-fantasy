@@ -5,18 +5,17 @@ import validator from 'validator';
 import { times } from 'lodash';
 import { FaStar } from 'react-icons/fa';
 
-import { createLeague } from '../actions';
+import { createLeagueAction } from '../actions';
 import { RootState } from 'store/types';
-import { CreateLeagueAction } from '../action.types';
 
 type Props = {
   isLoading: boolean;
   error: string | null;
   success: string | null;
-  createLeague: any;
+  createLeagueAction: typeof createLeagueAction;
 };
 
-const CreateLeague = ({ isLoading, error, success, createLeague }: Props) => {
+const CreateLeague = ({ isLoading, error, success, createLeagueAction }: Props) => {
   const [name, setName] = useState('');
   const [gameweek, setGameweek] = useState('Gameweek 1');
   const [isNameValid, setValidation] = useState(true);
@@ -35,8 +34,8 @@ const CreateLeague = ({ isLoading, error, success, createLeague }: Props) => {
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
     validateName();
-    console.log(name);
-    createLeague({ name });
+
+    createLeagueAction({ name });
   };
 
   return (
@@ -141,7 +140,7 @@ const mapStateToProps = (rootState: RootState) => ({
   success: rootState.league.success,
 });
 
-const actions = { createLeague };
+const actions = { createLeagueAction };
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
 
 export default connect(
