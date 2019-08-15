@@ -15,6 +15,11 @@ router
             .getPlayerMatchById(req.params.id)
             .then(value => res.json(value))
             .catch(next)
+    )
+    .get('/by-gameweeks/:id', (req, res, next) => 
+        playerMatchService.getPlayerStatsByGameweeks(req.params.id)
+            .then(value => res.json(value))
+            .catch(next)
     );
 
 export default router;
