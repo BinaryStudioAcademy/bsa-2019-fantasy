@@ -24,7 +24,7 @@ const PlayersSelection = ({ loadPlayersAction, players }: Props) => {
     order_field: 'player_score',
     position: undefined,
     club_id: undefined,
-    second_name: undefined,
+    search: undefined,
     max_price: undefined    
   });
 
@@ -60,7 +60,7 @@ const PlayersSelection = ({ loadPlayersAction, players }: Props) => {
   };
   const onSearchChange = (item: any) => {
     setSearch(item);
-    setQuery({ ...query, second_name: item });
+    setQuery({ ...query, search: item });
     loadPlayersAction({ ...query });
   };
   const onMaxPriceChange = (item: any) => {
