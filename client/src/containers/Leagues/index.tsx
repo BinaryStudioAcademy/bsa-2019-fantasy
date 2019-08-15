@@ -12,6 +12,7 @@ import { LeagueTable } from 'components/Leagues/LeagueTables';
 import { RootState } from 'store/types';
 import { loadUserLeagues } from './actions';
 
+import { getClubLogoUrl } from 'helpers/images';
 import FirstPlayer from 'assets/images/player.png';
 import SecondPlayer from 'assets/images/1966.png';
 import './styles.scss';
@@ -59,15 +60,21 @@ const columns = [
 type Props = {
   loadUserLeagues: typeof loadUserLeagues;
   leagues: any;
+  clubs: any;
 };
 
-const Leagues = ({ loadUserLeagues, leagues }: Props) => {
+const Leagues = ({ loadUserLeagues, leagues, clubs }: Props) => {
   const [userLeagues, setLeagues] = useState([]);
 
   useEffect(() => {
     loadUserLeagues();
     setLeagues(leagues);
   }, [userLeagues, setLeagues, loadUserLeagues]);
+
+  const getClubCodeByName = (name: string) => {
+    const club = clubs.filter((club: any) => club.name === name);
+    return club[0] && club[0].code;
+  };
 
   const titles = [
     {
@@ -99,8 +106,15 @@ const Leagues = ({ loadUserLeagues, leagues }: Props) => {
         <div className='container'>
           <div className='jumbotron paper mb-12 rounded flex items-end justify-between pt-6'>
             <div className='jumbotron-content mt-12 mb-12'>
+              <div className='clubLogo inline-flex rounded-full shadow-figma p-4 mb-6'>
+                <img
+                  className='w-16'
+                  src={getClubLogoUrl(getClubCodeByName(footballClub.league.name)!, 80)}
+                  alt='Club logo'
+                />
+              </div>
               <h2 className='title mb-12 text-secondary'>
-                <div className='sub title mb-4 flex items-center'>
+                <div className='sub title mb-3 flex items-center'>
                   <FaStar />
                   My Leagues
                 </div>
@@ -144,6 +158,7 @@ const Leagues = ({ loadUserLeagues, leagues }: Props) => {
 
 const mapStateToProps = (rootState: RootState) => ({
   leagues: rootState.league.leagues,
+  clubs: rootState.clubs.clubs,
 });
 
 const actions = { loadUserLeagues };
