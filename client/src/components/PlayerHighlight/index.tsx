@@ -116,7 +116,7 @@ const PlayerHighlight = ({ player }: { player: Player }) => {
         <div className='clubLogo rounded-full shadow-figma p-4'>
           <img
             className='w-16'
-            src={getClubLogoUrl(getClubCodeById(club_id), 80)}
+            src={getClubLogoUrl(getClubCodeById(club_id)!, 80)}
             alt='Club logo'
           />
         </div>

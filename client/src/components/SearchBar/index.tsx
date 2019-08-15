@@ -4,6 +4,8 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 type SearchBarProps = {
   className?: string;
+  onChange?: any;
+  value?: string;
 };
 
 const SearchBar = (props: SearchBarProps) => {
@@ -14,6 +16,8 @@ const SearchBar = (props: SearchBarProps) => {
         className={`header-search shadow-figma font-medium appearance-none border rounded min-w-0 pl-8 pr-3 py-2 leading-normal outline-none focus:shadow-outline ${props.className}`}
         type='text'
         placeholder='Search'
+        onChange={props.onChange}
+        value={props.value}
       />
     </div>
   );
