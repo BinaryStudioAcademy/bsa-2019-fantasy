@@ -15,7 +15,7 @@ const StatusPlayerModal = ({ isCaptain, isViceCaptain, onClose }: any) => {
       >
         <div className='modal-header bg-green-700 p-4 font-bold text-xl flex justify-between'>
           <h3>Hello</h3>
-          <button onClick={() => onClose()}><span className='close'></span></button>
+          <button onClick={() => onClose(false)}><span className='close'></span></button>
         </div>
         <div className='modal-body p-6 flex flex-col'>
           {!isCaptain && (

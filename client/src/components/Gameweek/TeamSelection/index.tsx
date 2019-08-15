@@ -15,6 +15,7 @@ import './styles.scss';
 
 export interface TeamSelectionProps {
   isGameweek: boolean;
+  onOpen?: any;
 }
 
 const BENCH = [
@@ -213,12 +214,11 @@ const PITCH = [
   },
 ];
 
-const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
+const TeamSelection = ({ isGameweek, onOpen }: TeamSelectionProps) => {
   //set bench drag&drop items, which accept all player types
   const [bench, setBench] = useState<BenchDroppable[]>(BENCH);
   //set bench drag&drop items, which accept only specific player types
   const [pitch, setPitch] = useState<PlayerDroppable[]>(PITCH);
-
   //set ids of players on the pitch
   const [droppedPlayerPitchIds, setdroppedPlayerPitchIds] = useState<string[]>(
     pitch.map((el) => {
@@ -348,6 +348,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
                   isGameweek={isGameweek}
+                  onOpen={onOpen}
                 />
               );
             } else {
@@ -368,6 +369,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
                   isGameweek={isGameweek}
+                  onOpen={onOpen}
                 />
               );
             } else {
@@ -388,6 +390,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
                   isGameweek={isGameweek}
+                  onOpen={onOpen}
                 />
               );
             } else {
@@ -408,6 +411,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
                   isGameweek={isGameweek}
+                  onOpen={onOpen}
                 />
               );
             } else {
@@ -427,6 +431,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
                 lastDroppedItem={lastDroppedItem}
                 onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
                 isGameweek={isGameweek}
+                onOpen={onOpen}
               />
             );
           })}

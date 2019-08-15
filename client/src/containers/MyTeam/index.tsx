@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
 import './styles.scss';
 import StatusPlayerModal from 'components/StatusPlayerModal';
 
 const MyTeam = () => {
+  const [showModal, setShowModal] = useState(true);
+
+  const onToggle = (show: boolean) => {
+    setShowModal(show);
+  }
+
   return (
     <div className='team-page'>
       <div className='jumbotron paper mb-12 rounded flex items-end justify-between pt-6'>
@@ -15,8 +21,8 @@ const MyTeam = () => {
           </h2>
         </div>
       </div>
-      <TeamSelection isGameweek={false} />
-      <StatusPlayerModal isCaptain={true} isViceCaptain={false}/>
+      <TeamSelection isGameweek={false} onOpen={onToggle}/>
+      {showModal && <StatusPlayerModal isCaptain={true} isViceCaptain={false} onClose={onToggle}/>}
     </div>
   );
 };

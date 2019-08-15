@@ -21,6 +21,7 @@ export interface PlayerDraggableProps {
   type: string;
   points: number;
   isGameweek: boolean;
+  onOpen?: any;
 }
 
 const PlayerSelection = ({
@@ -32,6 +33,7 @@ const PlayerSelection = ({
   type,
   points,
   isGameweek,
+  onOpen
 }: PlayerDraggableProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [{ opacity }, drag] = useDrag({
@@ -51,7 +53,7 @@ const PlayerSelection = ({
     drag(ref);
   }
   return (
-    <div ref={ref} className='text-center relative'>
+    <div ref={ref} className='text-center relative' onClick={() => onOpen(true)}>
       <div>
         <div className='absolute'>
           {isGameweek ? null : (
