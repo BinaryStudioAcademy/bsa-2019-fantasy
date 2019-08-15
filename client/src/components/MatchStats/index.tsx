@@ -11,8 +11,8 @@ type Props = {
 const MatchStats = ({ title, hometeam_stats, awayteam_stats }: Props) => {
   const mapArray = (array: any) =>
     array.map((item: any) => (
-      <div className='stats-item'>
-        {item.player} <span className='count'>{item.count}</span>
+      <div className='stats-item' key={`stats-item-${item.player}`}>
+        {item.player} <span className='count'>( {item.count} )</span>
       </div>
     ));
 

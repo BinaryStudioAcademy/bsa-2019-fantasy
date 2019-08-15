@@ -97,25 +97,46 @@ const stats = [
 ];
 
 const FixturesItem = ({ match }: Props) => {
+
   const [isDisplay, setIsDisplay] = useState(false);
+
   const toggleStats = () => {
     if (match.started) {
       setIsDisplay(!isDisplay);
     }
   };
+
   const displayStats = () =>
     stats.map(({ title, awayteam_stats, hometeam_stats }) => (
       <MatchStats
         title={title}
         awayteam_stats={awayteam_stats}
         hometeam_stats={hometeam_stats}
+        key={`stats-${title}-${match.id}`}
       />
     ));
+
+  let label = <p>{moment(match.start).format('HH:mm')}</p>;
+
+  if (match.started) {
+    label = (
+      <div className='flex'>
+        <p className='home-score score text-white font-bold bg-green-900'>
+          {match.hometeam_score}
+        </p>
+        <p className='away-score score text-white font-bold bg-green-900'>
+          {match.awayteam_score}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <React.Fragment>
       <li
-        className={`flex items-center p-3 ${match.started ? 'cursor-pointer' : ''}`}
+        className={`flex items-center p-3 ${match.started ? 'cursor-pointer' : ''} ${
+          isDisplay ? 'bg-green-600 text-white' : ''
+        }`}
         onClick={() => toggleStats()}
       >
         <div className='first-team team justify-end'>
@@ -131,19 +152,9 @@ const FixturesItem = ({ match }: Props) => {
             match.started ? 'bg-green-900' : ''
           }`}
         >
-          {!match.started && <p>{moment(match.start).format('HH:mm')}</p>}
-          {match.started && (
-            <div className='flex'>
-              <p className='home-score score text-white font-bold bg-green-900'>
-                {match.hometeam_score}
-              </p>
-              <p className='away-score score text-white font-bold bg-green-900'>
-                {match.awayteam_score}
-              </p>
-            </div>
-          )}
+          {label}
         </div>
-        <div className='second-team team'>
+        <div className='text-left team'>
           <img
             className='logo'
             src={`images/club-logos/badge_${match.awayteam.code}_200.png`}
