@@ -17,8 +17,8 @@ import Transfers from 'containers/Transfers';
 import Live from 'containers/Live';
 
 import Leagues from 'containers/Leagues';
-import CreateLeague from 'components/Leagues/CreateLeague';
-import JoinLeague from 'components/Leagues/JoinLeague';
+import CreateLeague from 'containers/Leagues/CreateLeague';
+import JoinLeague from 'containers/Leagues/JoinLeague';
 
 import GameweekHistory from 'containers/GameweekHistory';
 
