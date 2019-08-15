@@ -1,3 +1,5 @@
+import { feedback } from 'react-feedbacker';
+
 import * as authService from 'services/authService';
 import * as forgotPasswordService from 'services/forgotPasswordService';
 import { User } from 'types/user.type';
@@ -33,9 +35,12 @@ const handleAuthResponse = (
     token: string;
   }>,
 ): AsyncUserAction => async (dispatch, getRootState) => {
-  // TODO: Add notifications on failure
-  const { user, token } = await authResponsePromise;
-  setAuthData(user, token)(dispatch, getRootState);
+  try {
+    const { user, token } = await authResponsePromise;
+    setAuthData(user, token)(dispatch, getRootState);
+  } catch (err) {
+    feedback.error(err && err.message ? err.message : err);
+  }
 };
 
 export const login = (request: LoginCredentials) =>
