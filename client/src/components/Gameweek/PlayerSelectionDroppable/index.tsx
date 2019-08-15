@@ -5,24 +5,24 @@ import Player from '../PlayerSelection';
 import './styles.scss';
 
 export interface PlayerDroppable {
-  accept: string;
+  accept: any;
   lastDroppedItem: any;
 }
 export interface PlayerDroppableProps {
   index: number;
-  accept: string;
+  accept: any;
   onDrop: (item: any) => void;
   lastDroppedItem: any;
   isGameweek: boolean;
 }
 
 export interface BenchDroppable {
-  accept: string[];
+  accept: any;
   lastDroppedItem: any;
 }
 export interface BenchDroppableProps {
   index: number;
-  accept: string[];
+  accept: any;
   onDrop: (item: any) => void;
   lastDroppedItem: any;
   isGameweek: boolean;
@@ -64,10 +64,10 @@ const PlayerSelectionDroppable = ({
             id={lastDroppedItem.id}
             index={index}
             src={lastDroppedItem.src}
-            name={lastDroppedItem.name}
+            name={`${lastDroppedItem.first_name} ${lastDroppedItem.second_name}`}
             club={lastDroppedItem.club}
             type={lastDroppedItem.type}
-            points={lastDroppedItem.points}
+            points={lastDroppedItem.player_score}
             isGameweek={isGameweek}
           />
         )}
