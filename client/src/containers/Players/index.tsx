@@ -52,7 +52,7 @@ class PlayersPage extends React.Component<Props, State> {
     await this.props.fetchPlayers({
       offset: page * pageSize,
       limit: pageSize,
-      second_name: this.state.searchBarText,
+      search: this.state.searchBarText,
       ...sort,
     });
     if (Object.keys(this.state.playerHighlightData).length === 0) {
