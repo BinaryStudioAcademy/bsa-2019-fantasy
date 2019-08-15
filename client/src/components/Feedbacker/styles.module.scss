@@ -1,0 +1,32 @@
+:local(.notificationContainer) {
+  z-index: 10000;
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+:local(.notificationItem) {
+  margin-top: 0.5rem;
+
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+
+  animation: fade-in 0.5s;
+}
+
+@keyframes fade-in {
+  from {
+    transform: translateX(5%);
+    opacity: 0;
+    box-shadow: none;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
