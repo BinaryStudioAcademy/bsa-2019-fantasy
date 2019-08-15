@@ -1,3 +1,5 @@
+import { feedback } from 'react-feedbacker';
+
 import * as authService from 'services/authService';
 import * as forgotPasswordService from 'services/forgotPasswordService';
 import { User } from 'types/user.type';
@@ -10,6 +12,7 @@ import {
 import { SET_USER, SET_IS_LOADING, AsyncUserAction, UserAction } from './action.type';
 
 const setToken = (token: string) => localStorage.setItem('token', token);
+const clearToken = () => localStorage.removeItem('token');
 
 const setUser = (user: User | null): UserAction => ({
   type: SET_USER,
@@ -21,10 +24,8 @@ const setIsLoading = (isLoading: boolean): UserAction => ({
   payload: isLoading,
 });
 
-const setAuthData = (user: User | null = null, token = ''): AsyncUserAction => (
-  dispatch,
-) => {
-  setToken(token); // token should be set first before user
+const setAuthData = (user: User, token: string): AsyncUserAction => (dispatch) => {
+  setToken(token);
   dispatch(setUser(user));
 };
 
@@ -34,8 +35,12 @@ const handleAuthResponse = (
     token: string;
   }>,
 ): AsyncUserAction => async (dispatch, getRootState) => {
-  const { user, token } = await authResponsePromise;
-  setAuthData(user, token)(dispatch, getRootState);
+  try {
+    const { user, token } = await authResponsePromise;
+    setAuthData(user, token)(dispatch, getRootState);
+  } catch (err) {
+    feedback.error(err && err.message ? err.message : err);
+  }
 };
 
 export const login = (request: LoginCredentials) =>
@@ -54,25 +59,20 @@ export const resetPassword = (request: ResetPasswordCredentials) => async () => 
   return result;
 };
 
-export const logout = () => setAuthData();
+export const logout = (): AsyncUserAction => (dispatch) => {
+  clearToken();
+  dispatch(setUser(null));
+};
 
 export const loadCurrentUser = (): AsyncUserAction => async (dispatch) => {
   dispatch(setIsLoading(true));
 
-  // bring it back later as authorization will be implemented
-  // const user = await authService.getCurrentUser();
-  const user: User = {
-    id: 'dummy_thingy',
-    username: 'Dummy',
-    email: 'dummy@dummy',
-    money: 130,
-    favorite_club_id: 5,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  };
-
-  setTimeout(() => {
+  try {
+    const user = await authService.getCurrentUser();
     dispatch(setUser(user));
+  } catch (err) {
+    dispatch(setUser(null));
+  } finally {
     dispatch(setIsLoading(false));
-  }, 1000);
+  }
 };

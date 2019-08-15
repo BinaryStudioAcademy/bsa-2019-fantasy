@@ -4,9 +4,10 @@ import {
   FETCH_CLUBS_FAILURE,
   FetchClubsAction,
 } from './action.type';
+import { Club } from 'types/club.type';
 
 type State = {
-  clubs?: any;
+  clubs: Club[];
   loading: boolean;
   error: string | null;
 };
@@ -14,7 +15,6 @@ type State = {
 const initialState: State = { clubs: [], loading: false, error: null };
 
 export default (state = initialState, action: FetchClubsAction) => {
-  console.log(action);
   switch (action.type) {
     case FETCH_CLUBS_REQUEST:
       return { ...state, loading: true };

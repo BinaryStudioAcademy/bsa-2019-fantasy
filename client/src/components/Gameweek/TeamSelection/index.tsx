@@ -30,6 +30,7 @@ const BENCH = [
       src: 'images/uniforms/goalkeepers/shirt_43_1-66.png',
       name: 'Ederson',
       club: 'TOT (A)',
+      points: 3,
       type: PlayerTypes.GOALKEEPER,
     },
   },
@@ -45,6 +46,7 @@ const BENCH = [
       src: 'images/uniforms/field-players/shirt_43-66.png',
       name: 'Laporte',
       club: 'TOT (H)',
+      points: 5,
       type: PlayerTypes.DEFENDER,
     },
   },
@@ -60,6 +62,7 @@ const BENCH = [
       src: 'images/uniforms/field-players/shirt_31-66.png',
       name: 'Townsed',
       club: 'SHU (A)',
+      points: 10,
       type: PlayerTypes.DEFENDER,
     },
   },
@@ -75,6 +78,7 @@ const BENCH = [
       src: 'images/uniforms/field-players/shirt_11-66.png',
       name: 'Calvert-Lewin',
       club: 'WAT (H)',
+      points: 11,
       type: PlayerTypes.FORWARD,
     },
   },
@@ -88,6 +92,7 @@ const PITCH = [
       src: 'images/uniforms/goalkeepers/shirt_14_1-66.png',
       name: 'Allison',
       club: 'SOU (A)',
+      points: 15,
       type: PlayerTypes.GOALKEEPER,
     },
   },
@@ -98,6 +103,7 @@ const PITCH = [
       src: 'images/uniforms/field-players/shirt_14-66.png',
       name: 'van Dijk',
       club: 'SOU (A)',
+      points: 20,
       type: PlayerTypes.DEFENDER,
     },
   },
@@ -109,6 +115,7 @@ const PITCH = [
       src: 'images/uniforms/field-players/shirt_14-66.png',
       name: 'Aleksandr Arnold',
       club: 'SOU (A)',
+      points: 8,
       type: PlayerTypes.DEFENDER,
     },
   },
@@ -120,6 +127,7 @@ const PITCH = [
       src: 'images/uniforms/field-players/shirt_43-66.png',
       name: 'Walker',
       club: 'TOT (H)',
+      points: 9,
       type: PlayerTypes.DEFENDER,
     },
   },
@@ -130,6 +138,7 @@ const PITCH = [
       src: 'images/uniforms/field-players/shirt_3-66.png',
       name: 'David Luiz',
       club: 'BUR (H)',
+      points: 18,
       type: PlayerTypes.DEFENDER,
     },
   },
@@ -140,6 +149,7 @@ const PITCH = [
       src: 'images/uniforms/field-players/shirt_57-66.png',
       name: 'Doucoure',
       club: 'EVE (A)',
+      points: 8,
       type: PlayerTypes.MIDDLEFIELDER,
     },
   },
@@ -151,6 +161,7 @@ const PITCH = [
       src: 'images/uniforms/field-players/shirt_1-66.png',
       name: 'Pogba',
       club: 'WOL (A)',
+      points: 7,
       type: PlayerTypes.MIDDLEFIELDER,
     },
   },
@@ -161,6 +172,7 @@ const PITCH = [
       src: 'images/uniforms/field-players/shirt_13-66.png',
       name: 'Perez',
       club: 'CHE (A)',
+      points: 9,
       type: PlayerTypes.MIDDLEFIELDER,
     },
   },
@@ -172,6 +184,7 @@ const PITCH = [
       src: 'images/uniforms/field-players/shirt_39-66.png',
       name: 'Moutinho',
       club: 'MUN (H)',
+      points: 4,
       type: PlayerTypes.MIDDLEFIELDER,
     },
   },
@@ -182,6 +195,7 @@ const PITCH = [
       src: 'images/uniforms/field-players/shirt_1-66.png',
       name: 'Rashford',
       club: 'WOL (A)',
+      points: 9,
       type: PlayerTypes.FORWARD,
     },
   },
@@ -193,6 +207,7 @@ const PITCH = [
       src: 'images/uniforms/field-players/shirt_57-66.png',
       name: 'Deeney',
       club: 'EVE (A)',
+      points: 4,
       type: PlayerTypes.FORWARD,
     },
   },
@@ -332,6 +347,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
                   accept={accept}
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                  isGameweek={isGameweek}
                 />
               );
             } else {
@@ -351,6 +367,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
                   accept={accept}
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                  isGameweek={isGameweek}
                 />
               );
             } else {
@@ -370,6 +387,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
                   accept={accept}
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                  isGameweek={isGameweek}
                 />
               );
             } else {
@@ -389,6 +407,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
                   accept={accept}
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                  isGameweek={isGameweek}
                 />
               );
             } else {
@@ -407,6 +426,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
                 accept={accept}
                 lastDroppedItem={lastDroppedItem}
                 onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                isGameweek={isGameweek}
               />
             );
           })}

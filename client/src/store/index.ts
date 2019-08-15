@@ -9,6 +9,7 @@ import profileReducer from '../containers/Profile/reducer';
 import playersReducer from 'containers/Players/reducer';
 import fixturesReducer from '../containers/FixturesContainer/reducer';
 import clubsReducer from 'containers/Routing/fetchClubs/reducer';
+import gameweeksReducer from 'containers/Routing/fetchGameweeks/reducer';
 
 export const history = createBrowserHistory();
 
@@ -24,6 +25,7 @@ const reducers = {
   clubs: clubsReducer,
   players: playersReducer,
   fixtures: fixturesReducer,
+  gameweeks: gameweeksReducer,
 };
 
 const rootReducer = combineReducers({

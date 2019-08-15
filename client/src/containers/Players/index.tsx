@@ -2,12 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { Link } from 'react-router-dom';
-import { Option } from 'react-dropdown';
 import ReactTable from 'react-table';
-import { animateScroll as scroll } from 'react-scroll';
-
-// import { ReactTableDefaults } from 'react-table';
-// import _ from 'lodash';
 
 import { RootState } from 'store/types';
 import { Player } from 'types/player.types';
@@ -30,7 +25,7 @@ type Props = {
   loading: boolean;
   error: string | null;
   fetchPlayers: typeof fetchPlayers;
-  clubs: [Club?];
+  clubs: Club[];
   fetchDataForPlayer: typeof fetchDataForPlayer;
   dialogLoading: boolean;
   resetPlayerDialogData: typeof resetPlayerDialogData;
@@ -48,7 +43,6 @@ class PlayersPage extends React.Component<Props, State> {
   };
 
   onFetchData = async ({ page, pageSize, sorted }: any) => {
-    console.log('data fetch');
     const defaultSort = { order_field: 'player_price', order_direction: 'DESC' };
     const sort = sorted[0]
       ? { order_field: sorted[0].id, order_direction: sorted[0].desc ? 'DESC' : 'ASC' }
@@ -70,12 +64,10 @@ class PlayersPage extends React.Component<Props, State> {
   };
 
   setPlayerHighlight = (id: string) => {
-    console.log(window);
     const player = this.props.players.find((player) => player && player.id === id);
     this.setState({
       playerHighlightData: player,
     });
-    console.log('animate');
     const scrollElement = document.querySelector('#root>.flex>.flex-1');
     scrollElement && scrollElement.scrollTo({ top: 0, behavior: 'smooth' });
   };

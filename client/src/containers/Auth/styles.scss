@@ -1,66 +1,65 @@
 body {
-    overflow-y: hidden;
+  overflow-y: hidden;
 }
 .login-container {
-    position: relative;
-    height: 100%;
-    background: url('../../assets/images/login-bg.jpg') no-repeat;
-    background-size: auto 100%;
-    text-align: right;
-    background-position: right;
-    background-color: rgba(13, 28, 42, 0.67);
+  position: relative;
+  height: 100%;
+  background: url('../../assets/images/login-bg.jpg') no-repeat;
+  background-size: cover;
+  background-position: right;
+  background-color: rgba(13, 28, 42, 0.67);
 }
 
 .layer {
-    background-color: rgba(13, 28, 42, 0.67);
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  background-color: rgba(13, 28, 42, 0.67);
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .form-container {
-    background-color: #122737;
+  background-color: #122737;
 }
 
 .lable-wrapper {
-    padding-left: 8rem;
+  padding-left: 8rem;
 
-    text-align: left;
-    margin-top: 16rem;
-    width: 100%;
+  text-align: left;
+  margin-top: 16rem;
+  width: 100%;
 }
 
 .main-lable {
-    position: relative;
-    z-index: 2;
-    max-width: none !important;
-    font-family: 'Khula', sans-serif;
-    font-weight: 800;
-    font-size: 4.8rem;
-    line-height: 6rem;
-    color: #1ee3cf;
+  position: relative;
+  z-index: 2;
+  max-width: none !important;
+  font-family: 'Khula', sans-serif;
+  font-weight: 800;
+  font-size: 4.8rem;
+  line-height: 6rem;
+  color: #1ee3cf;
 }
 
 .lables {
-    width: 100%;
+  width: 100%;
 }
 .side-lable {
-    position: relative;
-    z-index: 2;
-    text-align: left;
-    font-family: 'Khula', sans-serif;
-    font-weight: 800;
+  position: relative;
+  z-index: 2;
+  text-align: left;
+  font-family: 'Khula', sans-serif;
+  font-weight: 800;
 
-    color: #1ee3cf;
-    font-size: 2rem;
-    letter-spacing: -0.3px;
+  color: #1ee3cf;
+  font-size: 2rem;
+  letter-spacing: -0.3px;
 }
 
 .side-lable-small {
-    font-style: italic;
-    font-size: 0.8rem;
-    font-weight: 400;
+  font-style: italic;
+  font-size: 0.8rem;
+  font-weight: 400;
 }

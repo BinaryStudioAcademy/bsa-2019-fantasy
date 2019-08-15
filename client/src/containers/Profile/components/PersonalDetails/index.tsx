@@ -48,7 +48,7 @@ const PersonalDetails = withRouter(({ history }) => {
             className='w-2/4 px-4 py-2 bg-gray-100 shadow rounded-sm'
             type='text'
             placeholder='Username'
-            value={user.username}
+            value={user.name}
             onChange={() => {}}
           />
         </label>
