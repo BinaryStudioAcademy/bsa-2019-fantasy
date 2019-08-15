@@ -6,13 +6,18 @@ export const getAllLeagues = async () => {
   return result;
 };
 
-export const getLeaguesByName = async (name) => {
-  const result = await leagueRepository.getAllByName(name);
+export const getLeagueById = async (id) => {
+  const result = await leagueRepository.getById(id);
   return result;
 };
 
-export const getLeagueById = async (id) => {
-  const result = await leagueRepository.getById(id);
+export const getLeaguesByUserId = async (id) => {
+  const result = await leagueParticipantRepository.getLeaguesByUserId(id);
+  return result;
+};
+
+export const getLeaguesByName = async (name) => {
+  const result = await leagueRepository.getAllByName(name);
   return result;
 };
 
@@ -26,19 +31,19 @@ export const getPublicLeagues = async () => {
   return result;
 };
 
-export const createLeague = (id, data) =>
+export const createLeague = (name) =>
   leagueRepository.create({
-    ...data,
-    id,
+    name,
+    private: false,
   });
 
 export const updateLeague = async (id, data) => leagueRepository.updateById(id, data);
 
 export const deleteLeagueById = async (id) => leagueRepository.deleteById(id);
 
-export const joinLeague = async (participant_id, league_id) => {
+export const joinLeague = async (participant_id, league_id, is_creator) => {
   const newParticipant = await leagueParticipantRepository.addParticipant({
-    is_creator: false,
+    is_creator,
     league_id,
     participant_id,
   });
