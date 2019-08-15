@@ -68,6 +68,10 @@ class PlayersPage extends React.Component<Props, State> {
     }
   };
 
+  componentDidMount = () => {
+    document.title = 'Players | Fantasy Football League';
+  }
+
   onModalDismiss = () => {
     this.props.resetPlayerDialogData();
     this.setState({ currentPlayer: undefined });

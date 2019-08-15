@@ -102,7 +102,7 @@ const Routing = () => {
                 <Route path='/live' component={Live} />
 
                 <Route path='/players' exact component={Players} />
-                <Route path='/players/comparison' exact component={PlayersComparison} />
+                <Route path='/players-comparison' exact component={PlayersComparison} />
 
                 <Route path='/transfers' exact component={Transfers} />
 

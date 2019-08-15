@@ -58,7 +58,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`sidebar flex flex-col py-8 bg-secondary text-primary2 h-screen relative ${
+      className={`sidebar flex flex-col py-6 bg-secondary text-primary2 h-screen relative ${
         isOpened ? 'open' : ''
       }`}
       onClick={toggleOpened}
@@ -66,9 +66,12 @@ const Sidebar = () => {
     >
       <Link
         to='/'
-        className={`sidebar-logo item font-bold ${isOpened ? 'pl-6' : 'pl-4'}`}
+        className={`sidebar-logo item font-bold ${isOpened ? 'pl-6 pr-12' : 'pl-3 pr-3'}`}
       >
-        Logo
+        <img
+          src='/images/logo.png'
+          alt='logo'
+        />
       </Link>
       <Link
         className={`username-link mt-32 flex-col ${isOpened ? 'pl-6' : 'pl-3'}`}
@@ -100,7 +103,7 @@ const Sidebar = () => {
         ))}
         <button
           type='button'
-          className='absolute bottom-0 mb-6 w-full opacity-75 hover:opacity-100 font-bold rounded py-1 px-6 bg-transparent shadow uppercase'
+          className='absolute bottom-0 mb-6 w-full opacity-75 hover:opacity-100 font-bold rounded py-1 px-6 bg-transparent uppercase'
           onClick={(e) => {
             e.stopPropagation();
             dispatch(logout());

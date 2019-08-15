@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
 import './styles.scss';
 
 const MyTeam = () => {
+  useEffect(() => {
+    document.title = 'My Team | Fantasy Football League';
+  }, []);
+
   return (
     <div className='team-page'>
       <div className='jumbotron paper mb-12 rounded flex items-end justify-between pt-6'>

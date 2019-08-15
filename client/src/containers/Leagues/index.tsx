@@ -67,6 +67,7 @@ const Leagues = ({ loadUserLeagues, leagues, clubs }: Props) => {
   const [userLeagues, setLeagues] = useState([]);
 
   useEffect(() => {
+    document.title = 'Leagues | Fantasy Football League';
     loadUserLeagues();
     setLeagues(leagues);
   }, [userLeagues, setLeagues, loadUserLeagues]);
