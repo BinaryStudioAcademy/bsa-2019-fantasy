@@ -39,10 +39,10 @@ export const getFixturesForPlayer = async (playerId, clubId) => {
     .map((el) => el.get({ plain: true }))
     .reduce(async (result, { start, hometeam, awayteam }, i) => {
       if (start > new Date()) {
-        if (hometeam.id === clubId) {
+        if (hometeam.id.toString() === clubId) {
           result.push({ start: formatDate(start), opp: awayteam.short_name, round: i });
         }
-        if (awayteam.id === clubId) {
+        if (awayteam.id.toString() === clubId) {
           result.push({ start: formatDate(start), opp: hometeam.short_name, round: i });
         }
       }
