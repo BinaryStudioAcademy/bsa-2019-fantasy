@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store/types';
 
 import Spinner from 'components/Spinner';
+import { getClubLogoUrl } from 'helpers/images';
 
 import styles from './styles.module.scss';
 
@@ -46,8 +47,8 @@ const FavouriteClubSelection = () => {
               />
               <div className={cn(styles.clubLabel, 'h-full w-full rounded shadow')}>
                 <img
-                  className='rounded'
-                  src='https://via.placeholder.com/50'
+                  className='rounded w-10'
+                  src={getClubLogoUrl(item.code, 200)}
                   alt={`Club ${item.name}`}
                 />
                 <span className='text-secondary text-sm leading-none font-bold'>
