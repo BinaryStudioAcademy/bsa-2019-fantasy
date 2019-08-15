@@ -6,6 +6,7 @@ import { map } from 'lodash';
 
 import { FaStar, FaArrowUp, FaArrowDown } from 'react-icons/fa';
 
+import Spinner from 'components/Spinner';
 import { LeagueTable } from 'components/Leagues/LeagueTables';
 
 import { RootState } from 'store/types';
@@ -113,7 +114,7 @@ const Leagues = ({ loadUserLeagues, leagues }: Props) => {
   ];
 
   if (!leagues) {
-    return <div>wait</div>;
+    return <Spinner />;
   } else
     return (
       <div className='leagues'>
