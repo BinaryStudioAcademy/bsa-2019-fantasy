@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as userService from '../services/user.service';
 import * as leagueService from '../services/league.service';
+import globalLeagues from '../../config/global-leagues.config';
 
 const router = Router();
 
@@ -8,7 +9,29 @@ router
   .get('/leagues', (req, res, next) => {
     leagueService
       .getLeaguesByUserId(req.user.id)
-      .then((value) => res.json(value))
+      .then((value) => {
+        const result = {
+          public: [],
+          private: [],
+          global: [],
+        };
+
+        value.forEach((item) => {
+          const { league } = item;
+
+          if (league.private) {
+            result.private.push(item);
+          } else if (globalLeagues.includes(league.name)) {
+            result.global.push(item);
+          } else {
+            result.public.push(item);
+          }
+
+          return result;
+        });
+
+        res.json(result);
+      })
       .catch(next);
   })
   .get('/:id', (req, res, next) =>
