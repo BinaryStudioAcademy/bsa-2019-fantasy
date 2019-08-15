@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { FaFacebook } from 'react-icons/fa';
 import { withRouter } from 'react-router-dom';
 
 import { login } from 'containers/Profile/actions';
 
 import './styles.scss';
-import { FaFacebook } from 'react-icons/fa';
 
 const LoginForm = withRouter(({ history }) => {
   const dispatch = useDispatch();

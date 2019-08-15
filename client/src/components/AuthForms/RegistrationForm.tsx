@@ -16,7 +16,7 @@ const RegistrationForm = withRouter(({ history }) => {
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (email && password) {
+    if (name && email && password) {
       dispatch(registration({ name, email, password }));
     }
   };
