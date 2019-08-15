@@ -1,32 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { PlayerItem } from '../PlayerItem/index';
 import info from '../../assets/images/info.svg';
-import shirt from '../../assets/images/shirt_8-66.png';
 import { Player } from 'types/player.types';
+import { RootState } from 'store/types';
+import { getFieldPlayersUniformUrl, getGoalkeepersUniformUrl } from 'helpers/images';
 
 export const PlayerList = ({ players }: any) => {
-  const clubs = {
-    '1': 'ARS',
-    '2': 'AVL',
-    '3': 'BOU',
-    '4': 'BHA',
-    '5': 'BUR',
-    '6': 'CHE',
-    '7': 'CRY',
-    '8': 'EVE',
-    '9': 'LEI',
-    '10': 'LIV',
-    '11': 'MCI',
-    '12': 'MUN',
-    '13': 'NEW',
-    '14': 'NOR',
-    '15': 'SHU',
-    '16': 'SOU',
-    '17': 'TOT',
-    '18': 'WAT',
-    '19': 'WHU',
-    '20': 'WOL',
-  }
+  const clubs = useSelector((state: RootState) => state.clubs.clubs);
 
   const goalkeepers = players.filter((player: any) => {
     return player.position === '1' ? true : false;
@@ -60,12 +41,12 @@ export const PlayerList = ({ players }: any) => {
       {goalkeepers.map((player: any) => (
         <PlayerItem
           name={player.second_name}
-          club={player.club_id}
+          club={clubs[player.club_id-1].short_name}
           position='GKP'
           price={player.player_price}
           score={player.player_score}
           info={info}
-          shirt={shirt}
+          imageURL={getGoalkeepersUniformUrl(clubs[player.club_id-1].code)}
         />
       ))}
       <tr className='bg-green-400'>
@@ -85,12 +66,12 @@ export const PlayerList = ({ players }: any) => {
       {defenders.map((player: any) => (
         <PlayerItem
           name={player.second_name}
-          club={player.club_id}
+          club={clubs[player.club_id-1].short_name}
           position='DEF'
           price={player.player_price}
           score={player.player_score}
           info={info}
-          shirt={shirt}
+          imageURL={getFieldPlayersUniformUrl(clubs[player.club_id-1].code)}
         />
       ))}
       <tr className='bg-blue-400'>
@@ -110,12 +91,12 @@ export const PlayerList = ({ players }: any) => {
       {midfielders.map((player: any) => (
         <PlayerItem
           name={player.second_name}
-          club={player.club_id}
+          club={clubs[player.club_id-1].short_name}
           position='MID'
           price={player.player_price}
           score={player.player_score}
           info={info}
-          shirt={shirt}
+          imageURL={getFieldPlayersUniformUrl(clubs[player.club_id-1].code)}
         />
       ))}
       <tr className='bg-red-400'>
@@ -135,12 +116,12 @@ export const PlayerList = ({ players }: any) => {
       {forwards.map((player: any) => (
         <PlayerItem
           name={player.second_name}
-          club={player.club_id}
+          club={clubs[player.club_id-1].short_name}
           position='FWD'
           price={player.player_price}
           score={player.player_score}
           info={info}
-          shirt={shirt}
+          imageURL={getFieldPlayersUniformUrl(clubs[player.club_id-1].code)}
         />
       ))}
     </table>

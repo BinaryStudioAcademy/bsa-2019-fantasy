@@ -48,6 +48,7 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "^3.0.1",
     "react-scroll": "^1.7.12",
+    "react-search-box": "^2.0.1",
     "react-table": "^6.10.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
