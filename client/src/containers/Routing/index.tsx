@@ -32,22 +32,29 @@ import Spinner from 'components/Spinner';
 import Profile from 'containers/Profile';
 import SetPassword from 'containers/Profile/components/SetPassword';
 import { loadCurrentUser } from 'containers/Profile/actions';
-import { fetchClubs } from './fetchClubs/actions';
 
 import ForgotPassword from 'containers/ChangePassword/ForgotPassword';
 import ResetPassword from 'containers/ChangePassword/ResetPassword';
 
+// Initial data loading
+import { fetchClubs } from './fetchClubs/actions';
+import { fetchGameweeks } from './fetchGameweeks/actions';
+import { preloadClubLogos } from 'helpers/images';
+
 const Routing = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state: RootState) => state.profile.isLoading);
+  const clubs = useSelector((state: RootState) => state.clubs.clubs);
 
   useEffect(() => {
     dispatch(loadCurrentUser());
+    dispatch(fetchClubs());
+    dispatch(fetchGameweeks());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchClubs());
-  }, [dispatch]);
+    clubs.length > 0 && preloadClubLogos(clubs, 80);
+  }, [clubs]);
 
   if (isLoading) {
     return <Spinner />;

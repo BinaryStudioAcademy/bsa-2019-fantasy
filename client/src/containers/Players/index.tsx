@@ -41,7 +41,6 @@ class PlayersPage extends React.Component<Props, State> {
   };
 
   onFetchData = async ({ page, pageSize, sorted }: any) => {
-    console.log('data fetch');
     const defaultSort = { order_field: 'player_price', order_direction: 'DESC' };
     const sort = sorted[0]
       ? { order_field: sorted[0].id, order_direction: sorted[0].desc ? 'DESC' : 'ASC' }
@@ -61,12 +60,10 @@ class PlayersPage extends React.Component<Props, State> {
   onModalDismiss = () => this.setState({ playerDialogData: undefined });
 
   setPlayerHighlight = (id: string) => {
-    console.log(window);
     const player = this.props.players.find((player) => player && player.id === id);
     this.setState({
       playerHighlightData: player,
     });
-    console.log('animate');
     const scrollElement = document.querySelector('#root>.flex>.flex-1');
     scrollElement && scrollElement.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -154,8 +151,6 @@ class PlayersPage extends React.Component<Props, State> {
           className='w-4 h-4 justify-center leading-none flex ml-auto bg-background rounded-full text-xs font-semibold'
           onClick={() => {
             this.setState({ playerDialogData: props.original.id });
-            console.log('props');
-            console.log(props);
           }}
         >
           i
