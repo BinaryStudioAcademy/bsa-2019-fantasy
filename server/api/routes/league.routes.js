@@ -68,5 +68,10 @@ router
       .then((status) => res.send({ deleted: status }))
       .catch(next),
   );
+/* eslint-disable */
+router.use(function(err, req, res, next) {
+  res.status(500).json({ message: 'Something went wrong! Try again.' });
+});
+/* eslint-enable */
 
 export default router;

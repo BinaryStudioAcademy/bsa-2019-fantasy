@@ -18,19 +18,23 @@ export default (state = initialState, action: CreateLeagueAction) => {
     case CREATE_LEAGUE_SUCCESS:
       return {
         ...state,
-        success: 'Successfully created a new league!',
+        success: action.payload.message,
+        error: null,
         isLoading: false,
       };
     case CREATE_LEAGUE_FAILURE:
       return {
         ...state,
-        error: 'Something went wrong!',
+        error: action.payload.message,
+        success: null,
         isLoading: false,
       };
     case SET_IS_LOADING:
       return {
         ...state,
         isLoading: true,
+        error: null,
+        success: null,
       };
     default:
       return state;
