@@ -2,11 +2,10 @@ import playerMatchRepository from '../../data/repositories/player-match.reposito
 import gameweekRepository from '../../data/repositories/gameweek.repository';
 import gameRepository from '../../data/repositories/game.repository';
 import eventRepository from '../../data/repositories/event.repository';
-import playerMathStatsRepository from '../../data/repositories/player-match.repository';
 
-export const getAllPlayerMatch = async () => await playerMatchRepository.getAll();
+export const getAllPlayerMatch = () => playerMatchRepository.getAll();
 
-export const getPlayerMatchById = async (id) => await playerMatchRepository.getById(id);
+export const getPlayerMatchById = (id) => playerMatchRepository.getById(id);
 
 export const getPlayerStatsByGameweeks = async (playerId, playerClubId) => {
   const result = [];
@@ -40,7 +39,7 @@ export const getPlayerStatsByGameweeks = async (playerId, playerClubId) => {
               const realEvents = eventsForGame.filter((ev) => ev !== undefined);
 
               const eventsForCurrentPlayer = realEvents.filter(
-                (event) => event.player.player_id == playerId,
+                (event) => event.player.player_id === playerId,
               );
               if (eventsForCurrentPlayer.length < 1) return;
               const {
@@ -51,7 +50,7 @@ export const getPlayerStatsByGameweeks = async (playerId, playerClubId) => {
                 saves,
                 yellow_cards,
                 red_cards,
-              } = eventsForCurrentPlayer[0].player; //last event for game and get this stats
+              } = eventsForCurrentPlayer[0].player; // last event for game and get this stats
 
               result.push({
                 gameweek: { number },

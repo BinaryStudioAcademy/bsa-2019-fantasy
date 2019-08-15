@@ -17,8 +17,8 @@ class GameRepository extends BaseRepository {
 
   getAllWithClubs() {
     return this.model.findAll({
-      include: ['hometeam', 'awayteam']
-    })
+      include: ['hometeam', 'awayteam'],
+    });
   }
 }
 

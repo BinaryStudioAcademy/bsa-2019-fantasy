@@ -10,8 +10,8 @@ class EventRepository extends BaseRepository {
     return this.model.findAll({
       where: { game_id: gameId },
       include: 'player',
-      order: [['createdAt', 'DESC']]
-    })
+      order: [['createdAt', 'DESC']],
+    });
   }
 }
 
