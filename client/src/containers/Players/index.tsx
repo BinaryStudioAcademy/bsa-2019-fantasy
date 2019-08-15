@@ -20,7 +20,7 @@ type Props = {
   loading: boolean;
   error: string | null;
   fetchPlayers: typeof fetchPlayers;
-  clubs: [Club?];
+  clubs: Club[];
 };
 
 type State = {

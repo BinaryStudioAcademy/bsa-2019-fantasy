@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { RootState } from 'store/types';
-import { useClubs } from 'helpers/hooks/clubs.hook';
 
 import Spinner from 'components/Spinner';
 
@@ -13,7 +12,7 @@ const FavouriteClubSelection = () => {
   const favoriteClub = useSelector(
     ({ profile }: RootState) => profile.user && profile.user.favorite_club_id,
   );
-  const { clubs, loading } = useClubs();
+  const { clubs, loading } = useSelector((state: RootState) => state.clubs);
   const [selectedClubId, setClub] = useState<null | number>(favoriteClub);
 
   const onSubmit = (e: React.FormEvent) => {

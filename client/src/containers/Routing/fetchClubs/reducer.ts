@@ -4,9 +4,10 @@ import {
   FETCH_CLUBS_FAILURE,
   FetchClubsAction,
 } from './action.type';
+import { Club } from 'types/club.type';
 
 type State = {
-  clubs?: any;
+  clubs: Club[];
   loading: boolean;
   error: string | null;
 };
