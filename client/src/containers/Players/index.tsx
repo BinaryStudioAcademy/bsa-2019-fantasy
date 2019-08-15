@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { Link } from 'react-router-dom';
@@ -35,12 +35,21 @@ type Props = {
 type State = {
   playerHighlightData: any;
   currentPlayer?: Player;
+  searchBarText: string;
 };
 
 class PlayersPage extends React.Component<Props, State> {
   state: State = {
     playerHighlightData: {},
+    searchBarText: '',
   };
+  table: any;
+
+  constructor(props: any) {
+    super(props);
+    this.table = React.createRef();
+    this.onFetchData = this.onFetchData.bind(this);
+  }
 
   onFetchData = async ({ page, pageSize, sorted }: any) => {
     const defaultSort = { order_field: 'player_price', order_direction: 'DESC' };
@@ -50,6 +59,7 @@ class PlayersPage extends React.Component<Props, State> {
     await this.props.fetchPlayers({
       offset: page * pageSize,
       limit: pageSize,
+      search: this.state.searchBarText,
       ...sort,
     });
     if (Object.keys(this.state.playerHighlightData).length === 0) {
@@ -85,6 +95,12 @@ class PlayersPage extends React.Component<Props, State> {
     const club = this.getClubById(id);
     const url = club && club.code && getClubLogoUrl(club.code, 80);
     return url || '';
+  };
+
+  onSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
+    this.setState({ searchBarText: e.currentTarget.value }, () =>
+      this.onFetchData({ ...this.table.current.state, page: 0 }),
+    );
   };
 
   readonly columns = [
@@ -206,13 +222,13 @@ class PlayersPage extends React.Component<Props, State> {
     });
     return (
       <ReactTable
+        ref={this.table as any}
         style={this.tableStyle}
         data={playerTableData}
-        pageSize={10}
+        pageSize={playerTableData.length > 10 ? playerTableData.length : 10}
         pages={10} // should default to -1 (which means we don't know how many pages we have)
         manual
         columns={this.columns}
-        //column={this.columnProps}
         onFetchData={this.onFetchData}
       />
     );
@@ -220,7 +236,6 @@ class PlayersPage extends React.Component<Props, State> {
 
   render() {
     if (this.props.loading) return 'spinner';
-
     return (
       <>
         <PlayerHighlight player={this.state.playerHighlightData} />
@@ -228,7 +243,10 @@ class PlayersPage extends React.Component<Props, State> {
         <section className='allStats my-6'>
           <div className='filters text-sm flex mt-6 mb-1'>
             <div className='ml-auto'>
-              <SearchBar />
+              <SearchBar
+                onChange={this.onSearchChange}
+                value={this.state.searchBarText}
+              />
             </div>
           </div>
           {this.renderTable()}
