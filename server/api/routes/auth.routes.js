@@ -24,12 +24,11 @@ router
   .post('/registration', registrationMiddleware, (req, res, next) =>
     authService
       .register(req.user)
-      .then(
-        (data) => res.send(data),
-        // leagueService
-        //   .joinGlobalLeague(data.user.id, 'Overall')
-        //   .then(() => res.send(data))
-        //   .catch(next),
+      .then((data) =>
+        leagueService
+          .joinGlobalLeague(data.user.id, 'Overall', false)
+          .then(() => res.send(data))
+          .catch(next),
       )
       .catch(next),
   )

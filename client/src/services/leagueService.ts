@@ -13,7 +13,7 @@ export const createLeague = async (request: CreateLeagueCredentials) => {
 
 export const getUserLeagues = async () => {
   const response = await callWebApi({
-    endpoint: `/api/users/leagues`,
+    endpoint: `/api/profile/leagues`,
     type: 'GET',
   });
 

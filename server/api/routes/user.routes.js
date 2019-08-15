@@ -8,7 +8,7 @@ import jwtMiddleware from '../middlewares/jwt.middleware';
 const router = Router();
 
 router
-  .get('/leagues', (req, res, next) => {
+  .get('/leagues', jwtMiddleware, (req, res, next) => {
     leagueService
       .getLeaguesByUserId(req.user.id)
       .then((value) => {

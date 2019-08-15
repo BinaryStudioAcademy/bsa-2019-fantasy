@@ -4,6 +4,7 @@ import {
   createLeagueMiddleware,
   joinLeagueMiddleware,
 } from '../middlewares/league.middleware';
+import jwtMiddleware from '../middlewares/jwt.middleware';
 
 const router = Router();
 
@@ -20,7 +21,7 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
-  .post('/', createLeagueMiddleware, (req, res, next) =>
+  .post('/', createLeagueMiddleware, jwtMiddleware, (req, res, next) =>
     leagueService
       .createLeague(req.body.name)
       .then((value) =>
@@ -35,7 +36,7 @@ router
       )
       .catch(next),
   )
-  .post('/join', joinLeagueMiddleware, (req, res, next) => {
+  .post('/join', joinLeagueMiddleware, jwtMiddleware, (req, res, next) => {
     leagueService
       .joinLeague(req.user.id, req.body.code, false)
       .then(() => res.json({ message: 'Successfully joined a league' }))
