@@ -35,35 +35,68 @@ const positionDict: { [key: string]: { name: string; color: string } } = {
   },
 };
 
+const cellStyle = {
+  borderBottom: '1px solid #ddd',
+  padding: '8px',
+};
+
 const PlayerDialog = (props: Props) => {
   const [currentTab, setCurrentTab] = useState('history');
 
-  const renderHeader = (row: any[]) =>
+  const renderHistoryHeader = (row: any[]) =>
     row.map((obj, i) => {
       const string = Object.keys(obj)[0]
-        .replace(/([A-Z])/g, ' $1')
+        .replace('_', ' ')
         .toLowerCase();
       return (
-        <div key={i} className='w-1/10 bg-gray-400 text-center '>
+        <div
+          key={i + string}
+          className={classNames(
+            'bg-gray-400 w-1/12',
+            {
+              'w-4/12': string === 'opponent',
+            },
+            {
+              'w-2/12': string === 'gameweek',
+            },
+          )}
+        >
           <abbr title={string}>
-            {string
-              .split(' ')
-              .map((w) => w.charAt(0))
-              .join('')
-              .toUpperCase()}
+            {string === 'gameweek'
+              ? 'GM'
+              : string === 'opponent'
+              ? 'Opponent'
+              : string
+                  .split(' ')
+                  .map((w) => w.charAt(0))
+                  .join('')
+                  .toUpperCase()}
           </abbr>
         </div>
       );
     });
 
-  const renderTableRows = (historyRows: any[]) =>
+  const renderHistoryRows = (historyRows: any[]) =>
     historyRows.map((row, i) => (
       <div key={i} className='flex'>
         {row.map((obj: any) => {
-          const value = Object.values(obj)[0] as string;
+          const [key, value] = Object.entries(obj)[0];
+
           return (
-            <div key={value} className='w-1/10 text-center'>
-              {value}
+            <div
+              style={cellStyle}
+              key={new Date().getTime() + key}
+              className={classNames(
+                'w-1/12',
+                {
+                  'w-4/12': key === 'opponent',
+                },
+                {
+                  'w-2/12': key === 'gameweek',
+                },
+              )}
+            >
+              {value as string}
             </div>
           );
         })}
@@ -83,6 +116,7 @@ const PlayerDialog = (props: Props) => {
         </div>
       );
     }
+
     const historyRows = history.map(
       ({
         gameweek: { number },
@@ -98,8 +132,7 @@ const PlayerDialog = (props: Props) => {
         },
       }) => [
         { gameweek: number },
-        { opponent: opp },
-        { res },
+        { opponent: `${opp} ${res}` },
         { goals },
         { assists },
         { missed_passes },
@@ -110,10 +143,12 @@ const PlayerDialog = (props: Props) => {
       ],
     );
     return (
-      <div className='self-center' style={{ width: '100%' }}>
+      <div>
         <h3 className='text-lg font-medium'>This season</h3>
-        <div className='flex text-sm mt-4'>{renderHeader(historyRows[0])}</div>
-        {renderTableRows(historyRows)}
+        <div className='overflow-y-auto' style={{ width: '100%', maxHeight: '300px' }}>
+          <div className='flex text-sm mt-4'>{renderHistoryHeader(historyRows[0])}</div>
+          {renderHistoryRows(historyRows)}
+        </div>
       </div>
     );
   };
@@ -122,13 +157,10 @@ const PlayerDialog = (props: Props) => {
     const {
       playerDialogData: { fixtures },
     } = props as Props;
-    const borderStyle = {
-      borderBottom: '1px solid #ddd',
-      padding: '8px',
-    };
+
     return (
       <div
-        className='self-center overflow-y-scroll'
+        className='self-center overflow-y-auto'
         style={{ width: '100%', maxHeight: '300px' }}
       >
         <div className='flex'>
@@ -137,7 +169,7 @@ const PlayerDialog = (props: Props) => {
           <div className='w-3/12 bg-gray-400'>Opponent</div>
         </div>
         {fixtures.map((fixture, i) => (
-          <div key={fixture.start} style={borderStyle} className='flex text-sm'>
+          <div key={fixture.start} style={cellStyle} className='flex text-sm'>
             <div className='w-7/12 cell'>{fixture.start}</div>
             <div className='w-2/12 cell'>{fixture.round}</div>
             <div className='w-3/12 cell'>{fixture.opp}</div>
@@ -181,7 +213,7 @@ const PlayerDialog = (props: Props) => {
               <div className=''>
                 <img
                   className='mt-2 mr-10'
-                  style={{ height: '100%', maxHeight: '10rem' }}
+                  style={{ maxWidth: '100%', height: 'auto', maxHeight: '10rem' }}
                   src={`/images/players/500x500/${props.player.code}.png`}
                   alt='playerPhoto'
                 />
