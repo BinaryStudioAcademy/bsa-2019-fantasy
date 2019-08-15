@@ -4,7 +4,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { Link } from 'react-router-dom';
 import { map } from 'lodash';
 
-import { FaStar, FaArrowUp, FaArrowDown } from 'react-icons/fa';
+import { FaStar } from 'react-icons/fa';
 
 import Spinner from 'components/Spinner';
 import { LeagueTable } from 'components/Leagues/LeagueTables';
@@ -15,11 +15,6 @@ import { loadUserLeagues } from './actions';
 import FirstPlayer from 'assets/images/player.png';
 import SecondPlayer from 'assets/images/1966.png';
 import './styles.scss';
-
-// mock data
-const mockData = {
-  leagues: ['Barcelona'],
-};
 
 /* eslint-disable */
 const columns = [
@@ -61,26 +56,6 @@ const columns = [
   },
 ];
 /* eslint-enable */
-// mock data
-const table = [
-  {
-    league: 'Tanner Linsley',
-    rank: {
-      movement: 'up',
-      current: 123,
-      last: 23,
-    },
-  },
-  {
-    league: 'Tanner Linsley',
-    rank: {
-      movement: 'down',
-      current: 123,
-      last: 23,
-    },
-  },
-];
-
 type Props = {
   loadUserLeagues: typeof loadUserLeagues;
   leagues: any;
@@ -92,7 +67,6 @@ const Leagues = ({ loadUserLeagues, leagues }: Props) => {
   useEffect(() => {
     loadUserLeagues();
     setLeagues(leagues);
-    console.log(userLeagues);
   }, [userLeagues, setLeagues, loadUserLeagues]);
 
   const titles = [
@@ -115,7 +89,11 @@ const Leagues = ({ loadUserLeagues, leagues }: Props) => {
 
   if (!leagues) {
     return <Spinner />;
-  } else
+  } else {
+    const footballClub = leagues.global.find(
+      (item: any) => item.league.name !== 'Overall',
+    );
+
     return (
       <div className='leagues'>
         <div className='container'>
@@ -126,9 +104,7 @@ const Leagues = ({ loadUserLeagues, leagues }: Props) => {
                   <FaStar />
                   My Leagues
                 </div>
-                {map(mockData.leagues, (item, index) =>
-                  index === mockData.leagues.length - 1 ? item : `${item}, `,
-                )}
+                {footballClub.league.name}
               </h2>
               <Link
                 to='/leagues/join'
@@ -149,8 +125,7 @@ const Leagues = ({ loadUserLeagues, leagues }: Props) => {
             </div>
           </div>
           <div className='tables'>
-            {map(titles, (item, index) => {
-              console.log(leagues[item.accessor], item);
+            {map(titles, (item) => {
               return (
                 <LeagueTable
                   columns={columns}
@@ -164,6 +139,7 @@ const Leagues = ({ loadUserLeagues, leagues }: Props) => {
         </div>
       </div>
     );
+  }
 };
 
 const mapStateToProps = (rootState: RootState) => ({
