@@ -2,6 +2,7 @@ import React from 'react';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
 import './styles.scss';
+import StatusPlayerModal from 'components/StatusPlayerModal';
 
 const MyTeam = () => {
   return (
@@ -15,6 +16,7 @@ const MyTeam = () => {
         </div>
       </div>
       <TeamSelection isGameweek={false} />
+      <StatusPlayerModal isCaptain={true} isViceCaptain={false}/>
     </div>
   );
 };
