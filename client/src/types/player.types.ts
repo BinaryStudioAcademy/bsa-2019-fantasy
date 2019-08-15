@@ -1,10 +1,17 @@
+export enum Position {
+  GKP = 'GKP',
+  DEF = 'DEF',
+  MID = 'MID',
+  FWD = 'FWD',
+}
+
 export type Player = {
   id: string;
   first_name: string;
   second_name: string;
   player_price: number;
   player_score: number;
-  position: string;
+  position: Position;
   goals: number;
   assists: number;
   missed_passes: number;

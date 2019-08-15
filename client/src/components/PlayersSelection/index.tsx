@@ -5,7 +5,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 
 import { loadPlayersAction } from '../../components/PlayersSelection/actions';
 import { RootState } from 'store/types';
-import { Player } from 'types/player.types';
+import { Position, Player } from 'types/player.types';
 import { sortedBy, filteredBy, maxPrice } from './constants';
 
 import { PlayerList } from '../PlayersList/index';
@@ -25,7 +25,7 @@ const PlayersSelection = ({ loadPlayersAction, players }: Props) => {
     position: undefined,
     club_id: undefined,
     search: undefined,
-    max_price: undefined    
+    max_price: undefined,
   });
 
   const [sortSelect, setSortSelect] = useState({
@@ -87,31 +87,27 @@ const PlayersSelection = ({ loadPlayersAction, players }: Props) => {
           <label className='font-bold'>
             <span>Sorted by</span>
           </label>
-          <Dropdown 
-            options={sortedBy} 
-            onChange={onSortChange} 
-            value={sortSelect} />
+          <Dropdown options={sortedBy} onChange={onSortChange} value={sortSelect} />
         </div>
         <div className='mt-2'>
           <label className='font-bold'>
             <span>Search</span>
           </label>
-          <ReactSearchBox 
-            onChange={onSearchChange}
-            value={search}
-          />
+          <ReactSearchBox onChange={onSearchChange} value={search} />
         </div>
         <div className='mt-2'>
           <label className='font-bold'>
             <span>Max cost</span>
-          </label><br/>
+          </label>
+          <br />
           <label>
             <span>Between 45 and 125</span>
           </label>
-          <Dropdown 
-            options={maxPrice} 
-            onChange={onMaxPriceChange} 
-            value={maxPriceSelect} />
+          <Dropdown
+            options={maxPrice}
+            onChange={onMaxPriceChange}
+            value={maxPriceSelect}
+          />
         </div>
       </form>
 
