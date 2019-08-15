@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router';
 import { useDispatch } from 'react-redux';
+import validator from 'validator';
 
 import { registration } from 'containers/Profile/actions';
 
@@ -12,41 +13,90 @@ const RegistrationForm = withRouter(({ history }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isNameValid, setIsNameValid] = useState(true);
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isPasswordValid, setIsPasswordlValid] = useState(true);
 
-  const handleSignup = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (name && email && password) {
-      dispatch(registration({ name, email, password }));
-    }
+  const nameChanged = (name: string) => {
+    setName(name);
+    setIsNameValid(true);
   };
+
+  const emailChanged = (email: string) => {
+    setEmail(email);
+    setIsEmailValid(true);
+  };
+
+  const passwordChanged = (password: string) => {
+    setPassword(password);
+    setIsPasswordlValid(true);
+  };
+
+  const validateEmail = () => {
+    const isEmailValid = validator.isEmail(email);
+    setIsEmailValid(isEmailValid);
+    return isEmailValid;
+  };
+
+  const validatePassword = () => {
+    const isPasswordValid = validator.isByteLength(password, { min: 8, max: undefined });
+    setIsPasswordlValid(isPasswordValid);
+    return isPasswordValid;
+  };
+
+  const validateName = () => {
+    const isNameValid = validator.isByteLength(name, { min: 5, max: undefined });
+    setIsNameValid(isNameValid);
+    return isNameValid;
+  };
+
+  const handleClickRegister = (ev: React.FormEvent) => {
+    ev.preventDefault();
+    const valid = [validateEmail(), validatePassword(), validateName()].every(Boolean);
+
+    if (!valid) {
+      return;
+    }
+    dispatch(registration({ name, email, password }));
+  };
+
+  let [firstNameClass, emailClass, passwordClass] = [[], [], []].map(
+    () =>
+      'shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline',
+  );
 
   return (
     <div className='w-full max-w-xs form-registration'>
-      <form className='px-8 pt-6 pb-8' onSubmit={handleSignup}>
+      <form className='px-8 pt-6 pb-8' onSubmit={handleClickRegister}>
         <div className='mb-4'>
           <label>
             Name
             <input
-              className='shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline'
+              className={isNameValid ? firstNameClass : (firstNameClass += ' error')}
               id='first-name'
               type='text'
               placeholder='Name'
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(ev) => nameChanged(ev.target.value)}
+              onBlur={validateName}
             />
+            {!isNameValid && (
+              <p className='mt-1 text-red-500 text-xs italic text-justify'>
+                Shoud be at least 5 characters
+              </p>
+            )}
           </label>
         </div>
         <div className='mb-2'>
           <label>
             Email
             <input
-              className='shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline'
+              className={isEmailValid ? emailClass : (emailClass += ' error')}
               id='email'
               type='email'
-              placeholder='Email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder='Email address'
+              onChange={(ev) => emailChanged(ev.target.value)}
+              onBlur={validateEmail}
             />
             <p className='mt-1 text-xs italic text-justify'>
               We will send you a confirmation email
@@ -57,14 +107,18 @@ const RegistrationForm = withRouter(({ history }) => {
           <label>
             Password
             <input
-              className='shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline'
+              className={isPasswordValid ? passwordClass : (passwordClass += ' error')}
               id='password'
               type='password'
               placeholder='*************'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(ev) => passwordChanged(ev.target.value)}
+              onBlur={validatePassword}
             />
-            <p className='mt-1 text-xs italic text-justify'>At least 8 characters</p>
+            {!isPasswordValid && (
+              <p className='mt-1 text-red-500 text-xs italic text-justify'>
+                Shoud be at least 8 characters
+              </p>
+            )}
           </label>
         </div>
         <div className='flex items-center justify-start'>
