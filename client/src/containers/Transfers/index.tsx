@@ -6,15 +6,19 @@ import FixturesContainer from 'containers/FixturesContainer';
 const Transfers = () => {
   return (
     <div className='transfers-page'>
-      <div className='jumbotron paper mb-12 rounded flex items-end justify-between pt-6'>
-        <div className='jumbotron-content mt-16'>
-          <h2 className='title text-secondary mb-6'>
-            <div className='sub title mb-4 flex items-center'>Transfers Page</div>
-            Transfers
-          </h2>
-          <PlayersSelection />
+      <div className='jumbotron paper mb-12 rounded pt-12'>
+        <div className='sub title mb-4 flex items-center'>Transfers Page</div>
+        <h2 className='title text-secondary mb-6'>Transfers</h2>
+        <div className='jumbotron-content mt-2 flex'>
+          <div style={{ width: '25%' }}>
+            <PlayersSelection />
+          </div>
+          <div className='flex flex-grow justify-center'>
+            <div className='wrapper'>
+              <TeamSelection isGameweek={false} />
+            </div>
+          </div>
         </div>
-        <TeamSelection isGameweek={false} />
       </div>
       <FixturesContainer />
     </div>
