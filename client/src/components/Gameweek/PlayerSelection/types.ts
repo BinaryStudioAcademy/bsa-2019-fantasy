@@ -1,6 +1,6 @@
 export const PlayerTypes = {
-  GOALKEEPER: 'goalkeeper',
-  FORWARD: 'forward',
-  DEFENDER: 'defender',
-  MIDDLEFIELDER: 'middlefielder',
+  GOALKEEPER: 'GKP',
+  FORWARD: 'FWD',
+  DEFENDER: 'DEF',
+  MIDDLEFIELDER: 'MDF',
 };

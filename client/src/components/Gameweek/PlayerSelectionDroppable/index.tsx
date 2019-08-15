@@ -5,24 +5,24 @@ import Player from '../PlayerSelection';
 import './styles.scss';
 
 export interface PlayerDroppable {
-  accept: string;
+  accept: any;
   lastDroppedItem: any;
 }
 export interface PlayerDroppableProps {
   index: number;
-  accept: string;
+  accept: any;
   onDrop: (item: any) => void;
   lastDroppedItem: any;
   isGameweek: boolean;
 }
 
 export interface BenchDroppable {
-  accept: string[];
+  accept: any;
   lastDroppedItem: any;
 }
 export interface BenchDroppableProps {
   index: number;
-  accept: string[];
+  accept: any;
   onDrop: (item: any) => void;
   lastDroppedItem: any;
   isGameweek: boolean;
