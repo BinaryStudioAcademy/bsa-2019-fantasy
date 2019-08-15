@@ -1,4 +1,5 @@
 export type Fixture = {
   start: string;
-  opponent: string;
+  opp: string;
+  round: number;
 };

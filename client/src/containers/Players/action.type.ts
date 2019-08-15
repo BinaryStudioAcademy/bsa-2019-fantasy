@@ -17,11 +17,24 @@ export const FETCH_PLAYER_DIALOG_CONTENT_REQUEST =
   'PLAYERS:FETCH_PLAYER_DIALOG_CONTENT_REQUEST';
 export const FETCH_PLAYER_DIALOG_CONTENT_SUCCESS =
   'PLAYERS:FETCH_PLAYER_DIALOG_CONTENT_SUCCESS';
+export const RESET_PLAYER_DIALOG_CONTENT = 'PLAYERS:RESET_PLAYER_DIALOG_CONTENT';
+export const SET_IS_LOADING_PLAYER_DIALOG = 'PLAYERS:SET_IS_LOADING_PLAYER_DIALOG';
 
-export type FetchaDataForPlayerAction = {
+export type FetchDataForPlayerAction = {
   type:
     | typeof FETCH_PLAYER_DIALOG_CONTENT_REQUEST
-    | typeof FETCH_PLAYER_DIALOG_CONTENT_SUCCESS;
+    | typeof FETCH_PLAYER_DIALOG_CONTENT_SUCCESS
+    | typeof SET_IS_LOADING_PLAYER_DIALOG;
   payload: any;
 };
-export type AsyncFetchaDataForPlayerAction = Thunky<FetchaDataForPlayerAction>;
+
+export type ResestPlayerDialogDataAction = {
+  type: typeof RESET_PLAYER_DIALOG_CONTENT;
+  payload: any;
+};
+
+export type SetIsLoadingPlayerDialogAction = {
+  type: typeof SET_IS_LOADING_PLAYER_DIALOG;
+  payload: boolean;
+};
+export type AsyncFetchaDataForPlayerAction = Thunky<FetchDataForPlayerAction>;

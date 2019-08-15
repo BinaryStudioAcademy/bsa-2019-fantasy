@@ -5,7 +5,11 @@ import {
   FetchPlayersAction,
   FETCH_PLAYER_DIALOG_CONTENT_REQUEST,
   FETCH_PLAYER_DIALOG_CONTENT_SUCCESS,
-  FetchaDataForPlayerAction,
+  FetchDataForPlayerAction,
+  RESET_PLAYER_DIALOG_CONTENT,
+  ResestPlayerDialogDataAction,
+  SET_IS_LOADING_PLAYER_DIALOG,
+  SetIsLoadingPlayerDialogAction,
 } from './action.type';
 import { Fixture } from 'types/fixture.types';
 import { History } from 'types/history.types';
@@ -28,7 +32,11 @@ const initialState: State = {
 
 export default (
   state = initialState,
-  action: FetchPlayersAction | FetchaDataForPlayerAction,
+  action:
+    | FetchPlayersAction
+    | FetchDataForPlayerAction
+    | ResestPlayerDialogDataAction
+    | SetIsLoadingPlayerDialogAction,
 ) => {
   switch (action.type) {
     case FETCH_PLAYERS_REQUEST:
@@ -49,6 +57,17 @@ export default (
         playerData: action.payload,
         dialogLoading: false,
       };
+    case RESET_PLAYER_DIALOG_CONTENT:
+      return {
+        ...state,
+        playerData: {},
+      };
+    case SET_IS_LOADING_PLAYER_DIALOG: {
+      return {
+        ...state,
+        dialogLoading: action.payload,
+      };
+    }
     default:
       return state;
   }

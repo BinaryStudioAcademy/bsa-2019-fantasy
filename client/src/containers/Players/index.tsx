@@ -11,7 +11,12 @@ import { animateScroll as scroll } from 'react-scroll';
 
 import { RootState } from 'store/types';
 import { Player } from 'types/player.types';
-import { fetchPlayers, fetchDataForPlayer } from './actions';
+import {
+  fetchPlayers,
+  fetchDataForPlayer,
+  resetPlayerDialogData,
+  PlayerDataType,
+} from './actions';
 import PlayerHighlight from 'components/PlayerHighlight';
 import SearchBar from 'components/SearchBar';
 import PlayerDialog from 'components/PlayerDialog';
@@ -28,17 +33,17 @@ type Props = {
   clubs: [Club?];
   fetchDataForPlayer: typeof fetchDataForPlayer;
   dialogLoading: boolean;
+  resetPlayerDialogData: typeof resetPlayerDialogData;
+  playerData: PlayerDataType;
 };
 
 type State = {
-  //filters: any;
-  playerDialogData?: { id: string; clubId: string } | undefined;
   playerHighlightData: any;
+  currentPlayer?: Player;
 };
 
 class PlayersPage extends React.Component<Props, State> {
   state: State = {
-    playerDialogData: undefined,
     playerHighlightData: {},
   };
 
@@ -59,9 +64,10 @@ class PlayersPage extends React.Component<Props, State> {
     }
   };
 
-  showModal = (id: string, clubId: string) =>
-    this.setState({ playerDialogData: { id, clubId } });
-  onModalDismiss = () => this.setState({ playerDialogData: undefined });
+  onModalDismiss = () => {
+    this.props.resetPlayerDialogData();
+    this.setState({ currentPlayer: undefined });
+  };
 
   setPlayerHighlight = (id: string) => {
     console.log(window);
@@ -157,8 +163,11 @@ class PlayersPage extends React.Component<Props, State> {
           className='w-4 h-4 justify-center leading-none flex ml-auto bg-background rounded-full text-xs font-semibold'
           onClick={() => {
             this.setState({
-              playerDialogData: { id: props.original.id, clubId: props.original.club_id },
+              currentPlayer: this.props.players.find(
+                (p: any) => p && props.original.id === p.id,
+              ),
             });
+            this.props.fetchDataForPlayer(props.original.id, props.original.club_id);
           }}
         >
           i
@@ -232,12 +241,13 @@ class PlayersPage extends React.Component<Props, State> {
           </div>
           {this.renderTable()}
 
-          {this.state.playerDialogData && (
+          {this.state.currentPlayer && (
             <PlayerDialog
-              playerDialogData={this.state.playerDialogData}
+              playerDialogData={this.props.playerData}
               onDismiss={this.onModalDismiss}
-              loadDataForPlayer={this.props.fetchDataForPlayer}
               loading={this.props.dialogLoading}
+              player={this.state.currentPlayer}
+              clubName={this.getClubNameById(this.state.currentPlayer.club_id)}
             />
           )}
         </section>
@@ -258,6 +268,7 @@ const mapStateToProps = (rootState: RootState) => ({
 const actions = {
   fetchPlayers,
   fetchDataForPlayer,
+  resetPlayerDialogData,
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
