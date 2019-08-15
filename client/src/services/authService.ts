@@ -13,7 +13,7 @@ export const login = async (request: LoginCredentials) => {
 
 export const registration = async (request: RegisterCredentials) => {
   const response = await callWebApi({
-    endpoint: '/api/auth/register',
+    endpoint: '/api/auth/registration',
     type: 'POST',
     request,
   });

@@ -14,7 +14,6 @@ type State = {
 const initialState: State = { players: [], loading: false, error: null };
 
 export default (state = initialState, action: FetchPlayersAction) => {
-  console.log(action);
   switch (action.type) {
     case FETCH_PLAYERS_REQUEST:
       return { ...state, loading: true };
