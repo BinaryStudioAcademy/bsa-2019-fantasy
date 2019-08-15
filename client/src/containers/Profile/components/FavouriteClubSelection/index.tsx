@@ -51,7 +51,7 @@ const FavouriteClubSelection = () => {
                 value={item.id}
                 onChange={(e) => setClub(+e.target.value)}
               />
-              <div className={cn(styles.clubLabel, 'h-full w-full rounded shadow')}>
+              <div className={cn(styles.clubLabel, 'h-full w-full rounded shadow p-2')}>
                 <img
                   className='rounded w-10'
                   src={getClubLogoUrl(item.code, 200)}
