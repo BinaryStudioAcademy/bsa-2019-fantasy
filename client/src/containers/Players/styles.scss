@@ -1,0 +1,14 @@
+.ReactTable .rt-thead.-header {
+  box-shadow: none;
+}
+
+.ReactTable .rt-thead .rt-th,
+.ReactTable .rt-thead .rt-td,
+.ReactTable .rt-tbody .rt-td {
+  border-right: none;
+}
+
+.ReactTable .rt-tbody .rt-tr-group {
+  border-bottom: none;
+  margin-bottom: 2px;
+}

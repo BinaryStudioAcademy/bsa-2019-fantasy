@@ -1,0 +1,28 @@
+.gameweek-history {
+  svg {
+    display: inline;
+    vertical-align: initial;
+    font-size: 10px;
+  }
+
+  &-content {
+    display: grid;
+    grid-template-columns: 70% 30%;
+
+    .title {
+      font-size: 25px;
+      line-height: 27px;
+      font-weight: bold;
+    }
+  }
+
+  .gameweek-stats {
+    .points {
+      font-size: 18px;
+
+      span {
+        font-size: 35px;
+      }
+    }
+  }
+}
