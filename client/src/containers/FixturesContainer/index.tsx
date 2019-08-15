@@ -43,8 +43,8 @@ const FixturesContainer = ({
     return <Spinner />;
   }
 
-  return (
-    <div className='bg-white py-3 min-h-screen'>
+  return ( 
+    <div className='bg-white py-3 min-h-screen shadow-figma'>
       <div className='fixtures-list flex flex-col items-stretch text-center max-w-2xl'>
         <h2 className='text-5xl'>Fixtures</h2>
         <p className='mb-3'>
