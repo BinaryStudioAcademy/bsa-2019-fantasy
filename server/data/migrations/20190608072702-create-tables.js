@@ -30,18 +30,21 @@ export default {
               money: {
                 allowNull: false,
                 type: Sequelize.FLOAT,
+                defaultValue: 1000,
               },
               score: {
                 allowNull: false,
                 type: Sequelize.FLOAT,
+                defaultValue: 0,
               },
               team_name: {
-                allowNull: false,
+                allowNull: true,
                 type: Sequelize.STRING,
               },
               chip_used: {
                 allowNull: false,
                 type: Sequelize.ENUM('wildcard', 'triple_caption', 'bench_boost'),
+                defaultValue: 'wildcard',
               },
               createdAt: Sequelize.DATE,
               updatedAt: Sequelize.DATE,

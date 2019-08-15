@@ -14,7 +14,6 @@ type State = {
 const initialState: State = { clubs: [], loading: false, error: null };
 
 export default (state = initialState, action: FetchClubsAction) => {
-  console.log(action);
   switch (action.type) {
     case FETCH_CLUBS_REQUEST:
       return { ...state, loading: true };

@@ -1,42 +1,37 @@
 .form-registration {
-    position: relative;
-    z-index: 2;
-    color: #1ee3cf;
+  position: relative;
+  z-index: 2;
+  color: #1ee3cf;
 
-    input,
-    select,
-    select:focus {
-        height: 2rem;
-        background-color: rgba(255, 255, 255, 0.128578);
-        border-radius: 3px;
-        border: 1px solid #41ebda;
-        padding: 0.8rem;
-    }
+  input,
+  select,
+  select:focus {
+    height: 2rem;
+    background-color: rgba(255, 255, 255, 0.128578);
+    border-radius: 3px;
+    border: 1px solid #41ebda;
+    padding: 0.8rem;
+  }
 
-    select > option {
-        color: #122737f6;
-    }
+  select > option {
+    color: #122737f6;
+  }
 
-    label {
-        text-align: left;
-    }
+  .sign-up-btn {
+    background: #1ee3cf;
+    border-radius: 3px;
+    color: #122737;
+  }
 
-    .sign-up-btn {
-        background: #1ee3cf;
-        border-radius: 3px;
-        text-transform: uppercase;
-        color: #122737;
-    }
-
-    .sign-up-btn-no-bg {
-        border: 1px solid #1ee3cf;
-        border-radius: 3px;
-        background-color: transparent;
-    }
+  .sign-up-btn-no-bg {
+    border: 1px solid #1ee3cf;
+    border-radius: 3px;
+    background-color: transparent;
+  }
 }
 
 @media (max-width: 745px) {
-    .form-registration {
-        margin: 0 auto;
-    }
+  .form-registration {
+    margin: 0 auto;
+  }
 }

@@ -54,6 +54,8 @@ module.exports = {
     '@typescript-eslint/await-thenable': 'warn',
     '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/no-var-requires': 'off',
+    'no-console': 'warn',
+    '@typescript-eslint/no-non-null-assertion': 'warn',
   },
   settings: {
     react: {

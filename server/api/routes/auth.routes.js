@@ -21,7 +21,7 @@ router
       .then((data) => res.send(data))
       .catch(next),
   )
-  .post('/register', registrationMiddleware, (req, res, next) =>
+  .post('/registration', registrationMiddleware, (req, res, next) =>
     authService
       .register(req.user)
       .then((data) =>
