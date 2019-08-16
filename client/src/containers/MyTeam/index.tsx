@@ -5,11 +5,43 @@ import './styles.scss';
 import StatusPlayerModal from 'components/StatusPlayerModal';
 
 const MyTeam = () => {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [isCaptain, setIsCaptain] = useState(false);
+  const [isViceCaptain, setIsViceCaptain] = useState(false);
+  const [currentId, setCurrentId] = useState('');
+  const [captainId, setCaptainId] = useState('');
+  const [viceCaptainId, setViceCaptainId] = useState('');
 
   const onToggle = (show: boolean) => {
     setShowModal(show);
-  }
+  };
+
+  const onSetCaptain = () => {
+    if (currentId === viceCaptainId) {
+      setViceCaptainId(captainId);
+      setCaptainId(currentId);
+    } else {
+      setCaptainId(currentId);
+    }
+    setShowModal(false);
+  };
+
+  const onSetViceCaptain = () => {
+    if (currentId === captainId) {
+      setCaptainId(viceCaptainId);
+      setViceCaptainId(currentId);
+    } else {
+      setViceCaptainId(currentId);
+    }
+    setShowModal(false);
+  };
+
+  const onOpen = (id: string, isCaptain: boolean, isViceCaptain: boolean) => {
+    setShowModal(true);
+    setCurrentId(id);
+    setIsCaptain(isCaptain);
+    setIsViceCaptain(isViceCaptain);
+  };
 
   return (
     <div className='team-page'>
@@ -21,8 +53,21 @@ const MyTeam = () => {
           </h2>
         </div>
       </div>
-      <TeamSelection isGameweek={false} onOpen={onToggle}/>
-      {showModal && <StatusPlayerModal isCaptain={true} isViceCaptain={false} onClose={onToggle}/>}
+      <TeamSelection
+        isGameweek={false}
+        onOpen={onOpen}
+        captainId={captainId}
+        viceCaptainId={viceCaptainId}
+      />
+      {showModal && (
+        <StatusPlayerModal
+          isCaptain={isCaptain}
+          isViceCaptain={isViceCaptain}
+          onClose={onToggle}
+          onSetCaptain={onSetCaptain}
+          onSetViceCaptain={onSetViceCaptain}
+        />
+      )}
     </div>
   );
 };
