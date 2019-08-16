@@ -14,6 +14,8 @@ const PrivateLeagues = ({ joinPrivateLeague }: Props) => {
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
+
+    joinPrivateLeague({ code });
   };
 
   return (

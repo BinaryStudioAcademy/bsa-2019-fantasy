@@ -4,13 +4,17 @@ import {
   CREATE_LEAGUE_SUCCESS,
   CREATE_LEAGUE_FAILURE,
   SET_USER_LEAGUES,
+  JOIN_PRIVATE_LEAGUE_SUCCESS,
+  JOIN_PRIVATE_LEAGUE_FAILURE,
   SetLeaguesAction,
   AsyncSetLeaguesAction,
   CreateLeagueAction,
   AsyncCreateLeagueAction,
+  JoinPrivateLeagueAction,
+  AsyncJoinPrivateLeagueAction,
 } from './action.types';
 
-const setIsLoading = (isLoading: boolean): CreateLeagueAction => ({
+const setIsLoading = (isLoading: boolean): any => ({
   type: SET_IS_LOADING,
   payload: isLoading,
 });
@@ -30,6 +34,16 @@ const setUserLeagues = (leagues: any): SetLeaguesAction => ({
   payload: leagues,
 });
 
+const joinPrivateLeagueSuccess = (payload: any): JoinPrivateLeagueAction => ({
+  type: JOIN_PRIVATE_LEAGUE_SUCCESS,
+  payload,
+});
+
+const joinPrivateLeagueFailure = (payload: any): JoinPrivateLeagueAction => ({
+  type: JOIN_PRIVATE_LEAGUE_FAILURE,
+  payload,
+});
+
 export const createLeagueAction = (data: {
   name: string;
 }): AsyncCreateLeagueAction => async (dispatch) => {
@@ -47,4 +61,18 @@ export const createLeagueAction = (data: {
 export const loadUserLeagues = (): AsyncSetLeaguesAction => async (dispatch) => {
   const result = await leagueService.getUserLeagues();
   dispatch(setUserLeagues(result));
+};
+
+export const joinPrivateLeague = (data: {
+  code: string;
+}): AsyncJoinPrivateLeagueAction => async (dispatch) => {
+  try {
+    dispatch(setIsLoading(true));
+    const result = await leagueService.joinPrivateLeague(data);
+    dispatch(setIsLoading(false));
+    dispatch(joinPrivateLeagueSuccess(result));
+  } catch (e) {
+    dispatch(setIsLoading(false));
+    dispatch(joinPrivateLeagueFailure(e));
+  }
 };
