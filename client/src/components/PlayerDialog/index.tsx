@@ -17,19 +17,19 @@ type Props = {
 };
 
 const positionDict: { [key: string]: { name: string; color: string } } = {
-  '1': {
+  'GKP': {
     name: 'goalkeeper',
     color: 'bg-yellow-400',
   },
-  '2': {
+  'DEF': {
     name: 'defender',
     color: 'bg-green-600',
   },
-  '3': {
+  'MID': {
     name: 'midfielder',
     color: 'bg-teal-400',
   },
-  '4': {
+  'FWD': {
     name: 'forward',
     color: 'bg-red-600',
   },
