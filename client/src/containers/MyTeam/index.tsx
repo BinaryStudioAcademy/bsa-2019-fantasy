@@ -1,9 +1,15 @@
 import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
+import { RootState } from 'store/types';
 import TeamSelection from 'components/Gameweek/TeamSelection';
 import './styles.scss';
 
 const MyTeam = () => {
+  const gameweekPlayers = useSelector(
+    (state: RootState) => state.gameweeks.gameweeks_history,
+  );
+
   useEffect(() => {
     document.title = 'My Team | Fantasy Football League';
   }, []);
@@ -18,7 +24,7 @@ const MyTeam = () => {
           </h2>
         </div>
       </div>
-      <TeamSelection isGameweek={false} players={[]} />
+      <TeamSelection isGameweek={false} players={gameweekPlayers} />
     </div>
   );
 };

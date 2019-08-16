@@ -48,17 +48,19 @@ const Routing = () => {
   const dispatch = useDispatch();
   const { isLoading, user } = useSelector((state: RootState) => state.profile);
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
+  const gameweeks = useSelector((state: RootState) => state.gameweeks.gameweeks);
 
   useEffect(() => {
     dispatch(loadCurrentUser());
     dispatch(fetchClubs());
     dispatch(fetchGameweeks());
-    // dispatch(
-    //   fetchGameweekHistory(
-    //     'dfe3c86d-c303-41d2-992a-9e9d62bc87b5',
-    //     '94a2e21a-c317-40d6-836d-9bc3f76810e7',
-    //   ),
-    // );
+
+    dispatch(
+      fetchGameweekHistory(
+        '2cc163d0-dfa4-4961-89e3-3888bba04280',
+        '0f0dd066-4e3d-4657-930c-35f319e8b300',
+      ),
+    );
   }, [dispatch]);
 
   useEffect(() => {

@@ -1,13 +1,21 @@
 import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
 import PlayersSelection from 'components/PlayersSelection';
 import TeamSelection from 'components/Gameweek/TeamSelection';
 import FixturesContainer from 'containers/FixturesContainer';
 
+import { RootState } from 'store/types';
+
 const Transfers = () => {
+  const gameweekPlayers = useSelector(
+    (state: RootState) => state.gameweeks.gameweeks_history,
+  );
+
   useEffect(() => {
     document.title = 'Transfers | Fantasy Football League';
   }, []);
-  
+
   return (
     <div className='transfers-page'>
       <div className='jumbotron paper mb-12 rounded pt-12'>
@@ -19,7 +27,7 @@ const Transfers = () => {
           </div>
           <div className='flex flex-grow justify-center'>
             <div className='wrapper'>
-              <TeamSelection isGameweek={false} />
+              <TeamSelection isGameweek={false} players={gameweekPlayers} />
             </div>
           </div>
         </div>

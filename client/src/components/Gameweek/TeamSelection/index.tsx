@@ -15,78 +15,12 @@ import { PlayerDraggableProps } from '../PlayerSelection';
 import { PlayerTypes } from '../PlayerSelection/types';
 import Button from '../../../components/Button';
 import './styles.scss';
+import Spinner from 'components/Spinner';
 
 export interface TeamSelectionProps {
   isGameweek: boolean;
   players: Array<any>;
 }
-
-const BENCH = [
-  {
-    accept: [
-      PlayerTypes.GOALKEEPER,
-      PlayerTypes.DEFENDER,
-      PlayerTypes.MIDDLEFIELDER,
-      PlayerTypes.FORWARD,
-    ],
-    lastDroppedItem: {
-      id: uuid(),
-      src: 'images/uniforms/goalkeepers/shirt_43_1-66.png',
-      name: 'Ederson',
-      club: 'TOT (A)',
-      points: 3,
-      type: PlayerTypes.GOALKEEPER,
-    },
-  },
-  {
-    accept: [
-      PlayerTypes.GOALKEEPER,
-      PlayerTypes.DEFENDER,
-      PlayerTypes.MIDDLEFIELDER,
-      PlayerTypes.FORWARD,
-    ],
-    lastDroppedItem: {
-      id: uuid(),
-      src: 'images/uniforms/field-players/shirt_43-66.png',
-      name: 'Laporte',
-      club: 'TOT (H)',
-      points: 5,
-      type: PlayerTypes.DEFENDER,
-    },
-  },
-  {
-    accept: [
-      PlayerTypes.GOALKEEPER,
-      PlayerTypes.DEFENDER,
-      PlayerTypes.MIDDLEFIELDER,
-      PlayerTypes.FORWARD,
-    ],
-    lastDroppedItem: {
-      id: uuid(),
-      src: 'images/uniforms/field-players/shirt_31-66.png',
-      name: 'Townsed',
-      club: 'SHU (A)',
-      points: 10,
-      type: PlayerTypes.DEFENDER,
-    },
-  },
-  {
-    accept: [
-      PlayerTypes.GOALKEEPER,
-      PlayerTypes.DEFENDER,
-      PlayerTypes.MIDDLEFIELDER,
-      PlayerTypes.FORWARD,
-    ],
-    lastDroppedItem: {
-      id: uuid(),
-      src: 'images/uniforms/field-players/shirt_11-66.png',
-      name: 'Calvert-Lewin',
-      club: 'WAT (H)',
-      points: 11,
-      type: PlayerTypes.FORWARD,
-    },
-  },
-];
 
 const PITCH = [
   {
@@ -218,21 +152,87 @@ const PITCH = [
 ];
 
 const TeamSelection = ({ isGameweek, players }: TeamSelectionProps) => {
-  const [query, setQuery] = useState({
-    limit: 15,
-    order_direction: 'DESC',
-    order_field: 'player_score',
-    position: undefined,
-    club_id: undefined,
-    search: undefined,
-    max_price: undefined,
-  });
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(loadPlayersAction({ ...query }));
-  }, [query, dispatch]);
+  // const [query, setQuery] = useState({
+  //   limit: 15,
+  //   order_direction: 'DESC',
+  //   order_field: 'player_score',
+  //   position: undefined,
+  //   club_id: undefined,
+  //   search: undefined,
+  //   max_price: undefined,
+  // });
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(loadPlayersAction({ ...query }));
+  // }, [query, dispatch]);
 
   // const players = useSelector((state: RootState) => state.playerSelection.players);
+  const BENCH = [
+    {
+      accept: [
+        PlayerTypes.GOALKEEPER,
+        PlayerTypes.DEFENDER,
+        PlayerTypes.MIDDLEFIELDER,
+        PlayerTypes.FORWARD,
+      ],
+      lastDroppedItem: {
+        id: uuid(),
+        src: 'images/uniforms/goalkeepers/shirt_43_1-66.png',
+        name: 'Walker',
+        club: 'TOT (A)',
+        points: 6,
+        type: PlayerTypes.GOALKEEPER,
+      },
+    },
+    {
+      accept: [
+        PlayerTypes.GOALKEEPER,
+        PlayerTypes.DEFENDER,
+        PlayerTypes.MIDDLEFIELDER,
+        PlayerTypes.FORWARD,
+      ],
+      lastDroppedItem: {
+        id: uuid(),
+        src: 'images/uniforms/field-players/shirt_43-66.png',
+        name: 'Laporte',
+        club: 'TOT (H)',
+        points: 5,
+        type: PlayerTypes.DEFENDER,
+      },
+    },
+    {
+      accept: [
+        PlayerTypes.GOALKEEPER,
+        PlayerTypes.DEFENDER,
+        PlayerTypes.MIDDLEFIELDER,
+        PlayerTypes.FORWARD,
+      ],
+      lastDroppedItem: {
+        id: uuid(),
+        src: 'images/uniforms/field-players/shirt_31-66.png',
+        name: 'Townsed',
+        club: 'SHU (A)',
+        points: 10,
+        type: PlayerTypes.DEFENDER,
+      },
+    },
+    {
+      accept: [
+        PlayerTypes.GOALKEEPER,
+        PlayerTypes.DEFENDER,
+        PlayerTypes.MIDDLEFIELDER,
+        PlayerTypes.FORWARD,
+      ],
+      lastDroppedItem: {
+        id: uuid(),
+        src: 'images/uniforms/field-players/shirt_11-66.png',
+        name: 'Calvert-Lewin',
+        club: 'WAT (H)',
+        points: 11,
+        type: PlayerTypes.FORWARD,
+      },
+    },
+  ];
 
   console.log(players);
   //set bench drag&drop items, which accept all player types
@@ -367,116 +367,120 @@ const TeamSelection = ({ isGameweek, players }: TeamSelectionProps) => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className='relative team-container'>
-        {/* Goalkeeper */}
+      {players ? (
+        <div className='relative team-container'>
+          {/* Goalkeeper */}
 
-        <div className='flex justify-around absolute team'>
-          {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-            if (accept === PlayerTypes.GOALKEEPER) {
-              return (
-                <PlayerSelectionDroppable
-                  index={index}
-                  key={index}
-                  accept={accept}
-                  lastDroppedItem={lastDroppedItem}
-                  onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                  isGameweek={isGameweek}
-                />
-              );
-            } else {
-              return null;
-            }
-          })}
-        </div>
-
-        {/* Defenders */}
-        <div className='flex justify-between top-20 absolute team'>
-          {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-            if (accept === PlayerTypes.DEFENDER) {
-              return (
-                <PlayerSelectionDroppable
-                  index={index}
-                  key={index}
-                  accept={accept}
-                  lastDroppedItem={lastDroppedItem}
-                  onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                  isGameweek={isGameweek}
-                />
-              );
-            } else {
-              return null;
-            }
-          })}
-        </div>
-
-        {/* Middlefilders */}
-        <div className='flex justify-between top-40 absolute team'>
-          {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-            if (accept === PlayerTypes.MIDDLEFIELDER) {
-              return (
-                <PlayerSelectionDroppable
-                  index={index}
-                  key={index}
-                  accept={accept}
-                  lastDroppedItem={lastDroppedItem}
-                  onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                  isGameweek={isGameweek}
-                />
-              );
-            } else {
-              return null;
-            }
-          })}
-        </div>
-
-        {/* Forwards */}
-        <div className='flex justify-around top-60 absolute team'>
-          {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-            if (accept === PlayerTypes.FORWARD) {
-              return (
-                <PlayerSelectionDroppable
-                  index={index}
-                  key={index}
-                  accept={accept}
-                  lastDroppedItem={lastDroppedItem}
-                  onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                  isGameweek={isGameweek}
-                />
-              );
-            } else {
-              return null;
-            }
-          })}
-        </div>
-
-        {/* Bench */}
-        <div className='flex justify-around top-80 left-0 w-full m-3 absolute team'>
-          {bench.map(({ accept, lastDroppedItem }: BenchDroppable, index) => {
-            return (
-              <PlayerSelectionDroppable
-                index={index}
-                key={index}
-                accept={accept}
-                lastDroppedItem={lastDroppedItem}
-                onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                isGameweek={isGameweek}
-              />
-            );
-          })}
-        </div>
-        <img src='images/field.svg' alt='field' className='field' />
-        <div className='w-full h-40 bg-gray-400 rounded-r-sm' />
-        {isGameweek ? null : (
-          <div className='w-full h-24 absolute flex justify-center'>
-            <Button
-              className='w-3/12 h-12 mt-3'
-              onClick={(e) => saveTeam(droppedPlayerPitchIds, droppedPlayerBenchIds)}
-            >
-              <p>Save Your Team</p>
-            </Button>
+          <div className='flex justify-around absolute team'>
+            {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+              if (accept === PlayerTypes.GOALKEEPER) {
+                return (
+                  <PlayerSelectionDroppable
+                    index={index}
+                    key={index}
+                    accept={accept}
+                    lastDroppedItem={lastDroppedItem}
+                    onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                    isGameweek={isGameweek}
+                  />
+                );
+              } else {
+                return null;
+              }
+            })}
           </div>
-        )}
-      </div>
+
+          {/* Defenders */}
+          <div className='flex justify-between top-20 absolute team'>
+            {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+              if (accept === PlayerTypes.DEFENDER) {
+                return (
+                  <PlayerSelectionDroppable
+                    index={index}
+                    key={index}
+                    accept={accept}
+                    lastDroppedItem={lastDroppedItem}
+                    onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                    isGameweek={isGameweek}
+                  />
+                );
+              } else {
+                return null;
+              }
+            })}
+          </div>
+
+          {/* Middlefilders */}
+          <div className='flex justify-between top-40 absolute team'>
+            {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+              if (accept === PlayerTypes.MIDDLEFIELDER) {
+                return (
+                  <PlayerSelectionDroppable
+                    index={index}
+                    key={index}
+                    accept={accept}
+                    lastDroppedItem={lastDroppedItem}
+                    onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                    isGameweek={isGameweek}
+                  />
+                );
+              } else {
+                return null;
+              }
+            })}
+          </div>
+
+          {/* Forwards */}
+          <div className='flex justify-around top-60 absolute team'>
+            {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+              if (accept === PlayerTypes.FORWARD) {
+                return (
+                  <PlayerSelectionDroppable
+                    index={index}
+                    key={index}
+                    accept={accept}
+                    lastDroppedItem={lastDroppedItem}
+                    onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                    isGameweek={isGameweek}
+                  />
+                );
+              } else {
+                return null;
+              }
+            })}
+          </div>
+
+          {/* Bench */}
+          <div className='flex justify-around top-80 left-0 w-full m-3 absolute team'>
+            {bench.map(({ accept, lastDroppedItem }: BenchDroppable, index) => {
+              return (
+                <PlayerSelectionDroppable
+                  index={index}
+                  key={index}
+                  accept={accept}
+                  lastDroppedItem={lastDroppedItem}
+                  onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                  isGameweek={isGameweek}
+                />
+              );
+            })}
+          </div>
+          <img src='images/field.svg' alt='field' className='field' />
+          <div className='w-full h-40 bg-gray-400 rounded-r-sm' />
+          {isGameweek ? null : (
+            <div className='w-full h-24 absolute flex justify-center'>
+              <Button
+                className='w-3/12 h-12 mt-3'
+                onClick={(e) => saveTeam(droppedPlayerPitchIds, droppedPlayerBenchIds)}
+              >
+                <p>Save Your Team</p>
+              </Button>
+            </div>
+          )}
+        </div>
+      ) : (
+        <Spinner />
+      )}
     </DndProvider>
   );
 };

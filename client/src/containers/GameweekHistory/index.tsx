@@ -28,26 +28,30 @@ const mockChartData = {
 };
 
 const GameweekHistory = withRouter(({ history }) => {
+  const gameweekPlayers = useSelector(
+    (state: RootState) => state.gameweeks.gameweeks_history,
+  );
+
   useEffect(() => {
     document.title = 'Home | Fantasy Football League';
   }, []);
 
-  const dispatch = useDispatch();
-  const { user } = usePersonalDetails();
+  // const dispatch = useDispatch();
+  // const { user } = usePersonalDetails();
 
-  if (!user) return <Spinner />;
+  // if (!user) return <Spinner />;
 
-  useEffect(() => {
-    dispatch(
-      fetchGameweekHistory(
-        'dfe3c86d-c303-41d2-992a-9e9d62bc87b5',
-        '94a2e21a-c317-40d6-836d-9bc3f76810e7',
-      ),
-    );
-  }, [dispatch]);
-  const gameweekPlayers = useSelector(
-    (state: RootState) => state.gameweeks.gameweeks_history,
-  );
+  // useEffect(() => {
+  //   dispatch(
+  //     fetchGameweekHistory(
+  //       'dfe3c86d-c303-41d2-992a-9e9d62bc87b5',
+  //       '94a2e21a-c317-40d6-836d-9bc3f76810e7',
+  //     ),
+  //   );
+  // }, [dispatch]);
+  // const gameweekPlayers = useSelector(
+  //   (state: RootState) => state.gameweeks.gameweeks_history,
+  // );
   return (
     <div className='gameweek-history'>
       <div className='jumbotron paper mb-12 rounded flex items-end justify-between pt-6'>
