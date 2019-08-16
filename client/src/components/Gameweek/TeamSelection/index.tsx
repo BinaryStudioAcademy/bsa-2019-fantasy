@@ -21,7 +21,203 @@ export interface TeamSelectionProps {
   players: Array<any>;
 }
 
-const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
+const BENCH = [
+  {
+    accept: [
+      PlayerTypes.GOALKEEPER,
+      PlayerTypes.DEFENDER,
+      PlayerTypes.MIDDLEFIELDER,
+      PlayerTypes.FORWARD,
+    ],
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/goalkeepers/shirt_43_1-66.png',
+      name: 'Ederson',
+      club: 'TOT (A)',
+      points: 3,
+      type: PlayerTypes.GOALKEEPER,
+    },
+  },
+  {
+    accept: [
+      PlayerTypes.GOALKEEPER,
+      PlayerTypes.DEFENDER,
+      PlayerTypes.MIDDLEFIELDER,
+      PlayerTypes.FORWARD,
+    ],
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_43-66.png',
+      name: 'Laporte',
+      club: 'TOT (H)',
+      points: 5,
+      type: PlayerTypes.DEFENDER,
+    },
+  },
+  {
+    accept: [
+      PlayerTypes.GOALKEEPER,
+      PlayerTypes.DEFENDER,
+      PlayerTypes.MIDDLEFIELDER,
+      PlayerTypes.FORWARD,
+    ],
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_31-66.png',
+      name: 'Townsed',
+      club: 'SHU (A)',
+      points: 10,
+      type: PlayerTypes.DEFENDER,
+    },
+  },
+  {
+    accept: [
+      PlayerTypes.GOALKEEPER,
+      PlayerTypes.DEFENDER,
+      PlayerTypes.MIDDLEFIELDER,
+      PlayerTypes.FORWARD,
+    ],
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_11-66.png',
+      name: 'Calvert-Lewin',
+      club: 'WAT (H)',
+      points: 11,
+      type: PlayerTypes.FORWARD,
+    },
+  },
+];
+
+const PITCH = [
+  {
+    accept: PlayerTypes.GOALKEEPER,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/goalkeepers/shirt_14_1-66.png',
+      name: 'Allison',
+      club: 'SOU (A)',
+      points: 15,
+      type: PlayerTypes.GOALKEEPER,
+    },
+  },
+  {
+    accept: PlayerTypes.DEFENDER,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_14-66.png',
+      name: 'van Dijk',
+      club: 'SOU (A)',
+      points: 20,
+      type: PlayerTypes.DEFENDER,
+    },
+  },
+
+  {
+    accept: PlayerTypes.DEFENDER,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_14-66.png',
+      name: 'Aleksandr Arnold',
+      club: 'SOU (A)',
+      points: 8,
+      type: PlayerTypes.DEFENDER,
+    },
+  },
+
+  {
+    accept: PlayerTypes.DEFENDER,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_43-66.png',
+      name: 'Walker',
+      club: 'TOT (H)',
+      points: 9,
+      type: PlayerTypes.DEFENDER,
+    },
+  },
+  {
+    accept: PlayerTypes.DEFENDER,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_3-66.png',
+      name: 'David Luiz',
+      club: 'BUR (H)',
+      points: 18,
+      type: PlayerTypes.DEFENDER,
+    },
+  },
+  {
+    accept: PlayerTypes.MIDDLEFIELDER,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_57-66.png',
+      name: 'Doucoure',
+      club: 'EVE (A)',
+      points: 8,
+      type: PlayerTypes.MIDDLEFIELDER,
+    },
+  },
+
+  {
+    accept: PlayerTypes.MIDDLEFIELDER,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_1-66.png',
+      name: 'Pogba',
+      club: 'WOL (A)',
+      points: 7,
+      type: PlayerTypes.MIDDLEFIELDER,
+    },
+  },
+  {
+    accept: PlayerTypes.MIDDLEFIELDER,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_13-66.png',
+      name: 'Perez',
+      club: 'CHE (A)',
+      points: 9,
+      type: PlayerTypes.MIDDLEFIELDER,
+    },
+  },
+
+  {
+    accept: PlayerTypes.MIDDLEFIELDER,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_39-66.png',
+      name: 'Moutinho',
+      club: 'MUN (H)',
+      points: 4,
+      type: PlayerTypes.MIDDLEFIELDER,
+    },
+  },
+  {
+    accept: PlayerTypes.FORWARD,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_1-66.png',
+      name: 'Rashford',
+      club: 'WOL (A)',
+      points: 9,
+      type: PlayerTypes.FORWARD,
+    },
+  },
+
+  {
+    accept: PlayerTypes.FORWARD,
+    lastDroppedItem: {
+      id: uuid(),
+      src: 'images/uniforms/field-players/shirt_57-66.png',
+      name: 'Deeney',
+      club: 'EVE (A)',
+      points: 4,
+      type: PlayerTypes.FORWARD,
+    },
+  },
+];
+
+const TeamSelection = ({ isGameweek, players }: TeamSelectionProps) => {
   const [query, setQuery] = useState({
     limit: 15,
     order_direction: 'DESC',
@@ -36,205 +232,8 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
     dispatch(loadPlayersAction({ ...query }));
   }, [query, dispatch]);
 
-  const players = useSelector((state: RootState) => state.playerSelection.players);
+  // const players = useSelector((state: RootState) => state.playerSelection.players);
 
-  const BENCH = [
-    {
-      accept: [
-        PlayerTypes.GOALKEEPER,
-        PlayerTypes.DEFENDER,
-        PlayerTypes.MIDDLEFIELDER,
-        PlayerTypes.FORWARD,
-      ],
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/goalkeepers/shirt_43_1-66.png',
-        name: 'Ederson',
-        club: 'TOT (A)',
-        points: 3,
-        type: PlayerTypes.GOALKEEPER,
-      },
-    },
-    {
-      accept: [
-        PlayerTypes.GOALKEEPER,
-        PlayerTypes.DEFENDER,
-        PlayerTypes.MIDDLEFIELDER,
-        PlayerTypes.FORWARD,
-      ],
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_43-66.png',
-        name: 'Laporte',
-        club: 'TOT (H)',
-        points: 5,
-        type: PlayerTypes.DEFENDER,
-      },
-    },
-    {
-      accept: [
-        PlayerTypes.GOALKEEPER,
-        PlayerTypes.DEFENDER,
-        PlayerTypes.MIDDLEFIELDER,
-        PlayerTypes.FORWARD,
-      ],
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_31-66.png',
-        name: 'Townsed',
-        club: 'SHU (A)',
-        points: 10,
-        type: PlayerTypes.DEFENDER,
-      },
-    },
-    {
-      accept: [
-        PlayerTypes.GOALKEEPER,
-        PlayerTypes.DEFENDER,
-        PlayerTypes.MIDDLEFIELDER,
-        PlayerTypes.FORWARD,
-      ],
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_11-66.png',
-        name: 'Calvert-Lewin',
-        club: 'WAT (H)',
-        points: 11,
-        type: PlayerTypes.FORWARD,
-      },
-    },
-  ];
-
-  const PITCH = [
-    {
-      accept: PlayerTypes.GOALKEEPER,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/goalkeepers/shirt_14_1-66.png',
-        name: 'Allison',
-        club: 'SOU (A)',
-        points: 15,
-        type: PlayerTypes.GOALKEEPER,
-      },
-    },
-    {
-      accept: PlayerTypes.DEFENDER,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_14-66.png',
-        name: 'van Dijk',
-        club: 'SOU (A)',
-        points: 20,
-        type: PlayerTypes.DEFENDER,
-      },
-    },
-
-    {
-      accept: PlayerTypes.DEFENDER,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_14-66.png',
-        name: 'Aleksandr Arnold',
-        club: 'SOU (A)',
-        points: 8,
-        type: PlayerTypes.DEFENDER,
-      },
-    },
-
-    {
-      accept: PlayerTypes.DEFENDER,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_43-66.png',
-        name: 'Walker',
-        club: 'TOT (H)',
-        points: 9,
-        type: PlayerTypes.DEFENDER,
-      },
-    },
-    {
-      accept: PlayerTypes.DEFENDER,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_3-66.png',
-        name: 'David Luiz',
-        club: 'BUR (H)',
-        points: 18,
-        type: PlayerTypes.DEFENDER,
-      },
-    },
-    {
-      accept: PlayerTypes.MIDDLEFIELDER,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_57-66.png',
-        name: 'Doucoure',
-        club: 'EVE (A)',
-        points: 8,
-        type: PlayerTypes.MIDDLEFIELDER,
-      },
-    },
-
-    {
-      accept: PlayerTypes.MIDDLEFIELDER,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_1-66.png',
-        name: 'Pogba',
-        club: 'WOL (A)',
-        points: 7,
-        type: PlayerTypes.MIDDLEFIELDER,
-      },
-    },
-    {
-      accept: PlayerTypes.MIDDLEFIELDER,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_13-66.png',
-        name: 'Perez',
-        club: 'CHE (A)',
-        points: 9,
-        type: PlayerTypes.MIDDLEFIELDER,
-      },
-    },
-
-    {
-      accept: PlayerTypes.MIDDLEFIELDER,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_39-66.png',
-        name: 'Moutinho',
-        club: 'MUN (H)',
-        points: 4,
-        type: PlayerTypes.MIDDLEFIELDER,
-      },
-    },
-    {
-      accept: PlayerTypes.FORWARD,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_1-66.png',
-        name: 'Rashford',
-        club: 'WOL (A)',
-        points: 9,
-        type: PlayerTypes.FORWARD,
-      },
-    },
-
-    {
-      accept: PlayerTypes.FORWARD,
-      lastDroppedItem: {
-        id: uuid(),
-        src: 'images/uniforms/field-players/shirt_57-66.png',
-        name: 'Deeney',
-        club: 'EVE (A)',
-        points: 4,
-        type: PlayerTypes.FORWARD,
-      },
-    },
-  ];
-
-const TeamSelection = ({ isGameweek, players }: TeamSelectionProps) => {
   console.log(players);
   //set bench drag&drop items, which accept all player types
   const [bench, setBench] = useState<BenchDroppable[]>(BENCH);
@@ -480,6 +479,5 @@ const TeamSelection = ({ isGameweek, players }: TeamSelectionProps) => {
       </div>
     </DndProvider>
   );
-}};
-
+};
 export default TeamSelection;
