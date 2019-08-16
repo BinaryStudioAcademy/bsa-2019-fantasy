@@ -8,7 +8,7 @@ export const getUserById = async (userId) => {
 };
 
 export const getUserByEmail = async (userEmail) => {
-  const user = await userRepository.getUserByEmail(userEmail);
+  const user = await userRepository.getByEmail(userEmail);
   const { password: _, ...userToSend } = user.dataValues;
 
   return userToSend;

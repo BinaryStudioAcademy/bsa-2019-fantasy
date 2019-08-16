@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PlayersSelection from 'components/PlayersSelection';
 import TeamSelection from 'components/Gameweek/TeamSelection';
 import FixturesContainer from 'containers/FixturesContainer';
 
 const Transfers = () => {
+  useEffect(() => {
+    document.title = 'Transfers | Fantasy Football League';
+  }, []);
+  
   return (
     <div className='transfers-page'>
       <div className='jumbotron paper mb-12 rounded pt-12'>

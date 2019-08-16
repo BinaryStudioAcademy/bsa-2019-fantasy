@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import RegistrationForm from 'components/AuthForms/RegistrationForm';
 
@@ -6,6 +6,10 @@ import '../styles.scss';
 import './responsive.scss';
 
 const RegistrationPage = () => {
+  useEffect(() => {
+    document.title = 'Sign Up | Fantasy Football League';
+  }, []);
+
   return (
     <div className='flex w-full md:flex-row-reverse flex-wrap login-container'>
       <div className='layer' />

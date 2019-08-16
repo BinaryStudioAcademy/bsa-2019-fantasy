@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { Line as LineChart } from 'react-chartjs-2';
@@ -22,6 +22,10 @@ const mockChartData = {
 };
 
 const GameweekHistory = () => {
+  useEffect(() => {
+    document.title = 'Home | Fantasy Football League';
+  }, []);
+
   return (
     <div className='gameweek-history'>
       <div className='jumbotron paper mb-12 rounded flex items-end justify-between pt-6'>

@@ -30,6 +30,7 @@ const FixturesContainer = ({
   const [currentGameweek, setCurrentGameweek] = useState<number>(0);
 
   useEffect(() => {
+    document.title = 'Fixtures | Fantasy Football League';
     loadGameweeksAction();
   }, [loadGameweeksAction]);
 

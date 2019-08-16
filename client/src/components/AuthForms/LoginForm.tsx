@@ -61,7 +61,7 @@ const LoginForm = withRouter(({ history }) => {
             type='submit'
             className='font-bold rounded py-1 px-6 mr-2 border border-transparent text-secondary bg-primary shadow uppercase'
           >
-            Login
+            Sign In
           </button>
           <button
             type='button'

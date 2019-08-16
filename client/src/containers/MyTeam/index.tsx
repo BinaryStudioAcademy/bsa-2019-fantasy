@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
 import './styles.scss';
 import StatusPlayerModal from 'components/StatusPlayerModal';
 
 const MyTeam = () => {
+
   const [showModal, setShowModal] = useState(false);
 
   const [isCaptain, setIsCaptain] = useState(false);
@@ -48,6 +49,11 @@ const MyTeam = () => {
     setIsCaptain(isCaptain);
     setIsViceCaptain(isViceCaptain);
   };
+
+  useEffect(() => {
+    document.title = 'My Team | Fantasy Football League';
+  }, []);
+
 
   return (
     <div className='team-page'>

@@ -122,7 +122,7 @@ export default {
               },
               position: {
                 allowNull: false,
-                type: Sequelize.ENUM('1', '2', '3', '4'),
+                type: Sequelize.ENUM('GKP', 'DEF', 'MID', 'FWD'),
               },
               goals: {
                 allowNull: false,

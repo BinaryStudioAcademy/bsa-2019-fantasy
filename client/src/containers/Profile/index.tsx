@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import cn from 'classnames';
-import { Switch, Route, Redirect, Link, withRouter } from 'react-router-dom';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 import { useSteps } from 'helpers/hooks/steps.hook';
@@ -14,9 +14,7 @@ import styles from './styles.module.scss';
 
 const stepRouteMap = [
   '/profile/details',
-  '/profile/details',
   '/profile/favorite-club',
-  '/profile/email-preferences',
   '/profile/email-preferences',
 ];
 
@@ -24,11 +22,12 @@ const Profile = withRouter(({ history }) => {
   const { step, nextStep, prevStep, navToStep } = useSteps(3);
 
   useEffect(() => {
-    navToStep(stepRouteMap.indexOf(history.location.pathname) || 1);
+    document.title = 'Profile | Fantasy Football League';
+    navToStep(stepRouteMap.indexOf(history.location.pathname) + 1);
   }, []);
 
-  const prevStepLink = stepRouteMap[step - 1];
-  const nextStepLink = stepRouteMap[step + 1];
+  const prevStepLink = stepRouteMap[step - 1 - 1];
+  const nextStepLink = stepRouteMap[step + 1 - 1];
 
   return (
     <section>
@@ -42,7 +41,7 @@ const Profile = withRouter(({ history }) => {
           step={step}
           navToStep={(step: number) => {
             navToStep(step);
-            history.push(stepRouteMap[step]);
+            history.replace(stepRouteMap[step - 1]);
           }}
         />
 
@@ -65,11 +64,12 @@ const Profile = withRouter(({ history }) => {
               'shadow hover:shadow-md text-secondary left-0 -ml-3',
               step === 1 && 'hidden',
             )}
-            onClick={prevStep}
+            onClick={() => {
+              history.replace(prevStepLink);
+              prevStep();
+            }}
           >
-            <Link to={prevStepLink}>
-              <IoIosArrowBack />
-            </Link>
+            <IoIosArrowBack />
           </button>
           <button
             className={cn(
@@ -77,11 +77,12 @@ const Profile = withRouter(({ history }) => {
               'shadow hover:shadow-md text-secondary right-0 -mr-3',
               step === 3 && 'hidden',
             )}
-            onClick={nextStep}
+            onClick={() => {
+              history.replace(nextStepLink);
+              nextStep();
+            }}
           >
-            <Link to={nextStepLink}>
-              <IoIosArrowForward />
-            </Link>
+            <IoIosArrowForward />
           </button>
         </div>
       </div>
