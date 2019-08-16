@@ -43,16 +43,17 @@ class ResetPasswordForm extends Component<
       return;
     }
 
-    this.setState({ isLoading: true });
+    this.setState({ isLoading: true, isError: false, isSuccess: false });
 
     try {
       await this.props.resetPassword({ password, id });
       this.setState({
         isLoading: false,
         isSuccess: true,
+        isError: false,
       });
     } catch {
-      this.setState({ isLoading: false, isError: true });
+      this.setState({ isLoading: false, isError: true, isSuccess: false });
       // TODO: show error
       console.log('Something went wrong');
     }

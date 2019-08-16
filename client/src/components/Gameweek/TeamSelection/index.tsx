@@ -19,6 +19,9 @@ import Spinner from 'components/Spinner';
 
 export interface TeamSelectionProps {
   isGameweek: boolean;
+  onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
+  captainId?: string;
+  viceCaptainId?: string;
   players: Array<any>;
 }
 
@@ -151,7 +154,13 @@ const PITCH = [
   },
 ];
 
-const TeamSelection = ({ isGameweek, players }: TeamSelectionProps) => {
+const TeamSelection = ({
+  isGameweek,
+  players,
+  captainId,
+  viceCaptainId,
+  onOpen,
+}: TeamSelectionProps) => {
   // const [query, setQuery] = useState({
   //   limit: 15,
   //   order_direction: 'DESC',
@@ -234,12 +243,140 @@ const TeamSelection = ({ isGameweek, players }: TeamSelectionProps) => {
     },
   ];
 
-  console.log(players);
+  const PITCH = [
+    {
+      accept: PlayerTypes.GOALKEEPER,
+      lastDroppedItem: {
+        id: uuid(),
+        src: 'images/uniforms/goalkeepers/shirt_14_1-66.png',
+        name: 'Allison',
+        club: 'SOU (A)',
+        points: 15,
+        type: PlayerTypes.GOALKEEPER,
+      },
+    },
+    {
+      accept: PlayerTypes.DEFENDER,
+      lastDroppedItem: {
+        id: uuid(),
+        src: 'images/uniforms/field-players/shirt_14-66.png',
+        name: 'van Dijk',
+        club: 'SOU (A)',
+        points: 20,
+        type: PlayerTypes.DEFENDER,
+      },
+    },
+
+    {
+      accept: PlayerTypes.DEFENDER,
+      lastDroppedItem: {
+        id: uuid(),
+        src: 'images/uniforms/field-players/shirt_14-66.png',
+        name: 'Aleksandr Arnold',
+        club: 'SOU (A)',
+        points: 8,
+        type: PlayerTypes.DEFENDER,
+      },
+    },
+
+    {
+      accept: PlayerTypes.DEFENDER,
+      lastDroppedItem: {
+        id: uuid(),
+        src: 'images/uniforms/field-players/shirt_43-66.png',
+        name: 'Walker',
+        club: 'TOT (H)',
+        points: 9,
+        type: PlayerTypes.DEFENDER,
+      },
+    },
+    {
+      accept: PlayerTypes.DEFENDER,
+      lastDroppedItem: {
+        id: uuid(),
+        src: 'images/uniforms/field-players/shirt_3-66.png',
+        name: 'David Luiz',
+        club: 'BUR (H)',
+        points: 18,
+        type: PlayerTypes.DEFENDER,
+      },
+    },
+
+    {
+      accept: PlayerTypes.MIDDLEFIELDER,
+      lastDroppedItem: {
+        id: uuid(),
+        src: 'images/uniforms/field-players/shirt_57-66.png',
+        name: 'Doucoure',
+        club: 'EVE (A)',
+        points: 8,
+        type: PlayerTypes.MIDDLEFIELDER,
+      },
+    },
+
+    {
+      accept: PlayerTypes.MIDDLEFIELDER,
+      lastDroppedItem: {
+        id: uuid(),
+        src: 'images/uniforms/field-players/shirt_1-66.png',
+        name: 'Pogba',
+        club: 'WOL (A)',
+        points: 7,
+        type: PlayerTypes.MIDDLEFIELDER,
+      },
+    },
+    {
+      accept: PlayerTypes.MIDDLEFIELDER,
+      lastDroppedItem: {
+        id: uuid(),
+        src: 'images/uniforms/field-players/shirt_13-66.png',
+        name: 'Perez',
+        club: 'CHE (A)',
+        points: 9,
+        type: PlayerTypes.MIDDLEFIELDER,
+      },
+    },
+
+    {
+      accept: PlayerTypes.MIDDLEFIELDER,
+      lastDroppedItem: {
+        id: uuid(),
+        src: 'images/uniforms/field-players/shirt_39-66.png',
+        name: 'Moutinho',
+        club: 'MUN (H)',
+        points: 4,
+        type: PlayerTypes.MIDDLEFIELDER,
+      },
+    },
+    {
+      accept: PlayerTypes.FORWARD,
+      lastDroppedItem: {
+        id: uuid(),
+        src: 'images/uniforms/field-players/shirt_1-66.png',
+        name: 'Rashford',
+        club: 'WOL (A)',
+        points: 9,
+        type: PlayerTypes.FORWARD,
+      },
+    },
+
+    {
+      accept: PlayerTypes.FORWARD,
+      lastDroppedItem: {
+        id: uuid(),
+        src: 'images/uniforms/field-players/shirt_57-66.png',
+        name: 'Deeney',
+        club: 'EVE (A)',
+        points: 4,
+        type: PlayerTypes.FORWARD,
+      },
+    },
+  ];
+
   //set bench drag&drop items, which accept all player types
   const [bench, setBench] = useState<BenchDroppable[]>(BENCH);
   //set bench drag&drop items, which accept only specific player types
   const [pitch, setPitch] = useState<PlayerDroppable[]>(PITCH);
-
   //set ids of players on the pitch
   const [droppedPlayerPitchIds, setdroppedPlayerPitchIds] = useState<string[]>(
     pitch.map((el) => {
@@ -259,6 +396,8 @@ const TeamSelection = ({ isGameweek, players }: TeamSelectionProps) => {
   const saveTeam = (pitch: string[], bench: string[]) => {
     console.log(`PITCH PLAYERS \n  ${pitch}`);
     console.log(`BENCH PLAYERS \n  ${bench}`);
+    console.log(`CAPTAINID ${captainId}`);
+    console.log(`VICECAPTAINID ${viceCaptainId}`);
   };
   //handles drop from bench to the pitch
   const handlePitchDrop = useCallback(
@@ -382,6 +521,9 @@ const TeamSelection = ({ isGameweek, players }: TeamSelectionProps) => {
                     lastDroppedItem={lastDroppedItem}
                     onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
                     isGameweek={isGameweek}
+                    onOpen={onOpen}
+                    captainId={captainId}
+                    viceCaptainId={viceCaptainId}
                   />
                 );
               } else {
@@ -402,6 +544,9 @@ const TeamSelection = ({ isGameweek, players }: TeamSelectionProps) => {
                     lastDroppedItem={lastDroppedItem}
                     onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
                     isGameweek={isGameweek}
+                    onOpen={onOpen}
+                    captainId={captainId}
+                    viceCaptainId={viceCaptainId}
                   />
                 );
               } else {
@@ -422,26 +567,9 @@ const TeamSelection = ({ isGameweek, players }: TeamSelectionProps) => {
                     lastDroppedItem={lastDroppedItem}
                     onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
                     isGameweek={isGameweek}
-                  />
-                );
-              } else {
-                return null;
-              }
-            })}
-          </div>
-
-          {/* Forwards */}
-          <div className='flex justify-around top-60 absolute team'>
-            {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-              if (accept === PlayerTypes.FORWARD) {
-                return (
-                  <PlayerSelectionDroppable
-                    index={index}
-                    key={index}
-                    accept={accept}
-                    lastDroppedItem={lastDroppedItem}
-                    onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                    isGameweek={isGameweek}
+                    onOpen={onOpen}
+                    captainId={captainId}
+                    viceCaptainId={viceCaptainId}
                   />
                 );
               } else {
@@ -461,6 +589,9 @@ const TeamSelection = ({ isGameweek, players }: TeamSelectionProps) => {
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
                   isGameweek={isGameweek}
+                  onOpen={onOpen}
+                  captainId={captainId}
+                  viceCaptainId={viceCaptainId}
                 />
               );
             })}

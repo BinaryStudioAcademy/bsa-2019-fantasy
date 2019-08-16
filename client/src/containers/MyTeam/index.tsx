@@ -1,14 +1,58 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { RootState } from 'store/types';
 import TeamSelection from 'components/Gameweek/TeamSelection';
 import './styles.scss';
+import StatusPlayerModal from 'components/StatusPlayerModal';
 
 const MyTeam = () => {
   const gameweekPlayers = useSelector(
     (state: RootState) => state.gameweeks.gameweeks_history,
   );
+  const [showModal, setShowModal] = useState(false);
+
+  const [isCaptain, setIsCaptain] = useState(false);
+  const [isViceCaptain, setIsViceCaptain] = useState(false);
+
+  const [currentId, setCurrentId] = useState('');
+  const [currentName, setCurrentName] = useState('');
+
+  const [captainId, setCaptainId] = useState('');
+  const [viceCaptainId, setViceCaptainId] = useState('');
+
+  const onClose = () => {
+    setShowModal(false);
+  };
+
+  const onSetCaptain = () => {
+    if (currentId === viceCaptainId) {
+      setViceCaptainId(captainId);
+    }
+    setCaptainId(currentId);
+    setShowModal(false);
+  };
+
+  const onSetViceCaptain = () => {
+    if (currentId === captainId) {
+      setCaptainId(viceCaptainId);
+    }
+    setViceCaptainId(currentId);
+    setShowModal(false);
+  };
+
+  const onOpen = (
+    id: string,
+    isCaptain: boolean,
+    isViceCaptain: boolean,
+    name: string,
+  ) => {
+    setShowModal(true);
+    setCurrentId(id);
+    setCurrentName(name);
+    setIsCaptain(isCaptain);
+    setIsViceCaptain(isViceCaptain);
+  };
 
   useEffect(() => {
     document.title = 'My Team | Fantasy Football League';
@@ -24,7 +68,23 @@ const MyTeam = () => {
           </h2>
         </div>
       </div>
-      <TeamSelection isGameweek={false} players={gameweekPlayers} />
+      <TeamSelection
+        isGameweek={false}
+        players={gameweekPlayers}
+        onOpen={onOpen}
+        captainId={captainId}
+        viceCaptainId={viceCaptainId}
+      />
+      {showModal && (
+        <StatusPlayerModal
+          isCaptain={isCaptain}
+          isViceCaptain={isViceCaptain}
+          onClose={onClose}
+          onSetCaptain={onSetCaptain}
+          onSetViceCaptain={onSetViceCaptain}
+          name={currentName}
+        />
+      )}
     </div>
   );
 };

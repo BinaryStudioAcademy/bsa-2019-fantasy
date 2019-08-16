@@ -41,16 +41,17 @@ class ForgotPasswordForm extends Component<
     if (!isEmailValid || isLoading) {
       return;
     }
-    this.setState({ isLoading: true });
+    this.setState({ isLoading: true, isSuccess: false, isError: false });
 
     try {
       await this.props.forgotPassword({ email });
       this.setState({
         isLoading: false,
         isSuccess: true,
+        isError: false,
       });
     } catch {
-      this.setState({ isLoading: false, isError: true });
+      this.setState({ isLoading: false, isError: true, isSuccess: false });
       console.log('Something went wrong');
     }
   };
@@ -81,7 +82,7 @@ class ForgotPasswordForm extends Component<
             {`${isLoading ? 'Wait' : 'Send'}`}
           </button>
           {isSuccess && (
-            <p className='text-primary font-bold mb-2'>Successfully changed password!</p>
+            <p className='text-primary font-bold mb-2'>Сheck your mailbox!</p>
           )}
           {isError && (
             <p className='text-red-500 font-bold mb-2'>Something went wrong!</p>
