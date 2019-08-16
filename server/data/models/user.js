@@ -27,7 +27,7 @@ export default (orm, DataTypes) => {
         defaultValue: 0,
       },
       team_name: {
-        allowNull: true, // FIXME: CHECK THIS ONE
+        allowNull: true,
         type: DataTypes.STRING,
       },
       chip_used: {
