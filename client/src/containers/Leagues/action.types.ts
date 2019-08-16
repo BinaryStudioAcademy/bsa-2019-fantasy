@@ -8,6 +8,7 @@ export const SET_USER_LEAGUES = 'LEAGUES_ACTION:SET_USER_LEAGUES';
 export const JOIN_PRIVATE_LEAGUE = 'LEAGUES_ACTION: JOIN_PRIVATE_LEAGUE';
 export const JOIN_PRIVATE_LEAGUE_SUCCESS = 'LEAGUES_ACTION: JOIN_PRIVATE_LEAGUE_SUCCESS';
 export const JOIN_PRIVATE_LEAGUE_FAILURE = 'LEAGUES_ACTION: JOIN_PRIVATE_LEAGUE_FAILURE';
+export const SET_LEAGUES_SUGGESTIONS = 'LEAGUES_ACTION: SET_LEAGUES_SUGGESTIONS';
 
 type SetLoading = {
   type: typeof SET_IS_LOADING;
@@ -16,6 +17,11 @@ type SetLoading = {
 
 type SetLeagues = {
   type: typeof SET_USER_LEAGUES;
+  payload: any;
+};
+
+type SearchLeagues = {
+  type: typeof SET_LEAGUES_SUGGESTIONS;
   payload: any;
 };
 
@@ -42,3 +48,5 @@ export type AsyncCreateLeagueAction = Thunky<CreateLeagueAction>;
 export type SetLeaguesAction = SetLeagues;
 export type AsyncSetLeaguesAction = Thunky<SetLeaguesAction>;
 export type AsyncJoinPrivateLeagueAction = Thunky<JoinPrivateLeagueAction>;
+export type SearchLeaguesAction = SearchLeagues;
+export type AsyncSearchLeaguesAction = Thunky<SearchLeaguesAction>;

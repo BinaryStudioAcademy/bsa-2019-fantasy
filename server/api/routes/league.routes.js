@@ -53,21 +53,12 @@ router
       next(err);
     }
   })
-
   .post('/search/public', (req, res, next) => {
     leagueService
       .getLeaguesByName(req.body.filter)
       .then((value) => res.json(value))
       .catch(next);
   })
-
-  .post('/search/private', (req, res, next) => {
-    leagueService
-      .getLeaguesByNameOrId(req.body.filter)
-      .then((value) => res.json(value))
-      .catch(next);
-  })
-
   .put('/:id', (req, res, next) =>
     leagueService
       .updateLeague(req.params.id, req.body)

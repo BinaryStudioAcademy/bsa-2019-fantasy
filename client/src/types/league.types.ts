@@ -5,3 +5,7 @@ export type CreateLeagueCredentials = {
 export type JoinPrivateLeagueCredentials = {
   code: string;
 };
+
+export type SearchPublicLeaguesCredentials = {
+  filter: string;
+};

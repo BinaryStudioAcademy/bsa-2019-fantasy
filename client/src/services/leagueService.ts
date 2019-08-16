@@ -2,6 +2,7 @@ import callWebApi from 'helpers/webApiHelper';
 import {
   CreateLeagueCredentials,
   JoinPrivateLeagueCredentials,
+  SearchPublicLeaguesCredentials,
 } from 'types/league.types';
 
 export const createLeague = async (request: CreateLeagueCredentials) => {
@@ -28,6 +29,16 @@ export const joinPrivateLeague = async (request: JoinPrivateLeagueCredentials) =
     endpoint: `/api/leagues/join`,
     type: 'POST',
     request: { ...request, private: true },
+  });
+
+  return response.json();
+};
+
+export const searchPublicLeagues = async (request: SearchPublicLeaguesCredentials) => {
+  const response = await callWebApi({
+    endpoint: `/api/leagues/search/public`,
+    type: 'POST',
+    request,
   });
 
   return response.json();

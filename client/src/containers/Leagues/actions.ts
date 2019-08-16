@@ -6,12 +6,15 @@ import {
   SET_USER_LEAGUES,
   JOIN_PRIVATE_LEAGUE_SUCCESS,
   JOIN_PRIVATE_LEAGUE_FAILURE,
+  SET_LEAGUES_SUGGESTIONS,
   SetLeaguesAction,
   AsyncSetLeaguesAction,
   CreateLeagueAction,
   AsyncCreateLeagueAction,
   JoinPrivateLeagueAction,
   AsyncJoinPrivateLeagueAction,
+  SearchLeaguesAction,
+  AsyncSearchLeaguesAction,
 } from './action.types';
 
 const setIsLoading = (isLoading: boolean): any => ({
@@ -41,6 +44,11 @@ const joinPrivateLeagueSuccess = (payload: any): JoinPrivateLeagueAction => ({
 
 const joinPrivateLeagueFailure = (payload: any): JoinPrivateLeagueAction => ({
   type: JOIN_PRIVATE_LEAGUE_FAILURE,
+  payload,
+});
+
+const setSuggestions = (payload: any): SearchLeaguesAction => ({
+  type: SET_LEAGUES_SUGGESTIONS,
   payload,
 });
 
@@ -75,4 +83,11 @@ export const joinPrivateLeague = (data: {
     dispatch(setIsLoading(false));
     dispatch(joinPrivateLeagueFailure(e));
   }
+};
+
+export const searchPublicLeagues = (request: {
+  filter: string;
+}): AsyncSearchLeaguesAction => async (dispatch) => {
+  const result = await leagueService.searchPublicLeagues(request);
+  dispatch(setSuggestions(result));
 };

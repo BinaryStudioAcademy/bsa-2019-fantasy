@@ -1,10 +1,43 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
 
-const PublicLeagues = () => {
-  const [code, setCode] = useState('');
+import Autosuggest from 'react-autosuggest';
+
+import { searchPublicLeagues } from '../actions';
+import { RootState } from 'store/types';
+
+type Props = {
+  searchPublicLeagues: typeof searchPublicLeagues;
+  suggestions: any;
+};
+
+const renderSuggestion = (suggestion) => <div>{suggestion.name}</div>;
+const getSuggestionValue = (suggestion) => suggestion.name;
+
+const PublicLeagues = ({ searchPublicLeagues, suggestions }: Props) => {
+  const [value, setValue] = useState('');
+
+  const handleInputChange = (event, { newValue }) => {
+    setValue(newValue);
+  };
+
+  const onSuggestionsFetchRequested = ({ value }) => {
+    const inputValue = value.trim().toLowerCase();
+    searchPublicLeagues({ filter: inputValue });
+  };
+
+  const onSuggestionsClearRequested = () => {
+    suggestions = [];
+  };
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
+  };
+
+  const inputProps = {
+    value,
+    onChange: handleInputChange,
   };
 
   return (
@@ -22,27 +55,24 @@ const PublicLeagues = () => {
       <form className='w-full max-w-lg' onSubmit={handleSubmit}>
         <div className='flex flex-wrap -mx-3 mb-6'>
           <div className='w-full md:w-1/2 px-3'>
-            <label
-              className='block uppercase text-gray-700 text-xs font-bold mb-2'
-              htmlFor='league-code'
-            >
+            <p className='block uppercase text-gray-700 text-xs font-bold mb-2'>
               League Code
-            </label>
-            <input
-              className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-              id='league-code'
-              type='text'
-              name='code'
-              onChange={(ev) => setCode(ev.target.value)}
-              value={code}
+            </p>
+            <Autosuggest
+              suggestions={suggestions}
+              onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={onSuggestionsClearRequested}
+              getSuggestionValue={getSuggestionValue}
+              renderSuggestion={renderSuggestion}
+              inputProps={inputProps}
             />
           </div>
         </div>
         <button
-          className={`shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${!code &&
+          className={`shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${!value &&
             'opacity-50 cursor-not-allowed'}`}
           type='submit'
-          disabled={!code}
+          disabled={!value}
         >
           Join public league
         </button>
@@ -51,4 +81,14 @@ const PublicLeagues = () => {
   );
 };
 
-export default PublicLeagues;
+const mapStateToProps = (rootState: RootState) => ({
+  suggestions: rootState.league.suggestions,
+});
+
+const actions = { searchPublicLeagues };
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(PublicLeagues);
