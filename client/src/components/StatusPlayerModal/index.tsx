@@ -2,13 +2,23 @@ import React from 'react';
 
 import './styles.scss';
 
+type Props = {
+  isCaptain: boolean;
+  isViceCaptain: boolean,
+  onClose: () => void,
+  onSetCaptain: () => void,
+  onSetViceCaptain: () => void,
+  name: string
+}
+
 const StatusPlayerModal = ({
   isCaptain,
   isViceCaptain,
   onClose,
   onSetCaptain,
   onSetViceCaptain,
-}: any) => {
+  name
+}: Props) => {
   return (
     <div
       className='dimmer flex absolute inset-0 bg-modalDimmer'
@@ -20,8 +30,8 @@ const StatusPlayerModal = ({
         role='presentation'
       >
         <div className='modal-header bg-green-700 p-4 font-bold text-xl flex justify-between'>
-          <h3>Hello</h3>
-          <button onClick={() => onClose(false)}>
+          <h3>{name}</h3>
+          <button onClick={() => onClose()}>
             <span className='close'></span>
           </button>
         </div>
@@ -29,7 +39,7 @@ const StatusPlayerModal = ({
           {!isCaptain && (
             <button
               className='bg-green-700 p-2 mb-4 rounded'
-              onClick={() => onSetCaptain('11')}
+              onClick={() => onSetCaptain()}
             >
               Make Captain
             </button>
@@ -37,7 +47,7 @@ const StatusPlayerModal = ({
           {!isViceCaptain && (
             <button
               className='bg-green-700 p-2 rounded'
-              onClick={() => onSetViceCaptain('11')}
+              onClick={() => onSetViceCaptain()}
             >
               Make Vice-Captain
             </button>

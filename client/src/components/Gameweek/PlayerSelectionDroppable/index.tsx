@@ -15,7 +15,7 @@ export interface PlayerDroppableProps {
   onDrop: (item: any) => void;
   lastDroppedItem: any;
   isGameweek: boolean;
-  onOpen?: any;
+  onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
   viceCaptainId?: string;
 }
@@ -30,7 +30,7 @@ export interface BenchDroppableProps {
   onDrop: (item: any) => void;
   lastDroppedItem: any;
   isGameweek: boolean;
-  onOpen?: any;
+  onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
   viceCaptainId?: string;
 }

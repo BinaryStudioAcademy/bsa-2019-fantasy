@@ -22,7 +22,7 @@ export interface PlayerDraggableProps {
   type: string;
   points: number;
   isGameweek: boolean;
-  onOpen?: any;
+  onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
   viceCaptainId?: string;
 }
@@ -63,7 +63,11 @@ const PlayerSelection = ({
     <div
       ref={ref}
       className='text-center relative'
-      onClick={() => onOpen(id, isCaptain, isViceCaptain, name)}
+      onClick={() => {
+        if (onOpen) {
+          onOpen(id, isCaptain, isViceCaptain, name);
+        }
+      }}
     >
       <div>
         <div className='absolute'>

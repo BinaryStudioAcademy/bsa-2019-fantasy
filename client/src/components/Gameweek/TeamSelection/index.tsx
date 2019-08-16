@@ -15,7 +15,7 @@ import './styles.scss';
 
 export interface TeamSelectionProps {
   isGameweek: boolean;
-  onOpen?: any;
+  onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
   viceCaptainId?: string;
 }
@@ -216,7 +216,12 @@ const PITCH = [
   },
 ];
 
-const TeamSelection = ({ isGameweek, onOpen, viceCaptainId, captainId }: TeamSelectionProps) => {
+const TeamSelection = ({
+  isGameweek,
+  onOpen,
+  viceCaptainId,
+  captainId,
+}: TeamSelectionProps) => {
   //set bench drag&drop items, which accept all player types
   const [bench, setBench] = useState<BenchDroppable[]>(BENCH);
   //set bench drag&drop items, which accept only specific player types
@@ -240,6 +245,8 @@ const TeamSelection = ({ isGameweek, onOpen, viceCaptainId, captainId }: TeamSel
   const saveTeam = (pitch: string[], bench: string[]) => {
     console.log(`PITCH PLAYERS \n  ${pitch}`);
     console.log(`BENCH PLAYERS \n  ${bench}`);
+    console.log(`CAPTAINID ${captainId}`);
+    console.log(`VICECAPTAINID ${viceCaptainId}`);
   };
   //handles drop from bench to the pitch
   const handlePitchDrop = useCallback(
@@ -441,7 +448,6 @@ const TeamSelection = ({ isGameweek, onOpen, viceCaptainId, captainId }: TeamSel
                 lastDroppedItem={lastDroppedItem}
                 onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
                 isGameweek={isGameweek}
-                onOpen={onOpen}
               />
             );
           })}

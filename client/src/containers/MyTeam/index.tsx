@@ -6,39 +6,45 @@ import StatusPlayerModal from 'components/StatusPlayerModal';
 
 const MyTeam = () => {
   const [showModal, setShowModal] = useState(false);
+
   const [isCaptain, setIsCaptain] = useState(false);
   const [isViceCaptain, setIsViceCaptain] = useState(false);
+
   const [currentId, setCurrentId] = useState('');
+  const [currentName, setCurrentName] = useState('');
+
   const [captainId, setCaptainId] = useState('');
   const [viceCaptainId, setViceCaptainId] = useState('');
 
-  const onToggle = (show: boolean) => {
-    setShowModal(show);
+  const onClose = () => {
+    setShowModal(false);
   };
 
   const onSetCaptain = () => {
     if (currentId === viceCaptainId) {
       setViceCaptainId(captainId);
-      setCaptainId(currentId);
-    } else {
-      setCaptainId(currentId);
     }
+    setCaptainId(currentId);
     setShowModal(false);
   };
 
   const onSetViceCaptain = () => {
     if (currentId === captainId) {
       setCaptainId(viceCaptainId);
-      setViceCaptainId(currentId);
-    } else {
-      setViceCaptainId(currentId);
     }
+    setViceCaptainId(currentId);
     setShowModal(false);
   };
 
-  const onOpen = (id: string, isCaptain: boolean, isViceCaptain: boolean) => {
+  const onOpen = (
+    id: string,
+    isCaptain: boolean,
+    isViceCaptain: boolean,
+    name: string,
+  ) => {
     setShowModal(true);
     setCurrentId(id);
+    setCurrentName(name);
     setIsCaptain(isCaptain);
     setIsViceCaptain(isViceCaptain);
   };
@@ -63,9 +69,10 @@ const MyTeam = () => {
         <StatusPlayerModal
           isCaptain={isCaptain}
           isViceCaptain={isViceCaptain}
-          onClose={onToggle}
+          onClose={onClose}
           onSetCaptain={onSetCaptain}
           onSetViceCaptain={onSetViceCaptain}
+          name={currentName}
         />
       )}
     </div>
