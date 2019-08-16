@@ -30,6 +30,11 @@ export default (orm, DataTypes) => {
         allowNull: true, // FIXME: CHECK THIS ONE
         type: DataTypes.STRING,
       },
+      is_team_created: {
+        allowNull: false,
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
       chip_used: {
         allowNull: false,
         type: DataTypes.ENUM('wildcard', 'triple_caption', 'bench_boost'),

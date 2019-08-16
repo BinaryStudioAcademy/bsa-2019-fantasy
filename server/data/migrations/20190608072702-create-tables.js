@@ -41,6 +41,11 @@ export default {
                 allowNull: true,
                 type: Sequelize.STRING,
               },
+              is_team_created: {
+                allowNull: false,
+                type: Sequelize.BOOLEAN,
+                defaultValue: false,
+              },
               chip_used: {
                 allowNull: false,
                 type: Sequelize.ENUM('wildcard', 'triple_caption', 'bench_boost'),
