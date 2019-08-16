@@ -1,14 +1,17 @@
 import cn from 'classnames';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from 'store/types';
+import { updateFavoriteClub } from 'containers/Profile/actions';
 
 import Spinner from 'components/Spinner';
+import { getClubLogoUrl } from 'helpers/images';
 
 import styles from './styles.module.scss';
 
 const FavouriteClubSelection = () => {
+  const dispatch = useDispatch();
   const favoriteClub = useSelector(
     ({ profile }: RootState) => profile.user && profile.user.favorite_club_id,
   );
@@ -18,8 +21,12 @@ const FavouriteClubSelection = () => {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (selectedClubId !== null && clubs.find((c) => c.id === selectedClubId)) {
-      console.log('Submitting fav club:', clubs.find((c) => c.id === selectedClubId));
+    if (
+      selectedClubId !== null &&
+      selectedClubId !== favoriteClub &&
+      clubs.find((c) => c.id === selectedClubId)
+    ) {
+      dispatch(updateFavoriteClub(selectedClubId));
     }
   };
 
@@ -44,15 +51,13 @@ const FavouriteClubSelection = () => {
                 value={item.id}
                 onChange={(e) => setClub(+e.target.value)}
               />
-              <div className={cn(styles.clubLabel, 'h-full w-full rounded shadow')}>
+              <div className={cn(styles.clubLabel, 'h-full w-full rounded shadow p-2')}>
                 <img
-                  className='rounded'
-                  src='https://via.placeholder.com/50'
+                  className='rounded w-10'
+                  src={getClubLogoUrl(item.code, 200)}
                   alt={`Club ${item.name}`}
                 />
-                <span className='text-secondary text-sm leading-none font-bold'>
-                  {item.name}
-                </span>
+                <span className='text-sm leading-none font-bold'>{item.name}</span>
               </div>
             </label>
           );

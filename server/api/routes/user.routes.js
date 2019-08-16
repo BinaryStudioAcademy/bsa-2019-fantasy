@@ -1,11 +1,42 @@
 import { Router } from 'express';
 import * as userService from '../services/user.service';
 import * as leagueService from '../services/league.service';
+import globalLeagues from '../../config/global-leagues.config';
+
+import jwtMiddleware from '../middlewares/jwt.middleware';
 
 const router = Router();
 
 router
-  .get('/:id', (req, res, next) =>
+  .get('/leagues', jwtMiddleware, (req, res, next) => {
+    leagueService
+      .getLeaguesByUserId(req.user.id)
+      .then((value) => {
+        const result = {
+          public: [],
+          private: [],
+          global: [],
+        };
+
+        value.forEach((item) => {
+          const { league } = item;
+
+          if (league.private) {
+            result.private.push(item);
+          } else if (globalLeagues.includes(league.name)) {
+            result.global.push(item);
+          } else {
+            result.public.push(item);
+          }
+
+          return result;
+        });
+
+        res.json(result);
+      })
+      .catch(next);
+  })
+  .get('/:id', jwtMiddleware, (req, res, next) =>
     userService
       .getUserById(req.params.id)
       .then((value) => res.json(value))

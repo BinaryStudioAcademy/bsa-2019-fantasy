@@ -1,5 +1,6 @@
 import authRoutes from './auth.routes';
 import userRoutes from './user.routes';
+import profileRoutes from './profile.routes';
 import playerRoutes from './player.routes';
 import seasonRoutes from './season.routes';
 import gameweekRoutes from './gameweek.routes';
@@ -15,6 +16,7 @@ import forgotPasswordRoutes from './forgot.password.routes';
 // register all routes
 export default (app) => {
   app.use('/api/auth', authRoutes);
+  app.use('/api/profile', profileRoutes);
   app.use('/api/users', userRoutes);
   app.use('/api/players', playerRoutes);
   app.use('/api/seasons', seasonRoutes);

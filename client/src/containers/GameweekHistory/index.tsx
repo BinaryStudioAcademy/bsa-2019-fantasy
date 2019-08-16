@@ -28,10 +28,15 @@ const mockChartData = {
 };
 
 const GameweekHistory = withRouter(({ history }) => {
-  const dispatch = useDispatch();
+  useEffect(() => {
+    document.title = 'Home | Fantasy Football League';
+  }, []);
 
+  const dispatch = useDispatch();
   const { user } = usePersonalDetails();
+
   if (!user) return <Spinner />;
+
   useEffect(() => {
     dispatch(
       fetchGameweekHistory(
@@ -70,7 +75,7 @@ const GameweekHistory = withRouter(({ history }) => {
       </div>
       <div className='gameweek-history-content'>
         <div className='paper rounded mr-2'>
-          <TeamSelection isGameweek players={gameweekPlayers} />
+          <TeamSelection isGameweek={true} players={gameweekPlayers} />
         </div>
         <div className='paper px-8 pt-12 rounded gameweek-stats ml-2'>
           <h3 className='title text-secondary mb-1'>Current Points</h3>

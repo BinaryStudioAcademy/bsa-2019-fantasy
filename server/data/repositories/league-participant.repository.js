@@ -5,6 +5,14 @@ class LeagueParticipantRepository extends BaseRepository {
   addParticipant(data) {
     return this.create(data);
   }
+
+  getLeaguesByUserId(participant_id) {
+    return this.model.findAll({
+      where: { participant_id },
+      include: ['league'],
+      attributes: ['is_creator'],
+    });
+  }
 }
 
 export default new LeagueParticipantRepository(LeagueParticipantModel);

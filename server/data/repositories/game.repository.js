@@ -14,6 +14,12 @@ class GameRepository extends BaseRepository {
       include: ['hometeam', 'awayteam'],
     });
   }
+
+  getAllWithClubs() {
+    return this.model.findAll({
+      include: ['hometeam', 'awayteam'],
+    });
+  }
 }
 
 export default new GameRepository(GameModel);

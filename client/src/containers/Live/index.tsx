@@ -24,6 +24,7 @@ class Live extends React.Component<Props> {
   };
 
   componentDidMount() {
+    document.title = 'Live | Fantasy Football League';
     //this.props.testAction();
   }
 

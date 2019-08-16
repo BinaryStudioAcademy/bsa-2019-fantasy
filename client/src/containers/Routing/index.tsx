@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { feedback } from 'react-feedbacker';
 
 import { RootState } from 'store/types';
 
@@ -16,8 +17,8 @@ import Transfers from 'containers/Transfers';
 import Live from 'containers/Live';
 
 import Leagues from 'containers/Leagues';
-import CreateLeague from 'components/Leagues/CreateLeague';
-import JoinLeague from 'components/Leagues/JoinLeague';
+import CreateLeague from 'containers/Leagues/CreateLeague';
+import JoinLeague from 'containers/Leagues/JoinLeague';
 
 import GameweekHistory from 'containers/GameweekHistory';
 
@@ -30,6 +31,8 @@ import Sidebar from 'components/Sidebar';
 import Spinner from 'components/Spinner';
 
 import Profile from 'containers/Profile';
+import FavouriteClubSelection from 'containers/Profile/components/FavouriteClubSelection';
+
 import SetPassword from 'containers/Profile/components/SetPassword';
 import { loadCurrentUser } from 'containers/Profile/actions';
 
@@ -43,7 +46,7 @@ import { preloadClubLogos } from 'helpers/images';
 
 const Routing = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector((state: RootState) => state.profile.isLoading);
+  const { isLoading, user } = useSelector((state: RootState) => state.profile);
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
 
   useEffect(() => {
@@ -73,6 +76,17 @@ const Routing = () => {
         <GuestRoute exact path='/registration' component={RegistrationPage} />
         <GuestRoute exact path='/forgot' component={ForgotPassword} />
 
+        {user && user.favorite_club_id === null && (
+          <PrivateRoute>
+            {feedback.warning('Select your favorite club to proceed!')}
+            <div className='w-full p-24 bg-secondary text-primary'>
+              <div className='w-full'>
+                <FavouriteClubSelection />
+              </div>
+            </div>
+          </PrivateRoute>
+        )}
+
         <Route exact path='/404' component={NotFound} />
 
         <PrivateRoute path='/'>
@@ -85,7 +99,7 @@ const Routing = () => {
               <Switch>
                 <Route path='/' exact component={GameweekHistory} />
 
-                <Route exact path='/profile' component={Profile} />
+                <Route path='/profile' component={Profile} />
                 <Route path='/profile/set/password' component={SetPassword} />
 
                 <Route path='/reset/:id' component={ResetPassword} />
@@ -94,7 +108,7 @@ const Routing = () => {
                 <Route path='/live' component={Live} />
 
                 <Route path='/players' exact component={Players} />
-                <Route path='/players/comparison' exact component={PlayersComparison} />
+                <Route path='/players-comparison' exact component={PlayersComparison} />
 
                 <Route path='/transfers' exact component={Transfers} />
 
