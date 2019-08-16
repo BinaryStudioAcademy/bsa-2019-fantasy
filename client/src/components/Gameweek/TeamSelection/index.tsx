@@ -16,6 +16,8 @@ import './styles.scss';
 export interface TeamSelectionProps {
   isGameweek: boolean;
   onOpen?: any;
+  captainId?: string;
+  viceCaptainId?: string;
 }
 
 const BENCH = [
@@ -146,7 +148,7 @@ const PITCH = [
   {
     accept: PlayerTypes.MIDDLEFIELDER,
     lastDroppedItem: {
-      id: uuid(),
+      id: '974ace56-8a5b-4232-a41b-68b07be2d005',
       src: 'images/uniforms/field-players/shirt_57-66.png',
       name: 'Doucoure',
       club: 'EVE (A)',
@@ -181,7 +183,7 @@ const PITCH = [
   {
     accept: PlayerTypes.MIDDLEFIELDER,
     lastDroppedItem: {
-      id: uuid(),
+      id: '974ace56-8a5b-4232-a41b-68b07be2d006',
       src: 'images/uniforms/field-players/shirt_39-66.png',
       name: 'Moutinho',
       club: 'MUN (H)',
@@ -214,7 +216,7 @@ const PITCH = [
   },
 ];
 
-const TeamSelection = ({ isGameweek, onOpen }: TeamSelectionProps) => {
+const TeamSelection = ({ isGameweek, onOpen, viceCaptainId, captainId }: TeamSelectionProps) => {
   //set bench drag&drop items, which accept all player types
   const [bench, setBench] = useState<BenchDroppable[]>(BENCH);
   //set bench drag&drop items, which accept only specific player types
@@ -349,6 +351,8 @@ const TeamSelection = ({ isGameweek, onOpen }: TeamSelectionProps) => {
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
                   isGameweek={isGameweek}
                   onOpen={onOpen}
+                  captainId={captainId}
+                  viceCaptainId={viceCaptainId}
                 />
               );
             } else {
@@ -370,6 +374,8 @@ const TeamSelection = ({ isGameweek, onOpen }: TeamSelectionProps) => {
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
                   isGameweek={isGameweek}
                   onOpen={onOpen}
+                  captainId={captainId}
+                  viceCaptainId={viceCaptainId}
                 />
               );
             } else {
@@ -391,6 +397,8 @@ const TeamSelection = ({ isGameweek, onOpen }: TeamSelectionProps) => {
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
                   isGameweek={isGameweek}
                   onOpen={onOpen}
+                  captainId={captainId}
+                  viceCaptainId={viceCaptainId}
                 />
               );
             } else {
@@ -412,6 +420,8 @@ const TeamSelection = ({ isGameweek, onOpen }: TeamSelectionProps) => {
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
                   isGameweek={isGameweek}
                   onOpen={onOpen}
+                  captainId={captainId}
+                  viceCaptainId={viceCaptainId}
                 />
               );
             } else {

@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { useDrag } from 'react-dnd';
 
 import './styles.scss';
+import { is } from 'uuidv4';
 
 export interface PlayerInfo {
   id: string;
@@ -22,6 +23,8 @@ export interface PlayerDraggableProps {
   points: number;
   isGameweek: boolean;
   onOpen?: any;
+  captainId?: string;
+  viceCaptainId?: string;
 }
 
 const PlayerSelection = ({
@@ -33,7 +36,9 @@ const PlayerSelection = ({
   type,
   points,
   isGameweek,
-  onOpen
+  onOpen,
+  captainId,
+  viceCaptainId,
 }: PlayerDraggableProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [{ opacity }, drag] = useDrag({
@@ -52,8 +57,10 @@ const PlayerSelection = ({
   if (!isGameweek) {
     drag(ref);
   }
+  const isCaptain = captainId === id;
+  const isViceCaptain = viceCaptainId === id;
   return (
-    <div ref={ref} className='text-center relative' onClick={() => onOpen(true)}>
+    <div ref={ref} className='text-center relative' onClick={() => onOpen(id, isCaptain, isViceCaptain)}>
       <div>
         <div className='absolute'>
           {isGameweek ? null : (
@@ -85,6 +92,8 @@ const PlayerSelection = ({
         <div>
           <div className='player-name'> {name}</div>
           <div className='player-club'>{isGameweek ? points : club}</div>
+          {isCaptain && <div className='player-name'>Captain</div>}
+          {isViceCaptain && <div className='player-name'>Vice-Captain</div>}
         </div>
       </div>
     </div>

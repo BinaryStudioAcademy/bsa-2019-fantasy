@@ -3,6 +3,7 @@ import { useDrop } from 'react-dnd';
 
 import Player from '../PlayerSelection';
 import './styles.scss';
+import { Stream } from 'stream';
 
 export interface PlayerDroppable {
   accept: string;
@@ -15,6 +16,8 @@ export interface PlayerDroppableProps {
   lastDroppedItem: any;
   isGameweek: boolean;
   onOpen?: any;
+  captainId?: string;
+  viceCaptainId?: string;
 }
 
 export interface BenchDroppable {
@@ -28,6 +31,8 @@ export interface BenchDroppableProps {
   lastDroppedItem: any;
   isGameweek: boolean;
   onOpen?: any;
+  captainId?: string;
+  viceCaptainId?: string;
 }
 const PlayerSelectionDroppable = ({
   accept,
@@ -35,7 +40,9 @@ const PlayerSelectionDroppable = ({
   onDrop,
   lastDroppedItem,
   isGameweek,
-  onOpen
+  onOpen,
+  captainId,
+  viceCaptainId,
 }: PlayerDroppableProps | BenchDroppableProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [{ isOver, canDrop }, drop] = useDrop({
@@ -74,6 +81,8 @@ const PlayerSelectionDroppable = ({
             points={lastDroppedItem.points}
             isGameweek={isGameweek}
             onOpen={onOpen}
+            captainId={captainId}
+            viceCaptainId={viceCaptainId}
           />
         )}
       </div>
