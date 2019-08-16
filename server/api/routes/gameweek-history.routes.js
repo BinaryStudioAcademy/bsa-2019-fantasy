@@ -17,12 +17,25 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
-  .get('/user-team/:user/:id', (req, res, next) => {
+  .get('/user-team/:user/:gameweek', (req, res, next) => {
     gameweekHistoryService
-      .getCurrentHistoryById(req.params.user, req.params.id)
+      .getCurrentHistoryById(req.params.user, req.params.gameweek)
       .then((value) => {
         teamMemberHistoryService
           .getPlayersByGameweekId(value.id)
+          .then((players) => {
+            return res.json(players);
+          })
+          .catch(next);
+      })
+      .catch(next);
+  })
+  .post('/user-team/:user/:gameweek', (req, res, next) => {
+    gameweekHistoryService
+      .getCurrentHistoryById(req.params.user, req.params.gameweek)
+      .then((gameweekHistoryId) => {
+        teamMemberHistoryService
+          .postTeamMemberHistory(req.body, gameweekHistoryId)
           .then((players) => {
             return res.json(players);
           })

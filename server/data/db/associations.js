@@ -32,7 +32,10 @@ export default (models) => {
     foreignKey: 'player_id',
     as: 'player_stats',
   });
-
+  TeamMemberHistory.belongsTo(GameweekHistory, {
+    foreignKey: 'gameweek_history_id',
+    as: 'gameweek_history',
+  });
   Game.belongsTo(FootballClub, { foreignKey: 'hometeam_id', as: 'hometeam' });
   Game.belongsTo(FootballClub, { foreignKey: 'awayteam_id', as: 'awayteam' });
   Event.belongsTo(PlayerMatchStat, { foreignKey: 'player_match_stat_id', as: 'player' });

@@ -9,6 +9,13 @@ class TeamMemberHistoryRepository extends BaseRepository {
       attributes: ['is_on_bench', 'is_captain'],
     });
   }
+
+  createTeamMemberHistory(teamMemberHistory, gameweekHistoryId) {
+    return this.model.create({
+      ...teamMemberHistory,
+      gameweek_history_id: gameweekHistoryId.id,
+    });
+  }
 }
 
 export default new TeamMemberHistoryRepository(TeamMemberHistoryModel);
