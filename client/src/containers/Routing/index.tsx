@@ -69,6 +69,7 @@ const Routing = () => {
         <GuestRoute exact path='/login' component={LoginPage} />
         <GuestRoute exact path='/registration' component={RegistrationPage} />
         <GuestRoute exact path='/forgot' component={ForgotPassword} />
+        <GuestRoute path='/reset/:id' component={ResetPassword} />
 
         {user && user.favorite_club_id === null && (
           <PrivateRoute>
@@ -95,8 +96,6 @@ const Routing = () => {
 
                 <Route path='/profile' component={Profile} />
                 <Route path='/profile/set/password' component={SetPassword} />
-
-                <Route path='/reset/:id' component={ResetPassword} />
 
                 <Route path='/my-team' component={MyTeam} />
                 <Route path='/live' component={Live} />
