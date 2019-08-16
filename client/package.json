@@ -59,7 +59,7 @@
     "validator": "^10.11.0"
   },
   "devDependencies": {
-    "@types/chart.js": "^2.7.56",
+    "@types/chart.js": "^2.8.1",
     "@types/classnames": "^2.2.9",
     "@types/lodash": "^4.14.136",
     "@types/react": "^16.8.24",

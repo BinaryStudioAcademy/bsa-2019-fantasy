@@ -1,7 +1,7 @@
 import React, { SyntheticEvent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import ReactTable from 'react-table';
 
 import { RootState } from 'store/types';
@@ -17,6 +17,8 @@ import SearchBar from 'components/SearchBar';
 import PlayerDialog from 'components/PlayerDialog';
 import { getClubLogoUrl } from 'helpers/images';
 import { Club } from 'types/club.type';
+
+import { FaPlus, FaTimes } from 'react-icons/fa';
 
 import './styles.scss';
 
@@ -36,12 +38,16 @@ type State = {
   playerHighlightData: any;
   currentPlayer?: Player;
   searchBarText: string;
+  comparisonArray: any;
+  redirect: boolean;
 };
 
 class PlayersPage extends React.Component<Props, State> {
   state: State = {
     playerHighlightData: {},
     searchBarText: '',
+    comparisonArray: [],
+    redirect: false
   };
   table: any;
 
@@ -68,8 +74,46 @@ class PlayersPage extends React.Component<Props, State> {
     }
   };
 
+  onComparisonAdd = (props) => {
+    console.log(props);
+    if (props.original) {
+      const player = this.props.players.find(
+        (player) => player && props.original.id === player.id,
+      );
+
+      if (this.state.comparisonArray.length) {
+        const playerIndex = this.state.comparisonArray.findIndex(
+          (player) => player && props.original.id === player.id,
+        );
+        if (this.state.comparisonArray.length == 2 && playerIndex === -1) {
+          return;
+        }
+        console.log(playerIndex);
+        if (playerIndex !== -1) {
+          const GovnoArray = [...this.state.comparisonArray];
+          GovnoArray.splice(playerIndex, 1);
+          // mne kajetsa nado tyt
+          this.setState({
+            ...this.state,
+            comparisonArray: [...GovnoArray],
+          });
+          return;
+        }
+      }
+
+      this.setState({
+        ...this.state,
+        comparisonArray: [...this.state.comparisonArray, player],
+      });
+    }
+  };
+
   componentDidMount = () => {
     document.title = 'Players | Fantasy Football League';
+  };
+
+  onRedirect = () => {
+    this.setState( { ...this.state, redirect: true } );
   }
 
   onModalDismiss = () => {
@@ -170,21 +214,32 @@ class PlayersPage extends React.Component<Props, State> {
     {
       Header: () => this.renderHeader('Info'),
       className: 'flex items-center bg-white rounded-r',
-      Cell: (props: any) => (
-        <button
-          className='w-4 h-4 justify-center leading-none flex ml-auto bg-background rounded-full text-xs font-semibold'
-          onClick={() => {
-            this.setState({
-              currentPlayer: this.props.players.find(
-                (p: any) => p && props.original.id === p.id,
-              ),
-            });
-            this.props.fetchDataForPlayer(props.original.id, props.original.club_id);
-          }}
-        >
-          i
-        </button>
-      ),
+      Cell: (props: any) => {
+        const addedToComparison = this.state.comparisonArray.find(
+          (player) => player.id === props.original.id,
+        );
+        console.log(this.state.comparisonArray);
+        return (
+          <>
+            <button className='' onClick={() => this.onComparisonAdd(props)}>
+              {addedToComparison ? <FaTimes /> : <FaPlus />}
+            </button>
+            <button
+              className='w-4 h-4 justify-center leading-none flex ml-auto bg-background rounded-full text-xs font-semibold'
+              onClick={() => {
+                this.setState({
+                  currentPlayer: this.props.players.find(
+                    (p: any) => p && props.original.id === p.id,
+                  ),
+                });
+                this.props.fetchDataForPlayer(props.original.id, props.original.club_id);
+              }}
+            >
+              i
+            </button>
+          </>
+        );
+      },
     },
   ];
 
@@ -242,10 +297,32 @@ class PlayersPage extends React.Component<Props, State> {
     if (this.props.loading) return 'spinner';
     return (
       <>
+        {this.state.redirect 
+          && <Redirect 
+            to={{
+              pathname: '/players-comparison',
+              state: { id: 'kek' }
+            }}
+          /> 
+        }
         <PlayerHighlight player={this.state.playerHighlightData} />
 
         <section className='allStats my-6'>
           <div className='filters text-sm flex mt-6 mb-1'>
+            <div className='font-semibold'>
+              {this.state.comparisonArray.length === 2 ? (
+                <button
+                  className='bg-yellow-400 text-white font-bold py-2 px-4 rounded'
+                  onClick={this.onRedirect}
+                >
+                  Compare!
+                </button>
+              ) : (
+                <button className='bg-primary text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed'>
+                  Comparison queue: {this.state.comparisonArray.length} (need 2)
+                </button>
+              )}
+            </div>
             <div className='ml-auto'>
               <SearchBar
                 onChange={this.onSearchChange}
