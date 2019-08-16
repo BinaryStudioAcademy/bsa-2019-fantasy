@@ -17,7 +17,7 @@ export const joinLeagueMiddleware = function(req, res, next) {
   leagueService
     .getLeagueById(req.body.code)
     .then((league) => {
-      if (league) {
+      if (league && league.private === req.body.private) {
         return next();
       } else {
         res.status(400).json({ message: 'Invalid League Code provided' });

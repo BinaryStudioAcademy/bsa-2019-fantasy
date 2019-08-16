@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as leagueService from '../services/league.service';
+import * as leagueParticipantService from '../services/league-participant.service';
 import {
   createLeagueMiddleware,
   joinLeagueMiddleware,
@@ -36,11 +37,21 @@ router
       )
       .catch(next),
   )
-  .post('/join', joinLeagueMiddleware, jwtMiddleware, (req, res, next) => {
-    leagueService
-      .joinLeague(req.user.id, req.body.code, false)
-      .then(() => res.json({ message: 'Successfully joined a league' }))
-      .catch(next);
+  .post('/join', joinLeagueMiddleware, jwtMiddleware, async (req, res, next) => {
+    try {
+      const result = await leagueParticipantService.checkIfAParticipant(
+        req.user.id,
+        req.body.code,
+      );
+      if (result.length) {
+        res.status(400).json({ message: 'You have already joined this league' });
+      } else {
+        await leagueService.joinLeague(req.user.id, req.body.code, false);
+        res.json({ message: 'Successfully joined a league' });
+      }
+    } catch (err) {
+      next(err);
+    }
   })
 
   .post('/search/public', (req, res, next) => {
@@ -70,9 +81,10 @@ router
       .catch(next),
   );
 /* eslint-disable */
-router.use(function(err, req, res, next) {
-  res.status(500).json({ message: 'Something went wrong! Try again.' });
-});
+// router.use(function(err, req, res, next) {
+//   console.log(req.body);
+//   res.status(500).json({ message: err });
+// });
 /* eslint-enable */
 
 export default router;

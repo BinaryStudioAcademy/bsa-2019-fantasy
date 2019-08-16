@@ -13,6 +13,12 @@ class LeagueParticipantRepository extends BaseRepository {
       attributes: ['is_creator'],
     });
   }
+
+  getByLeagueAndId(participant_id, league_id) {
+    return this.model.findAll({
+      where: { participant_id, league_id },
+    });
+  }
 }
 
 export default new LeagueParticipantRepository(LeagueParticipantModel);
