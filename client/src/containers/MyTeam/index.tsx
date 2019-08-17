@@ -63,14 +63,17 @@ const MyTeam = () => {
             <div className='sub title mb-4 flex items-center'>Team Page</div>
             My Team
           </h2>
+          
         </div>
       </div>
+      <div className='bg-white p-3'>
       <TeamSelection
         isGameweek={false}
         onOpen={onOpen}
         captainId={captainId}
         viceCaptainId={viceCaptainId}
       />
+      </div>
       {showModal && (
         <StatusPlayerModal
           isCaptain={isCaptain}

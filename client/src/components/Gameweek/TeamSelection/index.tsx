@@ -40,7 +40,7 @@ const TeamSelection = ({
     max_price: undefined,
   });
 
-  const [view, setView] = useState<'list' | 'pitch'>('pitch')
+  const [view, setView] = useState<'list' | 'pitch'>('pitch');
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -424,145 +424,151 @@ const TeamSelection = ({
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className='py-8 team-select-wrapper w-3/4'>
+      <div className='pt-8 team-select-wrapper w-3/4'>
         <div className='flex justify-center mb-8'>
           <form className='form-team'>
-            <label className={`team-selection-radio ${view === 'pitch' ? 'is-active' : ''}`} onClick={() => setView('pitch')}>
-              <input className='invisible' type='radio' value='option2'/>
+            <label
+              className={`team-selection-radio ${view === 'pitch' ? 'is-active' : ''}`}
+              onClick={() => setView('pitch')}
+            >
+              <input className='invisible' type='radio' value='option2' />
               Pitch View
             </label>
 
-            <label className={`team-selection-radio ${view === 'list' ? 'is-active' : ''}`} onClick={() => setView('list')}>
+            <label
+              className={`team-selection-radio ${view === 'list' ? 'is-active' : ''}`}
+              onClick={() => setView('list')}
+            >
               <input className='invisible' type='radio' value='option3' />
               List View
             </label>
           </form>
         </div>
-        {view === 'list' && <TeamList starters={PITCH} substitutes={BENCH}/>}
-        {view === 'pitch' &&
-        <div className='relative team-container'>
-          {/* Goalkeeper */}
+        {view === 'list' && <TeamList starters={PITCH} substitutes={BENCH} />}
+        {view === 'pitch' && (
+          <div className='relative team-container'>
+            {/* Goalkeeper */}
 
-          <div className='flex justify-around absolute team'>
-            {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-              if (accept === PlayerTypes.GOALKEEPER) {
-                return (
-                  <PlayerSelectionDroppable
-                    index={index}
-                    key={index}
-                    accept={accept}
-                    lastDroppedItem={lastDroppedItem}
-                    onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                    isGameweek={isGameweek}
-                    onOpen={onOpen}
-                    captainId={captainId}
-                    viceCaptainId={viceCaptainId}
-                  />
-                );
-              } else {
-                return null;
-              }
-            })}
-          </div>
-
-          {/* Defenders */}
-          <div className='flex justify-between top-20 absolute team'>
-            {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-              if (accept === PlayerTypes.DEFENDER) {
-                return (
-                  <PlayerSelectionDroppable
-                    index={index}
-                    key={index}
-                    accept={accept}
-                    lastDroppedItem={lastDroppedItem}
-                    onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                    isGameweek={isGameweek}
-                    onOpen={onOpen}
-                    captainId={captainId}
-                    viceCaptainId={viceCaptainId}
-                  />
-                );
-              } else {
-                return null;
-              }
-            })}
-          </div>
-
-          {/* Middlefilders */}
-          <div className='flex justify-between top-40 absolute team'>
-            {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-              if (accept === PlayerTypes.MIDDLEFIELDER) {
-                return (
-                  <PlayerSelectionDroppable
-                    index={index}
-                    key={index}
-                    accept={accept}
-                    lastDroppedItem={lastDroppedItem}
-                    onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                    isGameweek={isGameweek}
-                    onOpen={onOpen}
-                    captainId={captainId}
-                    viceCaptainId={viceCaptainId}
-                  />
-                );
-              } else {
-                return null;
-              }
-            })}
-          </div>
-
-          {/* Forwards */}
-          <div className='flex justify-around top-60 absolute team'>
-            {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-              if (accept === PlayerTypes.FORWARD) {
-                return (
-                  <PlayerSelectionDroppable
-                    index={index}
-                    key={index}
-                    accept={accept}
-                    lastDroppedItem={lastDroppedItem}
-                    onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                    isGameweek={isGameweek}
-                    onOpen={onOpen}
-                    captainId={captainId}
-                    viceCaptainId={viceCaptainId}
-                  />
-                );
-              } else {
-                return null;
-              }
-            })}
-          </div>
-
-          {/* Bench */}
-          <div className='flex justify-around top-80 left-0 w-full m-3 absolute team'>
-            {bench.map(({ accept, lastDroppedItem }: BenchDroppable, index) => {
-              return (
-                <PlayerSelectionDroppable
-                  index={index}
-                  key={index}
-                  accept={accept}
-                  lastDroppedItem={lastDroppedItem}
-                  onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                  isGameweek={isGameweek}
-                />
-              );
-            })}
-          </div>
-          <img src='images/field.svg' alt='field' className='field' />
-          <div className='w-full h-40 bg-gray-400 rounded-r-sm' />
-          {isGameweek ? null : (
-            <div className='w-full h-24 absolute flex justify-center'>
-              <Button
-                className='w-3/12 h-12 mt-3'
-                onClick={(e) => saveTeam(droppedPlayerPitchIds, droppedPlayerBenchIds)}
-              >
-                <p>Save Your Team</p>
-              </Button>
+            <div className='flex justify-around absolute team'>
+              {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+                if (accept === PlayerTypes.GOALKEEPER) {
+                  return (
+                    <PlayerSelectionDroppable
+                      index={index}
+                      key={index}
+                      accept={accept}
+                      lastDroppedItem={lastDroppedItem}
+                      onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                      isGameweek={isGameweek}
+                      onOpen={onOpen}
+                      captainId={captainId}
+                      viceCaptainId={viceCaptainId}
+                    />
+                  );
+                } else {
+                  return null;
+                }
+              })}
             </div>
-          )}
-        </div>
-        }
+
+            {/* Defenders */}
+            <div className='flex justify-between top-20 absolute team'>
+              {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+                if (accept === PlayerTypes.DEFENDER) {
+                  return (
+                    <PlayerSelectionDroppable
+                      index={index}
+                      key={index}
+                      accept={accept}
+                      lastDroppedItem={lastDroppedItem}
+                      onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                      isGameweek={isGameweek}
+                      onOpen={onOpen}
+                      captainId={captainId}
+                      viceCaptainId={viceCaptainId}
+                    />
+                  );
+                } else {
+                  return null;
+                }
+              })}
+            </div>
+
+            {/* Middlefilders */}
+            <div className='flex justify-between top-40 absolute team'>
+              {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+                if (accept === PlayerTypes.MIDDLEFIELDER) {
+                  return (
+                    <PlayerSelectionDroppable
+                      index={index}
+                      key={index}
+                      accept={accept}
+                      lastDroppedItem={lastDroppedItem}
+                      onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                      isGameweek={isGameweek}
+                      onOpen={onOpen}
+                      captainId={captainId}
+                      viceCaptainId={viceCaptainId}
+                    />
+                  );
+                } else {
+                  return null;
+                }
+              })}
+            </div>
+
+            {/* Forwards */}
+            <div className='flex justify-around top-60 absolute team'>
+              {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+                if (accept === PlayerTypes.FORWARD) {
+                  return (
+                    <PlayerSelectionDroppable
+                      index={index}
+                      key={index}
+                      accept={accept}
+                      lastDroppedItem={lastDroppedItem}
+                      onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                      isGameweek={isGameweek}
+                      onOpen={onOpen}
+                      captainId={captainId}
+                      viceCaptainId={viceCaptainId}
+                    />
+                  );
+                } else {
+                  return null;
+                }
+              })}
+            </div>
+
+            {/* Bench */}
+            <div className='flex justify-around top-80 left-0 w-full m-3 absolute team'>
+              {bench.map(({ accept, lastDroppedItem }: BenchDroppable, index) => {
+                return (
+                  <PlayerSelectionDroppable
+                    index={index}
+                    key={index}
+                    accept={accept}
+                    lastDroppedItem={lastDroppedItem}
+                    onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                    isGameweek={isGameweek}
+                  />
+                );
+              })}
+            </div>
+            <img src='images/field.svg' alt='field' className='field' />
+            <div className='w-full h-40 bg-gray-400 rounded-r-sm' />
+          </div>
+        )}
+        {!isGameweek && (
+          <div className='w-full h-24 flex justify-center'>
+            <button
+              className='w-3/12 h-12 mt-3 bg-white rounded-lg'
+              onClick={(e) => saveTeam(droppedPlayerPitchIds, droppedPlayerBenchIds)}
+            >
+              <p>Save Your Team</p>
+            </button>
+          </div>
+        )}
       </div>
     </DndProvider>
   );
