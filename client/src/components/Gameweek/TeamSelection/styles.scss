@@ -8,3 +8,28 @@
   left: 15%;
   top: 0.25%;
 }
+
+.team-select-wrapper {
+  background: #1fe3cf;
+}
+
+.team-selection-radio {
+  width: 175px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.form-team {
+  display: flex;
+  background: rgb(40, 209, 139);
+  border-radius: 5px;
+  border: 2px solid rgb(40, 209, 139);
+}
+
+.is-active {
+  background: #fff;
+  color: #000;
+}
