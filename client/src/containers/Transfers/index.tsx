@@ -1,16 +1,24 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import PlayersSelection from 'components/PlayersSelection';
 import TeamSelection from 'components/Gameweek/TeamSelection';
 import FixturesContainer from 'containers/FixturesContainer';
 
 import { RootState } from 'store/types';
+import { fetchGameweekHistory } from 'containers/Routing/fetchGameweeks/actions';
 
 const Transfers = () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.profile);
+  const gameweeks = useSelector((state: RootState) => state.gameweeks.gameweeks);
   const gameweekPlayers = useSelector(
     (state: RootState) => state.gameweeks.gameweeks_history,
   );
+
+  useEffect(() => {
+    dispatch(fetchGameweekHistory(user!.id, gameweeks[0]!.id));
+  }, [dispatch]);
 
   useEffect(() => {
     document.title = 'Transfers | Fantasy Football League';

@@ -41,26 +41,19 @@ import ResetPassword from 'containers/ChangePassword/ResetPassword';
 
 // Initial data loading
 import { fetchClubs } from './fetchClubs/actions';
-import { fetchGameweeks, fetchGameweekHistory } from './fetchGameweeks/actions';
+import { fetchGameweeks } from './fetchGameweeks/actions';
 import { preloadClubLogos } from 'helpers/images';
 
 const Routing = () => {
   const dispatch = useDispatch();
+
   const { isLoading, user } = useSelector((state: RootState) => state.profile);
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
-  const gameweeks = useSelector((state: RootState) => state.gameweeks.gameweeks);
 
   useEffect(() => {
     dispatch(loadCurrentUser());
     dispatch(fetchClubs());
     dispatch(fetchGameweeks());
-
-    dispatch(
-      fetchGameweekHistory(
-        '2cc163d0-dfa4-4961-89e3-3888bba04280',
-        '0f0dd066-4e3d-4657-930c-35f319e8b300',
-      ),
-    );
   }, [dispatch]);
 
   useEffect(() => {

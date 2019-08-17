@@ -1,12 +1,10 @@
 export default (models) => {
   const {
     User,
-    Season,
     PlayerStat,
     PlayerMatchStat,
     League,
     LeagueParticipant,
-    Gameweek,
     GameweekHistory,
     Game,
     FootballClub,
