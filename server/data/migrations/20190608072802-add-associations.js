@@ -130,6 +130,20 @@ export default {
           { transaction },
         ),
         queryInterface.addColumn(
+          'leagues',
+          'start_from',
+          {
+            type: Sequelize.UUID,
+            references: {
+              model: 'gameweeks',
+              key: 'id',
+            },
+            onUpdate: 'CASCADE',
+            onDelete: 'SET NULL',
+          },
+          { transaction },
+        ),
+        queryInterface.addColumn(
           'league_participants',
           'league_id',
           {
@@ -233,6 +247,9 @@ export default {
           transaction,
         }),
         queryInterface.removeColumn('events', 'game_id', {
+          transaction,
+        }),
+        queryInterface.removeColumn('leagues', 'start_from', {
           transaction,
         }),
         queryInterface.removeColumn('league_participants', 'league_id', {
