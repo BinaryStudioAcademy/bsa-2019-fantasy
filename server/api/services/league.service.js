@@ -41,6 +41,8 @@ export const joinLeagueById = async (participant_id, league_id, is_creator) => {
     is_creator,
     league_id,
     participant_id,
+    current_rank: 0,
+    last_rank: 0,
   });
 
   return newParticipant;
@@ -65,6 +67,8 @@ export const joinGlobalLeague = async (participant_id, league_name) => {
     is_creator: false,
     league_id: id,
     participant_id,
+    current_rank: 0,
+    last_rank: 0,
   });
 
   return newParticipant;

@@ -18,9 +18,12 @@ import './styles.scss';
 
 export interface TeamSelectionProps {
   isGameweek: boolean;
+  onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
+  captainId?: string;
+  viceCaptainId?: string;
 }
 
-const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
+const TeamSelection = ({ isGameweek, onOpen, viceCaptainId, captainId }: TeamSelectionProps) => {
   const [query, setQuery] = useState({
     limit: 15,
     order_direction: 'DESC',
@@ -162,6 +165,7 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
         type: PlayerTypes.DEFENDER,
       },
     },
+
     {
       accept: PlayerTypes.MIDDLEFIELDER,
       lastDroppedItem: {
@@ -233,11 +237,11 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
     },
   ];
 
+
   //set bench drag&drop items, which accept all player types
   const [bench, setBench] = useState<BenchDroppable[]>(BENCH);
   //set bench drag&drop items, which accept only specific player types
   const [pitch, setPitch] = useState<PlayerDroppable[]>(PITCH);
-
   //set ids of players on the pitch
   const [droppedPlayerPitchIds, setdroppedPlayerPitchIds] = useState<string[]>(
     pitch.map((el) => {
@@ -257,6 +261,8 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
   const saveTeam = (pitch: string[], bench: string[]) => {
     console.log(`PITCH PLAYERS \n  ${pitch}`);
     console.log(`BENCH PLAYERS \n  ${bench}`);
+    console.log(`CAPTAINID ${captainId}`);
+    console.log(`VICECAPTAINID ${viceCaptainId}`);
   };
   //handles drop from bench to the pitch
   const handlePitchDrop = useCallback(
@@ -379,6 +385,9 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
                   isGameweek={isGameweek}
+                  onOpen={onOpen}
+                  captainId={captainId}
+                  viceCaptainId={viceCaptainId}
                 />
               );
             } else {
@@ -399,6 +408,9 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
                   isGameweek={isGameweek}
+                  onOpen={onOpen}
+                  captainId={captainId}
+                  viceCaptainId={viceCaptainId}
                 />
               );
             } else {
@@ -419,6 +431,9 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
                   isGameweek={isGameweek}
+                  onOpen={onOpen}
+                  captainId={captainId}
+                  viceCaptainId={viceCaptainId}
                 />
               );
             } else {
@@ -439,6 +454,9 @@ const TeamSelection = ({ isGameweek }: TeamSelectionProps) => {
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
                   isGameweek={isGameweek}
+                  onOpen={onOpen}
+                  captainId={captainId}
+                  viceCaptainId={viceCaptainId}
                 />
               );
             } else {
