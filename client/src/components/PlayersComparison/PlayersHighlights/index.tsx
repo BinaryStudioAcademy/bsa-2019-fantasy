@@ -15,7 +15,7 @@ Object.assign(Chart.defaults.global, {
 });
 
 interface IProps {
-  comparisonHighlightsData: Player[];
+  comparisonData: Player[];
 }
 
 const PlayersHighlights = (props: IProps) => {
@@ -35,8 +35,8 @@ const PlayersHighlights = (props: IProps) => {
     return club && club.code;
   };
 
-  const firstPlayer = props.comparisonHighlightsData[0];
-  const secondPlayer = props.comparisonHighlightsData[1];
+  const firstPlayer = props.comparisonData[0];
+  const secondPlayer = props.comparisonData[1];
 
   const firstDataset = [
     firstPlayer.goals,

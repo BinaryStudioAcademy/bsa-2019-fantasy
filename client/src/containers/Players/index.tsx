@@ -36,7 +36,7 @@ type IProps = {
 
 type IState = {
   playerHighlightData: any;
-  comparisonHighlightsData: any;
+  comparisonData: any;
   currentPlayer?: Player;
   searchBarText: string;
   redirect: boolean;
@@ -45,7 +45,7 @@ type IState = {
 class PlayersPage extends React.Component<IProps, IState> {
   state: IState = {
     playerHighlightData: {},
-    comparisonHighlightsData: [],
+    comparisonData: [],
     searchBarText: '',
     redirect: false,
   };
@@ -74,47 +74,50 @@ class PlayersPage extends React.Component<IProps, IState> {
     }
   };
 
-  onComparisonAdd = (props: any) => {
+  onComparisonAdd = async (props: any) => {
     if (props.original) {
       const player = this.props.players.find(
         (player) => player && props.original.id === player.id,
       );
 
-      if (this.state.comparisonHighlightsData.length) {
-        const playerIndex = this.state.comparisonHighlightsData.findIndex(
+      if (this.state.comparisonData.length) {
+        const playerIndex = this.state.comparisonData.findIndex(
           (player: any) => player && props.original.id === player.id,
         );
 
-        if (this.state.comparisonHighlightsData.length == 2 && playerIndex === -1) {
+        if (this.state.comparisonData.length == 2 && playerIndex === -1) {
           return;
         }
 
         if (playerIndex !== -1) {
-          const preparedArray = [...this.state.comparisonHighlightsData];
-          preparedArray.splice(playerIndex, 1);
+          const preparedHighlightsArray = [...this.state.comparisonData];
+          preparedHighlightsArray.splice(playerIndex, 1);
 
           this.setState({
             ...this.state,
-            comparisonHighlightsData: [...preparedArray],
+            comparisonData: [...preparedHighlightsArray],
           });
 
           return;
         }
       }
 
+      await this.props.fetchDataForPlayer(props.original.id, props.original.club_id);
+      player!.gameweeks_stats = this.props.playerData.history;
+
       this.setState({
         ...this.state,
-        comparisonHighlightsData: [...this.state.comparisonHighlightsData, player],
+        comparisonData: [...this.state.comparisonData, player],
       });
     }
   };
 
-  componentDidMount = () => {
-    document.title = 'Players | Fantasy Football League';
+  onComparisonRedirect = () => {
+    this.setState({ ...this.state, redirect: true });
   };
 
-  onRedirect = () => {
-    this.setState({ ...this.state, redirect: true });
+  componentDidMount = () => {
+    document.title = 'Players | Fantasy Football League';
   };
 
   onModalDismiss = () => {
@@ -214,18 +217,18 @@ class PlayersPage extends React.Component<IProps, IState> {
     },
     {
       Header: () => this.renderHeader('Info'),
-      className: 'flex items-center bg-white rounded-r',
+      className: 'flex items-center justify-end bg-white rounded-r',
       Cell: (props: any) => {
-        const addedToComparison = this.state.comparisonHighlightsData.find(
+        const addedToComparison = this.state.comparisonData.find(
           (player: any) => player.id === props.original.id,
         );
         return (
           <>
-            <button className='' onClick={() => this.onComparisonAdd(props)}>
+            <button className='mr-4' onClick={() => this.onComparisonAdd(props)}>
               {addedToComparison ? <FaTimes /> : <FaPlus />}
             </button>
             <button
-              className='w-4 h-4 justify-center leading-none flex ml-auto bg-background rounded-full text-xs font-semibold'
+              className='w-4 h-4 justify-center mr-4 leading-none flex bg-background rounded-full text-xs font-semibold'
               onClick={() => {
                 this.setState({
                   currentPlayer: this.props.players.find(
@@ -301,7 +304,9 @@ class PlayersPage extends React.Component<IProps, IState> {
           <Redirect
             to={{
               pathname: '/players-comparison',
-              state: { comparisonHighlightsData: this.state.comparisonHighlightsData },
+              state: {
+                comparisonData: this.state.comparisonData,
+              },
             }}
           />
         )}
@@ -310,16 +315,16 @@ class PlayersPage extends React.Component<IProps, IState> {
         <section className='allStats my-6'>
           <div className='filters text-sm flex mt-6 mb-1'>
             <div className='font-semibold'>
-              {this.state.comparisonHighlightsData.length === 2 ? (
+              {this.state.comparisonData.length === 2 ? (
                 <button
                   className='bg-yellow-400 text-white font-bold py-2 px-4 rounded'
-                  onClick={this.onRedirect}
+                  onClick={() => this.onComparisonRedirect()}
                 >
                   Compare
                 </button>
               ) : (
                 <button className='bg-primary text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed'>
-                  Comparison queue: {this.state.comparisonHighlightsData.length} (need 2)
+                  Comparison queue: {this.state.comparisonData.length} (need 2)
                 </button>
               )}
             </div>
