@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
-import { joinPrivateLeague } from '../actions';
+import { joinLeague } from '../actions';
 
 type Props = {
-  joinPrivateLeague: typeof joinPrivateLeague;
+  joinLeague: typeof joinLeague;
 };
 
-const PrivateLeagues = ({ joinPrivateLeague }: Props) => {
+const PrivateLeagues = ({ joinLeague }: Props) => {
   const [code, setCode] = useState('');
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
 
-    joinPrivateLeague({ code });
+    joinLeague({ code, private: true });
   };
 
   return (
@@ -55,7 +55,7 @@ const PrivateLeagues = ({ joinPrivateLeague }: Props) => {
   );
 };
 
-const actions = { joinPrivateLeague };
+const actions = { joinLeague };
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
 
 export default connect(

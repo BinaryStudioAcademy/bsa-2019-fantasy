@@ -2,8 +2,9 @@ export type CreateLeagueCredentials = {
   name: string;
 };
 
-export type JoinPrivateLeagueCredentials = {
+export type JoinLeagueCredentials = {
   code: string;
+  private: boolean;
 };
 
 export type SearchPublicLeaguesCredentials = {

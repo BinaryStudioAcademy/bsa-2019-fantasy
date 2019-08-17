@@ -5,9 +5,9 @@ export const CREATE_LEAGUE_SUCCESS = 'LEAGUES_ACTION::CREATE_LEAGUE_SUCCESS';
 export const CREATE_LEAGUE_FAILURE = 'LEAGUES_ACTION::CREATE_LEAGUE_FAILURE';
 export const SET_IS_LOADING = 'LEAGUES_ACTION:SET_IS_LOADING';
 export const SET_USER_LEAGUES = 'LEAGUES_ACTION:SET_USER_LEAGUES';
-export const JOIN_PRIVATE_LEAGUE = 'LEAGUES_ACTION: JOIN_PRIVATE_LEAGUE';
-export const JOIN_PRIVATE_LEAGUE_SUCCESS = 'LEAGUES_ACTION: JOIN_PRIVATE_LEAGUE_SUCCESS';
-export const JOIN_PRIVATE_LEAGUE_FAILURE = 'LEAGUES_ACTION: JOIN_PRIVATE_LEAGUE_FAILURE';
+export const JOIN_LEAGUE = 'LEAGUES_ACTION: JOIN_LEAGUE';
+export const JOIN_LEAGUE_SUCCESS = 'LEAGUES_ACTION: JOIN_LEAGUE_SUCCESS';
+export const JOIN_LEAGUE_FAILURE = 'LEAGUES_ACTION: JOIN_LEAGUE_FAILURE';
 export const SET_LEAGUES_SUGGESTIONS = 'LEAGUES_ACTION: SET_LEAGUES_SUGGESTIONS';
 
 type SetLoading = {
@@ -25,13 +25,10 @@ type SearchLeagues = {
   payload: any;
 };
 
-export type JoinPrivateLeagueAction =
+export type JoinLeagueAction =
   | SetLoading
   | {
-      type:
-        | typeof JOIN_PRIVATE_LEAGUE
-        | typeof JOIN_PRIVATE_LEAGUE_SUCCESS
-        | typeof JOIN_PRIVATE_LEAGUE_FAILURE;
+      type: typeof JOIN_LEAGUE | typeof JOIN_LEAGUE_SUCCESS | typeof JOIN_LEAGUE_FAILURE;
       payload: any;
     };
 
@@ -47,6 +44,6 @@ export type CreateLeagueAction =
 export type AsyncCreateLeagueAction = Thunky<CreateLeagueAction>;
 export type SetLeaguesAction = SetLeagues;
 export type AsyncSetLeaguesAction = Thunky<SetLeaguesAction>;
-export type AsyncJoinPrivateLeagueAction = Thunky<JoinPrivateLeagueAction>;
+export type AsyncJoinLeagueAction = Thunky<JoinLeagueAction>;
 export type SearchLeaguesAction = SearchLeagues;
 export type AsyncSearchLeaguesAction = Thunky<SearchLeaguesAction>;

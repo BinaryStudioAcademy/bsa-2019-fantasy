@@ -1,7 +1,7 @@
 import callWebApi from 'helpers/webApiHelper';
 import {
   CreateLeagueCredentials,
-  JoinPrivateLeagueCredentials,
+  JoinLeagueCredentials,
   SearchPublicLeaguesCredentials,
 } from 'types/league.types';
 
@@ -24,11 +24,11 @@ export const getUserLeagues = async () => {
   return response.json();
 };
 
-export const joinPrivateLeague = async (request: JoinPrivateLeagueCredentials) => {
+export const joinLeague = async (request: JoinLeagueCredentials) => {
   const response = await callWebApi({
     endpoint: `/api/leagues/join`,
     type: 'POST',
-    request: { ...request, private: true },
+    request,
   });
 
   return response.json();

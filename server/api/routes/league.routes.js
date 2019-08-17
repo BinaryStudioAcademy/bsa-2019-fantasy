@@ -55,7 +55,7 @@ router
   })
   .post('/search/public', (req, res, next) => {
     leagueService
-      .getLeaguesByName(req.body.filter)
+      .searchLeaguesByName(req.body.filter)
       .then((value) => res.json(value))
       .catch(next);
   })
