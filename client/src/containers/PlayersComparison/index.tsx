@@ -6,11 +6,10 @@ import CompareTable from 'components/PlayersComparison/CompareTable';
 import { Redirect } from 'react-router';
 
 interface IProps {
-  location?: any
+  location?: any;
 }
 
 const PlayersComparisonPage: React.FC<IProps> = (props: IProps) => {
-  console.log(props.location);
   useEffect(() => {
     document.title = 'Players Comparison | Fantasy Football League';
   }, []);
@@ -105,7 +104,7 @@ const PlayersComparisonPage: React.FC<IProps> = (props: IProps) => {
 
     return (
       <div className='table-wrapper flex flex-col bg-white shadow-figma rounded my-4 w-full'>
-        {!props.location.state && <Redirect to='/404'/>}
+        {!props.location.state && <Redirect to='/404' />}
         <CompareTable
           columns={columns}
           data={player.matches}
@@ -216,7 +215,11 @@ const PlayersComparisonPage: React.FC<IProps> = (props: IProps) => {
 
   return (
     <>
-      <PlayersHighlights />
+      {props.location.state && (
+        <PlayersHighlights
+          comparisonHighlightsData={props.location.state.comparisonHighlightsData}
+        />
+      )}
 
       <section className='footer-stats my-6'>
         <div className='footer-tables flex flex-wrap'>
