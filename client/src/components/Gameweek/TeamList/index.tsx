@@ -3,38 +3,42 @@ import React from 'react';
 import './styles.scss';
 import TeamItem from '../TeamItem';
 import info from 'assets/images/info.svg';
+import TeamItemHeader from '../TeamItemHeader/TeamItemHeader';
 
-const TeamList = ({ starters, substitutes }: any) => {
-  const players = starters.map(({ lastDroppedItem, accept }) => (
-    <TeamItem
-      info={info}
-      name={lastDroppedItem.name}
-      imageURL={lastDroppedItem.src}
-      club={lastDroppedItem.club}
-      position={accept}
-      form={lastDroppedItem.form}
-      gameweek_points={lastDroppedItem.gameweek_points}
-      total_points={lastDroppedItem.points}
-      fixture={lastDroppedItem.fixture}
-    />
-  ));
+const TeamList = ({
+  starters,
+  substitutes,
+  isGameweek,
+  onOpen,
+  captainId,
+  viceCaptainId,
+}: any) => {
+  const displayPlayers = (arr) =>
+    arr.map(({ lastDroppedItem }) => (
+      <TeamItem
+        id={lastDroppedItem.id}
+        info={info}
+        name={lastDroppedItem.name}
+        imageURL={lastDroppedItem.src}
+        club={lastDroppedItem.club}
+        position={lastDroppedItem.type}
+        form={lastDroppedItem.form}
+        gameweek_points={lastDroppedItem.gameweek_points}
+        total_points={lastDroppedItem.points}
+        fixture={lastDroppedItem.fixture}
+        isGameweek={isGameweek}
+        onOpen={onOpen}
+        captainId={captainId}
+        viceCaptainId={viceCaptainId}
+      />
+    ));
+
   return (
     <table className='team-list'>
-      <thead>
-        <tr className='bg-green-100'>
-          <td className='w-1/12' align='center' valign='middle'></td>
-          <td className='w-1/12 text-center'></td>
-          <td className='w-5/12' valign='middle'>
-            Starters
-          </td>
-          <td className='w-1/12'>Pos</td>
-          <td className='w-1/12'>Form</td>
-          <td className='w-1/12'>GW</td>
-          <td className='w-1/12'>PTS</td>
-          <td className='w-1/12'>Fix</td>
-        </tr>
-      </thead>
-      <tbody className='w-3/4 bg-white p-3'>{players}</tbody>
+      <TeamItemHeader name='Starters' />
+      <tbody className='w-3/4 bg-white p-3'>{displayPlayers(starters)}</tbody>
+      <TeamItemHeader name='Substitutes' />
+      <tbody className='w-3/4 bg-white p-3'>{displayPlayers(substitutes)}</tbody>
     </table>
   );
 };
