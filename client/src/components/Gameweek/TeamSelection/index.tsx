@@ -444,7 +444,16 @@ const TeamSelection = ({
             </label>
           </form>
         </div>
-        {view === 'list' && <TeamList starters={PITCH} substitutes={BENCH} />}
+        {view === 'list' && (
+          <TeamList
+            starters={pitch}
+            substitutes={bench}
+            isGameweek={isGameweek}
+            onOpen={onOpen}
+            captainId={captainId}
+            viceCaptainId={viceCaptainId}
+          />
+        )}
         {view === 'pitch' && (
           <div className='relative team-container'>
             {/* Goalkeeper */}
