@@ -424,7 +424,7 @@ const TeamSelection = ({
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className='pt-8 team-select-wrapper w-3/4'>
+      <div className='py-8 team-select-wrapper w-3/4'>
         <div className='flex justify-center mb-8'>
           <form className='form-team'>
             <label
@@ -568,17 +568,17 @@ const TeamSelection = ({
             <div className='w-full h-40 bg-gray-400 rounded-r-sm' />
           </div>
         )}
-        {!isGameweek && (
-          <div className='w-full h-24 flex justify-center'>
-            <button
-              className='w-3/12 h-12 mt-3 bg-white rounded-lg'
-              onClick={(e) => saveTeam(droppedPlayerPitchIds, droppedPlayerBenchIds)}
-            >
-              <p>Save Your Team</p>
-            </button>
-          </div>
-        )}
       </div>
+      {!isGameweek && (
+        <div className='w-full h-24 flex justify-center'>
+          <button
+            className='w-3/12 h-12 mt-3 bg-green-600 rounded-lg text-white'
+            onClick={(e) => saveTeam(droppedPlayerPitchIds, droppedPlayerBenchIds)}
+          >
+            <p>Save Your Team</p>
+          </button>
+        </div>
+      )}
     </DndProvider>
   );
 };

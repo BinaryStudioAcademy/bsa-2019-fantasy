@@ -66,7 +66,7 @@ const MyTeam = () => {
           
         </div>
       </div>
-      <div className='bg-white p-3'>
+      <div className='p-3'>
       <TeamSelection
         isGameweek={false}
         onOpen={onOpen}
