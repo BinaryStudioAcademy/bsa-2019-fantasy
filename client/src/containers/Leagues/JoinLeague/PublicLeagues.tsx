@@ -4,18 +4,19 @@ import { bindActionCreators, Dispatch } from 'redux';
 
 import Autosuggest from 'react-autosuggest';
 
-import { searchPublicLeagues } from '../actions';
+import { searchPublicLeagues, joinLeague } from '../actions';
 import { RootState } from 'store/types';
 
 type Props = {
   searchPublicLeagues: typeof searchPublicLeagues;
+  joinLeague: typeof joinLeague;
   suggestions: any;
 };
 
 const renderSuggestion = (suggestion) => <div>{suggestion.name}</div>;
 const getSuggestionValue = (suggestion) => suggestion.name;
 
-const PublicLeagues = ({ searchPublicLeagues, suggestions }: Props) => {
+const PublicLeagues = ({ searchPublicLeagues, suggestions, joinLeague }: Props) => {
   const [value, setValue] = useState('');
 
   const handleInputChange = (event, { newValue }) => {
@@ -33,6 +34,8 @@ const PublicLeagues = ({ searchPublicLeagues, suggestions }: Props) => {
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
+
+    joinLeague({ code: value, private: false });
   };
 
   const inputProps = {
@@ -89,7 +92,7 @@ const mapStateToProps = (rootState: RootState) => ({
   suggestions: rootState.league.suggestions,
 });
 
-const actions = { searchPublicLeagues };
+const actions = { searchPublicLeagues, joinLeague };
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
 
 export default connect(

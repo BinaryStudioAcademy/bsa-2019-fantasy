@@ -3,7 +3,8 @@ import * as leagueService from '../services/league.service';
 import * as leagueParticipantService from '../services/league-participant.service';
 import {
   createLeagueMiddleware,
-  joinLeagueMiddleware,
+  joinPrivateLeagueMiddleware,
+  joinPublicLeagueMiddleware,
 } from '../middlewares/league.middleware';
 import jwtMiddleware from '../middlewares/jwt.middleware';
 
@@ -37,22 +38,48 @@ router
       )
       .catch(next),
   )
-  .post('/join', joinLeagueMiddleware, jwtMiddleware, async (req, res, next) => {
-    try {
-      const result = await leagueParticipantService.checkIfAParticipant(
-        req.user.id,
-        req.body.code,
-      );
-      if (result.length) {
-        res.status(400).json({ message: 'You have already joined this league' });
-      } else {
-        await leagueService.joinLeague(req.user.id, req.body.code, false);
-        res.json({ message: 'Successfully joined a league' });
+  .post(
+    '/join/private',
+    joinPrivateLeagueMiddleware,
+    jwtMiddleware,
+    async (req, res, next) => {
+      try {
+        const result = await leagueParticipantService.checkIfAParticipantById(
+          req.user.id,
+          req.body.code,
+        );
+        if (result.length) {
+          res.status(400).json({ message: 'You have already joined this league' });
+        } else {
+          await leagueService.joinLeagueById(req.user.id, req.body.code, false);
+          res.json({ message: 'Successfully joined a league' });
+        }
+      } catch (err) {
+        next(err);
       }
-    } catch (err) {
-      next(err);
-    }
-  })
+    },
+  )
+  .post(
+    '/join/public',
+    joinPublicLeagueMiddleware,
+    jwtMiddleware,
+    async (req, res, next) => {
+      try {
+        const result = await leagueParticipantService.checkIfAParticipantByName(
+          req.user.id,
+          req.body.code,
+        );
+        if (result.length) {
+          res.status(400).json({ message: 'You have already joined this league' });
+        } else {
+          await leagueService.joinLeagueByName(req.user.id, req.body.code, false);
+          res.json({ message: 'Successfully joined a league' });
+        }
+      } catch (err) {
+        next(err);
+      }
+    },
+  )
   .post('/search/public', (req, res, next) => {
     leagueService
       .searchLeaguesByName(req.body.filter)

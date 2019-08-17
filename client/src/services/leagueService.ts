@@ -25,8 +25,10 @@ export const getUserLeagues = async () => {
 };
 
 export const joinLeague = async (request: JoinLeagueCredentials) => {
+  const privacy = request.private ? 'private' : 'public';
+
   const response = await callWebApi({
-    endpoint: `/api/leagues/join`,
+    endpoint: `/api/leagues/join/${privacy}`,
     type: 'POST',
     request,
   });

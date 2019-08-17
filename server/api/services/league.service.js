@@ -36,10 +36,22 @@ export const updateLeague = async (id, data) => leagueRepository.updateById(id, 
 
 export const deleteLeagueById = async (id) => leagueRepository.deleteById(id);
 
-export const joinLeague = async (participant_id, league_id, is_creator) => {
+export const joinLeagueById = async (participant_id, league_id, is_creator) => {
   const newParticipant = await leagueParticipantRepository.addParticipant({
     is_creator,
     league_id,
+    participant_id,
+  });
+
+  return newParticipant;
+};
+
+export const joinLeagueByName = async (participant_id, league_name, is_creator) => {
+  const { id } = await leagueRepository.getByName(league_name);
+
+  const newParticipant = await leagueParticipantRepository.addParticipant({
+    is_creator,
+    league_id: id,
     participant_id,
   });
 
