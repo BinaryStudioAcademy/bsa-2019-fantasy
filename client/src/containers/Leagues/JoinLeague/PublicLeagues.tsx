@@ -55,9 +55,12 @@ const PublicLeagues = ({ searchPublicLeagues, suggestions }: Props) => {
       <form className='w-full max-w-lg' onSubmit={handleSubmit}>
         <div className='flex flex-wrap -mx-3 mb-6'>
           <div className='w-full md:w-1/2 px-3'>
-            <p className='block uppercase text-gray-700 text-xs font-bold mb-2'>
-              League Code
-            </p>
+            <label
+              htmlFor='public-league-name'
+              className='block uppercase text-gray-700 text-xs font-bold mb-2'
+            >
+              League Name
+            </label>
             <Autosuggest
               suggestions={suggestions}
               onSuggestionsFetchRequested={onSuggestionsFetchRequested}
@@ -65,6 +68,7 @@ const PublicLeagues = ({ searchPublicLeagues, suggestions }: Props) => {
               getSuggestionValue={getSuggestionValue}
               renderSuggestion={renderSuggestion}
               inputProps={inputProps}
+              id='public-league-name'
             />
           </div>
         </div>

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
-import { RootState } from 'store/types';
 import { joinPrivateLeague } from '../actions';
 
 type Props = {
