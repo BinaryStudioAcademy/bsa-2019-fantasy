@@ -2,9 +2,9 @@ import * as leagueService from '../services/league.service';
 /* eslint-disable */
 export const createLeagueMiddleware = function(req, res, next) {
   leagueService
-    .getLeaguesByName(req.body.name)
+    .getLeagueByName(req.body.name)
     .then((leagues) => {
-      if (!leagues.length) {
+      if (!leagues) {
         return next();
       } else {
         res.status(400).json({ message: 'League with current name already exists' });

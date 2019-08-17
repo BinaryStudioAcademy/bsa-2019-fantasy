@@ -1,11 +1,6 @@
 import leagueRepository from '../../data/repositories/league.repository';
 import leagueParticipantRepository from '../../data/repositories/league-participant.repository';
 
-export const getAllLeagues = async () => {
-  const result = await leagueRepository.getAll();
-  return result;
-};
-
 export const getLeagueById = async (id) => {
   const result = await leagueRepository.getById(id);
   return result;
@@ -16,8 +11,8 @@ export const getLeaguesByUserId = async (id) => {
   return result;
 };
 
-export const getLeaguesByName = async (name) => {
-  const result = await leagueRepository.getAllByName(name);
+export const getLeagueByName = async (name) => {
+  const result = await leagueRepository.getByName(name);
   return result;
 };
 

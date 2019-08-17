@@ -30,22 +30,6 @@ class LeagueRepository extends BaseRepository {
       },
     });
   }
-
-  getAllByFilter(filter) {
-    return this.model.findAll({
-      where: Sequelize.or(
-        {
-          name: {
-            [Op.iLike]: `%${filter}%`,
-          },
-        },
-        // TODO: fix search by id
-        Sequelize.where(Sequelize.cast('id', 'varchar'), {
-          [Op.iLike]: `%${filter}%`,
-        }),
-      ),
-    });
-  }
 }
 
 export default new LeagueRepository(LeagueModel);
