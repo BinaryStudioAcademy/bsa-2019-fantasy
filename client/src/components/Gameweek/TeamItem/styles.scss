@@ -1,5 +1,10 @@
 .team-item {
-    font-size: 1rem;
-    vertical-align: middle;
+  width: 150px;
 }
-
+.info {
+  width: 50px;
+  font-size: 1rem;
+}
+.team-item-button {
+  border-right: 2px solid #ddd;
+}

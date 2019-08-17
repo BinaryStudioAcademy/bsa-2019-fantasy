@@ -15,13 +15,14 @@ const TeamItem = ({
 }: any) => {
   return (
     <tr className='bg-white w-full'>
-      <td className='team-item w-2/12' align='center' valign='middle'>
+      <td className='w-1/12' align='center' valign='middle'>
         <button>
           <img src={info} alt=' info' />
         </button>
       </td>
-      <td className='team-item w-5/12' valign='middle'>
-        <button className='flex flex-row'>
+      <td className='w-1/12 text-center'>C</td>
+      <td className='w-5/12' valign='middle'>
+        <button className='flex flex-row w-full team-item-button'>
           <img className='w-8 mr-2' src={imageURL} alt='player' />
           <div className='flex flex-col items-start'>
             <div>{name}</div>
@@ -32,10 +33,11 @@ const TeamItem = ({
           </div>
         </button>
       </td>
-      <td className='team-item w-1/12'>{form}</td>
-      <td className='team-item w-1/12'>{gameweek_points}</td>
-      <td className='team-item w-1/12'>{total_points}</td>
-      <td className='team-item w-2/12'>{fixture}</td>
+      <td className='w-1/12'>{position}</td>
+      <td className='w-1/12'>{form}</td>
+      <td className='w-1/12'>{gameweek_points}</td>
+      <td className='w-1/12'>{total_points}</td>
+      <td className='w-1/12'>{fixture}</td>
     </tr>
   );
 };
