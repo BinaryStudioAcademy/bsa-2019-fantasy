@@ -21,5 +21,4 @@ class GameweekHistoryRepository extends BaseRepository {
     });
   }
 }
-
 export default new GameweekHistoryRepository(GameweekHistoryModel);
