@@ -129,7 +129,7 @@ const Leagues = ({ loadUserLeagues, leagues, clubs }: Props) => {
               </Link>
               <Link
                 to='/leagues/create'
-                className='g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded'
+                className='whitespace-no-wrap g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded'
               >
                 New League
               </Link>

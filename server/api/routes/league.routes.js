@@ -28,7 +28,7 @@ router
       .createLeague(req.body.name)
       .then((value) =>
         leagueService
-          .joinLeague(req.user.id, value.id, true)
+          .joinLeagueById(req.user.id, value.id, true)
           .then(() =>
             res.json({
               message: `Successfully created a league with '${value.name}' name`,

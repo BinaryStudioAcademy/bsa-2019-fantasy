@@ -1,3 +1,5 @@
+import { feedback } from 'react-feedbacker';
+
 import * as leagueService from 'services/leagueService';
 import {
   SET_IS_LOADING,
@@ -22,29 +24,9 @@ const setIsLoading = (isLoading: boolean): any => ({
   payload: isLoading,
 });
 
-const createLeagueSuccess = (payload: any): CreateLeagueAction => ({
-  type: CREATE_LEAGUE_SUCCESS,
-  payload,
-});
-
-const createLeagueFailure = (error: any): CreateLeagueAction => ({
-  type: CREATE_LEAGUE_FAILURE,
-  payload: error,
-});
-
 const setUserLeagues = (leagues: any): SetLeaguesAction => ({
   type: SET_USER_LEAGUES,
   payload: leagues,
-});
-
-const joinLeagueSuccess = (payload: any): JoinLeagueAction => ({
-  type: JOIN_LEAGUE_SUCCESS,
-  payload,
-});
-
-const joinLeagueFailure = (payload: any): JoinLeagueAction => ({
-  type: JOIN_LEAGUE_FAILURE,
-  payload,
 });
 
 const setSuggestions = (payload: any): SearchLeaguesAction => ({
@@ -54,15 +36,14 @@ const setSuggestions = (payload: any): SearchLeaguesAction => ({
 
 export const createLeagueAction = (data: {
   name: string;
+  private: boolean;
+  start_from: number;
 }): AsyncCreateLeagueAction => async (dispatch) => {
   try {
-    dispatch(setIsLoading(true));
     const result = await leagueService.createLeague(data);
-    dispatch(setIsLoading(false));
-    dispatch(createLeagueSuccess(result));
-  } catch (e) {
-    dispatch(setIsLoading(false));
-    dispatch(createLeagueFailure(e));
+    feedback.success((result && result.message) || result);
+  } catch (err) {
+    feedback.error(err.message);
   }
 };
 
@@ -76,13 +57,10 @@ export const joinLeague = (data: {
   private: boolean;
 }): AsyncJoinLeagueAction => async (dispatch) => {
   try {
-    dispatch(setIsLoading(true));
     const result = await leagueService.joinLeague(data);
-    dispatch(setIsLoading(false));
-    dispatch(joinLeagueSuccess(result));
-  } catch (e) {
-    dispatch(setIsLoading(false));
-    dispatch(joinLeagueFailure(e));
+    feedback.success((result && result.message) || result);
+  } catch (err) {
+    feedback.error(err.message);
   }
 };
 
