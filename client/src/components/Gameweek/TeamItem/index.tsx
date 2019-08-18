@@ -2,6 +2,23 @@ import React from 'react';
 
 import './styles.scss';
 
+type Props = {
+  id: string;
+  imageURL: string;
+  info: string;
+  name: string;
+  club: string;
+  position: string;
+  total_points: number;
+  form: number;
+  gameweek_points: number;
+  fixture: string;
+  isGameweek: boolean;
+  onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
+  captainId?: string;
+  viceCaptainId?: string;
+};
+
 const TeamItem = ({
   id,
   info,
@@ -17,10 +34,9 @@ const TeamItem = ({
   onOpen,
   captainId,
   viceCaptainId,
-}: any) => {
+}: Props) => {
   const isCaptain = captainId === id;
   const isViceCaptain = viceCaptainId === id;
-  console.log(id);
   return (
     <tr className='bg-white w-full'>
       <td className='w-1/12' align='center' valign='middle'>
@@ -30,7 +46,7 @@ const TeamItem = ({
       </td>
       <td className='w-1/12 text-center'>
         {' '}
-        {isGameweek ? null : (
+        {!isGameweek && (
           <React.Fragment>
             {(isCaptain || isViceCaptain) && (
               <svg width='24' height='24' viewBox='0 0 24 24'>

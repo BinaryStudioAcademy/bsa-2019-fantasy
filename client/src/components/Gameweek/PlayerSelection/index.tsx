@@ -11,6 +11,9 @@ export interface PlayerInfo {
   club: string;
   type: string;
   points: number;
+  form: string;
+  gameweek_points: string;
+  fixture: string;
 }
 
 export interface PlayerDraggableProps {
@@ -21,8 +24,8 @@ export interface PlayerDraggableProps {
   club: string;
   type: string;
   points: number;
-  form: string;
-  gameweek_points: string;
+  form: number;
+  gameweek_points: number;
   fixture: string;
   isGameweek: boolean;
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;

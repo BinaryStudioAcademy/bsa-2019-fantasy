@@ -5,6 +5,15 @@ import TeamItem from '../TeamItem';
 import info from 'assets/images/info.svg';
 import TeamItemHeader from '../TeamItemHeader/TeamItemHeader';
 
+type Props = {
+  starters: any; // can be change to type real data
+  substitutes: any; // can be change to type real data
+  isGameweek: boolean;
+  onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
+  captainId?: string;
+  viceCaptainId?: string;
+}
+
 const TeamList = ({
   starters,
   substitutes,
@@ -12,8 +21,8 @@ const TeamList = ({
   onOpen,
   captainId,
   viceCaptainId,
-}: any) => {
-  const displayPlayers = (arr) =>
+}: Props) => {
+  const displayPlayers = (arr: any) =>
     arr.map(({ lastDroppedItem }) => (
       <TeamItem
         id={lastDroppedItem.id}
