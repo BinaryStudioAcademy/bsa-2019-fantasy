@@ -25,7 +25,7 @@ router
   )
   .post('/', createLeagueMiddleware, jwtMiddleware, (req, res, next) =>
     leagueService
-      .createLeague(req.body.name)
+      .createLeague(req.body)
       .then((value) =>
         leagueService
           .joinLeagueById(req.user.id, value.id, true)
