@@ -4,7 +4,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { Link } from 'react-router-dom';
 import { map } from 'lodash';
 
-import { FaStar } from 'react-icons/fa';
+import { FaStar, FaArrowUp, FaArrowDown, FaMinus } from 'react-icons/fa';
 
 import Spinner from 'components/Spinner';
 import { LeagueTable } from 'components/Leagues/LeagueTables';
@@ -29,31 +29,43 @@ const columns = [
   },
   {
     Header: () => <span className='table-title uppercase font-bold'>Current Rank</span>,
+    accessor: 'current_rank',
+    Cell: (props: any) => {
+      const movement = props.original.current_rank - props.original.last_rank;
 
-    // Cell: (props: { value: { movement: string; current: number } }) => (
-    //   <div className='rank flex justify-center items-center'>
-    //     <span
-    //       className={`movement mr-1 ${props.value.movement === 'up' ? 'up' : 'down'}`}
-    //     >
-    //       {props.value.movement === 'up' ? <FaArrowUp /> : <FaArrowDown />}
-    //     </span>{' '}
-    //     {props.value.current}
-    //   </div>
-    // ),
+      return (
+        <div className='rank flex justify-center items-center'>
+          <span
+            className={`movement mr-1 ${movement > 0 ? 'up' : ''} ${
+              movement < 0 ? 'down' : ''
+            }`}
+          >
+            {movement > 0 ? <FaArrowUp /> : movement < 0 ? <FaArrowDown /> : <FaMinus />}
+          </span>{' '}
+          {props.value}
+        </div>
+      );
+    },
   },
   {
     Header: () => <span className='table-title uppercase font-bold'>Last Rank</span>,
+    accessor: 'last_rank',
+    Cell: (props: any) => {
+      const movement = props.original.current_rank - props.original.last_rank;
 
-    // Cell: (props: { value: { movement: string; last: number } }) => (
-    //   <div className='rank flex justify-center items-center'>
-    //     <span
-    //       className={`movement mr-1 ${props.value.movement === 'up' ? 'up' : 'down'}`}
-    //     >
-    //       {props.value.movement === 'up' ? <FaArrowUp /> : <FaArrowDown />}
-    //     </span>{' '}
-    //     {props.value.last}
-    //   </div>
-    // ),
+      return (
+        <div className='rank flex justify-center items-center'>
+          <span
+            className={`movement mr-1 ${movement > 0 ? 'up' : ''} ${
+              movement < 0 ? 'down' : ''
+            }`}
+          >
+            {movement > 0 ? <FaArrowUp /> : movement < 0 ? <FaArrowDown /> : <FaMinus />}
+          </span>{' '}
+          {props.value}
+        </div>
+      );
+    },
   },
 ];
 /* eslint-enable */
@@ -61,21 +73,19 @@ type Props = {
   loadUserLeagues: typeof loadUserLeagues;
   leagues: any;
   clubs: any;
+  user: any;
 };
 
-const Leagues = ({ loadUserLeagues, leagues, clubs }: Props) => {
-  const [userLeagues, setLeagues] = useState([]);
+const Leagues = ({ loadUserLeagues, leagues, clubs, user }: Props) => {
+  const [club, setClub] = useState({ name: '', code: 0 });
 
   useEffect(() => {
     document.title = 'Leagues | Fantasy Football League';
     loadUserLeagues();
-    setLeagues(leagues);
-  }, [userLeagues, setLeagues, loadUserLeagues]);
 
-  const getClubCodeByName = (name: string) => {
-    const club = clubs.filter((club: any) => club.name === name);
-    return club[0] && club[0].code;
-  };
+    const userFavouriteCLub = clubs.filter((item) => item.id === user.favorite_club_id);
+    setClub(userFavouriteCLub[0]);
+  }, []);
 
   const titles = [
     {
@@ -98,10 +108,6 @@ const Leagues = ({ loadUserLeagues, leagues, clubs }: Props) => {
   if (!leagues) {
     return <Spinner />;
   } else {
-    const footballClub = leagues.global.find(
-      (item: any) => item.league.name !== 'Overall',
-    );
-
     return (
       <div className='leagues'>
         <div className='container'>
@@ -109,8 +115,8 @@ const Leagues = ({ loadUserLeagues, leagues, clubs }: Props) => {
             <div className='jumbotron-content mt-12 mb-12'>
               <div className='clubLogo inline-flex rounded-full shadow-figma p-4 mb-6'>
                 <img
-                  className='w-16'
-                  src={getClubLogoUrl(getClubCodeByName(footballClub.league.name)!, 80)}
+                  style={{ height: 50, width: 50 }}
+                  src={getClubLogoUrl(club.code, 80)}
                   alt='Club logo'
                 />
               </div>
@@ -119,7 +125,7 @@ const Leagues = ({ loadUserLeagues, leagues, clubs }: Props) => {
                   <FaStar />
                   My Leagues
                 </div>
-                {footballClub.league.name}
+                {club.name}
               </h2>
               <Link
                 to='/leagues/join'
@@ -129,7 +135,7 @@ const Leagues = ({ loadUserLeagues, leagues, clubs }: Props) => {
               </Link>
               <Link
                 to='/leagues/create'
-                className='g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded'
+                className='whitespace-no-wrap g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded'
               >
                 New League
               </Link>
@@ -160,6 +166,7 @@ const Leagues = ({ loadUserLeagues, leagues, clubs }: Props) => {
 const mapStateToProps = (rootState: RootState) => ({
   leagues: rootState.league.leagues,
   clubs: rootState.clubs.clubs,
+  user: rootState.profile.user,
 });
 
 const actions = { loadUserLeagues };

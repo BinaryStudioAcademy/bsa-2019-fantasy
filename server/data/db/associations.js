@@ -27,6 +27,7 @@ export default (models) => {
     foreignKey: 'league_id',
     as: 'league_participants',
   });
+  League.belongsTo(Gameweek, { foreignKey: 'start_from', as: 'gameweek' });
 
   TeamMemberHistory.belongsTo(PlayerStat, {
     foreignKey: 'player_id',

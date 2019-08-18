@@ -17,6 +17,7 @@ class LeagueRepository extends BaseRepository {
   getAllPublic() {
     return this.model.findAll({
       where: { private: false },
+      include: ['league_participants'],
     });
   }
 
@@ -28,22 +29,6 @@ class LeagueRepository extends BaseRepository {
         },
         private: false,
       },
-    });
-  }
-
-  getAllByFilter(filter) {
-    return this.model.findAll({
-      where: Sequelize.or(
-        {
-          name: {
-            [Op.iLike]: `%${filter}%`,
-          },
-        },
-        // TODO: fix search by id
-        Sequelize.where(Sequelize.cast('id', 'varchar'), {
-          [Op.iLike]: `%${filter}%`,
-        }),
-      ),
     });
   }
 }
