@@ -424,7 +424,7 @@ const TeamSelection = ({
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className='py-8 team-select-wrapper w-3/4'>
+      <div className='py-8 team-select-wrapper team-container'>
         <div className='flex justify-center mb-8'>
           <form className='form-team'>
             <label
