@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import { feedback } from 'react-feedbacker';
 
 import { User } from 'types/user.type';
@@ -66,10 +67,21 @@ export const logout = (): AsyncUserAction => (dispatch) => {
   dispatch(setUser(null));
 };
 
+const retrieveTokenFromCookie = () => {
+  const token = Cookies.get('token');
+
+  if (token) {
+    localStorage.setItem('token', token);
+    Cookies.remove('token');
+  }
+};
+
 export const loadCurrentUser = (soft = false): AsyncUserAction => async (dispatch) => {
   if (!soft) {
     dispatch(setIsLoading(true));
   }
+
+  retrieveTokenFromCookie();
 
   try {
     const user = await authService.getCurrentUser();
@@ -79,6 +91,10 @@ export const loadCurrentUser = (soft = false): AsyncUserAction => async (dispatc
   } finally {
     if (!soft) {
       dispatch(setIsLoading(false));
+    }
+
+    if (window.location.hash === '#_=_') {
+      window.location.hash = '';
     }
   }
 };

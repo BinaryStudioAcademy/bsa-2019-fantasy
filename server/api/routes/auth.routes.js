@@ -1,4 +1,7 @@
 import { Router } from 'express';
+
+import getClientURL from '../../helpers/client-url.helper';
+
 import * as authService from '../services/auth.service';
 import * as userService from '../services/user.service';
 import * as leagueService from '../services/league.service';
@@ -13,7 +16,13 @@ const router = Router();
 router
   .get('/fb', facebookAuthMiddleware)
   .get('/fb/callback', facebookAuthRedirectMiddleware, (req, res, next) =>
-    res.json(req.user),
+    authService
+      .login(req.user)
+      .then(({ token }) => {
+        res.cookie('token', token);
+        res.redirect(getClientURL());
+      })
+      .catch(next),
   )
   .post('/login', loginMiddleware, (req, res, next) =>
     authService

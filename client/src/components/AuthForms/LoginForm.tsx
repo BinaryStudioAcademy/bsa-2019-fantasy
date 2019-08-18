@@ -72,7 +72,9 @@ const LoginForm = withRouter(({ history }) => {
           </button>
         </div>
         <div className='block mt-8'>
-          <FaFacebook className='cursor-pointer' />
+          <a href='/api/auth/fb'>
+            <FaFacebook />
+          </a>
         </div>
       </form>
     </div>
