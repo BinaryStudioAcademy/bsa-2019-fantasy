@@ -10,7 +10,7 @@ class LeagueParticipantRepository extends BaseRepository {
     return this.model.findAll({
       where: { participant_id },
       include: ['league'],
-      attributes: ['is_creator'],
+      attributes: ['is_creator', 'current_rank', 'last_rank'],
     });
   }
 

@@ -10,11 +10,24 @@ type Props = {
 
 const PrivateLeagues = ({ joinLeague }: Props) => {
   const [code, setCode] = useState('');
+  const [isLoading, setLoading] = useState(false);
 
-  const handleSubmit = (event: React.SyntheticEvent) => {
+  const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
+    if (isLoading) {
+      return;
+    }
 
-    joinLeague({ code, private: true });
+    setLoading(true);
+    /*eslint-disable*/
+    try {
+      await joinLeague({ code, private: true });
+    } catch {
+      console.log('Something went wrong!');
+    } finally {
+      setLoading(false);
+    }
+    /* eslint-enable */
   };
 
   return (
@@ -43,12 +56,13 @@ const PrivateLeagues = ({ joinLeague }: Props) => {
           </div>
         </div>
         <button
-          className={`shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${!code &&
-            'opacity-50 cursor-not-allowed'}`}
+          className={`w-48 shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${
+            !code || isLoading ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
           type='submit'
-          disabled={!code}
+          disabled={!code || isLoading}
         >
-          Join private league
+          {isLoading ? 'Wait' : 'Join private league'}
         </button>
       </form>
     </div>

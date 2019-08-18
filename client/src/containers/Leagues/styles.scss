@@ -14,6 +14,10 @@
     }
 
     .movement {
+      svg {
+        fill: rgb(148, 150, 140);
+      }
+
       &.up {
         svg {
           fill: #1ee3cf;

@@ -168,9 +168,9 @@ const CreateLeague = ({ createLeagueAction }: Props) => {
               </div>
             </div>
             <button
-              className={`w-40 shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${(!name ||
-                !isNameValid) &&
-                'opacity-50 cursor-not-allowed'}`}
+              className={`w-40 shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${
+                !name || !isNameValid || isLoading ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
               type='submit'
               disabled={!name || !isNameValid || isLoading}
             >

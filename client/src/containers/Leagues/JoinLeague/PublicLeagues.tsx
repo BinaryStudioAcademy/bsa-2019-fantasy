@@ -18,6 +18,7 @@ const getSuggestionValue = (suggestion) => suggestion.name;
 
 const PublicLeagues = ({ searchPublicLeagues, suggestions, joinLeague }: Props) => {
   const [value, setValue] = useState('');
+  const [isLoading, setLoading] = useState(false);
 
   const handleInputChange = (event, { newValue }) => {
     setValue(newValue);
@@ -32,10 +33,23 @@ const PublicLeagues = ({ searchPublicLeagues, suggestions, joinLeague }: Props) 
     suggestions = [];
   };
 
-  const handleSubmit = (event: React.SyntheticEvent) => {
+  const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
+    if (isLoading) {
+      return;
+    }
 
-    joinLeague({ code: value, private: false });
+    setLoading(true);
+
+    /* eslint-disable */
+    try {
+      await joinLeague({ code: value, private: false });
+    } catch {
+      console.log('Something went wrong!');
+    } finally {
+      setLoading(false);
+    }
+    /* eslint-enable */
   };
 
   const inputProps = {
@@ -65,7 +79,7 @@ const PublicLeagues = ({ searchPublicLeagues, suggestions, joinLeague }: Props) 
               League Name
             </label>
             <Autosuggest
-              suggestions={suggestions}
+              suggestions={suggestions.slice(0, 4)}
               onSuggestionsFetchRequested={onSuggestionsFetchRequested}
               onSuggestionsClearRequested={onSuggestionsClearRequested}
               getSuggestionValue={getSuggestionValue}
@@ -76,12 +90,13 @@ const PublicLeagues = ({ searchPublicLeagues, suggestions, joinLeague }: Props) 
           </div>
         </div>
         <button
-          className={`shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${!value &&
-            'opacity-50 cursor-not-allowed'}`}
+          className={`w-48 shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${
+            !value || isLoading ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
           type='submit'
-          disabled={!value}
+          disabled={!value || isLoading}
         >
-          Join public league
+          {isLoading ? 'Wait' : 'Join public league'}
         </button>
       </form>
     </div>
