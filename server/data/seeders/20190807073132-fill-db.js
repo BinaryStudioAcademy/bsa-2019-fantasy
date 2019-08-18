@@ -116,7 +116,11 @@ export default {
         {},
       );
 
-      await queryInterface.bulkInsert('leagues', leaguesSeed, {});
+      const leaguesMappedSeeds = leaguesSeed.map((league) => ({
+        ...league,
+        start_from: gameweeks[randomIndex(gameweeks.length)].id,
+      }));
+      await queryInterface.bulkInsert('leagues', leaguesMappedSeeds, {});
       const leagues = await queryInterface.sequelize.query(
         'SELECT id FROM "leagues";',
         options,
