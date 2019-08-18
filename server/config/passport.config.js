@@ -26,9 +26,21 @@ passport.use(
 
         const { password: userPassword, ...userToSend } = user.dataValues;
 
+        if (userPassword === null) {
+          return done(
+            {
+              status: 401,
+              message:
+                'Seems like you logged in with Facebook account bound to the entered email. ' +
+                'To login in a traditional way try to set password in profile.',
+            },
+            null,
+          );
+        }
+
         return (await cryptoHelper.compare(password, userPassword))
           ? done(null, userToSend)
-          : done({ status: 401, message: 'Passwords do not match.' }, null, false);
+          : done({ status: 401, message: 'Wrong password.' }, null);
       } catch (err) {
         return done(err, null);
       }
@@ -81,21 +93,39 @@ passport.use(
     {
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      callbackURL: 'http://localhost:5001/api/auth/fb/callback',
-      profileFields: ['id', 'displayName', 'photos', 'email'],
+      callbackURL: `/api/auth/fb/callback`,
+      profileFields: ['id', 'emails', 'name'],
+      authType: 'reauthenticate',
     },
-    (accessToken, refreshToken, user, done) => {
-      return user
-        ? done(null, user)
-        : done({ status: 401, message: 'Could not authorize' }, null);
+    async (accessToken, refreshToken, profile, done) => {
+      const { id, first_name, last_name, email } = profile._json;
+      const name = `${first_name} ${last_name}`;
+
+      try {
+        let user = await userRepository.getByEmail(email);
+
+        if (!user) {
+          const userWithSuchName = await userRepository.getByUsername(name);
+
+          user = await userRepository.addUser({
+            facebook_id: id,
+            email,
+            name: userWithSuchName ? `${name} ${Math.random()}` : name,
+          });
+        }
+
+        return done(null, {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+        });
+      } catch (err) {
+        return done({ status: 401, message: 'Could not authorize' }, null);
+      }
     },
   ),
 );
-// need for facebook strategy verify-cALLBACK
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
 
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
-});
+passport.serializeUser((user, done) => done(null, user));
+
+passport.deserializeUser((obj, done) => done(null, obj));

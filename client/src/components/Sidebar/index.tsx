@@ -68,10 +68,7 @@ const Sidebar = () => {
         to='/'
         className={`sidebar-logo item font-bold ${isOpened ? 'pl-6 pr-12' : 'pl-3 pr-3'}`}
       >
-        <img
-          src='/images/logo.png'
-          alt='logo'
-        />
+        <img src='/images/logo.png' alt='logo' />
       </Link>
       <Link
         className={`username-link mt-32 flex-col ${isOpened ? 'pl-6' : 'pl-3'}`}
@@ -84,7 +81,7 @@ const Sidebar = () => {
           style={{ height: 45, width: 45 }}
           className='rounded-full mb-2'
         />
-        <p className={`username ${isOpened ? 'open' : ''}`}>{name}</p>
+        <p className={`username truncate ${isOpened ? 'open' : ''}`}>{name}</p>
       </Link>
       <div className={`points text-sm ${isOpened ? 'pl-6' : 'pl-4'}`}>Score: {score}</div>
       <div className='menu mt-16'>

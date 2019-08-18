@@ -24,7 +24,7 @@ export default {
                 unique: true,
               },
               password: {
-                allowNull: false,
+                allowNull: true,
                 type: Sequelize.STRING,
               },
               money: {
@@ -45,6 +45,11 @@ export default {
                 allowNull: false,
                 type: Sequelize.ENUM('wildcard', 'triple_caption', 'bench_boost'),
                 defaultValue: 'wildcard',
+              },
+              facebook_id: {
+                allowNull: true,
+                type: Sequelize.STRING,
+                unique: true,
               },
               createdAt: Sequelize.DATE,
               updatedAt: Sequelize.DATE,
