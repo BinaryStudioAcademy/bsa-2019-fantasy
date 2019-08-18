@@ -16,6 +16,7 @@ export default (orm, DataTypes) => {
           key: 'id'
         }
       },
+      team_score: DataTypes.INTEGER,
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE
     },

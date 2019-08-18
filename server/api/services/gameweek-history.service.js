@@ -8,3 +8,12 @@ export const getCurrentHistoryById = async (userId, gameweekId) => {
     id,
   };
 };
+
+export const getHistoriesByUserId = async userId => {
+  const histories = await gameweekHistoryRepository.getByUserId(userId);
+  
+  const now = new Date();
+  const finishedHistories = histories.filter(history => history.gameweek.start < now);
+
+  return finishedHistories;
+}

@@ -5,7 +5,6 @@ import schedule from 'node-schedule';
 import playerRepository from '../data/repositories/player.repository';
 import gameweekRepository from '../data/repositories/gameweek.repository';
 import calculatePlayerPrice from '../helpers/calculate-player-price.helper';
-import recalculateTeamsScore from './teamScoreRecalculator';
 
 let isFirstLaunch = true;
 
@@ -37,11 +36,9 @@ const gameweekScheduler = async () => {
 
   schedule.scheduleJob('players-price-recalculation', currentGameweek.end, (fireDate) => {
     console.log(`>>> Players price recalculation! ${fireDate}`);
-    recalculateTeamsScore(fireDate);
     gameweekScheduler();
   });
   console.log(`>>> Players price recalculation job scheduled on: ${currentGameweek.end}`);
-  recalculateTeamsScore(currentGameweek);
 };
 
 export default gameweekScheduler;

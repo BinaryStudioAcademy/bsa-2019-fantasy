@@ -1,8 +1,21 @@
+import moment from 'moment';
+
 import userRepository from '../data/repositories/user.repository';
 import gameweekHistoryRepository from '../data/repositories/gameweek-history.repository';
 import teamMemberHistoryReposiory from '../data/repositories/team-member-history.repository';
+import gameweekRepository from '../data/repositories/gameweek.repository';
 
-const recalculateTeamsScore = async (gameweek) => {
+const recalculateTeamsScore = async () => {
+  const gameweeks = await gameweekRepository.getAll();
+  const currentGameweek = gameweeks.find((w) => {
+    const now = moment().add(2, 's');
+    return moment(w.start).isBefore(now) && moment(w.end).isAfter(now);
+  });
+
+  if (!currentGameweek) {
+    return;
+  }
+
   const users = await userRepository.getAll();
 
   await Promise.all(
@@ -11,7 +24,7 @@ const recalculateTeamsScore = async (gameweek) => {
 
       const gameweekHistory = await gameweekHistoryRepository.getByUserGameweekId(
         user.id,
-        gameweek.id,
+        currentGameweek.id,
       );
       if (!gameweekHistory) return;
 
@@ -19,7 +32,6 @@ const recalculateTeamsScore = async (gameweek) => {
         await teamMemberHistoryReposiory
           .getByGameweekId(gameweekHistory.id)
           .map(async ({ is_on_bench, is_captain, player_stats }) => {
-
             if (!is_on_bench) {
               if (is_captain) {
                 score += 2 * player_stats.player_score;
@@ -29,12 +41,14 @@ const recalculateTeamsScore = async (gameweek) => {
             }
           }),
       );
-
-      console.log({ gameweek: gameweek.name, user: user.name, score });
+      if(gameweekHistory.team_score !== score) {
+        const result = await gameweekHistoryRepository.setTeamScoreById(gameweekHistory.id, score);
+        console.log(result);
+      } else {
+        console.log('team score have not been changed');
+      }
     }),
   );
-
-  console.log('finish');
 };
 
 export default recalculateTeamsScore;
