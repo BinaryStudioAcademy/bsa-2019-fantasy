@@ -27,7 +27,7 @@ const TeamList = ({
         total_points={lastDroppedItem.points}
         fixture={lastDroppedItem.fixture}
         isGameweek={isGameweek}
-        onOpen={onOpen}
+        onOpen={arr.length === starters.length ? onOpen : undefined}
         captainId={captainId}
         viceCaptainId={viceCaptainId}
       />

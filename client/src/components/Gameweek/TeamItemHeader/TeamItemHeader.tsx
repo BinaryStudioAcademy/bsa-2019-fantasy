@@ -7,7 +7,7 @@ type Props = {
 const TeamItemHeader = ({ name }: Props) => {
   return (
     <thead>
-      <tr className='bg-green-200'>
+      <tr className='table-header'>
         <td className='w-1/12' align='center' valign='middle'></td>
         <td className='w-1/12 text-center'></td>
         <td className='w-5/12 text-base' valign='middle'>

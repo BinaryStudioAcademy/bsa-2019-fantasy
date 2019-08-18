@@ -21,6 +21,9 @@ export interface PlayerDraggableProps {
   club: string;
   type: string;
   points: number;
+  form: string;
+  gameweek_points: string;
+  fixture: string;
   isGameweek: boolean;
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
@@ -35,6 +38,9 @@ const PlayerSelection = ({
   club,
   type,
   points,
+  form,
+  gameweek_points,
+  fixture,
   isGameweek,
   onOpen,
   captainId,
@@ -50,6 +56,9 @@ const PlayerSelection = ({
       name,
       club,
       points,
+      form,
+      gameweek_points,
+      fixture,
     },
     collect: (monitor) => ({ opacity: monitor.isDragging ? 1 : 0 }),
   });
