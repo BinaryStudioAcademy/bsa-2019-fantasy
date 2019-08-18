@@ -27,6 +27,8 @@ const PlayersComparisonPage: React.FC<IProps> = (props: IProps) => {
     document.title = 'Players Comparison | Fantasy Football League';
   }, []);
 
+  if (!props.location.state) return <>{<Redirect to='/404' />}</>;
+
   const renderTable = (player: any) => {
     const columns = [
       {
@@ -103,7 +105,6 @@ const PlayersComparisonPage: React.FC<IProps> = (props: IProps) => {
 
     return (
       <div className='table-wrapper flex flex-col bg-white shadow-figma rounded my-4 w-full'>
-        {!props.location.state && <Redirect to='/404' />}
         <CompareTable
           columns={columns}
           data={player.matches}
@@ -113,8 +114,8 @@ const PlayersComparisonPage: React.FC<IProps> = (props: IProps) => {
     );
   };
 
-  const firstPlayer = props.location!.state.comparisonData[0];
-  const secondPlayer = props.location!.state.comparisonData[1];
+  const firstPlayer = props.location.state.comparisonData[0];
+  const secondPlayer = props.location.state.comparisonData[1];
   const firstPlayerMatches: IMatchStats[] = [];
   const secondPlayerMatches: IMatchStats[] = [];
 
@@ -163,7 +164,7 @@ const PlayersComparisonPage: React.FC<IProps> = (props: IProps) => {
 
   return (
     <>
-      <PlayersHighlights comparisonData={props.location!.state.comparisonData} />
+      <PlayersHighlights comparisonData={props.location.state.comparisonData} />
 
       <section className='footer-stats my-6'>
         <div className='footer-tables flex flex-wrap'>
