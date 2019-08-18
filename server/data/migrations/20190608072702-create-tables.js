@@ -312,6 +312,14 @@ export default {
                 allowNull: false,
                 type: Sequelize.BOOLEAN,
               },
+              current_rank: {
+                allowNull: false,
+                type: Sequelize.INTEGER,
+              },
+              last_rank: {
+                allowNull: false,
+                type: Sequelize.INTEGER,
+              },
               createdAt: Sequelize.DATE,
               updatedAt: Sequelize.DATE,
             },
