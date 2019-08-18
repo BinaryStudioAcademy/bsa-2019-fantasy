@@ -8,3 +8,10 @@ export const getCurrentHistoryById = async (userId, gameweekId) => {
     id,
   };
 };
+
+export const postCurrentHistoryById = async (userId, gameweekId) => {
+  const { id } = await gameweekHistoryRepository.addByUserGameweekId(userId, gameweekId);
+  return {
+    id,
+  };
+};

@@ -7,6 +7,7 @@ export default (models) => {
     LeagueParticipant,
     GameweekHistory,
     Game,
+    Gameweek,
     FootballClub,
     Event,
     TeamMemberHistory,
@@ -33,6 +34,15 @@ export default (models) => {
   TeamMemberHistory.belongsTo(GameweekHistory, {
     foreignKey: 'gameweek_history_id',
     as: 'gameweek_history',
+  });
+
+  GameweekHistory.belongsTo(Gameweek, {
+    foreignKey: 'gameweek_id',
+    as: 'gameweek',
+  });
+  GameweekHistory.belongsTo(User, {
+    foreignKey: 'user_id',
+    as: 'user',
   });
   Game.belongsTo(FootballClub, { foreignKey: 'hometeam_id', as: 'hometeam' });
   Game.belongsTo(FootballClub, { foreignKey: 'awayteam_id', as: 'awayteam' });

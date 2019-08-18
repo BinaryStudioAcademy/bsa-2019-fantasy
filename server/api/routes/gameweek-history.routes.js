@@ -32,7 +32,7 @@ router
   })
   .post('/user-team/:user/:gameweek', (req, res, next) => {
     gameweekHistoryService
-      .getCurrentHistoryById(req.params.user, req.params.gameweek)
+      .postCurrentHistoryById(req.params.user, req.params.gameweek)
       .then((gameweekHistoryId) => {
         teamMemberHistoryService
           .postTeamMemberHistory(req.body, gameweekHistoryId)

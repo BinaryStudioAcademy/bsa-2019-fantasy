@@ -13,6 +13,7 @@ class TeamMemberHistoryRepository extends BaseRepository {
   createTeamMemberHistory(teamMemberHistory, gameweekHistoryId) {
     return this.model.create({
       ...teamMemberHistory,
+      player_id: teamMemberHistory.player_stats.id,
       gameweek_history_id: gameweekHistoryId.id,
     });
   }
