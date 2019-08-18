@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import update from 'immutability-helper';
 
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -13,9 +13,10 @@ import PlayerSelectionDroppable, {
 import { PlayerDraggableProps } from '../PlayerSelection';
 import { PlayerTypes } from '../PlayerSelection/types';
 import { getFieldPlayersUniformUrl, getGoalkeepersUniformUrl } from 'helpers/images';
+import { postGameweekHistory } from 'containers/Routing/fetchGameweeks/actions';
 import Button from '../../../components/Button';
-import './styles.scss';
 import Spinner from 'components/Spinner';
+import './styles.scss';
 
 export interface TeamSelectionProps {
   isGameweek: boolean;
@@ -32,10 +33,10 @@ const TeamSelection = ({
   onOpen,
   players,
 }: TeamSelectionProps) => {
+  const dispatch = useDispatch();
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
-  const gameweekPlayers = useSelector(
-    (state: RootState) => state.gameweeks.gameweeks_history,
-  );
+  const { user } = useSelector((state: RootState) => state.profile);
+  const gameweeks = useSelector((state: RootState) => state.gameweeks.gameweeks);
 
   const [playersOnBench, setBench] = useState<Array<any>>([
     {
@@ -196,6 +197,30 @@ const TeamSelection = ({
     console.log(`BENCH PLAYERS \n  ${bench}`);
     console.log(`CAPTAINID ${captainId}`);
     console.log(`VICECAPTAINID ${viceCaptainId}`);
+
+    const query = [
+      ...pitch.map((el) => {
+        return {
+          is_on_bench: false,
+          is_captain: el === captainId ? true : false,
+          player_id: el,
+        };
+      }),
+      ...bench.map((el) => {
+        return {
+          is_on_bench: true,
+          is_captain: el === captainId ? true : false,
+          player_id: el,
+        };
+      }),
+    ];
+    console.log(query);
+    console.log('user' + user!.id);
+    console.log('gameweek' + gameweeks[15]!.id);
+    query.forEach((el) => {
+      console.log(el);
+      dispatch(postGameweekHistory(user!.id, gameweeks[23]!.id, el));
+    });
   };
   //handles drop from bench to the pitch
   const handlePitchDrop = useCallback(

@@ -16,7 +16,6 @@ export const postCurrentHistoryById = async (userId, gameweekId) => {
     history = await gameweekHistoryRepository.addByUserGameweekId(userId, gameweekId);
   }
   const { id } = history;
-  console.log(id);
   return {
     id,
   };

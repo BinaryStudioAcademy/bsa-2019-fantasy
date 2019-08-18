@@ -1,10 +1,5 @@
-export type GameweekHistoryType = [
-  {
-    id: string;
-    name: string;
-    start: string;
-    end: string;
-    createdAt: string;
-    updatedAt: string;
-  },
-];
+export type GameweekHistoryType = {
+  is_on_bench: boolean;
+  is_captain: boolean;
+  player_id: string;
+};

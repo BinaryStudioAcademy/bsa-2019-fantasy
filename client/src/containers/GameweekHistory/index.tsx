@@ -33,7 +33,7 @@ const GameweekHistory = () => {
   );
 
   useEffect(() => {
-    dispatch(fetchGameweekHistory(user!.id, gameweeks[0]!.id));
+    dispatch(fetchGameweekHistory(user!.id, gameweeks[24]!.id));
   }, [dispatch]);
 
   useEffect(() => {

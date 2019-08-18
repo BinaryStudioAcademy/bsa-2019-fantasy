@@ -11,6 +11,7 @@ import {
   FetchGameweeksAction,
   AsyncFetchGameweeksAction,
 } from './action.type';
+import { GameweekHistoryType } from 'types/gameweekHistory.type';
 
 const fetchGameweeksSuccess = (payload: [Club]): FetchGameweeksAction => ({
   type: FETCH_GAMEWEEKS_SUCCESS,
@@ -45,4 +46,13 @@ export const fetchGameweekHistory = (
     gameweekId,
   );
   dispatch(fetchGameweeksHistorySuccess(result));
+};
+
+export const postGameweekHistory = (
+  userId: string,
+  gameweekId: string,
+  data: GameweekHistoryType,
+): AsyncFetchGameweeksAction => async () => {
+  await gameweeksHistoryService.postGameweekHistoryForUserById(userId, gameweekId, data);
+  console.log('here');
 };
