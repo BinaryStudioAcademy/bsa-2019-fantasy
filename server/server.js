@@ -37,7 +37,7 @@ fakerSocket.on('connect', () => {
     // eslint-disable-next-line no-console
     console.log('Received data from faker ', data);
 
-    recalculateTeamsScore()
+    recalculateTeamsScore();
   });
 });
 
