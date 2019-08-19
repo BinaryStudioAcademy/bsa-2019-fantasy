@@ -1,4 +1,5 @@
 import * as clubsService from 'services/clubService';
+
 import { Club } from 'types/club.type';
 import {
   FETCH_CLUBS_REQUEST,

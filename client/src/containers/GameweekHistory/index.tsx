@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { useSelector, useDispatch } from 'react-redux';
+
 import { Link } from 'react-router-dom';
 
 import { Line as LineChart } from 'react-chartjs-2';
@@ -9,6 +11,8 @@ import TeamSelection, { GameweekSelectionProps } from 'components/Gameweek/TeamS
 
 import { RootState } from 'store/types';
 import { fetchGameweekHistory } from 'containers/Routing/fetchGameweeks/actions';
+
+import { joinRoom } from 'helpers/socket';
 
 import './styles.scss';
 
@@ -27,7 +31,7 @@ const mockChartData = {
   ],
 };
 
-const GameweekHistory = ({ currentGameweek, userId }: GameweekSelectionProps) => {
+const GameweekHistory = ({ currentGameweek, userId, favorite_club }: any/*GameweekSelectionProps*/) => {
   const dispatch = useDispatch();
   const gameweekPlayers = useSelector(
     (state: RootState) => state.gameweeks.gameweeks_history,
@@ -38,7 +42,9 @@ const GameweekHistory = ({ currentGameweek, userId }: GameweekSelectionProps) =>
     dispatch(fetchGameweekHistory(userId, currentGameweek.id));
   }, [dispatch]);
 
+
   useEffect(() => {
+    joinRoom(favorite_club);
     document.title = 'Home | Fantasy Football League';
   }, []);
 
@@ -87,4 +93,8 @@ const GameweekHistory = ({ currentGameweek, userId }: GameweekSelectionProps) =>
   );
 };
 
-export default GameweekHistory;
+const mapStateToProps = (rootState: RootState) => ({
+  favorite_club: rootState.profile.user ? rootState.profile.user.favorite_club_id : null,
+});
+
+export default connect(mapStateToProps)(GameweekHistory);
