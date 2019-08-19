@@ -39,7 +39,7 @@ export default (models) => {
 
   GameweekHistory.belongsTo(Gameweek, {
     foreignKey: 'gameweek_id',
-    as: 'gameweek',
+    as: 'Gameweek',
   });
   GameweekHistory.belongsTo(User, {
     foreignKey: 'user_id',

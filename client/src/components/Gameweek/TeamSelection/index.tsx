@@ -241,11 +241,9 @@ const TeamSelection = ({
           },
         }),
       );
-      console.log(playersOnPitch);
       droppedPlayerPitchIds.splice(index, 1, id);
 
       setPlayerPitchIds([...droppedPlayerPitchIds]);
-      console.log(droppedPlayerPitchIds);
       setBench(
         update(playersOnBench, {
           [benchIndex]: {
