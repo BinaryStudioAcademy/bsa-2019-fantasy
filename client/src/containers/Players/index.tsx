@@ -1,7 +1,7 @@
 import React, { SyntheticEvent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import ReactTable from 'react-table';
 
 import { RootState } from 'store/types';
@@ -18,9 +18,11 @@ import PlayerDialog from 'components/PlayerDialog';
 import { getClubLogoUrl } from 'helpers/images';
 import { Club } from 'types/club.type';
 
+import { FaPlus, FaTimes } from 'react-icons/fa';
+
 import './styles.scss';
 
-type Props = {
+type IProps = {
   players: [Player?];
   loading: boolean;
   error: string | null;
@@ -32,20 +34,24 @@ type Props = {
   playerData: PlayerDataType;
 };
 
-type State = {
+type IState = {
   playerHighlightData: any;
+  comparisonData: any;
   currentPlayer?: Player;
   searchBarText: string;
+  redirect: boolean;
 };
 
-class PlayersPage extends React.Component<Props, State> {
-  state: State = {
+class PlayersPage extends React.Component<IProps, IState> {
+  state: IState = {
     playerHighlightData: {},
+    comparisonData: [],
     searchBarText: '',
+    redirect: false,
   };
   table: any;
 
-  constructor(props: any) {
+  constructor(props: IProps) {
     super(props);
     this.table = React.createRef();
     this.onFetchData = this.onFetchData.bind(this);
@@ -68,9 +74,51 @@ class PlayersPage extends React.Component<Props, State> {
     }
   };
 
+  onComparisonAdd = async (props: any) => {
+    if (props.original) {
+      const player = this.props.players.find(
+        (player) => player && props.original.id === player.id,
+      );
+
+      if (this.state.comparisonData.length) {
+        const playerIndex = this.state.comparisonData.findIndex(
+          (player: any) => player && props.original.id === player.id,
+        );
+
+        if (this.state.comparisonData.length == 2 && playerIndex === -1) {
+          return;
+        }
+
+        if (playerIndex !== -1) {
+          const preparedHighlightsArray = [...this.state.comparisonData];
+          preparedHighlightsArray.splice(playerIndex, 1);
+
+          this.setState({
+            ...this.state,
+            comparisonData: [...preparedHighlightsArray],
+          });
+
+          return;
+        }
+      }
+
+      await this.props.fetchDataForPlayer(props.original.id, props.original.club_id);
+      player!.gameweeks_stats = this.props.playerData.history;
+
+      this.setState({
+        ...this.state,
+        comparisonData: [...this.state.comparisonData, player],
+      });
+    }
+  };
+
+  onComparisonRedirect = () => {
+    this.setState({ ...this.state, redirect: true });
+  };
+
   componentDidMount = () => {
     document.title = 'Players | Fantasy Football League';
-  }
+  };
 
   onModalDismiss = () => {
     this.props.resetPlayerDialogData();
@@ -169,22 +217,32 @@ class PlayersPage extends React.Component<Props, State> {
     },
     {
       Header: () => this.renderHeader('Info'),
-      className: 'flex items-center bg-white rounded-r',
-      Cell: (props: any) => (
-        <button
-          className='w-4 h-4 justify-center leading-none flex ml-auto bg-background rounded-full text-xs font-semibold'
-          onClick={() => {
-            this.setState({
-              currentPlayer: this.props.players.find(
-                (p: any) => p && props.original.id === p.id,
-              ),
-            });
-            this.props.fetchDataForPlayer(props.original.id, props.original.club_id);
-          }}
-        >
-          i
-        </button>
-      ),
+      className: 'flex items-center justify-end bg-white rounded-r',
+      Cell: (props: any) => {
+        const addedToComparison = this.state.comparisonData.find(
+          (player: any) => player.id === props.original.id,
+        );
+        return (
+          <>
+            <button className='mr-4' onClick={() => this.onComparisonAdd(props)}>
+              {addedToComparison ? <FaTimes /> : <FaPlus />}
+            </button>
+            <button
+              className='w-4 h-4 justify-center mr-4 leading-none flex bg-background rounded-full text-xs font-semibold'
+              onClick={() => {
+                this.setState({
+                  currentPlayer: this.props.players.find(
+                    (p: any) => p && props.original.id === p.id,
+                  ),
+                });
+                this.props.fetchDataForPlayer(props.original.id, props.original.club_id);
+              }}
+            >
+              i
+            </button>
+          </>
+        );
+      },
     },
   ];
 
@@ -242,10 +300,34 @@ class PlayersPage extends React.Component<Props, State> {
     if (this.props.loading) return 'spinner';
     return (
       <>
+        {this.state.redirect && (
+          <Redirect
+            to={{
+              pathname: '/players-comparison',
+              state: {
+                comparisonData: this.state.comparisonData,
+              },
+            }}
+          />
+        )}
         <PlayerHighlight player={this.state.playerHighlightData} />
 
         <section className='allStats my-6'>
           <div className='filters text-sm flex mt-6 mb-1'>
+            <div className='font-semibold'>
+              {this.state.comparisonData.length === 2 ? (
+                <button
+                  className='bg-yellow-400 text-white font-bold py-2 px-4 rounded'
+                  onClick={() => this.onComparisonRedirect()}
+                >
+                  Compare
+                </button>
+              ) : (
+                <button className='bg-primary text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed'>
+                  Comparison queue: {this.state.comparisonData.length} (need 2)
+                </button>
+              )}
+            </div>
             <div className='ml-auto'>
               <SearchBar
                 onChange={this.onSearchChange}

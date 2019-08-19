@@ -23,6 +23,7 @@ export type Player = {
   createdAt: string;
   updatedAt: string;
   club_id: number;
+  gameweeks_stats?: any;
 };
 
 export type PlayerFilter = {

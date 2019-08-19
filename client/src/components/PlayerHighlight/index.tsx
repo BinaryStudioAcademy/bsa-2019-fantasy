@@ -69,6 +69,7 @@ const PlayerHighlight = ({ player }: { player: Player }) => {
     ],
     datasets: [
       {
+        label: player.first_name + ' ' + player.second_name,
         data: dataset,
         backgroundColor: 'rgba(30, 227, 207, .5)',
         borderColor: 'rgba(30, 227, 207, .5)',
@@ -104,6 +105,16 @@ const PlayerHighlight = ({ player }: { player: Player }) => {
     },
     tooltips: {
       intersect: false,
+      enabled: true,
+      callbacks: {
+        label: function(tooltipItem: any, data: any) {
+          return (
+            data.datasets[tooltipItem.datasetIndex].label +
+            ' : ' +
+            data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
+          );
+        },
+      },
     },
   };
 

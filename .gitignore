@@ -83,4 +83,6 @@ build
 .env.test.local
 .env.production.local
 
+# Lock file
 package-lock.json
+yarn.lock

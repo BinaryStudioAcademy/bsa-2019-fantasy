@@ -26,6 +26,7 @@ export default (models) => {
     foreignKey: 'league_id',
     as: 'league_participants',
   });
+  League.belongsTo(Gameweek, { foreignKey: 'start_from', as: 'gameweek' });
 
   TeamMemberHistory.belongsTo(PlayerStat, {
     foreignKey: 'player_id',
@@ -47,6 +48,8 @@ export default (models) => {
   Game.belongsTo(FootballClub, { foreignKey: 'hometeam_id', as: 'hometeam' });
   Game.belongsTo(FootballClub, { foreignKey: 'awayteam_id', as: 'awayteam' });
   Event.belongsTo(PlayerMatchStat, { foreignKey: 'player_match_stat_id', as: 'player' });
+
+  GameweekHistory.belongsTo(Gameweek, { foreignKey: 'gameweek_id', as: 'gameweek' });
 
   // PlayerMatchStat.hasOne(PlayerStat, { foreignKey: 'player_id', as: 'player' });
 

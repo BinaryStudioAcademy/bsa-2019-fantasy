@@ -30,6 +30,7 @@ router
       })
       .catch(next);
   })
+
   .post('/user-team/:user/:gameweek', (req, res, next) => {
     gameweekHistoryService
       .postCurrentHistoryById(req.params.user, req.params.gameweek)
@@ -40,7 +41,13 @@ router
             return res.json(players);
           })
           .catch(next);
-      })
+      });
+  })
+  .get('/user-team/:user', (req, res, next) => {
+    gameweekHistoryService
+      .getHistoriesByUserId(req.params.user)
+      .then((value) => res.json(value))
+
       .catch(next);
   });
 
