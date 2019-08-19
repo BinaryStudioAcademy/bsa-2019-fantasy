@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+
 import { Link } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { Line as LineChart } from 'react-chartjs-2';
+import openSocket from 'socket.io-client';
 
+import { RootState } from 'store/types';
 import TeamSelection from 'components/Gameweek/TeamSelection';
 import './styles.scss';
+import handlers from '../../helpers/sockets';
 
 const mockChartData = {
   labels: ['GW1', 'GW2', 'GW3', 'GW4', 'GW5', 'GW6', 'GW7'],
@@ -21,8 +26,11 @@ const mockChartData = {
   ],
 };
 
-const GameweekHistory = () => {
+const GameweekHistory = ({ favorite_club }) => {
   useEffect(() => {
+    const socket = openSocket('http://localhost:5002');
+    handlers(socket);
+    socket.emit('createRoom', favorite_club)
     document.title = 'Home | Fantasy Football League';
   }, []);
 
@@ -66,4 +74,8 @@ const GameweekHistory = () => {
   );
 };
 
-export default GameweekHistory;
+const mapStateToProps = (rootState: RootState) => ({
+  favorite_club: rootState.profile.user ? rootState.profile.user.favorite_club_id : null,
+});
+
+export default connect(mapStateToProps)(GameweekHistory);
