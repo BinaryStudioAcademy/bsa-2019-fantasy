@@ -14,6 +14,10 @@
     }
 
     .movement {
+      svg {
+        fill: rgb(148, 150, 140);
+      }
+
       &.up {
         svg {
           fill: #1ee3cf;
@@ -110,5 +114,31 @@
     font-weight: 600;
     line-height: 16px;
     text-transform: uppercase;
+  }
+}
+
+.create-league {
+  .checkbox-styled {
+    display: block;
+    transition: 0.2s;
+
+    input[type='checkbox'] {
+      display: none;
+      + span {
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 15px;
+        text-align: center;
+        cursor: pointer;
+        display: block;
+        position: relative;
+      }
+    }
+
+    &.checked {
+      color: #fff;
+      background-color: #4fd1c5;
+      border-color: transparent;
+    }
   }
 }

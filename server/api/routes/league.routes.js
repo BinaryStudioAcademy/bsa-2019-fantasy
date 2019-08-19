@@ -1,8 +1,10 @@
 import { Router } from 'express';
 import * as leagueService from '../services/league.service';
+import * as leagueParticipantService from '../services/league-participant.service';
 import {
   createLeagueMiddleware,
-  joinLeagueMiddleware,
+  joinPrivateLeagueMiddleware,
+  joinPublicLeagueMiddleware,
 } from '../middlewares/league.middleware';
 import jwtMiddleware from '../middlewares/jwt.middleware';
 
@@ -23,10 +25,10 @@ router
   )
   .post('/', createLeagueMiddleware, jwtMiddleware, (req, res, next) =>
     leagueService
-      .createLeague(req.body.name)
+      .createLeague(req.body)
       .then((value) =>
         leagueService
-          .joinLeague(req.user.id, value.id, true)
+          .joinLeagueById(req.user.id, value.id, true)
           .then(() =>
             res.json({
               message: `Successfully created a league with '${value.name}' name`,
@@ -36,27 +38,54 @@ router
       )
       .catch(next),
   )
-  .post('/join', joinLeagueMiddleware, jwtMiddleware, (req, res, next) => {
-    leagueService
-      .joinLeague(req.user.id, req.body.code, false)
-      .then(() => res.json({ message: 'Successfully joined a league' }))
-      .catch(next);
-  })
-
+  .post(
+    '/join/private',
+    joinPrivateLeagueMiddleware,
+    jwtMiddleware,
+    async (req, res, next) => {
+      try {
+        const result = await leagueParticipantService.checkIfAParticipantById(
+          req.user.id,
+          req.body.code,
+        );
+        if (result.length) {
+          res.status(400).json({ message: 'You have already joined this league' });
+        } else {
+          await leagueService.joinLeagueById(req.user.id, req.body.code, false);
+          res.json({ message: 'Successfully joined a league' });
+        }
+      } catch (err) {
+        next(err);
+      }
+    },
+  )
+  .post(
+    '/join/public',
+    joinPublicLeagueMiddleware,
+    jwtMiddleware,
+    async (req, res, next) => {
+      try {
+        const result = await leagueParticipantService.checkIfAParticipantByName(
+          req.user.id,
+          req.body.code,
+        );
+        if (result.length) {
+          res.status(400).json({ message: 'You have already joined this league' });
+        } else {
+          await leagueService.joinLeagueByName(req.user.id, req.body.code, false);
+          res.json({ message: 'Successfully joined a league' });
+        }
+      } catch (err) {
+        next(err);
+      }
+    },
+  )
   .post('/search/public', (req, res, next) => {
     leagueService
-      .getLeaguesByName(req.body.filter)
+      .searchLeaguesByName(req.body.filter)
       .then((value) => res.json(value))
       .catch(next);
   })
-
-  .post('/search/private', (req, res, next) => {
-    leagueService
-      .getLeaguesByNameOrId(req.body.filter)
-      .then((value) => res.json(value))
-      .catch(next);
-  })
-
   .put('/:id', (req, res, next) =>
     leagueService
       .updateLeague(req.params.id, req.body)
@@ -70,9 +99,10 @@ router
       .catch(next),
   );
 /* eslint-disable */
-router.use(function(err, req, res, next) {
-  res.status(500).json({ message: 'Something went wrong! Try again.' });
-});
+// router.use(function(err, req, res, next) {
+//   console.log(req.body);
+//   res.status(500).json({ message: err });
+// });
 /* eslint-enable */
 
 export default router;

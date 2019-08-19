@@ -3,11 +3,31 @@ import React, { useEffect } from 'react';
 import PlayersHighlights from 'components/PlayersComparison/PlayersHighlights';
 
 import CompareTable from 'components/PlayersComparison/CompareTable';
+import { Redirect } from 'react-router';
 
-const PlayersComparisonPage = () => {
+interface IMatchStats {
+  gameweekName: string;
+  opp: string;
+  res: string;
+  goals: string;
+  assists: string;
+  missed_passes: string;
+  goals_conceded: string;
+  saves: string;
+  yellow_cards: string;
+  red_cards: string;
+}
+
+interface IProps {
+  location?: any;
+}
+
+const PlayersComparisonPage: React.FC<IProps> = (props: IProps) => {
   useEffect(() => {
     document.title = 'Players Comparison | Fantasy Football League';
   }, []);
+
+  if (!props.location.state) return <>{<Redirect to='/404' />}</>;
 
   const renderTable = (player: any) => {
     const columns = [
@@ -19,29 +39,15 @@ const PlayersComparisonPage = () => {
         ),
       },
       {
-        Header: () => <span className='table-title uppercase font-bold'>HTM</span>,
-        accessor: 'hometeam',
+        Header: () => <span className='table-title uppercase font-bold'>OPP</span>,
+        accessor: 'opp',
         Cell: (props: { value: string }) => (
           <span className='flex justify-center items-center'>{props.value}</span>
         ),
       },
       {
-        Header: () => <span className='table-title uppercase font-bold'>ATM</span>,
-        accessor: 'awayteam',
-        Cell: (props: { value: string }) => (
-          <span className='flex justify-center items-center'>{props.value}</span>
-        ),
-      },
-      {
-        Header: () => <span className='table-title uppercase font-bold'>SCR</span>,
-        accessor: 'playerScore',
-        Cell: (props: { value: string }) => (
-          <span className='flex justify-center items-center'>{props.value}</span>
-        ),
-      },
-      {
-        Header: () => <span className='table-title uppercase font-bold'>PRC</span>,
-        accessor: 'playerPrice',
+        Header: () => <span className='table-title uppercase font-bold'>RES</span>,
+        accessor: 'res',
         Cell: (props: { value: string }) => (
           <span className='flex justify-center items-center'>{props.value}</span>
         ),
@@ -62,14 +68,14 @@ const PlayersComparisonPage = () => {
       },
       {
         Header: () => <span className='table-title uppercase font-bold'>MSPS</span>,
-        accessor: 'missedPasses',
+        accessor: 'missed_passes',
         Cell: (props: { value: string }) => (
           <span className='flex justify-center items-center'>{props.value}</span>
         ),
       },
       {
         Header: () => <span className='table-title uppercase font-bold'>GLSCD</span>,
-        accessor: 'goalsConceded',
+        accessor: 'goals_conceded',
         Cell: (props: { value: string }) => (
           <span className='flex justify-center items-center'>{props.value}</span>
         ),
@@ -83,14 +89,14 @@ const PlayersComparisonPage = () => {
       },
       {
         Header: () => <span className='table-title uppercase font-bold'>YCRDS</span>,
-        accessor: 'yellowCards',
+        accessor: 'yellow_cards',
         Cell: (props: { value: string }) => (
           <span className='flex justify-center items-center'>{props.value}</span>
         ),
       },
       {
         Header: () => <span className='table-title uppercase font-bold'>RCRDS</span>,
-        accessor: 'redCards',
+        accessor: 'red_cards',
         Cell: (props: { value: string }) => (
           <span className='flex justify-center items-center'>{props.value}</span>
         ),
@@ -108,112 +114,61 @@ const PlayersComparisonPage = () => {
     );
   };
 
-  const data = [
+  const firstPlayer = props.location.state.comparisonData[0];
+  const secondPlayer = props.location.state.comparisonData[1];
+  const firstPlayerMatches: IMatchStats[] = [];
+  const secondPlayerMatches: IMatchStats[] = [];
+
+  firstPlayer.gameweeks_stats.forEach((stats: any) => {
+    firstPlayerMatches.push({
+      gameweekName: stats.gameweek.number,
+      opp: stats.game.opp,
+      res: stats.game.res,
+      goals: stats.stats.goals,
+      assists: stats.stats.assists,
+      missed_passes: stats.stats.missed_passes,
+      goals_conceded: stats.stats.goals_conceded,
+      saves: stats.stats.saves,
+      yellow_cards: stats.stats.yellow_cards,
+      red_cards: stats.stats.red_cards,
+    });
+  });
+
+  secondPlayer.gameweeks_stats.forEach((stats: any) => {
+    firstPlayerMatches.push({
+      gameweekName: stats.gameweek.number,
+      opp: stats.game.opp,
+      res: stats.game.res,
+      goals: stats.stats.goals,
+      assists: stats.stats.assists,
+      missed_passes: stats.stats.missed_passes,
+      goals_conceded: stats.stats.goals_conceded,
+      saves: stats.stats.saves,
+      yellow_cards: stats.stats.yellow_cards,
+      red_cards: stats.stats.red_cards,
+    });
+  });
+
+  const tableData = [
     {
-      firstName: 'Lucas',
-      secondName: 'Digne',
-      matches: [
-        {
-          gameweekName: 'GW1',
-          hometeam: 'ARS',
-          awayteam: 'BCN',
-          playerScore: 3121,
-          playerPrice: 421,
-          goals: 1,
-          assists: 2,
-          missedPasses: 16,
-          goalsConceded: 0,
-          saves: 0,
-          yellowCards: 1,
-          redCards: 0,
-        },
-        {
-          gameweekName: 'GW1',
-          hometeam: 'DBA',
-          awayteam: 'YAS',
-          playerScore: 1221,
-          playerPrice: 511,
-          goals: 0,
-          assists: 2,
-          missedPasses: 11,
-          goalsConceded: 0,
-          saves: 0,
-          yellowCards: 1,
-          redCards: 0,
-        },
-        {
-          gameweekName: 'GW2',
-          hometeam: 'KXA',
-          awayteam: 'OPA',
-          playerScore: 221,
-          playerPrice: 11,
-          goals: 5,
-          assists: 2,
-          missedPasses: 7,
-          goalsConceded: 0,
-          saves: 0,
-          yellowCards: 2,
-          redCards: 1,
-        },
-      ],
+      firstName: firstPlayer.first_name,
+      secondName: firstPlayer.second_name,
+      matches: [...firstPlayerMatches],
     },
     {
-      firstName: 'Mario',
-      secondName: 'Balotelli',
-      matches: [
-        {
-          gameweekName: 'GW1',
-          hometeam: 'ARS',
-          awayteam: 'BCN',
-          playerScore: 3121,
-          playerPrice: 421,
-          goals: 1,
-          assists: 2,
-          missedPasses: 16,
-          goalsConceded: 0,
-          saves: 0,
-          yellowCards: 1,
-          redCards: 0,
-        },
-        {
-          gameweekName: 'GW1',
-          hometeam: 'DBA',
-          awayteam: 'YAS',
-          playerScore: 1221,
-          playerPrice: 511,
-          goals: 0,
-          assists: 2,
-          missedPasses: 11,
-          goalsConceded: 0,
-          saves: 0,
-          yellowCards: 1,
-          redCards: 0,
-        },
-        {
-          gameweekName: 'GW2',
-          hometeam: 'KXA',
-          awayteam: 'OPA',
-          playerScore: 221,
-          playerPrice: 11,
-          goals: 5,
-          assists: 2,
-          missedPasses: 7,
-          goalsConceded: 0,
-          saves: 0,
-          yellowCards: 2,
-          redCards: 1,
-        },
-      ],
+      firstName: secondPlayer.first_name,
+      secondName: secondPlayer.second_name,
+      matches: [...secondPlayerMatches],
     },
   ];
 
   return (
     <>
-      <PlayersHighlights />
+      <PlayersHighlights comparisonData={props.location.state.comparisonData} />
 
       <section className='footer-stats my-6'>
         <div className='footer-tables flex flex-wrap'>
-          {data.map((player) => renderTable(player))}
+          {tableData.map((player) => renderTable(player))}
         </div>
       </section>
     </>

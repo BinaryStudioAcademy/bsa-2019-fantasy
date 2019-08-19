@@ -1,5 +1,7 @@
-import passport from "passport";
+import passport from 'passport';
 
-export default passport.authenticate("facebook", {
-    failureRedirect: "/login"
+import getClientURL from '../../helpers/client-url.helper';
+
+export default passport.authenticate('facebook', {
+  failureRedirect: `${getClientURL()}/login`,
 });

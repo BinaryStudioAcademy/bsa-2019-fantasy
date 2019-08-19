@@ -6,19 +6,17 @@ import { times } from 'lodash';
 import { FaStar } from 'react-icons/fa';
 
 import { createLeagueAction } from '../actions';
-import { RootState } from 'store/types';
 
 type Props = {
-  isLoading: boolean;
-  error: string | null;
-  success: string | null;
   createLeagueAction: typeof createLeagueAction;
 };
 
-const CreateLeague = ({ isLoading, error, success, createLeagueAction }: Props) => {
+const CreateLeague = ({ createLeagueAction }: Props) => {
+  const [isLoading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [gameweek, setGameweek] = useState('Gameweek 1');
   const [isNameValid, setValidation] = useState(true);
+  const [privacy, setPrivacy] = useState('public');
 
   const handleChange = (name: string) => {
     setName(name);
@@ -31,11 +29,33 @@ const CreateLeague = ({ isLoading, error, success, createLeagueAction }: Props) 
     return isNameValid;
   };
 
-  const handleSubmit = (event: React.SyntheticEvent) => {
+  const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    validateName();
+    const valid = validateName();
+    if (!valid || isLoading) {
+      return;
+    }
 
-    createLeagueAction({ name });
+    const isPrivate = privacy === 'private';
+    setLoading(true);
+
+    try {
+      await createLeagueAction({
+        name,
+        private: isPrivate,
+        start_from: Number(gameweek.split(' ')[1]),
+      });
+    } catch {
+      console.log('Something went wrong!');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const changePrivacy = (value, privacy) => {
+    if (value) {
+      setPrivacy(privacy);
+    }
   };
 
   return (
@@ -81,6 +101,42 @@ const CreateLeague = ({ isLoading, error, success, createLeagueAction }: Props) 
               </div>
             </div>
             <div className='w-full mb-6'>
+              <p className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>
+                Privacy
+              </p>
+              <div className='flex items-center'>
+                <label
+                  className={`checkbox-styled g-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded ${
+                    privacy === 'public' ? 'checked' : ''
+                  }`}
+                >
+                  <input
+                    type='checkbox'
+                    name='public'
+                    value='public'
+                    checked={privacy === 'public'}
+                    onChange={(ev) => changePrivacy(ev.target.checked, 'public')}
+                  />
+                  <span>Public</span>
+                </label>
+                <p className='mx-3'>or</p>
+                <label
+                  className={`checkbox-styled g-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded ${
+                    privacy === 'private' ? 'checked' : ''
+                  }`}
+                >
+                  <input
+                    type='checkbox'
+                    name='private'
+                    value='private'
+                    checked={privacy === 'private'}
+                    onChange={(ev) => changePrivacy(ev.target.checked, 'private')}
+                  />
+                  <span>Private</span>
+                </label>
+              </div>
+            </div>
+            <div className='w-full mb-6'>
               <label
                 className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
                 htmlFor='league-gameweek'
@@ -112,9 +168,9 @@ const CreateLeague = ({ isLoading, error, success, createLeagueAction }: Props) 
               </div>
             </div>
             <button
-              className={`w-40 shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${(!name ||
-                !isNameValid) &&
-                'opacity-50 cursor-not-allowed'}`}
+              className={`w-40 shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${
+                !name || !isNameValid || isLoading ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
               type='submit'
               disabled={!name || !isNameValid || isLoading}
             >
@@ -125,8 +181,6 @@ const CreateLeague = ({ isLoading, error, success, createLeagueAction }: Props) 
                 Maximum length exceeded!
               </span>
             )}
-            {success && <span className='ml-2 font-bold text-teal-600'>{success}</span>}
-            {error && <span className=' ml-2 font-bold text-red-600'>{error}</span>}
           </form>
         </div>
       </div>
@@ -134,16 +188,10 @@ const CreateLeague = ({ isLoading, error, success, createLeagueAction }: Props) 
   );
 };
 
-const mapStateToProps = (rootState: RootState) => ({
-  isLoading: rootState.league.isLoading,
-  error: rootState.league.error,
-  success: rootState.league.success,
-});
-
 const actions = { createLeagueAction };
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 )(CreateLeague);

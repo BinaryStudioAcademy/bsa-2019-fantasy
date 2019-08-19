@@ -12,7 +12,6 @@ const Header = () => {
     { name: 'Leagues', link: '/leagues' },
     { name: 'Live', link: '/live', dot: true },
     { name: 'Players', link: '/players' },
-    { name: 'Players Comparison', link: '/players-comparison' },
     { name: 'Transfers', link: '/transfers' },
     { name: 'Fixtures', link: '/fixtures' },
   ];
