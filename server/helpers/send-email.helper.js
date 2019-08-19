@@ -22,6 +22,7 @@ http://localhost:5003/my-team`,
   };
   // eslint-disable-next-line func-names
   smtpTransport.sendMail(mailOptions, function(err) {
+    // eslint-disable-next-line no-console
     console.log(err);
   });
 };
