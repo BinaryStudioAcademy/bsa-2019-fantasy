@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { feedback } from 'react-feedbacker';
 
@@ -39,21 +39,27 @@ import { loadCurrentUser } from 'containers/Profile/actions';
 import ForgotPassword from 'containers/ChangePassword/ForgotPassword';
 import ResetPassword from 'containers/ChangePassword/ResetPassword';
 
-// Initial data loading
 import { fetchClubs } from './fetchClubs/actions';
 import { fetchGameweeks } from './fetchGameweeks/actions';
 import { preloadClubLogos } from 'helpers/images';
 
 const Routing = () => {
   const dispatch = useDispatch();
-  const { isLoading, user } = useSelector((state: RootState) => state.profile);
+  const { isLoading, user, isAuthorized } = useSelector(
+    (state: RootState) => state.profile,
+  );
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
 
   useEffect(() => {
     dispatch(loadCurrentUser());
-    dispatch(fetchClubs());
-    dispatch(fetchGameweeks());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (isAuthorized) {
+      dispatch(fetchClubs());
+      dispatch(fetchGameweeks());
+    }
+  }, [dispatch, isAuthorized]);
 
   useEffect(() => {
     clubs.length > 0 && preloadClubLogos(clubs, 80);

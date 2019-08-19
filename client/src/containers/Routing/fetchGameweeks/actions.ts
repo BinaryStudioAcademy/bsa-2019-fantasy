@@ -8,7 +8,11 @@ import {
   AsyncFetchGameweeksAction,
 } from './action.type';
 
-const fetchGameweeksSuccess = (payload: [Club]): FetchGameweeksAction => ({
+const fetchGameweeksRequest = (): FetchGameweeksAction => ({
+  type: FETCH_GAMEWEEKS_REQUEST,
+});
+
+const fetchGameweeksSuccess = (payload: Club[]): FetchGameweeksAction => ({
   type: FETCH_GAMEWEEKS_SUCCESS,
   payload: payload,
 });
@@ -19,6 +23,12 @@ const fetchGameweeksFailure = (error: string): FetchGameweeksAction => ({
 });
 
 export const fetchGameweeks = (): AsyncFetchGameweeksAction => async (dispatch) => {
-  const result = await gameweeksService.getGameweeks();
-  dispatch(fetchGameweeksSuccess(result));
+  dispatch(fetchGameweeksRequest());
+
+  try {
+    const result = await gameweeksService.getGameweeks();
+    dispatch(fetchGameweeksSuccess(result));
+  } catch (err) {
+    dispatch(fetchGameweeksFailure(err.message || err));
+  }
 };
