@@ -1,28 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 
-import TeamSelection, { GameweekSelectionProps } from 'components/Gameweek/TeamSelection';
-
-import { RootState } from 'store/types';
+import TeamSelection from 'components/Gameweek/TeamSelection';
 import StatusPlayerModal from 'components/StatusPlayerModal';
 
-import { fetchGameweekHistory } from 'containers/Routing/fetchGameweeks/actions';
 import './styles.scss';
 
-const MyTeam = ({ currentGameweek, userId }: GameweekSelectionProps) => {
-  const dispatch = useDispatch();
-  const gameweekPlayers = useSelector(
-    (state: RootState) => state.gameweeks.gameweeks_history,
-  );
-
-  //fetch players for current gameweek
-  useEffect(() => {
-    dispatch(fetchGameweekHistory(userId, currentGameweek.id));
-  }, [dispatch]);
-
+const MyTeam = () => {
   useEffect(() => {
     document.title = 'Home | Fantasy Football League';
   }, []);
+
   const [showModal, setShowModal] = useState(false);
 
   const [isCaptain, setIsCaptain] = useState(false);
@@ -87,9 +74,6 @@ const MyTeam = ({ currentGameweek, userId }: GameweekSelectionProps) => {
           onOpen={onOpen}
           captainId={captainId}
           viceCaptainId={viceCaptainId}
-          players={gameweekPlayers}
-          currentGameweek={currentGameweek}
-          userId={userId}
         />
       </div>
       {showModal && (

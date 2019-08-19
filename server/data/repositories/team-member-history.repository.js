@@ -6,7 +6,6 @@ class TeamMemberHistoryRepository extends BaseRepository {
     return this.model.findAll({
       where: { gameweek_history_id },
       include: 'player_stats',
-      attributes: ['is_on_bench', 'is_captain'],
     });
   }
 
@@ -15,7 +14,7 @@ class TeamMemberHistoryRepository extends BaseRepository {
       this.model.create({
         ...el,
         player_id: el.player_id,
-        gameweek_history_id: gameweekHistoryId.id,
+        gameweek_history_id: gameweekHistoryId,
       }),
     );
   }

@@ -1,5 +1,6 @@
 import { Thunky } from 'store/types';
-import { Club } from 'types/club.types';
+import { GameweekType } from 'types/gameweek.type';
+import { GameweekHistoryType } from 'types/gameweekHistory.type';
 
 export const FETCH_GAMEWEEKS_REQUEST = 'GAMEWEEKS:FETCH_FETCH_GAMEWEEKS_REQUEST';
 export const FETCH_GAMEWEEKS_SUCCESS = 'GAMEWEEKS:FETCH_FETCH_GAMEWEEKS_SUCCESS';
@@ -16,7 +17,7 @@ type FetchGameweeksRequest = {
 
 type FetchGameweeksSuccess = {
   type: typeof FETCH_GAMEWEEKS_SUCCESS;
-  payload: Club[];
+  payload: GameweekType[];
 };
 
 type FetchGameweeksFailure = {
@@ -30,7 +31,7 @@ type FetchGameweeksHistoryRequest = {
 
 type FetchGameweeksHistorySuccess = {
   type: typeof FETCH_GAMEWEEKS_HISTORY_SUCCESS;
-  payload: Club[];
+  payload: GameweekHistoryType[];
 };
 
 type FetchGameweeksHistoryFailure = {

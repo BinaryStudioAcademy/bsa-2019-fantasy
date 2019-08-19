@@ -8,6 +8,7 @@ import { DndProvider } from 'react-dnd';
 import { RootState } from 'store/types';
 import { GameweekType } from 'types/gameweek.type';
 import { PlayerTypes } from '../PlayerSelection/types';
+import { currentGameweekSelector } from 'store/selectors/current-gameweek.selector';
 
 import PlayerSelectionDroppable, {
   PlayerDroppable,
@@ -28,26 +29,23 @@ export interface GameweekSelectionProps {
   userId: string;
 }
 export interface TeamSelectionProps {
-  isGameweek: boolean;
+  isGameweek?: boolean;
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
   viceCaptainId?: string;
-  players: any;
-  currentGameweek: GameweekType;
-  userId: string;
 }
 
 const TeamSelection = ({
-  isGameweek,
+  isGameweek = false,
   captainId,
   viceCaptainId,
   onOpen,
-  players,
-  currentGameweek,
-  userId,
 }: TeamSelectionProps) => {
   const dispatch = useDispatch();
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
+  const currentGameweek = useSelector(currentGameweekSelector);
+
+  const players = useSelector((state: RootState) => state.gameweeks.gameweeks_history);
 
   const [playersOnBench, setBench] = useState<any[]>([
     {
@@ -224,7 +222,7 @@ const TeamSelection = ({
       }),
     ];
 
-    dispatch(postGameweekHistory(userId, currentGameweek.id, query));
+    currentGameweek && dispatch(postGameweekHistory(currentGameweek.id, query));
   };
 
   //handles drop from bench to the pitch
