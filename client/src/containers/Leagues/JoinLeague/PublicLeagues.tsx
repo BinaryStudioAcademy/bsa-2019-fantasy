@@ -7,6 +7,8 @@ import Autosuggest from 'react-autosuggest';
 import { searchPublicLeagues, joinLeague } from '../actions';
 import { RootState } from 'store/types';
 
+import styles from './styles.module.scss';
+
 type Props = {
   searchPublicLeagues: typeof searchPublicLeagues;
   joinLeague: typeof joinLeague;
@@ -58,8 +60,8 @@ const PublicLeagues = ({ searchPublicLeagues, suggestions, joinLeague }: Props) 
   };
 
   return (
-    <div className='join-league-item w-full md:w-1/2 px-6'>
-      <h3 className='title text-secondary mb-4 font-bold'>Public leagues</h3>
+    <div className={`${styles['join-league-item']} w-full md:w-1/2 px-6`}>
+      <h3 className={`${styles.title} text-secondary mb-4 font-bold`}>Public leagues</h3>
       <p className='mb-2'>
         Public leagues allow you to compete against 20 game players in a classic league.
         You can join up to 3 public leagues.

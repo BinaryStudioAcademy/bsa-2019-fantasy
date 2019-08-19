@@ -5,15 +5,16 @@ import { FaStar } from 'react-icons/fa';
 import PrivateLeagues from './PrivateLeagues';
 import PublicLeagues from './PublicLeagues';
 
-import './styles.scss';
+import styles from './styles.module.scss';
+import header from 'styles/header.module.scss';
 
 const JoinLeague = () => (
-  <div className='join-league'>
+  <div className={styles['join-league']}>
     <div className='container'>
-      <div className='jumbotron paper mb-12 rounded'>
-        <div className='jumbotron-content mt-12'>
-          <h2 className='title text-secondary'>
-            <div className='sub title mb-4 flex items-center'>
+      <div className={`${header.jumbotron} ${header.paper} mb-12 rounded`}>
+        <div className={`${header['jumbotron-content']} mt-12`}>
+          <h2 className={`${header.title} text-secondary`}>
+            <div className={`${header.sub} ${header.title} mb-4 flex items-center`}>
               <FaStar />
               Join a League
             </div>
@@ -21,7 +22,9 @@ const JoinLeague = () => (
           </h2>
         </div>
       </div>
-      <div className='join-league-content paper flex flex-col md:flex-row'>
+      <div
+        className={`${styles['join-league-content']} ${styles.paper} flex flex-col md:flex-row rounded`}
+      >
         <PublicLeagues />
         <PrivateLeagues />
       </div>

@@ -4,6 +4,8 @@ import { bindActionCreators, Dispatch } from 'redux';
 
 import { joinLeague } from '../actions';
 
+import styles from './styles.module.scss';
+
 type Props = {
   joinLeague: typeof joinLeague;
 };
@@ -31,8 +33,8 @@ const PrivateLeagues = ({ joinLeague }: Props) => {
   };
 
   return (
-    <div className='join-league-item w-full md:w-1/2 px-6'>
-      <h3 className='title text-secondary mb-4 font-bold'>Private leagues</h3>
+    <div className={`${styles['join-league-item']} w-full md:w-1/2 px-6`}>
+      <h3 className={`${styles.title} text-secondary mb-4 font-bold`}>Private leagues</h3>
       <p className='mb-4'>
         Join a private league if somebody has given you a league code to enter.
       </p>
