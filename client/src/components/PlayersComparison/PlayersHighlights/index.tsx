@@ -87,6 +87,7 @@ const PlayersHighlights = (props: IProps) => {
     ],
     datasets: [
       {
+        label: firstPlayer.first_name + ' ' + firstPlayer.second_name,
         data: firstDataset,
         backgroundColor: 'rgba(30, 227, 207, .5)',
         borderColor: 'rgba(30, 227, 207, .5)',
@@ -95,6 +96,7 @@ const PlayersHighlights = (props: IProps) => {
         pointRadius: 3,
       },
       {
+        label: secondPlayer.first_name + ' ' + secondPlayer.second_name,
         data: secondDataset,
         backgroundColor: 'rgba(237, 100, 166, .5)',
         borderColor: 'rgba(237, 100, 166, .5)',
@@ -126,6 +128,19 @@ const PlayersHighlights = (props: IProps) => {
       },
       pointLabels: {
         fontSize: '14',
+      },
+    },
+    tooltips: {
+      intersect: false,
+      enabled: true,
+      callbacks: {
+        label: function(tooltipItem: any, data: any) {
+          return (
+            data.datasets[tooltipItem.datasetIndex].label +
+            ' : ' +
+            data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
+          );
+        },
       },
     },
   };
