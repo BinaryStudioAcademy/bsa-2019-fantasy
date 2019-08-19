@@ -1,17 +1,12 @@
 {
   "email": "Email address",
+  "password": "Password",
   "remember": "Remember me",
   "forgot": "Forgot password?",
-  "login": "Log in",
+  "login": "Sign in",
   "signup": "Sign up",
-  "firstName": "First Name",
-  "lastName": "Last Name",
+  "name": "Name",
   "sendConfirm": "We will send you a confirmation email",
-  "atLeast": "At least 8 characters",
-  "gender": "Gender",
-  "dateBirth": "Date of Birth",
-  "day": "Day",
-  "country": "Country",
-  "code": "Code",
-  "mobile": "Mobile"
+  "atLeastName": "Should be at least 5 characters",
+  "atLeastPassword": "Should be at least 8 characters"
 }
