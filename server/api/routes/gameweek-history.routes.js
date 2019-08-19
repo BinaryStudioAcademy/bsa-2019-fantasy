@@ -47,7 +47,6 @@ router
     gameweekHistoryService
       .getHistoriesByUserId(req.params.user)
       .then((value) => res.json(value))
-
       .catch(next);
   });
 
