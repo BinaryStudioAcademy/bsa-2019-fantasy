@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import cn from 'classnames';
+import { useTranslation } from 'react-i18next';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { Line as LineChart } from 'react-chartjs-2';
 
@@ -25,6 +25,8 @@ const mockChartData = {
 };
 
 const GameweekHistory = () => {
+  const { t } = useTranslation();
+
   useEffect(() => {
     document.title = 'Home | Fantasy Football League';
   }, []);
@@ -37,21 +39,23 @@ const GameweekHistory = () => {
         <div className={`${header['jumbotron-content']} mt-32 mb-12`}>
           <h2 className={`${header.title} text-secondary mb-12`}>
             <div className={`${header.sub} ${header.title} mb-3 flex items-center`}>
-              Premier League
+              {t('GameweekHistoryPage.titles.sub')}
             </div>
-            Gameweek 1
+            {`${t('GameweekHistoryPage.titles.main')}  1`}
           </h2>
           <Link
             to='/'
             className='g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded mr-6'
           >
-            <FaChevronLeft /> Previous
+            <FaChevronLeft />
+            {t('GameweekHistoryPage.previous')}
           </Link>
           <Link
             to='/'
             className='g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded'
           >
-            Next <FaChevronRight />
+            {t('GameweekHistoryPage.next')}
+            <FaChevronRight />
           </Link>
         </div>
         <div className='w-6/12'>
@@ -65,9 +69,12 @@ const GameweekHistory = () => {
         <div
           className={`${header.paper} px-8 pt-12 rounded ${styles['gameweek-stats']} ml-2`}
         >
-          <h3 className={`${header.title} text-secondary mb-1`}>Current Points</h3>
+          <h3 className={`${header.title} text-secondary mb-1`}>
+            {t('GameweekHistoryPage.currentPoints')}
+          </h3>
           <p className={`pl-3 ${styles.points}`}>
-            <span className='font-bold'>47</span> points
+            <span className='font-bold'>47</span>
+            {` ${t('GameweekHistoryPage.points')}`}
           </p>
         </div>
       </div>

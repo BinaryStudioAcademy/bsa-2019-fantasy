@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import uuid from 'uuidv4';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
@@ -14,7 +15,7 @@ import PlayerSelectionDroppable, {
 import { PlayerDraggableProps } from '../PlayerSelection';
 import { PlayerTypes } from '../PlayerSelection/types';
 import Button from '../../../components/Button';
-import './styles.scss';
+import styles from './styles.module.scss';
 import TeamList from '../TeamList';
 
 export interface TeamSelectionProps {
@@ -30,6 +31,7 @@ const TeamSelection = ({
   viceCaptainId,
   captainId,
 }: TeamSelectionProps) => {
+  const { t } = useTranslation();
   const [query, setQuery] = useState({
     limit: 15,
     order_direction: 'DESC',
@@ -424,23 +426,29 @@ const TeamSelection = ({
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className='py-8 team-select-wrapper team-container'>
+      <div
+        className={`py-8 ${styles['team-select-wrapper']} ${styles['team-container']}`}
+      >
         <div className='flex justify-center mb-8'>
-          <form className='form-team'>
+          <form className={styles['form-team']}>
             <label
-              className={`team-selection-radio ${view === 'pitch' ? 'is-active' : ''}`}
+              className={`${styles['team-selection-radio']} ${
+                view === 'pitch' ? styles['is-active'] : ''
+              }`}
               onClick={() => setView('pitch')}
             >
               <input className='invisible' type='radio' value='option2' />
-              Pitch View
+              {t('Gameweek.pitchView')}
             </label>
 
             <label
-              className={`team-selection-radio ${view === 'list' ? 'is-active' : ''}`}
+              className={`${styles['team-selection-radio']} ${
+                view === 'list' ? styles['is-active'] : ''
+              }`}
               onClick={() => setView('list')}
             >
               <input className='invisible' type='radio' value='option3' />
-              List View
+              {t('Gameweek.listView')}
             </label>
           </form>
         </div>
@@ -455,10 +463,10 @@ const TeamSelection = ({
           />
         )}
         {view === 'pitch' && (
-          <div className='relative team-container'>
+          <div className={`relative ${styles['team-container']}`}>
             {/* Goalkeeper */}
 
-            <div className='flex justify-around absolute team'>
+            <div className={`flex justify-around absolute ${styles.team}`}>
               {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
                 if (accept === PlayerTypes.GOALKEEPER) {
                   return (
@@ -481,7 +489,7 @@ const TeamSelection = ({
             </div>
 
             {/* Defenders */}
-            <div className='flex justify-between top-20 absolute team'>
+            <div className={`flex justify-between top-20 absolute ${styles.team}`}>
               {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
                 if (accept === PlayerTypes.DEFENDER) {
                   return (
@@ -504,7 +512,7 @@ const TeamSelection = ({
             </div>
 
             {/* Middlefilders */}
-            <div className='flex justify-between top-40 absolute team'>
+            <div className={`flex justify-between top-40 absolute ${styles.team}`}>
               {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
                 if (accept === PlayerTypes.MIDDLEFIELDER) {
                   return (
@@ -527,7 +535,7 @@ const TeamSelection = ({
             </div>
 
             {/* Forwards */}
-            <div className='flex justify-around top-60 absolute team'>
+            <div className={`flex justify-between top-60 absolute ${styles.team}`}>
               {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
                 if (accept === PlayerTypes.FORWARD) {
                   return (
@@ -550,7 +558,9 @@ const TeamSelection = ({
             </div>
 
             {/* Bench */}
-            <div className='flex justify-around top-80 left-0 w-full m-3 absolute team'>
+            <div
+              className={`flex justify-around top-80 left-0 w-full m-3 absolute ${styles.team}`}
+            >
               {bench.map(({ accept, lastDroppedItem }: BenchDroppable, index) => {
                 return (
                   <PlayerSelectionDroppable
@@ -575,7 +585,7 @@ const TeamSelection = ({
             className='w-3/12 h-12 mt-3 bg-green-600 rounded-lg text-white'
             onClick={(e) => saveTeam(droppedPlayerPitchIds, droppedPlayerBenchIds)}
           >
-            <p>Save Your Team</p>
+            <p>{t('Gameweek.saveTeam')}</p>
           </button>
         </div>
       )}

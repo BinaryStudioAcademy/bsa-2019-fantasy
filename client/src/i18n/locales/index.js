@@ -14,6 +14,10 @@ import ChangePasswordFormsEn from 'components/ChangePasswordForms/locales/en.jso
 import ChangePasswordFormsUa from 'components/ChangePasswordForms/locales/ua.json';
 import FixturesEn from 'containers/FixturesContainer/locales/en.json';
 import FixturesUa from 'containers/FixturesContainer/locales/ua.json';
+import GameweekHistoryPageEn from 'containers/GameweekHistory/locales/en.json';
+import GameweekHistoryPageUa from 'containers/GameweekHistory/locales/ua.json';
+import GameweekEn from 'components/Gameweek/locales/en.json';
+import GameweekUa from 'components/Gameweek/locales/ua.json';
 
 const en = {};
 const ua = {};
@@ -34,5 +38,9 @@ en.ChangePasswordForms = ChangePasswordFormsEn;
 ua.ChangePasswordForms = ChangePasswordFormsUa;
 en.Fixtures = FixturesEn;
 ua.Fixtures = FixturesUa;
+en.GameweekHistoryPage = GameweekHistoryPageEn;
+ua.GameweekHistoryPage = GameweekHistoryPageUa;
+en.Gameweek = GameweekEn;
+ua.Gameweek = GameweekUa;
 
 export { ua, en };

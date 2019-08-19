@@ -1,5 +1,7 @@
 import React from 'react';
 
+import styles from '../TeamList/styles.module.scss';
+
 type Props = {
   name: string;
 };
@@ -7,9 +9,9 @@ type Props = {
 const TeamItemHeader = ({ name }: Props) => {
   return (
     <thead>
-      <tr className='table-header'>
-        <td className='w-1/12' align='center' valign='middle'></td>
-        <td className='w-1/12 text-center'></td>
+      <tr className={styles['table-header']}>
+        <td className='w-1/12' align='center' valign='middle' />
+        <td className='w-1/12 text-center' />
         <td className='w-5/12 text-base' valign='middle'>
           {name}
         </td>

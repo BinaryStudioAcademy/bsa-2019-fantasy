@@ -1,0 +1,10 @@
+{
+  "titles": {
+    "sub": "Premier League",
+    "main": "Gameweek"
+  },
+  "previous": "Previous",
+  "next": "Next",
+  "currentPoints": "Current Points",
+  "points": "points"
+}
