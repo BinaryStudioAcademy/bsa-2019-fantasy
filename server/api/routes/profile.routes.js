@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as userService from '../services/user.service';
 import * as leagueService from '../services/league.service';
+import * as leagueParticipantService from '../services/league-participant.service';
 import * as footballClubService from '../services/football-club.service';
 import globalLeagues from '../../config/global-leagues.config';
 
@@ -26,6 +27,12 @@ router
     } catch (err) {
       next(err);
     }
+  })
+  .get('/league-rankings', jwtMiddleware, (req, res, next) => {
+    leagueParticipantService
+      .getUserRankings(req.user.id)
+      .then((value) => res.json(value))
+      .catch(next);
   })
   .get('/leagues', jwtMiddleware, (req, res, next) => {
     leagueService

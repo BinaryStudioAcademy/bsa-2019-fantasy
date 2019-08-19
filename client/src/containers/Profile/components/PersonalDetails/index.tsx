@@ -9,7 +9,7 @@ import { forgotPassword } from 'containers/Profile/actions';
 
 import styles from './styles.module.scss';
 
-const usePersonalDetails = () => {
+export const usePersonalDetails = () => {
   const user = useSelector((state: RootState) => state.profile.user);
 
   return { user };

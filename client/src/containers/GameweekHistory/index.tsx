@@ -1,13 +1,19 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Link } from 'react-router-dom';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+
 import { Line as LineChart } from 'react-chartjs-2';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+
+import TeamSelection, { GameweekSelectionProps } from 'components/Gameweek/TeamSelection';
+
+import { RootState } from 'store/types';
+import { fetchGameweekHistory } from 'containers/Routing/fetchGameweeks/actions';
 
 import { joinRoom } from 'helpers/socket';
-import { RootState } from 'store/types';
-import TeamSelection from 'components/Gameweek/TeamSelection';
+
 import './styles.scss';
 
 const mockChartData = {
@@ -25,7 +31,18 @@ const mockChartData = {
   ],
 };
 
-const GameweekHistory = ({ favorite_club }) => {
+const GameweekHistory = ({ currentGameweek, userId, favorite_club }: any/*GameweekSelectionProps*/) => {
+  const dispatch = useDispatch();
+  const gameweekPlayers = useSelector(
+    (state: RootState) => state.gameweeks.gameweeks_history,
+  );
+
+  //fetch players for current gameweek
+  useEffect(() => {
+    dispatch(fetchGameweekHistory(userId, currentGameweek.id));
+  }, [dispatch]);
+
+
   useEffect(() => {
     joinRoom(favorite_club);
     document.title = 'Home | Fantasy Football League';
@@ -58,7 +75,12 @@ const GameweekHistory = ({ favorite_club }) => {
       </div>
       <div className='gameweek-history-content'>
         <div className='paper rounded mr-2'>
-          <TeamSelection isGameweek />
+          <TeamSelection
+            isGameweek={true}
+            players={gameweekPlayers}
+            currentGameweek={currentGameweek}
+            userId={userId}
+          />
         </div>
         <div className='paper px-8 pt-12 rounded gameweek-stats ml-2'>
           <h3 className='title text-secondary mb-1'>Current Points</h3>

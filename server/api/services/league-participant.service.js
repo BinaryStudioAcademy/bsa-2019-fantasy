@@ -6,6 +6,11 @@ export const getleagueParticipantById = async (participantId) => {
   return result;
 };
 
+export const getUserRankings = async (participantId) => {
+  const result = await leagueParticipantRepository.getLeaguesByUserId(participantId);
+  return result;
+};
+
 export const checkIfAParticipantById = async (participantId, leagueId) => {
   const result = await leagueParticipantRepository.getByLeagueAndId(
     participantId,

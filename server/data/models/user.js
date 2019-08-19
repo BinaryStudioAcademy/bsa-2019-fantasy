@@ -13,7 +13,7 @@ export default (orm, DataTypes) => {
         unique: true,
       },
       password: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING,
       },
       money: {
@@ -34,6 +34,11 @@ export default (orm, DataTypes) => {
         allowNull: false,
         type: DataTypes.ENUM('wildcard', 'triple_caption', 'bench_boost'),
         defaultValue: 'wildcard',
+      },
+      facebook_id: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        unique: true,
       },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,

@@ -1,11 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import TeamSelection from 'components/Gameweek/TeamSelection';
-import './styles.scss';
+import TeamSelection, { GameweekSelectionProps } from 'components/Gameweek/TeamSelection';
+
+import { RootState } from 'store/types';
 import StatusPlayerModal from 'components/StatusPlayerModal';
 
-const MyTeam = () => {
+import { fetchGameweekHistory } from 'containers/Routing/fetchGameweeks/actions';
+import './styles.scss';
 
+const MyTeam = ({ currentGameweek, userId }: GameweekSelectionProps) => {
+  const dispatch = useDispatch();
+  const gameweekPlayers = useSelector(
+    (state: RootState) => state.gameweeks.gameweeks_history,
+  );
+
+  //fetch players for current gameweek
+  useEffect(() => {
+    dispatch(fetchGameweekHistory(userId, currentGameweek.id));
+  }, [dispatch]);
+
+  useEffect(() => {
+    document.title = 'Home | Fantasy Football League';
+  }, []);
   const [showModal, setShowModal] = useState(false);
 
   const [isCaptain, setIsCaptain] = useState(false);
@@ -54,7 +71,6 @@ const MyTeam = () => {
     document.title = 'My Team | Fantasy Football League';
   }, []);
 
-
   return (
     <div className='team-page'>
       <div className='jumbotron paper mb-12 rounded flex items-end justify-between pt-6'>
@@ -63,16 +79,18 @@ const MyTeam = () => {
             <div className='sub title mb-4 flex items-center'>Team Page</div>
             My Team
           </h2>
-          
         </div>
       </div>
       <div className='p-3'>
-      <TeamSelection
-        isGameweek={false}
-        onOpen={onOpen}
-        captainId={captainId}
-        viceCaptainId={viceCaptainId}
-      />
+        <TeamSelection
+          isGameweek={false}
+          onOpen={onOpen}
+          captainId={captainId}
+          viceCaptainId={viceCaptainId}
+          players={gameweekPlayers}
+          currentGameweek={currentGameweek}
+          userId={userId}
+        />
       </div>
       {showModal && (
         <StatusPlayerModal
