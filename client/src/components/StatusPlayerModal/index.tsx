@@ -4,13 +4,10 @@ import { useTranslation } from 'react-i18next';
 import styles from './styles.module.scss';
 
 type Props = {
-  i;
-  Captain: boolean;
-  isViceC;
-  ptain: boolean;
+  isCaptain: boolean;
+  isViceCaptain: boolean;
   onClose: () => void;
-  onSetC;
-  aptain: () => void;
+  onSetCaptain: () => void;
   onSetViceCaptain: () => void;
   name: string;
 };
