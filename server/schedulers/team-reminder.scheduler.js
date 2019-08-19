@@ -4,6 +4,7 @@ import schedule from 'node-schedule';
 
 import userRepository from '../data/repositories/user.repository';
 import gameweekRepository from '../data/repositories/gameweek.repository';
+import { sendRemind } from '../helpers/send-email.helper';
 
 const teamReminderScheduler = async () => {
   const gameweeks = await gameweekRepository.getAll();
@@ -19,17 +20,17 @@ const teamReminderScheduler = async () => {
     return;
   }
 
-  schedule.scheduleJob('remind apply team', timeToRemind, async (fireDate) => {
+  schedule.scheduleJob('remind apply team', new Date(timeToRemind), async (fireDate) => {
     console.log(`remind apply team ${fireDate}`);
     const users = await userRepository.getAll();
     users.forEach(async (u) => {
       if (u.team_name === null) {
-        console.log('apply team');
+        sendRemind(u.email);
       }
     });
     teamReminderScheduler();
   });
-  console.log(`>>> Players price recalculation job scheduled on: ${nextGameweek.start}`);
+  console.log(`>>> Remind apply team on: ${timeToRemind}`);
 };
 
 export default teamReminderScheduler;
