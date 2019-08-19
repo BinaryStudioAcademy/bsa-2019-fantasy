@@ -12,6 +12,8 @@ import ChangePasswordPageEn from 'containers/ChangePassword/locales/en.json';
 import ChangePasswordPageUa from 'containers/ChangePassword/locales/ua.json';
 import ChangePasswordFormsEn from 'components/ChangePasswordForms/locales/en.json';
 import ChangePasswordFormsUa from 'components/ChangePasswordForms/locales/ua.json';
+import FixturesEn from 'containers/FixturesContainer/locales/en.json';
+import FixturesUa from 'containers/FixturesContainer/locales/ua.json';
 
 const en = {};
 const ua = {};
@@ -30,5 +32,7 @@ en.ChangePasswordPage = ChangePasswordPageEn;
 ua.ChangePasswordPage = ChangePasswordPageUa;
 en.ChangePasswordForms = ChangePasswordFormsEn;
 ua.ChangePasswordForms = ChangePasswordFormsUa;
+en.Fixtures = FixturesEn;
+ua.Fixtures = FixturesUa;
 
 export { ua, en };

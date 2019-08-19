@@ -108,8 +108,9 @@ class ForgotPasswordForm extends Component<
 const actions = { forgotPassword };
 //TODO: fix any type
 const mapDispatchToProps = (dispatch: any) => bindActionCreators(actions, dispatch);
-// @ts-ignore
+
 export default withTranslation()(
+  // @ts-ignore
   connect(
     null,
     mapDispatchToProps,
