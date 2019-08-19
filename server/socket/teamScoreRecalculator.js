@@ -17,38 +17,38 @@ const recalculateTeamsScore = async () => {
   }
 
   const users = await userRepository.getAll();
+  users.map(async (user) => {
+    let score = 0;
 
-  await Promise.all(
-    users.map(async (user) => {
-      let score = 0;
+    const gameweekHistory = await gameweekHistoryRepository.getByUserGameweekId(
+      user.id,
+      currentGameweek.id,
+    );
+    if (!gameweekHistory) return;
 
-      const gameweekHistory = await gameweekHistoryRepository.getByUserGameweekId(
-        user.id,
-        currentGameweek.id,
-      );
-      if (!gameweekHistory) return;
+    const teamMemberHistories = await teamMemberHistoryReposiory.getByGameweekId(
+      gameweekHistory.id,
+    );
 
-      await Promise.all(
-        await teamMemberHistoryReposiory
-          .getByGameweekId(gameweekHistory.id)
-          .map(async ({ is_on_bench, is_captain, player_stats }) => {
-            if (!is_on_bench) {
-              if (is_captain) {
-                score += 2 * player_stats.player_score;
-              } else {
-                score += player_stats.player_score;
-              }
-            }
-          }),
-      );
-      if(gameweekHistory.team_score !== score) {
-        const result = await gameweekHistoryRepository.setTeamScoreById(gameweekHistory.id, score);
-        console.log(result);
-      } else {
-        console.log('team score have not been changed');
+    teamMemberHistories.map(({ is_on_bench, is_captain, player_stats }) => {
+      if (!is_on_bench) {
+        if (is_captain) {
+          score += 2 * player_stats.player_score;
+        } else {
+          score += player_stats.player_score;
+        }
       }
-    }),
-  );
+    });
+    if (gameweekHistory.team_score !== score) {
+      const result = await gameweekHistoryRepository.setTeamScoreById(
+        gameweekHistory.id,
+        score,
+      );
+      console.log(result);
+    } else {
+      console.log('team score have not been changed');
+    }
+  });
 };
 
 export default recalculateTeamsScore;
