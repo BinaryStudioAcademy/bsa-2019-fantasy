@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router';
+import cn from 'classnames';
 import { useDispatch } from 'react-redux';
 import { useTranslation, Trans } from 'react-i18next';
 import validator from 'validator';
 
 import { registration } from 'containers/Profile/actions';
 
-import './styles.scss';
+import styles from './styles.module.scss';
 
 const RegistrationForm = withRouter(({ history }) => {
   const { t } = useTranslation();
@@ -68,13 +69,15 @@ const RegistrationForm = withRouter(({ history }) => {
   );
 
   return (
-    <div className='w-full max-w-xs form-registration'>
+    <div className={cn(styles['form-registration'], 'w-full max-w-xs')}>
       <form className='px-8 pt-6 pb-8' onSubmit={handleClickRegister}>
         <div className='mb-4'>
           <label>
             {t('AuthForms.name')}
             <input
-              className={isNameValid ? firstNameClass : (firstNameClass += ' error')}
+              className={
+                isNameValid ? firstNameClass : (firstNameClass += ` ${styles.error}`)
+              }
               id='first-name'
               type='text'
               placeholder={t('AuthForms.name')}
@@ -93,7 +96,7 @@ const RegistrationForm = withRouter(({ history }) => {
           <label>
             {t('AuthForms.email')}
             <input
-              className={isEmailValid ? emailClass : (emailClass += ' error')}
+              className={isEmailValid ? emailClass : (emailClass += ` ${styles.error}`)}
               id='email'
               type='email'
               placeholder={t('AuthForms.email')}
@@ -109,7 +112,9 @@ const RegistrationForm = withRouter(({ history }) => {
           <label>
             {t('AuthForms.password')}
             <input
-              className={isPasswordValid ? passwordClass : (passwordClass += ' error')}
+              className={
+                isPasswordValid ? passwordClass : (passwordClass += ` ${styles.error}`)
+              }
               id='password'
               type='password'
               placeholder='*************'
