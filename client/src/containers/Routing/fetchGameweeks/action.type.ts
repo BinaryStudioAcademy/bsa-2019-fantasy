@@ -24,8 +24,25 @@ type FetchGameweeksFailure = {
   payload: string;
 };
 
+type FetchGameweeksHistoryRequest = {
+  type: typeof FETCH_GAMEWEEKS_HISTORY_REQUEST;
+};
+
+type FetchGameweeksHistorySuccess = {
+  type: typeof FETCH_GAMEWEEKS_HISTORY_SUCCESS;
+  payload: Club[];
+};
+
+type FetchGameweeksHistoryFailure = {
+  type: typeof FETCH_GAMEWEEKS_HISTORY_FAILURE;
+  payload: string;
+};
+
 export type FetchGameweeksAction =
   | FetchGameweeksRequest
   | FetchGameweeksSuccess
-  | FetchGameweeksFailure;
+  | FetchGameweeksFailure
+  | FetchGameweeksHistoryRequest
+  | FetchGameweeksHistorySuccess
+  | FetchGameweeksHistoryFailure;
 export type AsyncFetchGameweeksAction = Thunky<FetchGameweeksAction>;
