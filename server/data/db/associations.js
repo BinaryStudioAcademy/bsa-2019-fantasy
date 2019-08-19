@@ -1,14 +1,13 @@
 export default (models) => {
   const {
     User,
-    Season,
     PlayerStat,
     PlayerMatchStat,
     League,
     LeagueParticipant,
-    Gameweek,
     GameweekHistory,
     Game,
+    Gameweek,
     FootballClub,
     Event,
     TeamMemberHistory,
@@ -33,12 +32,24 @@ export default (models) => {
     foreignKey: 'player_id',
     as: 'player_stats',
   });
+  TeamMemberHistory.belongsTo(GameweekHistory, {
+    foreignKey: 'gameweek_history_id',
+    as: 'gameweek_history',
+  });
 
+  GameweekHistory.belongsTo(Gameweek, {
+    foreignKey: 'gameweek_id',
+    as: 'Gameweek',
+  });
+  GameweekHistory.belongsTo(User, {
+    foreignKey: 'user_id',
+    as: 'user',
+  });
   Game.belongsTo(FootballClub, { foreignKey: 'hometeam_id', as: 'hometeam' });
   Game.belongsTo(FootballClub, { foreignKey: 'awayteam_id', as: 'awayteam' });
   Event.belongsTo(PlayerMatchStat, { foreignKey: 'player_match_stat_id', as: 'player' });
 
-  GameweekHistory.belongsTo(Gameweek, { foreignKey: 'gameweek_id', as: 'gameweek'});
+  GameweekHistory.belongsTo(Gameweek, { foreignKey: 'gameweek_id', as: 'gameweek' });
 
   // PlayerMatchStat.hasOne(PlayerStat, { foreignKey: 'player_id', as: 'player' });
 

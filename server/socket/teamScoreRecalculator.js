@@ -30,7 +30,7 @@ const recalculateTeamsScore = async () => {
       gameweekHistory.id,
     );
 
-    teamMemberHistories.map(({ is_on_bench, is_captain, player_stats }) => {
+    [...teamMemberHistories].forEach(({ is_on_bench, is_captain, player_stats }) => {
       if (!is_on_bench) {
         if (is_captain) {
           score += 2 * player_stats.player_score;
