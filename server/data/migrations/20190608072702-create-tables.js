@@ -275,6 +275,10 @@ export default {
                 type: Sequelize.UUID,
                 defaultValue: Sequelize.literal('gen_random_uuid()'),
               },
+              team_score: {
+                allowNull: false,
+                type: Sequelize.INTEGER,
+              },
               createdAt: Sequelize.DATE,
               updatedAt: Sequelize.DATE,
             },

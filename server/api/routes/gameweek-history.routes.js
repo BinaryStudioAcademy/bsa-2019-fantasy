@@ -29,6 +29,12 @@ router
           .catch(next);
       })
       .catch(next);
+  })
+  .get('/user-team/:user', (req, res, next) => {
+    gameweekHistoryService
+      .getHistoriesByUserId(req.params.user)
+      .then((value) => res.json(value))
+      .catch(next);
   });
 
 export default router;

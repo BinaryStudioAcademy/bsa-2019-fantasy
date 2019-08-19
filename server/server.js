@@ -12,6 +12,7 @@ import errorHandlerMiddleware from './api/middlewares/error-handler.middleware';
 import socketInjector from './socket/injector';
 import socketHandlers from './socket/handlers';
 import initSchedulers from './schedulers';
+import recalculateTeamsScore from './socket/teamScoreRecalculator';
 
 import sequelize from './data/db/connection';
 
@@ -35,6 +36,8 @@ fakerSocket.on('connect', () => {
   fakerSocket.on('someEvent', (data) => {
     // eslint-disable-next-line no-console
     console.log('Received data from faker ', data);
+
+    recalculateTeamsScore()
   });
 });
 
