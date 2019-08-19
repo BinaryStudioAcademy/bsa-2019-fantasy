@@ -18,6 +18,8 @@ import GameweekHistoryPageEn from 'containers/GameweekHistory/locales/en.json';
 import GameweekHistoryPageUa from 'containers/GameweekHistory/locales/ua.json';
 import GameweekEn from 'components/Gameweek/locales/en.json';
 import GameweekUa from 'components/Gameweek/locales/ua.json';
+import LeaguesPageEn from 'containers/Leagues/locales/en.json';
+import LeaguesPageUa from 'containers/Leagues/locales/ua.json';
 
 const en = {};
 const ua = {};
@@ -42,5 +44,7 @@ en.GameweekHistoryPage = GameweekHistoryPageEn;
 ua.GameweekHistoryPage = GameweekHistoryPageUa;
 en.Gameweek = GameweekEn;
 ua.Gameweek = GameweekUa;
+en.LeaguesPage = LeaguesPageEn;
+ua.LeaguesPage = LeaguesPageUa;
 
 export { ua, en };

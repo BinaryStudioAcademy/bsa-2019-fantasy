@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { bindActionCreators, Dispatch } from 'redux';
 
 import { joinLeague } from '../actions';
@@ -11,6 +12,8 @@ type Props = {
 };
 
 const PrivateLeagues = ({ joinLeague }: Props) => {
+  const { t } = useTranslation();
+
   const [code, setCode] = useState('');
   const [isLoading, setLoading] = useState(false);
 
@@ -34,10 +37,10 @@ const PrivateLeagues = ({ joinLeague }: Props) => {
 
   return (
     <div className={`${styles['join-league-item']} w-full md:w-1/2 px-6`}>
-      <h3 className={`${styles.title} text-secondary mb-4 font-bold`}>Private leagues</h3>
-      <p className='mb-4'>
-        Join a private league if somebody has given you a league code to enter.
-      </p>
+      <h3 className={`${styles.title} text-secondary mb-4 font-bold`}>
+        {t('LeaguesPage.joinLeague.private.title')}
+      </h3>
+      <p className='mb-4'>{t('LeaguesPage.joinLeague.private.message')}</p>
       <form className='w-full max-w-lg' onSubmit={handleSubmit}>
         <div className='flex flex-wrap -mx-3 mb-6'>
           <div className='w-full md:w-1/2 px-3'>
@@ -45,7 +48,7 @@ const PrivateLeagues = ({ joinLeague }: Props) => {
               className='block uppercase text-gray-700 text-xs font-bold mb-2'
               htmlFor='league-code'
             >
-              League Code
+              {t('LeaguesPage.joinLeague.private.code')}
             </label>
             <input
               className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
@@ -64,7 +67,7 @@ const PrivateLeagues = ({ joinLeague }: Props) => {
           type='submit'
           disabled={!code || isLoading}
         >
-          {isLoading ? 'Wait' : 'Join private league'}
+          {isLoading ? t('LeaguesPage.wait') : t('LeaguesPage.joinLeague.private.join')}
         </button>
       </form>
     </div>

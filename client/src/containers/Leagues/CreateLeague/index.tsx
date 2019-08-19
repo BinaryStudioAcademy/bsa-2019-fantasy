@@ -126,7 +126,7 @@ const CreateLeague = ({ createLeagueAction }: Props) => {
                   />
                   <span>{t('LeaguesPage.createLeague.privacy.public')}</span>
                 </label>
-                <p className='mx-3'>or</p>
+                <p className='mx-3'>{t('LeaguesPage.createLeague.or')}</p>
                 <label
                   className={`${
                     styles['checkbox-styled']
@@ -183,7 +183,7 @@ const CreateLeague = ({ createLeagueAction }: Props) => {
               type='submit'
               disabled={!name || !isNameValid || isLoading}
             >
-              {isLoading ? 'Wait' : 'Create league'}
+              {isLoading ? t('LeaguesPage.wait') : t('LeaguesPage.createLeague.create')}
             </button>
             {!isNameValid && (
               <span className='ml-2 font-bold text-red-600'>

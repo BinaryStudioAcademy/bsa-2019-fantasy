@@ -19,58 +19,6 @@ import SecondPlayer from 'assets/images/1966.png';
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
 
-/* eslint-disable */
-const columns = [
-  {
-    Header: () => <span className={`${styles['table-title']} uppercase font-bold`}>League</span>,
-    accessor: 'league.name',
-
-    Cell: (props: { value: string }) => (
-      <span className={styles['table-title-row']}>{props.value}</span>
-    ),
-  },
-  {
-    Header: () => <span className={`${styles['table-title']} uppercase font-bold`}>Current Rank</span>,
-    accessor: 'current_rank',
-    Cell: (props: any) => {
-      const movement = props.original.current_rank - props.original.last_rank;
-
-      return (
-        <div className={`${styles.rank} flex justify-center items-center`}>
-          <span
-            className={`${styles.movement} mr-1 ${movement > 0 ? 'up' : ''} ${
-              movement < 0 ? 'down' : ''
-            }`}
-          >
-            {movement > 0 ? <FaArrowUp /> : movement < 0 ? <FaArrowDown /> : <FaMinus />}
-          </span>{' '}
-          {props.value}
-        </div>
-      );
-    },
-  },
-  {
-    Header: () => <span className={`${styles['table-title']} uppercase font-bold`}>Last Rank</span>,
-    accessor: 'last_rank',
-    Cell: (props: any) => {
-      const movement = props.original.current_rank - props.original.last_rank;
-
-      return (
-        <div className={`${styles.rank} flex justify-center items-center`}>
-          <span
-            className={`${styles.movement} mr-1 ${movement > 0 ? 'up' : ''} ${
-              movement < 0 ? 'down' : ''
-            }`}
-          >
-            {movement > 0 ? <FaArrowUp /> : movement < 0 ? <FaArrowDown /> : <FaMinus />}
-          </span>{' '}
-          {props.value}
-        </div>
-      );
-    },
-  },
-];
-/* eslint-enable */
 type Props = {
   loadUserLeagues: typeof loadUserLeagues;
   leagues: any;
@@ -90,6 +38,59 @@ const Leagues = ({ loadUserLeagues, leagues, clubs, user }: Props) => {
     setClub(userFavouriteCLub[0]);
   }, []);
 
+  /* eslint-disable */
+  const columns = [
+    {
+      Header: () => <span className={`${styles['table-title']} uppercase font-bold`}>{t('LeaguesPage.cells.leagues')}</span>,
+      accessor: 'league.name',
+
+      Cell: (props: { value: string }) => (
+        <span className={styles['table-title-row']}>{props.value}</span>
+      ),
+    },
+    {
+      Header: () => <span className={`${styles['table-title']} uppercase font-bold`}>{t('LeaguesPage.cells.currentRank')}</span>,
+      accessor: 'current_rank',
+      Cell: (props: any) => {
+        const movement = props.original.current_rank - props.original.last_rank;
+
+        return (
+          <div className={`${styles.rank} flex justify-center items-center`}>
+            <span
+              className={`${styles.movement} mr-1 ${movement > 0 ? 'up' : ''} ${
+                movement < 0 ? 'down' : ''
+              }`}
+            >
+              {movement > 0 ? <FaArrowUp /> : movement < 0 ? <FaArrowDown /> : <FaMinus />}
+            </span>{' '}
+            {props.value}
+          </div>
+        );
+      },
+    },
+    {
+      Header: () => <span className={`${styles['table-title']} uppercase font-bold`}>{t('LeaguesPage.cells.lastRank')}</span>,
+      accessor: 'last_rank',
+      Cell: (props: any) => {
+        const movement = props.original.current_rank - props.original.last_rank;
+
+        return (
+          <div className={`${styles.rank} flex justify-center items-center`}>
+            <span
+              className={`${styles.movement} mr-1 ${movement > 0 ? 'up' : ''} ${
+                movement < 0 ? 'down' : ''
+              }`}
+            >
+              {movement > 0 ? <FaArrowUp /> : movement < 0 ? <FaArrowDown /> : <FaMinus />}
+            </span>{' '}
+            {props.value}
+          </div>
+        );
+      },
+    },
+  ];
+  /* eslint-enable */
+
   const titles = [
     {
       title: t('LeaguesPage.tables.private'),
@@ -102,7 +103,7 @@ const Leagues = ({ loadUserLeagues, leagues, clubs, user }: Props) => {
       accessor: 'public',
     },
     {
-      title: t('LeaguesPage.tables.public'),
+      title: t('LeaguesPage.tables.global'),
       id: '2',
       accessor: 'global',
     },
