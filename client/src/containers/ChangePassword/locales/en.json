@@ -1,0 +1,9 @@
+{
+  "forgotPassword": "Forgot your password?",
+  "changePassword": "Change your password?",
+  "title": "Changing password",
+  "subtitle": {
+    "forgotPassword": "Please type your e-mail below. We&apos;ll send you a letter with further instructions",
+    "changePassword": "Please type your new password below."
+  }
+}

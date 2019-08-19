@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import cn from 'classnames';
 import validator from 'validator';
 
 import { forgotPassword } from 'containers/Profile/actions';
 import { ForgotPasswordCredentials } from 'types/forgot.password.types';
+
+import styles from '../AuthForms/styles.module.scss';
 
 type ActionType = (props: ForgotPasswordCredentials) => Promise<any>;
 class ForgotPasswordForm extends Component<
@@ -60,7 +63,7 @@ class ForgotPasswordForm extends Component<
     const { isEmailValid, email, isSuccess, isError, isLoading } = this.state;
 
     return (
-      <div className='w-full h-full max-w-xs form-registration'>
+      <div className={cn(styles['form-registration'], 'w-full h-full max-w-xs')}>
         <form className=' px-8 pt-6 pb-8' onSubmit={this.handleSubmit}>
           <div className='mb-4'>
             <input
@@ -74,7 +77,7 @@ class ForgotPasswordForm extends Component<
           </div>
           <button
             type='submit'
-            className={`font-medium xpy-2 px-4 border sign-up-btn w-24 ${(!email ||
+            className={`font-bold rounded py-1 px-6 mr-2 border border-transparent text-secondary bg-primary shadow uppercase ${(!email ||
               isLoading) &&
               'opacity-50 cursor-not-allowed'}`}
             disabled={!isEmailValid || isLoading}

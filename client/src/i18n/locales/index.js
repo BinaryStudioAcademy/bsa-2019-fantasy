@@ -8,6 +8,8 @@ import AuthFormsEn from 'components/AuthForms/locales/en.json';
 import AuthFormsUa from 'components/AuthForms/locales/ua.json';
 import RegistrationPageEn from 'containers/Auth/Registration/locales/en.json';
 import RegistrationPageUa from 'containers/Auth/Registration/locales/ua.json';
+import ChangePasswordPageEn from 'containers/ChangePassword/locales/en.json';
+import ChangePasswordPageUa from 'containers/ChangePassword/locales/ua.json';
 
 const en = {};
 const ua = {};
@@ -22,5 +24,7 @@ en.AuthForms = AuthFormsEn;
 ua.AuthForms = AuthFormsUa;
 en.RegistrationPage = RegistrationPageEn;
 ua.RegistrationPage = RegistrationPageUa;
+en.ChangePasswordPage = ChangePasswordPageEn;
+ua.ChangePasswordPage = ChangePasswordPageUa;
 
 export { ua, en };

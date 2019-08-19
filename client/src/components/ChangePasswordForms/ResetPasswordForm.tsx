@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import cn from 'classnames';
 import validator from 'validator';
 
 import { resetPassword } from 'containers/Profile/actions';
+
+import styles from '../AuthForms/styles.module.scss';
 
 class ResetPasswordForm extends Component<
   // TODO: change prop types
@@ -63,7 +66,7 @@ class ResetPasswordForm extends Component<
     const { isPasswordValid, password, isSuccess, isError, isLoading } = this.state;
 
     return (
-      <div className='w-full h-full max-w-xs form-registration'>
+      <div className={cn(styles['form-registration'], 'w-full h-full max-w-xs')}>
         <form className=' px-8 pt-6 pb-8' onSubmit={this.handleSubmit}>
           <div className='mb-4'>
             <input
@@ -77,7 +80,7 @@ class ResetPasswordForm extends Component<
           </div>
           <button
             type='submit'
-            className={`font-medium text-base xpy-2 px-4 border sign-up-btn w-48 ${(!password ||
+            className={`font-bold rounded py-1 px-6 mr-2 border border-transparent text-secondary bg-primary shadow uppercase ${(!password ||
               isLoading) &&
               'opacity-50 cursor-not-allowed'}`}
             disabled={!isPasswordValid || isLoading}
