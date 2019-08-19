@@ -20,6 +20,10 @@ import GameweekEn from 'components/Gameweek/locales/en.json';
 import GameweekUa from 'components/Gameweek/locales/ua.json';
 import LeaguesPageEn from 'containers/Leagues/locales/en.json';
 import LeaguesPageUa from 'containers/Leagues/locales/ua.json';
+import MyTeamPageEn from 'containers/MyTeam/locales/en.json';
+import MyTeamPageUa from 'containers/MyTeam/locales/ua.json';
+import StatusPlayerModalEn from 'components/StatusPlayerModal/locales/en.json';
+import StatusPlayerModalUa from 'components/StatusPlayerModal/locales/ua.json';
 
 const en = {};
 const ua = {};
@@ -46,5 +50,9 @@ en.Gameweek = GameweekEn;
 ua.Gameweek = GameweekUa;
 en.LeaguesPage = LeaguesPageEn;
 ua.LeaguesPage = LeaguesPageUa;
+en.MyTeamPage = MyTeamPageEn;
+ua.MyTeamPage = MyTeamPageUa;
+en.StatusPlayerModal = StatusPlayerModalEn;
+ua.StatusPlayerModal = StatusPlayerModalUa;
 
 export { ua, en };

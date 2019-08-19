@@ -1,4 +1,9 @@
 {
+  "cells": {
+    "leagues": "Leagues",
+    "currentRank": "Current Rank",
+    "lastRank": "Last Rank"
+  },
   "wait": "Wait",
   "tables": {
     "private": "Private classic leagues",

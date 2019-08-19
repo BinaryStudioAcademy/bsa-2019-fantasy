@@ -1,15 +1,15 @@
-.modal-header {
+:local(.modal-header) {
   position: relative;
 }
 
-.close {
+:local(.close) {
   position: absolute;
   top: 8px;
   right: 40px;
 }
 
-.close:before,
-.close:after {
+:local(.close:before),
+:local(.close:after) {
   content: '';
   position: absolute;
   top: 21px;
@@ -18,10 +18,10 @@
   background: white;
 }
 
-.close:before {
+:local(.close:before) {
   transform: rotate(45deg);
 }
 
-.close:after {
+:local(.close:after){
   transform: rotate(-45deg);
 }
