@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import RegistrationForm from 'components/AuthForms/RegistrationForm';
 
 import styles from '../styles.module.scss';
-import responsive from './responsive.module.scss';
 
 const RegistrationPage = () => {
   const { t } = useTranslation();

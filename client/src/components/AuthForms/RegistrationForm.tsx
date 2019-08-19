@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { withRouter } from 'react-router';
 import cn from 'classnames';
 import { useDispatch } from 'react-redux';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import validator from 'validator';
 
 import { registration } from 'containers/Profile/actions';

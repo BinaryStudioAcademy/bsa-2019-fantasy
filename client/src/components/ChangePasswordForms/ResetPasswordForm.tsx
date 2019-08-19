@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
 import cn from 'classnames';
 import validator from 'validator';
 
@@ -64,6 +65,7 @@ class ResetPasswordForm extends Component<
 
   render() {
     const { isPasswordValid, password, isSuccess, isError, isLoading } = this.state;
+    const { t } = this.props;
 
     return (
       <div className={cn(styles['form-registration'], 'w-full h-full max-w-xs')}>
@@ -73,7 +75,7 @@ class ResetPasswordForm extends Component<
               className='shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline'
               id='password'
               type='password'
-              placeholder='Your new password'
+              placeholder={t('ChangePasswordForms.passwordPlaceholder')}
               onChange={(ev) => this.passwordChanged(ev.target.value)}
               onBlur={this.validatePassword}
             />
@@ -85,13 +87,21 @@ class ResetPasswordForm extends Component<
               'opacity-50 cursor-not-allowed'}`}
             disabled={!isPasswordValid || isLoading}
           >
-            {`${isLoading ? 'Wait' : 'Change password'}`}
+            {`${
+              isLoading
+                ? t('ChangePasswordForms.wait')
+                : t('ChangePasswordForms.changePassword')
+            }`}
           </button>
           {isSuccess && (
-            <p className='text-primary font-bold mb-2'>Successfully changed password!</p>
+            <p className='text-primary font-bold mb-2'>
+              {t('ChangePasswordForms.success.reset')}
+            </p>
           )}
           {isError && (
-            <p className='text-red-500 font-bold mb-2'>Something went wrong!</p>
+            <p className='text-red-500 font-bold mb-2'>
+              {t('ChangePasswordForms.error')}
+            </p>
           )}
         </form>
       </div>
@@ -103,10 +113,12 @@ const actions = { resetPassword };
 //TODO: fix any type
 const mapDispatchToProps = (dispatch: any) => bindActionCreators(actions, dispatch);
 
-export default withRouter(
-  //@ts-ignore
-  connect(
-    null,
-    mapDispatchToProps,
-  )(ResetPasswordForm),
+export default withTranslation()(
+  withRouter(
+    //@ts-ignore
+    connect(
+      null,
+      mapDispatchToProps,
+    )(ResetPasswordForm),
+  ),
 );

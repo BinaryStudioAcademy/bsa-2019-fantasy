@@ -31,7 +31,7 @@ i18n
   .init(options)
   .catch((err) => console.err(err));
 i18n
-  .changeLanguage('en', (err, t) => {
+  .changeLanguage('ua', (err, t) => {
     if (err) return console.log('something went wrong loading', err);
   })
   .catch((err) => console.err(err));

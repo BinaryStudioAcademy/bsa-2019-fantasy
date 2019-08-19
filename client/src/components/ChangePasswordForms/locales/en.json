@@ -1,0 +1,13 @@
+{
+  "wait": "Wait",
+  "send": "Send",
+  "changePassword": "Change password",
+  "email": "Email",
+  "emailPlaceholder": "Email adress",
+  "passwordPlaceholder": "Your new password",
+  "error": "Something went wrong!",
+  "success": {
+    "forgot": "Сheck your mailbox!",
+    "reset": "Successfully changed password!"
+  }
+}
