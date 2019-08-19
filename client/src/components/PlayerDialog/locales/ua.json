@@ -1,0 +1,13 @@
+{
+  "goalkeeper": "воротап",
+  "defender": "захисник",
+  "midfielder": "півзахисник",
+  "forward": "форвард",
+  "thisSeason": "Цей сезон",
+  "haventPlayed": "Цей гравець ще не грав у жодну гру.",
+  "date": "Дата",
+  "round": "Раунд",
+  "opponent": "Опонент",
+  "history": "Історія",
+  "fixtures": "Матчі"
+}

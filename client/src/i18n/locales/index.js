@@ -24,6 +24,8 @@ import MyTeamPageEn from 'containers/MyTeam/locales/en.json';
 import MyTeamPageUa from 'containers/MyTeam/locales/ua.json';
 import StatusPlayerModalEn from 'components/StatusPlayerModal/locales/en.json';
 import StatusPlayerModalUa from 'components/StatusPlayerModal/locales/ua.json';
+import PlayerDialogEn from 'components/PlayerDialog/locales/en.json';
+import PlayerDialogUa from 'components/PlayerDialog/locales/ua.json';
 
 const en = {};
 const ua = {};
@@ -54,5 +56,7 @@ en.MyTeamPage = MyTeamPageEn;
 ua.MyTeamPage = MyTeamPageUa;
 en.StatusPlayerModal = StatusPlayerModalEn;
 ua.StatusPlayerModal = StatusPlayerModalUa;
+en.PlayerDialog = PlayerDialogEn;
+ua.PlayerDialog = PlayerDialogUa;
 
 export { ua, en };
