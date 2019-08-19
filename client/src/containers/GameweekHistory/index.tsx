@@ -1,18 +1,14 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { useSelector, useDispatch } from 'react-redux';
-
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import { Line as LineChart } from 'react-chartjs-2';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
-import TeamSelection, { GameweekSelectionProps } from 'components/Gameweek/TeamSelection';
-
-import { RootState } from 'store/types';
-import { fetchGameweekHistory } from 'containers/Routing/fetchGameweeks/actions';
+import TeamSelection from 'components/Gameweek/TeamSelection';
 
 import { joinRoom } from 'helpers/socket';
+import { RootState } from 'store/types';
 
 import './styles.scss';
 
@@ -31,17 +27,10 @@ const mockChartData = {
   ],
 };
 
-const GameweekHistory = ({ currentGameweek, userId, favorite_club }: any/*GameweekSelectionProps*/) => {
-  const dispatch = useDispatch();
-  const gameweekPlayers = useSelector(
-    (state: RootState) => state.gameweeks.gameweeks_history,
+const GameweekHistory = () => {
+  const favorite_club = useSelector(
+    (state: RootState) => state.profile.user && state.profile.user.favorite_club_id,
   );
-
-  //fetch players for current gameweek
-  useEffect(() => {
-    dispatch(fetchGameweekHistory(userId, currentGameweek.id));
-  }, [dispatch]);
-
 
   useEffect(() => {
     joinRoom(favorite_club);
@@ -75,12 +64,7 @@ const GameweekHistory = ({ currentGameweek, userId, favorite_club }: any/*Gamewe
       </div>
       <div className='gameweek-history-content'>
         <div className='paper rounded mr-2'>
-          <TeamSelection
-            isGameweek={true}
-            players={gameweekPlayers}
-            currentGameweek={currentGameweek}
-            userId={userId}
-          />
+          <TeamSelection isGameweek />
         </div>
         <div className='paper px-8 pt-12 rounded gameweek-stats ml-2'>
           <h3 className='title text-secondary mb-1'>Current Points</h3>
@@ -93,8 +77,4 @@ const GameweekHistory = ({ currentGameweek, userId, favorite_club }: any/*Gamewe
   );
 };
 
-const mapStateToProps = (rootState: RootState) => ({
-  favorite_club: rootState.profile.user ? rootState.profile.user.favorite_club_id : null,
-});
-
-export default connect(mapStateToProps)(GameweekHistory);
+export default GameweekHistory;

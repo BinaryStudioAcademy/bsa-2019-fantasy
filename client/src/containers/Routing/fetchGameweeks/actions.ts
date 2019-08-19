@@ -1,6 +1,5 @@
 import * as gameweeksService from 'services/gameweekService';
 import * as gameweeksHistoryService from 'services/gameweekHistoryService';
-import { Club } from 'types/club.type';
 import {
   FETCH_GAMEWEEKS_REQUEST,
   FETCH_GAMEWEEKS_SUCCESS,
@@ -11,13 +10,14 @@ import {
   FetchGameweeksAction,
   AsyncFetchGameweeksAction,
 } from './action.type';
-import { GameweekHistoryType } from 'types/gameweekHistory.type';
+import { GameweekHistoryType, TeamMemberType } from 'types/gameweekHistory.type';
+import { GameweekType } from 'types/gameweek.type';
 
 const fetchGameweeksRequest = (): FetchGameweeksAction => ({
   type: FETCH_GAMEWEEKS_REQUEST,
 });
 
-const fetchGameweeksSuccess = (payload: Club[]): FetchGameweeksAction => ({
+const fetchGameweeksSuccess = (payload: GameweekType[]): FetchGameweeksAction => ({
   type: FETCH_GAMEWEEKS_SUCCESS,
   payload: payload,
 });
@@ -27,7 +27,13 @@ const fetchGameweeksFailure = (error: string): FetchGameweeksAction => ({
   payload: error,
 });
 
-const fetchGameweeksHistorySuccess = (payload: [Club]): FetchGameweeksAction => ({
+const fetchGameweeksHistoryRequest = (): FetchGameweeksAction => ({
+  type: FETCH_GAMEWEEKS_HISTORY_REQUEST,
+});
+
+const fetchGameweeksHistorySuccess = (
+  payload: GameweekHistoryType[],
+): FetchGameweeksAction => ({
   type: FETCH_GAMEWEEKS_HISTORY_SUCCESS,
   payload: payload,
 });
@@ -51,17 +57,29 @@ export const fetchGameweekHistory = (
   userId: string,
   gameweekId: string,
 ): AsyncFetchGameweeksAction => async (dispatch) => {
-  const result = await gameweeksHistoryService.getGameweekHistoryForUserById(
-    userId,
-    gameweekId,
-  );
-  dispatch(fetchGameweeksHistorySuccess(result));
+  dispatch(fetchGameweeksHistoryRequest());
+
+  try {
+    const result = await gameweeksHistoryService.getGameweekHistoryForUserById(
+      userId,
+      gameweekId,
+    );
+    dispatch(fetchGameweeksHistorySuccess(result));
+  } catch (err) {
+    dispatch(fetchGameweeksHistoryFailure(err.message || err));
+  }
 };
 
 export const postGameweekHistory = (
-  userId: string,
   gameweekId: string,
-  data: GameweekHistoryType,
-): AsyncFetchGameweeksAction => async () => {
-  await gameweeksHistoryService.postGameweekHistoryForUserById(userId, gameweekId, data);
+  data: TeamMemberType[],
+): AsyncFetchGameweeksAction => async (_, getRootState) => {
+  const { user } = getRootState().profile;
+
+  user &&
+    (await gameweeksHistoryService.postGameweekHistoryForUserById(
+      user.id,
+      gameweekId,
+      data,
+    ));
 };

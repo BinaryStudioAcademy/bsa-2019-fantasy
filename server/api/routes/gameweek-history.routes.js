@@ -20,9 +20,9 @@ router
   .get('/user-team/:user/:gameweek', (req, res, next) => {
     gameweekHistoryService
       .getCurrentHistoryById(req.params.user, req.params.gameweek)
-      .then((value) => {
+      .then((historyId) => {
         teamMemberHistoryService
-          .getPlayersByGameweekId(value.id)
+          .getPlayersByGameweekId(historyId)
           .then((players) => {
             return res.json(players);
           })
@@ -37,9 +37,7 @@ router
       .then((gameweekHistoryId) => {
         teamMemberHistoryService
           .postTeamMemberHistory(req.body, gameweekHistoryId)
-          .then((players) => {
-            return res.json(players);
-          })
+          .then((players) => res.json(players))
           .catch(next);
       });
   })

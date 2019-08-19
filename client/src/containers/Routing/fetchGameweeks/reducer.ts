@@ -1,3 +1,5 @@
+import { GameweekType } from 'types/gameweek.type';
+import { GameweekHistoryType } from 'types/gameweekHistory.type';
 import {
   FETCH_GAMEWEEKS_REQUEST,
   FETCH_GAMEWEEKS_SUCCESS,
@@ -9,8 +11,8 @@ import {
 } from './action.type';
 
 type State = {
-  gameweeks?: any;
-  gameweeks_history?: any;
+  gameweeks: GameweekType[];
+  gameweeks_history: GameweekHistoryType[];
   loading: boolean;
   error: string | null;
 };
@@ -23,26 +25,30 @@ const initialState: State = {
 };
 
 export default (state = initialState, action: FetchGameweeksAction) => {
-  console.log(action);
   switch (action.type) {
     case FETCH_GAMEWEEKS_REQUEST:
       return { ...state, loading: true };
+
     case FETCH_GAMEWEEKS_SUCCESS:
       return {
         ...state,
         gameweeks: action.payload,
         loading: false,
       };
+
     case FETCH_GAMEWEEKS_FAILURE:
       return { ...state, loading: false, error: action.payload };
+
     case FETCH_GAMEWEEKS_HISTORY_REQUEST:
       return { ...state, loading: true };
+
     case FETCH_GAMEWEEKS_HISTORY_SUCCESS:
       return {
         ...state,
         gameweeks_history: action.payload,
         loading: false,
       };
+
     case FETCH_GAMEWEEKS_HISTORY_FAILURE:
       return { ...state, loading: false, error: action.payload };
     default:

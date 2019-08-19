@@ -5,7 +5,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 
 import { loadPlayersAction } from '../../components/PlayersSelection/actions';
 import { RootState } from 'store/types';
-import { Position, Player } from 'types/player.types';
+import { Player } from 'types/player.types';
 import { sortedBy, filteredBy, maxPrice } from './constants';
 
 import { PlayerList } from '../PlayersList/index';
@@ -74,9 +74,9 @@ const PlayersSelection = ({ loadPlayersAction, players }: Props) => {
       <h3 className='font-bold'>Player Selection</h3>
       <form>
         <div className='mt-2'>
-          <label className='font-bold'>
+          <div className='font-bold'>
             <span>View</span>
-          </label>
+          </div>
           <Dropdown
             options={filteredBy as any}
             onChange={onFilterSelectChange}
@@ -84,25 +84,25 @@ const PlayersSelection = ({ loadPlayersAction, players }: Props) => {
           />
         </div>
         <div className='mt-2'>
-          <label className='font-bold'>
+          <div className='font-bold'>
             <span>Sorted by</span>
-          </label>
+          </div>
           <Dropdown options={sortedBy} onChange={onSortChange} value={sortSelect} />
         </div>
         <div className='mt-2'>
-          <label className='font-bold'>
+          <div className='font-bold'>
             <span>Search</span>
-          </label>
+          </div>
           <ReactSearchBox onChange={onSearchChange} value={search} />
         </div>
         <div className='mt-2'>
-          <label className='font-bold'>
+          <div className='font-bold'>
             <span>Max cost</span>
-          </label>
+          </div>
           <br />
-          <label>
+          <div>
             <span>Between 45 and 125</span>
-          </label>
+          </div>
           <Dropdown
             options={maxPrice}
             onChange={onMaxPriceChange}
@@ -115,7 +115,7 @@ const PlayersSelection = ({ loadPlayersAction, players }: Props) => {
         <strong>10</strong> players shown
       </p>
 
-      <PlayerList players={players} />
+      {players && <PlayerList players={players} />}
     </div>
   );
 };

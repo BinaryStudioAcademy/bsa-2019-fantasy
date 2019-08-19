@@ -5,9 +5,7 @@ export const getAllHistory = () => gameweekHistoryRepository.getAll();
 export const getCurrentHistoryById = async (userId, gameweekId) => {
   const { id } = await gameweekHistoryRepository.getByUserGameweekId(userId, gameweekId);
 
-  return {
-    id,
-  };
+  return id;
 };
 
 export const postCurrentHistoryById = async (userId, gameweekId) => {
@@ -15,10 +13,8 @@ export const postCurrentHistoryById = async (userId, gameweekId) => {
   if (!history) {
     history = await gameweekHistoryRepository.addByUserGameweekId(userId, gameweekId);
   }
-  const { id } = history;
-  return {
-    id,
-  };
+
+  return history.id;
 };
 
 export const getHistoriesByUserId = async (userId) => {

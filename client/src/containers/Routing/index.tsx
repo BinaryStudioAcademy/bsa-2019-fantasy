@@ -40,21 +40,18 @@ import ForgotPassword from 'containers/ChangePassword/ForgotPassword';
 import ResetPassword from 'containers/ChangePassword/ResetPassword';
 
 import { fetchClubs } from './fetchClubs/actions';
-import { fetchGameweeks } from './fetchGameweeks/actions';
+import { fetchGameweeks, fetchGameweekHistory } from './fetchGameweeks/actions';
 import { preloadClubLogos } from 'helpers/images';
-import { GameweekType } from 'types/gameweek.type';
+import { currentGameweekSelector } from 'store/selectors/current-gameweek.selector';
 
 const Routing = () => {
   const dispatch = useDispatch();
   const { isLoading, user, isAuthorized } = useSelector(
     (state: RootState) => state.profile,
   );
-  const clubs = useSelector((state: RootState) => state.clubs.clubs);
-  const gameweeks = useSelector((state: RootState) => state.gameweeks.gameweeks);
 
-  const currentGameweek = gameweeks.filter(
-    (e: GameweekType) => new Date(e.start) >= new Date(),
-  )[0];
+  const clubs = useSelector((state: RootState) => state.clubs.clubs);
+  const currentGameweek = useSelector(currentGameweekSelector);
 
   useEffect(() => {
     dispatch(loadCurrentUser());
@@ -68,24 +65,18 @@ const Routing = () => {
   }, [dispatch, isAuthorized]);
 
   useEffect(() => {
+    if (user && currentGameweek) {
+      dispatch(fetchGameweekHistory(user.id, currentGameweek.id));
+    }
+  }, [dispatch, user, currentGameweek]);
+
+  useEffect(() => {
     clubs.length > 0 && preloadClubLogos(clubs, 80);
   }, [clubs]);
 
   if (isLoading) {
     return <Spinner />;
   }
-
-  const renderMyTeam = () => (
-    <MyTeam currentGameweek={currentGameweek} userId={user!.id} />
-  );
-
-  const renderTransfers = () => (
-    <Transfers currentGameweek={currentGameweek} userId={user!.id} />
-  );
-
-  const renderGameweekHistory = () => (
-    <GameweekHistory currentGameweek={currentGameweek} userId={user!.id} />
-  );
 
   return (
     <div className='flex h-screen font-sans font-medium'>
@@ -116,18 +107,18 @@ const Routing = () => {
             <Header />
             <main className='mx-16 -mt-32'>
               <Switch>
-                <Route path='/' exact render={renderGameweekHistory} />
+                <Route path='/' exact component={GameweekHistory} />
 
                 <Route path='/profile' component={Profile} />
                 <Route path='/profile/set/password' component={SetPassword} />
 
-                <Route path='/my-team' component={renderMyTeam} />
+                <Route path='/my-team' component={MyTeam} />
                 <Route path='/live' component={Live} />
 
                 <Route path='/players' exact component={Players} />
                 <Route path='/players-comparison' exact component={PlayersComparison} />
 
-                <Route path='/transfers' exact render={renderTransfers} />
+                <Route path='/transfers' exact component={Transfers} />
 
                 <Route path='/fixtures' exact component={FixturesContainer} />
 
