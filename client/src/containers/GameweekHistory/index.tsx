@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import cn from 'classnames';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { Line as LineChart } from 'react-chartjs-2';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
-import './styles.scss';
+
+import styles from './styles.module.scss';
+import header from 'styles/header.module.scss';
 
 const mockChartData = {
   labels: ['GW1', 'GW2', 'GW3', 'GW4', 'GW5', 'GW6', 'GW7'],
@@ -27,11 +30,15 @@ const GameweekHistory = () => {
   }, []);
 
   return (
-    <div className='gameweek-history'>
-      <div className='jumbotron paper mb-12 rounded flex items-end justify-between pt-6'>
-        <div className='jumbotron-content mt-32 mb-12'>
-          <h2 className='title text-secondary mb-12'>
-            <div className='sub title mb-3 flex items-center'>Premier League</div>
+    <div className={styles['gameweek-history']}>
+      <div
+        className={`${header.jumbotron} ${header.paper} mb-12 rounded flex items-end justify-between pt-6`}
+      >
+        <div className={`${header['jumbotron-content']} mt-32 mb-12`}>
+          <h2 className={`${header.title} text-secondary mb-12`}>
+            <div className={`${header.sub} ${header.title} mb-3 flex items-center`}>
+              Premier League
+            </div>
             Gameweek 1
           </h2>
           <Link
@@ -51,13 +58,15 @@ const GameweekHistory = () => {
           <LineChart data={mockChartData} />
         </div>
       </div>
-      <div className='gameweek-history-content'>
-        <div className='paper rounded mr-2'>
+      <div className={styles['gameweek-history-content']}>
+        <div className={`${header.paper} rounded mr-2`}>
           <TeamSelection isGameweek />
         </div>
-        <div className='paper px-8 pt-12 rounded gameweek-stats ml-2'>
-          <h3 className='title text-secondary mb-1'>Current Points</h3>
-          <p className='pl-3 points'>
+        <div
+          className={`${header.paper} px-8 pt-12 rounded ${styles['gameweek-stats']} ml-2`}
+        >
+          <h3 className={`${header.title} text-secondary mb-1`}>Current Points</h3>
+          <p className={`pl-3 ${styles.points}`}>
             <span className='font-bold'>47</span> points
           </p>
         </div>
