@@ -6,24 +6,35 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 
 import { RootState } from 'store/types';
+import { GameweekType } from 'types/gameweek.type';
+import { PlayerTypes } from '../PlayerSelection/types';
+
 import PlayerSelectionDroppable, {
   PlayerDroppable,
   BenchDroppable,
 } from '../PlayerSelectionDroppable';
 import { PlayerDraggableProps } from '../PlayerSelection';
-import { PlayerTypes } from '../PlayerSelection/types';
+
 import { getFieldPlayersUniformUrl, getGoalkeepersUniformUrl } from 'helpers/images';
 import { postGameweekHistory } from 'containers/Routing/fetchGameweeks/actions';
-import Button from '../../../components/Button';
+
+import Button from 'components/Button';
 import Spinner from 'components/Spinner';
+
 import './styles.scss';
 
+export interface GameweekSelectionProps {
+  currentGameweek: GameweekType;
+  userId: string;
+}
 export interface TeamSelectionProps {
   isGameweek: boolean;
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
   viceCaptainId?: string;
   players: any;
+  currentGameweek: GameweekType;
+  userId: string;
 }
 
 const TeamSelection = ({
@@ -32,11 +43,11 @@ const TeamSelection = ({
   viceCaptainId,
   onOpen,
   players,
+  currentGameweek,
+  userId,
 }: TeamSelectionProps) => {
   const dispatch = useDispatch();
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
-  const { user } = useSelector((state: RootState) => state.profile);
-  const gameweeks = useSelector((state: RootState) => state.gameweeks.gameweeks);
 
   const [playersOnBench, setBench] = useState<Array<any>>([
     {
@@ -76,6 +87,7 @@ const TeamSelection = ({
       lastDroppedItem: null,
     },
   ]);
+
   const [playersOnPitch, setPitch] = useState<Array<any>>([
     {
       accept: PlayerTypes.GOALKEEPER,
@@ -132,6 +144,7 @@ const TeamSelection = ({
   const [droppedPlayerBenchIds, setPlayerBenchIds] = useState<Array<any>>([]);
   const [droppedPlayerPitchIds, setPlayerPitchIds] = useState<Array<any>>([]);
 
+  //sets fetched players to the corresponding places
   useEffect(() => {
     if (players.length) {
       setBench(
@@ -192,12 +205,8 @@ const TeamSelection = ({
     }
   }, [players]);
 
+  //saves team to database
   const saveTeam = (pitch: string[], bench: string[]) => {
-    console.log(`PITCH PLAYERS \n  ${pitch}`);
-    console.log(`BENCH PLAYERS \n  ${bench}`);
-    console.log(`CAPTAINID ${captainId}`);
-    console.log(`VICECAPTAINID ${viceCaptainId}`);
-
     const query = [
       ...pitch.map((el) => {
         return {
@@ -214,14 +223,10 @@ const TeamSelection = ({
         };
       }),
     ];
-    console.log(query);
-    console.log('user' + user!.id);
-    console.log('gameweek' + gameweeks[15]!.id);
-    query.forEach((el) => {
-      console.log(el);
-      dispatch(postGameweekHistory(user!.id, gameweeks[23]!.id, el));
-    });
+
+    dispatch(postGameweekHistory(userId, currentGameweek.id, query));
   };
+
   //handles drop from bench to the pitch
   const handlePitchDrop = useCallback(
     (index: number, item: PlayerDraggableProps, benchIndex: number) => {
@@ -251,15 +256,12 @@ const TeamSelection = ({
         }),
       );
 
-      console.log(playersOnBench);
-
       droppedPlayerBenchIds.splice(
         benchIndex,
         1,
         playersOnPitch[index].lastDroppedItem.id,
       );
       setPlayerBenchIds([...droppedPlayerBenchIds]);
-      console.log(droppedPlayerBenchIds);
     },
     [droppedPlayerPitchIds, droppedPlayerBenchIds, playersOnPitch, playersOnBench],
   );
@@ -277,10 +279,8 @@ const TeamSelection = ({
           },
         }),
       );
-      console.log(playersOnBench);
       droppedPlayerBenchIds.splice(index, 1, id);
       setPlayerBenchIds([...droppedPlayerBenchIds]);
-      console.log(droppedPlayerBenchIds);
       setPitch(
         update(playersOnPitch, {
           [pitchIndex]: {
@@ -290,14 +290,12 @@ const TeamSelection = ({
           },
         }),
       );
-      console.log(playersOnPitch);
       droppedPlayerPitchIds.splice(
         pitchIndex,
         1,
         playersOnBench[index].lastDroppedItem.id,
       );
       setPlayerPitchIds([...droppedPlayerPitchIds]);
-      console.log(droppedPlayerPitchIds);
     },
     [droppedPlayerPitchIds, droppedPlayerBenchIds, playersOnPitch, playersOnBench],
   );
@@ -328,6 +326,7 @@ const TeamSelection = ({
         playersOnBench !== undefined
       ) {
         handleBenchDrop(index, item, playerPitchIndex);
+        //when we move from the list
       } else if (playerBenchIndex === -1 && playerPitchIndex === -1) {
         setPitch(
           update(playersOnPitch, {
@@ -338,10 +337,8 @@ const TeamSelection = ({
             },
           }),
         );
-        console.log(playersOnPitch);
         droppedPlayerPitchIds.splice(index, 1, id);
         setPlayerPitchIds([...droppedPlayerPitchIds]);
-        console.log(droppedPlayerPitchIds);
       }
     },
     [
@@ -428,7 +425,28 @@ const TeamSelection = ({
               }
             })}
           </div>
-
+          {/* Forwards */}
+          <div className='flex justify-between top-60 absolute team'>
+            {playersOnPitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+              if (accept === PlayerTypes.FORWARD) {
+                return (
+                  <PlayerSelectionDroppable
+                    index={index}
+                    key={index}
+                    accept={accept}
+                    lastDroppedItem={lastDroppedItem}
+                    onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                    isGameweek={isGameweek}
+                    onOpen={onOpen}
+                    captainId={captainId}
+                    viceCaptainId={viceCaptainId}
+                  />
+                );
+              } else {
+                return null;
+              }
+            })}
+          </div>
           {/* Bench */}
           <div className='flex justify-around top-80 left-0 w-full m-3 absolute team'>
             {playersOnBench.map(({ accept, lastDroppedItem }: BenchDroppable, index) => {

@@ -6,9 +6,15 @@ export const getPlayersByGameweekId = async (id) => {
 };
 
 export const postTeamMemberHistory = async (data, gameweekHistoryId) => {
+  const players = getPlayersByGameweekId(gameweekHistoryId.id);
+
+  if (players) {
+    await teamMemberHistoryRepository.deleteByGameweekId(gameweekHistoryId.id);
+  }
   const result = await teamMemberHistoryRepository.createTeamMemberHistory(
     data,
     gameweekHistoryId,
   );
+
   return result;
 };

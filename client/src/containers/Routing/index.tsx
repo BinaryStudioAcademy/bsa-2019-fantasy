@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { feedback } from 'react-feedbacker';
 
@@ -43,12 +43,18 @@ import ResetPassword from 'containers/ChangePassword/ResetPassword';
 import { fetchClubs } from './fetchClubs/actions';
 import { fetchGameweeks } from './fetchGameweeks/actions';
 import { preloadClubLogos } from 'helpers/images';
+import { GameweekType } from 'types/gameweek.type';
 
 const Routing = () => {
   const dispatch = useDispatch();
 
   const { isLoading, user } = useSelector((state: RootState) => state.profile);
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
+  const gameweeks = useSelector((state: RootState) => state.gameweeks.gameweeks);
+
+  const currentGameweek = gameweeks.filter(
+    (e: GameweekType) => new Date(e.start) >= new Date(),
+  )[0];
 
   useEffect(() => {
     dispatch(loadCurrentUser());
@@ -63,6 +69,18 @@ const Routing = () => {
   if (isLoading) {
     return <Spinner />;
   }
+
+  const renderMyTeam = () => (
+    <MyTeam currentGameweek={currentGameweek} userId={user!.id} />
+  );
+
+  const renderTransfers = () => (
+    <Transfers currentGameweek={currentGameweek} userId={user!.id} />
+  );
+
+  const renderGameweekHistory = () => (
+    <GameweekHistory currentGameweek={currentGameweek} userId={user!.id} />
+  );
 
   return (
     <div className='flex h-screen font-sans font-medium'>
@@ -93,18 +111,18 @@ const Routing = () => {
             <Header />
             <main className='mx-16 -mt-32'>
               <Switch>
-                <Route path='/' exact component={GameweekHistory} />
+                <Route path='/' exact render={renderGameweekHistory} />
 
                 <Route path='/profile' component={Profile} />
                 <Route path='/profile/set/password' component={SetPassword} />
 
-                <Route path='/my-team' component={MyTeam} />
+                <Route path='/my-team' component={renderMyTeam} />
                 <Route path='/live' component={Live} />
 
                 <Route path='/players' exact component={Players} />
                 <Route path='/players-comparison' exact component={PlayersComparison} />
 
-                <Route path='/transfers' exact component={Transfers} />
+                <Route path='/transfers' exact render={renderTransfers} />
 
                 <Route path='/fixtures' exact component={FixturesContainer} />
 

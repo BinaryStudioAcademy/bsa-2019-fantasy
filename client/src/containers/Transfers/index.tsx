@@ -1,23 +1,21 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import PlayersSelection from 'components/PlayersSelection';
-import TeamSelection from 'components/Gameweek/TeamSelection';
 import FixturesContainer from 'containers/FixturesContainer';
+import PlayersSelection from 'components/PlayersSelection';
+import TeamSelection, { GameweekSelectionProps } from 'components/Gameweek/TeamSelection';
 
 import { RootState } from 'store/types';
 import { fetchGameweekHistory } from 'containers/Routing/fetchGameweeks/actions';
 
-const Transfers = () => {
+const Transfers = ({ currentGameweek, userId }: GameweekSelectionProps) => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.profile);
-  const gameweeks = useSelector((state: RootState) => state.gameweeks.gameweeks);
   const gameweekPlayers = useSelector(
     (state: RootState) => state.gameweeks.gameweeks_history,
   );
-
+  //fetch players for current gameweek
   useEffect(() => {
-    dispatch(fetchGameweekHistory(user!.id, gameweeks[24]!.id));
+    dispatch(fetchGameweekHistory(userId, currentGameweek.id));
   }, [dispatch]);
 
   useEffect(() => {
@@ -35,7 +33,12 @@ const Transfers = () => {
           </div>
           <div className='flex flex-grow justify-center'>
             <div className='wrapper'>
-              <TeamSelection isGameweek={false} players={gameweekPlayers} />
+              <TeamSelection
+                isGameweek={false}
+                players={gameweekPlayers}
+                currentGameweek={currentGameweek}
+                userId={userId}
+              />
             </div>
           </div>
         </div>

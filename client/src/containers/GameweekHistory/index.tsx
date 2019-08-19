@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { Line as LineChart } from 'react-chartjs-2';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import TeamSelection from 'components/Gameweek/TeamSelection';
+import { Line as LineChart } from 'react-chartjs-2';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+
+import TeamSelection, { GameweekSelectionProps } from 'components/Gameweek/TeamSelection';
+
 import { RootState } from 'store/types';
 import { fetchGameweekHistory } from 'containers/Routing/fetchGameweeks/actions';
+
 import './styles.scss';
 
 const mockChartData = {
@@ -24,16 +27,15 @@ const mockChartData = {
   ],
 };
 
-const GameweekHistory = () => {
+const GameweekHistory = ({ currentGameweek, userId }: GameweekSelectionProps) => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.profile);
-  const gameweeks = useSelector((state: RootState) => state.gameweeks.gameweeks);
   const gameweekPlayers = useSelector(
     (state: RootState) => state.gameweeks.gameweeks_history,
   );
 
+  //fetch players for current gameweek
   useEffect(() => {
-    dispatch(fetchGameweekHistory(user!.id, gameweeks[24]!.id));
+    dispatch(fetchGameweekHistory(userId, currentGameweek.id));
   }, [dispatch]);
 
   useEffect(() => {
@@ -67,7 +69,12 @@ const GameweekHistory = () => {
       </div>
       <div className='gameweek-history-content'>
         <div className='paper rounded mr-2'>
-          <TeamSelection isGameweek={true} players={gameweekPlayers} />
+          <TeamSelection
+            isGameweek={true}
+            players={gameweekPlayers}
+            currentGameweek={currentGameweek}
+            userId={userId}
+          />
         </div>
         <div className='paper px-8 pt-12 rounded gameweek-stats ml-2'>
           <h3 className='title text-secondary mb-1'>Current Points</h3>

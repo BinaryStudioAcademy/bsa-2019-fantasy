@@ -54,5 +54,4 @@ export const postGameweekHistory = (
   data: GameweekHistoryType,
 ): AsyncFetchGameweeksAction => async () => {
   await gameweeksHistoryService.postGameweekHistoryForUserById(userId, gameweekId, data);
-  console.log('here');
 };

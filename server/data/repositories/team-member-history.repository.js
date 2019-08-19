@@ -11,11 +11,17 @@ class TeamMemberHistoryRepository extends BaseRepository {
   }
 
   createTeamMemberHistory(teamMemberHistory, gameweekHistoryId) {
-    return this.model.create({
-      ...teamMemberHistory,
-      player_id: teamMemberHistory.player_id,
-      gameweek_history_id: gameweekHistoryId.id,
-    });
+    return teamMemberHistory.map((el) =>
+      this.model.create({
+        ...el,
+        player_id: el.player_id,
+        gameweek_history_id: gameweekHistoryId.id,
+      }),
+    );
+  }
+
+  deleteByGameweekId(gameweek_history_id) {
+    return this.model.destroy({ where: { gameweek_history_id } });
   }
 }
 

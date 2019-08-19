@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
+import TeamSelection, { GameweekSelectionProps } from 'components/Gameweek/TeamSelection';
+
 import { RootState } from 'store/types';
-import TeamSelection from 'components/Gameweek/TeamSelection';
 import StatusPlayerModal from 'components/StatusPlayerModal';
+
 import { fetchGameweekHistory } from 'containers/Routing/fetchGameweeks/actions';
 import './styles.scss';
 
-const MyTeam = () => {
+const MyTeam = ({ currentGameweek, userId }: GameweekSelectionProps) => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.profile);
-  const gameweeks = useSelector((state: RootState) => state.gameweeks.gameweeks);
   const gameweekPlayers = useSelector(
     (state: RootState) => state.gameweeks.gameweeks_history,
   );
 
+  //fetch players for current gameweek
   useEffect(() => {
-    dispatch(fetchGameweekHistory(user!.id, gameweeks[24]!.id));
+    dispatch(fetchGameweekHistory(userId, currentGameweek.id));
   }, [dispatch]);
 
   useEffect(() => {
@@ -87,6 +88,8 @@ const MyTeam = () => {
           captainId={captainId}
           viceCaptainId={viceCaptainId}
           players={gameweekPlayers}
+          currentGameweek={currentGameweek}
+          userId={userId}
         />
       </div>
       {showModal && (
