@@ -45,10 +45,9 @@ import { fetchGameweeks, fetchGameweekHistory } from './fetchGameweeks/actions';
 import { preloadClubLogos } from 'helpers/images';
 import { currentGameweekSelector } from 'store/selectors/current-gameweek.selector';
 
-import { joinRoom, requestGames } from 'helpers/socket';
+import { joinRoom, leaveRoom, requestGames } from 'helpers/socket';
 
 import ConnectFbPage from 'containers/Auth/ConnectFbPage';
-
 
 const Routing = () => {
   const dispatch = useDispatch();
@@ -73,13 +72,18 @@ const Routing = () => {
     if (isAuthorized) {
       dispatch(fetchClubs());
       dispatch(fetchGameweeks());
+    }
+  }, [dispatch, isAuthorized]);
+
+  useEffect(() => {
+    if (isAuthorized && favorite_club) {
       if (!joinedRoom) {
         setJoinedRoom(true);
         joinRoom(favorite_club);
       }
       requestGames();
     }
-  }, [dispatch, isAuthorized]);
+  }, [dispatch, isAuthorized, favorite_club]);
 
   useEffect(() => {
     if (user && currentGameweek) {
