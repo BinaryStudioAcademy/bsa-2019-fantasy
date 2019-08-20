@@ -4,6 +4,16 @@
   "next": "Next",
   "previous": "Previous",
   "submit": "Submit",
+  "roles": {
+    "goalkeeper": "goalkeeper",
+    "goalkeeper_plural": "goalkeepers",
+    "defender": "defender",
+    "defender_plural": "defenders",
+    "midfielder": "midfielder",
+    "midfielder_plural": "midfielders",
+    "forward": "forward",
+    "forward_plural": "forwards"
+  },
 
   "LoginPage": {
     "login": "Log in to play",
@@ -135,10 +145,6 @@
   },
 
   "PlayerDialog": {
-    "goalkeeper": "goalkeeper",
-    "defender": "defender",
-    "midfielder": "midfielder",
-    "forward": "forward",
     "thisSeason": "This season",
     "haventPlayed": "This player hasn't player any games yet",
     "date": "Date",
@@ -185,7 +191,8 @@
       "username": "Username",
       "password": "Password",
       "email": "Email",
-      "setPassword": "Set a password"
+      "setPassword": "Set a password",
+      "language": "Language"
     },
 
     "favouriteClub": {
@@ -203,6 +210,22 @@
       },
       "back": "Back to profile update",
       "message": "An email will be sent shortly with instructions and a unique link that will allow you to set your password."
+    }
+  },
+
+  "Transfers": {
+    "title": {
+      "main": "Transfers",
+      "sub": "Transfers Page"
+    },
+    "playerSelection": {
+      "title": "Player Selection",
+      "view": "View",
+      "sort": "Sorted by",
+      "search": "Search",
+      "maxCost": "Max Cost",
+      "maxCostBetween": "Between 45 and 125",
+      "shown": "players shown"
     }
   }
 }
