@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
+import socketIOClient from 'socket.io-client';
 
 import Modal from 'containers/Modal';
 import Button from 'components/Button';
 import { testAction } from './actions';
 import { RootState } from 'store/types';
 
+import field from 'assets/images/field.svg';
 //import styles from "./styles.module.scss";
 
 type Props = {
@@ -14,19 +16,30 @@ type Props = {
   testAction: typeof testAction;
 };
 
+const endpoint = 'http://localhost:5004';
 class Live extends React.Component<Props> {
   static defaultProps = {
     testRes: 'not received yet',
   };
+  socket: any;
 
   state = {
     isModalActive: false,
+    messages: [],
   };
 
   componentDidMount() {
-    document.title = 'Live | Fantasy Football League';
-    //this.props.testAction();
+    this.socket = socketIOClient(endpoint);
+    this.socket.on('event', (data) => {
+      console.log(data);
+      this.setState({ messages: [...this.state.messages, data] });
+    });
   }
+
+  simulate = () => {
+    console.log(this.socket);
+    this.socket.emit('simulate', { homeClubId: 2, awayClubId: 3, timeout: 5 });
+  };
 
   showModal = () => {
     this.setState({ isModalActive: true });
@@ -38,10 +51,24 @@ class Live extends React.Component<Props> {
   render() {
     const { testRes } = this.props;
     return (
-      <div className='h-64 bg-white shadow-figma rounded-sm p-12'>
-        Live page <br />
-        The test result is: {testRes}
-        <Button onClick={this.showModal}>Show modal</Button>
+      <div className='bg-white shadow-figma rounded-sm p-12'>
+        <h2
+          className='playerName font-bold text-3xl xl:text-5xl mt-4 leading-none'
+          style={{ maxHeight: '2em', width: '400px' }}
+        >
+          Live page
+        </h2>
+        <div className='flex'>
+          <div className='w-1/2 h-64 overflow-auto'>
+            {this.state.messages.map((message) => (
+              <p>{message}</p>
+            ))}
+          </div>
+          <div className='w-1/2 h-64'>
+            <img className='h-64' src={field} alt='Football field' />
+          </div>
+        </div>
+        <Button onClick={this.simulate}>Simulate</Button>
         {this.state.isModalActive && (
           <Modal
             title='Modal Title'
