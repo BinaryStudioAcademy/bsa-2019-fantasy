@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { RootState } from 'store/types';
 import { Position, Player } from 'types/player.types';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -15,6 +16,8 @@ type Props = {
 };
 
 export const PlayerList = ({ players }: Props) => {
+  const { t } = useTranslation();
+
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
 
   const { GKP, DEF, MID, FWD } = Position;
@@ -38,8 +41,8 @@ export const PlayerList = ({ players }: Props) => {
             <th className='w-1/6' align='left'>
               &nbsp;
             </th>
-            <th className='w-3/6' align='left'>
-              Goalkeepers
+            <th className='w-3/6 capitalize' align='left'>
+              {t('roles.goalkeeper_plural')}
             </th>
             <th className='w-1/6' align='left'>
               £
@@ -65,8 +68,8 @@ export const PlayerList = ({ players }: Props) => {
             <th className='w-1/6' align='left'>
               &nbsp;
             </th>
-            <th className='w-3/6' align='left'>
-              Defenders
+            <th className='w-3/6 capitalize' align='left'>
+              {t('roles.defender_plural')}
             </th>
             <th className='w-1/6' align='left'>
               £
@@ -92,8 +95,8 @@ export const PlayerList = ({ players }: Props) => {
             <th className='w-1/6' align='left'>
               &nbsp;
             </th>
-            <th className='w-3/6' align='left'>
-              Midfielders
+            <th className='w-3/6 capitalize' align='left'>
+              {t('roles.midfielder_plural')}
             </th>
             <th className='w-1/6' align='left'>
               £
@@ -119,8 +122,8 @@ export const PlayerList = ({ players }: Props) => {
             <th className='w-1/6' align='left'>
               &nbsp;
             </th>
-            <th className='w-3/6' align='left'>
-              Forwards
+            <th className='w-3/6 capitalize' align='left'>
+              {t('roles.forward_plural')}
             </th>
             <th className='w-1/6' align='left'>
               £

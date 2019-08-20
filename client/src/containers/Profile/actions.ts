@@ -12,7 +12,13 @@ import {
   ResetPasswordCredentials,
 } from 'types/forgot.password.types';
 
-import { SET_USER, SET_IS_LOADING, AsyncUserAction, UserAction } from './action.type';
+import {
+  SET_USER,
+  SET_IS_LOADING,
+  CHANGE_LANGUAGE,
+  AsyncUserAction,
+  UserAction,
+} from './action.type';
 
 const setToken = (token: string) => localStorage.setItem('token', token);
 const clearToken = () => localStorage.removeItem('token');
@@ -25,6 +31,11 @@ const setUser = (user: User | null): UserAction => ({
 const setIsLoading = (isLoading: boolean): UserAction => ({
   type: SET_IS_LOADING,
   payload: isLoading,
+});
+
+export const setLanguage = (request: { language: string }): UserAction => ({
+  type: CHANGE_LANGUAGE,
+  payload: request,
 });
 
 const setAuthData = (user: User, token: string): AsyncUserAction => (dispatch) => {
