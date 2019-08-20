@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -14,10 +15,12 @@ import { RootState } from 'store/types';
 
 import { logout } from 'containers/Profile/actions';
 
-import './styles.scss';
+import styles from './styles.module.scss';
 import { FaSignOutAlt } from 'react-icons/fa';
 
 const Sidebar = () => {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const { name, score } = useSelector(
     (state: RootState) => state.profile.user!,
@@ -30,27 +33,27 @@ const Sidebar = () => {
 
   const menuItems = [
     {
-      name: 'Status',
+      name: t('Sidebar.status'),
       icon: faStar,
       link: '/',
     },
     {
-      name: 'My Team',
+      name: t('Sidebar.myTeam'),
       icon: faFutbol,
       link: '/my-team',
     },
     {
-      name: 'Statistics',
+      name: t('Sidebar.statistics'),
       icon: faProjectDiagram,
       link: '/players',
     },
     {
-      name: 'Transfers',
+      name: t('Sidebar.transfers'),
       icon: faExchangeAlt,
       link: '/transfers',
     },
     {
-      name: 'Leagues',
+      name: t('Sidebar.leagues'),
       icon: faAward,
       link: '/leagues',
     },
@@ -58,20 +61,26 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`sidebar flex flex-col py-6 bg-secondary text-primary2 h-screen relative ${
-        isOpened ? 'open' : ''
+      className={`${
+        styles.sidebar
+      } flex flex-col py-6 bg-secondary text-primary2 h-screen relative ${
+        isOpened ? styles.open : ''
       }`}
       onClick={toggleOpened}
       role='presentation'
     >
       <Link
         to='/'
-        className={`sidebar-logo item font-bold ${isOpened ? 'pl-6 pr-12' : 'pl-3 pr-3'}`}
+        className={`${styles['sidebar-logo']} font-bold ${
+          isOpened ? 'pl-6 pr-12' : 'pl-3 pr-3'
+        }`}
       >
         <img src='/images/logo.png' alt='logo' />
       </Link>
       <Link
-        className={`username-link mt-32 flex-col ${isOpened ? 'pl-6' : 'pl-3'}`}
+        className={`${styles['username-link']} mt-32 flex-col ${
+          isOpened ? 'pl-6' : 'pl-3'
+        }`}
         to='/profile'
         onClick={noPropagation}
       >
@@ -81,21 +90,25 @@ const Sidebar = () => {
           style={{ height: 45, width: 45 }}
           className='rounded-full mb-2'
         />
-        <p className={`username truncate ${isOpened ? 'open' : ''}`}>{name}</p>
+        <p className={`${styles.username} truncate ${isOpened ? styles.open : ''}`}>
+          {name}
+        </p>
       </Link>
-      <div className={`points text-sm ${isOpened ? 'pl-6' : 'pl-4'}`}>Score: {score}</div>
+      <div className={`${styles.points} text-sm ${isOpened ? 'pl-6' : 'pl-4'}`}>
+        {t('Sidebar.score')}: {score}
+      </div>
       <div className='menu mt-16'>
         {menuItems.map(({ name, icon, link }) => (
           <NavLink
             exact
-            className='menuItem flex px-6 py-5 h-8 justify-start items-center hover:text-primary'
+            className='flex px-6 py-5 h-8 justify-start items-center hover:text-primary'
             activeClassName='text-primary'
             key={name}
             to={link}
             onClick={noPropagation}
           >
             <FontAwesomeIcon className='fa-fw' icon={icon} />
-            <div className='link-title'>{name}</div>
+            <div className={styles['link-title']}>{name}</div>
           </NavLink>
         ))}
         <button
@@ -106,7 +119,7 @@ const Sidebar = () => {
             dispatch(logout());
           }}
         >
-          {isOpened ? 'Logout' : <FaSignOutAlt className='ml-1 opacity-75' />}
+          {isOpened ? t('Sidebar.logout') : <FaSignOutAlt className='ml-1 opacity-75' />}
         </button>
       </div>
     </div>

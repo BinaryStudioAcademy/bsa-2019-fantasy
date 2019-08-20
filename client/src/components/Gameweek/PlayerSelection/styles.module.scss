@@ -11,15 +11,18 @@
     center bottom / contain no-repeat;
 }
 
-:local(.player-name){
+:local(.player-name-container) {
   background-color: rgba(0, 111, 55, 0.9);
   color: white;
   font-size: 0.8rem;
+  width: 112px;
+}
+
+:local(.player-name) {
+  text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding: 0.1rem 2rem;
   overflow: hidden;
-  max-width: 130px;
 }
 
 :local(.player-club) {

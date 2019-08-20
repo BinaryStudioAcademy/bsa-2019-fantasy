@@ -16,6 +16,7 @@ import PlayerSelectionDroppable, {
 } from '../PlayerSelectionDroppable';
 import { PlayerDraggableProps } from '../PlayerSelection';
 
+import { getPitch, getBench } from 'helpers/dragndrop';
 import { getFieldPlayersUniformUrl, getGoalkeepersUniformUrl } from 'helpers/images';
 import { postGameweekHistory } from 'containers/Routing/fetchGameweeks/actions';
 
@@ -51,93 +52,9 @@ const TeamSelection = ({
   const players = useSelector((state: RootState) => state.gameweeks.gameweeks_history);
 
   const [view, setView] = useState<'list' | 'pitch'>('pitch');
-  const [playersOnBench, setBench] = useState<any[]>([
-    {
-      accept: [
-        PlayerTypes.GOALKEEPER,
-        PlayerTypes.DEFENDER,
-        PlayerTypes.MIDDLEFIELDER,
-        PlayerTypes.FORWARD,
-      ],
-      lastDroppedItem: null,
-    },
-    {
-      accept: [
-        PlayerTypes.GOALKEEPER,
-        PlayerTypes.DEFENDER,
-        PlayerTypes.MIDDLEFIELDER,
-        PlayerTypes.FORWARD,
-      ],
-      lastDroppedItem: null,
-    },
-    {
-      accept: [
-        PlayerTypes.GOALKEEPER,
-        PlayerTypes.DEFENDER,
-        PlayerTypes.MIDDLEFIELDER,
-        PlayerTypes.FORWARD,
-      ],
-      lastDroppedItem: null,
-    },
-    {
-      accept: [
-        PlayerTypes.GOALKEEPER,
-        PlayerTypes.DEFENDER,
-        PlayerTypes.MIDDLEFIELDER,
-        PlayerTypes.FORWARD,
-      ],
-      lastDroppedItem: null,
-    },
-  ]);
+  const [playersOnBench, setBench] = useState<any[]>(getBench());
 
-  const [playersOnPitch, setPitch] = useState<any[]>([
-    {
-      accept: PlayerTypes.GOALKEEPER,
-      lastDroppedItem: null,
-    },
-
-    {
-      accept: PlayerTypes.DEFENDER,
-      lastDroppedItem: null,
-    },
-
-    {
-      accept: PlayerTypes.DEFENDER,
-      lastDroppedItem: null,
-    },
-    {
-      accept: PlayerTypes.DEFENDER,
-      lastDroppedItem: null,
-    },
-
-    {
-      accept: PlayerTypes.MIDDLEFIELDER,
-      lastDroppedItem: null,
-    },
-
-    {
-      accept: PlayerTypes.MIDDLEFIELDER,
-      lastDroppedItem: null,
-    },
-    {
-      accept: PlayerTypes.MIDDLEFIELDER,
-      lastDroppedItem: null,
-    },
-
-    {
-      accept: PlayerTypes.MIDDLEFIELDER,
-      lastDroppedItem: null,
-    },
-    {
-      accept: PlayerTypes.FORWARD,
-      lastDroppedItem: null,
-    },
-
-    {
-      accept: PlayerTypes.FORWARD,
-      lastDroppedItem: null,
-    },
-  ]);
+  const [playersOnPitch, setPitch] = useState<any[]>(getPitch());
 
   const [droppedPlayerBenchIds, setPlayerBenchIds] = useState<any[]>([]);
   const [droppedPlayerPitchIds, setPlayerPitchIds] = useState<any[]>([]);

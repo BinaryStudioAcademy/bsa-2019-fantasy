@@ -1,51 +1,49 @@
-.sidebar {
+:local(.sidebar) {
   display: flex;
   height: 100%;
   width: 70px;
   transition: width 0.3s;
 
-  &-logo {
-    transition: padding 0.3s;
-  }
-
-  &.open {
+  &:local(.open){
     width: 150px;
 
-    .link-title {
+    :local(.link-title) {
       visibility: visible;
       opacity: 1;
       margin-left: 8px;
     }
 
-    .username,
-    .points {
+    :local(.username),
+    :local(.points) {
       visibility: visible;
       opacity: 1;
     }
 
-    .username {
+    :local(.username) {
       font-weight: bold;
     }
   }
 
-  .link-title {
+  :local(.link-title) {
     white-space: nowrap;
     visibility: hidden;
     opacity: 0;
     transition: visibility 0s, opacity 0.3s, width 0.3s;
   }
 
-  .username,
-  .points {
+  :local(.username),
+  :local(.points) {
     white-space: nowrap;
     visibility: hidden;
     opacity: 0;
     transition: visibility 0s, opacity 0.3s, padding 0.3s;
   }
 
-  .username {
-    &-link {
-      transition: padding 0.3s;
-    }
+  :local(.username-link) {
+    transition: padding 0.3s;
   }
+}
+
+:local(.sidebar-logo) {
+  transition: padding 0.3s;
 }

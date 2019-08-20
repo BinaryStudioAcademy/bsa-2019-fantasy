@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Radar } from 'react-chartjs-2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,7 +11,7 @@ import Button from 'components/Button';
 import { getClubLogoUrl, getPlayerImageUrl } from 'helpers/images';
 import { RootState } from 'store/types';
 
-import './styles.scss';
+import styles from './styles.module.scss';
 import { Player } from 'types/player.types';
 import { Club } from 'types/club.types';
 
@@ -23,6 +24,8 @@ Object.assign(Chart.defaults.global, {
 });
 
 const PlayerHighlight = ({ player }: { player: Player }) => {
+  const { t } = useTranslation();
+
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
   const getClubById = (id: number) => {
     return clubs.find((club: Club) => club.id === id);
@@ -133,7 +136,7 @@ const PlayerHighlight = ({ player }: { player: Player }) => {
         </div>
 
         <div className='award text-secondary2 mt-12'>
-          <FontAwesomeIcon icon={faMedal} /> Player of the week
+          <FontAwesomeIcon icon={faMedal} /> {t('Players.playerOfTheWeek')}
         </div>
 
         <h2
@@ -153,7 +156,7 @@ const PlayerHighlight = ({ player }: { player: Player }) => {
             styling='primary'
             className='text-sm xl:text-base mr-4'
           >
-            History
+            {t('Players.history')}
           </Button>
           <Button
             href='/fixtures'
@@ -161,13 +164,13 @@ const PlayerHighlight = ({ player }: { player: Player }) => {
             styling='secondary'
             className='text-sm xl:text-base'
           >
-            Fixtures
+            {t('Players.fixtures')}
           </Button>
         </div>
 
         <div className='allWinners mt-6 text-sm'>
           <Link className='font-semibold hover:underline' to='/'>
-            Browse all winners
+            {t('Players.browseAll')}
           </Link>
         </div>
       </div>
@@ -185,8 +188,8 @@ const PlayerHighlight = ({ player }: { player: Player }) => {
         style={{ maxWidth: '40%' }}
       >
         <div className='px-4'>
-          <h4 className='font-bold text-xl'>Summary</h4>
-          <p className='font-semibold text-xs'>Season 1</p>
+          <h4 className='font-bold text-xl'>{t('Players.summary')}</h4>
+          <p className='font-semibold text-xs'>{`${t('Players.season')} 1`}</p>
         </div>
 
         <div className='chart-container'>

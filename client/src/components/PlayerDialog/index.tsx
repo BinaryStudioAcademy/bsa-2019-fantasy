@@ -25,19 +25,19 @@ const PlayerDialog = (props: Props) => {
 
   const positionDict: { [key: string]: { name: string; color: string } } = {
     GKP: {
-      name: t('PlayerDialog.goalkeeper'),
+      name: t('roles.goalkeeper'),
       color: 'bg-yellow-400',
     },
     DEF: {
-      name: t('PlayerDialog.defender'),
+      name: t('roles.defender'),
       color: 'bg-green-600',
     },
     MID: {
-      name: t('PlayerDialog.midfielder'),
+      name: t('roles.midfielder'),
       color: 'bg-teal-400',
     },
     FWD: {
-      name: t('PlayerDialog.forward'),
+      name: t('roles.forward'),
       color: 'bg-red-600',
     },
   };

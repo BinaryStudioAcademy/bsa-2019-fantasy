@@ -37,13 +37,13 @@ export const getFixturesForPlayer = async (playerId, clubId) => {
   return gameRepository
     .getAllWithClubs()
     .map((el) => el.get({ plain: true }))
-    .reduce(async (result, { start, hometeam, awayteam }, i) => {
+    .reduce(async (result, { start, hometeam, awayteam, gameweek_id }, i) => {
       if (start > new Date()) {
         if (hometeam.id.toString() === clubId) {
-          result.push({ start: formatDate(start), opp: awayteam.short_name, round: i });
+          result.push({ start: formatDate(start), opp: awayteam.short_name, round: gameweek_id });
         }
         if (awayteam.id.toString() === clubId) {
-          result.push({ start: formatDate(start), opp: hometeam.short_name, round: i });
+          result.push({ start: formatDate(start), opp: hometeam.short_name, round: gameweek_id });
         }
       }
       return result;
