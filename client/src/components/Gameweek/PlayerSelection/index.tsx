@@ -130,7 +130,9 @@ const PlayerSelection = ({
           alt='player'
         />
         <div>
-          <div className={styles['player-name']}> {name}</div>
+          <div className={styles['player-name-container']}>
+            <p className={styles['player-name']}>{name}</p>
+          </div>
           <div className={styles['player-club']}>{isGameweek ? points : club}</div>
         </div>
       </div>
