@@ -1,15 +1,16 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-import './styles.scss';
+import styles from './styles.module.scss';
 
 type Props = {
   isCaptain: boolean;
-  isViceCaptain: boolean,
-  onClose: () => void,
-  onSetCaptain: () => void,
-  onSetViceCaptain: () => void,
-  name: string
-}
+  isViceCaptain: boolean;
+  onClose: () => void;
+  onSetCaptain: () => void;
+  onSetViceCaptain: () => void;
+  name: string;
+};
 
 const StatusPlayerModal = ({
   isCaptain,
@@ -17,8 +18,10 @@ const StatusPlayerModal = ({
   onClose,
   onSetCaptain,
   onSetViceCaptain,
-  name
+  name,
 }: Props) => {
+  const { t } = useTranslation();
+
   return (
     <div
       className='dimmer flex absolute inset-0 bg-modalDimmer'
@@ -29,10 +32,12 @@ const StatusPlayerModal = ({
         className='modal-status m-auto max-w-full max-h-full bg-white w-1/3 text-white'
         role='presentation'
       >
-        <div className='modal-header bg-green-700 p-4 font-bold text-xl flex justify-between'>
+        <div
+          className={`${styles['modal-header']} bg-green-700 p-4 font-bold text-xl flex justify-between`}
+        >
           <h3>{name}</h3>
           <button onClick={() => onClose()}>
-            <span className='close'></span>
+            <span className={styles.close} />
           </button>
         </div>
         <div className='modal-body p-6 flex flex-col'>
@@ -41,7 +46,7 @@ const StatusPlayerModal = ({
               className='bg-green-700 p-2 mb-4 rounded'
               onClick={() => onSetCaptain()}
             >
-              Make Captain
+              {t('StatusPlayerModal.makeCaptain')}
             </button>
           )}
           {!isViceCaptain && (
@@ -49,7 +54,7 @@ const StatusPlayerModal = ({
               className='bg-green-700 p-2 rounded'
               onClick={() => onSetViceCaptain()}
             >
-              Make Vice-Captain
+              {t('StatusPlayerModal.makeViceCaptain')}
             </button>
           )}
         </div>

@@ -1,0 +1,29 @@
+:local(.league-table) {
+  :local(.title) {
+    font-size: 25px;
+    line-height: 27px;
+    font-weight: bold;
+  }
+}
+
+:local(.league-table[id='0']) {
+  grid-area: public;
+
+  @media screen and (min-width: 1024px) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+:local(.league-table[id='1']) {
+  grid-area: private;
+
+  @media screen and (min-width: 1024px) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+:local(.league-table[id='2']) {
+  grid-area: global;
+}

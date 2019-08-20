@@ -1,7 +1,8 @@
 body {
   overflow-y: hidden;
 }
-.login-container {
+
+:local(.login-container) {
   position: relative;
   height: 100%;
   background: url('../../assets/images/login-bg.jpg') no-repeat;
@@ -10,7 +11,7 @@ body {
   background-color: rgba(13, 28, 42, 0.67);
 }
 
-.layer {
+:local(.layer) {
   background-color: rgba(13, 28, 42, 0.67);
   position: absolute;
   z-index: 1;
@@ -20,19 +21,19 @@ body {
   height: 100%;
 }
 
-.form-container {
+:local(.form-container) {
   background-color: #122737;
 }
 
-.lable-wrapper {
+:local(.lable-wrapper) {
   padding-left: 8rem;
-
+  padding-right: 1rem;
   text-align: left;
   margin-top: 16rem;
   width: 100%;
 }
 
-.main-lable {
+:local(.main-lable) {
   position: relative;
   z-index: 2;
   max-width: none !important;
@@ -43,10 +44,10 @@ body {
   color: #1ee3cf;
 }
 
-.lables {
+:local(.lables) {
   width: 100%;
 }
-.side-lable {
+:local(.side-lable) {
   position: relative;
   z-index: 2;
   text-align: left;
@@ -58,8 +59,42 @@ body {
   letter-spacing: -0.3px;
 }
 
-.side-lable-small {
+:local(.side-lable-small) {
   font-style: italic;
   font-size: 0.8rem;
   font-weight: 400;
+}
+
+@media (max-width: 745px) {
+  :local(.lable-wrapper) {
+    margin-top: 0.5rem;
+    padding-left: 0 !important;
+
+    text-align: center;
+  }
+
+  :local(.main-lable) {
+    font-size: 3rem;
+  }
+
+  :local(.login-form) {
+    min-height: 23rem !important;
+    max-height: 30rem !important;
+  }
+
+  :local(.lables) {
+    display: none;
+  }
+  :local(.lable-wrapper) {
+    padding-left: 0 !important;
+  }
+
+  body {
+    overflow-y: auto;
+  }
+}
+
+:local(.login-form) {
+  min-height: 100vh;
+  background-color: #122737;
 }

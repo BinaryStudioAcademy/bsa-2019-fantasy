@@ -1,21 +1,21 @@
-.team-container {
+:local(.team-container) {
   min-width: 740px;
   max-width: 1000px;
 }
 
-.team {
+:local(.team) {
   width: 70%;
   left: 15%;
   top: 0.25%;
 }
 
-.team-select-wrapper {
+:local(.team-select-wrapper) {
   background: #122737;
   margin: 0 auto;
   box-shadow: 7px 10px 13px -5px rgba(0, 0, 0, 0.75);
 }
 
-.team-selection-radio {
+:local(.team-selection-radio) {
   width: 175px;
   padding: 10px;
   text-align: center;
@@ -24,14 +24,14 @@
   color: #fff;
 }
 
-.form-team {
+:local(.form-team) {
   display: flex;
   background: rgb(33, 156, 105);
   border-radius: 5px;
   border: 2px solid rgb(33, 156, 105);
 }
 
-.is-active {
+:local(.is-active) {
   background: #fff;
   color: #000;
 }

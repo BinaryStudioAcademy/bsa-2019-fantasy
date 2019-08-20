@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import './styles.scss';
+import styles from './styles.module.scss';
 
 const SocialForm = withRouter(({ history }) => {
   return (

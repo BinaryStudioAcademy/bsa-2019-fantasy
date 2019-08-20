@@ -38,6 +38,7 @@ class GameweekHistoryRepository extends BaseRepository {
       updatedAt: now,
       user_id,
       gameweek_id,
+      team_score: 0
     });
   }
 }

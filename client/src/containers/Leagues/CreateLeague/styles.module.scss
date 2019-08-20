@@ -1,0 +1,25 @@
+:local(.create-league) {
+  :local(.checkbox-styled) {
+    display: block;
+    transition: 0.2s;
+
+    input[type='checkbox'] {
+      display: none;
+      + span {
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 15px;
+        text-align: center;
+        cursor: pointer;
+        display: block;
+        position: relative;
+      }
+    }
+
+    &:local(.checked) {
+      color: #fff;
+      background-color: #4fd1c5;
+      border-color: transparent;
+    }
+  }
+}

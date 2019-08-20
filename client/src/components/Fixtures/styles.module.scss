@@ -1,50 +1,51 @@
-.play-time {
+:local(.play-time) {
   flex: 1 0 3.4rem;
   margin: 0 20px;
   border: 1px solid #1ab8a8;
 }
 
-.team {
+:local(.team) {
   flex: 1 1 calc(50% - 1.7rem);
   display: flex;
   align-items: center;
 }
 
-.fixtures-list {
+:local(.fixtures-list) {
   margin: 0 auto;
   padding-bottom: 30px;
 }
 
-.first-team {
+:local(.first-team) {
   text-align: right;
 }
-.second-team {
+
+:local(.second-team) {
   text-align: left;
 }
 
-.logo {
+:local(.logo) {
   width: 50px;
   height: 50px;
   margin: 0 10px;
 }
-.fixtures-list__daystamp {
+:local(.fixtures-list__daystamp ){
   text-align: center;
   background-color: #e9edf1;
 }
 
-.bnt {
+:local(.bnt) {
   margin-left: auto;
 }
 
-.home-score {
+:local(.home-score) {
   border-right: 1px solid white;
   padding-right: 10px;
 }
 
-.away-score {
+:local(.away-score) {
   padding-left: 10px;
 }
 
-.score {
+:local(.score) {
   flex: 1;
 }

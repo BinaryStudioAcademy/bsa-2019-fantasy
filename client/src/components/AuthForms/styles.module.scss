@@ -1,4 +1,4 @@
-.form-registration {
+:local(.form-registration) {
   position: relative;
   z-index: 2;
   color: #1ee3cf;
@@ -17,25 +17,25 @@
     color: #122737f6;
   }
 
-  .sign-up-btn {
+  :local(.sign-up-btn) {
     background: #1ee3cf;
     border-radius: 3px;
     color: #122737;
   }
 
-  .sign-up-btn-no-bg {
+  :local(.sign-up-btn-no-bg) {
     border: 1px solid #1ee3cf;
     border-radius: 3px;
     background-color: transparent;
   }
 
-  .error {
+  :local(.error) {
     border: 1px solid #e60000;
   }
 }
 
 @media (max-width: 745px) {
-  .form-registration {
+  :local(.form-registration) {
     margin: 0 auto;
   }
 }
