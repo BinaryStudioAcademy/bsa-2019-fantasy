@@ -41,7 +41,11 @@ import ForgotPassword from 'containers/ChangePassword/ForgotPassword';
 import ResetPassword from 'containers/ChangePassword/ResetPassword';
 
 import { fetchClubs } from './fetchClubs/actions';
-import { fetchGameweeks, fetchGameweekHistory } from './fetchGameweeks/actions';
+import {
+  fetchGameweeks,
+  fetchGameweekHistory,
+  fetchGameweekHistoryResults,
+} from './fetchGameweeks/actions';
 import { preloadClubLogos } from 'helpers/images';
 import { currentGameweekSelector } from 'store/selectors/current-gameweek.selector';
 
@@ -88,6 +92,7 @@ const Routing = () => {
   useEffect(() => {
     if (user && currentGameweek) {
       dispatch(fetchGameweekHistory(user.id, currentGameweek.id));
+      dispatch(fetchGameweekHistoryResults(currentGameweek.id));
     }
   }, [dispatch, user, currentGameweek]);
 

@@ -35,3 +35,14 @@ export const getHistoryByGameweekId = async (gameweekId) => {
   const result = await gameweekHistoryRepository.getByGameweekId(gameweekId);
   return result;
 };
+
+export const getAverageGameweekScore = (gameweekResults) => {
+  return (
+    gameweekResults.map((gr) => gr.team_score).reduce((p, c) => p + c, 0) /
+    gameweekResults.length
+  );
+};
+
+export const getMaxGameweekScore = (gameweekResults) => {
+  return Math.max(...gameweekResults.map((gr) => gr.team_score));
+};

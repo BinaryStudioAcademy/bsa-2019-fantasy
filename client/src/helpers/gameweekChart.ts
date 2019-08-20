@@ -11,6 +11,15 @@ export const getChartOptions = () => {
         pointHoverRadius: 7,
         data: [10, 59, 80, 81, 56, 55, 40],
       },
+      {
+        label: 'points',
+        fill: true,
+        borderColor: '#1EE3CF',
+        backgroundColor: 'rgba(30, 227, 207)',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverRadius: 7,
+        data: [20, 45, 65, 34, 65, 43, 56],
+      },
     ],
   };
 };

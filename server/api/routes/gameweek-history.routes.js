@@ -23,6 +23,22 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
+  .get('/gameweek/:gameweek/avg', (req, res, next) => {
+    gameweekHistoryService
+      .getHistoryByGameweekId(req.params.gameweek)
+      .then((value) => {
+        return res.json(gameweekHistoryService.getAverageGameweekScore(value));
+      })
+      .catch(next);
+  })
+  .get('/gameweek/:gameweek/max', (req, res, next) => {
+    gameweekHistoryService
+      .getHistoryByGameweekId(req.params.gameweek)
+      .then((value) => {
+        return res.json(gameweekHistoryService.getMaxGameweekScore(value));
+      })
+      .catch(next);
+  })
   .get('/user-team/:user/:gameweek', (req, res, next) => {
     gameweekHistoryService
       .getCurrentHistoryById(req.params.user, req.params.gameweek)

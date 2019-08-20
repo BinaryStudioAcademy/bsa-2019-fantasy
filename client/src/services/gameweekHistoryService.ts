@@ -11,6 +11,13 @@ export const getGameweekHistoryForUserById = async (
   });
   return response.json();
 };
+export const getGameweekHistoryByGameweekId = async (gameweekId: string) => {
+  const response = await callWebApi({
+    endpoint: `/api/gameweek-history/gameweek/${gameweekId}`,
+    type: 'GET',
+  });
+  return response.json();
+};
 
 export const postGameweekHistoryForUserById = async (
   userId: string,

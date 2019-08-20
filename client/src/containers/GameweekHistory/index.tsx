@@ -1,17 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Line as LineChart } from 'react-chartjs-2';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+
+import { RootState } from 'store/types';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
 import { getChartOptions } from 'helpers/gameweekChart';
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
+import { GameweekHistoryResultsType } from 'types/gameweekHistory.type';
+const getAverageGameweekScore = (results: Array<GameweekHistoryResultsType>) => {
+  return (
+    results
+      .map((el: GameweekHistoryResultsType) => el.team_score)
+      .reduce((p: number, c: number) => p + c, 0) / results.length
+  );
+};
 
+const getMaxGameweekScore = (results: Array<GameweekHistoryResultsType>) => {
+  return Math.max(...results.map((el: GameweekHistoryResultsType) => el.team_score));
+};
 const GameweekHistory = () => {
   const { t } = useTranslation();
+
+  const gameweekResults = useSelector(
+    (state: RootState) => state.gameweeks.gameweeks_results,
+  );
+  if (gameweekResults.length) {
+    console.log(`Avg score is ${getAverageGameweekScore(gameweekResults)}`);
+    console.log(`Max score is ${getMaxGameweekScore(gameweekResults)}`);
+  }
 
   useEffect(() => {
     document.title = 'Home | Fantasy Football League';
