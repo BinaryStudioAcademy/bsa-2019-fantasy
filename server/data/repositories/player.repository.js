@@ -53,6 +53,10 @@ class PlayerRepository extends BaseRepository {
 
     return this.model.findAll({ where, order, offset, limit });
   }
+
+  getById(id) {
+    return this.model.findOne({ where: { id } });
+  }
 }
 
 export default new PlayerRepository(PlayerStatModel);
