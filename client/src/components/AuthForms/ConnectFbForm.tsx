@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { login } from 'containers/Profile/actions';
 
-import './styles.scss';
+import styles from './styles.module.scss';
 
 const LoginForm = withRouter(({ history }) => {
   const dispatch = useDispatch();

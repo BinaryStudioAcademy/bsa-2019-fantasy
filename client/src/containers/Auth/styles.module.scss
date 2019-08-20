@@ -27,7 +27,7 @@ body {
 
 :local(.lable-wrapper) {
   padding-left: 8rem;
-  padding-right:  1rem;
+  padding-right: 1rem;
   text-align: left;
   margin-top: 16rem;
   width: 100%;
@@ -68,6 +68,7 @@ body {
 @media (max-width: 745px) {
   :local(.lable-wrapper) {
     margin-top: 0.5rem;
+    padding-left: 0 !important;
 
     text-align: center;
   }
@@ -97,4 +98,3 @@ body {
   min-height: 100vh;
   background-color: #122737;
 }
-
