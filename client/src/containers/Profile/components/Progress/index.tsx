@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
 import { FaUserCog, FaStar, FaEnvelope } from 'react-icons/fa';
 
@@ -9,22 +10,24 @@ type Props = {
   navToStep: (s: number) => void;
 };
 
-const steps = [
-  {
-    name: '1. Personal details',
-    Icon: FaUserCog,
-  },
-  {
-    name: '2. Favourite club',
-    Icon: FaStar,
-  },
-  {
-    name: '3. Email preferences',
-    Icon: FaEnvelope,
-  },
-];
-
 const Progress = ({ step, navToStep }: Props) => {
+  const { t } = useTranslation();
+
+  const steps = [
+    {
+      name: `1. ${t('Profile.steps.personalDetails')}`,
+      Icon: FaUserCog,
+    },
+    {
+      name: `2. ${t('Profile.steps.favouriteClub')}`,
+      Icon: FaStar,
+    },
+    {
+      name: `3. ${t('Profile.steps.emailPreferences')}`,
+      Icon: FaEnvelope,
+    },
+  ];
+
   return (
     <div className='-mr-1 px-12 py-4 bg-white rounded shadow-figma'>
       <div className={styles.steps}>

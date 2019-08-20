@@ -1,5 +1,6 @@
 import React, { SyntheticEvent } from 'react';
 import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
 import { bindActionCreators, Dispatch } from 'redux';
 import { Link, Redirect } from 'react-router-dom';
 import ReactTable from 'react-table';
@@ -32,6 +33,7 @@ type IProps = {
   dialogLoading: boolean;
   resetPlayerDialogData: typeof resetPlayerDialogData;
   playerData: PlayerDataType;
+  t: any;
 };
 
 type IState = {
@@ -164,34 +166,34 @@ class PlayersPage extends React.Component<IProps, IState> {
       Cell: (props: any) => this.renderClubImageCell(props),
     },
     {
-      Header: () => this.renderHeader('Name'),
+      Header: () => this.renderHeader(this.props.t('Players.name')),
       accessor: 'first_name',
       className: 'flex items-center bg-white',
       Cell: (props: any) => this.renderNameCell(props),
     },
     {
-      Header: () => this.renderHeader('Price'),
+      Header: () => this.renderHeader(this.props.t('Players.price')),
       accessor: 'player_price',
       className: 'flex items-center bg-white',
     },
     {
-      Header: () => this.renderHeader('Score'),
+      Header: () => this.renderHeader(this.props.t('Players.score')),
       accessor: 'player_score',
       className: 'flex items-center bg-white',
     },
     {
-      Header: () => this.renderHeader('Position'),
+      Header: () => this.renderHeader(this.props.t('Players.position')),
       accessor: 'position',
       className: 'flex items-center bg-white',
     },
     {
-      Header: () => this.renderHeader('Club'),
+      Header: () => this.renderHeader(this.props.t('Players.club')),
       accessor: 'club_id',
       className: 'flex items-center bg-white',
       Cell: (props: any) => this.renderClubCell(props),
     },
     {
-      Header: () => this.renderHeader('Info'),
+      Header: () => this.renderHeader(this.props.t('Players.info')),
       className: 'flex items-center justify-end bg-white rounded-r',
       Cell: (props: any) => this.renderComparisonCell(props),
     },
@@ -297,6 +299,7 @@ class PlayersPage extends React.Component<IProps, IState> {
 
   render() {
     if (this.props.loading) return 'spinner';
+    const { t } = this.props;
 
     return (
       <>
@@ -320,11 +323,12 @@ class PlayersPage extends React.Component<IProps, IState> {
                   className='bg-yellow-400 text-white font-bold py-2 px-4 rounded'
                   onClick={() => this.onComparisonRedirect()}
                 >
-                  Compare
+                  {t('Players.compare')}
                 </button>
               ) : (
                 <button className='bg-primary text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed'>
-                  Comparison queue: {this.state.comparisonData.length} (need 2)
+                  {t('Players.compareQueue')}: {this.state.comparisonData.length} (
+                  {t('Players.need')} 2)
                 </button>
               )}
             </div>
@@ -368,8 +372,11 @@ const actions = {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(PlayersPage);
+/* eslint-disable */
+export default withTranslation()(
+  // @ts-ignore
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(PlayersPage),
+);

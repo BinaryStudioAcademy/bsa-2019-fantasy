@@ -1,6 +1,7 @@
 import cn from 'classnames';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import { RootState } from 'store/types';
 import { updateFavoriteClub } from 'containers/Profile/actions';
@@ -11,6 +12,8 @@ import { getClubLogoUrl } from 'helpers/images';
 import styles from './styles.module.scss';
 
 const FavouriteClubSelection = () => {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const favoriteClub = useSelector(
     ({ profile }: RootState) => profile.user && profile.user.favorite_club_id,
@@ -36,7 +39,7 @@ const FavouriteClubSelection = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <h2 className='mb-12 text-5xl font-bold'>Favourite club</h2>
+      <h2 className='mb-12 text-5xl font-bold'>{t('Profile.favouriteClub.title')}</h2>
 
       <div className={styles.clubsList}>
         {clubs.map((item) => {
@@ -67,7 +70,7 @@ const FavouriteClubSelection = () => {
         type='submit'
         className='mt-12 py-2 px-16 text-lg max-w-xs rounded shadow bg-primary text-secondary font-bold'
       >
-        Submit
+        {t('submit')}
       </button>
     </form>
   );

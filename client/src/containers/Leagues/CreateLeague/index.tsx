@@ -114,7 +114,7 @@ const CreateLeague = ({ createLeagueAction }: Props) => {
                   className={`${
                     styles['checkbox-styled']
                   } g-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded ${
-                    privacy === 'public' ? 'checked' : ''
+                    privacy === 'public' ? `${styles.checked}` : ''
                   }`}
                 >
                   <input
@@ -131,7 +131,7 @@ const CreateLeague = ({ createLeagueAction }: Props) => {
                   className={`${
                     styles['checkbox-styled']
                   } g-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded ${
-                    privacy === 'private' ? 'checked' : ''
+                    privacy === 'private' ? `${styles.checked}` : ''
                   }`}
                 >
                   <input
