@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import cn from 'classnames';
 import validator from 'validator';
+import { feedback } from 'react-feedbacker';
 
-import { resetPassword } from 'containers/Profile/actions';
+import { resetPassword, loadCurrentUser } from 'containers/Profile/actions';
 
 import styles from '../AuthForms/styles.module.scss';
 
@@ -23,21 +24,19 @@ class ResetPasswordForm extends Component<
 > {
   state = {
     password: '',
-    isPasswordValid: true,
+    isPasswordValid: false,
     isLoading: false,
     isSuccess: false,
     isError: false,
   };
 
-  validatePassword = () => {
-    const { password } = this.state;
-    const isPasswordValid = !validator.isEmpty(password);
-    this.setState({ isPasswordValid });
-    return isPasswordValid;
+  validatePassword = (password: string) => {
+    return !validator.isEmpty(password) && validator.isLength(password, { min: 8 });
   };
 
-  passwordChanged = (password: string) =>
-    this.setState({ password, isPasswordValid: true });
+  passwordChanged = (password: string) => {
+    this.setState({ password, isPasswordValid: this.validatePassword(password) });
+  };
 
   handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -56,15 +55,16 @@ class ResetPasswordForm extends Component<
         isSuccess: true,
         isError: false,
       });
+      feedback.success('Successfully changed your password!');
+      this.props.history.replace('/');
     } catch {
       this.setState({ isLoading: false, isError: true, isSuccess: false });
-      // TODO: show error
-      console.log('Something went wrong');
+      feedback.error('Could not change the password');
     }
   };
 
   render() {
-    const { isPasswordValid, password, isSuccess, isError, isLoading } = this.state;
+    const { isPasswordValid, isSuccess, isError, isLoading } = this.state;
     const { t } = this.props;
 
     return (
@@ -77,14 +77,14 @@ class ResetPasswordForm extends Component<
               type='password'
               placeholder={t('ChangePasswordForms.passwordPlaceholder')}
               onChange={(ev) => this.passwordChanged(ev.target.value)}
-              onBlur={this.validatePassword}
             />
           </div>
           <button
             type='submit'
-            className={`font-bold rounded py-1 px-6 mr-2 border border-transparent text-secondary bg-primary shadow uppercase ${(!password ||
-              isLoading) &&
-              'opacity-50 cursor-not-allowed'}`}
+            className={cn(
+              'font-bold rounded py-1 px-6 mr-2 border border-transparent text-secondary bg-primary shadow uppercase',
+              (!isPasswordValid || isLoading) && 'opacity-50 cursor-not-allowed',
+            )}
             disabled={!isPasswordValid || isLoading}
           >
             {`${isLoading ? t('wait') : t('ChangePasswordForms.changePassword')}`}
@@ -105,9 +105,9 @@ class ResetPasswordForm extends Component<
   }
 }
 
-const actions = { resetPassword };
+const actions = { resetPassword, loadCurrentUser };
 //TODO: fix any type
-const mapDispatchToProps = (dispatch: any) => bindActionCreators(actions, dispatch);
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
 
 export default withTranslation()(
   withRouter(

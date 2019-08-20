@@ -4,7 +4,7 @@ import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import { FaFacebook } from 'react-icons/fa';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 import { login } from 'containers/Profile/actions';
 
@@ -55,9 +55,9 @@ const LoginForm = withRouter(({ history }) => {
           </label>
         </div>
         <div className='flex appearance-none items-center justify-between mb-4'>
-          <button className='text-xs' onClick={() => history.push('/forgot')}>
+          <Link to='/forgot' className='text-xs'>
             {t('AuthForms.forgot')}
-          </button>
+          </Link>
         </div>
 
         <div className='flex items-center justify-start'>
