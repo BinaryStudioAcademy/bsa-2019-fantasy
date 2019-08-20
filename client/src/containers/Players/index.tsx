@@ -372,9 +372,8 @@ const actions = {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
-
+/* eslint-disable */
 export default withTranslation()(
-  /* eslint-disable */
   // @ts-ignore
   connect(
     mapStateToProps,
