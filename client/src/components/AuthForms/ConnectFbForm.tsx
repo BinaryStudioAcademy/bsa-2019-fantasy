@@ -21,7 +21,7 @@ const LoginForm = withRouter(({ history }) => {
   };
 
   return (
-    <div className='w-full h-full max-w-xs form-registration'>
+    <div className={`${styles['form-registration']} w-full h-full max-w-xs`}>
       <form onSubmit={handleLogin} className=' px-8 pt-6 pb-8 '>
         <div className='mb-4'>
           <label>
