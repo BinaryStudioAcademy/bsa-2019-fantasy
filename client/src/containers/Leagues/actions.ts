@@ -3,7 +3,11 @@ import { feedback } from 'react-feedbacker';
 import * as leagueService from 'services/leagueService';
 import {
   SET_USER_LEAGUES,
+  CREATE_LEAGUE_FAILURE,
+  CREATE_LEAGUE_SUCCESS,
+  SET_LOADING,
   SET_LEAGUES_SUGGESTIONS,
+  RESET_LEAGUES_DATA,
   SetLeaguesAction,
   AsyncSetLeaguesAction,
   AsyncCreateLeagueAction,
@@ -22,16 +26,43 @@ const setSuggestions = (payload: any): SearchLeaguesAction => ({
   payload,
 });
 
+const createLeagueFailure = (payload) => ({
+  type: CREATE_LEAGUE_FAILURE,
+  payload,
+});
+
+const createLeagueSuccess = (payload) => ({
+  type: CREATE_LEAGUE_SUCCESS,
+  payload,
+});
+
+const setLoading = (isLoading: boolean): any => ({
+  type: SET_LOADING,
+  payload: isLoading,
+});
+
+export const resetLeaguesData = () => ({
+  type: RESET_LEAGUES_DATA,
+});
+
 export const createLeagueAction = (data: {
   name: string;
   private: boolean;
   start_from: number;
-}): AsyncCreateLeagueAction => async () => {
+}): any => async (dispatch) => {
   try {
+    dispatch(setLoading(true));
     const result = await leagueService.createLeague(data);
+    if (data.private) {
+      const { name } = data;
+      const code = await leagueService.getInvitationCode({ name });
+      console.log('code: ', code);
+    }
     feedback.success((result && result.message) || result);
+    dispatch(createLeagueSuccess(result.message));
   } catch (err) {
     feedback.error(err.message);
+    dispatch(createLeagueFailure(err.message));
   }
 };
 
