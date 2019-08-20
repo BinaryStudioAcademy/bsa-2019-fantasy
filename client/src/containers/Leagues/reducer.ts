@@ -3,6 +3,7 @@ import {
   SearchLeaguesAction,
   SET_USER_LEAGUES,
   SET_LEAGUES_SUGGESTIONS,
+  SET_INVITATION_CODE,
   SET_LOADING,
   RESET_LEAGUES_DATA,
   CREATE_LEAGUE_FAILURE,
@@ -15,6 +16,7 @@ type State = {
   error: string | null;
   success: string | null;
   isLoading: boolean;
+  code?: string;
 };
 
 const initialState: State = {
@@ -22,6 +24,7 @@ const initialState: State = {
   error: null,
   success: null,
   isLoading: false,
+  code: '',
 };
 
 export default (state = initialState, action: any) => {
@@ -37,7 +40,9 @@ export default (state = initialState, action: any) => {
     case CREATE_LEAGUE_SUCCESS:
       return { ...state, success: action.payload, error: null, isLoading: false };
     case RESET_LEAGUES_DATA:
-      return { ...state, success: null, error: null };
+      return { ...state, success: null, error: null, code: '' };
+    case SET_INVITATION_CODE:
+      return { ...state, code: action.payload };
     default:
       return state;
   }

@@ -22,6 +22,7 @@ type Props = {
   error: null | string;
   success: null | string;
   isLoading: boolean;
+  code: string;
 };
 
 const CreateLeague = ({
@@ -31,6 +32,7 @@ const CreateLeague = ({
   error,
   success,
   isLoading,
+  code,
 }: Props) => {
   const { t } = useTranslation();
   const [name, setName] = useState('');
@@ -84,7 +86,6 @@ const CreateLeague = ({
       history.push('/leagues');
     }
   }
-  console.log(success, privacy);
 
   return (
     <div className={styles['create-league']}>
@@ -216,11 +217,13 @@ const CreateLeague = ({
           </form>
         </div>
       </div>
-      <PrivateLeagueModal
-        open={success && privacy === 'private'}
-        onClose={closeModal}
-        code={'111'}
-      />
+      {code && (
+        <PrivateLeagueModal
+          open={success && privacy === 'private'}
+          onClose={closeModal}
+          code={code}
+        />
+      )}
     </div>
   );
 };
@@ -229,6 +232,7 @@ const mapStateToProps = (rootState: RootState) => ({
   isLoading: rootState.league.isLoading,
   success: rootState.league.success,
   error: rootState.league.error,
+  code: rootState.league.code,
 });
 
 const actions = { createLeagueAction, resetLeaguesData };

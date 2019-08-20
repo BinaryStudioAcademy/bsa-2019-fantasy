@@ -5,6 +5,7 @@ import {
   SET_USER_LEAGUES,
   CREATE_LEAGUE_FAILURE,
   CREATE_LEAGUE_SUCCESS,
+  SET_INVITATION_CODE,
   SET_LOADING,
   SET_LEAGUES_SUGGESTIONS,
   RESET_LEAGUES_DATA,
@@ -41,6 +42,11 @@ const setLoading = (isLoading: boolean): any => ({
   payload: isLoading,
 });
 
+const setInvitationCode = (payload: string) => ({
+  type: SET_INVITATION_CODE,
+  payload,
+});
+
 export const resetLeaguesData = () => ({
   type: RESET_LEAGUES_DATA,
 });
@@ -55,8 +61,10 @@ export const createLeagueAction = (data: {
     const result = await leagueService.createLeague(data);
     if (data.private) {
       const { name } = data;
-      const code = await leagueService.getInvitationCode({ name });
-      console.log('code: ', code);
+      const result = await leagueService.getInvitationCode({ name });
+      if (!result.forbidden) {
+        dispatch(setInvitationCode(result.code));
+      }
     }
     feedback.success((result && result.message) || result);
     dispatch(createLeagueSuccess(result.message));
