@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { FaFacebook } from 'react-icons/fa';
 import { withRouter } from 'react-router-dom';
 
 import { login } from 'containers/Profile/actions';
@@ -50,30 +49,19 @@ const LoginForm = withRouter(({ history }) => {
             />
           </label>
         </div>
-        <div className='flex appearance-none items-center justify-between mb-4'>
-          <button className='text-xs' onClick={() => history.push('/forgot')}>
-            Forgot your password?
-          </button>
-        </div>
-
         <div className='flex items-center justify-start'>
           <button
             type='submit'
             className='font-bold rounded py-1 px-6 mr-2 border border-transparent text-secondary bg-primary shadow uppercase'
           >
-            Sign In
+            Confirm
           </button>
           <button
             type='button'
             className='opacity-50 hover:opacity-100 font-bold rounded py-1 px-6 border border-primary bg-transparent shadow uppercase'
-            onClick={() => history.push('/registration')}
+            onClick={() => history.push('/social')}
           >
-            Sign Up
-          </button>
-        </div>
-        <div className='block mt-8'>
-          <button onClick={() => history.push('/social')} /* href='/api/auth/fb' */>
-            <FaFacebook />
+            Go back
           </button>
         </div>
       </form>

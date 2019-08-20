@@ -11,6 +11,7 @@ import GuestRoute from 'containers/GuestRoute';
 
 import LoginPage from 'containers/Auth/Login/LoginPage';
 import RegistrationPage from 'containers/Auth/Registration/RegistrationPage';
+import SocialPage from 'containers/Auth/SocialPage';
 
 import MyTeam from 'containers/MyTeam';
 import Transfers from 'containers/Transfers';
@@ -43,6 +44,7 @@ import { fetchClubs } from './fetchClubs/actions';
 import { fetchGameweeks, fetchGameweekHistory } from './fetchGameweeks/actions';
 import { preloadClubLogos } from 'helpers/images';
 import { currentGameweekSelector } from 'store/selectors/current-gameweek.selector';
+import ConnectFbPage from 'containers/Auth/ConnectFbPage';
 
 const Routing = () => {
   const dispatch = useDispatch();
@@ -84,6 +86,8 @@ const Routing = () => {
         <GuestRoute exact path='/login' component={LoginPage} />
         <GuestRoute exact path='/registration' component={RegistrationPage} />
         <GuestRoute exact path='/forgot' component={ForgotPassword} />
+        <GuestRoute exact path='/social' component={SocialPage} />
+        <GuestRoute exact path='/connect-fb' component={ConnectFbPage} />
         <GuestRoute path='/reset/:id' component={ResetPassword} />
 
         {user && user.favorite_club_id === null && (
