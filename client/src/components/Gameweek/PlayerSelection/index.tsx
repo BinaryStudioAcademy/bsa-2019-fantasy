@@ -74,7 +74,7 @@ const PlayerSelection = ({
   return (
     <div
       ref={ref}
-      className='text-center relative'
+      className='text-center relative cursor-pointer'
       onClick={() => {
         if (onOpen) {
           onOpen(id, isCaptain, isViceCaptain, name);
@@ -82,7 +82,13 @@ const PlayerSelection = ({
       }}
     >
       <div>
-        <div className='absolute'>
+        <div
+          className='absolute'
+          onClick={(e) => {
+            e.stopPropagation();
+            console.log('substitution');
+          }}
+        >
           {isGameweek ? null : (
             <React.Fragment>
               <svg width='18' height='24' viewBox='0 0 24 24'>
