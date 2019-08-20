@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { bindActionCreators, Dispatch } from 'redux';
 import validator from 'validator';
@@ -13,9 +14,10 @@ import header from 'styles/header.module.scss';
 
 type Props = {
   createLeagueAction: typeof createLeagueAction;
+  history: any;
 };
 
-const CreateLeague = ({ createLeagueAction }: Props) => {
+const CreateLeague = ({ createLeagueAction, history }: Props) => {
   const { t } = useTranslation();
   const [isLoading, setLoading] = useState(false);
   const [name, setName] = useState('');
@@ -50,6 +52,9 @@ const CreateLeague = ({ createLeagueAction }: Props) => {
         private: isPrivate,
         start_from: Number(gameweek.split(' ')[1]),
       });
+      if (!isPrivate) {
+        return history.push('/leagues');
+      }
     } catch {
       console.log('Something went wrong!');
     } finally {
@@ -199,8 +204,9 @@ const CreateLeague = ({ createLeagueAction }: Props) => {
 
 const actions = { createLeagueAction };
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
-
-export default connect(
+/* eslint-disable */
+// @ts-ignore
+export default withRouter(connect(
   null,
   mapDispatchToProps,
-)(CreateLeague);
+)(CreateLeague));
