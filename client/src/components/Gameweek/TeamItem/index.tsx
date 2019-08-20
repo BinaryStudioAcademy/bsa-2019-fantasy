@@ -39,12 +39,12 @@ const TeamItem = ({
   const isViceCaptain = viceCaptainId === id;
   return (
     <tr className='bg-white w-full'>
-      <td className='w-1/12' align='center' valign='middle'>
+      <td  className={`w-1/12 ${styles['table-item']}`} align='center' valign='middle'>
         <button>
           <img src={info} alt=' info' />
         </button>
       </td>
-      <td className='w-1/12 text-center'>
+      <td  className={`w-1/12 ${styles['table-item']}`}>
         {' '}
         {!isGameweek && (
           <React.Fragment>
@@ -69,9 +69,9 @@ const TeamItem = ({
           </React.Fragment>
         )}
       </td>
-      <td className='w-5/12' valign='middle'>
+      <td className={`w-5/12 ${styles['table-item']}`} valign='middle'>
         <button
-          className={`flex flex-row w-full ${styles.teamItemButton}`}
+          className={`flex flex-row w-full ${styles['team-item-button']}`}
           onClick={() => {
             if (onOpen) {
               onOpen(id, isCaptain, isViceCaptain, name);
@@ -88,11 +88,11 @@ const TeamItem = ({
           </div>
         </button>
       </td>
-      <td className='w-1/12 text-base'>{position}</td>
-      <td className='w-1/12 text-base'>{form}</td>
-      <td className='w-1/12 text-base'>{gameweek_points}</td>
-      <td className='w-1/12 text-base'>{total_points}</td>
-      <td className='w-1/12 text-base'>{fixture}</td>
+      <td className={`w-1/12 text-base ${styles['table-item']}`}>{position}</td>
+      <td className={`w-1/12 text-base ${styles['table-item']}`}>{form}</td>
+      <td className={`w-1/12 text-base ${styles['table-item']}`}>{gameweek_points}</td>
+      <td className={`w-1/12 text-base ${styles['table-item']}`}>{total_points}</td>
+      <td className={`w-1/12 text-base ${styles['table-item']}`}>{fixture}</td>
     </tr>
   );
 };
