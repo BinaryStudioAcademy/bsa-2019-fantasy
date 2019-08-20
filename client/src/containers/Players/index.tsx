@@ -161,32 +161,13 @@ class PlayersPage extends React.Component<IProps, IState> {
       width: 70,
       className: 'flex justify-center bg-white rounded-l',
       style: { marginLeft: '5px' },
-      Cell: (props: any) => {
-        return (
-          <div className='rounded-full shadow-figma p-1 bg-white w-10'>
-            <img
-              className='w-full'
-              src={this.getClubImageById(props.value)}
-              alt='Club logo'
-            />
-          </div>
-        );
-      },
+      Cell: (props: any) => this.renderClubImageCell(props),
     },
     {
       Header: () => this.renderHeader('Name'),
       accessor: 'first_name',
       className: 'flex items-center bg-white',
-
-      Cell: (props: any) => (
-        <div
-          className='mr-4 font-semibold hover:text-secondary2 cursor-pointer'
-          role='presentation'
-          onClick={() => this.setPlayerHighlight(props.original.id)}
-        >
-          {props.original.first_name} {props.original.second_name}
-        </div>
-      ),
+      Cell: (props: any) => this.renderNameCell(props),
     },
     {
       Header: () => this.renderHeader('Price'),
@@ -207,42 +188,12 @@ class PlayersPage extends React.Component<IProps, IState> {
       Header: () => this.renderHeader('Club'),
       accessor: 'club_id',
       className: 'flex items-center bg-white',
-      Cell: (props: any) => {
-        return (
-          <Link className='mr-4 font-semibold' to='#'>
-            {this.getClubNameById(props.value)}
-          </Link>
-        );
-      },
+      Cell: (props: any) => this.renderClubCell(props),
     },
     {
       Header: () => this.renderHeader('Info'),
       className: 'flex items-center justify-end bg-white rounded-r',
-      Cell: (props: any) => {
-        const addedToComparison = this.state.comparisonData.find(
-          (player: any) => player.id === props.original.id,
-        );
-        return (
-          <>
-            <button className='mr-4' onClick={() => this.onComparisonAdd(props)}>
-              {addedToComparison ? <FaTimes /> : <FaPlus />}
-            </button>
-            <button
-              className='w-4 h-4 justify-center mr-4 leading-none flex bg-background rounded-full text-xs font-semibold'
-              onClick={() => {
-                this.setState({
-                  currentPlayer: this.props.players.find(
-                    (p: any) => p && props.original.id === p.id,
-                  ),
-                });
-                this.props.fetchDataForPlayer(props.original.id, props.original.club_id);
-              }}
-            >
-              i
-            </button>
-          </>
-        );
-      },
+      Cell: (props: any) => this.renderComparisonCell(props),
     },
   ];
 
@@ -258,6 +209,54 @@ class PlayersPage extends React.Component<IProps, IState> {
       </div>
     );
   };
+
+  renderClubImageCell = (props: any) => (
+    <div className='rounded-full shadow-figma p-1 bg-white w-10'>
+      <img className='w-full' src={this.getClubImageById(props.value)} alt='Club logo' />
+    </div>
+  );
+
+  renderComparisonCell = (props: any) => {
+    const addedToComparison = this.state.comparisonData.find(
+      (player: any) => player.id === props.original.id,
+    );
+    return (
+      <>
+        <button className='mr-4' onClick={() => this.onComparisonAdd(props)}>
+          {addedToComparison ? <FaTimes /> : <FaPlus />}
+        </button>
+        <button
+          className='w-4 h-4 justify-center mr-4 leading-none flex bg-background rounded-full text-xs font-semibold'
+          onClick={() => {
+            this.setState({
+              currentPlayer: this.props.players.find(
+                (p: any) => p && props.original.id === p.id,
+              ),
+            });
+            this.props.fetchDataForPlayer(props.original.id, props.original.club_id);
+          }}
+        >
+          i
+        </button>
+      </>
+    );
+  };
+
+  renderNameCell = (props) => (
+    <div
+      className='mr-4 font-semibold hover:text-secondary2 cursor-pointer'
+      role='presentation'
+      onClick={() => this.setPlayerHighlight(props.original.id)}
+    >
+      {props.original.first_name} {props.original.second_name}
+    </div>
+  );
+
+  renderClubCell = (props) => (
+    <Link className='mr-4 font-semibold' to='#'>
+      {this.getClubNameById(props.value)}
+    </Link>
+  );
 
   renderTable() {
     //if (!this.props.players.length) return 'spinner';
@@ -298,6 +297,7 @@ class PlayersPage extends React.Component<IProps, IState> {
 
   render() {
     if (this.props.loading) return 'spinner';
+
     return (
       <>
         {this.state.redirect && (
