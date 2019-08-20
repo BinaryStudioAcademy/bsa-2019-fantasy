@@ -87,11 +87,7 @@ class ResetPasswordForm extends Component<
               'opacity-50 cursor-not-allowed'}`}
             disabled={!isPasswordValid || isLoading}
           >
-            {`${
-              isLoading
-                ? t('ChangePasswordForms.wait')
-                : t('ChangePasswordForms.changePassword')
-            }`}
+            {`${isLoading ? t('wait') : t('ChangePasswordForms.changePassword')}`}
           </button>
           {isSuccess && (
             <p className='text-primary font-bold mb-2'>

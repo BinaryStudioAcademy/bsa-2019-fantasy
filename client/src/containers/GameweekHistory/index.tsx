@@ -48,13 +48,13 @@ const GameweekHistory = () => {
             className='g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded mr-6'
           >
             <FaChevronLeft />
-            {t('GameweekHistoryPage.previous')}
+            {t('previous')}
           </Link>
           <Link
             to='/'
             className='g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded'
           >
-            {t('GameweekHistoryPage.next')}
+            {t('next')}
             <FaChevronRight />
           </Link>
         </div>

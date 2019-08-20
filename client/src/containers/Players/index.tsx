@@ -20,7 +20,7 @@ import { Club } from 'types/club.type';
 
 import { FaPlus, FaTimes } from 'react-icons/fa';
 
-import './styles.scss';
+import styles from './styles.module.scss';
 
 type IProps = {
   players: [Player?];
@@ -92,7 +92,7 @@ class PlayersPage extends React.Component<IProps, IState> {
         if (playerIndex !== -1) {
           const preparedHighlightsArray = [...this.state.comparisonData];
           preparedHighlightsArray.splice(playerIndex, 1);
-
+          /* eslint-disable */
           this.setState({
             ...this.state,
             comparisonData: [...preparedHighlightsArray],
@@ -154,7 +154,7 @@ class PlayersPage extends React.Component<IProps, IState> {
       this.onFetchData({ ...this.table.current.state, page: 0 }),
     );
   };
-
+  /* eslint-enable */
   readonly columns = [
     {
       accessor: 'club_id',

@@ -97,7 +97,7 @@ const PublicLeagues = ({ searchPublicLeagues, suggestions, joinLeague }: Props) 
           type='submit'
           disabled={!value || isLoading}
         >
-          {isLoading ? t('LeaguesPage.wait') : t('LeaguesPage.joinLeague.public.join')}
+          {isLoading ? t('wait') : t('LeaguesPage.joinLeague.public.join')}
         </button>
       </form>
     </div>

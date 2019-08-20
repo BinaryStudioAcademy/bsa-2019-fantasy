@@ -183,7 +183,7 @@ const CreateLeague = ({ createLeagueAction }: Props) => {
               type='submit'
               disabled={!name || !isNameValid || isLoading}
             >
-              {isLoading ? t('LeaguesPage.wait') : t('LeaguesPage.createLeague.create')}
+              {isLoading ? t('wait') : t('LeaguesPage.createLeague.create')}
             </button>
             {!isNameValid && (
               <span className='ml-2 font-bold text-red-600'>

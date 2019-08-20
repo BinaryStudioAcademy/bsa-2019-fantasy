@@ -69,7 +69,7 @@ const FixturesContainer = ({
               className='btn bg-green-600 px-20 py-1 rounded'
               onClick={() => setCurrentGameweek(currentGameweek - 1)}
             >
-              {t('Fixtures.previous')}
+              {t('previous')}
             </button>
           )}
           {currentGameweek < gameweeks.length - 1 && (
@@ -77,7 +77,7 @@ const FixturesContainer = ({
               className={cn(styles['btn-next'], 'btn bg-green-600 px-20 py-1 rounded')}
               onClick={() => setCurrentGameweek(currentGameweek + 1)}
             >
-              {t('Fixtures.next')}
+              {t('next')}
             </button>
           )}
         </div>

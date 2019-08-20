@@ -67,7 +67,7 @@ const PrivateLeagues = ({ joinLeague }: Props) => {
           type='submit'
           disabled={!code || isLoading}
         >
-          {isLoading ? t('LeaguesPage.wait') : t('LeaguesPage.joinLeague.private.join')}
+          {isLoading ? t('wait') : t('LeaguesPage.joinLeague.private.join')}
         </button>
       </form>
     </div>

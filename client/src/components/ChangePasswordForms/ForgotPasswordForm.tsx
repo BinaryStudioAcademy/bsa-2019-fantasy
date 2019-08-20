@@ -85,9 +85,7 @@ class ForgotPasswordForm extends Component<
               'opacity-50 cursor-not-allowed'}`}
             disabled={!isEmailValid || isLoading}
           >
-            {`${
-              isLoading ? t('ChangePasswordForms.wait') : t('ChangePasswordForms.send')
-            }`}
+            {`${isLoading ? t('wait') : t('send')}`}
           </button>
           {isSuccess && (
             <p className='text-primary font-bold mb-2'>
