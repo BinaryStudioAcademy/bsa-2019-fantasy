@@ -5,7 +5,7 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons';
 
 import Notifications from 'components/Notifications';
 
-import './styles.scss';
+import styles from './styles.module.scss';
 
 const Header = () => {
   const menuItems = [
@@ -17,7 +17,7 @@ const Header = () => {
   ];
 
   return (
-    <header className='header bg-primary pb-32 text-sm text-secondary2'>
+    <header className={`${styles.header} bg-primary pb-32 text-sm text-secondary2`}>
       <div className='mx-16'>
         <nav className='flex items-center py-4 '>
           <div className='flex flex-initial items-center mr-4'>

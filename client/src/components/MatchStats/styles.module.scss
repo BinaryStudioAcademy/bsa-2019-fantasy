@@ -1,25 +1,25 @@
-.teamstats {
+:local(.teamstats) {
   flex: 1;
   padding: 10px 20px 10px 20px;
 }
-.left-team {
+:local(.left-team){
   text-align: right;
   border-right: 1px dotted black;
 }
 
-.right-team {
+:local(.right-team) {
   text-align: left;
 }
 
-.stats-item {
+:local(.stats-item) {
   border-bottom: 1px solid rgb(226, 226, 226);
   color: rgb(47, 47, 47);
 }
 
-.stats-item:last-child {
+:local(.stats-item:last-child) {
   border: none;
 }
 
-.stats {
+:local(.stats) {
   margin: 0 auto;
 }

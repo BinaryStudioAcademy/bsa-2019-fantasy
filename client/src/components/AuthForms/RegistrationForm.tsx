@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router';
+import cn from 'classnames';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import validator from 'validator';
 
 import { registration } from 'containers/Profile/actions';
 
-import './styles.scss';
+import styles from './styles.module.scss';
 
 const RegistrationForm = withRouter(({ history }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const [name, setName] = useState('');
@@ -66,48 +69,52 @@ const RegistrationForm = withRouter(({ history }) => {
   );
 
   return (
-    <div className='w-full max-w-xs form-registration'>
+    <div className={cn(styles['form-registration'], 'w-full max-w-xs')}>
       <form className='px-8 pt-6 pb-8' onSubmit={handleClickRegister}>
         <div className='mb-4'>
           <label>
-            Name
+            {t('AuthForms.name')}
             <input
-              className={isNameValid ? firstNameClass : (firstNameClass += ' error')}
+              className={
+                isNameValid ? firstNameClass : (firstNameClass += ` ${styles.error}`)
+              }
               id='first-name'
               type='text'
-              placeholder='Name'
+              placeholder={t('AuthForms.name')}
               value={name}
               onChange={(ev) => nameChanged(ev.target.value)}
               onBlur={validateName}
             />
             {!isNameValid && (
               <p className='mt-1 text-red-500 text-xs italic text-justify'>
-                Shoud be at least 5 characters
+                {t('AuthForms.atLeastName')}
               </p>
             )}
           </label>
         </div>
         <div className='mb-2'>
           <label>
-            Email
+            {t('AuthForms.email')}
             <input
-              className={isEmailValid ? emailClass : (emailClass += ' error')}
+              className={isEmailValid ? emailClass : (emailClass += ` ${styles.error}`)}
               id='email'
               type='email'
-              placeholder='Email address'
+              placeholder={t('AuthForms.email')}
               onChange={(ev) => emailChanged(ev.target.value)}
               onBlur={validateEmail}
             />
             <p className='mt-1 text-xs italic text-justify'>
-              We will send you a confirmation email
+              {t('AuthForms.sendConfirm')}
             </p>
           </label>
         </div>
         <div className='mb-6'>
           <label>
-            Password
+            {t('AuthForms.password')}
             <input
-              className={isPasswordValid ? passwordClass : (passwordClass += ' error')}
+              className={
+                isPasswordValid ? passwordClass : (passwordClass += ` ${styles.error}`)
+              }
               id='password'
               type='password'
               placeholder='*************'
@@ -116,7 +123,7 @@ const RegistrationForm = withRouter(({ history }) => {
             />
             {!isPasswordValid && (
               <p className='mt-1 text-red-500 text-xs italic text-justify'>
-                Shoud be at least 8 characters
+                {t('AuthForms.atLeastPassword')}
               </p>
             )}
           </label>
@@ -126,14 +133,14 @@ const RegistrationForm = withRouter(({ history }) => {
             type='submit'
             className='font-bold rounded py-1 px-6 mr-2 border border-transparent text-secondary bg-primary shadow uppercase'
           >
-            Sign up
+            {t('AuthForms.signup')}
           </button>
           <button
             type='button'
             className='opacity-50 hover:opacity-100 font-bold rounded py-1 px-6 border border-primary bg-transparent shadow uppercase'
             onClick={() => history.push('/login')}
           >
-            Sign In
+            {t('AuthForms.login')}
           </button>
         </div>
       </form>

@@ -1,10 +1,10 @@
-.player-placeholder {
+:local(.player-placeholder) {
   position: relative;
   height: 6.5rem;
   width: 7rem;
 }
 
-.player-type {
+:local(.player-type) {
   color: white;
   font-size: 0.75rem;
   text-transform: uppercase;

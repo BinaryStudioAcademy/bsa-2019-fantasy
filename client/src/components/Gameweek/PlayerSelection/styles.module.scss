@@ -1,8 +1,8 @@
-.player-img {
+:local(.player-img) {
   width: 52px;
 }
 
-.player-shadow {
+:local(.player-shadow) {
   display: inline-block;
   vertical-align: middle;
   padding-bottom: 0.6rem;
@@ -11,7 +11,7 @@
     center bottom / contain no-repeat;
 }
 
-.player-name {
+:local(.player-name){
   background-color: rgba(0, 111, 55, 0.9);
   color: white;
   font-size: 0.8rem;
@@ -22,7 +22,7 @@
   max-width: 130px;
 }
 
-.player-club {
+:local(.player-club) {
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
   background-color: #00ff87;

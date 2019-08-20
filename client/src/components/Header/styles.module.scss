@@ -1,4 +1,4 @@
-.header .search-bar input {
+:local(.header .search-bar) input {
   background-color: rgba(255, 255, 255, 0.33);
   border-color: rgba(255, 255, 255, 0.08);
   &::placeholder {

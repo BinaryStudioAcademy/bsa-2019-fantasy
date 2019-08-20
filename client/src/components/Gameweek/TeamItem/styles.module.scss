@@ -5,13 +5,6 @@
   width: 50px;
   font-size: 1rem;
 }
-:local(.teamItemButton) {
+:local(.team-item-button) {
   border-right: 2px solid #ddd;
-}
-
-td {
-  border-bottom: 1px solid #ddd;
-  padding: 8px;
-  margin: 0 8px;
-  font-size: 13px;
 }

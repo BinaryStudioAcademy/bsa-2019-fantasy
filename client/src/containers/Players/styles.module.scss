@@ -1,0 +1,14 @@
+:global(.ReactTable .rt-thead.-header) {
+  box-shadow: none;
+}
+
+:global(.ReactTable .rt-thead .rt-th),
+:global(.ReactTable .rt-thead .rt-td),
+:global(.ReactTable .rt-tbody .rt-td) {
+  border-right: none;
+}
+
+:global(.ReactTable .rt-tbody .rt-tr-group) {
+  border-bottom: none;
+  margin-bottom: 2px;
+}

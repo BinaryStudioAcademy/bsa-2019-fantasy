@@ -1,0 +1,149 @@
+{
+  "wait": "Wait",
+  "send": "Send",
+  "next": "Next",
+  "previous": "Previous",
+
+  "LoginPage": {
+    "login": "Log in to play",
+    "fantasy": "Fantasy Premier League",
+    "hey": "Hey, dude!",
+    "welcome": "Welcome back! Please, login to your account"
+  },
+
+  "RegistrationPage": {
+    "register": "Register to play",
+    "fantasy": "Fantasy Premier League",
+    "welcome": "Welcome!",
+    "fill-the-form": "Please, fill in the form to join!"
+  },
+
+  "AuthForms": {
+    "email": "Email address",
+    "password": "Password",
+    "remember": "Remember me",
+    "forgot": "Forgot password?",
+    "login": "Sign in",
+    "signup": "Sign up",
+    "name": "Name",
+    "sendConfirm": "We will send you a confirmation email",
+    "atLeastName": "Should be at least 5 characters",
+    "atLeastPassword": "Should be at least 8 characters"
+  },
+
+  "ChangePasswordPage": {
+    "forgotPassword": "Forgot your password?",
+    "changePassword": "Change your password?",
+    "title": "Changing password",
+    "subtitle": {
+      "forgotPassword": "Please type your e-mail below. We'll send you a letter with further instructions",
+      "changePassword": "Please type your new password below."
+    }
+  },
+
+  "ChangePasswordForms": {
+    "changePassword": "Change password",
+    "email": "Email",
+    "emailPlaceholder": "Email adress",
+    "passwordPlaceholder": "Your new password",
+    "error": "Something went wrong!",
+    "success": {
+      "forgot": "Сheck your mailbox!",
+      "reset": "Successfully changed password!"
+    }
+  },
+
+  "Fixtures": {
+    "title": "Fixtures"
+  },
+
+  "GameweekHistoryPage": {
+    "titles": {
+      "sub": "Premier League",
+      "main": "Gameweek"
+    },
+    "currentPoints": "Current Points",
+    "points": "points"
+  },
+
+  "Gameweek": {
+    "saveTeam": "Save your Team",
+    "listView": "List View",
+    "pitchView": "Pitch View"
+  },
+
+  "LeaguesPage": {
+    "join": "Join",
+    "cells": {
+      "leagues": "Leagues",
+      "currentRank": "Current Rank",
+      "lastRank": "Last Rank"
+    },
+    "tables": {
+      "private": "Private classic leagues",
+      "public": "Public classic leagues",
+      "global": "Global classic leagues"
+    },
+    "title": {
+      "sub": "My Leagues"
+    },
+    "create": "New League",
+    "createLeague": {
+      "title": {
+        "main": "Create a new classic league",
+        "sub": "Create a League"
+      },
+      "name": "Name",
+      "nameMax": "Maximum 30 characters",
+      "privacy": {
+        "title": "Privacy",
+        "public": "Public",
+        "private": "Private"
+      },
+      "scoring": "Scoring starts",
+      "error": "Maximum length exceeded!",
+      "create": "Create a league",
+      "or": "or"
+    },
+    "joinLeague": {
+      "title": {
+        "sub": "Join a League",
+        "main": "Join an existing league"
+      },
+      "private": {
+        "title": "Private leagues",
+        "message": "Join a private league if somebody has given you a league code to enter.",
+        "code": "League Code",
+        "join": "Join private league"
+      },
+      "public": {
+        "title": "Public leagues",
+        "name": "League Name",
+        "join": "Join public league",
+        "message": "Public leagues allow you to compete against 20 game players in a classic league. You can join up to 3 public leagues.",
+        "note": "Note, you can't remove your team from a public league after the league has started, once the challenge is on there's no quitting."
+      }
+    }
+  },
+
+  "MyTeamPage": {
+    "title": {
+      "main": "My team",
+      "sub": "Team Page"
+    }
+  },
+
+  "PlayerDialog": {
+    "goalkeeper": "goalkeeper",
+    "defender": "defender",
+    "midfielder": "midfielder",
+    "forward": "forward",
+    "thisSeason": "This season",
+    "haventPlayed": "This player hasn't player any games yet",
+    "date": "Date",
+    "round": "Round",
+    "opponent": "Opponent",
+    "history": "History",
+    "fixtures": "Fixtures"
+  }
+}

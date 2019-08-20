@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { en, ua } from './locales';
+import en from './locales/en.json';
+import ua from './locales/ua.json';
 
 const options = {
   interpolation: {
