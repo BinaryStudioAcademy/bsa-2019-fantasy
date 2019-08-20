@@ -145,5 +145,15 @@
     "opponent": "Opponent",
     "history": "History",
     "fixtures": "Fixtures"
+  },
+
+  "Sidebar": {
+    "status": "Status",
+    "myTeam": "My Team",
+    "statistics": "Statistics",
+    "transfers": "Transfers",
+    "leagues": "Leagues",
+    "score": "Score",
+    "logout": "Logout"
   }
 }

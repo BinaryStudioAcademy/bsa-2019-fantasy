@@ -145,5 +145,24 @@
     "opponent": "Опонент",
     "history": "Історія",
     "fixtures": "Матчі"
+  },
+
+  "Sidebar": {
+    "status": "Статус",
+    "myTeam": "Моя команда",
+    "statistics": "Статистика",
+    "transfers": "Трансфери",
+    "leagues": "Ліги",
+    "score": "Очки",
+    "logout": "Вийти"
+  },
+
+  "Header": {
+    "leagues": "Ліги",
+    "live": "Наживо",
+    "players": "Гравці",
+    "transfers": "Трансфери",
+    "fixtures": "Матчі",
+    "home": "Домашня сторінка"
   }
 }

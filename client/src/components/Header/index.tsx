@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
@@ -8,12 +9,14 @@ import Notifications from 'components/Notifications';
 import styles from './styles.module.scss';
 
 const Header = () => {
+  const { t } = useTranslation();
+
   const menuItems = [
-    { name: 'Leagues', link: '/leagues' },
-    { name: 'Live', link: '/live', dot: true },
-    { name: 'Players', link: '/players' },
-    { name: 'Transfers', link: '/transfers' },
-    { name: 'Fixtures', link: '/fixtures' },
+    { name: t('Header.leagues'), link: '/leagues' },
+    { name: t('Header.live'), link: '/live', dot: true },
+    { name: t('Header.players'), link: '/players' },
+    { name: t('Header.transfers'), link: '/transfers' },
+    { name: t('Header.fixtures'), link: '/fixtures' },
   ];
 
   return (
@@ -27,7 +30,7 @@ const Header = () => {
               className='font-semibold uppercase p-1 border-solid border-b-2 border-transparent hover:text-secondary mr-12'
               activeClassName='text-secondary border-secondary'
             >
-              Home
+              {t('Header.home')}
             </NavLink>
             <Notifications />
           </div>
