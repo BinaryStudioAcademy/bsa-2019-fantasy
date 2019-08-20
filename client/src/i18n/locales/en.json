@@ -232,5 +232,23 @@
   "NotFound": {
     "message": "Looks like this freekick went off the stadium!",
     "back": "Take me back home"
+  },
+
+  "Players": {
+    "name": "Name",
+    "price": "Price",
+    "score": "Score",
+    "position": "Position",
+    "club": "Club",
+    "info": "Info",
+    "compare": "Compare",
+    "compareQueue": "Comparison queue",
+    "need": "need",
+    "playerOfTheWeek": "Player of the week",
+    "history": "History",
+    "fixtures": "Fixtures",
+    "browseAll": "Browse all winners",
+    "summary": "Summary",
+    "season": "Season"
   }
 }
