@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import { Line as LineChart } from 'react-chartjs-2';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
-
-import { RootState } from 'store/types';
 
 import './styles.scss';
 
@@ -27,7 +24,6 @@ const mockChartData = {
 };
 
 const GameweekHistory = () => {
-
   useEffect(() => {
     document.title = 'Home | Fantasy Football League';
   }, []);

@@ -70,10 +70,8 @@ const Routing = () => {
       dispatch(fetchGameweeks());
       if (!joinedRoom) {
         setJoinedRoom(true);
-        console.log('hell');
         joinRoom(favorite_club);
       }
-      console.log(joinedRoom);
       requestGames();
     }
   }, [dispatch, isAuthorized]);
