@@ -70,7 +70,7 @@ const RegistrationForm = withRouter(({ history }) => {
 
   return (
     <div className={cn(styles['form-registration'], 'w-full max-w-xs')}>
-      <form className='px-8 pt-6 pb-8' onSubmit={handleClickRegister}>
+      <form className='px-8 pt-6 pb-8' onSubmit={handleClickRegister} autoComplete='off'>
         <div className='mb-4'>
           <label>
             {t('AuthForms.name')}
@@ -84,6 +84,7 @@ const RegistrationForm = withRouter(({ history }) => {
               value={name}
               onChange={(ev) => nameChanged(ev.target.value)}
               onBlur={validateName}
+              autoComplete='off'
             />
             {!isNameValid && (
               <p className='mt-1 text-red-500 text-xs italic text-justify'>
@@ -102,6 +103,7 @@ const RegistrationForm = withRouter(({ history }) => {
               placeholder={t('AuthForms.email')}
               onChange={(ev) => emailChanged(ev.target.value)}
               onBlur={validateEmail}
+              autoComplete='off'
             />
             <p className='mt-1 text-xs italic text-justify'>
               {t('AuthForms.sendConfirm')}
@@ -120,6 +122,7 @@ const RegistrationForm = withRouter(({ history }) => {
               placeholder='*************'
               onChange={(ev) => passwordChanged(ev.target.value)}
               onBlur={validatePassword}
+              autoComplete='new-password'
             />
             {!isPasswordValid && (
               <p className='mt-1 text-red-500 text-xs italic text-justify'>
