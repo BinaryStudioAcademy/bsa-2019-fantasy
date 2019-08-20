@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 
 const SocialForm = withRouter(({ history }) => {
   return (
-    <div className='w-full h-full max-w-xs form-registration'>
+    <div className={`${styles['form-registration']} w-full h-full max-w-xs`}>
       <div className='flex flex-col px-8 pt-6 pb-8'>
         <button
           type='button'
