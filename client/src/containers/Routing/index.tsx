@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { feedback } from 'react-feedbacker';
@@ -44,7 +44,11 @@ import { fetchClubs } from './fetchClubs/actions';
 import { fetchGameweeks, fetchGameweekHistory } from './fetchGameweeks/actions';
 import { preloadClubLogos } from 'helpers/images';
 import { currentGameweekSelector } from 'store/selectors/current-gameweek.selector';
+
+import { joinRoom, requestGames } from 'helpers/socket';
+
 import ConnectFbPage from 'containers/Auth/ConnectFbPage';
+
 
 const Routing = () => {
   const dispatch = useDispatch();
@@ -52,8 +56,14 @@ const Routing = () => {
     (state: RootState) => state.profile,
   );
 
+  const favorite_club = useSelector(
+    (state: RootState) => state.profile.user && state.profile.user.favorite_club_id,
+  );
+
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
   const currentGameweek = useSelector(currentGameweekSelector);
+
+  const [joinedRoom, setJoinedRoom] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(loadCurrentUser());
@@ -63,6 +73,11 @@ const Routing = () => {
     if (isAuthorized) {
       dispatch(fetchClubs());
       dispatch(fetchGameweeks());
+      if (!joinedRoom) {
+        setJoinedRoom(true);
+        joinRoom(favorite_club);
+      }
+      requestGames();
     }
   }, [dispatch, isAuthorized]);
 

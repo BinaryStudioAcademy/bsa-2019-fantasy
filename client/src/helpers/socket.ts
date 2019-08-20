@@ -7,5 +7,8 @@ handlers(socket);
 
 export const joinRoom = (favorite_club) => {
   socket.emit('createRoom', favorite_club);
-  socket.emit('requestGames');
 };
+
+export const requestGames = () => {
+  socket.emit('requestGames');
+}
