@@ -12,7 +12,7 @@ type Props = {
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
   viceCaptainId?: string;
-}
+};
 
 const TeamList = ({
   starters,
@@ -22,25 +22,32 @@ const TeamList = ({
   captainId,
   viceCaptainId,
 }: Props) => {
+  console.log(starters);
+
   const displayPlayers = (arr: any) =>
-    arr.map(({ lastDroppedItem }) => (
-      <TeamItem
-        id={lastDroppedItem.id}
-        info={info}
-        name={lastDroppedItem.name}
-        imageURL={lastDroppedItem.src}
-        club={lastDroppedItem.club}
-        position={lastDroppedItem.type}
-        form={lastDroppedItem.form}
-        gameweek_points={lastDroppedItem.gameweek_points}
-        total_points={lastDroppedItem.points}
-        fixture={lastDroppedItem.fixture}
-        isGameweek={isGameweek}
-        onOpen={arr.length === starters.length ? onOpen : undefined}
-        captainId={captainId}
-        viceCaptainId={viceCaptainId}
-      />
-    ));
+    arr.map(({ lastDroppedItem }) => {
+      if (!lastDroppedItem) {
+        return null;
+      }
+      return (
+        <TeamItem
+          id={lastDroppedItem.id}
+          info={info}
+          name={lastDroppedItem.name}
+          imageURL={lastDroppedItem.src}
+          club={lastDroppedItem.club}
+          position={lastDroppedItem.type}
+          form={lastDroppedItem.form}
+          gameweek_points={lastDroppedItem.gameweek_points}
+          total_points={lastDroppedItem.points}
+          fixture={lastDroppedItem.fixture}
+          isGameweek={isGameweek}
+          onOpen={arr.length === starters.length ? onOpen : undefined}
+          captainId={captainId}
+          viceCaptainId={viceCaptainId}
+        />
+      );
+    });
 
   return (
     <table className='team-list'>
