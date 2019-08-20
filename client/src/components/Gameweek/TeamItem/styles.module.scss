@@ -1,0 +1,17 @@
+:local(.team-item) {
+  width: 150px;
+}
+:local(.info) {
+  width: 50px;
+  font-size: 1rem;
+}
+:local(.teamItemButton) {
+  border-right: 2px solid #ddd;
+}
+
+td {
+  border-bottom: 1px solid #ddd;
+  padding: 8px;
+  margin: 0 8px;
+  font-size: 13px;
+}

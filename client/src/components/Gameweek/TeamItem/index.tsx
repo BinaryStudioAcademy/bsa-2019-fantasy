@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './styles.scss';
+import styles from './styles.module.scss';
 
 type Props = {
   id: string;
@@ -71,7 +71,7 @@ const TeamItem = ({
       </td>
       <td className='w-5/12' valign='middle'>
         <button
-          className='flex flex-row w-full team-item-button'
+          className={`flex flex-row w-full ${styles.teamItemButton}`}
           onClick={() => {
             if (onOpen) {
               onOpen(id, isCaptain, isViceCaptain, name);

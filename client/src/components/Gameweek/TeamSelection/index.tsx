@@ -93,48 +93,6 @@ const TeamSelection = ({
       accept: PlayerTypes.GOALKEEPER,
       lastDroppedItem: null,
     },
-    {
-      accept: PlayerTypes.GOALKEEPER,
-      lastDroppedItem: {
-        id: '1111',
-        src: 'images/uniforms/goalkeepers/shirt_14_1-66.png',
-        name: 'Allison',
-        club: 'SOU (A)',
-        points: 15,
-        form: 1.5,
-        gameweek_points: 3,
-        fixture: 'ARS (H)',
-        type: PlayerTypes.GOALKEEPER,
-      },
-    },
-    {
-      accept: PlayerTypes.GOALKEEPER,
-      lastDroppedItem: {
-        id: 'sdasdsdf',
-        src: 'images/uniforms/goalkeepers/shirt_14_1-66.png',
-        name: 'Allison',
-        club: 'SOU (A)',
-        points: 15,
-        form: 1.5,
-        gameweek_points: 3,
-        fixture: 'ARS (H)',
-        type: PlayerTypes.GOALKEEPER,
-      },
-    },
-    {
-      accept: PlayerTypes.GOALKEEPER,
-      lastDroppedItem: {
-        id: 'sadssad',
-        src: 'images/uniforms/goalkeepers/shirt_14_1-66.png',
-        name: 'Allison',
-        club: 'SOU (A)',
-        points: 15,
-        form: 1.5,
-        gameweek_points: 3,
-        fixture: 'ARS (H)',
-        type: PlayerTypes.GOALKEEPER,
-      },
-    },
 
     {
       accept: PlayerTypes.DEFENDER,
