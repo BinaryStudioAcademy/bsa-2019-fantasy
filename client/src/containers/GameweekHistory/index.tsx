@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -7,7 +7,6 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
 
-import { joinRoom } from 'helpers/socket';
 import { RootState } from 'store/types';
 
 import './styles.scss';
@@ -28,12 +27,8 @@ const mockChartData = {
 };
 
 const GameweekHistory = () => {
-  const favorite_club = useSelector(
-    (state: RootState) => state.profile.user && state.profile.user.favorite_club_id,
-  );
 
   useEffect(() => {
-    joinRoom(favorite_club);
     document.title = 'Home | Fantasy Football League';
   }, []);
 
