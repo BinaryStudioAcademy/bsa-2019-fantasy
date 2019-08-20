@@ -3,6 +3,7 @@
   "send": "Send",
   "next": "Next",
   "previous": "Previous",
+  "submit": "Submit",
 
   "LoginPage": {
     "login": "Log in to play",
@@ -155,5 +156,53 @@
     "leagues": "Leagues",
     "score": "Score",
     "logout": "Logout"
+  },
+
+  "Header": {
+    "leagues": "Leagues",
+    "live": "Live",
+    "players": "Players",
+    "transfers": "Transfers",
+    "fixtures": "Fixtures",
+    "home": "Home"
+  },
+
+  "Profile": {
+    "title": {
+      "main": "Your account",
+      "sub": "Update your profile"
+    },
+
+    "steps": {
+      "personalDetails": "Personal Details",
+      "favouriteClub": "Favourite Club",
+      "emailPreferences": "Email Preferences"
+    },
+
+    "personalDetails": {
+      "title": "Personal Details",
+      "required": "required",
+      "username": "Username",
+      "password": "Password",
+      "email": "Email",
+      "setPassword": "Set a password"
+    },
+
+    "favouriteClub": {
+      "title": "Favourite Club"
+    },
+
+    "emailPreferences": {
+      "title": "Email preferences"
+    },
+
+    "changePassword": {
+      "title": {
+        "main": "Set a password",
+        "sub": "Changing password"
+      },
+      "back": "Back to profile update",
+      "message": "An email will be sent shortly with instructions and a unique link that will allow you to set your password."
+    }
   }
 }
