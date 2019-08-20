@@ -6,22 +6,23 @@ import { useTranslation } from 'react-i18next';
 import { RootState } from 'store/types';
 
 import Spinner from 'components/Spinner';
-import { forgotPassword } from 'containers/Profile/actions';
+import { forgotPassword, setLanguage } from 'containers/Profile/actions';
 
 import styles from './styles.module.scss';
 
 export const usePersonalDetails = () => {
   const user = useSelector((state: RootState) => state.profile.user);
+  const language = useSelector((state: RootState) => state.profile.language);
 
-  return { user };
+  return { user, language };
 };
 
 const PersonalDetails = withRouter(({ history }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const dispatch = useDispatch();
 
-  const { user } = usePersonalDetails();
+  const { user, language } = usePersonalDetails();
   if (!user) return <Spinner />;
 
   const onSubmit = (e: React.FormEvent) => {
@@ -35,6 +36,15 @@ const PersonalDetails = withRouter(({ history }) => {
 
     dispatch(forgotPassword({ email: user.email }));
     history.push('/profile/set/password');
+  };
+
+  const changeLanguage = (value, language) => {
+    if (value) {
+      /* eslint-disable */
+      dispatch(setLanguage({ language }));
+      i18n.changeLanguage(language);
+      /* eslint-enable */
+    }
   };
 
   return (
@@ -76,6 +86,45 @@ const PersonalDetails = withRouter(({ history }) => {
           >
             {t('Profile.personalDetails.setPassword')}
           </button>
+        </div>
+
+        <div className='mb-8 flex'>
+          <div className='w-1/4 font-bold'>{t('Profile.personalDetails.language')}</div>
+          <div className='flex items-center'>
+            <label
+              className={`${
+                styles['checkbox-styled']
+              } g-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded ${
+                language === 'en' ? `${styles.checked}` : ''
+              }`}
+            >
+              <input
+                type='checkbox'
+                name='english'
+                value='English'
+                checked={language === 'en'}
+                onChange={(ev) => changeLanguage(ev.target.checked, 'en')}
+              />
+              <span>EN</span>
+            </label>
+            <p className='mx-3'>{t('LeaguesPage.createLeague.or')}</p>
+            <label
+              className={`${
+                styles['checkbox-styled']
+              } g-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded ${
+                language === 'ua' ? `${styles.checked}` : ''
+              }`}
+            >
+              <input
+                type='checkbox'
+                name='ukrainian'
+                value='Ukrainian'
+                checked={language === 'ua'}
+                onChange={(ev) => changeLanguage(ev.target.checked, 'ua')}
+              />
+              <span>UA</span>
+            </label>
+          </div>
         </div>
 
         <button
