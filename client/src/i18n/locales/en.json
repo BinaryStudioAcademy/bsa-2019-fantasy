@@ -240,6 +240,7 @@
     "score": "Score",
     "position": "Position",
     "club": "Club",
+    "clubLogo": "Club Logo",
     "info": "Info",
     "compare": "Compare",
     "compareQueue": "Comparison queue",

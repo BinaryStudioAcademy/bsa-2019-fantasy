@@ -6,8 +6,9 @@ module.exports = {
     'plugin:jsx-a11y/recommended',
     'prettier/react',
     'prettier',
+    'plugin:wdio/recommended'
   ],
-  plugins: ['@typescript-eslint', 'prettier', 'react', 'react-hooks', 'jsx-a11y'],
+  plugins: ['@typescript-eslint', 'prettier', 'react', 'react-hooks', 'jsx-a11y', 'wdio'],
   parserOptions: {
     project: __dirname + '/tsconfig.json',
     ecmaVersion: 2018,

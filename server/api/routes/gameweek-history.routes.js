@@ -17,6 +17,12 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
+  .get('/gameweek/:gameweek', (req, res, next) =>
+    gameweekHistoryService
+      .getHistoryByGameweekId(req.params.gameweek)
+      .then((value) => res.json(value))
+      .catch(next),
+  )
   .get('/user-team/:user/:gameweek', (req, res, next) => {
     gameweekHistoryService
       .getCurrentHistoryById(req.params.user, req.params.gameweek)

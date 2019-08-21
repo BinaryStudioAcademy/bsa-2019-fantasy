@@ -66,12 +66,21 @@ const FavouriteClubSelection = () => {
           );
         })}
       </div>
-      <button
-        type='submit'
-        className='mt-12 py-2 px-16 text-lg max-w-xs rounded shadow bg-primary text-secondary font-bold'
-      >
-        {t('submit')}
-      </button>
+      {selectedClubId ? (
+        <button
+          type='submit'
+          className='mt-12 py-2 px-16 text-lg max-w-xs rounded shadow bg-primary text-secondary font-bold'
+        >
+          {t('submit')}
+        </button>
+      ) : (
+        <button
+          type='submit'
+          className='mt-12 py-2 px-16 text-lg max-w-xs rounded shadow bg-primary text-secondary font-bold opacity-50 cursor-not-allowed'
+        >
+          {t('submit')}
+        </button>
+      )}
     </form>
   );
 };

@@ -159,8 +159,8 @@ class PlayersPage extends React.Component<IProps, IState> {
   /* eslint-enable */
   readonly columns = [
     {
+      Header: () => this.renderHeader(this.props.t('Players.clubLogo')),
       accessor: 'club_id',
-      width: 70,
       className: 'flex justify-center bg-white rounded-l',
       style: { marginLeft: '5px' },
       Cell: (props: any) => this.renderClubImageCell(props),
