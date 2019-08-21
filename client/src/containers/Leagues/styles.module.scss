@@ -64,6 +64,7 @@
 
     img {
       max-height: 400px;
+      margin-right: 100px; // remove that property if you want to use 2 players
 
       &:last-child {
         margin-left: -55px;

@@ -14,8 +14,6 @@ import { RootState } from 'store/types';
 import { loadUserLeagues } from './actions';
 
 import { getClubLogoUrl } from 'helpers/images';
-import FirstPlayer from 'assets/images/player.png';
-import SecondPlayer from 'assets/images/1966.png';
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
 
@@ -147,8 +145,7 @@ const Leagues = ({ loadUserLeagues, leagues, clubs, user }: Props) => {
               </Link>
             </div>
             <div className={`${styles.players} flex`}>
-              <img src={FirstPlayer} alt='player' />
-              <img src={SecondPlayer} alt='player' />
+              <img src={`/images/leagues_players/${club.code}_player.png`} alt='player' />
             </div>
           </div>
           <div className={styles.tables}>
