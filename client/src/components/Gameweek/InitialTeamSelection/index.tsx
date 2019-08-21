@@ -11,11 +11,13 @@ import { PlayerDraggableProps } from '../PlayerSelection';
 import { PlayerTypes } from '../PlayerSelection/types';
 import Button from 'components/Button';
 import SquadSelection from './components/SquadSelection';
+import Modal from 'containers/Modal';
 import { SQUAD, BUDGET, CLUBS } from './helpers';
 
 import styles from './styles.module.scss';
 
 const InitialTeamSelection = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   // Set squad drag&drop items, which accept only specific player types
   const [squad, setSquad] = useState<PlayerDroppable[]>(SQUAD);
 
@@ -202,13 +204,21 @@ const InitialTeamSelection = () => {
         <div className='w-full h-24 absolute flex justify-center'>
           <Button
             className={`${styles.saveTeam} w-3/12 h-12 mt-3`}
-            onClick={(e) => saveTeam(droppedPlayerSquadIds)}
-            disabled={!(moneyRemaing >= 0 && selectedPlayers === 15 && !isMoreThree)}
+            onClick={(e) => setIsModalOpen(true)}
+            // disabled={!(moneyRemaing >= 0 && selectedPlayers === 15 && !isMoreThree)}
           >
             <p>Save Your Team</p>
           </Button>
         </div>
       </div>
+      {isModalOpen && (
+        <Modal
+          title='Modal Title'
+          content='Test modal text'
+          actions='sdfsdfsdf'
+          onDismiss={(e) => setIsModalOpen(false)}
+        />
+      )}
     </DndProvider>
   );
 };
