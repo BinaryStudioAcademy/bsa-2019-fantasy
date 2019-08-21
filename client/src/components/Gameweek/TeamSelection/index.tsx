@@ -235,6 +235,7 @@ const TeamSelection = ({
         //when we move from the pitch
       } else if (
         playerPitchIndex > -1 &&
+        playerBenchIndex === -1 &&
         playersOnBench[index] &&
         playersOnBench !== undefined
       ) {
