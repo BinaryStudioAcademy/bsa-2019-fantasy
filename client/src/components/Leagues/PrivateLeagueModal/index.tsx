@@ -6,7 +6,6 @@ import styles from './styles.module.scss';
 
 const PrivateLeagueModal = ({ open, onClose, code }) => {
   const [copied, setCopy] = useState(false);
-  let codeInput;
 
   const copyToClipboard = (e) => {
     e.target.select();

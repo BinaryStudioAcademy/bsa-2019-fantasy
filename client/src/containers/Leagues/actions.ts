@@ -51,6 +51,19 @@ export const resetLeaguesData = () => ({
   type: RESET_LEAGUES_DATA,
 });
 
+export const getInvitationCode = (data: { name: string }): any => async (dispatch) => {
+  const { name } = data;
+
+  try {
+    const result = await leagueService.getInvitationCode({ name });
+    if (!result.forbidden) {
+      dispatch(setInvitationCode(result.code));
+    }
+  } catch (err) {
+    console.log('wrong');
+  }
+};
+
 export const createLeagueAction = (data: {
   name: string;
   private: boolean;
@@ -62,9 +75,7 @@ export const createLeagueAction = (data: {
     if (data.private) {
       const { name } = data;
       const result = await leagueService.getInvitationCode({ name });
-      if (!result.forbidden) {
-        dispatch(setInvitationCode(result.code));
-      }
+      dispatch(setInvitationCode(result.code));
     }
     feedback.success((result && result.message) || result);
     dispatch(createLeagueSuccess(result.message));
