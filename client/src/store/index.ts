@@ -12,6 +12,7 @@ import playerSelectionReducer from '../components/PlayersSelection/reducer';
 import clubsReducer from 'containers/Routing/fetchClubs/reducer';
 import gameweeksReducer from 'containers/Routing/fetchGameweeks/reducer';
 import leagueReducer from 'containers/Leagues/reducer';
+import currentGameReducer from 'containers/Live/reducer';
 
 export const history = createBrowserHistory();
 
@@ -30,6 +31,7 @@ const reducers = {
   playerSelection: playerSelectionReducer,
   gameweeks: gameweeksReducer,
   league: leagueReducer,
+  currentGame: currentGameReducer,
 };
 
 const rootReducer = combineReducers({
