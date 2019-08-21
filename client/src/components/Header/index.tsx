@@ -41,7 +41,7 @@ const Header = ({ team_name }: HeaderProps) => {
             {!team_name && (
               <NavLink
                 exact
-                to='/initial-squad-selection'
+                to='/squad-selection'
                 className='font-semibold uppercase p-1 border-solid
                 border-b-2 border-transparent hover:text-secondary mr-12'
                 activeClassName='text-secondary border-secondary'

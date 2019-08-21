@@ -15,6 +15,7 @@ import SocialPage from 'containers/Auth/SocialPage';
 
 import MyTeam from 'containers/MyTeam';
 import Transfers from 'containers/Transfers';
+import SquadSelection from 'containers/SquadSelection';
 import Live from 'containers/Live';
 
 import Leagues from 'containers/Leagues';
@@ -144,6 +145,7 @@ const Routing = () => {
                 <Route path='/players-comparison' exact component={PlayersComparison} />
 
                 <Route path='/transfers' exact component={Transfers} />
+                <Route path='/squad-selection' exact component={SquadSelection} />
 
                 <Route path='/fixtures' exact component={FixturesContainer} />
 

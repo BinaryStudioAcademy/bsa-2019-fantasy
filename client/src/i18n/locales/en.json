@@ -237,6 +237,22 @@
     }
   },
 
+  "SquadSelection": {
+    "title": {
+      "main": "Squad Selection",
+      "sub": "Squad Selection Page"
+    },
+    "playerSelection": {
+      "title": "Player Selection",
+      "view": "View",
+      "sort": "Sorted by",
+      "search": "Search",
+      "maxCost": "Max Cost",
+      "maxCostBetween": "Between 45 and 125",
+      "shown": "players shown"
+    }
+  },
+
   "NotFound": {
     "message": "Looks like this freekick went off the stadium!",
     "back": "Take me back home"
