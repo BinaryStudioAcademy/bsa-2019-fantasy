@@ -224,11 +224,14 @@ class PlayersPage extends React.Component<IProps, IState> {
     );
     return (
       <>
-        <button className='mr-4' onClick={() => this.onComparisonAdd(props)}>
+        <button
+          className='w-6 h-6 justify-center mr-4 leading-none flex bg-background rounded-full'
+          onClick={() => this.onComparisonAdd(props)}
+        >
           {addedToComparison ? <FaTimes /> : <FaPlus />}
         </button>
         <button
-          className='w-4 h-4 justify-center mr-4 leading-none flex bg-background rounded-full text-xs font-semibold'
+          className='w-6 h-6 justify-center mr-4 leading-none flex bg-background rounded-full text-s font-bold'
           onClick={() => {
             this.setState({
               currentPlayer: this.props.players.find(
