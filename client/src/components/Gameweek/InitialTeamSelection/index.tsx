@@ -1,11 +1,12 @@
-import React, { useState, useCallback, useEffect, useLayoutEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, useCallback } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
+import { withRouter } from 'react-router-dom';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import update from 'immutability-helper';
 
-import { RootState } from 'store/types';
-import { loadPlayersAction } from 'components/PlayersSelection/actions';
+import { updateUserTeamDetails } from 'containers/Profile/actions';
 import PlayerSelectionDroppable, { PlayerDroppable } from '../PlayerSelectionDroppable';
 import { PlayerDraggableProps } from '../PlayerSelection';
 import { PlayerTypes } from '../PlayerSelection/types';
@@ -16,7 +17,11 @@ import { SQUAD, BUDGET, CLUBS } from './helpers';
 
 import styles from './styles.module.scss';
 
-const InitialTeamSelection = () => {
+type Props = {
+  updateUserTeamDetails: typeof updateUserTeamDetails;
+};
+
+const InitialTeamSelection = ({ updateUserTeamDetails }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // Set squad drag&drop items, which accept only specific player types
   const [squad, setSquad] = useState<PlayerDroppable[]>(SQUAD);
@@ -26,16 +31,24 @@ const InitialTeamSelection = () => {
     squad.map((el) => (el.lastDroppedItem.id ? el.lastDroppedItem.id : null)),
   );
 
-  const [moneyRemaing, setMoneyRemaining] = useState(BUDGET);
-  const [selectedPlayers, setSelectedPlayers] = useState(0);
-  const [isMoreThree, setIsMoreThree] = useState(false);
+  const [moneyRemaing, setMoneyRemaining] = useState<number>(BUDGET);
+  const [selectedPlayers, setSelectedPlayers] = useState<number>(0);
+  const [isMoreThree, setIsMoreThree] = useState<boolean>(false);
 
-  const handleSaveTeam = (ev: React.SyntheticEvent) => {
+  const handleSaveTeam = async (ev: React.SyntheticEvent) => {
     ev.preventDefault();
-    console.log(ev);
+    const teamName = ev.target[0].value;
+    if (!teamName) {
+      return;
+    }
+    try {
+      await updateUserTeamDetails({ money: moneyRemaing, team_name: teamName });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const resetSquad = () => {
+  const handleResetSquad = () => {
     setSquad(SQUAD);
     setMoneyRemaining(BUDGET);
     setSelectedPlayers(0);
@@ -43,8 +56,7 @@ const InitialTeamSelection = () => {
     setIsMoreThree(false);
   };
 
-  const recalculateMoney = (squad) => {
-    console.log(squad);
+  const recalculateMoney = (squad: PlayerDroppable[]) => {
     let currentTotal = null;
     squad.forEach((el) => {
       if (el.lastDroppedItem.price) {
@@ -54,7 +66,7 @@ const InitialTeamSelection = () => {
     return currentTotal;
   };
 
-  const recalculatePlayers = (squad) => {
+  const recalculatePlayers = (squad: PlayerDroppable[]) => {
     let currentPlayers = 0;
     squad.forEach((el) => {
       if (el.lastDroppedItem.id) {
@@ -64,7 +76,7 @@ const InitialTeamSelection = () => {
     return currentPlayers;
   };
 
-  const checkIsMoreThree = (squad) => {
+  const checkIsMoreThree = (squad: PlayerDroppable[]) => {
     Object.keys(CLUBS).forEach(
       (key) =>
         (CLUBS[key] = squad.filter((el) => el.lastDroppedItem.club === key).length),
@@ -112,7 +124,7 @@ const InitialTeamSelection = () => {
         money={moneyRemaing}
         players={selectedPlayers}
         isMoreThree={isMoreThree}
-        onResetClick={(ev) => resetSquad()}
+        onResetClick={(ev) => handleResetSquad()}
       />
       <div className={`${styles.teamContainer} relative`}>
         {/* Goalkeeper */}
@@ -231,4 +243,12 @@ const InitialTeamSelection = () => {
   );
 };
 
-export default InitialTeamSelection;
+const actions = {
+  updateUserTeamDetails,
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
+export default connect(
+  null,
+  mapDispatchToProps,
+)(InitialTeamSelection);

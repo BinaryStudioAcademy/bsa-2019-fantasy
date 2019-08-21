@@ -12,6 +12,8 @@ import {
   ResetPasswordCredentials,
 } from 'types/forgot.password.types';
 
+import { UpdateUserTeamDetails } from 'types/user.type';
+
 import {
   SET_USER,
   SET_IS_LOADING,
@@ -120,5 +122,18 @@ export const updateFavoriteClub = (id: Club['id']): AsyncUserAction => async (
     feedback.success((res && res.message) || res);
   } catch (err) {
     feedback.error('Failed to update favorite club.');
+  }
+};
+
+export const updateUserTeamDetails = (
+  data: UpdateUserTeamDetails,
+): AsyncUserAction => async (dispatch, getState) => {
+  try {
+    const user = await authService.getCurrentUser();
+    const res = await profileService.updateUserTeamDetails(user!.id, data);
+    loadCurrentUser(true)(dispatch, getState);
+    feedback.success((res && res.message) || res);
+  } catch (err) {
+    feedback.error('Failed to create your team');
   }
 };

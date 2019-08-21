@@ -15,7 +15,11 @@ router
       .updateById(req.user.id, { favorite_club_id: req.body.clubId })
       .then(() => res.json({ message: 'Successfuly updated!' }).catch(next)),
   )
-
+  .put('/:id', jwtMiddleware, (req, res, next) =>
+    userService
+      .updateById(req.params.id, req.body)
+      .then(() => res.json({ message: 'Successfully saved!' }).catch(next)),
+  )
   .post('/favorite-club', jwtMiddleware, async (req, res, next) => {
     try {
       await userService.updateById(req.user.id, { favorite_club_id: req.body.clubId });
