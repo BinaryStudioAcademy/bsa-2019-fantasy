@@ -83,6 +83,13 @@
     "pitchView": "Pitch View"
   },
 
+  "NoTeamHome": {
+    "leftTitle": "Pick Your Squad",
+    "leftMain": "Use your budget of £100m to pick a squad of 15 players from the Premier League.",
+    "rightTitle": "Create and Join Leagues.",
+    "rightMain": "Play against friends and family, colleagues or a web community in private leagues."
+  },
+
   "LeaguesPage": {
     "join": "Join",
     "cells": {
@@ -165,6 +172,7 @@
   },
 
   "Header": {
+    "squad": "Squad Selection",
     "leagues": "Leagues",
     "live": "Live",
     "players": "Players",
