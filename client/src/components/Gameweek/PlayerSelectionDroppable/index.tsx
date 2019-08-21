@@ -19,7 +19,7 @@ export interface PlayerDroppableProps {
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
   viceCaptainId?: string;
-  playerIdToSwitch?: GameweekHistoryType | undefined;
+  playerToSwitch?: GameweekHistoryType | undefined;
   setCurrentPlayerForSwitching?: (id: string) => void;
 }
 
@@ -36,7 +36,7 @@ export interface BenchDroppableProps {
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
   viceCaptainId?: string;
-  playerIdToSwitch?: GameweekHistoryType | undefined;
+  playerToSwitch?: GameweekHistoryType | undefined;
   setCurrentPlayerForSwitching?: (id: string) => void;
 }
 const PlayerSelectionDroppable = ({
@@ -48,7 +48,7 @@ const PlayerSelectionDroppable = ({
   onOpen,
   captainId,
   viceCaptainId,
-  playerIdToSwitch,
+  playerToSwitch,
   setCurrentPlayerForSwitching,
 }: PlayerDroppableProps | BenchDroppableProps) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -69,10 +69,12 @@ const PlayerSelectionDroppable = ({
     backgroundColor = 'rgba(118, 124, 37, 0.9)';
   }
 
-  if (playerIdToSwitch) {
-    if (playerIdToSwitch.player_stats.id === lastDroppedItem.id) {
+  const canSwitch = playerToSwitch && playerToSwitch.player_stats.position === accept;
+
+  if (playerToSwitch) {
+    if (playerToSwitch.player_stats.id === lastDroppedItem.id) {
       backgroundColor = 'rgba(255, 255, 0, 0.6)';
-    } else if (accept === playerIdToSwitch.player_stats.position) {
+    } else if (canSwitch) {
       backgroundColor = 'rgba(255, 102, 0, 0.6)';
     }
   }
@@ -102,8 +104,9 @@ const PlayerSelectionDroppable = ({
             onOpen={onOpen}
             captainId={captainId}
             viceCaptainId={viceCaptainId}
-            playerIdToSwitch={playerIdToSwitch}
+            playerToSwitch={playerToSwitch}
             setCurrentPlayerForSwitching={setCurrentPlayerForSwitching}
+            canSwitch={canSwitch}
           />
         )}
       </div>

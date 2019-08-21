@@ -12,8 +12,8 @@ type Props = {
   onSetCaptain: () => void;
   onSetViceCaptain: () => void;
   name: string;
-  playerIdToSwitch?: GameweekHistoryType | undefined;
-  setPlayerForSwitching?: (player: GameweekHistoryType | undefined) => void;
+  funcForSwitching: () => void;
+  toSwitch: boolean;
 };
 
 const StatusPlayerModal = ({
@@ -23,6 +23,8 @@ const StatusPlayerModal = ({
   onSetCaptain,
   onSetViceCaptain,
   name,
+  funcForSwitching,
+  toSwitch,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -47,9 +49,11 @@ const StatusPlayerModal = ({
         <div className='modal-body p-6 flex flex-col'>
           <button
             className='bg-green-700 p-2 mb-4 rounded'
-            onClick={() => console.log('switch')}
+            onClick={() => {
+              funcForSwitching && funcForSwitching();
+            }}
           >
-            {t('StatusPlayerModal.switch')}
+            {toSwitch ? t('StatusPlayerModal.switch') : t('StatusPlayerModal.cancel')}
           </button>
           {!isCaptain && (
             <button

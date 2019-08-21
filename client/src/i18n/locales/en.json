@@ -255,6 +255,7 @@
 
   "StatusPlayerModal": {
     "switch": "Switch",
+    "cancel": "Cancel",
     "makeCaptain": "Make Captain",
     "makeViceCaptain": "Make Vice Captain"
   }

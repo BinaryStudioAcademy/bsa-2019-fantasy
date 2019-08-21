@@ -36,8 +36,8 @@ export interface TeamSelectionProps {
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
   viceCaptainId?: string;
-  playerIdToSwitch?: GameweekHistoryType | undefined;
-  setPlayerForSwitching?: (player: GameweekHistoryType | undefined) => void;
+  playerToSwitch?: GameweekHistoryType | undefined;
+  setPlayerForSwitching?: (id: string) => void;
 }
 
 const TeamSelection = ({
@@ -45,7 +45,7 @@ const TeamSelection = ({
   captainId,
   viceCaptainId,
   onOpen,
-  playerIdToSwitch,
+  playerToSwitch,
   setPlayerForSwitching,
 }: TeamSelectionProps) => {
   const { t } = useTranslation();
@@ -63,11 +63,6 @@ const TeamSelection = ({
 
   const [droppedPlayerBenchIds, setPlayerBenchIds] = useState<any[]>([]);
   const [droppedPlayerPitchIds, setPlayerPitchIds] = useState<any[]>([]);
-
-  const setCurrentPlayerForSwitching = (id: string) => {
-    const player = players.find((p) => p.player_stats.id === id);
-    setPlayerForSwitching && setPlayerForSwitching(player);
-  };
 
   //sets fetched players to the corresponding places
   useEffect(() => {
@@ -295,8 +290,8 @@ const TeamSelection = ({
                   onOpen={onOpen}
                   captainId={captainId}
                   viceCaptainId={viceCaptainId}
-                  playerIdToSwitch={playerIdToSwitch}
-                  setCurrentPlayerForSwitching={setCurrentPlayerForSwitching}
+                  playerToSwitch={playerToSwitch}
+                  setCurrentPlayerForSwitching={setPlayerForSwitching}
                 />
               );
             } else {
@@ -320,8 +315,8 @@ const TeamSelection = ({
                   onOpen={onOpen}
                   captainId={captainId}
                   viceCaptainId={viceCaptainId}
-                  playerIdToSwitch={playerIdToSwitch}
-                  setCurrentPlayerForSwitching={setCurrentPlayerForSwitching}
+                  playerToSwitch={playerToSwitch}
+                  setCurrentPlayerForSwitching={setPlayerForSwitching}
                 />
               );
             } else {
@@ -345,8 +340,8 @@ const TeamSelection = ({
                   onOpen={onOpen}
                   captainId={captainId}
                   viceCaptainId={viceCaptainId}
-                  playerIdToSwitch={playerIdToSwitch}
-                  setCurrentPlayerForSwitching={setCurrentPlayerForSwitching}
+                  playerToSwitch={playerToSwitch}
+                  setCurrentPlayerForSwitching={setPlayerForSwitching}
                 />
               );
             } else {
@@ -369,8 +364,8 @@ const TeamSelection = ({
                   onOpen={onOpen}
                   captainId={captainId}
                   viceCaptainId={viceCaptainId}
-                  playerIdToSwitch={playerIdToSwitch}
-                  setCurrentPlayerForSwitching={setCurrentPlayerForSwitching}
+                  playerToSwitch={playerToSwitch}
+                  setCurrentPlayerForSwitching={setPlayerForSwitching}
                 />
               );
             } else {
@@ -394,8 +389,8 @@ const TeamSelection = ({
                 onOpen={onOpen}
                 captainId={captainId}
                 viceCaptainId={viceCaptainId}
-                playerIdToSwitch={playerIdToSwitch}
-                setCurrentPlayerForSwitching={setCurrentPlayerForSwitching}
+                playerToSwitch={playerToSwitch}
+                setCurrentPlayerForSwitching={setPlayerForSwitching}
               />
             );
           })}

@@ -255,6 +255,7 @@
 
   "StatusPlayerModal": {
     "switch": "Поміняти",
+    "cancel": "Відмінити",
     "makeCaptain": "Назначити Капітаном",
     "makeViceCaptain": "Назначити Віце-капітаном"
   }

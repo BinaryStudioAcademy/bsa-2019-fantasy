@@ -7,9 +7,13 @@ import { GameweekHistoryType } from 'types/gameweekHistory.type';
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/types';
 
 const MyTeam = () => {
   const { t } = useTranslation();
+
+  const players = useSelector((state: RootState) => state.gameweeks.gameweeks_history);
 
   useEffect(() => {
     document.title = 'Home | Fantasy Football League';
@@ -25,11 +29,13 @@ const MyTeam = () => {
 
   const [captainId, setCaptainId] = useState('');
   const [viceCaptainId, setViceCaptainId] = useState('');
-  const [playerIdToSwitch, setPlayerToSwitch] = useState<GameweekHistoryType | undefined>(
+
+  const [playerToSwitch, setPlayerToSwitch] = useState<GameweekHistoryType | undefined>(
     undefined,
   );
 
-  const setPlayerForSwitching = (player: GameweekHistoryType | undefined) => {
+  const setCurrentPlayerForSwitching = (id: string) => {
+    const player = players.find((p) => p.player_stats.id === id);
     setPlayerToSwitch(player);
   };
 
@@ -66,6 +72,23 @@ const MyTeam = () => {
     setIsViceCaptain(isViceCaptain);
   };
 
+  const canSwitch = !playerToSwitch || playerToSwitch.player_stats.id !== currentId;
+
+  const onSetPlayerForSwitching = () => {
+    if (playerToSwitch) {
+      console.log('switch');
+      setCurrentPlayerForSwitching('');
+    } else {
+      setCurrentPlayerForSwitching(currentId);
+    }
+    setShowModal(false);
+  };
+
+  const onCancelPlayerForSwitching = () => {
+    setCurrentPlayerForSwitching('');
+    setShowModal(false);
+  };
+
   useEffect(() => {
     document.title = 'My Team | Fantasy Football League';
   }, []);
@@ -90,8 +113,8 @@ const MyTeam = () => {
           onOpen={onOpen}
           captainId={captainId}
           viceCaptainId={viceCaptainId}
-          playerIdToSwitch={playerIdToSwitch}
-          setPlayerForSwitching={setPlayerForSwitching}
+          playerToSwitch={playerToSwitch}
+          setPlayerForSwitching={setCurrentPlayerForSwitching}
         />
       </div>
       {showModal && (
@@ -102,8 +125,10 @@ const MyTeam = () => {
           onSetCaptain={onSetCaptain}
           onSetViceCaptain={onSetViceCaptain}
           name={currentName}
-          playerIdToSwitch={playerIdToSwitch}
-          setPlayerForSwitching={setPlayerForSwitching}
+          funcForSwitching={
+            canSwitch ? onSetPlayerForSwitching : onCancelPlayerForSwitching
+          }
+          toSwitch={canSwitch}
         />
       )}
     </div>
