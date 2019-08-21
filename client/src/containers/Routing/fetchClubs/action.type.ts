@@ -14,10 +14,10 @@ type FetchClubsSuccess = {
   payload: Club[];
 };
 
-type FetchClubFailure = {
+type FetchClubsFailure = {
   type: typeof FETCH_CLUBS_FAILURE;
   payload: string;
 };
 
-export type FetchClubsAction = FetchClubsRequest | FetchClubsSuccess | FetchClubFailure;
+export type FetchClubsAction = FetchClubsRequest | FetchClubsSuccess | FetchClubsFailure;
 export type AsyncFetchClubsAction = Thunky<FetchClubsAction>;

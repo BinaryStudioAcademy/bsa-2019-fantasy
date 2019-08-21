@@ -4,8 +4,9 @@ import PlayersHighlights from 'components/PlayersComparison/PlayersHighlights';
 
 import CompareTable from 'components/PlayersComparison/CompareTable';
 import { Redirect } from 'react-router';
+import Button from 'components/Button';
 
-interface IMatchStats {
+interface MatchStatsI {
   gameweekName: string;
   opp: string;
   res: string;
@@ -18,11 +19,11 @@ interface IMatchStats {
   red_cards: string;
 }
 
-interface IProps {
+interface PropsI {
   location?: any;
 }
 
-const PlayersComparisonPage: React.FC<IProps> = (props: IProps) => {
+const PlayersComparisonPage: React.FC<PropsI> = (props: PropsI) => {
   useEffect(() => {
     document.title = 'Players Comparison | Fantasy Football League';
   }, []);
@@ -116,8 +117,8 @@ const PlayersComparisonPage: React.FC<IProps> = (props: IProps) => {
 
   const firstPlayer = props.location.state.comparisonData[0];
   const secondPlayer = props.location.state.comparisonData[1];
-  const firstPlayerMatches: IMatchStats[] = [];
-  const secondPlayerMatches: IMatchStats[] = [];
+  const firstPlayerMatches: MatchStatsI[] = [];
+  const secondPlayerMatches: MatchStatsI[] = [];
 
   firstPlayer.gameweeks_stats.forEach((stats: any) => {
     firstPlayerMatches.push({
@@ -167,6 +168,14 @@ const PlayersComparisonPage: React.FC<IProps> = (props: IProps) => {
       <PlayersHighlights comparisonData={props.location.state.comparisonData} />
 
       <section className='footer-stats my-6'>
+        <Button
+          href='/players'
+          type='link'
+          styling='primary'
+          className='text-sm xl:text-base mr-4'
+        >
+          Go back
+        </Button>
         <div className='footer-tables flex flex-wrap'>
           {tableData.map((player) => renderTable(player))}
         </div>

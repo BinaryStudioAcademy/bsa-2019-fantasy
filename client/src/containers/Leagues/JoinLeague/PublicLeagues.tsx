@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
@@ -6,6 +7,8 @@ import Autosuggest from 'react-autosuggest';
 
 import { searchPublicLeagues, joinLeague } from '../actions';
 import { RootState } from 'store/types';
+
+import styles from './styles.module.scss';
 
 type Props = {
   searchPublicLeagues: typeof searchPublicLeagues;
@@ -17,6 +20,8 @@ const renderSuggestion = (suggestion) => <div>{suggestion.name}</div>;
 const getSuggestionValue = (suggestion) => suggestion.name;
 
 const PublicLeagues = ({ searchPublicLeagues, suggestions, joinLeague }: Props) => {
+  const { t } = useTranslation();
+
   const [value, setValue] = useState('');
   const [isLoading, setLoading] = useState(false);
 
@@ -58,16 +63,12 @@ const PublicLeagues = ({ searchPublicLeagues, suggestions, joinLeague }: Props) 
   };
 
   return (
-    <div className='join-league-item w-full md:w-1/2 px-6'>
-      <h3 className='title text-secondary mb-4 font-bold'>Public leagues</h3>
-      <p className='mb-2'>
-        Public leagues allow you to compete against 20 game players in a classic league.
-        You can join up to 3 public leagues.
-      </p>
-      <p className='font-bold mb-8'>
-        Note, you can&apos;t remove your team from a public league after the league has
-        started, once the challenge is on there&apos;s no quitting.
-      </p>
+    <div className={`${styles['join-league-item']} w-full md:w-1/2 px-6`}>
+      <h3 className={`${styles.title} text-secondary mb-4 font-bold`}>
+        {t('LeaguesPage.joinLeague.public.title')}
+      </h3>
+      <p className='mb-2'>{t('LeaguesPage.joinLeague.public.message')}</p>
+      <p className='font-bold mb-8'>{t('LeaguesPage.joinLeague.public.note')}</p>
 
       <form className='w-full max-w-lg' onSubmit={handleSubmit}>
         <div className='flex flex-wrap -mx-3 mb-6'>
@@ -76,7 +77,7 @@ const PublicLeagues = ({ searchPublicLeagues, suggestions, joinLeague }: Props) 
               htmlFor='public-league-name'
               className='block uppercase text-gray-700 text-xs font-bold mb-2'
             >
-              League Name
+              {t('LeaguesPage.joinLeague.public.name')}
             </label>
             <Autosuggest
               suggestions={suggestions.slice(0, 4)}
@@ -96,7 +97,7 @@ const PublicLeagues = ({ searchPublicLeagues, suggestions, joinLeague }: Props) 
           type='submit'
           disabled={!value || isLoading}
         >
-          {isLoading ? 'Wait' : 'Join public league'}
+          {isLoading ? t('wait') : t('LeaguesPage.joinLeague.public.join')}
         </button>
       </form>
     </div>

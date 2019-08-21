@@ -14,6 +14,7 @@ fixtures.forEach((item) => {
   acc2.push(item);
 });
 
+acc = [...acc, acc2];
 const now = new Date();
 
 const gameweeks = acc.map((item) => {

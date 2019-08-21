@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
+
+import cn from 'classnames';
 import validator from 'validator';
 
 import { forgotPassword } from 'containers/Profile/actions';
 import { ForgotPasswordCredentials } from 'types/forgot.password.types';
+
+import styles from '../AuthForms/styles.module.scss';
 
 type ActionType = (props: ForgotPasswordCredentials) => Promise<any>;
 class ForgotPasswordForm extends Component<
@@ -58,34 +63,39 @@ class ForgotPasswordForm extends Component<
 
   render() {
     const { isEmailValid, email, isSuccess, isError, isLoading } = this.state;
+    const { t } = this.props;
 
     return (
-      <div className='w-full h-full max-w-xs form-registration'>
+      <div className={cn(styles['form-registration'], 'w-full h-full max-w-xs')}>
         <form className=' px-8 pt-6 pb-8' onSubmit={this.handleSubmit}>
           <div className='mb-4'>
             <input
               className='shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline'
               id='email'
               type='email'
-              placeholder='Email address'
+              placeholder={t('ChangePasswordForms.emailPlaceholder')}
               onChange={(ev) => this.emailChanged(ev.target.value)}
               onBlur={this.validateEmail}
             />
           </div>
           <button
             type='submit'
-            className={`font-medium xpy-2 px-4 border sign-up-btn w-24 ${(!email ||
+            className={`font-bold rounded py-1 px-6 mr-2 border border-transparent text-secondary bg-primary shadow uppercase ${(!email ||
               isLoading) &&
               'opacity-50 cursor-not-allowed'}`}
             disabled={!isEmailValid || isLoading}
           >
-            {`${isLoading ? 'Wait' : 'Send'}`}
+            {`${isLoading ? t('wait') : t('send')}`}
           </button>
           {isSuccess && (
-            <p className='text-primary font-bold mb-2'>Сheck your mailbox!</p>
+            <p className='text-primary font-bold mb-2'>
+              {t('ChangePasswordForms.success.forgot')}
+            </p>
           )}
           {isError && (
-            <p className='text-red-500 font-bold mb-2'>Something went wrong!</p>
+            <p className='text-red-500 font-bold mb-2'>
+              {t('ChangePasswordForms.error')}
+            </p>
           )}
         </form>
       </div>
@@ -97,7 +107,10 @@ const actions = { forgotPassword };
 //TODO: fix any type
 const mapDispatchToProps = (dispatch: any) => bindActionCreators(actions, dispatch);
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(ForgotPasswordForm);
+export default withTranslation()(
+  // @ts-ignore
+  connect(
+    null,
+    mapDispatchToProps,
+  )(ForgotPasswordForm),
+);

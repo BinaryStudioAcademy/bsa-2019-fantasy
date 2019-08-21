@@ -1,24 +1,28 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import { RootState } from 'store/types';
 
 import Spinner from 'components/Spinner';
-import { forgotPassword } from 'containers/Profile/actions';
+import { forgotPassword, setLanguage } from 'containers/Profile/actions';
 
 import styles from './styles.module.scss';
 
-const usePersonalDetails = () => {
+export const usePersonalDetails = () => {
   const user = useSelector((state: RootState) => state.profile.user);
+  const language = useSelector((state: RootState) => state.profile.language);
 
-  return { user };
+  return { user, language };
 };
 
 const PersonalDetails = withRouter(({ history }) => {
+  const { t, i18n } = useTranslation();
+
   const dispatch = useDispatch();
 
-  const { user } = usePersonalDetails();
+  const { user, language } = usePersonalDetails();
   if (!user) return <Spinner />;
 
   const onSubmit = (e: React.FormEvent) => {
@@ -34,15 +38,26 @@ const PersonalDetails = withRouter(({ history }) => {
     history.push('/profile/set/password');
   };
 
+  const changeLanguage = (value, language) => {
+    if (value) {
+      /* eslint-disable */
+      dispatch(setLanguage({ language }));
+      i18n.changeLanguage(language);
+      /* eslint-enable */
+    }
+  };
+
   return (
     <form className='flex flex-col' onSubmit={onSubmit}>
-      <h2 className='text-5xl font-bold mb-12'>Personal details</h2>
+      <h2 className='text-5xl font-bold mb-12'>{t('Profile.personalDetails.title')}</h2>
 
       <div className={styles.items}>
         <label className='mb-8 flex'>
           <div className='w-1/4 font-bold'>
-            Username
-            <p className='font-bold text-red-500 text-sm'>*required</p>
+            {t('Profile.personalDetails.username')}
+            <p className='font-bold text-red-500 text-sm'>
+              {`* ${t('Profile.personalDetails.required')}`}
+            </p>
           </div>
           <input
             className='w-2/4 px-4 py-2 bg-gray-100 shadow rounded-sm'
@@ -53,31 +68,70 @@ const PersonalDetails = withRouter(({ history }) => {
           />
         </label>
         <label className='mb-8 flex'>
-          <div className='w-1/4 font-bold'>Email</div>
+          <div className='w-1/4 font-bold'>{t('Profile.personalDetails.email')}</div>
           <input
             className='w-2/4 px-4 py-2 bg-gray-100 shadow rounded-sm'
             type='text'
-            placeholder='Email'
+            placeholder={t('Profile.personalDetails.email')}
             value={user.email}
             onChange={() => {}}
           />
         </label>
         <div className='mb-8 flex'>
-          <div className='w-1/4 font-bold'>Password</div>
+          <div className='w-1/4 font-bold'>{t('Profile.personalDetails.password')}</div>
           <button
             type='button'
             className='hover:text-teal-400 text-secondary font-bold'
             onClick={onClick}
           >
-            Set a password
+            {t('Profile.personalDetails.setPassword')}
           </button>
+        </div>
+
+        <div className='mb-8 flex'>
+          <div className='w-1/4 font-bold'>{t('Profile.personalDetails.language')}</div>
+          <div className='flex items-center'>
+            <label
+              className={`${
+                styles['checkbox-styled']
+              } g-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded ${
+                language === 'en' ? `${styles.checked}` : ''
+              }`}
+            >
+              <input
+                type='checkbox'
+                name='english'
+                value='English'
+                checked={language === 'en'}
+                onChange={(ev) => changeLanguage(ev.target.checked, 'en')}
+              />
+              <span>EN</span>
+            </label>
+            <p className='mx-3'>{t('LeaguesPage.createLeague.or')}</p>
+            <label
+              className={`${
+                styles['checkbox-styled']
+              } g-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded ${
+                language === 'ua' ? `${styles.checked}` : ''
+              }`}
+            >
+              <input
+                type='checkbox'
+                name='ukrainian'
+                value='Ukrainian'
+                checked={language === 'ua'}
+                onChange={(ev) => changeLanguage(ev.target.checked, 'ua')}
+              />
+              <span>UA</span>
+            </label>
+          </div>
         </div>
 
         <button
           type='submit'
           className='mt-4 py-2 px-16 text-lg max-w-xs rounded shadow bg-primary text-secondary font-bold'
         >
-          Submit
+          {t('submit')}
         </button>
       </div>
     </form>

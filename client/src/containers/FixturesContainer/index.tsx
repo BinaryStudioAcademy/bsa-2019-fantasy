@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import cn from 'classnames';
+import { useTranslation } from 'react-i18next';
 import { bindActionCreators, Dispatch } from 'redux';
 import moment from 'moment';
 
@@ -10,7 +12,8 @@ import { GameweeksType, FixturesItemType } from 'types/fixtures.types';
 import Fixtures from 'components/Fixtures/Fixtures';
 import Spinner from 'components/Spinner';
 
-import './styles.scss';
+import styles from './styles.module.scss';
+import component from 'components/Fixtures/styles.module.scss';
 
 type Props = {
   gameweeks?: GameweeksType;
@@ -27,6 +30,8 @@ const FixturesContainer = ({
   games,
   isLoading,
 }: Props) => {
+  const { t } = useTranslation();
+
   const [currentGameweek, setCurrentGameweek] = useState<number>(0);
 
   useEffect(() => {
@@ -46,8 +51,13 @@ const FixturesContainer = ({
 
   return (
     <div className='bg-white py-3 min-h-screen shadow-figma'>
-      <div className='fixtures-list flex flex-col items-stretch text-center max-w-2xl'>
-        <h2 className='text-5xl'>Fixtures</h2>
+      <div
+        className={cn(
+          component['fixtures-list'],
+          'flex flex-col items-stretch text-center max-w-2xl',
+        )}
+      >
+        <h2 className='text-5xl'>{t('Fixtures.title')}</h2>
         <p className='mb-3'>
           Gameweek {currentGameweek + 1} -{' '}
           {moment(gameweeks[currentGameweek].start).format('ddd D MMMM YYYY')}
@@ -59,15 +69,15 @@ const FixturesContainer = ({
               className='btn bg-green-600 px-20 py-1 rounded'
               onClick={() => setCurrentGameweek(currentGameweek - 1)}
             >
-              Prev
+              {t('previous')}
             </button>
           )}
           {currentGameweek < gameweeks.length - 1 && (
             <button
-              className='btn btn-next bg-green-600 px-20 py-1 rounded'
+              className={cn(styles['btn-next'], 'btn bg-green-600 px-20 py-1 rounded')}
               onClick={() => setCurrentGameweek(currentGameweek + 1)}
             >
-              Next
+              {t('next')}
             </button>
           )}
         </div>

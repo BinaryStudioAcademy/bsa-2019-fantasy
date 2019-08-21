@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import cn from 'classnames';
 import moment from 'moment';
 
 import { FixturesItemType } from 'types/fixtures.types';
 
-import './styles.scss';
+import styles from './styles.module.scss';
 import MatchStats from 'components/MatchStats';
 
 type Props = {
@@ -120,10 +121,14 @@ const FixturesItem = ({ match }: Props) => {
   if (match.started) {
     label = (
       <div className='flex'>
-        <p className='home-score score text-white font-bold bg-green-900'>
+        <p
+          className={cn(styles['home-score'], 'score text-white font-bold bg-green-900')}
+        >
           {match.hometeam_score}
         </p>
-        <p className='away-score score text-white font-bold bg-green-900'>
+        <p
+          className={cn(styles['away-score'], 'score text-white font-bold bg-green-900')}
+        >
           {match.awayteam_score}
         </p>
       </div>
@@ -132,30 +137,32 @@ const FixturesItem = ({ match }: Props) => {
 
   return (
     <React.Fragment>
+      {/* eslint-disable */}
       <li
         className={`flex items-center p-3 ${match.started ? 'cursor-pointer' : ''} ${
           isDisplay ? 'bg-green-600 text-white' : ''
         }`}
         onClick={() => toggleStats()}
       >
-        <div className='first-team team justify-end'>
+      {/* eslint-enable */}
+        <div className={cn(styles['first-team'], styles.team, 'justify-end')}>
           <img
-            className='logo order-1'
+            className={cn(styles.logo, 'order-1')}
             src={`images/club-logos/badge_${match.hometeam.code}_200.png`}
             alt='logo'
           />
           <h5 className='font-bold'>{match.hometeam.name}</h5>
         </div>
         <div
-          className={`time p-3 py-2 rounded mx-2 play-time ${
+          className={`time p-3 py-2 rounded mx-2 ${styles['play-time']} ${
             match.started ? 'bg-green-900' : ''
           }`}
         >
           {label}
         </div>
-        <div className='text-left team'>
+        <div className={cn(styles.team, 'text-left')}>
           <img
-            className='logo'
+            className={styles.logo}
             src={`images/club-logos/badge_${match.awayteam.code}_200.png`}
             alt='logo'
           />

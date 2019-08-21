@@ -1,0 +1,40 @@
+:local(.paper) {
+  background-color: #fff;
+  box-shadow: 0px 0px 19px rgba(0, 0, 0, 0.08);
+  padding: 60px 50px;
+
+  @media screen and (max-width: 374px) {
+    padding: 60px 30px;
+  }
+}
+
+:local(.jumbotron) {
+  &:local(.paper) {
+    min-height: 250px;
+  }
+
+  :local(.title) {
+    font-size: 60px;
+    line-height: 65px;
+    font-weight: 600;
+
+    &:local(.sub) {
+      font-size: 14px;
+      line-height: 20px;
+      color: rgba(18, 39, 55, 0.7);
+
+      svg {
+        font-size: 18px;
+        margin-right: 5px;
+      }
+    }
+  }
+
+  a {
+    transition: 0.2s;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 16px;
+    text-transform: uppercase;
+  }
+}

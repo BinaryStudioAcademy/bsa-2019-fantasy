@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { bindActionCreators, Dispatch } from 'redux';
 import validator from 'validator';
 import { times } from 'lodash';
@@ -7,11 +8,15 @@ import { FaStar } from 'react-icons/fa';
 
 import { createLeagueAction } from '../actions';
 
+import styles from './styles.module.scss';
+import header from 'styles/header.module.scss';
+
 type Props = {
   createLeagueAction: typeof createLeagueAction;
 };
 
 const CreateLeague = ({ createLeagueAction }: Props) => {
+  const { t } = useTranslation();
   const [isLoading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [gameweek, setGameweek] = useState('Gameweek 1');
@@ -59,20 +64,20 @@ const CreateLeague = ({ createLeagueAction }: Props) => {
   };
 
   return (
-    <div className='create-league'>
+    <div className={styles['create-league']}>
       <div className='container'>
-        <div className='jumbotron paper mb-12 rounded'>
-          <div className='jumbotron-content mt-12'>
-            <h2 className='title text-secondary'>
-              <div className='sub title mb-4 flex items-center'>
+        <div className={`${header.jumbotron} ${header.paper} mb-12 rounded`}>
+          <div className={`${header['jumbotron-content']} mt-12`}>
+            <h2 className={`${header.title} text-secondary`}>
+              <div className={`${header.sub} ${header.title} mb-4 flex items-center`}>
                 <FaStar />
-                Create a League
+                {t('LeaguesPage.createLeague.title.sub')}
               </div>
-              Create a new classic league
+              {t('LeaguesPage.createLeague.title.main')}
             </h2>
           </div>
         </div>
-        <div className='paper'>
+        <div className={header.paper}>
           <form className='w-full max-w-lg' onSubmit={handleSubmit}>
             <div className='flex flex-wrap -mx-3 mb-6'>
               <div className='w-full px-3'>
@@ -80,7 +85,7 @@ const CreateLeague = ({ createLeagueAction }: Props) => {
                   className='block uppercase text-gray-700 text-xs font-bold mb-2'
                   htmlFor='league-name'
                 >
-                  Name
+                  {t('LeaguesPage.createLeague.name')}
                 </label>
                 <input
                   className={`appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 ${
@@ -96,18 +101,20 @@ const CreateLeague = ({ createLeagueAction }: Props) => {
                     !isNameValid ? 'text-red-500' : ''
                   }`}
                 >
-                  Maximum 30 characters
+                  {t('LeaguesPage.createLeague.nameMax')}
                 </p>
               </div>
             </div>
             <div className='w-full mb-6'>
               <p className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>
-                Privacy
+                {t('LeaguesPage.createLeague.privacy.title')}
               </p>
               <div className='flex items-center'>
                 <label
-                  className={`checkbox-styled g-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded ${
-                    privacy === 'public' ? 'checked' : ''
+                  className={`${
+                    styles['checkbox-styled']
+                  } g-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded ${
+                    privacy === 'public' ? `${styles.checked}` : ''
                   }`}
                 >
                   <input
@@ -117,12 +124,14 @@ const CreateLeague = ({ createLeagueAction }: Props) => {
                     checked={privacy === 'public'}
                     onChange={(ev) => changePrivacy(ev.target.checked, 'public')}
                   />
-                  <span>Public</span>
+                  <span>{t('LeaguesPage.createLeague.privacy.public')}</span>
                 </label>
-                <p className='mx-3'>or</p>
+                <p className='mx-3'>{t('LeaguesPage.createLeague.or')}</p>
                 <label
-                  className={`checkbox-styled g-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded ${
-                    privacy === 'private' ? 'checked' : ''
+                  className={`${
+                    styles['checkbox-styled']
+                  } g-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded ${
+                    privacy === 'private' ? `${styles.checked}` : ''
                   }`}
                 >
                   <input
@@ -132,7 +141,7 @@ const CreateLeague = ({ createLeagueAction }: Props) => {
                     checked={privacy === 'private'}
                     onChange={(ev) => changePrivacy(ev.target.checked, 'private')}
                   />
-                  <span>Private</span>
+                  <span>{t('LeaguesPage.createLeague.privacy.private')}</span>
                 </label>
               </div>
             </div>
@@ -141,7 +150,7 @@ const CreateLeague = ({ createLeagueAction }: Props) => {
                 className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
                 htmlFor='league-gameweek'
               >
-                Scoring starts
+                {t('LeaguesPage.createLeague.scoring')}
               </label>
               <div className='relative'>
                 <select
@@ -174,11 +183,11 @@ const CreateLeague = ({ createLeagueAction }: Props) => {
               type='submit'
               disabled={!name || !isNameValid || isLoading}
             >
-              {isLoading ? 'Wait' : 'Create league'}
+              {isLoading ? t('wait') : t('LeaguesPage.createLeague.create')}
             </button>
             {!isNameValid && (
               <span className='ml-2 font-bold text-red-600'>
-                Maximum length exceeded!
+                {t('LeaguesPage.createLeague.error')}
               </span>
             )}
           </form>

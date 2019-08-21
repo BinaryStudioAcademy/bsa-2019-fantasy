@@ -17,18 +17,35 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
-  .get('/user-team/:user/:id', (req, res, next) => {
+  .get('/gameweek/:gameweek', (req, res, next) =>
     gameweekHistoryService
-      .getCurrentHistoryById(req.params.user, req.params.id)
-      .then((value) => {
+      .getHistoryByGameweekId(req.params.gameweek)
+      .then((value) => res.json(value))
+      .catch(next),
+  )
+  .get('/user-team/:user/:gameweek', (req, res, next) => {
+    gameweekHistoryService
+      .getCurrentHistoryById(req.params.user, req.params.gameweek)
+      .then((historyId) => {
         teamMemberHistoryService
-          .getPlayersByGameweekId(value.id)
+          .getPlayersByGameweekId(historyId)
           .then((players) => {
             return res.json(players);
           })
           .catch(next);
       })
       .catch(next);
+  })
+
+  .post('/user-team/:user/:gameweek', (req, res, next) => {
+    gameweekHistoryService
+      .postCurrentHistoryById(req.params.user, req.params.gameweek)
+      .then((gameweekHistoryId) => {
+        teamMemberHistoryService
+          .postTeamMemberHistory(req.body, gameweekHistoryId)
+          .then((players) => res.json(players))
+          .catch(next);
+      });
   })
   .get('/user-team/:user', (req, res, next) => {
     gameweekHistoryService

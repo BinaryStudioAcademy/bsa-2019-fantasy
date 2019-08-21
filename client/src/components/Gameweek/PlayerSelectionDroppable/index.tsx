@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useDrop } from 'react-dnd';
 
 import Player from '../PlayerSelection';
-import './styles.scss';
+import styles from './styles.module.scss';
 import { Stream } from 'stream';
 
 export interface PlayerDroppable {
@@ -67,8 +67,8 @@ const PlayerSelectionDroppable = ({
 
   return (
     <div ref={ref}>
-      <div className='player-placeholder' style={{ backgroundColor }}>
-        <div className='player-type'>{isActive ? 'Release to drop' : null}</div>
+      <div className={styles['player-placeholder']} style={{ backgroundColor }}>
+        <div className={styles['player-type']}>{isActive ? 'Release to drop' : null}</div>
 
         {lastDroppedItem && (
           <Player

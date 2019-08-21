@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import cn from 'classnames';
+import { useTranslation } from 'react-i18next';
+
 import { FaFacebook } from 'react-icons/fa';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 import { login } from 'containers/Profile/actions';
 
-import './styles.scss';
+import styles from './styles.module.scss';
 
 const LoginForm = withRouter(({ history }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState('');
@@ -22,16 +26,16 @@ const LoginForm = withRouter(({ history }) => {
   };
 
   return (
-    <div className='w-full h-full max-w-xs form-registration'>
+    <div className={cn(styles['form-registration'], 'w-full h-full max-w-xs')}>
       <form onSubmit={handleLogin} className=' px-8 pt-6 pb-8 '>
         <div className='mb-4'>
           <label>
-            Email
+            {t('AuthForms.email')}
             <input
               className='shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline'
               id='email'
               type='email'
-              placeholder='Email'
+              placeholder={t('AuthForms.email')}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -39,7 +43,7 @@ const LoginForm = withRouter(({ history }) => {
         </div>
         <div className='mb-4'>
           <label>
-            Password
+            {t('AuthForms.password')}
             <input
               className='shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline'
               id='password'
@@ -51,9 +55,9 @@ const LoginForm = withRouter(({ history }) => {
           </label>
         </div>
         <div className='flex appearance-none items-center justify-between mb-4'>
-          <button className='text-xs' onClick={() => history.push('/forgot')}>
-            Forgot your password?
-          </button>
+          <Link to='/forgot' className='text-xs'>
+            {t('AuthForms.forgot')}
+          </Link>
         </div>
 
         <div className='flex items-center justify-start'>
@@ -61,20 +65,20 @@ const LoginForm = withRouter(({ history }) => {
             type='submit'
             className='font-bold rounded py-1 px-6 mr-2 border border-transparent text-secondary bg-primary shadow uppercase'
           >
-            Sign In
+            {t('AuthForms.login')}
           </button>
           <button
             type='button'
             className='opacity-50 hover:opacity-100 font-bold rounded py-1 px-6 border border-primary bg-transparent shadow uppercase'
             onClick={() => history.push('/registration')}
           >
-            Sign Up
+            {t('AuthForms.signup')}
           </button>
         </div>
         <div className='block mt-8'>
-          <a href='/api/auth/fb'>
+          <button onClick={() => history.push('/social')} /* href='/api/auth/fb' */>
             <FaFacebook />
-          </a>
+          </button>
         </div>
       </form>
     </div>

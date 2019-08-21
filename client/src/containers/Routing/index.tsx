@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { feedback } from 'react-feedbacker';
 
@@ -11,6 +11,7 @@ import GuestRoute from 'containers/GuestRoute';
 
 import LoginPage from 'containers/Auth/Login/LoginPage';
 import RegistrationPage from 'containers/Auth/Registration/RegistrationPage';
+import SocialPage from 'containers/Auth/SocialPage';
 
 import MyTeam from 'containers/MyTeam';
 import Transfers from 'containers/Transfers';
@@ -39,21 +40,51 @@ import { loadCurrentUser } from 'containers/Profile/actions';
 import ForgotPassword from 'containers/ChangePassword/ForgotPassword';
 import ResetPassword from 'containers/ChangePassword/ResetPassword';
 
-// Initial data loading
 import { fetchClubs } from './fetchClubs/actions';
-import { fetchGameweeks } from './fetchGameweeks/actions';
+import { fetchGameweeks, fetchGameweekHistory } from './fetchGameweeks/actions';
 import { preloadClubLogos } from 'helpers/images';
+import { currentGameweekSelector } from 'store/selectors/current-gameweek.selector';
+
+import { joinRoom, leaveRoom, requestGames } from 'helpers/socket';
+
+import ConnectFbPage from 'containers/Auth/ConnectFbPage';
 
 const Routing = () => {
   const dispatch = useDispatch();
-  const { isLoading, user } = useSelector((state: RootState) => state.profile);
+  const { isLoading, user, isAuthorized } = useSelector(
+    (state: RootState) => state.profile,
+  );
+
+  const favorite_club = useSelector(
+    (state: RootState) => state.profile.user && state.profile.user.favorite_club_id,
+  );
+
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
+  const currentGameweek = useSelector(currentGameweekSelector);
+
+  const [joinedRoom, setJoinedRoom] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(loadCurrentUser());
     dispatch(fetchClubs());
     dispatch(fetchGameweeks());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (isAuthorized && favorite_club) {
+      if (!joinedRoom) {
+        setJoinedRoom(true);
+        joinRoom(favorite_club);
+      }
+      requestGames();
+    }
+  }, [dispatch, isAuthorized, favorite_club]);
+
+  useEffect(() => {
+    if (user && currentGameweek) {
+      dispatch(fetchGameweekHistory(user.id, currentGameweek.id));
+    }
+  }, [dispatch, user, currentGameweek]);
 
   useEffect(() => {
     clubs.length > 0 && preloadClubLogos(clubs, 80);
@@ -69,6 +100,8 @@ const Routing = () => {
         <GuestRoute exact path='/login' component={LoginPage} />
         <GuestRoute exact path='/registration' component={RegistrationPage} />
         <GuestRoute exact path='/forgot' component={ForgotPassword} />
+        <GuestRoute exact path='/social' component={SocialPage} />
+        <GuestRoute exact path='/connect-fb' component={ConnectFbPage} />
         <GuestRoute path='/reset/:id' component={ResetPassword} />
 
         {user && user.favorite_club_id === null && (

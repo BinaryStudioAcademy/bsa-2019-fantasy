@@ -1,0 +1,51 @@
+:local(.play-time) {
+  flex: 1 0 3.4rem;
+  margin: 0 20px;
+  border: 1px solid #1ab8a8;
+}
+
+:local(.team) {
+  flex: 1 1 calc(50% - 1.7rem);
+  display: flex;
+  align-items: center;
+}
+
+:local(.fixtures-list) {
+  margin: 0 auto;
+  padding-bottom: 30px;
+}
+
+:local(.first-team) {
+  text-align: right;
+}
+
+:local(.second-team) {
+  text-align: left;
+}
+
+:local(.logo) {
+  width: 50px;
+  height: 50px;
+  margin: 0 10px;
+}
+:local(.fixtures-list__daystamp ){
+  text-align: center;
+  background-color: #e9edf1;
+}
+
+:local(.bnt) {
+  margin-left: auto;
+}
+
+:local(.home-score) {
+  border-right: 1px solid white;
+  padding-right: 10px;
+}
+
+:local(.away-score) {
+  padding-left: 10px;
+}
+
+:local(.score) {
+  flex: 1;
+}

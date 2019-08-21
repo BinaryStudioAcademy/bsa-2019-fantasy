@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './styles.scss';
+import styles from './styles.module.scss';
 
 type Props = {
   title: string;
@@ -11,17 +11,21 @@ type Props = {
 const MatchStats = ({ title, hometeam_stats, awayteam_stats }: Props) => {
   const mapArray = (array: any) =>
     array.map((item: any) => (
-      <div className='stats-item' key={`stats-item-${item.player}`}>
+      <div className={styles['stats-item']} key={`stats-item-${item.player}`}>
         {item.player} <span className='count'>( {item.count} )</span>
       </div>
     ));
 
   return (
-    <div className='w-4/5 stats mb-3'>
+    <div className={`w-4/5 ${styles.stats} mb-3`}>
       <h2 className='text-center bg-green-900 text-white p-1 font-bold'>{title}</h2>
       <div className='flex bg-white p-3'>
-        <div className='left-team teamstats'>{mapArray(hometeam_stats)}</div>
-        <div className='right-team teamstats'>{mapArray(awayteam_stats)}</div>
+        <div className={`${styles['left-team']} ${styles.teamstats}`}>
+          {mapArray(hometeam_stats)}
+        </div>
+        <div className={`${styles['right-team']} ${styles.teamstats}`}>
+          {mapArray(awayteam_stats)}
+        </div>
       </div>
     </div>
   );
