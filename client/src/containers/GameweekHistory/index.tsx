@@ -42,8 +42,7 @@ const GameweekHistory = ({
       loadTeamHistoryAction(user_id, gameweekId);
     }
   }, [currentGameweek, gameweeksHistory, loadTeamHistoryAction]);
-
-  console.log(teamHistory);
+  const displayRadar = () => gameweeksHistory.map((item) => item.team_score);
 
   if (!gameweeksHistory || !teamHistory) {
     return <Spinner />;
@@ -59,7 +58,7 @@ const GameweekHistory = ({
             <div className={`${header.sub} ${header.title} mb-3 flex items-center`}>
               {t('GameweekHistoryPage.titles.sub')}
             </div>
-            {`${t('GameweekHistoryPage.titles.main')}  1`}
+            {`${t('GameweekHistoryPage.titles.main')}  ${currentGameweek + 1}`}
           </h2>
           {currentGameweek >= 1 && (
             <button
@@ -81,12 +80,12 @@ const GameweekHistory = ({
           )}
         </div>
         <div className='w-6/12'>
-          <LineChart data={getChartOptions()} />
+          <LineChart data={getChartOptions(displayRadar())} />
         </div>
       </div>
       <div className={styles['gameweek-history-content']}>
         <div className={`${header.paper} rounded mr-2`}>
-          <TeamSelection isGameweek playersHistory={teamHistory}/>
+          <TeamSelection isGameweek playersHistory={teamHistory} />
         </div>
         <div
           className={`${header.paper} px-8 pt-12 rounded ${styles['gameweek-stats']} ml-2`}

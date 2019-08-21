@@ -51,7 +51,6 @@ const TeamSelection = ({
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
   const currentGameweek = useSelector(currentGameweekSelector);
   let players = useSelector((state: RootState) => state.gameweeks.gameweeks_history);
-  console.log(players);
   if (playersHistory) {
     players = playersHistory;
   }
