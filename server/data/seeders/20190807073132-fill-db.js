@@ -88,11 +88,13 @@ export default {
         'SELECT id FROM "users";',
         options,
       );
-      const gameweekHistoryMappedSeeds = gameweekHistoriesSeed.map((history) => ({
-        ...history,
-        gameweek_id: gameweeks[randomIndex(gameweeks.length)].id,
-        user_id: users[randomIndex(users.length)].id,
-      }));
+      const gameweekHistoryMappedSeeds = gameweekHistoriesSeed.map((history, index) => {
+        return {
+          ...history,
+          gameweek_id: gameweeks[index].id,
+          user_id: users[0].id,
+        };
+      });
 
       await queryInterface.bulkInsert(
         'gameweek_histories',
@@ -104,11 +106,21 @@ export default {
         options,
       );
 
-      const teamMemberHistoriesMappedSeeds = teamMemberHistoriesSeed.map((member) => ({
-        ...member,
-        player_id: playerStats[randomIndex(playerStats.length)].id,
-        gameweek_history_id: gameweekHistories[randomIndex(gameweekHistories.length)].id,
-      }));
+      const teamMemberHistoriesMappedSeeds = teamMemberHistoriesSeed.map(
+        (member, index) => {
+          let gameweek_history_id = '';
+          if (index <= 14) {
+            gameweek_history_id = gameweekHistories[0].id;
+          } else {
+            gameweek_history_id = gameweekHistories[1].id;
+          }
+          return {
+            ...member,
+            player_id: playerStats[randomIndex(playerStats.length)].id,
+            gameweek_history_id,
+          };
+        },
+      );
 
       await queryInterface.bulkInsert(
         'team_member_histories',
