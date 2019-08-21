@@ -23,19 +23,27 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
-  .get('/gameweek/:gameweek/avg', (req, res, next) => {
+  .get('/gameweek/results/:gameweek', (req, res, next) => {
     gameweekHistoryService
       .getHistoryByGameweekId(req.params.gameweek)
       .then((value) => {
-        return res.json(gameweekHistoryService.getAverageGameweekScore(value));
+        return res.json({
+          averageScore: gameweekHistoryService.getAverageGameweekScore(value),
+          maxScore: gameweekHistoryService.getMaxGameweekScore(value),
+        });
       })
       .catch(next);
   })
-  .get('/gameweek/:gameweek/max', (req, res, next) => {
+  .get('/gameweek/best-players/:gameweek', (req, res, next) => {
     gameweekHistoryService
       .getHistoryByGameweekId(req.params.gameweek)
-      .then((value) => {
-        return res.json(gameweekHistoryService.getMaxGameweekScore(value));
+      .then((history) => {
+        teamMemberHistoryService
+          .getPlayersByGameweekId(history)
+          .then((players) => {
+            return res.json(gameweekHistoryService.getBestPlayersOfTheGameweek(players));
+          })
+          .catch(next);
       })
       .catch(next);
   })
