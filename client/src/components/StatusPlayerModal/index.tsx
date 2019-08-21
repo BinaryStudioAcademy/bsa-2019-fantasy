@@ -10,6 +10,8 @@ type Props = {
   onSetCaptain: () => void;
   onSetViceCaptain: () => void;
   name: string;
+  playerIdToSwitch?: string | '';
+  setPlayerForSwitching?: (id: string) => void;
 };
 
 const StatusPlayerModal = ({
@@ -41,6 +43,12 @@ const StatusPlayerModal = ({
           </button>
         </div>
         <div className='modal-body p-6 flex flex-col'>
+          <button
+            className='bg-green-700 p-2 mb-4 rounded'
+            onClick={() => console.log('switch')}
+          >
+            {t('StatusPlayerModal.switch')}
+          </button>
           {!isCaptain && (
             <button
               className='bg-green-700 p-2 mb-4 rounded'

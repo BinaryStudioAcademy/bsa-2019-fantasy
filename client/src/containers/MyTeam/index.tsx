@@ -24,6 +24,11 @@ const MyTeam = () => {
 
   const [captainId, setCaptainId] = useState('');
   const [viceCaptainId, setViceCaptainId] = useState('');
+  const [playerIdToSwitch, setPlayerToSwitch] = useState<string | ''>('');
+
+  const setPlayerForSwitching = (id: string) => {
+    setPlayerToSwitch(id);
+  };
 
   const onClose = () => {
     setShowModal(false);
@@ -82,6 +87,8 @@ const MyTeam = () => {
           onOpen={onOpen}
           captainId={captainId}
           viceCaptainId={viceCaptainId}
+          playerIdToSwitch={playerIdToSwitch}
+          setPlayerForSwitching={setPlayerForSwitching}
         />
       </div>
       {showModal && (
@@ -92,6 +99,8 @@ const MyTeam = () => {
           onSetCaptain={onSetCaptain}
           onSetViceCaptain={onSetViceCaptain}
           name={currentName}
+          playerIdToSwitch={playerIdToSwitch}
+          setPlayerForSwitching={setPlayerForSwitching}
         />
       )}
     </div>

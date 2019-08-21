@@ -250,5 +250,11 @@
     "browseAll": "Переглянути всіх переможців",
     "summary": "Підсумок",
     "season": "Сезон"
+  },
+
+  "StatusPlayerModal": {
+    "switch": "Поміняти",
+    "makeCaptain": "Назначити Капітаном",
+    "makeViceCaptain": "Назначити Віце-капітаном"
   }
 }

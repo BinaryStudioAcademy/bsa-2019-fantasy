@@ -250,5 +250,11 @@
     "browseAll": "Browse all winners",
     "summary": "Summary",
     "season": "Season"
+  },
+
+  "StatusPlayerModal": {
+    "switch": "Switch",
+    "makeCaptain": "Make Captain",
+    "makeViceCaptain": "Make Vice Captain"
   }
 }

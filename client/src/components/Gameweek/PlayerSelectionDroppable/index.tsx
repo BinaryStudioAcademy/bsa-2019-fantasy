@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import { useDrop } from 'react-dnd';
+import { Stream } from 'stream';
 
 import Player from '../PlayerSelection';
 import styles from './styles.module.scss';
-import { Stream } from 'stream';
 
 export interface PlayerDroppable {
   accept: any;
@@ -18,6 +18,8 @@ export interface PlayerDroppableProps {
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
   viceCaptainId?: string;
+  playerIdToSwitch?: string | '';
+  setCurrentPlayerForSwitching?: (id: string) => void;
 }
 
 export interface BenchDroppable {
@@ -33,6 +35,8 @@ export interface BenchDroppableProps {
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
   viceCaptainId?: string;
+  playerIdToSwitch?: string | '';
+  setCurrentPlayerForSwitching?: (id: string) => void;
 }
 const PlayerSelectionDroppable = ({
   accept,
@@ -43,6 +47,8 @@ const PlayerSelectionDroppable = ({
   onOpen,
   captainId,
   viceCaptainId,
+  playerIdToSwitch,
+  setCurrentPlayerForSwitching,
 }: PlayerDroppableProps | BenchDroppableProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [{ isOver, canDrop }, drop] = useDrop({
@@ -86,6 +92,8 @@ const PlayerSelectionDroppable = ({
             onOpen={onOpen}
             captainId={captainId}
             viceCaptainId={viceCaptainId}
+            playerIdToSwitch={playerIdToSwitch}
+            setCurrentPlayerForSwitching={setCurrentPlayerForSwitching}
           />
         )}
       </div>
