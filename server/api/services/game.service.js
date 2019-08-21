@@ -1,4 +1,5 @@
 import gameRepository from '../../data/repositories/game.repository';
+import gameWeekRepository from '../../data/repositories/gameweek.repository';
 
 export const getAllGames = () => gameRepository.getAll();
 
@@ -48,4 +49,12 @@ export const getFixturesForPlayer = async (playerId, clubId) => {
       }
       return result;
     }, []);
+};
+
+export const getCurrentGame = async () => {
+  const currentPromise = gameRepository.getCurrent();
+  const nextPromise = gameRepository.getNext();
+  const [current, next] = [await currentPromise, await nextPromise];
+
+  return { current, next };
 };

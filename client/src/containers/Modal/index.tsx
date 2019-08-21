@@ -2,9 +2,7 @@ import React, { ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 
 type Props = {
-  title?: string;
-  content: ReactNode;
-  actions?: ReactNode;
+  children?: ReactNode;
   onDismiss?: (e: React.SyntheticEvent) => void;
 };
 
@@ -21,17 +19,13 @@ class Modal extends React.Component<Props> {
           tabIndex={-1}
           role='presentation'
         >
-          <form
-            className='modal m-auto max-w-full max-h-full bg-white'
+          <div
+            className='modal m-auto max-w-full max-h-full bg-white rounded'
             onClick={(e) => e.stopPropagation()}
             role='presentation'
           >
-            <div className='header'>
-              <h3>{this.props.title}</h3>
-            </div>
-            <div className='content'>{this.props.content}</div>
-            <div className='actions'>{this.props.actions}</div>
-          </form>
+            {this.props.children}
+          </div>
         </div>
       </div>,
       this.target,
