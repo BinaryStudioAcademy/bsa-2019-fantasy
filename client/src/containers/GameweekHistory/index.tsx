@@ -1,39 +1,36 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Line as LineChart } from 'react-chartjs-2';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 import { RootState } from 'store/types';
+import { recentGameweeksSelector } from 'store/selectors/recent-gameweeks.selector';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
+
 import { getChartOptions } from 'helpers/gameweekChart';
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
-import { GameweekHistoryResultsType } from 'types/gameweekHistory.type';
-const getAverageGameweekScore = (results: Array<GameweekHistoryResultsType>) => {
-  return (
-    results
-      .map((el: GameweekHistoryResultsType) => el.team_score)
-      .reduce((p: number, c: number) => p + c, 0) / results.length
-  );
-};
 
-const getMaxGameweekScore = (results: Array<GameweekHistoryResultsType>) => {
-  return Math.max(...results.map((el: GameweekHistoryResultsType) => el.team_score));
-};
 const GameweekHistory = () => {
   const { t } = useTranslation();
+  const [gameweeksInfo, setGameweeksInfo] = useState<Array<any>>([]);
+  const [gameweekStatistic, setGameweeksResults] = useState<Array<any>>([]);
 
   const gameweekResults = useSelector(
     (state: RootState) => state.gameweeks.gameweeks_results,
   );
-  if (gameweekResults.length) {
-    console.log(`Avg score is ${getAverageGameweekScore(gameweekResults)}`);
-    console.log(`Max score is ${getMaxGameweekScore(gameweekResults)}`);
-  }
+  const recentGameweeks = useSelector(recentGameweeksSelector);
+
+  useEffect(() => {
+    setGameweeksInfo(recentGameweeks);
+    if (gameweekResults != null) {
+      setGameweeksResults([...gameweekStatistic, gameweekResults]);
+    }
+  }, [recentGameweeks, gameweekResults]);
 
   useEffect(() => {
     document.title = 'Home | Fantasy Football League';
@@ -66,9 +63,11 @@ const GameweekHistory = () => {
             <FaChevronRight />
           </Link>
         </div>
-        <div className='w-6/12'>
-          <LineChart data={getChartOptions()} />
-        </div>
+        {gameweeksInfo.length === gameweekStatistic.length ? (
+          <div className='w-6/12'>
+            <LineChart data={getChartOptions(gameweeksInfo, gameweekStatistic)} />
+          </div>
+        ) : null}
       </div>
       <div className={styles['gameweek-history-content']}>
         <div className={`${header.paper} rounded mr-2`}>

@@ -48,8 +48,9 @@ import {
 } from './fetchGameweeks/actions';
 import { preloadClubLogos } from 'helpers/images';
 import { currentGameweekSelector } from 'store/selectors/current-gameweek.selector';
+import { recentGameweeksSelector } from 'store/selectors/recent-gameweeks.selector';
 
-import { joinRoom, leaveRoom, requestGames } from 'helpers/socket';
+import { joinRoom, requestGames } from 'helpers/socket';
 
 import ConnectFbPage from 'containers/Auth/ConnectFbPage';
 
@@ -65,6 +66,10 @@ const Routing = () => {
 
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
   const currentGameweek = useSelector(currentGameweekSelector);
+  const recentGameweeks = useSelector(recentGameweeksSelector);
+  const gameweekResults = useSelector(
+    (state: RootState) => state.gameweeks.gameweeks_results,
+  );
 
   const [joinedRoom, setJoinedRoom] = useState<boolean>(false);
 
@@ -90,11 +95,11 @@ const Routing = () => {
   }, [dispatch, isAuthorized, favorite_club]);
 
   useEffect(() => {
-    if (user && currentGameweek) {
+    if (user && recentGameweeks && currentGameweek) {
       dispatch(fetchGameweekHistory(user.id, currentGameweek.id));
-      dispatch(fetchGameweekHistoryResults(currentGameweek.id));
+      recentGameweeks.forEach((g) => dispatch(fetchGameweekHistoryResults(g!.id)));
     }
-  }, [dispatch, user, currentGameweek]);
+  }, [dispatch, user, currentGameweek, recentGameweeks]);
 
   useEffect(() => {
     clubs.length > 0 && preloadClubLogos(clubs, 80);

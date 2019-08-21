@@ -19,7 +19,7 @@ import {
 type State = {
   gameweeks: GameweekType[];
   gameweeks_history: GameweekHistoryType[];
-  gameweeks_results: GameweekHistoryResultsType[];
+  gameweeks_results: GameweekHistoryResultsType[] | null;
   loading: boolean;
   error: string | null;
 };
@@ -27,7 +27,7 @@ type State = {
 const initialState: State = {
   gameweeks: [],
   gameweeks_history: [],
-  gameweeks_results: [],
+  gameweeks_results: null,
   loading: false,
   error: null,
 };
@@ -69,7 +69,6 @@ export default (state = initialState, action: FetchGameweeksAction) => {
         gameweeks_results: action.payload,
         loading: false,
       };
-
     case FETCH_GAMEWEEKS_HISTORY_RESULTS_FAILURE:
       return { ...state, loading: false, error: action.payload };
     default:
