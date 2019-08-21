@@ -3,19 +3,37 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Line as LineChart } from 'react-chartjs-2';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { useSelector, connect } from 'react-redux';
+
+import { bindActionCreators, Dispatch } from 'redux';
+
+import { RootState } from 'store/types';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
 import { getChartOptions } from 'helpers/gameweekChart';
 
+import { loadGameweeksHistoryAction, loadTeamHistoryAction } from './actions';
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
 
-const GameweekHistory = () => {
+const GameweekHistory = ({
+  loadGameweeksHistoryAction,
+  loadTeamHistoryAction,
+  gameweeksHistory,
+  teamHistory,
+  isLoading,
+}) => {
   const { t } = useTranslation();
+  const user_id = useSelector(
+    (state: RootState) => state.profile.user && state.profile.user.id,
+  );
 
   useEffect(() => {
     document.title = 'Home | Fantasy Football League';
+    loadGameweeksHistoryAction(user_id);
   }, []);
+
+  console.log(gameweeksHistory);
 
   return (
     <div className={styles['gameweek-history']}>
@@ -68,4 +86,20 @@ const GameweekHistory = () => {
   );
 };
 
-export default GameweekHistory;
+const mapStateToProps = (rootState: RootState) => ({
+  gameweeksHistory: rootState.gameweekHistory.gameweeksHistory,
+  teamHistory: rootState.gameweekHistory.teamHistory,
+  isLoading: rootState.gameweekHistory.isLoading,
+});
+
+const actions = {
+  loadGameweeksHistoryAction,
+  loadTeamHistoryAction,
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(GameweekHistory);
