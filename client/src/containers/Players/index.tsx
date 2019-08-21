@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { bindActionCreators, Dispatch } from 'redux';
@@ -20,8 +20,6 @@ import { getClubLogoUrl } from 'helpers/images';
 import { Club } from 'types/club.type';
 
 import { FaPlus, FaTimes } from 'react-icons/fa';
-
-import styles from './styles.module.scss';
 
 type IProps = {
   players: [Player?];
@@ -87,7 +85,7 @@ class PlayersPage extends React.Component<IProps, IState> {
           (player: any) => player && props.original.id === player.id,
         );
 
-        if (this.state.comparisonData.length == 2 && playerIndex === -1) {
+        if (this.state.comparisonData.length === 2 && playerIndex === -1) {
           return;
         }
 

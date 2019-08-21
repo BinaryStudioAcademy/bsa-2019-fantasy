@@ -3,7 +3,6 @@ import { useDrop } from 'react-dnd';
 
 import Player from '../PlayerSelection';
 import styles from './styles.module.scss';
-import { Stream } from 'stream';
 
 export interface PlayerDroppable {
   accept: any;

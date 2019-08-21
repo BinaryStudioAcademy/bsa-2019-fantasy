@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import { useDrag } from 'react-dnd';
 
 import styles from './styles.module.scss';
-import { is } from 'uuidv4';
 
 export interface PlayerInfo {
   id: string;
