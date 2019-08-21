@@ -9,36 +9,33 @@ import { loadPlayersAction } from 'components/PlayersSelection/actions';
 import PlayerSelectionDroppable, { PlayerDroppable } from '../PlayerSelectionDroppable';
 import { PlayerDraggableProps } from '../PlayerSelection';
 import { PlayerTypes } from '../PlayerSelection/types';
-import Button from '../../../components/Button';
+import Button from 'components/Button';
 import SquadSelection from './components/SquadSelection';
-import { PITCH, BUDGET, CLUBS } from './helpers';
+import { SQUAD, BUDGET, CLUBS } from './helpers';
 
 import styles from './styles.module.scss';
 
 const InitialTeamSelection = () => {
-  // Set pitch drag&drop items, which accept only specific player types
-  const [pitch, setPitch] = useState<PlayerDroppable[]>(PITCH);
-  // Set ids of players on the pitch
-  const [droppedPlayerPitchIds, setdroppedPlayerPitchIds] = useState<string[]>(
-    pitch.map((el) => {
-      if (el.lastDroppedItem.id) {
-        return el.lastDroppedItem.id;
-      } else return null;
-    }),
+  // Set squad drag&drop items, which accept only specific player types
+  const [squad, setSquad] = useState<PlayerDroppable[]>(SQUAD);
+
+  // Set ids of players on the squad
+  const [droppedPlayerSquadIds, setdroppedPlayerSquadIds] = useState<string[]>(
+    squad.map((el) => (el.lastDroppedItem.id ? el.lastDroppedItem.id : null)),
   );
 
   const [moneyRemaing, setMoneyRemaining] = useState(BUDGET);
   const [selectedPlayers, setSelectedPlayers] = useState(0);
   const [isMoreThree, setIsMoreThree] = useState(false);
 
-  const saveTeam = (pitch: string[]) => {
-    console.log(`PITCH PLAYERS \n  ${pitch}`);
+  const saveTeam = (squad: string[]) => {
+    console.log(`SQUAD PLAYERS \n  ${squad}`);
   };
 
-  const recalculateMoney = (pitch) => {
-    console.log(pitch);
+  const recalculateMoney = (squad) => {
+    console.log(squad);
     let currentTotal = null;
-    pitch.forEach((el) => {
+    squad.forEach((el) => {
       if (el.lastDroppedItem.price) {
         currentTotal += el.lastDroppedItem.price;
       }
@@ -46,9 +43,9 @@ const InitialTeamSelection = () => {
     return currentTotal;
   };
 
-  const recalculatePlayers = (pitch) => {
+  const recalculatePlayers = (squad) => {
     let currentPlayers = 0;
-    pitch.forEach((el) => {
+    squad.forEach((el) => {
       if (el.lastDroppedItem.id) {
         currentPlayers++;
       }
@@ -56,10 +53,10 @@ const InitialTeamSelection = () => {
     return currentPlayers;
   };
 
-  const checkIsMoreThree = (pitch) => {
+  const checkIsMoreThree = (squad) => {
     Object.keys(CLUBS).forEach(
       (key) =>
-        (CLUBS[key] = pitch.filter((el) => el.lastDroppedItem.club === key).length),
+        (CLUBS[key] = squad.filter((el) => el.lastDroppedItem.club === key).length),
     );
 
     const isMoreThanThree = (el) => CLUBS[el] > 3;
@@ -75,27 +72,27 @@ const InitialTeamSelection = () => {
   const handleDrop = useCallback(
     (index: number, item: PlayerDraggableProps) => {
       const { id } = item;
-      const playerPitchIndex = droppedPlayerPitchIds.indexOf(id);
+      const playerSquadIndex = droppedPlayerSquadIds.indexOf(id);
 
-      // When we move to the pitch
-      if (playerPitchIndex === -1) {
-        const newPitch = update(pitch, {
+      // When we move to the squad
+      if (playerSquadIndex === -1) {
+        const newSquad = update(squad, {
           [index]: {
             lastDroppedItem: {
               $set: item,
             },
           },
         });
-        setPitch(newPitch);
-        setMoneyRemaining(BUDGET - recalculateMoney(newPitch)!);
-        setSelectedPlayers(recalculatePlayers(newPitch));
-        checkIsMoreThree(newPitch);
+        setSquad(newSquad);
+        setMoneyRemaining(BUDGET - recalculateMoney(newSquad)!);
+        setSelectedPlayers(recalculatePlayers(newSquad));
+        checkIsMoreThree(newSquad);
 
-        droppedPlayerPitchIds.splice(index, 1, id);
-        setdroppedPlayerPitchIds([...droppedPlayerPitchIds]);
+        droppedPlayerSquadIds.splice(index, 1, id);
+        setdroppedPlayerSquadIds([...droppedPlayerSquadIds]);
       }
     },
-    [droppedPlayerPitchIds, pitch],
+    [droppedPlayerSquadIds, squad],
   );
 
   return (
@@ -111,7 +108,7 @@ const InitialTeamSelection = () => {
           className={`${styles.team} flex justify-around absolute team`}
           style={{ top: '6%' }}
         >
-          {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+          {squad.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
             if (accept === PlayerTypes.GOALKEEPER) {
               return (
                 <PlayerSelectionDroppable
@@ -135,7 +132,7 @@ const InitialTeamSelection = () => {
           className={`${styles.team} flex justify-between absolute`}
           style={{ top: '29%' }}
         >
-          {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+          {squad.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
             if (accept === PlayerTypes.DEFENDER) {
               return (
                 <PlayerSelectionDroppable
@@ -159,7 +156,7 @@ const InitialTeamSelection = () => {
           className={`${styles.team} flex justify-between absolute`}
           style={{ top: '54%' }}
         >
-          {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+          {squad.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
             if (accept === PlayerTypes.MIDDLEFIELDER) {
               return (
                 <PlayerSelectionDroppable
@@ -183,7 +180,7 @@ const InitialTeamSelection = () => {
           className={`${styles.team} flex justify-around top-60 absolute`}
           style={{ top: '79%' }}
         >
-          {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+          {squad.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
             if (accept === PlayerTypes.FORWARD) {
               return (
                 <PlayerSelectionDroppable
@@ -205,7 +202,7 @@ const InitialTeamSelection = () => {
         <div className='w-full h-24 absolute flex justify-center'>
           <Button
             className={`${styles.saveTeam} w-3/12 h-12 mt-3`}
-            onClick={(e) => saveTeam(droppedPlayerPitchIds)}
+            onClick={(e) => saveTeam(droppedPlayerSquadIds)}
             disabled={!(moneyRemaing >= 0 && selectedPlayers === 15 && !isMoreThree)}
           >
             <p>Save Your Team</p>

@@ -1,6 +1,6 @@
 import { PlayerTypes } from '../PlayerSelection/types';
 
-export const PITCH = [
+export const SQUAD = [
   {
     accept: PlayerTypes.GOALKEEPER,
     lastDroppedItem: {

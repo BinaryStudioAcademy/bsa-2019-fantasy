@@ -64,7 +64,6 @@ const PlayerSelectionDroppable = ({
   if (!isGameweek) {
     drop(ref);
   }
-  console.log(lastDroppedItem);
 
   return (
     <div ref={ref}>
