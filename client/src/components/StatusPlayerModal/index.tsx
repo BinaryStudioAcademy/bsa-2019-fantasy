@@ -1,6 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { GameweekHistoryType } from 'types/gameweekHistory.type';
+
 import styles from './styles.module.scss';
 
 type Props = {
@@ -10,8 +12,8 @@ type Props = {
   onSetCaptain: () => void;
   onSetViceCaptain: () => void;
   name: string;
-  playerIdToSwitch?: string | '';
-  setPlayerForSwitching?: (id: string) => void;
+  playerIdToSwitch?: GameweekHistoryType | undefined;
+  setPlayerForSwitching?: (player: GameweekHistoryType | undefined) => void;
 };
 
 const StatusPlayerModal = ({

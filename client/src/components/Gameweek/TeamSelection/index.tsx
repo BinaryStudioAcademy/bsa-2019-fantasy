@@ -25,6 +25,7 @@ import Spinner from 'components/Spinner';
 import styles from './styles.module.scss';
 
 import TeamList from '../TeamList';
+import { GameweekHistoryType } from 'types/gameweekHistory.type';
 
 export interface GameweekSelectionProps {
   currentGameweek: GameweekType;
@@ -35,8 +36,8 @@ export interface TeamSelectionProps {
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
   viceCaptainId?: string;
-  playerIdToSwitch?: string | '';
-  setPlayerForSwitching?: (id: string) => void;
+  playerIdToSwitch?: GameweekHistoryType | undefined;
+  setPlayerForSwitching?: (player: GameweekHistoryType | undefined) => void;
 }
 
 const TeamSelection = ({
@@ -55,8 +56,6 @@ const TeamSelection = ({
 
   const players = useSelector((state: RootState) => state.gameweeks.gameweeks_history);
 
-  console.log(players);
-
   const [view, setView] = useState<'list' | 'pitch'>('pitch');
   const [playersOnBench, setBench] = useState<any[]>(getBench());
 
@@ -66,7 +65,8 @@ const TeamSelection = ({
   const [droppedPlayerPitchIds, setPlayerPitchIds] = useState<any[]>([]);
 
   const setCurrentPlayerForSwitching = (id: string) => {
-    setPlayerForSwitching && setPlayerForSwitching(id);
+    const player = players.find((p) => p.player_stats.id === id);
+    setPlayerForSwitching && setPlayerForSwitching(player);
   };
 
   //sets fetched players to the corresponding places

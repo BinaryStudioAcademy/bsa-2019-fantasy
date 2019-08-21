@@ -4,6 +4,7 @@ import { Stream } from 'stream';
 
 import Player from '../PlayerSelection';
 import styles from './styles.module.scss';
+import { GameweekHistoryType } from 'types/gameweekHistory.type';
 
 export interface PlayerDroppable {
   accept: any;
@@ -18,7 +19,7 @@ export interface PlayerDroppableProps {
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
   viceCaptainId?: string;
-  playerIdToSwitch?: string | '';
+  playerIdToSwitch?: GameweekHistoryType | undefined;
   setCurrentPlayerForSwitching?: (id: string) => void;
 }
 
@@ -35,7 +36,7 @@ export interface BenchDroppableProps {
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
   viceCaptainId?: string;
-  playerIdToSwitch?: string | '';
+  playerIdToSwitch?: GameweekHistoryType | undefined;
   setCurrentPlayerForSwitching?: (id: string) => void;
 }
 const PlayerSelectionDroppable = ({
@@ -67,6 +68,15 @@ const PlayerSelectionDroppable = ({
   } else if (canDrop) {
     backgroundColor = 'rgba(118, 124, 37, 0.9)';
   }
+
+  if (playerIdToSwitch) {
+    if (playerIdToSwitch.player_stats.id === lastDroppedItem.id) {
+      backgroundColor = 'rgba(255, 255, 0, 0.6)';
+    } else if (accept === playerIdToSwitch.player_stats.position) {
+      backgroundColor = 'rgba(255, 102, 0, 0.6)';
+    }
+  }
+
   if (!isGameweek) {
     drop(ref);
   }

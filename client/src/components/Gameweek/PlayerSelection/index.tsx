@@ -4,6 +4,7 @@ import { is } from 'uuidv4';
 import classNames from 'classnames';
 
 import styles from './styles.module.scss';
+import { GameweekHistoryType } from 'types/gameweekHistory.type';
 
 export interface PlayerInfo {
   id: string;
@@ -32,7 +33,7 @@ export interface PlayerDraggableProps {
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
   viceCaptainId?: string;
-  playerIdToSwitch?: string | '';
+  playerIdToSwitch?: GameweekHistoryType | undefined;
   setCurrentPlayerForSwitching?: (id: string) => void;
 }
 
@@ -58,7 +59,6 @@ const PlayerSelection = ({
   playerIdToSwitch,
   setCurrentPlayerForSwitching,
 }: PlayerDraggableProps) => {
-  console.log(playerIdToSwitch);
   const ref = useRef<HTMLDivElement>(null);
   const [{ opacity }, drag] = useDrag({
     item: {
@@ -87,21 +87,17 @@ const PlayerSelection = ({
 
     if (!setCurrentPlayerForSwitching) return;
 
-    if (playerIdToSwitch !== id) {
+    if (!playerIdToSwitch) {
       setCurrentPlayerForSwitching(id);
-    } else {
+    } else if (playerIdToSwitch && playerIdToSwitch.player_stats.id === id) {
       setCurrentPlayerForSwitching('');
     }
   };
 
-  const str = `${styles['player-highligted']}`;
-  console.log({ str, id, playerIdToSwitch });
   return (
     <div
       ref={ref}
-      className={classNames('text-center relative cursor-pointer', {
-        str: playerIdToSwitch == id,
-      })}
+      className='text-center relative cursor-pointer'
       onClick={() => {
         if (onOpen) {
           onOpen(id, isCaptain, isViceCaptain, name);

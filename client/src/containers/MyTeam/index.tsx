@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
 import StatusPlayerModal from 'components/StatusPlayerModal';
+import { GameweekHistoryType } from 'types/gameweekHistory.type';
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
@@ -24,10 +25,12 @@ const MyTeam = () => {
 
   const [captainId, setCaptainId] = useState('');
   const [viceCaptainId, setViceCaptainId] = useState('');
-  const [playerIdToSwitch, setPlayerToSwitch] = useState<string | ''>('');
+  const [playerIdToSwitch, setPlayerToSwitch] = useState<GameweekHistoryType | undefined>(
+    undefined,
+  );
 
-  const setPlayerForSwitching = (id: string) => {
-    setPlayerToSwitch(id);
+  const setPlayerForSwitching = (player: GameweekHistoryType | undefined) => {
+    setPlayerToSwitch(player);
   };
 
   const onClose = () => {
