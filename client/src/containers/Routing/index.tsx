@@ -66,14 +66,9 @@ const Routing = () => {
 
   useEffect(() => {
     dispatch(loadCurrentUser());
+    dispatch(fetchClubs());
+    dispatch(fetchGameweeks());
   }, [dispatch]);
-
-  useEffect(() => {
-    if (isAuthorized) {
-      dispatch(fetchClubs());
-      dispatch(fetchGameweeks());
-    }
-  }, [dispatch, isAuthorized]);
 
   useEffect(() => {
     if (isAuthorized && favorite_club) {
