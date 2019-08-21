@@ -10,6 +10,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { RootState } from 'store/types';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
+import Spinner from 'components/Spinner';
 import { getChartOptions } from 'helpers/gameweekChart';
 
 import { loadGameweeksHistoryAction, loadTeamHistoryAction } from './actions';
@@ -28,12 +29,25 @@ const GameweekHistory = ({
     (state: RootState) => state.profile.user && state.profile.user.id,
   );
 
+  const [currentGameweek, setCurrentGameweek] = useState<number>(0);
+
   useEffect(() => {
     document.title = 'Home | Fantasy Football League';
     loadGameweeksHistoryAction(user_id);
-  }, []);
+  }, [loadGameweeksHistoryAction]);
 
-  console.log(gameweeksHistory);
+  useEffect(() => {
+    if (gameweeksHistory) {
+      const gameweekId = gameweeksHistory[currentGameweek].gameweek.id;
+      loadTeamHistoryAction(user_id, gameweekId);
+    }
+  }, [currentGameweek, gameweeksHistory, loadTeamHistoryAction]);
+
+  console.log(teamHistory);
+
+  if (!gameweeksHistory || !teamHistory) {
+    return <Spinner />;
+  }
 
   return (
     <div className={styles['gameweek-history']}>
@@ -47,20 +61,24 @@ const GameweekHistory = ({
             </div>
             {`${t('GameweekHistoryPage.titles.main')}  1`}
           </h2>
-          <Link
-            to='/'
-            className='g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded mr-6'
-          >
-            <FaChevronLeft />
-            {t('previous')}
-          </Link>
-          <Link
-            to='/'
-            className='g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded'
-          >
-            {t('next')}
-            <FaChevronRight />
-          </Link>
+          {currentGameweek >= 1 && (
+            <button
+              onClick={() => setCurrentGameweek(currentGameweek - 1)}
+              className='g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded mr-6 font-bold'
+            >
+              <FaChevronLeft />
+              {t('previous')}
+            </button>
+          )}
+          {currentGameweek < gameweeksHistory.length - 1 && (
+            <button
+              onClick={() => setCurrentGameweek(currentGameweek + 1)}
+              className='g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded font-bold'
+            >
+              {t('next')}
+              <FaChevronRight />
+            </button>
+          )}
         </div>
         <div className='w-6/12'>
           <LineChart data={getChartOptions()} />
@@ -68,7 +86,7 @@ const GameweekHistory = ({
       </div>
       <div className={styles['gameweek-history-content']}>
         <div className={`${header.paper} rounded mr-2`}>
-          <TeamSelection isGameweek />
+          <TeamSelection isGameweek playersHistory={teamHistory}/>
         </div>
         <div
           className={`${header.paper} px-8 pt-12 rounded ${styles['gameweek-stats']} ml-2`}
