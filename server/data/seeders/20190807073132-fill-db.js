@@ -106,17 +106,40 @@ export default {
         options,
       );
 
+      const teamMemberIndex1Gameweek = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 14, 17, 18, 22];
+      const teamMemberIndex2Gameweek = [
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        64,
+        65,
+        67,
+        49,
+        50,
+        51,
+        52,
+      ];
+
       const teamMemberHistoriesMappedSeeds = teamMemberHistoriesSeed.map(
         (member, index) => {
           let gameweek_history_id = '';
+          let player_id = '';
           if (index <= 14) {
             gameweek_history_id = gameweekHistories[0].id;
+            player_id = playerStats[teamMemberIndex1Gameweek[index]].id;
+            console.log(player_id);
           } else {
             gameweek_history_id = gameweekHistories[1].id;
+            player_id = playerStats[teamMemberIndex2Gameweek[29 - index]].id;
           }
           return {
             ...member,
-            player_id: playerStats[randomIndex(playerStats.length)].id,
+            player_id,
             gameweek_history_id,
           };
         },
