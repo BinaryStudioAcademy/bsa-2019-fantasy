@@ -1,6 +1,14 @@
 import callWebApi from 'helpers/webApiHelper';
 import { TeamMemberType } from 'types/gameweekHistory.type';
 
+export const getGameweeksHistoryByUser = async (userId: string) => {
+  const response = await callWebApi({
+    endpoint: `/api/gameweek-history/user-team/${userId}`,
+    type: 'GET',
+  });
+  return response.json();
+};
+
 export const getGameweekHistoryForUserById = async (
   userId: string,
   gameweekId: string,
