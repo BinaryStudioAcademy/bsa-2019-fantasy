@@ -67,9 +67,6 @@ const Routing = () => {
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
   const currentGameweek = useSelector(currentGameweekSelector);
   const recentGameweeks = useSelector(recentGameweeksSelector);
-  const gameweekResults = useSelector(
-    (state: RootState) => state.gameweeks.gameweeks_results,
-  );
 
   const [joinedRoom, setJoinedRoom] = useState<boolean>(false);
 
