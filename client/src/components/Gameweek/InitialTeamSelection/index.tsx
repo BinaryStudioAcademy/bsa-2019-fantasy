@@ -10,8 +10,8 @@ import PlayerSelectionDroppable, { PlayerDroppable } from '../PlayerSelectionDro
 import { PlayerDraggableProps } from '../PlayerSelection';
 import { PlayerTypes } from '../PlayerSelection/types';
 import Button from 'components/Button';
-import SquadSelection from './components/SquadSelection';
-import Modal from 'containers/Modal';
+import SquadSelectionStatus from './components/SquadSelectionStatus';
+import SaveTeamModal from './components/SaveTeamModal';
 import { SQUAD, BUDGET, CLUBS } from './helpers';
 
 import styles from './styles.module.scss';
@@ -30,8 +30,17 @@ const InitialTeamSelection = () => {
   const [selectedPlayers, setSelectedPlayers] = useState(0);
   const [isMoreThree, setIsMoreThree] = useState(false);
 
-  const saveTeam = (squad: string[]) => {
-    console.log(`SQUAD PLAYERS \n  ${squad}`);
+  const handleSaveTeam = (ev: React.SyntheticEvent) => {
+    ev.preventDefault();
+    console.log(ev);
+  };
+
+  const resetSquad = () => {
+    setSquad(SQUAD);
+    setMoneyRemaining(BUDGET);
+    setSelectedPlayers(0);
+    setdroppedPlayerSquadIds([]);
+    setIsMoreThree(false);
   };
 
   const recalculateMoney = (squad) => {
@@ -99,10 +108,11 @@ const InitialTeamSelection = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <SquadSelection
+      <SquadSelectionStatus
         money={moneyRemaing}
         players={selectedPlayers}
         isMoreThree={isMoreThree}
+        onResetClick={(ev) => resetSquad()}
       />
       <div className={`${styles.teamContainer} relative`}>
         {/* Goalkeeper */}
@@ -205,18 +215,16 @@ const InitialTeamSelection = () => {
           <Button
             className={`${styles.saveTeam} w-3/12 h-12 mt-3`}
             onClick={(e) => setIsModalOpen(true)}
-            // disabled={!(moneyRemaing >= 0 && selectedPlayers === 15 && !isMoreThree)}
+            disabled={!(moneyRemaing >= 0 && selectedPlayers === 15 && !isMoreThree)}
           >
             <p>Save Your Team</p>
           </Button>
         </div>
       </div>
       {isModalOpen && (
-        <Modal
-          title='Modal Title'
-          content='Test modal text'
-          actions='sdfsdfsdf'
-          onDismiss={(e) => setIsModalOpen(false)}
+        <SaveTeamModal
+          onDismiss={(ev) => setIsModalOpen(false)}
+          onSubmit={(ev) => handleSaveTeam(ev)}
         />
       )}
     </DndProvider>

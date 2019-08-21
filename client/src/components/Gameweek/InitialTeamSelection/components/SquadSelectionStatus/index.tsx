@@ -5,9 +5,15 @@ interface SquadSelection {
   money: number;
   players: number;
   isMoreThree: boolean;
+  onResetClick: (ev: React.SyntheticEvent) => void;
 }
 
-const SquadSelection = ({ money, players, isMoreThree }: SquadSelection) => {
+const SquadSelectionStatus = ({
+  money,
+  players,
+  isMoreThree,
+  onResetClick,
+}: SquadSelection) => {
   const playerClass = players === 15 ? 'text-green-600' : 'text-red-600';
   const moneyClass = money >= 0 ? 'text-green-600' : 'text-red-600';
   return (
@@ -30,7 +36,7 @@ const SquadSelection = ({ money, players, isMoreThree }: SquadSelection) => {
           </div>
         </div>
         <div>
-          <Button className='w-3/16 h-12 mt-4' styling='secondary'>
+          <Button className='w-3/16 h-12 mt-4' styling='secondary' onClick={onResetClick}>
             <p>Reset</p>
           </Button>
           <hr className='mt-4' />
@@ -49,4 +55,4 @@ const SquadSelection = ({ money, players, isMoreThree }: SquadSelection) => {
   );
 };
 
-export default SquadSelection;
+export default SquadSelectionStatus;
