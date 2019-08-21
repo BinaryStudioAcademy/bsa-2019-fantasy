@@ -64,6 +64,7 @@ const PlayerSelectionDroppable = ({
   if (!isGameweek) {
     drop(ref);
   }
+  console.log(lastDroppedItem);
 
   return (
     <div ref={ref}>
@@ -78,6 +79,7 @@ const PlayerSelectionDroppable = ({
             name={lastDroppedItem.name}
             club={lastDroppedItem.club}
             type={lastDroppedItem.type}
+            price={lastDroppedItem.price}
             points={lastDroppedItem.points}
             form={lastDroppedItem.form}
             gameweek_points={lastDroppedItem.gameweek_points}

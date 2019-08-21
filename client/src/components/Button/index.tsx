@@ -8,6 +8,7 @@ type ButtonProps = {
   styling?: 'primary' | 'secondary';
   onClick?: (e: SyntheticEvent) => void;
   children: ReactNode;
+  disabled?: boolean;
 };
 
 const Button = (props: ButtonProps) => {
@@ -33,7 +34,7 @@ const Button = (props: ButtonProps) => {
       return <div className={className}>{props.children}</div>;
     default:
       return (
-        <button className={className} onClick={props.onClick}>
+        <button className={className} onClick={props.onClick} disabled={props.disabled}>
           {props.children}
         </button>
       );

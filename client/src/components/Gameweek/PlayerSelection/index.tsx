@@ -10,6 +10,7 @@ export interface PlayerInfo {
   name: string;
   club: string;
   type: string;
+  price: number;
   points: number;
   form: string;
   gameweek_points: string;
@@ -23,6 +24,7 @@ export interface PlayerDraggableProps {
   name: string;
   club: string;
   type: string;
+  price: number;
   points: number;
   form: number;
   gameweek_points: number;
@@ -40,6 +42,7 @@ const PlayerSelection = ({
   name,
   club,
   type,
+  price,
   points,
   form,
   gameweek_points,
@@ -133,7 +136,7 @@ const PlayerSelection = ({
           <div className={styles['player-name-container']}>
             <p className={styles['player-name']}>{name}</p>
           </div>
-          <div className={styles['player-club']}>{isGameweek ? points : club}</div>
+          <div className={styles['player-club']}>{isGameweek ? points : price}</div>
         </div>
       </div>
     </div>

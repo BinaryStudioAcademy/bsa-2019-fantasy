@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import FixturesContainer from 'containers/FixturesContainer';
 import PlayersSelection from 'components/PlayersSelection';
-import TeamSelection from 'components/Gameweek/TeamSelection';
+import InitialTeamSelection from 'components/Gameweek/InitialTeamSelection';
 
 import header from 'styles/header.module.scss';
 
@@ -29,7 +29,7 @@ const SquadSelection = () => {
           </div>
           <div className='flex flex-grow justify-center'>
             <div className='wrapper'>
-              <TeamSelection />
+              <InitialTeamSelection />
             </div>
           </div>
         </div>

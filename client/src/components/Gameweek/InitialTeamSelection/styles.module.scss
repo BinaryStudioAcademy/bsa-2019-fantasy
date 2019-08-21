@@ -1,0 +1,18 @@
+:local(.teamContainer) {
+  min-width: 740px;
+  max-width: 1000px;
+  width: 920px;
+}
+
+:local(.team) {
+  width: 70%;
+  left: 15%;
+  top: 0.25%;
+}
+
+:local(.saveTeam:disabled) {
+  background-color: #d8d8d8;
+  color: #9a9a9a;
+  border: none;
+  cursor: default;
+}

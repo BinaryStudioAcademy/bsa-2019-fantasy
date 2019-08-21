@@ -96,8 +96,6 @@ const Routing = () => {
     return <Spinner />;
   }
 
-  console.log(user);
-
   return (
     <div className='flex h-screen font-sans font-medium'>
       <Switch>
