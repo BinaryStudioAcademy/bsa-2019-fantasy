@@ -14,12 +14,18 @@ type Props = {
   searchPublicLeagues: typeof searchPublicLeagues;
   joinLeague: typeof joinLeague;
   suggestions: any;
+  leagues: any;
 };
 
 const renderSuggestion = (suggestion) => <div>{suggestion.name}</div>;
 const getSuggestionValue = (suggestion) => suggestion.name;
 
-const PublicLeagues = ({ searchPublicLeagues, suggestions, joinLeague }: Props) => {
+const PublicLeagues = ({
+  searchPublicLeagues,
+  suggestions,
+  joinLeague,
+  leagues,
+}: Props) => {
   const { t } = useTranslation();
 
   const [value, setValue] = useState('');
@@ -92,7 +98,9 @@ const PublicLeagues = ({ searchPublicLeagues, suggestions, joinLeague }: Props) 
         </div>
         <button
           className={`w-48 shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${
-            !value || isLoading ? 'opacity-50 cursor-not-allowed' : ''
+            !value || isLoading || leagues.public.length > 3
+              ? 'opacity-50 cursor-not-allowed'
+              : ''
           }`}
           type='submit'
           disabled={!value || isLoading}
@@ -106,6 +114,7 @@ const PublicLeagues = ({ searchPublicLeagues, suggestions, joinLeague }: Props) 
 
 const mapStateToProps = (rootState: RootState) => ({
   suggestions: rootState.league.suggestions,
+  leagues: rootState.league.leagues,
 });
 
 const actions = { searchPublicLeagues, joinLeague };
