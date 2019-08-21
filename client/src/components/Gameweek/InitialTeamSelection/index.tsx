@@ -107,7 +107,10 @@ const InitialTeamSelection = () => {
       />
       <div className={`${styles.teamContainer} relative`}>
         {/* Goalkeeper */}
-        <div className='flex justify-around absolute team' style={{ top: '6%' }}>
+        <div
+          className={`${styles.team} flex justify-around absolute team`}
+          style={{ top: '6%' }}
+        >
           {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
             if (accept === PlayerTypes.GOALKEEPER) {
               return (
@@ -152,7 +155,10 @@ const InitialTeamSelection = () => {
         </div>
 
         {/* Middlefilders */}
-        <div className='flex justify-between absolute team' style={{ top: '54%' }}>
+        <div
+          className={`${styles.team} flex justify-between absolute`}
+          style={{ top: '54%' }}
+        >
           {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
             if (accept === PlayerTypes.MIDDLEFIELDER) {
               return (
@@ -173,7 +179,10 @@ const InitialTeamSelection = () => {
         </div>
 
         {/* Forwards */}
-        <div className='flex justify-around top-60 absolute team' style={{ top: '79%' }}>
+        <div
+          className={`${styles.team} flex justify-around top-60 absolute`}
+          style={{ top: '79%' }}
+        >
           {pitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
             if (accept === PlayerTypes.FORWARD) {
               return (

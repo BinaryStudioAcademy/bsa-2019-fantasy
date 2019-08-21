@@ -12,11 +12,14 @@ type ButtonProps = {
 };
 
 const Button = (props: ButtonProps) => {
+  const hover = 'hover:bg-secondary hover:text-white hover:border-secondary';
   const stylingClasses = {
-    primary:
-      'bg-primary text-secondary border-primary hover:bg-secondary hover:text-white hover:border-secondary',
-    secondary:
-      'bg-white border-secondary2 hover:bg-secondary hover:text-white hover:border-secondary',
+    primary: props.disabled
+      ? 'bg-primary text-secondary border-primary'
+      : `bg-primary text-secondary border-primary ${hover}`,
+    secondary: props.disabled
+      ? 'bg-white border-secondary2'
+      : `bg-white border-secondary2 ${hover}`,
   };
 
   const styling = props.styling || 'primary';
