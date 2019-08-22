@@ -16,4 +16,6 @@ export type User = {
 export type UpdateUserTeamDetails = {
   team_name: string;
   money: number;
+  squad: string[];
+  gameweek_id: string | undefined;
 };

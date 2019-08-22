@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -10,6 +10,7 @@ import { updateUserTeamDetails } from 'containers/Profile/actions';
 import PlayerSelectionDroppable, { PlayerDroppable } from '../PlayerSelectionDroppable';
 import { PlayerDraggableProps } from '../PlayerSelection';
 import { PlayerTypes } from '../PlayerSelection/types';
+import { currentGameweekSelector } from 'store/selectors/current-gameweek.selector';
 import Button from 'components/Button';
 import SquadSelectionStatus from './components/SquadSelectionStatus';
 import SaveTeamModal from './components/SaveTeamModal';
@@ -22,7 +23,6 @@ interface Props extends RouteComponentProps {
 }
 
 const InitialTeamSelection = ({ updateUserTeamDetails, history }: Props) => {
-  console.log(history);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Set squad drag&drop items, which accept only specific player types
@@ -37,6 +37,8 @@ const InitialTeamSelection = ({ updateUserTeamDetails, history }: Props) => {
   const [selectedPlayers, setSelectedPlayers] = useState<number>(0);
   const [isMoreThree, setIsMoreThree] = useState<boolean>(false);
 
+  const currentGameweek = useSelector(currentGameweekSelector);
+
   const handleSaveTeam = async (ev: React.SyntheticEvent) => {
     ev.preventDefault();
     const teamName = ev.target[0].value;
@@ -44,7 +46,12 @@ const InitialTeamSelection = ({ updateUserTeamDetails, history }: Props) => {
       return;
     }
     try {
-      await updateUserTeamDetails({ money: moneyRemaing, team_name: teamName });
+      await updateUserTeamDetails({
+        money: moneyRemaing,
+        team_name: teamName,
+        squad: droppedPlayerSquadIds,
+        gameweek_id: currentGameweek && currentGameweek.id,
+      });
       history.push('/');
     } catch (err) {
       console.log(err);
