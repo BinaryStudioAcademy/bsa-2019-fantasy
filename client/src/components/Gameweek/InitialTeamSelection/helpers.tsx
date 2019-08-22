@@ -301,4 +301,27 @@ export const CLUBS = {
   WOL: 0,
 };
 
+export const FULLNAMES = {
+  ARS: 'Arsenal',
+  AVL: 'Aston Villa',
+  BOU: 'Bournemouth',
+  BHA: 'Brighton',
+  BUR: 'Burnley',
+  CHE: 'Chelsea',
+  CRY: 'Crystal Palace',
+  EVE: 'Everton',
+  LEI: 'Leicester',
+  LIV: 'Liverpool',
+  MCI: 'Man City',
+  MUN: 'Man Utd',
+  NEW: 'Newcastle',
+  NOR: 'Norwich',
+  SHU: 'Sheffield Utd',
+  SOU: 'Southampton',
+  TOT: 'Spurs',
+  WAT: 'Watford',
+  WHU: 'West Ham',
+  WOL: 'Wolves',
+};
+
 export const BUDGET = 1000;

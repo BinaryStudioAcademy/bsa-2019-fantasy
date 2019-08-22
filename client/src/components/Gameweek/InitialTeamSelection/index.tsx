@@ -15,7 +15,8 @@ import Button from 'components/Button';
 import SquadSelectionStatus from './components/SquadSelectionStatus';
 import SaveTeamModal from './components/SaveTeamModal';
 import TeamList from '../TeamList';
-import { SQUAD, BUDGET, CLUBS } from './helpers';
+
+import { SQUAD, BUDGET, CLUBS, FULLNAMES, AUTOPICKSQUAD } from './helpers';
 
 import styles from './styles.module.scss';
 
@@ -38,7 +39,10 @@ const InitialTeamSelection = ({ history }: Props) => {
 
   const [moneyRemaing, setMoneyRemaining] = useState<number>(BUDGET);
   const [selectedPlayers, setSelectedPlayers] = useState<number>(0);
-  const [isMoreThree, setIsMoreThree] = useState<boolean>(false);
+  const [isMoreThree, setIsMoreThree] = useState<{ status: boolean; club: string }>({
+    status: false,
+    club: '',
+  });
 
   const currentGameweek = useSelector(currentGameweekSelector);
 
@@ -66,14 +70,6 @@ const InitialTeamSelection = ({ history }: Props) => {
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const handleResetSquad = () => {
-    setSquad(SQUAD);
-    setMoneyRemaining(BUDGET);
-    setSelectedPlayers(0);
-    setdroppedPlayerSquadIds([]);
-    setIsMoreThree(false);
   };
 
   const recalculateMoney = (squad: PlayerDroppable[]) => {
@@ -105,10 +101,34 @@ const InitialTeamSelection = ({ history }: Props) => {
     const isMoreThanThree = (el) => CLUBS[el] > 3;
 
     if (Object.keys(CLUBS).some(isMoreThanThree)) {
-      setIsMoreThree(true);
+      const club = FULLNAMES[Object.keys(CLUBS).filter(isMoreThanThree)[0]];
+      setIsMoreThree({
+        status: true,
+        club,
+      });
     } else {
-      setIsMoreThree(false);
+      setIsMoreThree({
+        status: false,
+        club: '',
+      });
     }
+  };
+
+  const handleResetSquad = () => {
+    setSquad(SQUAD);
+    setMoneyRemaining(BUDGET);
+    setSelectedPlayers(0);
+    setdroppedPlayerSquadIds([]);
+    setIsMoreThree({ status: false, club: '' });
+  };
+
+  const handleAutoPick = () => {
+    setSquad(AUTOPICKSQUAD);
+    setMoneyRemaining(BUDGET - recalculateMoney(AUTOPICKSQUAD)!);
+    setSelectedPlayers(recalculatePlayers(AUTOPICKSQUAD));
+    checkIsMoreThree(AUTOPICKSQUAD);
+    const squadIds = AUTOPICKSQUAD.map((el) => el.lastDroppedItem.id);
+    setdroppedPlayerSquadIds(squadIds);
   };
 
   // Handles drag&drop action
@@ -259,6 +279,7 @@ const InitialTeamSelection = ({ history }: Props) => {
         players={selectedPlayers}
         isMoreThree={isMoreThree}
         onResetClick={() => handleResetSquad()}
+        onAutoPickClick={() => handleAutoPick()}
       />
 
       <div className={cn(styles['team-select-wrapper'], 'rounded bg-secondary')}>
@@ -276,7 +297,9 @@ const InitialTeamSelection = ({ history }: Props) => {
           <Button
             className={`${styles.saveTeam} px-8 py-2 rounded`}
             onClick={() => setIsModalOpen(true)}
-            disabled={!(moneyRemaing >= 0 && selectedPlayers === 15 && !isMoreThree)}
+            disabled={
+              !(moneyRemaing >= 0 && selectedPlayers === 15 && !isMoreThree.status)
+            }
           >
             <p>Save Your Team</p>
           </Button>
