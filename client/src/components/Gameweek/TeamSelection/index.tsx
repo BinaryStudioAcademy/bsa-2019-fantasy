@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import update from 'immutability-helper';
 import { useTranslation } from 'react-i18next';
@@ -38,6 +38,7 @@ export interface TeamSelectionProps {
   viceCaptainId?: string;
   playerToSwitch?: GameweekHistoryType | undefined;
   setPlayerForSwitching?: (id: string) => void;
+  switchWith?: (id: string) => void;
 }
 
 const TeamSelection = ({
@@ -47,6 +48,7 @@ const TeamSelection = ({
   onOpen,
   playerToSwitch,
   setPlayerForSwitching,
+  switchWith,
 }: TeamSelectionProps) => {
   const { t } = useTranslation();
 
@@ -292,6 +294,8 @@ const TeamSelection = ({
                   viceCaptainId={viceCaptainId}
                   playerToSwitch={playerToSwitch}
                   setCurrentPlayerForSwitching={setPlayerForSwitching}
+                  switchWith={switchWith}
+                  onBench={false}
                 />
               );
             } else {
@@ -317,6 +321,8 @@ const TeamSelection = ({
                   viceCaptainId={viceCaptainId}
                   playerToSwitch={playerToSwitch}
                   setCurrentPlayerForSwitching={setPlayerForSwitching}
+                  switchWith={switchWith}
+                  onBench={false}
                 />
               );
             } else {
@@ -342,6 +348,8 @@ const TeamSelection = ({
                   viceCaptainId={viceCaptainId}
                   playerToSwitch={playerToSwitch}
                   setCurrentPlayerForSwitching={setPlayerForSwitching}
+                  switchWith={switchWith}
+                  onBench={false}
                 />
               );
             } else {
@@ -366,6 +374,8 @@ const TeamSelection = ({
                   viceCaptainId={viceCaptainId}
                   playerToSwitch={playerToSwitch}
                   setCurrentPlayerForSwitching={setPlayerForSwitching}
+                  switchWith={switchWith}
+                  onBench={false}
                 />
               );
             } else {
@@ -391,6 +401,8 @@ const TeamSelection = ({
                 viceCaptainId={viceCaptainId}
                 playerToSwitch={playerToSwitch}
                 setCurrentPlayerForSwitching={setPlayerForSwitching}
+                switchWith={switchWith}
+                onBench={true}
               />
             );
           })}

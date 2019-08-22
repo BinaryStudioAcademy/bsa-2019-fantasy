@@ -7,8 +7,10 @@ import { GameweekHistoryType } from 'types/gameweekHistory.type';
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store/types';
+
+import { fetchGameweeksHistorySuccess } from 'containers/Routing/fetchGameweeks/actions';
 
 const MyTeam = () => {
   const { t } = useTranslation();
@@ -31,7 +33,35 @@ const MyTeam = () => {
   const [playerToSwitch, setPlayerToSwitch] = useState<GameweekHistoryType | undefined>(
     undefined,
   );
+  const dispatch = useDispatch();
   const players = useSelector((state: RootState) => state.gameweeks.gameweeks_history);
+
+  if (players.length === 8) {
+    players.push(JSON.parse(JSON.stringify(players[0])));
+    players[players.length - 1].is_on_bench = true;
+    players[players.length - 1].player_stats.id = players[
+      players.length - 1
+    ].player_stats.id.replace('d', '1');
+    players[players.length - 1].player_stats.second_name = 'Replace1';
+    players.push(JSON.parse(JSON.stringify(players[1])));
+    players[players.length - 1].is_on_bench = true;
+    players[players.length - 1].player_stats.id = players[
+      players.length - 1
+    ].player_stats.id.replace('a', '2');
+    players[players.length - 1].player_stats.second_name = 'Replace2';
+    players.push(JSON.parse(JSON.stringify(players[2])));
+    players[players.length - 1].is_on_bench = true;
+    players[players.length - 1].player_stats.id = players[
+      players.length - 1
+    ].player_stats.id.replace('a', '3');
+    players[players.length - 1].player_stats.second_name = 'Replace3';
+    players.push(JSON.parse(JSON.stringify(players[3])));
+    players[players.length - 1].is_on_bench = true;
+    players[players.length - 1].player_stats.id = players[
+      players.length - 1
+    ].player_stats.id.replace('b', '4');
+    players[players.length - 1].player_stats.second_name = 'Replace4';
+  }
 
   if (captainId === '' && players.length > 0) {
     const givenCaptain = players.find((p) => p.is_captain);
@@ -41,6 +71,29 @@ const MyTeam = () => {
   const setCurrentPlayerForSwitching = (id: string) => {
     const player = players.find((p) => p.player_stats.id === id);
     setPlayerToSwitch(player);
+  };
+
+  const switchWith = (id: string) => {
+    if (!playerToSwitch) return;
+
+    const firstPlayer = players.find(
+      (p) => p.player_stats.id === playerToSwitch.player_stats.id,
+    );
+    const secondPlayer = players.find((p) => p.player_stats.id === id);
+
+    if (!firstPlayer || !secondPlayer) return;
+
+    const newPlayers = players.map((p) => {
+      if (p === firstPlayer || p === secondPlayer) {
+        return {
+          ...p,
+          is_on_bench: !p.is_on_bench,
+        };
+      }
+      return p;
+    });
+
+    dispatch(fetchGameweeksHistorySuccess(newPlayers));
   };
 
   const onClose = () => {
@@ -80,7 +133,7 @@ const MyTeam = () => {
 
   const onSetPlayerForSwitching = () => {
     if (playerToSwitch) {
-      console.log('switch');
+      switchWith(currentId);
       setCurrentPlayerForSwitching('');
     } else {
       setCurrentPlayerForSwitching(currentId);
@@ -119,6 +172,7 @@ const MyTeam = () => {
           viceCaptainId={viceCaptainId}
           playerToSwitch={playerToSwitch}
           setPlayerForSwitching={setCurrentPlayerForSwitching}
+          switchWith={switchWith}
         />
       </div>
       {showModal && (

@@ -31,7 +31,7 @@ const fetchGameweeksHistoryRequest = (): FetchGameweeksAction => ({
   type: FETCH_GAMEWEEKS_HISTORY_REQUEST,
 });
 
-const fetchGameweeksHistorySuccess = (
+export const fetchGameweeksHistorySuccess = (
   payload: GameweekHistoryType[],
 ): FetchGameweeksAction => ({
   type: FETCH_GAMEWEEKS_HISTORY_SUCCESS,

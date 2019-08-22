@@ -36,11 +36,8 @@ export interface PlayerDraggableProps {
   playerToSwitch?: GameweekHistoryType | undefined;
   setCurrentPlayerForSwitching?: (id: string) => void;
   canSwitch: boolean | undefined;
+  switchWith?: (id: string) => void;
 }
-
-const highlitedStyle = {
-  backgorundColor: 'rgba(255, 255, 0, 0.6)',
-};
 
 const PlayerSelection = ({
   id,
@@ -60,6 +57,7 @@ const PlayerSelection = ({
   playerToSwitch,
   setCurrentPlayerForSwitching,
   canSwitch,
+  switchWith,
 }: PlayerDraggableProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [{ opacity }, drag] = useDrag({
@@ -95,7 +93,7 @@ const PlayerSelection = ({
       if (playerToSwitch.player_stats.id === id) {
         setCurrentPlayerForSwitching('');
       } else if (canSwitch) {
-        console.log('switch');
+        switchWith && switchWith(id);
         setCurrentPlayerForSwitching('');
       }
     }

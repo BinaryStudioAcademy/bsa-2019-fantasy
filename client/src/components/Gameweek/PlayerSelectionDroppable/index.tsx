@@ -21,6 +21,8 @@ export interface PlayerDroppableProps {
   viceCaptainId?: string;
   playerToSwitch?: GameweekHistoryType | undefined;
   setCurrentPlayerForSwitching?: (id: string) => void;
+  switchWith?: (id: string) => void;
+  onBench?: boolean;
 }
 
 export interface BenchDroppable {
@@ -38,6 +40,8 @@ export interface BenchDroppableProps {
   viceCaptainId?: string;
   playerToSwitch?: GameweekHistoryType | undefined;
   setCurrentPlayerForSwitching?: (id: string) => void;
+  switchWith?: (id: string) => void;
+  onBench?: boolean;
 }
 const PlayerSelectionDroppable = ({
   accept,
@@ -50,6 +54,8 @@ const PlayerSelectionDroppable = ({
   viceCaptainId,
   playerToSwitch,
   setCurrentPlayerForSwitching,
+  switchWith,
+  onBench,
 }: PlayerDroppableProps | BenchDroppableProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [{ isOver, canDrop }, drop] = useDrop({
@@ -69,7 +75,11 @@ const PlayerSelectionDroppable = ({
     backgroundColor = 'rgba(118, 124, 37, 0.9)';
   }
 
-  const canSwitch = playerToSwitch && playerToSwitch.player_stats.position === accept;
+  const canSwitch =
+    playerToSwitch &&
+    onBench !== undefined &&
+    playerToSwitch.player_stats.position === accept &&
+    onBench !== playerToSwitch.is_on_bench;
 
   if (playerToSwitch) {
     if (playerToSwitch.player_stats.id === lastDroppedItem.id) {
@@ -107,6 +117,7 @@ const PlayerSelectionDroppable = ({
             playerToSwitch={playerToSwitch}
             setCurrentPlayerForSwitching={setCurrentPlayerForSwitching}
             canSwitch={canSwitch}
+            switchWith={switchWith}
           />
         )}
       </div>
