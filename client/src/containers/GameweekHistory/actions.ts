@@ -38,11 +38,13 @@ export const loadGameweeksHistoryAction = (
 export const loadTeamHistoryAction = (
   userId,
   gameweekId,
+  currentGameweek
 ): AsyncSetTeamHistoryAction => async (dispatch) => {
   dispatch(setIsLoading(true));
   const result = await gameweekHistoryService.getTeamHistoryForUserById(
     userId,
     gameweekId,
+    currentGameweek
   );
   dispatch(setTeamHistory(result));
   dispatch(setIsLoading(false));
