@@ -251,5 +251,13 @@
     "browseAll": "Browse all winners",
     "summary": "Summary",
     "season": "Season"
+  },
+
+  "PrivateLeagueModal": {
+    "title": "This is your invitation code",
+    "message": "Share this code with others to join your league!",
+    "invitationCode": "Your invitation code",
+    "copied": "Copied",
+    "clickToCopy": "Click on the code to copy"
   }
 }

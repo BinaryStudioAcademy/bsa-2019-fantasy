@@ -1,23 +1,39 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { bindActionCreators, Dispatch } from 'redux';
 import validator from 'validator';
 import { times } from 'lodash';
 import { FaStar } from 'react-icons/fa';
 
-import { createLeagueAction } from '../actions';
+import PrivateLeagueModal from 'components/Leagues/PrivateLeagueModal';
+
+import { RootState } from 'store/types';
+import { createLeagueAction, resetLeaguesData } from '../actions';
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
 
 type Props = {
   createLeagueAction: typeof createLeagueAction;
+  resetLeaguesData: typeof resetLeaguesData;
+  history: any;
+  error: null | string;
+  success: null | string;
+  isLoading: boolean;
+  code: string;
 };
 
-const CreateLeague = ({ createLeagueAction }: Props) => {
+const CreateLeague = ({
+  createLeagueAction,
+  resetLeaguesData,
+  history,
+  success,
+  isLoading,
+  code,
+}: Props) => {
   const { t } = useTranslation();
-  const [isLoading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [gameweek, setGameweek] = useState('Gameweek 1');
   const [isNameValid, setValidation] = useState(true);
@@ -34,27 +50,25 @@ const CreateLeague = ({ createLeagueAction }: Props) => {
     return isNameValid;
   };
 
-  const handleSubmit = async (event: React.SyntheticEvent) => {
+  const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
     const valid = validateName();
+
     if (!valid || isLoading) {
       return;
     }
 
     const isPrivate = privacy === 'private';
-    setLoading(true);
+    createLeagueAction({
+      name,
+      private: isPrivate,
+      start_from: Number(gameweek.split(' ')[1]),
+    });
+  };
 
-    try {
-      await createLeagueAction({
-        name,
-        private: isPrivate,
-        start_from: Number(gameweek.split(' ')[1]),
-      });
-    } catch {
-      console.log('Something went wrong!');
-    } finally {
-      setLoading(false);
-    }
+  const closeModal = () => {
+    resetLeaguesData();
+    return history.push('/leagues');
   };
 
   const changePrivacy = (value, privacy) => {
@@ -62,6 +76,15 @@ const CreateLeague = ({ createLeagueAction }: Props) => {
       setPrivacy(privacy);
     }
   };
+
+  if (success) {
+    const isPrivate = privacy === 'private';
+
+    if (!isPrivate) {
+      resetLeaguesData();
+      history.push('/leagues');
+    }
+  }
 
   return (
     <div className={styles['create-league']}>
@@ -193,14 +216,31 @@ const CreateLeague = ({ createLeagueAction }: Props) => {
           </form>
         </div>
       </div>
+      {code && (
+        <PrivateLeagueModal
+          open={success && privacy === 'private'}
+          onClose={closeModal}
+          code={code}
+        />
+      )}
     </div>
   );
 };
 
-const actions = { createLeagueAction };
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
+const mapStateToProps = (rootState: RootState) => ({
+  isLoading: rootState.league.isLoading,
+  success: rootState.league.success,
+  error: rootState.league.error,
+  code: rootState.league.code,
+});
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(CreateLeague);
+const actions = { createLeagueAction, resetLeaguesData };
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
+/* eslint-disable */
+export default withRouter(
+  // @ts-ignore
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(CreateLeague),
+);
