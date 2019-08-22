@@ -28,7 +28,6 @@ export const getPlayerHistoryByGameweekId = async (id, gameweekNumber) => {
 
 export const postTeamMemberHistory = async (data, gameweekHistoryId) => {
   const players = getPlayersByGameweekId(gameweekHistoryId);
-
   if (players) {
     await teamMemberHistoryRepository.deleteByGameweekId(gameweekHistoryId);
   }

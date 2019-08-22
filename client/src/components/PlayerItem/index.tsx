@@ -11,6 +11,7 @@ export const PlayerItem = (props: any) => {
       src: imageURL,
       name,
       club,
+      price,
       points: score,
     },
   });

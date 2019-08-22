@@ -16,3 +16,8 @@ export type User = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type UserTeamDetails = {
+  team_name: string;
+  money: number;
+};

@@ -73,8 +73,8 @@ const PlayersSelection = ({ loadPlayersAction, players }: Props) => {
   };
 
   return (
-    <div className='bg-gray-200 px-4 py-4'>
-      <h3 className='font-bold'>{t('Transfers.playerSelection.title')}</h3>
+    <div className='bg-gray-200 px-4 py-4 rounded'>
+      <h3 className='font-bold text-lg'>{t('Transfers.playerSelection.title')}</h3>
       <form>
         <div className='mt-2'>
           <div className='font-bold'>

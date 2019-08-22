@@ -1,9 +1,10 @@
+import { FaFutbol } from 'react-icons/fa';
 import React, { useRef } from 'react';
 import { useDrop } from 'react-dnd';
+import cn from 'classnames';
 
 import Player from '../PlayerSelection';
 import styles from './styles.module.scss';
-import { Stream } from 'stream';
 
 export interface PlayerDroppable {
   accept: any;
@@ -59,7 +60,7 @@ const PlayerSelectionDroppable = ({
   if (isActive) {
     backgroundColor = 'rgba(0, 111, 55, 0.9)';
   } else if (canDrop) {
-    backgroundColor = 'rgba(118, 124, 37, 0.9)';
+    backgroundColor = 'rgba(57, 90, 50, 0.9)';
   }
   if (!isGameweek) {
     drop(ref);
@@ -67,8 +68,11 @@ const PlayerSelectionDroppable = ({
 
   return (
     <div ref={ref}>
-      <div className={styles['player-placeholder']} style={{ backgroundColor }}>
-        <div className={styles['player-type']}>{isActive ? 'Release to drop' : null}</div>
+      <div
+        className={cn(styles['player-placeholder'], 'rounded shadow')}
+        style={{ backgroundColor }}
+      >
+        <div className={styles['player-type']}>{isActive ? <FaFutbol /> : null}</div>
 
         {lastDroppedItem && (
           <Player
@@ -78,6 +82,7 @@ const PlayerSelectionDroppable = ({
             name={lastDroppedItem.name}
             club={lastDroppedItem.club}
             type={lastDroppedItem.type}
+            price={lastDroppedItem.price}
             points={lastDroppedItem.points}
             form={lastDroppedItem.form}
             gameweek_points={lastDroppedItem.gameweek_points}

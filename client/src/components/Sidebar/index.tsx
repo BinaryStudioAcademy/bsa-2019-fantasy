@@ -31,33 +31,35 @@ const Sidebar = () => {
   const toggleOpened = () => setOpened((o) => !o);
   const noPropagation = (e: React.SyntheticEvent) => e.stopPropagation();
 
-  const menuItems = [
-    {
-      name: t('Sidebar.status'),
-      icon: faStar,
-      link: '/',
-    },
-    {
-      name: t('Sidebar.myTeam'),
-      icon: faFutbol,
-      link: '/my-team',
-    },
-    {
-      name: t('Sidebar.statistics'),
-      icon: faProjectDiagram,
-      link: '/players',
-    },
-    {
-      name: t('Sidebar.transfers'),
-      icon: faExchangeAlt,
-      link: '/transfers',
-    },
-    {
-      name: t('Sidebar.leagues'),
-      icon: faAward,
-      link: '/leagues',
-    },
-  ];
+  const menuItems = team_name
+    ? [
+        {
+          name: t('Sidebar.status'),
+          icon: faStar,
+          link: '/',
+        },
+        {
+          name: t('Sidebar.myTeam'),
+          icon: faFutbol,
+          link: '/my-team',
+        },
+        {
+          name: t('Sidebar.statistics'),
+          icon: faProjectDiagram,
+          link: '/players',
+        },
+        {
+          name: t('Sidebar.transfers'),
+          icon: faExchangeAlt,
+          link: '/transfers',
+        },
+        {
+          name: t('Sidebar.leagues'),
+          icon: faAward,
+          link: '/leagues',
+        },
+      ]
+    : [];
 
   return (
     <div

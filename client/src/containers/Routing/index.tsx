@@ -16,6 +16,7 @@ import SocialPage from 'containers/Auth/SocialPage';
 
 import MyTeam from 'containers/MyTeam';
 import Transfers from 'containers/Transfers';
+import SquadSelection from 'containers/SquadSelection';
 import Live from 'containers/Live';
 
 import Leagues from 'containers/Leagues';
@@ -23,6 +24,7 @@ import CreateLeague from 'containers/Leagues/CreateLeague';
 import JoinLeague from 'containers/Leagues/JoinLeague';
 
 import GameweekHistory from 'containers/GameweekHistory';
+import NoTeamHome from 'components/NoTeamHome';
 
 import FixturesContainer from 'containers/FixturesContainer';
 import Players from 'containers/Players';
@@ -141,10 +143,14 @@ const Routing = () => {
             <Sidebar />
           </div>
           <div className='flex-1 bg-background h-full overflow-y-auto pb-16'>
-            <Header />
+            <Header team_name={user ? user.team_name : undefined} />
             <main className='mx-16 -mt-32'>
               <Switch>
-                <Route path='/' exact component={GameweekHistory} />
+                <Route
+                  path='/'
+                  exact
+                  component={user && user.team_name ? GameweekHistory : NoTeamHome}
+                />
 
                 <Route path='/profile' component={Profile} />
                 <Route path='/profile/set/password' component={SetPassword} />
@@ -156,6 +162,7 @@ const Routing = () => {
                 <Route path='/players-comparison' exact component={PlayersComparison} />
 
                 <Route path='/transfers' exact component={Transfers} />
+                <Route path='/squad-selection' exact component={SquadSelection} />
 
                 <Route path='/fixtures' exact component={FixturesContainer} />
 

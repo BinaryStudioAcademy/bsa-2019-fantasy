@@ -1,8 +1,8 @@
-:local(.player-img) {
-  height: 100%;
+:local(.playerImg) {
+  width: 62px;
 }
 
-:local(.player-shadow) {
+:local(.playerShadow) {
   display: inline-block;
   vertical-align: middle;
   padding-bottom: 0.6rem;
@@ -11,14 +11,18 @@
     center bottom / contain no-repeat;
 }
 
-:local(.player-name) {
-  text-align: center;
+:local(.playerName) {
+  background-color: rgba(0, 111, 55, 0.9);
+  color: white;
+  font-size: 0.8rem;
   text-overflow: ellipsis;
   white-space: nowrap;
+  padding: 0.1rem 2rem;
   overflow: hidden;
+  max-width: 130px;
 }
 
-:local(.player-club) {
+:local(.playerClub) {
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
   background-color: #00ff87;
