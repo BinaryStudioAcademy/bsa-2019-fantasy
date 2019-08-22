@@ -32,7 +32,7 @@ const reducers = {
   playerSelection: playerSelectionReducer,
   gameweeks: gameweeksReducer,
   league: leagueReducer,
-  gameweekHistory: gameweekHistoryReducer
+  gameweekHistory: gameweekHistoryReducer,
   transfers: transferReducer,
 };
 
