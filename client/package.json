@@ -61,7 +61,7 @@
     "validator": "^11.1.0"
   },
   "devDependencies": {
-    "@types/chart.js": "^2.8.1",
+    "@types/chart.js": "^2.8.2",
     "@types/classnames": "^2.2.9",
     "@types/js-cookie": "^2.2.2",
     "@types/lodash": "^4.14.137",

@@ -48,7 +48,7 @@ export const joinLeague = (data: {
     const result = await leagueService.joinLeague(data);
     feedback.success((result && result.message) || result);
   } catch (err) {
-    feedback.error(err.message);
+    feedback.error('Invalid League code (or name) provided');
   }
 };
 
