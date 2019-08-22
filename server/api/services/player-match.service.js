@@ -14,16 +14,14 @@ export const getPlayerStatsByGameweeks = async (playerId, playerClubId) => {
     await gameweekRepository
       .getAll()
       .map((el) => el.get({ plain: true }))
-      .map(async ({ id: gameweekId, name, number }) => {
+      .map(async ({ number }) => {
         const games = await gameRepository
           .getByGameweekId(number)
           .map((el) => el.get({ plain: true }));
-
         await Promise.all(
           games.map(
             async ({
               id: gameId,
-              start,
               hometeam,
               awayteam,
               hometeam_score,
