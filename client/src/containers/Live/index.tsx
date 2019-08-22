@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Ref, ReactNode } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import socketIOClient from 'socket.io-client';
@@ -12,9 +12,12 @@ import { loadCurrentGame } from './actions';
 
 import { RootState } from 'store/types';
 import { Club } from 'types/club.type';
+import { Game } from 'types/game.types';
 
 import field from 'assets/images/field.svg';
-import { Game } from 'types/game.types';
+import fieldEvents from './fieldEvents';
+
+import Fade from 'react-reveal/Fade';
 import 'react-dropdown/style.css';
 
 type Props = {
@@ -26,17 +29,18 @@ type State = {
   isModalActive: boolean;
   isSimulating: boolean;
   matchStarted: boolean;
+  socketConnected: boolean;
   events: any[];
   homeClub: Club | undefined;
   awayClub: Club | undefined;
   timeout: number;
   score: number[];
+  elapsed: number | undefined;
 };
 type RenderFixture = {
   homeClub: Club;
   awayClub: Club;
-  score?: number[];
-  start?: string;
+  content: any;
 };
 
 const endpoint = 'http://localhost:5004';
@@ -50,6 +54,7 @@ class Live extends React.Component<Props, State> {
   //   testRes: 'not received yet',
   // };
   socket: any;
+  eventsLog: Ref<HTMLDivElement>;
 
   constructor(props: Props) {
     super(props);
@@ -62,18 +67,33 @@ class Live extends React.Component<Props, State> {
       awayClub: undefined,
       timeout: 5,
       score: [0, 0],
+      elapsed: undefined,
+      socketConnected: false,
     };
+
+    this.eventsLog = React.createRef();
   }
 
   componentDidMount() {
     this.socket = socketIOClient(endpoint);
+    this.socket.on('connect', this.handleSocketConnect);
     this.socket.on('event', this.handleSocketEvent);
+    this.socket.on('disconnect', this.handleSocketDisconnect);
     this.props.loadCurrentGame();
   }
+
+  handleSocketConnect = () => {
+    this.setState({ socketConnected: true });
+  };
+
+  handleSocketDisconnect = () => {
+    this.handleSocketEvent({ name: 'socket-disconnect' });
+  };
 
   handleSocketEvent = (event) => {
     const newState = { ...this.state };
     newState.events = [...newState.events, event];
+    newState.elapsed = event.elapsed;
 
     switch (event.name) {
       case 'goal':
@@ -81,6 +101,8 @@ class Live extends React.Component<Props, State> {
         break;
       case 'start-game':
         newState.matchStarted = true;
+      case 'socket-disconnect':
+        newState.socketConnected = false;
     }
 
     this.setState(newState);
@@ -132,6 +154,10 @@ class Live extends React.Component<Props, State> {
         return <>{event.text}</>;
     }
   }
+  renderElapsed = (elapsed = 0) => {
+    const formatted = moment.utc(elapsed).format('mm:ss');
+    return <div className='time p-3 py-2 rounded bg-gray-200'>{formatted}</div>;
+  };
 
   renderScore = (score) => (
     <div className='flex'>
@@ -144,10 +170,10 @@ class Live extends React.Component<Props, State> {
     <p className='font-bold text-white'>{moment(start).format('HH:mm')}</p>
   );
 
-  renderFixture = ({ homeClub, awayClub, score, start }: RenderFixture) => {
+  renderFixture = ({ homeClub, awayClub, content }: RenderFixture) => {
     if (homeClub && awayClub) {
       return (
-        <div className='flex items-center p-3'>
+        <div className='flex items-center p-3 w-full'>
           <div className='first-team team justify-end'>
             <img
               className='logo order-1'
@@ -156,11 +182,7 @@ class Live extends React.Component<Props, State> {
             />
             <h5 className='font-bold'>{homeClub.name}</h5>
           </div>
-          <div className='time p-3 py-2 rounded mx-2 play-time bg-green-900'>
-            {this.state.matchStarted
-              ? this.renderScore(score)
-              : this.renderStartTime(start)}
-          </div>
+          <div className='time p-3 py-2 rounded mx-2 bg-green-900'>{content}</div>
           <div className='text-left team'>
             <img
               className='logo'
@@ -175,25 +197,36 @@ class Live extends React.Component<Props, State> {
   };
 
   renderFixtureLive = () => {
-    const { homeClub, awayClub, score } = this.state;
-    if (homeClub && awayClub) {
-      return this.renderFixture({ homeClub, awayClub, score });
-    }
+    const { homeClub, awayClub, score, elapsed = 0 } = this.state;
+    const content = (
+      <div className='flex'>
+        <p className='home-score score text-white font-bold bg-green-900'>{score[0]}</p>
+        <p className='away-score score text-white font-bold bg-green-900'>{score[1]}</p>
+      </div>
+    );
+    return (
+      <>
+        {this.renderElapsed(elapsed)}
+        {homeClub && awayClub && this.renderFixture({ homeClub, awayClub, content })}
+      </>
+    );
   };
 
   renderFixtureNext = () => {
     if (!this.props.currentGame) return 'loading';
-    const {
-      hometeam_id,
-      awayteam_id,
-      hometeam_score,
-      awayteam_score,
-    } = this.props.currentGame;
-    console.log(this.props);
+    const { hometeam_id, awayteam_id, start } = this.props.currentGame;
     const homeClub = this.getClubById(hometeam_id);
     const awayClub = this.getClubById(awayteam_id);
-    const score = [hometeam_score, awayteam_score];
-    if (homeClub && awayClub) return this.renderFixture({ homeClub, awayClub, score });
+    const content = (
+      <p className='font-bold text-white'>{moment(start).format('DD.MM')}</p>
+    );
+
+    return (
+      <>
+        <h2 className='font-semibold text-xl mb-2'>Next match</h2>
+        {homeClub && awayClub && this.renderFixture({ homeClub, awayClub, content })}
+      </>
+    );
   };
 
   renderModal = () => {
@@ -204,9 +237,9 @@ class Live extends React.Component<Props, State> {
 
     return (
       <Modal onDismiss={this.onModalDismiss}>
-        <div className='p-4'>
+        <div className='p-8'>
           <h3 className='font-bold text-2xl mb-4'>Select clubs</h3>
-          <div className='flex -mx-4 mb-8'>
+          <div className='flex -mx-2 mb-8'>
             <div className='w-1/3 px-2'>
               <label className='font-semibold text-l'>Home club</label>
               <Dropdown
@@ -252,34 +285,81 @@ class Live extends React.Component<Props, State> {
     );
   };
 
+  renderField() {
+    const { events } = this.state;
+    const lastEvent = events[events.length - 1] || false;
+    const defaultAnimationProps = {
+      duration: 500,
+      opposite: true,
+      distance: '50%',
+    };
+    const positionRight = { top: '15%', left: '55%' };
+    const positionLeft = { top: '15%', right: '55%' };
+
+    const home = lastEvent.team === 'home';
+    const direction = home ? { left: true } : { right: true };
+
+    return (
+      <div className='relative mt-16'>
+        {fieldEvents.map((event) => (
+          <div className='absolute' style={event.style}>
+            <Fade
+              {...event.direction}
+              when={
+                lastEvent &&
+                lastEvent.name === event.name &&
+                lastEvent.team === event.team
+              }
+              {...defaultAnimationProps}
+            >
+              <img src={event.img} alt={`${event.name} - ${event.team}`} />
+            </Fade>
+          </div>
+        ))}
+
+        <img src={field} alt='Football field' />
+      </div>
+    );
+  }
+
   render() {
     const { isSimulating, isModalActive, events } = this.state;
+    const simulateButton = isSimulating ? (
+      <Button onClick={this.stopSimulation} className='bg-red'>
+        Stop simulation
+      </Button>
+    ) : (
+      <Button onClick={this.showModal}>Simulate</Button>
+    );
+    const socketNotConnected = (
+      <div className='flex items-center'>
+        <Button inactive>Simulate</Button>
+        <p className='text-red-600 ml-4'>Cannot connect to event server</p>
+      </div>
+    );
+
     return (
-      <div className='bg-white shadow-figma rounded-sm p-12'>
-        <h2
-          className='playerName font-bold text-3xl xl:text-5xl mt-4 leading-none'
-          style={{ maxHeight: '2em', width: '400px' }}
-        >
-          Live page
-        </h2>
-        <div className='flex'>
-          <div className='w-1/2 h-64 overflow-auto'>
-            {events.map((event) => (
-              <div>{this.renderEvent(event)}</div>
-            ))}
+      <div className='bg-white text-secondary shadow-figma rounded-sm p-12'>
+        <div className='flex -mx-4'>
+          <div className='w-1/2 mx-4'>
+            <h2 className='font-semibold text-5xl mt-4 leading-none mb-8'>Live page</h2>
+            <div
+              className='h-64 overflow-auto bg-gray-200 rounded p-4'
+              ref={this.eventsLog}
+            >
+              {events.map((event) => (
+                <div>{this.renderEvent(event)}</div>
+              ))}
+            </div>
           </div>
-          <div className='w-1/2 h-64'>
+          <div className='w-1/2 pt-4 mx-4 h-64 flex flex-col items-center'>
             {isSimulating ? this.renderFixtureLive() : this.renderFixtureNext()}
-            <img className='h-64' src={field} alt='Football field' />
+            {this.renderField()}
           </div>
         </div>
-        {isSimulating ? (
-          <Button onClick={this.stopSimulation} className='bg-red'>
-            Stop simulation
-          </Button>
-        ) : (
-          <Button onClick={this.showModal}>Simulate</Button>
-        )}
+        <div className='mt-8'>
+          {this.state.socketConnected ? simulateButton : socketNotConnected}
+        </div>
         {isModalActive && this.renderModal()}
       </div>
     );

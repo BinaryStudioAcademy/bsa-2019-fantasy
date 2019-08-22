@@ -6,20 +6,29 @@ type ButtonProps = {
   type?: 'link' | 'button';
   href?: string;
   styling?: 'primary' | 'secondary';
+  inactive?: boolean;
   onClick?: (e: SyntheticEvent) => void;
   children: ReactNode;
 };
 
-const Button = (props: ButtonProps) => {
-  const stylingClasses = {
-    primary:
-      'bg-primary text-secondary border-primary hover:bg-secondary hover:text-white hover:border-secondary',
-    secondary:
-      'bg-white border-secondary2 hover:bg-secondary hover:text-white hover:border-secondary',
-  };
+const styles = {
+  default: 'border-2 font-semibold uppercase rounded px-6 py-2',
+  primary: {
+    default: 'bg-primary text-secondary border-primary ',
+    hover: 'hover:bg-secondary hover:text-white hover:border-secondary',
+  },
+  secondary: {
+    default: 'bg-white border-secondary2',
+    hover: 'hover:bg-secondary hover:text-white hover:border-secondary',
+  },
+  inactive: 'opacity-50 cursor-not-allowed',
+};
 
+const Button = (props: ButtonProps) => {
   const styling = props.styling || 'primary';
-  const className = `border-2 font-semibold uppercase rounded px-6 py-2 ${stylingClasses[styling]} ${props.className}`;
+  const className = `${styles.default} ${styles[styling].default} ${
+    props.inactive ? styles.inactive : styles[styling].hover
+  } ${props.className}`;
 
   switch (props.type) {
     case 'link':
