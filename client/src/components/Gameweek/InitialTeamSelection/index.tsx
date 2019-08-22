@@ -14,7 +14,7 @@ import { currentGameweekSelector } from 'store/selectors/current-gameweek.select
 import Button from 'components/Button';
 import SquadSelectionStatus from './components/SquadSelectionStatus';
 import SaveTeamModal from './components/SaveTeamModal';
-import { SQUAD, BUDGET, CLUBS, FULLNAMES } from './helpers';
+import { SQUAD, BUDGET, CLUBS, FULLNAMES, AUTOPICKSQUAD } from './helpers';
 
 import styles from './styles.module.scss';
 
@@ -66,14 +66,6 @@ const InitialTeamSelection = ({ updateUserTeamDetails, history }: Props) => {
     }
   };
 
-  const handleResetSquad = () => {
-    setSquad(SQUAD);
-    setMoneyRemaining(BUDGET);
-    setSelectedPlayers(0);
-    setdroppedPlayerSquadIds([]);
-    setIsMoreThree({ status: false, club: '' });
-  };
-
   const recalculateMoney = (squad: PlayerDroppable[]) => {
     let currentTotal = null;
     squad.forEach((el) => {
@@ -116,6 +108,23 @@ const InitialTeamSelection = ({ updateUserTeamDetails, history }: Props) => {
     }
   };
 
+  const handleResetSquad = () => {
+    setSquad(SQUAD);
+    setMoneyRemaining(BUDGET);
+    setSelectedPlayers(0);
+    setdroppedPlayerSquadIds([]);
+    setIsMoreThree({ status: false, club: '' });
+  };
+
+  const handleAutoPick = () => {
+    setSquad(AUTOPICKSQUAD);
+    setMoneyRemaining(BUDGET - recalculateMoney(AUTOPICKSQUAD)!);
+    setSelectedPlayers(recalculatePlayers(AUTOPICKSQUAD));
+    checkIsMoreThree(AUTOPICKSQUAD);
+    const squadIds = AUTOPICKSQUAD.map((el) => el.lastDroppedItem.id);
+    setdroppedPlayerSquadIds(squadIds);
+  };
+
   // Handles drag&drop action
   const handleDrop = useCallback(
     (index: number, item: PlayerDraggableProps) => {
@@ -149,7 +158,8 @@ const InitialTeamSelection = ({ updateUserTeamDetails, history }: Props) => {
         money={moneyRemaing}
         players={selectedPlayers}
         isMoreThree={isMoreThree}
-        onResetClick={(ev) => handleResetSquad()}
+        onResetClick={() => handleResetSquad()}
+        onAutoPickClick={() => handleAutoPick()}
       />
       <div className={`${styles.teamContainer} relative`}>
         {/* Goalkeeper */}
@@ -252,7 +262,9 @@ const InitialTeamSelection = ({ updateUserTeamDetails, history }: Props) => {
           <Button
             className={`${styles.saveTeam} w-3/12 h-12 mt-3`}
             onClick={(e) => setIsModalOpen(true)}
-            disabled={!(moneyRemaing >= 0 && selectedPlayers === 15 && !isMoreThree)}
+            disabled={
+              !(moneyRemaing >= 0 && selectedPlayers === 15 && !isMoreThree.status)
+            }
           >
             <p>Save Your Team</p>
           </Button>

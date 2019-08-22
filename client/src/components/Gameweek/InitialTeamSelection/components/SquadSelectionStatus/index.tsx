@@ -6,6 +6,7 @@ interface SquadSelection {
   players: number;
   isMoreThree: { status: boolean; club: string };
   onResetClick: (ev: React.SyntheticEvent) => void;
+  onAutoPickClick: (ev: React.SyntheticEvent) => void;
 }
 
 const SquadSelectionStatus = ({
@@ -13,6 +14,7 @@ const SquadSelectionStatus = ({
   players,
   isMoreThree,
   onResetClick,
+  onAutoPickClick,
 }: SquadSelection) => {
   const playerClass = players === 15 ? 'text-green-600' : 'text-red-600';
   const moneyClass = money >= 0 ? 'text-green-600' : 'text-red-600';
@@ -26,7 +28,11 @@ const SquadSelectionStatus = ({
       </p>
       <div className='flex justify-around'>
         <div>
-          <Button className='w-3/16 h-12 mt-4' styling='secondary'>
+          <Button
+            className='w-3/16 h-12 mt-4'
+            styling='secondary'
+            onClick={onAutoPickClick}
+          >
             <p>Auto Pick</p>
           </Button>
           <hr className='mt-4' />
