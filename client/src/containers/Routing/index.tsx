@@ -37,6 +37,7 @@ import FavouriteClubSelection from 'containers/Profile/components/FavouriteClubS
 import SetPassword from 'containers/Profile/components/SetPassword';
 import { loadCurrentUser } from 'containers/Profile/actions';
 
+import ConnectFbPage from 'containers/Auth/ConnectFbPage';
 import ForgotPassword from 'containers/ChangePassword/ForgotPassword';
 import ResetPassword from 'containers/ChangePassword/ResetPassword';
 
@@ -48,11 +49,8 @@ import {
 } from './fetchGameweeks/actions';
 import { preloadClubLogos } from 'helpers/images';
 import { currentGameweekSelector } from 'store/selectors/current-gameweek.selector';
-import { recentGameweeksSelector } from 'store/selectors/recent-gameweeks.selector';
 
 import { joinRoom, requestGames } from 'helpers/socket';
-
-import ConnectFbPage from 'containers/Auth/ConnectFbPage';
 
 const Routing = () => {
   const dispatch = useDispatch();
@@ -66,7 +64,6 @@ const Routing = () => {
 
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
   const currentGameweek = useSelector(currentGameweekSelector);
-  const recentGameweeks = useSelector(recentGameweeksSelector);
 
   const [joinedRoom, setJoinedRoom] = useState<boolean>(false);
 
@@ -92,11 +89,11 @@ const Routing = () => {
   }, [dispatch, isAuthorized, favorite_club]);
 
   useEffect(() => {
-    if (user && recentGameweeks && currentGameweek) {
+    if (user && currentGameweek) {
       dispatch(fetchGameweekHistory(user.id, currentGameweek.id));
-      recentGameweeks.forEach((g) => dispatch(fetchGameweekHistoryResults(g!.id)));
+      dispatch(fetchGameweekHistoryResults());
     }
-  }, [dispatch, user, currentGameweek, recentGameweeks]);
+  }, [dispatch, user, currentGameweek]);
 
   useEffect(() => {
     clubs.length > 0 && preloadClubLogos(clubs, 80);

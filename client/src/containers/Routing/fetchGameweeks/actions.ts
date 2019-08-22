@@ -93,15 +93,13 @@ export const fetchGameweekHistory = (
   }
 };
 
-export const fetchGameweekHistoryResults = (
-  gameweekId: string,
-): AsyncFetchGameweeksAction => async (dispatch) => {
+export const fetchGameweekHistoryResults = (): AsyncFetchGameweeksAction => async (
+  dispatch,
+) => {
   dispatch(fetchGameweeksHistoryResultsRequest());
 
   try {
-    const result = await gameweeksHistoryService.getGameweekHistoryByGameweekId(
-      gameweekId,
-    );
+    const result = await gameweeksHistoryService.getGameweekHistoryResults();
     dispatch(fetchGameweeksHistoryResultsSuccess(result));
   } catch (err) {
     dispatch(fetchGameweeksHistoryResultsFailure(err.message || err));

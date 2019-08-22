@@ -13,6 +13,7 @@ export type PlayerStatsType = {
 };
 
 export type GameweekHistoryResultsType = {
-  averageScore: number;
-  maxScore: number;
+  gameweek: string;
+  average: number;
+  max: number;
 };

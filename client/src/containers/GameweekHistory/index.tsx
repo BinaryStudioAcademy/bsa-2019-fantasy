@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +7,6 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 import { RootState } from 'store/types';
 import { currentGameweekSelector } from 'store/selectors/current-gameweek.selector';
-import { recentGameweeksSelector } from 'store/selectors/recent-gameweeks.selector';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
 
@@ -18,21 +17,11 @@ import header from 'styles/header.module.scss';
 
 const GameweekHistory = () => {
   const { t } = useTranslation();
-  const [gameweeksInfo, setGameweeksInfo] = useState<Array<any>>([]);
-  const [gameweekStatistic, setGameweeksResults] = useState<Array<any>>([]);
-
+  const gameweeks = useSelector((state: RootState) => state.gameweeks.gameweeks);
   const gameweekResults = useSelector(
     (state: RootState) => state.gameweeks.gameweeks_results,
   );
-  const recentGameweeks = useSelector(recentGameweeksSelector);
   const currentGameweek = useSelector(currentGameweekSelector);
-
-  useEffect(() => {
-    setGameweeksInfo(recentGameweeks);
-    if (gameweekResults != null) {
-      setGameweeksResults([...gameweekStatistic, gameweekResults]);
-    }
-  }, [recentGameweeks, gameweekResults]);
 
   useEffect(() => {
     document.title = 'Home | Fantasy Football League';
@@ -67,11 +56,11 @@ const GameweekHistory = () => {
             <FaChevronRight />
           </Link>
         </div>
-        {gameweeksInfo.length === gameweekStatistic.length ? (
-          <div className='w-6/12'>
-            <LineChart data={getChartOptions(gameweeksInfo, gameweekStatistic)} />
-          </div>
-        ) : null}
+        <div className='w-6/12'>
+          {gameweekResults && gameweeks && (
+            <LineChart data={getChartOptions(gameweeks, gameweekResults)} />
+          )}
+        </div>
       </div>
       <div className={styles['gameweek-history-content']}>
         <div className={`${header.paper} rounded mr-2`}>
