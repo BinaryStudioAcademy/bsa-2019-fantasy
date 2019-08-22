@@ -74,7 +74,8 @@
       "main": "Gameweek"
     },
     "currentPoints": "Current Points",
-    "points": "points"
+    "points": "points",
+    "overallRank": "Rank in Overall League"
   },
 
   "Gameweek": {

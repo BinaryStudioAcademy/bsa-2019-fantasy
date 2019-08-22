@@ -74,7 +74,8 @@
       "main": "Gameweek"
     },
     "currentPoints": "Поточні очки",
-    "points": "очків"
+    "points": "очків",
+    "overallRank": "Позиція в Загальній Лізі"
   },
 
   "Gameweek": {
