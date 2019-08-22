@@ -12,7 +12,9 @@ import {
   ResetPasswordCredentials,
 } from 'types/forgot.password.types';
 
-import { UpdateUserTeamDetails } from 'types/user.type';
+import { UserTeamDetails } from 'types/user.type';
+import { TeamMemberData } from 'types/teamMemberHistory.types';
+import { GameweekType } from 'types/gameweek.type';
 
 import {
   SET_USER,
@@ -126,11 +128,18 @@ export const updateFavoriteClub = (id: Club['id']): AsyncUserAction => async (
 };
 
 export const updateUserTeamDetails = (
-  data: UpdateUserTeamDetails,
+  userData: UserTeamDetails,
+  teamMemberData: TeamMemberData,
+  gameweekId: GameweekType['id'],
 ): AsyncUserAction => async (dispatch, getState) => {
   try {
     const user = await authService.getCurrentUser();
-    const res = await profileService.updateUserTeamDetails(user!.id, data);
+    const res = await profileService.updateUserTeamDetails(
+      user!.id,
+      gameweekId,
+      userData,
+      teamMemberData,
+    );
     loadCurrentUser(true)(dispatch, getState);
     feedback.success((res && res.message) || res);
   } catch (err) {

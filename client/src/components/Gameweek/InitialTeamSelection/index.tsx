@@ -42,16 +42,21 @@ const InitialTeamSelection = ({ updateUserTeamDetails, history }: Props) => {
   const handleSaveTeam = async (ev: React.SyntheticEvent) => {
     ev.preventDefault();
     const teamName = ev.target[0].value;
+    const teamMemberData = droppedPlayerSquadIds.map((id, i) => ({
+      player_id: id,
+      is_on_bench: i % 4 === 0,
+      is_captain: i === 1,
+    }));
+    const gameweek_id = currentGameweek!.id;
     if (!teamName) {
       return;
     }
     try {
-      await updateUserTeamDetails({
-        money: moneyRemaing,
-        team_name: teamName,
-        squad: droppedPlayerSquadIds,
-        gameweek_id: currentGameweek && currentGameweek.id,
-      });
+      await updateUserTeamDetails(
+        { money: moneyRemaing, team_name: teamName },
+        teamMemberData,
+        gameweek_id,
+      );
       history.push('/');
     } catch (err) {
       console.log(err);

@@ -17,29 +17,23 @@ router
       .updateById(req.user.id, { favorite_club_id: req.body.clubId })
       .then(() => res.json({ message: 'Successfuly updated!' }).catch(next)),
   )
-  .put('/:id', jwtMiddleware, async (req, res, next) => {
-    try {
-      const userData = { money: req.body.money, team_name: req.body.team_name };
-      const { gameweek_id } = req.body;
-      const { squad } = req.body;
-      await userService.updateById(req.params.id, userData);
-      const gameweekHistoryId = await gameweekHistoryService.postCurrentHistoryById(
-        req.params.id,
-        gameweek_id,
-      );
-      const teamMemberData = squad.map((id, i) => ({
-        player_id: id,
-        is_on_bench: i % 4 === 0,
-        is_captain: i === 1,
-      }));
-      const teamMemberHistory = await teamMemberHistoryService.postTeamMemberHistory(
-        teamMemberData,
-        gameweekHistoryId,
-      );
-      res.json({ message: 'Successfully saved!' });
-    } catch (err) {
-      next(err);
-    }
+  .put('/:user/:gameweek', jwtMiddleware, (req, res, next) => {
+    userService
+      .updateById(req.params.user, req.body.userData)
+      .then(() => {
+        gameweekHistoryService
+          .postCurrentHistoryById(req.params.user, req.params.gameweek)
+          .then((gameweekHistoryId) => {
+            teamMemberHistoryService
+              .postTeamMemberHistory(req.body.teamMemberData, gameweekHistoryId)
+              .then(() => {
+                res.json({ message: 'Successfully saved!' });
+              })
+              .catch(next);
+          })
+          .catch(next);
+      })
+      .catch(next);
   })
   .post('/favorite-club', jwtMiddleware, async (req, res, next) => {
     try {

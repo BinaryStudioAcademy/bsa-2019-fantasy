@@ -13,9 +13,7 @@ export type User = {
   updatedAt: string;
 };
 
-export type UpdateUserTeamDetails = {
+export type UserTeamDetails = {
   team_name: string;
   money: number;
-  squad: string[];
-  gameweek_id: string | undefined;
 };
