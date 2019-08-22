@@ -9,29 +9,34 @@ import {
   AsyncSetTeamHistoryAction,
 } from './action.type';
 
-import { GameweeksType, FixturesItemType } from 'types/fixtures.types';
+import { GameweekHistoryType, TeamMemberType } from 'types/gameweekHistory.type';
 
-const setGameweeksHistory = (gameweeksHistory: any): any => ({
+const setGameweeksHistory = (gameweeksHistory: any): setGameweekHistoryAction => ({
   type: SET_GAMEWEEKS_HISTORY,
   payload: gameweeksHistory,
 });
 
-const setTeamHistory = (teamHistory: any): any => ({
+const setTeamHistory = (teamHistory: TeamMemberType[]): setTeamHistoryAction => ({
   type: SET_TEAM_HISTORY,
   payload: teamHistory,
 });
 
-const setIsLoading = (isLoading: boolean): any => ({
+const setIsLoading = (isLoading: boolean): setTeamHistoryAction => ({
   type: SET_IS_LOADING,
   payload: isLoading,
 });
 
-export const loadGameweeksHistoryAction = (userId): any => async (dispatch) => {
+export const loadGameweeksHistoryAction = (
+  userId: string,
+): AsyncSetGameweekHistoryAction => async (dispatch) => {
   const result = await gameweekHistoryService.getGameweeksHistoryByUser(userId);
   dispatch(setGameweeksHistory(result));
 };
 
-export const loadTeamHistoryAction = (userId, gameweekId): any => async (dispatch) => {
+export const loadTeamHistoryAction = (
+  userId,
+  gameweekId,
+): AsyncSetTeamHistoryAction => async (dispatch) => {
   dispatch(setIsLoading(true));
   const result = await gameweekHistoryService.getTeamHistoryForUserById(
     userId,
