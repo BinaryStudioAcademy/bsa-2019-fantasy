@@ -105,8 +105,8 @@ const Routing = () => {
         <GuestRoute exact path='/login' component={LoginPage} />
         <GuestRoute exact path='/registration' component={RegistrationPage} />
         <GuestRoute exact path='/forgot' component={ForgotPassword} />
-        <GuestRoute exact path='/social' component={SocialPage} />
-        <GuestRoute exact path='/connect-fb' component={ConnectFbPage} />
+        {/* <GuestRoute exact path='/social' component={SocialPage} /> */}
+        {/* <GuestRoute exact path='/connect-fb' component={ConnectFbPage} /> */}
         <GuestRoute path='/reset/:id' component={ResetPassword} />
 
         {user && user.favorite_club_id === null && (
