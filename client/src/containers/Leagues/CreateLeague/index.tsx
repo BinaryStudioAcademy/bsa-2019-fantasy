@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { useTranslation } from 'react-i18next';
@@ -17,7 +17,7 @@ import header from 'styles/header.module.scss';
 
 type Props = {
   createLeagueAction: typeof createLeagueAction;
-  resetLeaguesData: any;
+  resetLeaguesData: typeof resetLeaguesData;
   history: any;
   error: null | string;
   success: null | string;
@@ -29,7 +29,6 @@ const CreateLeague = ({
   createLeagueAction,
   resetLeaguesData,
   history,
-  error,
   success,
   isLoading,
   code,

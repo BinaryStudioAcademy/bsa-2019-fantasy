@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import ReactDom from 'react-dom';
 import { FaTimes } from 'react-icons/fa';
 
 import styles from './styles.module.scss';
 
 const PrivateLeagueModal = ({ open, onClose, code }) => {
+  const { t } = useTranslation();
+
   const [copied, setCopy] = useState(false);
 
   const copyToClipboard = (e) => {
@@ -28,10 +31,10 @@ const PrivateLeagueModal = ({ open, onClose, code }) => {
           </button>
           <div className={styles['modal-body']}>
             <div className='modal-header'>
-              <h2 className='text-4xl font-bold'>This is your invitation code</h2>
+              <h2 className='text-4xl font-bold'>{t('PrivateLeagueModal.title')}</h2>
             </div>
             <p className='text-lg text-gray-600 text-xs italic mb-5'>
-              Share this code with others to join your league!
+              {t('PrivateLeagueModal.message')}
             </p>
             <div className='flex flex-wrap -mx-3 mb-6'>
               <div className='w-full md:w-1/2 px-3'>
@@ -39,7 +42,7 @@ const PrivateLeagueModal = ({ open, onClose, code }) => {
                   className='block uppercase text-gray-700 text-xs font-bold mb-2'
                   htmlFor='league-code'
                 >
-                  Your invitation code
+                  {t('PrivateLeagueModal.invitationCode')}
                 </label>
                 <input
                   className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
@@ -53,9 +56,13 @@ const PrivateLeagueModal = ({ open, onClose, code }) => {
               </div>
             </div>
             {copied ? (
-              <p className='text-green-500 italic mb-5'>Copied</p>
+              <p className='text-green-500 italic mb-5'>
+                {t('PrivateLeagueModal.copied')}
+              </p>
             ) : (
-              <p className='text-gray-600 italic mb-5'>Click on the code to copy</p>
+              <p className='text-gray-600 italic mb-5'>
+                {t('PrivateLeagueModal.clickToCopy')}
+              </p>
             )}
           </div>
         </div>

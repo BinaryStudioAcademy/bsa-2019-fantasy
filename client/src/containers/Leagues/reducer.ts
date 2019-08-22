@@ -8,6 +8,9 @@ import {
   RESET_LEAGUES_DATA,
   CREATE_LEAGUE_FAILURE,
   CREATE_LEAGUE_SUCCESS,
+  SetInvitationCode,
+  CreateLeagueAction,
+  ResetLeagueAction,
 } from './action.types';
 
 type State = {
@@ -27,7 +30,15 @@ const initialState: State = {
   code: '',
 };
 
-export default (state = initialState, action: any) => {
+export default (
+  state = initialState,
+  action:
+    | SetInvitationCode
+    | SetLeaguesAction
+    | SearchLeaguesAction
+    | CreateLeagueAction
+    | ResetLeagueAction,
+) => {
   switch (action.type) {
     case SET_USER_LEAGUES:
       return { ...state, leagues: action.payload };

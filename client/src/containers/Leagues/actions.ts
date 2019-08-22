@@ -15,6 +15,11 @@ import {
   AsyncJoinLeagueAction,
   SearchLeaguesAction,
   AsyncSearchLeaguesAction,
+  CreateLeagueFailure,
+  CreateLeagueSuccess,
+  SetInvitationCode,
+  AsyncGetInvitationCode,
+  SetLoading,
 } from './action.types';
 
 const setUserLeagues = (leagues: any): SetLeaguesAction => ({
@@ -27,22 +32,22 @@ const setSuggestions = (payload: any): SearchLeaguesAction => ({
   payload,
 });
 
-const createLeagueFailure = (payload) => ({
+const createLeagueFailure = (payload: any): CreateLeagueFailure => ({
   type: CREATE_LEAGUE_FAILURE,
   payload,
 });
 
-const createLeagueSuccess = (payload) => ({
+const createLeagueSuccess = (payload: any): CreateLeagueSuccess => ({
   type: CREATE_LEAGUE_SUCCESS,
   payload,
 });
 
-const setLoading = (isLoading: boolean): any => ({
+const setLoading = (isLoading: boolean): SetLoading => ({
   type: SET_LOADING,
   payload: isLoading,
 });
 
-const setInvitationCode = (payload: string) => ({
+const setInvitationCode = (payload: string): SetInvitationCode => ({
   type: SET_INVITATION_CODE,
   payload,
 });
@@ -51,7 +56,9 @@ export const resetLeaguesData = () => ({
   type: RESET_LEAGUES_DATA,
 });
 
-export const getInvitationCode = (data: { name: string }): any => async (dispatch) => {
+export const getInvitationCode = (data: {
+  name: string;
+}): AsyncGetInvitationCode => async (dispatch) => {
   const { name } = data;
 
   try {
@@ -68,7 +75,7 @@ export const createLeagueAction = (data: {
   name: string;
   private: boolean;
   start_from: number;
-}): any => async (dispatch) => {
+}): AsyncCreateLeagueAction => async (dispatch) => {
   try {
     dispatch(setLoading(true));
     const result = await leagueService.createLeague(data);
