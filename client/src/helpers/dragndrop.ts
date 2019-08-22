@@ -20,6 +20,10 @@ export const getPitch = () => {
       accept: PlayerTypes.DEFENDER,
       lastDroppedItem: null,
     },
+    {
+      accept: PlayerTypes.DEFENDER,
+      lastDroppedItem: null,
+    },
 
     {
       accept: PlayerTypes.MIDDLEFIELDER,
