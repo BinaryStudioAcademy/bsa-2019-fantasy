@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { map } from 'lodash';
 
-import { FaStar, FaArrowUp, FaArrowDown, FaMinus } from 'react-icons/fa';
+import { FaStar, FaArrowUp, FaArrowDown, FaMinus, FaUserCog } from 'react-icons/fa';
 
 import Spinner from 'components/Spinner';
 import { LeagueTable } from 'components/Leagues/LeagueTables';
+import PrivateLeagueModal from 'components/Leagues/PrivateLeagueModal';
 
 import { RootState } from 'store/types';
-import { loadUserLeagues } from './actions';
+import { loadUserLeagues, getInvitationCode, resetLeaguesData } from './actions';
 
 import { getClubLogoUrl } from 'helpers/images';
 import styles from './styles.module.scss';
@@ -19,12 +20,23 @@ import header from 'styles/header.module.scss';
 
 type Props = {
   loadUserLeagues: typeof loadUserLeagues;
+  getInvitationCode: any;
+  resetLeaguesData: any;
+  code: string;
   leagues: any;
   clubs: any;
   user: any;
 };
 
-const Leagues = ({ loadUserLeagues, leagues, clubs, user }: Props) => {
+const Leagues = ({
+  loadUserLeagues,
+  getInvitationCode,
+  resetLeaguesData,
+  leagues,
+  clubs,
+  user,
+  code,
+}: Props) => {
   const { t } = useTranslation();
   const [club, setClub] = useState({ name: '', code: 0 });
 
@@ -34,20 +46,45 @@ const Leagues = ({ loadUserLeagues, leagues, clubs, user }: Props) => {
 
     const userFavouriteCLub = clubs.filter((item) => item.id === user.favorite_club_id);
     setClub(userFavouriteCLub[0]);
-  }, []);
+  }, [clubs]);
+
+  const openModal = (data) => {
+    const { name } = data.league;
+    if (data.league.private) {
+      getInvitationCode({ name });
+    }
+  };
+
+  const closeModal = () => {
+    resetLeaguesData();
+  };
 
   /* eslint-disable */
   const columns = [
     {
-      Header: () => <span className={`${styles['table-title']} uppercase font-bold`}>{t('LeaguesPage.cells.leagues')}</span>,
+      Header: () => (
+        <span className={`${styles['table-title']} uppercase font-bold`}>
+          {t('LeaguesPage.cells.leagues')}
+        </span>
+      ),
       accessor: 'league.name',
 
-      Cell: (props: { value: string }) => (
-        <span className={styles['table-title-row']}>{props.value}</span>
+      Cell: (props: any) => (
+        <button
+          className={`${styles['table-title-row']} flex items-center`}
+          onClick={() => openModal(props.original)}
+        >
+          {props.original.is_creator && <FaUserCog className='mr-1' />}
+          {props.value}
+        </button>
       ),
     },
     {
-      Header: () => <span className={`${styles['table-title']} uppercase font-bold`}>{t('LeaguesPage.cells.currentRank')}</span>,
+      Header: () => (
+        <span className={`${styles['table-title']} uppercase font-bold`}>
+          {t('LeaguesPage.cells.currentRank')}
+        </span>
+      ),
       accessor: 'current_rank',
       Cell: (props: any) => {
         const movement = props.original.current_rank - props.original.last_rank;
@@ -59,7 +96,13 @@ const Leagues = ({ loadUserLeagues, leagues, clubs, user }: Props) => {
                 movement < 0 ? 'down' : ''
               }`}
             >
-              {movement > 0 ? <FaArrowUp /> : movement < 0 ? <FaArrowDown /> : <FaMinus />}
+              {movement > 0 ? (
+                <FaArrowUp />
+              ) : movement < 0 ? (
+                <FaArrowDown />
+              ) : (
+                <FaMinus />
+              )}
             </span>{' '}
             {props.value}
           </div>
@@ -67,7 +110,11 @@ const Leagues = ({ loadUserLeagues, leagues, clubs, user }: Props) => {
       },
     },
     {
-      Header: () => <span className={`${styles['table-title']} uppercase font-bold`}>{t('LeaguesPage.cells.lastRank')}</span>,
+      Header: () => (
+        <span className={`${styles['table-title']} uppercase font-bold`}>
+          {t('LeaguesPage.cells.lastRank')}
+        </span>
+      ),
       accessor: 'last_rank',
       Cell: (props: any) => {
         const movement = props.original.current_rank - props.original.last_rank;
@@ -79,7 +126,13 @@ const Leagues = ({ loadUserLeagues, leagues, clubs, user }: Props) => {
                 movement < 0 ? 'down' : ''
               }`}
             >
-              {movement > 0 ? <FaArrowUp /> : movement < 0 ? <FaArrowDown /> : <FaMinus />}
+              {movement > 0 ? (
+                <FaArrowUp />
+              ) : movement < 0 ? (
+                <FaArrowDown />
+              ) : (
+                <FaMinus />
+              )}
             </span>{' '}
             {props.value}
           </div>
@@ -161,6 +214,7 @@ const Leagues = ({ loadUserLeagues, leagues, clubs, user }: Props) => {
             })}
           </div>
         </div>
+        <PrivateLeagueModal open={code.length} onClose={closeModal} code={code} />
       </div>
     );
   }
@@ -170,9 +224,10 @@ const mapStateToProps = (rootState: RootState) => ({
   leagues: rootState.league.leagues,
   clubs: rootState.clubs.clubs,
   user: rootState.profile.user,
+  code: rootState.league.code,
 });
 
-const actions = { loadUserLeagues };
+const actions = { loadUserLeagues, getInvitationCode, resetLeaguesData };
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
 
 export default connect(
