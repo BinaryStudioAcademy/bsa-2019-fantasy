@@ -32,6 +32,7 @@ module.exports = {
     'react/static-property-placement': 'error',
     'react/void-dom-elements-no-children': 'error',
     'react/state-in-constructor': ['error', 'never'],
+    'react/prop-types': 'off',
 
     'jsx-a11y/click-events-have-key-events': 'off',
     'jsx-a11y/no-static-element-interactions': 'warn',

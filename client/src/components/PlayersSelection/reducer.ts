@@ -1,9 +1,9 @@
 import { SET_PLAYERS, setPlayersAction } from './action.type';
 
-import { Player } from 'types/player.types';
+import { PlayerType } from 'types/player.types';
 
 type State = {
-  players?: Player[];
+  players?: PlayerType[];
 };
 
 const initialState: State = {

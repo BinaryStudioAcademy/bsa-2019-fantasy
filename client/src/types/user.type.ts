@@ -9,6 +9,10 @@ export type User = {
   team_name: string;
   favorite_club_id: number;
 
+  facebook_id: string;
+
+  free_transfers: number;
+
   createdAt: string;
   updatedAt: string;
 };

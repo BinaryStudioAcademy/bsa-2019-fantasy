@@ -2,9 +2,9 @@ import * as playersService from 'services/playersService';
 
 import { SET_PLAYERS, setPlayersAction, AsyncSetPlayersAction } from './action.type';
 
-import { Player } from 'types/player.types';
+import { PlayerType } from 'types/player.types';
 
-const setPlayers = (players: Player[]): setPlayersAction => ({
+const setPlayers = (players: PlayerType[]): setPlayersAction => ({
   type: SET_PLAYERS,
   payload: players,
 });

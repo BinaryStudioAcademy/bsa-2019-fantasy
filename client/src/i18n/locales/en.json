@@ -161,6 +161,7 @@
     "transfers": "Transfers",
     "leagues": "Leagues",
     "score": "Score",
+    "money": "Money",
     "logout": "Logout"
   },
 
@@ -227,6 +228,33 @@
       "maxCostBetween": "Between 45 and 125",
       "shown": "players shown"
     }
+  },
+
+  "TransfersTeamSelection": {
+    "switch": {
+      "pitch": "Pitch View",
+      "list": "List View"
+    },
+    "submit": "Make transfers"
+  },
+
+  "TransfersModal": {
+    "title": "Confirm transfers",
+    "statement": {
+      "a": "You will have",
+      "b": "free transfers",
+      "c": "and",
+      "d": "left after transfers"
+    },
+    "table": {
+      "in": "In",
+      "out": "Out",
+      "scoreCost": "Score cost",
+      "discardTransfer": "Discard transfer",
+      "total": "Total"
+    },
+    "submit": "Confirm Transfers",
+    "cancel": "Change Transfers"
   },
 
   "NotFound": {

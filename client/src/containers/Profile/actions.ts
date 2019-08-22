@@ -23,7 +23,7 @@ import {
 const setToken = (token: string) => localStorage.setItem('token', token);
 const clearToken = () => localStorage.removeItem('token');
 
-const setUser = (user: User | null): UserAction => ({
+export const setUser = (user: User | null): UserAction => ({
   type: SET_USER,
   payload: user,
 });

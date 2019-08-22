@@ -1,4 +1,4 @@
-import { Player } from './player.types';
+import { PlayerType } from './player.types';
 
 export type GameweekHistoryType = TeamMemberType & PlayerStatsType;
 
@@ -9,5 +9,5 @@ export type TeamMemberType = {
 };
 
 export type PlayerStatsType = {
-  player_stats: Player;
+  player_stats: PlayerType;
 };
