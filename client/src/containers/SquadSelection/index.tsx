@@ -23,15 +23,11 @@ const SquadSelection = () => {
         <h2 className={`${header.title} text-secondary mb-6`}>
           {t('SquadSelection.title.main')}
         </h2>
-        <div className={`${header['jumbotron-content']} mt-2 flex`}>
-          <div style={{ width: '25%' }}>
-            <PlayersSelection />
+        <div className={`${header['jumbotron-content']} mt-8 flex`}>
+          <div className='flex flex-grow flex-col mr-4'>
+            <InitialTeamSelection />
           </div>
-          <div className='flex flex-grow justify-center'>
-            <div className='wrapper'>
-              <InitialTeamSelection />
-            </div>
-          </div>
+          <PlayersSelection />
         </div>
       </div>
       <FixturesContainer />

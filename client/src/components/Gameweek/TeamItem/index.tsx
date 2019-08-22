@@ -35,17 +35,16 @@ const TeamItem = ({
   captainId,
   viceCaptainId,
 }: Props) => {
-  const isCaptain = captainId === id;
-  const isViceCaptain = viceCaptainId === id;
+  const isCaptain = !!captainId && captainId === id;
+  const isViceCaptain = !!viceCaptainId && viceCaptainId === id;
   return (
     <tr className='bg-white w-full'>
-      <td  className={`w-1/12 ${styles['table-item']}`} align='center' valign='middle'>
-        <button>
-          <img src={info} alt=' info' />
+      <td className={`w-1/12 ${styles['table-item']}`} align='center' valign='middle'>
+        <button className='w-full'>
+          <img className='object-cover' src={info} alt='info' />
         </button>
       </td>
-      <td  className={`w-1/12 ${styles['table-item']}`}>
-        {' '}
+      <td className={`w-1/12 ${styles['table-item']}`}>
         {!isGameweek && (
           <React.Fragment>
             {(isCaptain || isViceCaptain) && (
@@ -78,11 +77,11 @@ const TeamItem = ({
             }
           }}
         >
-          <img className='w-8 mr-2' src={imageURL} alt='player' />
+          {imageURL && <img className='w-8 mr-2' src={imageURL} alt='player' />}
           <div className='flex flex-col items-start'>
-            <div>{name}</div>
+            <div>{name || 'Unassigned'}</div>
             <div>
-              <span className='mr-1'>{club}</span>
+              {club && <span className='mr-1'>{club}</span>}
               <span>{position}</span>
             </div>
           </div>

@@ -17,9 +17,8 @@ const SquadSelectionStatus = ({
   const playerClass = players === 15 ? 'text-green-600' : 'text-red-600';
   const moneyClass = money >= 0 ? 'text-green-600' : 'text-red-600';
   return (
-    <div className='text-center'>
-      <h3 className='font-bold text-xl'>Squad Selection</h3>
-      <hr className='mt-4' />
+    <div className='text-center mb-4'>
+      <hr />
       <p className='mt-4 text-sm'>
         Select a maximum of 3 players from a single team or &apos;Auto Pick&apos; if
         you&apos;re short of time.

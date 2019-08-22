@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from 'react';
-import { connect, useSelector } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import update from 'immutability-helper';
+import cn from 'classnames';
 
 import { updateUserTeamDetails } from 'containers/Profile/actions';
 import PlayerSelectionDroppable, { PlayerDroppable } from '../PlayerSelectionDroppable';
@@ -14,16 +14,19 @@ import { currentGameweekSelector } from 'store/selectors/current-gameweek.select
 import Button from 'components/Button';
 import SquadSelectionStatus from './components/SquadSelectionStatus';
 import SaveTeamModal from './components/SaveTeamModal';
+import TeamList from '../TeamList';
 import { SQUAD, BUDGET, CLUBS } from './helpers';
 
 import styles from './styles.module.scss';
 
-interface Props extends RouteComponentProps {
-  updateUserTeamDetails: typeof updateUserTeamDetails;
-}
+type Props = RouteComponentProps;
 
-const InitialTeamSelection = ({ updateUserTeamDetails, history }: Props) => {
+const InitialTeamSelection = ({ history }: Props) => {
+  const dispatch = useDispatch();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [view, setView] = useState<'list' | 'pitch'>('pitch');
 
   // Set squad drag&drop items, which accept only specific player types
   const [squad, setSquad] = useState<PlayerDroppable[]>(SQUAD);
@@ -39,7 +42,7 @@ const InitialTeamSelection = ({ updateUserTeamDetails, history }: Props) => {
 
   const currentGameweek = useSelector(currentGameweekSelector);
 
-  const handleSaveTeam = async (ev: React.SyntheticEvent) => {
+  const handleSaveTeam = (ev: React.SyntheticEvent) => {
     ev.preventDefault();
     const teamName = ev.target[0].value;
     const teamMemberData = droppedPlayerSquadIds.map((id, i) => ({
@@ -52,10 +55,12 @@ const InitialTeamSelection = ({ updateUserTeamDetails, history }: Props) => {
       return;
     }
     try {
-      await updateUserTeamDetails(
-        { money: moneyRemaing, team_name: teamName },
-        teamMemberData,
-        gameweek_id,
+      dispatch(
+        updateUserTeamDetails(
+          { money: moneyRemaing, team_name: teamName },
+          teamMemberData,
+          gameweek_id,
+        ),
       );
       history.push('/');
     } catch (err) {
@@ -133,124 +138,154 @@ const InitialTeamSelection = ({ updateUserTeamDetails, history }: Props) => {
     [droppedPlayerSquadIds, squad],
   );
 
+  const Pitch = () => (
+    <div className={`${styles['team-container']} relative`}>
+      {/* Goalkeeper */}
+      <div className={styles.team}>
+        {squad.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+          if (accept === PlayerTypes.GOALKEEPER) {
+            return (
+              <PlayerSelectionDroppable
+                index={index}
+                key={index}
+                accept={accept}
+                lastDroppedItem={lastDroppedItem}
+                onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                isGameweek={false}
+                onOpen={() => false}
+              />
+            );
+          } else {
+            return null;
+          }
+        })}
+      </div>
+
+      {/* Defenders */}
+      <div className={styles.team}>
+        {squad.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+          if (accept === PlayerTypes.DEFENDER) {
+            return (
+              <PlayerSelectionDroppable
+                index={index}
+                key={index}
+                accept={accept}
+                lastDroppedItem={lastDroppedItem}
+                onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                isGameweek={false}
+                onOpen={() => false}
+              />
+            );
+          } else {
+            return null;
+          }
+        })}
+      </div>
+
+      {/* Middlefilders */}
+      <div className={styles.team}>
+        {squad.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+          if (accept === PlayerTypes.MIDDLEFIELDER) {
+            return (
+              <PlayerSelectionDroppable
+                index={index}
+                key={index}
+                accept={accept}
+                lastDroppedItem={lastDroppedItem}
+                onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                isGameweek={false}
+                onOpen={() => false}
+              />
+            );
+          } else {
+            return null;
+          }
+        })}
+      </div>
+
+      {/* Forwards */}
+      <div className={styles.team}>
+        {squad.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
+          if (accept === PlayerTypes.FORWARD) {
+            return (
+              <PlayerSelectionDroppable
+                index={index}
+                key={index}
+                accept={accept}
+                lastDroppedItem={lastDroppedItem}
+                onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                isGameweek={false}
+                onOpen={() => false}
+              />
+            );
+          } else {
+            return null;
+          }
+        })}
+      </div>
+    </div>
+  );
+
+  const ViewToggles = () => (
+    <div className='flex justify-center mb-4'>
+      <form className={styles['form-team']}>
+        <label
+          className={`${styles['team-selection-radio']} ${
+            view === 'pitch' ? styles['is-active'] : ''
+          }`}
+          onClick={() => setView('pitch')}
+        >
+          <input className='hidden' type='radio' value='option2' />
+          Pitch View
+        </label>
+
+        <label
+          className={`${styles['team-selection-radio']} ${
+            view === 'list' ? styles['is-active'] : ''
+          }`}
+          onClick={() => setView('list')}
+        >
+          <input className='hidden' type='radio' value='option3' />
+          List View
+        </label>
+      </form>
+    </div>
+  );
+
   return (
     <DndProvider backend={HTML5Backend}>
       <SquadSelectionStatus
         money={moneyRemaing}
         players={selectedPlayers}
         isMoreThree={isMoreThree}
-        onResetClick={(ev) => handleResetSquad()}
+        onResetClick={() => handleResetSquad()}
       />
-      <div className={`${styles.teamContainer} relative`}>
-        {/* Goalkeeper */}
-        <div
-          className={`${styles.team} flex justify-around absolute team`}
-          style={{ top: '6%' }}
-        >
-          {squad.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-            if (accept === PlayerTypes.GOALKEEPER) {
-              return (
-                <PlayerSelectionDroppable
-                  index={index}
-                  key={index}
-                  accept={accept}
-                  lastDroppedItem={lastDroppedItem}
-                  onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                  isGameweek={false}
-                  onOpen={() => false}
-                />
-              );
-            } else {
-              return null;
-            }
-          })}
-        </div>
 
-        {/* Defenders */}
-        <div
-          className={`${styles.team} flex justify-between absolute`}
-          style={{ top: '29%' }}
-        >
-          {squad.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-            if (accept === PlayerTypes.DEFENDER) {
-              return (
-                <PlayerSelectionDroppable
-                  index={index}
-                  key={index}
-                  accept={accept}
-                  lastDroppedItem={lastDroppedItem}
-                  onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                  isGameweek={false}
-                  onOpen={() => false}
-                />
-              );
-            } else {
-              return null;
-            }
-          })}
-        </div>
+      <div className={cn(styles['team-select-wrapper'], 'rounded bg-secondary')}>
+        <ViewToggles />
 
-        {/* Middlefilders */}
-        <div
-          className={`${styles.team} flex justify-between absolute`}
-          style={{ top: '54%' }}
-        >
-          {squad.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-            if (accept === PlayerTypes.MIDDLEFIELDER) {
-              return (
-                <PlayerSelectionDroppable
-                  index={index}
-                  key={index}
-                  accept={accept}
-                  lastDroppedItem={lastDroppedItem}
-                  onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                  isGameweek={false}
-                  onOpen={() => false}
-                />
-              );
-            } else {
-              return null;
-            }
-          })}
-        </div>
+        {view === 'list' ? (
+          <div className='overflow-auto w-auto'>
+            <TeamList starters={squad} />
+          </div>
+        ) : (
+          <Pitch />
+        )}
 
-        {/* Forwards */}
-        <div
-          className={`${styles.team} flex justify-around top-60 absolute`}
-          style={{ top: '79%' }}
-        >
-          {squad.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-            if (accept === PlayerTypes.FORWARD) {
-              return (
-                <PlayerSelectionDroppable
-                  index={index}
-                  key={index}
-                  accept={accept}
-                  lastDroppedItem={lastDroppedItem}
-                  onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                  isGameweek={false}
-                  onOpen={() => false}
-                />
-              );
-            } else {
-              return null;
-            }
-          })}
-        </div>
-        <img src='images/field.svg' alt='field' className='field' />
-        <div className='w-full h-24 absolute flex justify-center'>
+        <div className='w-full flex justify-center mt-3'>
           <Button
-            className={`${styles.saveTeam} w-3/12 h-12 mt-3`}
-            onClick={(e) => setIsModalOpen(true)}
+            className={`${styles.saveTeam} px-8 py-2 rounded`}
+            onClick={() => setIsModalOpen(true)}
             disabled={!(moneyRemaing >= 0 && selectedPlayers === 15 && !isMoreThree)}
           >
             <p>Save Your Team</p>
           </Button>
         </div>
       </div>
+
       {isModalOpen && (
         <SaveTeamModal
-          onDismiss={(ev) => setIsModalOpen(false)}
+          onDismiss={() => setIsModalOpen(false)}
           onSubmit={(ev) => handleSaveTeam(ev)}
         />
       )}
@@ -258,12 +293,4 @@ const InitialTeamSelection = ({ updateUserTeamDetails, history }: Props) => {
   );
 };
 
-const actions = {
-  updateUserTeamDetails,
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
-export default withRouter(connect(
-  null,
-  mapDispatchToProps,
-)(InitialTeamSelection) as any);
+export default withRouter(InitialTeamSelection);
