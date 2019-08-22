@@ -22,7 +22,7 @@ const Sidebar = () => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
-  const { name, score, team_name } = useSelector(
+  const { name, score, money } = useSelector(
     (state: RootState) => state.profile.user!,
     shallowEqual,
   );
@@ -97,6 +97,9 @@ const Sidebar = () => {
         </p>
       </Link>
       <div className={`${styles.points} text-sm ${isOpened ? 'pl-6' : 'pl-4'}`}>
+        {t('Sidebar.money')}: £{money}
+      </div>
+      <div className={`${styles.points} text-sm ${isOpened ? 'pl-6' : 'pl-4'}`}>
         {t('Sidebar.score')}: {score}
       </div>
       <div className='menu mt-16'>
@@ -105,7 +108,7 @@ const Sidebar = () => {
             exact
             className='flex px-6 py-5 h-8 justify-start items-center hover:text-primary'
             activeClassName='text-primary'
-            key={name}
+            key={`sidebar-menu-${name}`}
             to={link}
             onClick={noPropagation}
           >

@@ -1,6 +1,9 @@
 import { Router } from 'express';
+
 import * as gameweekHistoryService from '../services/gameweek-history.service';
 import * as teamMemberHistoryService from '../services/team-member-history.service';
+import * as transferService from '../services/transfer.service';
+import jwtMiddleware from '../middlewares/jwt.middleware';
 
 const router = Router();
 
@@ -37,6 +40,20 @@ router
       .catch(next);
   })
 
+  .get('/history-team/:user/:gameweek/:gameweekNumber', (req, res, next) => {
+    gameweekHistoryService
+      .getCurrentHistoryById(req.params.user, req.params.gameweek)
+      .then((historyId) => {
+        teamMemberHistoryService
+          .getPlayerHistoryByGameweekId(historyId, req.params.gameweekNumber)
+          .then((players) => {
+            return res.json(players);
+          })
+          .catch(next);
+      })
+      .catch(next);
+  })
+
   .post('/user-team/:user/:gameweek', (req, res, next) => {
     gameweekHistoryService
       .postCurrentHistoryById(req.params.user, req.params.gameweek)
@@ -51,6 +68,16 @@ router
     gameweekHistoryService
       .getHistoriesByUserId(req.params.user)
       .then((value) => res.json(value))
+      .catch(next);
+  })
+  .post('/transfers/:gameweek', jwtMiddleware, (req, res, next) => {
+    transferService
+      .applyTransfers(req.user.id, req.params.gameweek, req.body)
+      .then((amount) =>
+        res.send({
+          message: `Successfully transfered ${amount} player${amount > 1 ? 's' : ''}`,
+        }),
+      )
       .catch(next);
   });
 

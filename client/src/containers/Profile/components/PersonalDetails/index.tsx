@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import cn from 'classnames';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +15,11 @@ export const usePersonalDetails = () => {
   const user = useSelector((state: RootState) => state.profile.user);
   const language = useSelector((state: RootState) => state.profile.language);
 
-  return { user, language };
+  useEffect(() => {
+    localStorage.setItem('language', language);
+  }, [language]);
+
+  return { user, language, setLanguage };
 };
 
 const PersonalDetails = withRouter(({ history }) => {
@@ -38,12 +43,10 @@ const PersonalDetails = withRouter(({ history }) => {
     history.push('/profile/set/password');
   };
 
-  const changeLanguage = (value, language) => {
+  const changeLanguage = async (value: boolean, language: 'ua' | 'en') => {
     if (value) {
-      /* eslint-disable */
       dispatch(setLanguage({ language }));
-      i18n.changeLanguage(language);
-      /* eslint-enable */
+      await i18n.changeLanguage(language);
     }
   };
 
@@ -92,11 +95,11 @@ const PersonalDetails = withRouter(({ history }) => {
           <div className='w-1/4 font-bold'>{t('Profile.personalDetails.language')}</div>
           <div className='flex items-center'>
             <label
-              className={`${
-                styles['checkbox-styled']
-              } g-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded ${
-                language === 'en' ? `${styles.checked}` : ''
-              }`}
+              className={cn(
+                styles['checkbox-styled'],
+                language === 'en' && styles.checked,
+                'cursor-pointer bg-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded',
+              )}
             >
               <input
                 type='checkbox'
@@ -109,11 +112,11 @@ const PersonalDetails = withRouter(({ history }) => {
             </label>
             <p className='mx-3'>{t('LeaguesPage.createLeague.or')}</p>
             <label
-              className={`${
-                styles['checkbox-styled']
-              } g-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded ${
-                language === 'ua' ? `${styles.checked}` : ''
-              }`}
+              className={cn(
+                styles['checkbox-styled'],
+                language === 'ua' && styles.checked,
+                'cursor-pointer bg-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded',
+              )}
             >
               <input
                 type='checkbox'

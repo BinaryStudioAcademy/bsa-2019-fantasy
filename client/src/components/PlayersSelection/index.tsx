@@ -6,7 +6,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 
 import { loadPlayersAction } from '../../components/PlayersSelection/actions';
 import { RootState } from 'store/types';
-import { Player } from 'types/player.types';
+import { PlayerType } from 'types/player.types';
 import { sortedBy, filteredBy, maxPrice } from './constants';
 
 import { PlayerList } from '../PlayersList/index';
@@ -15,7 +15,7 @@ import 'react-dropdown/style.css';
 
 type Props = {
   loadPlayersAction: typeof loadPlayersAction;
-  players?: Player[];
+  players?: PlayerType[];
 };
 
 const PlayersSelection = ({ loadPlayersAction, players }: Props) => {

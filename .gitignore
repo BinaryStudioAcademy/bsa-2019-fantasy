@@ -86,3 +86,6 @@ build
 # Lock file
 package-lock.json
 yarn.lock
+
+# Test
+test/output/

@@ -6,8 +6,9 @@ module.exports = {
     'plugin:jsx-a11y/recommended',
     'prettier/react',
     'prettier',
+    'plugin:wdio/recommended'
   ],
-  plugins: ['@typescript-eslint', 'prettier', 'react', 'react-hooks', 'jsx-a11y'],
+  plugins: ['@typescript-eslint', 'prettier', 'react', 'react-hooks', 'jsx-a11y', 'wdio'],
   parserOptions: {
     project: __dirname + '/tsconfig.json',
     ecmaVersion: 2018,
@@ -31,6 +32,7 @@ module.exports = {
     'react/static-property-placement': 'error',
     'react/void-dom-elements-no-children': 'error',
     'react/state-in-constructor': ['error', 'never'],
+    'react/prop-types': 'off',
 
     'jsx-a11y/click-events-have-key-events': 'off',
     'jsx-a11y/no-static-element-interactions': 'warn',

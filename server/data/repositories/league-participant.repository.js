@@ -1,4 +1,4 @@
-import { LeagueParticipantModel } from '../models';
+import { LeagueParticipantModel, LeagueModel } from '../models';
 import BaseRepository from './base.repository';
 
 class LeagueParticipantRepository extends BaseRepository {
@@ -9,8 +9,14 @@ class LeagueParticipantRepository extends BaseRepository {
   getLeaguesByUserId(participant_id) {
     return this.model.findAll({
       where: { participant_id },
-      include: ['league'],
       attributes: ['is_creator', 'current_rank', 'last_rank'],
+      include: [
+        {
+          model: LeagueModel,
+          as: 'league',
+          attributes: ['name', 'private'],
+        },
+      ],
     });
   }
 

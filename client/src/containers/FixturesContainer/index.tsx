@@ -44,6 +44,7 @@ const FixturesContainer = ({
       loadGamesAction(currentGameweek + 1);
     }
   }, [currentGameweek, gameweeks, loadGamesAction]);
+  
 
   if (!games || !gameweeks) {
     return <Spinner />;

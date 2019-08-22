@@ -168,6 +168,7 @@
     "transfers": "Transfers",
     "leagues": "Leagues",
     "score": "Score",
+    "money": "Money",
     "logout": "Logout"
   },
 
@@ -253,6 +254,33 @@
     }
   },
 
+  "TransfersTeamSelection": {
+    "switch": {
+      "pitch": "Pitch View",
+      "list": "List View"
+    },
+    "submit": "Make transfers"
+  },
+
+  "TransfersModal": {
+    "title": "Confirm transfers",
+    "statement": {
+      "a": "You will have",
+      "b": "free transfers",
+      "c": "and",
+      "d": "left after transfers"
+    },
+    "table": {
+      "in": "In",
+      "out": "Out",
+      "scoreCost": "Score cost",
+      "discardTransfer": "Discard transfer",
+      "total": "Total"
+    },
+    "submit": "Confirm Transfers",
+    "cancel": "Change Transfers"
+  },
+
   "NotFound": {
     "message": "Looks like this freekick went off the stadium!",
     "back": "Take me back home"
@@ -275,5 +303,13 @@
     "browseAll": "Browse all winners",
     "summary": "Summary",
     "season": "Season"
+  },
+
+  "PrivateLeagueModal": {
+    "title": "This is your invitation code",
+    "message": "Share this code with others to join your league!",
+    "invitationCode": "Your invitation code",
+    "copied": "Copied",
+    "clickToCopy": "Click on the code to copy"
   }
 }
