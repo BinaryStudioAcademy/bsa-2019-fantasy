@@ -22,7 +22,7 @@ const Sidebar = () => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
-  const { name, score, money } = useSelector(
+  const { name, score, money, team_name } = useSelector(
     (state: RootState) => state.profile.user!,
     shallowEqual,
   );
