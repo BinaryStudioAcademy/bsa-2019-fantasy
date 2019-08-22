@@ -40,6 +40,11 @@ export default (orm, DataTypes) => {
         type: DataTypes.STRING,
         unique: true,
       },
+      free_transfers: {
+        allowNull: true,
+        type: DataTypes.INTEGER,
+        defaultValue: 1,
+      },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
     },
