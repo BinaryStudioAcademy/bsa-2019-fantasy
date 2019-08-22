@@ -9,7 +9,7 @@ import {
   AsyncSetTeamHistoryAction,
 } from './action.type';
 
-import { GameweekHistoryType, TeamMemberType } from 'types/gameweekHistory.type';
+import { TeamMemberType } from 'types/gameweekHistory.type';
 
 const setGameweeksHistory = (gameweeksHistory: any): setGameweekHistoryAction => ({
   type: SET_GAMEWEEKS_HISTORY,
@@ -21,7 +21,7 @@ const setTeamHistory = (teamHistory: TeamMemberType[]): setTeamHistoryAction => 
   payload: teamHistory,
 });
 
-const setIsLoading = (isLoading: boolean): setTeamHistoryAction => ({
+const setIsLoading = (isLoading: boolean): any => ({
   type: SET_IS_LOADING,
   payload: isLoading,
 });
@@ -29,8 +29,10 @@ const setIsLoading = (isLoading: boolean): setTeamHistoryAction => ({
 export const loadGameweeksHistoryAction = (
   userId: string,
 ): AsyncSetGameweekHistoryAction => async (dispatch) => {
+  dispatch(setIsLoading(true));
   const result = await gameweekHistoryService.getGameweeksHistoryByUser(userId);
   dispatch(setGameweeksHistory(result));
+  dispatch(setIsLoading(false));
 };
 
 export const loadTeamHistoryAction = (

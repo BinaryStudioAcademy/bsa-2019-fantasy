@@ -19,7 +19,7 @@ type SetLoading = {
   payload: boolean;
 };
 
-export type setGameweekHistoryAction = SetGameweeksHistory;
+export type setGameweekHistoryAction = SetGameweeksHistory | SetLoading;
 export type setTeamHistoryAction = SetTeamHistory | SetLoading;
 export type AsyncSetGameweekHistoryAction = Thunky<setGameweekHistoryAction>;
 export type AsyncSetTeamHistoryAction = Thunky<setTeamHistoryAction>;

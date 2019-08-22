@@ -39,7 +39,7 @@ const GameweekHistory = ({
   }, [loadGameweeksHistoryAction]);
 
   useEffect(() => {
-    if (gameweeksHistory) {
+    if (gameweeksHistory && gameweeksHistory.length) {
       const gameweekId = gameweeksHistory[currentGameweek].gameweek.id;
       loadTeamHistoryAction(user_id, gameweekId);
     }
@@ -47,7 +47,7 @@ const GameweekHistory = ({
 
   const displayRadar = () => gameweeksHistory.map((item) => item.team_score);
 
-  if (!gameweeksHistory || !teamHistory) {
+  if (!gameweeksHistory) {
     return <Spinner />;
   }
 
@@ -109,7 +109,9 @@ const GameweekHistory = ({
             </h3>
             <p className={`pl-3 ${styles.points}`}>
               <span className='font-bold'>
-                {gameweeksHistory[gameweeksHistory.length - 1].team_score}
+                {gameweeksHistory[gameweeksHistory.length - 1]
+                  ? gameweeksHistory[gameweeksHistory.length - 1].team_score
+                  : '0'}
               </span>
               {` ${t('GameweekHistoryPage.points')}`}
             </p>
