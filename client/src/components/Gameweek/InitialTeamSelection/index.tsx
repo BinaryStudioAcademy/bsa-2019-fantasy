@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import update from 'immutability-helper';
@@ -17,12 +17,14 @@ import { SQUAD, BUDGET, CLUBS } from './helpers';
 
 import styles from './styles.module.scss';
 
-type Props = {
+interface Props extends RouteComponentProps {
   updateUserTeamDetails: typeof updateUserTeamDetails;
-};
+}
 
-const InitialTeamSelection = ({ updateUserTeamDetails }: Props) => {
+const InitialTeamSelection = ({ updateUserTeamDetails, history }: Props) => {
+  console.log(history);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   // Set squad drag&drop items, which accept only specific player types
   const [squad, setSquad] = useState<PlayerDroppable[]>(SQUAD);
 
@@ -43,6 +45,7 @@ const InitialTeamSelection = ({ updateUserTeamDetails }: Props) => {
     }
     try {
       await updateUserTeamDetails({ money: moneyRemaing, team_name: teamName });
+      history.push('/');
     } catch (err) {
       console.log(err);
     }
@@ -248,7 +251,7 @@ const actions = {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
-export default connect(
+export default withRouter(connect(
   null,
   mapDispatchToProps,
-)(InitialTeamSelection);
+)(InitialTeamSelection) as any);
