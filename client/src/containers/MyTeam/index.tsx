@@ -13,8 +13,6 @@ import { RootState } from 'store/types';
 const MyTeam = () => {
   const { t } = useTranslation();
 
-  const players = useSelector((state: RootState) => state.gameweeks.gameweeks_history);
-
   useEffect(() => {
     document.title = 'Home | Fantasy Football League';
   }, []);
@@ -33,6 +31,12 @@ const MyTeam = () => {
   const [playerToSwitch, setPlayerToSwitch] = useState<GameweekHistoryType | undefined>(
     undefined,
   );
+  const players = useSelector((state: RootState) => state.gameweeks.gameweeks_history);
+
+  if (captainId === '' && players.length > 0) {
+    const givenCaptain = players.find((p) => p.is_captain);
+    givenCaptain && setCaptainId(givenCaptain.player_stats.id);
+  }
 
   const setCurrentPlayerForSwitching = (id: string) => {
     const player = players.find((p) => p.player_stats.id === id);
