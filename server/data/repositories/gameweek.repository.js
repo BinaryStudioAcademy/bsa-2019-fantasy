@@ -7,6 +7,10 @@ class GameweekRepository extends BaseRepository {
       where: { number },
     });
   }
+
+  getAll() {
+    return this.model.findAll();
+  }
 }
 
 export default new GameweekRepository(GameweekModel);
