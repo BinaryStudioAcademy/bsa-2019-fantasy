@@ -1,6 +1,9 @@
 import { Router } from 'express';
+
 import * as gameweekHistoryService from '../services/gameweek-history.service';
 import * as teamMemberHistoryService from '../services/team-member-history.service';
+import * as transferService from '../services/transfer.service';
+import jwtMiddleware from '../middlewares/jwt.middleware';
 
 const router = Router();
 
@@ -65,6 +68,16 @@ router
     gameweekHistoryService
       .getHistoriesByUserId(req.params.user)
       .then((value) => res.json(value))
+      .catch(next);
+  })
+  .post('/transfers/:gameweek', jwtMiddleware, (req, res, next) => {
+    transferService
+      .applyTransfers(req.user.id, req.params.gameweek, req.body)
+      .then((amount) =>
+        res.send({
+          message: `Successfully transfered ${amount} player${amount > 1 ? 's' : ''}`,
+        }),
+      )
       .catch(next);
   });
 
