@@ -14,7 +14,7 @@ import { currentGameweekSelector } from 'store/selectors/current-gameweek.select
 import Button from 'components/Button';
 import SquadSelectionStatus from './components/SquadSelectionStatus';
 import SaveTeamModal from './components/SaveTeamModal';
-import { SQUAD, BUDGET, CLUBS } from './helpers';
+import { SQUAD, BUDGET, CLUBS, FULLNAMES } from './helpers';
 
 import styles from './styles.module.scss';
 
@@ -35,7 +35,10 @@ const InitialTeamSelection = ({ updateUserTeamDetails, history }: Props) => {
 
   const [moneyRemaing, setMoneyRemaining] = useState<number>(BUDGET);
   const [selectedPlayers, setSelectedPlayers] = useState<number>(0);
-  const [isMoreThree, setIsMoreThree] = useState<boolean>(false);
+  const [isMoreThree, setIsMoreThree] = useState<{ status: boolean; club: string }>({
+    status: false,
+    club: '',
+  });
 
   const currentGameweek = useSelector(currentGameweekSelector);
 
@@ -68,7 +71,7 @@ const InitialTeamSelection = ({ updateUserTeamDetails, history }: Props) => {
     setMoneyRemaining(BUDGET);
     setSelectedPlayers(0);
     setdroppedPlayerSquadIds([]);
-    setIsMoreThree(false);
+    setIsMoreThree({ status: false, club: '' });
   };
 
   const recalculateMoney = (squad: PlayerDroppable[]) => {
@@ -100,9 +103,16 @@ const InitialTeamSelection = ({ updateUserTeamDetails, history }: Props) => {
     const isMoreThanThree = (el) => CLUBS[el] > 3;
 
     if (Object.keys(CLUBS).some(isMoreThanThree)) {
-      setIsMoreThree(true);
+      const club = FULLNAMES[Object.keys(CLUBS).filter(isMoreThanThree)[0]];
+      setIsMoreThree({
+        status: true,
+        club,
+      });
     } else {
-      setIsMoreThree(false);
+      setIsMoreThree({
+        status: false,
+        club: '',
+      });
     }
   };
 

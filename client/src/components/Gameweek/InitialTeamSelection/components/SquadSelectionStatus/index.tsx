@@ -4,7 +4,7 @@ import Button from 'components/Button';
 interface SquadSelection {
   money: number;
   players: number;
-  isMoreThree: boolean;
+  isMoreThree: { status: boolean; club: string };
   onResetClick: (ev: React.SyntheticEvent) => void;
 }
 
@@ -46,9 +46,9 @@ const SquadSelectionStatus = ({
           </div>
         </div>
       </div>
-      {isMoreThree && (
+      {isMoreThree.status && (
         <p className='text-center bg-red-700 text-white text-xs mb-4'>
-          Too many players selected from one team
+          {`Too many players selected from ${isMoreThree.club}`}
         </p>
       )}
     </div>
