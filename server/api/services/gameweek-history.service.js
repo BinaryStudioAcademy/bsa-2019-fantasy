@@ -1,4 +1,5 @@
 import gameweekHistoryRepository from '../../data/repositories/gameweek-history.repository';
+import gameweekRepository from '../../data/repositories/gameweek.repository';
 
 export const getAllHistory = () => gameweekHistoryRepository.getAll();
 
@@ -36,16 +37,65 @@ export const getHistoryByGameweekId = async (gameweekId) => {
 
   return result;
 };
+export const getHistoryByGameweeks = async (gameweeks) => {
+  const getGameweekId = (gameweek) => {
+    const { id } = gameweek;
+    return id;
+  };
+  const ids = gameweeks.map((g) => getGameweekId(g));
+  const result = await gameweekHistoryRepository.getByGameweekId(ids);
 
+  return result;
+};
+export const getGameweekHistoryForUser = async (userId) => {
+  const result = await gameweekHistoryRepository.getGameweekHistoryForUser(userId);
+
+  return result;
+};
+const getTeamScore = (gameweekHistory) => {
+  const { team_score } = gameweekHistory;
+  return team_score;
+};
 export const getAverageGameweekScore = (gameweekResults) => {
   return (
-    gameweekResults.map((gr) => gr.team_score).reduce((p, c) => p + c, 0) /
+    gameweekResults.map((gr) => getTeamScore(gr)).reduce((p, c) => p + c, 0) /
     gameweekResults.length
   );
 };
 
 export const getMaxGameweekScore = (gameweekResults) => {
-  return Math.max(...gameweekResults.map((gr) => gr.team_score));
+  return Math.max(...gameweekResults.map((gr) => getTeamScore(gr)));
+};
+
+export const getGameweeksStatistics = (histories) => {
+  const gameweekIds = new Set([...histories].map((h) => h.gameweek_id));
+  // const getGameweek = (gameweekId) => {
+  //   const result = gameweekRepository.getById(gameweekId);
+  //   return result;
+  // };
+  // const getGameweekNumber = (gameweek) => {
+  //   const { number } = gameweek;
+
+  //   return number;
+  // };
+
+  let result = [];
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < [...gameweekIds].length; i++) {
+    result = [
+      ...result,
+      {
+        gameweek: [...gameweekIds][i],
+        average: getAverageGameweekScore(
+          [...histories].filter((h) => h.gameweek_id === [...gameweekIds][i]),
+        ),
+        max: getMaxGameweekScore(
+          [...histories].filter((h) => h.gameweek_id === [...gameweekIds][i]),
+        ),
+      },
+    ];
+  }
+  return result;
 };
 
 export const getBestPlayersOfTheGameweek = (players) => {

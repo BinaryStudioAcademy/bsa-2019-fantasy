@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as gameweekHistoryService from '../services/gameweek-history.service';
 import * as teamMemberHistoryService from '../services/team-member-history.service';
+import * as gameweekService from '../services/gameweek.service';
 
 const router = Router();
 
@@ -23,15 +24,24 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
-  .get('/gameweek/results/:gameweek', (req, res, next) => {
+
+  // TODO: get user ranking in overall league
+  .get('/gameweek/ranking/user/:user', (req, res, next) =>
     gameweekHistoryService
-      .getHistoryByGameweekId(req.params.gameweek)
-      .then((value) => {
-        return res.json({
-          averageScore: gameweekHistoryService.getAverageGameweekScore(value),
-          maxScore: gameweekHistoryService.getMaxGameweekScore(value),
-        });
-      })
+      .getGameweekHistoryForUser(req.params.user)
+      .then((value) => res.json(value))
+      .catch(next),
+  )
+  .get('/gameweek/recent/results', (req, res, next) => {
+    gameweekService
+      .getRecentGameweeks()
+      .then((gameweeks) =>
+        gameweekHistoryService
+          .getHistoryByGameweeks(gameweeks)
+          .then((histories) =>
+            res.json(gameweekHistoryService.getGameweeksStatistics(histories)),
+          ),
+      )
       .catch(next);
   })
   .get('/gameweek/best-players/:gameweek', (req, res, next) => {
