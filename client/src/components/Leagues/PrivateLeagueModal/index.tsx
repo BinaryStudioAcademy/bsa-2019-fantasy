@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDom from 'react-dom';
 import { FaTimes } from 'react-icons/fa';
 
@@ -6,6 +6,10 @@ import styles from './styles.module.scss';
 
 const PrivateLeagueModal = ({ open, onClose, code }) => {
   const [copied, setCopy] = useState(false);
+
+  useEffect(() => {
+    setCopy(false);
+  }, []);
 
   const copyToClipboard = (e) => {
     e.target.select();
@@ -47,7 +51,11 @@ const PrivateLeagueModal = ({ open, onClose, code }) => {
                 />
               </div>
             </div>
-            {copied && <p>Copied</p>}
+            {copied ? (
+              <p className='text-green-500 italic mb-5'>Copied</p>
+            ) : (
+              <p className='text-gray-600 italic mb-5'>Click on the code to copy</p>
+            )}
           </div>
         </div>
       </div>,
