@@ -28,13 +28,12 @@ const setIsLoading = (isLoading: boolean): any => ({
 
 export const loadGameweeksHistoryAction = (userId): any => async (dispatch) => {
   const result = await gameweekHistoryService.getGameweeksHistoryByUser(userId);
-  console.log(result);
   dispatch(setGameweeksHistory(result));
 };
 
 export const loadTeamHistoryAction = (userId, gameweekId): any => async (dispatch) => {
   dispatch(setIsLoading(true));
-  const result = await gameweekHistoryService.getGameweekHistoryForUserById(
+  const result = await gameweekHistoryService.getTeamHistoryForUserById(
     userId,
     gameweekId,
   );
