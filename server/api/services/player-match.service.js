@@ -3,6 +3,8 @@ import gameweekRepository from '../../data/repositories/gameweek.repository';
 import gameRepository from '../../data/repositories/game.repository';
 import eventRepository from '../../data/repositories/event.repository';
 
+import calculatePlayerScore from '../../helpers/calculate-player-score.helper';
+
 export const getAllPlayerMatch = () => playerMatchRepository.getAll();
 
 export const getPlayerMatchById = (id) => playerMatchRepository.getById(id);
@@ -73,4 +75,18 @@ export const getPlayerStatsByGameweeks = async (playerId, playerClubId) => {
   );
 
   return result;
+};
+
+export const getPlayerScoreByGameweeks = async (playerId, gameweekId) => {
+  const gameweeksByPlayer = await getPlayerStatsByGameweeks(playerId);
+  const playerEvents = gameweeksByPlayer.filter(
+    (item) => item.gameweek.number === +gameweekId,
+  );
+  const scoreList = playerEvents.map((item) => {
+    return calculatePlayerScore(item.stats);
+  });
+
+  const score = scoreList.reduce((sum, current) => sum + current, 0);
+
+  return score;
 };
