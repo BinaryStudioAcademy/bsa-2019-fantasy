@@ -10,9 +10,9 @@ type Props = {
   club: string;
   position: string;
   total_points: number;
-  form: number;
-  gameweek_points: number;
-  fixture: string;
+  goals: number;
+  missed_passes: number;
+  red_cards: number;
   isGameweek: boolean;
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
@@ -26,10 +26,10 @@ const TeamItem = ({
   name,
   club,
   position,
-  form,
-  gameweek_points,
+  goals,
+  missed_passes,
   total_points,
-  fixture,
+  red_cards,
   isGameweek,
   onOpen,
   captainId,
@@ -39,12 +39,12 @@ const TeamItem = ({
   const isViceCaptain = viceCaptainId === id;
   return (
     <tr className='bg-white w-full'>
-      <td  className={`w-1/12 ${styles['table-item']}`} align='center' valign='middle'>
+      <td className={`w-1/12 ${styles['table-item']}`} align='center' valign='middle'>
         <button>
           <img src={info} alt=' info' />
         </button>
       </td>
-      <td  className={`w-1/12 ${styles['table-item']}`}>
+      <td className={`w-1/12 ${styles['table-item']}`}>
         {' '}
         {!isGameweek && (
           <React.Fragment>
@@ -89,10 +89,10 @@ const TeamItem = ({
         </button>
       </td>
       <td className={`w-1/12 text-base ${styles['table-item']}`}>{position}</td>
-      <td className={`w-1/12 text-base ${styles['table-item']}`}>{form}</td>
-      <td className={`w-1/12 text-base ${styles['table-item']}`}>{gameweek_points}</td>
+      <td className={`w-1/12 text-base ${styles['table-item']}`}>{goals}</td>
+      <td className={`w-1/12 text-base ${styles['table-item']}`}>{missed_passes}</td>
       <td className={`w-1/12 text-base ${styles['table-item']}`}>{total_points}</td>
-      <td className={`w-1/12 text-base ${styles['table-item']}`}>{fixture}</td>
+      <td className={`w-1/12 text-base ${styles['table-item']}`}>{red_cards}</td>
     </tr>
   );
 };

@@ -12,6 +12,7 @@ import fixturesReducer from 'containers/FixturesContainer/reducer';
 import playerSelectionReducer from 'components/PlayersSelection/reducer';
 import clubsReducer from 'containers/Routing/fetchClubs/reducer';
 import gameweeksReducer from 'containers/Routing/fetchGameweeks/reducer';
+import gameweekHistoryReducer from 'containers/GameweekHistory/reducer';
 import leagueReducer from 'containers/Leagues/reducer';
 
 export const history = createBrowserHistory();
@@ -31,6 +32,7 @@ const reducers = {
   playerSelection: playerSelectionReducer,
   gameweeks: gameweeksReducer,
   league: leagueReducer,
+  gameweekHistory: gameweekHistoryReducer
   transfers: transferReducer,
 };
 

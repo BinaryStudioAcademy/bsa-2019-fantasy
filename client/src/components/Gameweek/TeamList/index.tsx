@@ -38,10 +38,10 @@ const TeamList = ({
           imageURL={lastDroppedItem.src}
           club={lastDroppedItem.club}
           position={lastDroppedItem.type}
-          form={lastDroppedItem.form}
-          gameweek_points={lastDroppedItem.gameweek_points}
+          goals={lastDroppedItem.goals}
+          missed_passes={lastDroppedItem.missed_passes}
           total_points={lastDroppedItem.points}
-          fixture={lastDroppedItem.fixture}
+          red_cards={lastDroppedItem.red_cards}
           isGameweek={isGameweek}
           onOpen={arr.length === starters.length ? onOpen : undefined}
           captainId={captainId}
