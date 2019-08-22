@@ -7,10 +7,6 @@ import styles from './styles.module.scss';
 const PrivateLeagueModal = ({ open, onClose, code }) => {
   const [copied, setCopy] = useState(false);
 
-  useEffect(() => {
-    setCopy(false);
-  }, []);
-
   const copyToClipboard = (e) => {
     e.target.select();
     document.execCommand('copy');
@@ -18,11 +14,16 @@ const PrivateLeagueModal = ({ open, onClose, code }) => {
     setCopy(true);
   };
 
+  const closeModal = () => {
+    setCopy(false);
+    onClose();
+  };
+
   if (open) {
     return ReactDom.createPortal(
       <div className={styles['modal-cover']}>
         <div className={`${styles.modal} rounded`}>
-          <button className={styles['modal-close']} onClick={onClose}>
+          <button className={styles['modal-close']} onClick={closeModal}>
             <FaTimes />
           </button>
           <div className={styles['modal-body']}>

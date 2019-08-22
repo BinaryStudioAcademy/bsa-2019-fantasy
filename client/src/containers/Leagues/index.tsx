@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { map } from 'lodash';
 
-import { FaStar, FaArrowUp, FaArrowDown, FaMinus } from 'react-icons/fa';
+import { FaStar, FaArrowUp, FaArrowDown, FaMinus, FaUserCog } from 'react-icons/fa';
 
 import Spinner from 'components/Spinner';
 import { LeagueTable } from 'components/Leagues/LeagueTables';
@@ -48,7 +48,7 @@ const Leagues = ({
 
     const userFavouriteCLub = clubs.filter((item) => item.id === user.favorite_club_id);
     setClub(userFavouriteCLub[0]);
-  }, []);
+  }, [clubs]);
 
   const openModal = (data) => {
     const { name } = data.league;
@@ -73,9 +73,10 @@ const Leagues = ({
 
       Cell: (props: any) => (
         <button
-          className={styles['table-title-row']}
+          className={`${styles['table-title-row']} flex items-center`}
           onClick={() => openModal(props.original)}
         >
+          {props.original.is_creator && <FaUserCog className='mr-1' />}
           {props.value}
         </button>
       ),
