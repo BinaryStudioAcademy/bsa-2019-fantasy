@@ -39,7 +39,7 @@ router
       .getHistoryByGameweekId(req.params.gameweek)
       .then((history) => {
         teamMemberHistoryService
-          .getPlayersByGameweekId(history)
+          .getPlayersByGameweekIds(history)
           .then((players) => {
             return res.json(gameweekHistoryService.getBestPlayersOfTheGameweek(players));
           })

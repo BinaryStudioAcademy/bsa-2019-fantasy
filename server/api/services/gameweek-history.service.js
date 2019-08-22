@@ -33,6 +33,7 @@ export const getHistoriesByUserId = async (userId) => {
 
 export const getHistoryByGameweekId = async (gameweekId) => {
   const result = await gameweekHistoryRepository.getByGameweekId(gameweekId);
+
   return result;
 };
 
@@ -45,4 +46,63 @@ export const getAverageGameweekScore = (gameweekResults) => {
 
 export const getMaxGameweekScore = (gameweekResults) => {
   return Math.max(...gameweekResults.map((gr) => gr.team_score));
+};
+
+export const getBestPlayersOfTheGameweek = (players) => {
+  const getPlayerStats = (player) => {
+    const { player_stats } = player;
+    return player_stats;
+  };
+  const getPlayerInfo = (player) => {
+    const {
+      id,
+      first_name,
+      second_name,
+      player_price,
+      player_score,
+      position,
+      goals,
+      assists,
+      missed_passes,
+      goals_conceded,
+      saves,
+      yellow_cards,
+      red_cards,
+      code,
+      club_id,
+      createdAt,
+      updatedAt,
+    } = player;
+    return {
+      id,
+      first_name,
+      second_name,
+      player_price,
+      player_score,
+      position,
+      goals,
+      assists,
+      missed_passes,
+      goals_conceded,
+      saves,
+      yellow_cards,
+      red_cards,
+      code,
+      club_id,
+      createdAt,
+      updatedAt,
+    };
+  };
+
+  //  players' info
+  players.map((p) => getPlayerStats(p)).map((p) => getPlayerInfo(p));
+
+  // left only unique players
+  const uniquePlayers = new Set([...players]);
+  //  sort them by player_score in descending order
+  const bestPlayers = [...uniquePlayers]
+    .sort((a, b) => b.player_score - a.player_score)
+    .slice(0, 11);
+
+  return bestPlayers;
 };
