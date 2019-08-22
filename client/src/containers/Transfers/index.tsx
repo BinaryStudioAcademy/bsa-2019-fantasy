@@ -24,7 +24,7 @@ const Transfers = () => {
           {t('Transfers.title.main')}
         </h2>
         <div className={`${header['jumbotron-content']} mt-2 flex`}>
-          <div style={{ width: '25%' }}>
+          <div style={{ minWidth: '350px' }}>
             <PlayersSelection />
           </div>
           <div className='flex flex-grow justify-center'>

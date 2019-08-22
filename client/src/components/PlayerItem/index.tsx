@@ -25,7 +25,16 @@ export const PlayerItem = (props: any) => {
         <button className='flex flex-row'>
           <img className='w-8 mr-2' src={imageURL} alt='player' />
           <div className='flex flex-col items-start'>
-            <div>{name}</div>
+            <div
+              style={{
+                maxWidth: '100px',
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {name}
+            </div>
             <div>
               <span className='mr-1'>{club}</span>
               <span>{position}</span>
