@@ -13,6 +13,25 @@ import teamMemberHistoriesSeed from '../seed-data/team-member-histories.seed';
 
 const randomIndex = (length) => Math.floor(Math.random() * length);
 
+const teamMemberIndex1Gameweek = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 14, 17, 18, 22];
+const teamMemberIndex2Gameweek = [
+  53,
+  54,
+  55,
+  56,
+  57,
+  58,
+  59,
+  60,
+  64,
+  65,
+  67,
+  49,
+  50,
+  51,
+  52,
+];
+
 export default {
   up: async (queryInterface, Sequelize) => {
     try {
@@ -42,10 +61,20 @@ export default {
         options,
       );
 
-      const playerMatchMappedSeed = playerMatchSeed.map((match) => ({
-        ...match,
-        player_id: playerStats[randomIndex(playerStats.length)].id,
-      }));
+      const playerMatchMappedSeed = playerMatchSeed.map((match, index) => {
+        let player_id = '';
+        if (index <= 14) {
+          player_id = playerStats[teamMemberIndex1Gameweek[index]].id;
+        } else if (index <= 29) {
+          player_id = playerStats[teamMemberIndex2Gameweek[29 - index]].id;
+        } else {
+          player_id = playerStats[randomIndex(playerStats.length)].id;
+        }
+        return {
+          ...match,
+          player_id,
+        };
+      });
 
       await queryInterface.bulkInsert('player_match_stats', playerMatchMappedSeed, {});
       const playerMatchStats = await queryInterface.sequelize.query(
@@ -70,11 +99,27 @@ export default {
         options,
       );
 
-      const eventMappedSeeds = eventsSeed.map((event) => ({
-        ...event,
-        player_match_stat_id: playerMatchStats[randomIndex(playerMatchStats.length)].id,
-        game_id: games[randomIndex(games.length)].id,
-      }));
+      const eventMappedSeeds = eventsSeed.map((event, index) => {
+        let player_match_stat_id = '';
+        let game_id = '';
+        if (index < playerMatchStats.length) {
+          player_match_stat_id = playerMatchStats[index].id;
+        } else {
+          player_match_stat_id =
+            playerMatchStats[randomIndex(playerMatchStats.length)].id;
+        }
+
+        if (index < games.length) {
+          game_id = games[index].id;
+        } else {
+          game_id = games[randomIndex(games.length)].id;
+        }
+        return {
+          ...event,
+          player_match_stat_id,
+          game_id,
+        };
+      });
 
       await queryInterface.bulkInsert('events', eventMappedSeeds, {});
 
@@ -106,25 +151,6 @@ export default {
         options,
       );
 
-      const teamMemberIndex1Gameweek = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 14, 17, 18, 22];
-      const teamMemberIndex2Gameweek = [
-        53,
-        54,
-        55,
-        56,
-        57,
-        58,
-        59,
-        60,
-        64,
-        65,
-        67,
-        49,
-        50,
-        51,
-        52,
-      ];
-
       const teamMemberHistoriesMappedSeeds = teamMemberHistoriesSeed.map(
         (member, index) => {
           let gameweek_history_id = '';
@@ -132,7 +158,6 @@ export default {
           if (index <= 14) {
             gameweek_history_id = gameweekHistories[0].id;
             player_id = playerStats[teamMemberIndex1Gameweek[index]].id;
-            console.log(player_id);
           } else {
             gameweek_history_id = gameweekHistories[1].id;
             player_id = playerStats[teamMemberIndex2Gameweek[29 - index]].id;

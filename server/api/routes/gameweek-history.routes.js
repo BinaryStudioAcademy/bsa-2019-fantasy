@@ -37,6 +37,20 @@ router
       .catch(next);
   })
 
+  .get('/history-team/:user/:gameweek/:gameweekNumber', (req, res, next) => {
+    gameweekHistoryService
+      .getCurrentHistoryById(req.params.user, req.params.gameweek)
+      .then((historyId) => {
+        teamMemberHistoryService
+          .getPlayerHistoryByGameweekId(historyId, req.params.gameweekNumber)
+          .then((players) => {
+            return res.json(players);
+          })
+          .catch(next);
+      })
+      .catch(next);
+  })
+
   .post('/user-team/:user/:gameweek', (req, res, next) => {
     gameweekHistoryService
       .postCurrentHistoryById(req.params.user, req.params.gameweek)

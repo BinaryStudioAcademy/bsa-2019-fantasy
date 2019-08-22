@@ -21,13 +21,6 @@ router
       .getPlayerStatsByGameweeks(req.params.id)
       .then((value) => res.json(value))
       .catch(next),
-  )
-
-  .get('/score/:player/:gameweek', (req, res, next) =>
-    playerMatchService
-      .getPlayerScoreByGameweeks(req.params.player, req.params.gameweek)
-      .then((value) => res.json(value))
-      .catch(next),
   );
 
 export default router;
