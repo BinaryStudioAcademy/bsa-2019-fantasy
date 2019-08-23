@@ -27,12 +27,14 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
-
-  // TODO: get user ranking in overall league
-  .get('/gameweek/ranking/user/:user', (req, res, next) =>
+  .get('/gameweek/ranking/user/:user/:gameweek', (req, res, next) =>
     gameweekHistoryService
-      .getGameweekHistoryForUser(req.params.user)
-      .then((value) => res.json(value))
+      .getGameweekHistoryForGameweek(req.params.gameweek)
+      .then((userHistory) => {
+        res.json({
+          rank: gameweekHistoryService.getUserRanking(userHistory, req.params.user),
+        });
+      })
       .catch(next),
   )
   .get('/gameweek/recent/results', (req, res, next) => {

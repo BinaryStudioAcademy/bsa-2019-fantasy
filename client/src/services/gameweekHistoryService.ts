@@ -39,6 +39,14 @@ export const getTeamHistoryForUserById = async (
   return response.json();
 };
 
+export const getUserRankingForGameweek = async (userId: string, gameweekId: string) => {
+  const response = await callWebApi({
+    endpoint: `/api/gameweek-history/gameweek/ranking/user/${userId}/${gameweekId}`,
+    type: 'GET',
+  });
+  return response.json();
+};
+
 export const postGameweekHistoryForUserById = async (
   userId: string,
   gameweekId: string,

@@ -1,5 +1,4 @@
 import gameweekHistoryRepository from '../../data/repositories/gameweek-history.repository';
-import gameweekRepository from '../../data/repositories/gameweek.repository';
 
 export const getAllHistory = () => gameweekHistoryRepository.getAll();
 
@@ -46,8 +45,10 @@ export const getHistoryByGameweeks = async (gameweeks) => {
 
   return result;
 };
-export const getGameweekHistoryForUser = async (userId) => {
-  const result = await gameweekHistoryRepository.getGameweekHistoryForUser(userId);
+export const getGameweekHistoryForGameweek = async (gameweekId) => {
+  const result = await gameweekHistoryRepository.getGameweekHistoryForGameweek(
+    gameweekId,
+  );
 
   return result;
 };
@@ -154,4 +155,24 @@ export const getBestPlayersOfTheGameweek = (players) => {
     .slice(0, 11);
 
   return bestPlayers;
+};
+
+export const getUserRanking = (userHistory, userId) => {
+  const getHistoryInfo = (history) => {
+    const { id, user_id, gameweek_id, team_score } = history;
+    return {
+      id,
+      user_id,
+      gameweek_id,
+      team_score,
+    };
+  };
+  //  sort gameweek-history results for all users by team score
+  const usersRanking = [...userHistory]
+    .map((h) => getHistoryInfo(h))
+    .sort((a, b) => b.team_score - a.team_score)
+    .map((h) => h.user_id);
+  //  get user rank among another users` results
+  const userPosition = usersRanking.indexOf(userId) + 1;
+  return userPosition;
 };

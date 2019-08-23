@@ -26,9 +26,9 @@ class GameweekHistoryRepository extends BaseRepository {
     });
   }
 
-  getGameweekHistoryForUser(user_id) {
+  getGameweekHistoryForGameweek(gameweek_id) {
     return this.model.findAll({
-      where: { user_id },
+      where: { gameweek_id },
     });
   }
 
