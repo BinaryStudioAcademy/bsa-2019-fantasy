@@ -163,8 +163,6 @@ const PlayersComparisonPage: React.FC<PropsI> = (props: PropsI) => {
     },
   ];
 
-  console.log(tableData);
-
   return (
     <>
       <PlayersHighlights comparisonData={props.location.state.comparisonData} />

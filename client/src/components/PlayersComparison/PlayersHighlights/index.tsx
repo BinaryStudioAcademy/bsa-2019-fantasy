@@ -161,9 +161,15 @@ const PlayersHighlights = (props: Props) => {
             {positionDict[firstPlayer.position].name}
           </div>
 
-          <div className='player-main-name'>
+          <div className='player-main-first-name'>
+            <h2 className='font-bold text-2xl xl:text-2xl leading-none'>
+              {firstPlayer.first_name}
+            </h2>
+          </div>
+
+          <div className='player-main-second-name'>
             <h2 className='font-bold text-3xl xl:text-4xl leading-none'>
-              {firstPlayer.first_name + ' ' + firstPlayer.second_name}
+              {firstPlayer.second_name}
             </h2>
           </div>
 
@@ -210,9 +216,15 @@ const PlayersHighlights = (props: Props) => {
             {positionDict[secondPlayer.position].name}
           </div>
 
-          <div className='player-main-name'>
+          <div className='player-main-first-name'>
+            <h2 className='font-bold text-2xl xl:text-2xl leading-none'>
+              {secondPlayer.first_name}
+            </h2>
+          </div>
+
+          <div className='player-main-second-name'>
             <h2 className='font-bold text-3xl xl:text-4xl leading-none'>
-              {secondPlayer.first_name + ' ' + secondPlayer.second_name}
+              {secondPlayer.second_name}
             </h2>
           </div>
 
