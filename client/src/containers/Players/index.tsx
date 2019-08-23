@@ -15,11 +15,13 @@ import {
 } from './actions';
 import PlayerHighlight from 'components/PlayerHighlight';
 import SearchBar from 'components/SearchBar';
+import Dropdown from 'components/Dropdown';
 import PlayerDialog from 'components/PlayerDialog';
 import { getClubLogoUrl } from 'helpers/images';
 import { Club } from 'types/club.type';
 
 import { FaPlus, FaTimes } from 'react-icons/fa';
+import { Option } from 'react-dropdown';
 
 type Props = {
   players: PlayerType[];
@@ -39,6 +41,8 @@ type State = {
   comparisonData: any;
   currentPlayer?: PlayerType;
   searchBarText: string;
+  searchClub: string;
+  searchPosition: string;
   redirect: boolean;
 };
 
@@ -48,6 +52,8 @@ class PlayersPage extends React.Component<Props, State> {
     comparisonData: [],
     searchBarText: '',
     redirect: false,
+    searchClub: '',
+    searchPosition: '',
   };
   table: any;
 
@@ -66,6 +72,8 @@ class PlayersPage extends React.Component<Props, State> {
       offset: page * pageSize,
       limit: pageSize,
       search: this.state.searchBarText,
+      club_id: this.state.searchClub,
+      position: this.state.searchPosition,
       ...sort,
     });
     if (Object.keys(this.state.playerHighlightData).length === 0) {
@@ -146,6 +154,7 @@ class PlayersPage extends React.Component<Props, State> {
   getClubImageById = (id: number) => {
     const club = this.getClubById(id);
     const url = club && club.code && getClubLogoUrl(club.code, 80);
+    this.getClubOptions();
     return url || '';
   };
 
@@ -154,6 +163,44 @@ class PlayersPage extends React.Component<Props, State> {
       this.onFetchData({ ...this.table.current.state, page: 0 }),
     );
   };
+
+  onClubChange = (e: Option) => {
+    console.log(this.table.current.state);
+    this.setState({ searchClub: e.value }, () =>
+      this.onFetchData({ ...this.table.current.state, page: 0 }),
+    );
+  };
+
+  onPositionChange = (e: Option) => {
+    console.log(this.table.current.state);
+    this.setState({ searchPosition: e.value }, () =>
+      this.onFetchData({ ...this.table.current.state, page: 0 }),
+    );
+  };
+
+  getClubOptions = () => {
+    const options = this.props.clubs.map((club) => {
+      return { value: club.id.toString(), label: club.name };
+    });
+    options.unshift({ value: '', label: 'Club' });
+    return options;
+  };
+  getPositionOptions = () => {
+    const position = ['GKP', 'DEF', 'MID', 'FWD'];
+    const options = position.map((ps) => {
+      return { value: ps, label: ps };
+    });
+    options.unshift({ value: '', label: 'Position' });
+    return options;
+  };
+
+  renderClubs = () => (
+    <Dropdown
+      options={this.getClubOptions()}
+      onChange={this.onClubChange}
+      value={this.state.searchClub}
+    />
+  );
   /* eslint-enable */
   readonly columns = [
     {
@@ -333,7 +380,19 @@ class PlayersPage extends React.Component<Props, State> {
                 </button>
               )}
             </div>
-            <div className='ml-auto'>
+            <div className='ml-auto flex'>
+              <Dropdown
+                placeholder='Club'
+                options={this.getClubOptions()}
+                onChange={this.onClubChange}
+                value={this.state.searchClub}
+              />
+              <Dropdown
+                placeholder='Position'
+                options={this.getPositionOptions()}
+                onChange={this.onPositionChange}
+                value={this.state.searchPosition}
+              />
               <SearchBar
                 onChange={this.onSearchChange}
                 value={this.state.searchBarText}
