@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import update from 'immutability-helper';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +25,7 @@ import Spinner from 'components/Spinner';
 import styles from './styles.module.scss';
 
 import TeamList from '../TeamList';
+import { GameweekHistoryType } from 'types/gameweekHistory.type';
 
 export interface GameweekSelectionProps {
   currentGameweek: GameweekType;
@@ -35,6 +36,9 @@ export interface TeamSelectionProps {
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
   viceCaptainId?: string;
+  playerToSwitch?: GameweekHistoryType | undefined;
+  setPlayerForSwitching?: (id: string) => void;
+  switchWith?: (id: string) => void;
   playersHistory?: any;
 }
 
@@ -43,6 +47,9 @@ const TeamSelection = ({
   captainId,
   viceCaptainId,
   onOpen,
+  playerToSwitch,
+  setPlayerForSwitching,
+  switchWith,
   playersHistory,
 }: TeamSelectionProps) => {
   const { t } = useTranslation();
@@ -292,6 +299,10 @@ const TeamSelection = ({
                   onOpen={onOpen}
                   captainId={captainId}
                   viceCaptainId={viceCaptainId}
+                  playerToSwitch={playerToSwitch}
+                  setCurrentPlayerForSwitching={setPlayerForSwitching}
+                  switchWith={switchWith}
+                  onBench={false}
                 />
               );
             } else {
@@ -315,6 +326,10 @@ const TeamSelection = ({
                   onOpen={onOpen}
                   captainId={captainId}
                   viceCaptainId={viceCaptainId}
+                  playerToSwitch={playerToSwitch}
+                  setCurrentPlayerForSwitching={setPlayerForSwitching}
+                  switchWith={switchWith}
+                  onBench={false}
                 />
               );
             } else {
@@ -338,6 +353,10 @@ const TeamSelection = ({
                   onOpen={onOpen}
                   captainId={captainId}
                   viceCaptainId={viceCaptainId}
+                  playerToSwitch={playerToSwitch}
+                  setCurrentPlayerForSwitching={setPlayerForSwitching}
+                  switchWith={switchWith}
+                  onBench={false}
                 />
               );
             } else {
@@ -360,6 +379,10 @@ const TeamSelection = ({
                   onOpen={onOpen}
                   captainId={captainId}
                   viceCaptainId={viceCaptainId}
+                  playerToSwitch={playerToSwitch}
+                  setCurrentPlayerForSwitching={setPlayerForSwitching}
+                  switchWith={switchWith}
+                  onBench={false}
                 />
               );
             } else {
@@ -383,6 +406,10 @@ const TeamSelection = ({
                 onOpen={onOpen}
                 captainId={captainId}
                 viceCaptainId={viceCaptainId}
+                playerToSwitch={playerToSwitch}
+                setCurrentPlayerForSwitching={setPlayerForSwitching}
+                switchWith={switchWith}
+                onBench={true}
               />
             );
           })}

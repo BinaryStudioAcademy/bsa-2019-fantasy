@@ -3,9 +3,14 @@ import { useTranslation } from 'react-i18next';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
 import StatusPlayerModal from 'components/StatusPlayerModal';
+import { GameweekHistoryType } from 'types/gameweekHistory.type';
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'store/types';
+
+import { fetchGameweeksHistorySuccess } from 'containers/Routing/fetchGameweeks/actions';
 
 const MyTeam = () => {
   const { t } = useTranslation();
@@ -24,6 +29,45 @@ const MyTeam = () => {
 
   const [captainId, setCaptainId] = useState('');
   const [viceCaptainId, setViceCaptainId] = useState('');
+
+  const [playerToSwitch, setPlayerToSwitch] = useState<GameweekHistoryType | undefined>(
+    undefined,
+  );
+  const dispatch = useDispatch();
+  const players = useSelector((state: RootState) => state.gameweeks.gameweeks_history);
+
+  if (captainId === '' && players.length > 0) {
+    const givenCaptain = players.find((p) => p.is_captain);
+    givenCaptain && setCaptainId(givenCaptain.player_stats.id);
+  }
+
+  const setCurrentPlayerForSwitching = (id: string) => {
+    const player = players.find((p) => p.player_stats.id === id);
+    setPlayerToSwitch(player);
+  };
+
+  const switchWith = (id: string) => {
+    if (!playerToSwitch) return;
+
+    const firstPlayer = players.find(
+      (p) => p.player_stats.id === playerToSwitch.player_stats.id,
+    );
+    const secondPlayer = players.find((p) => p.player_stats.id === id);
+
+    if (!firstPlayer || !secondPlayer) return;
+
+    const newPlayers = players.map((p) => {
+      if (p === firstPlayer || p === secondPlayer) {
+        return {
+          ...p,
+          is_on_bench: !p.is_on_bench,
+        };
+      }
+      return p;
+    });
+
+    dispatch(fetchGameweeksHistorySuccess(newPlayers));
+  };
 
   const onClose = () => {
     setShowModal(false);
@@ -58,6 +102,23 @@ const MyTeam = () => {
     setIsViceCaptain(isViceCaptain);
   };
 
+  const canSwitch = !playerToSwitch || playerToSwitch.player_stats.id !== currentId;
+
+  const onSetPlayerForSwitching = () => {
+    if (playerToSwitch) {
+      switchWith(currentId);
+      setCurrentPlayerForSwitching('');
+    } else {
+      setCurrentPlayerForSwitching(currentId);
+    }
+    setShowModal(false);
+  };
+
+  const onCancelPlayerForSwitching = () => {
+    setCurrentPlayerForSwitching('');
+    setShowModal(false);
+  };
+
   useEffect(() => {
     document.title = 'My Team | Fantasy Football League';
   }, []);
@@ -82,6 +143,9 @@ const MyTeam = () => {
           onOpen={onOpen}
           captainId={captainId}
           viceCaptainId={viceCaptainId}
+          playerToSwitch={playerToSwitch}
+          setPlayerForSwitching={setCurrentPlayerForSwitching}
+          switchWith={switchWith}
         />
       </div>
       {showModal && (
@@ -92,6 +156,10 @@ const MyTeam = () => {
           onSetCaptain={onSetCaptain}
           onSetViceCaptain={onSetViceCaptain}
           name={currentName}
+          funcForSwitching={
+            canSwitch ? onSetPlayerForSwitching : onCancelPlayerForSwitching
+          }
+          toSwitch={canSwitch}
         />
       )}
     </div>

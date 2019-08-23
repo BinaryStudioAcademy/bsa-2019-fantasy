@@ -305,6 +305,12 @@
     "season": "Сезон"
   },
 
+  "StatusPlayerModal": {
+    "switch": "Поміняти",
+    "cancel": "Відмінити",
+    "makeCaptain": "Назначити Капітаном",
+    "makeViceCaptain": "Назначити Віце-капітаном"
+  },
   "PrivateLeagueModal": {
     "title": "Це ваш код запрошення",
     "message": "Поділіться цим кодом з іншими, щоб приєднатися до вашої ліги!",
