@@ -44,6 +44,7 @@ const GameweekHistory = ({
 
   useEffect(() => {
     if (gameweeksHistory && gameweeksHistory.length) {
+      setCurrentGameweek(gameweeksHistory[0].gameweek.number);
       const gameweekId = gameweeksHistory[currentGameweek].gameweek.id;
       loadTeamHistoryAction(user_id, gameweekId, currentGameweek + 1);
     }
@@ -106,7 +107,9 @@ const GameweekHistory = ({
         {isLoading && <Spinner />}
         <React.Fragment>
           <div className={`${header.paper} rounded mr-2`}>
-            {!isLoading && <TeamSelection isGameweek playersHistory={teamHistory} />}
+            {!isLoading && (
+              <TeamSelection isGameweek playersHistory={teamHistory ? teamHistory : []} />
+            )}
           </div>
 
           <div
