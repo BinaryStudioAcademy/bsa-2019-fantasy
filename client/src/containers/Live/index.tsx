@@ -1,4 +1,4 @@
-import React, { Ref, ReactNode } from 'react';
+import React, { Ref, ReactNode, RefObject } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import socketIOClient from 'socket.io-client';
@@ -14,9 +14,10 @@ import { RootState } from 'store/types';
 import { Club } from 'types/club.type';
 import { Game } from 'types/game.types';
 
-import field from 'assets/images/field.svg';
 import fieldEvents from './fieldEvents';
+import renderComment from './commentary';
 
+import field from 'assets/images/field.svg';
 import Fade from 'react-reveal/Fade';
 import 'react-dropdown/style.css';
 
@@ -54,7 +55,7 @@ class Live extends React.Component<Props, State> {
   //   testRes: 'not received yet',
   // };
   socket: any;
-  eventsLog: Ref<HTMLDivElement>;
+  eventsLog: RefObject<HTMLDivElement>;
 
   constructor(props: Props) {
     super(props);
@@ -77,32 +78,51 @@ class Live extends React.Component<Props, State> {
   componentDidMount() {
     this.socket = socketIOClient(endpoint);
     this.socket.on('connect', this.handleSocketConnect);
+    this.socket.on('status', this.handleStatusEvent);
     this.socket.on('event', this.handleSocketEvent);
     this.socket.on('disconnect', this.handleSocketDisconnect);
     this.props.loadCurrentGame();
   }
 
+  componentDidUpdate = () => {
+    if (this.eventsLog) {
+      const current = this.eventsLog.current;
+      if (current) current.scrollTop = current.scrollHeight;
+    }
+  };
+
   handleSocketConnect = () => {
     this.setState({ socketConnected: true });
   };
 
+  handleStatusEvent = (data) => {
+    console.log(data);
+    const { gameStarted } = data;
+    this.setState({ isSimulating: gameStarted });
+  };
+
   handleSocketDisconnect = () => {
-    this.handleSocketEvent({ name: 'socket-disconnect' });
+    this.handleSocketEvent({ name: 'disconnect' });
   };
 
   handleSocketEvent = (event) => {
     const newState = { ...this.state };
-    newState.events = [...newState.events, event];
+    if (event.name !== 'nothing') newState.events = [...newState.events, event];
     newState.elapsed = event.elapsed;
 
     switch (event.name) {
       case 'goal':
         newState.score = event.score;
         break;
-      case 'start-game':
+      case 'startGame':
         newState.matchStarted = true;
-      case 'socket-disconnect':
+        newState.score = [0, 0];
+        break;
+      case 'endGame':
+        newState.isSimulating = false;
+      case 'disconnect':
         newState.socketConnected = false;
+        break;
     }
 
     this.setState(newState);
@@ -120,7 +140,7 @@ class Live extends React.Component<Props, State> {
   };
 
   stopSimulation = () => {
-    this.socket.emit('stop-simulation', {});
+    this.socket.emit('stopSimulation', {});
     this.setState({ isSimulating: false });
   };
 
@@ -136,24 +156,6 @@ class Live extends React.Component<Props, State> {
     return this.props.clubs.find((club) => club.id === Number(id));
   };
 
-  renderEvent(event) {
-    console.log(event);
-    const { homeClub, awayClub } = this.state;
-    switch (event.name) {
-      case 'start-game':
-        return (
-          <>
-            The match {homeClub && homeClub.name} - {awayClub && awayClub.name} started.
-          </>
-        );
-      case 'start-time':
-        return <>Time {event.time} started.</>;
-      case 'end-time':
-        return <>Time {event.time} ended with score .</>;
-      default:
-        return <>{event.text}</>;
-    }
-  }
   renderElapsed = (elapsed = 0) => {
     const formatted = moment.utc(elapsed).format('mm:ss');
     return <div className='time p-3 py-2 rounded bg-gray-200'>{formatted}</div>;
@@ -348,7 +350,7 @@ class Live extends React.Component<Props, State> {
               ref={this.eventsLog}
             >
               {events.map((event) => (
-                <div>{this.renderEvent(event)}</div>
+                <div key={event.elapsed}>{renderComment(event, this.state)}</div>
               ))}
             </div>
           </div>
