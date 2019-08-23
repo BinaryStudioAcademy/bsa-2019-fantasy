@@ -1,36 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import ReactDom from 'react-dom';
 import classNames from 'classnames';
 
 import { PlayerDataType } from 'containers/Players/actions';
 import Spinner from 'components/Spinner';
-import { Player } from 'types/player.types';
+import { PlayerType } from 'types/player.types';
 
 type Props = {
   playerDialogData: PlayerDataType;
-  player: Player;
+  player: PlayerType;
   onDismiss: () => void;
   loading: boolean;
   clubName: string | undefined;
-};
-
-const positionDict: { [key: string]: { name: string; color: string } } = {
-  GKP: {
-    name: 'goalkeeper',
-    color: 'bg-yellow-400',
-  },
-  DEF: {
-    name: 'defender',
-    color: 'bg-green-600',
-  },
-  MID: {
-    name: 'midfielder',
-    color: 'bg-teal-400',
-  },
-  FWD: {
-    name: 'forward',
-    color: 'bg-red-600',
-  },
 };
 
 const cellStyle = {
@@ -39,6 +21,27 @@ const cellStyle = {
 };
 
 const PlayerDialog = (props: Props) => {
+  const { t } = useTranslation();
+
+  const positionDict: { [key: string]: { name: string; color: string } } = {
+    GKP: {
+      name: t('roles.goalkeeper'),
+      color: 'bg-yellow-400',
+    },
+    DEF: {
+      name: t('roles.defender'),
+      color: 'bg-green-600',
+    },
+    MID: {
+      name: t('roles.midfielder'),
+      color: 'bg-teal-400',
+    },
+    FWD: {
+      name: t('roles.forward'),
+      color: 'bg-red-600',
+    },
+  };
+
   const [currentTab, setCurrentTab] = useState('history');
 
   const renderHistoryHeader = (row: any[]) =>
@@ -113,8 +116,8 @@ const PlayerDialog = (props: Props) => {
     if (history.length < 1) {
       return (
         <div className='self-center' style={{ width: '90%' }}>
-          <h3 className='text-lg font-medium'>This season</h3>
-          <h4>This player hasn&#39;t played any games yet</h4>
+          <h3 className='text-lg font-medium'>{t('PlayerDialog.thisSeason')}</h3>
+          <h4>{t('PlayerDialog.haventPlayed')}</h4>
         </div>
       );
     }
@@ -146,7 +149,7 @@ const PlayerDialog = (props: Props) => {
     );
     return (
       <div>
-        <h3 className='text-lg font-medium'>This season</h3>
+        <h3 className='text-lg font-medium'>{t('PlayerDialog.thisSeason')}</h3>
         <div className='overflow-y-auto' style={{ width: '100%', maxHeight: '300px' }}>
           <div className='flex text-sm mt-4'>{renderHistoryHeader(historyRows[0])}</div>
           {renderHistoryRows(historyRows)}
@@ -166,9 +169,9 @@ const PlayerDialog = (props: Props) => {
         style={{ width: '100%', maxHeight: '300px' }}
       >
         <div className='flex'>
-          <div className='w-7/12 bg-gray-400'>Date</div>
-          <div className='w-2/12 bg-gray-400'>Round</div>
-          <div className='w-3/12 bg-gray-400'>Opponent</div>
+          <div className='w-7/12 bg-gray-400'>{t('PlayerDialog.date')}</div>
+          <div className='w-2/12 bg-gray-400'>{t('PlayerDialog.round')}</div>
+          <div className='w-3/12 bg-gray-400'>{t('PlayerDialog.opponent')}</div>
         </div>
         {fixtures.map((fixture, i) => (
           <div key={fixture.start} style={cellStyle} className='flex text-sm'>
@@ -233,7 +236,7 @@ const PlayerDialog = (props: Props) => {
                 'bg-white': currentTab === 'history',
               })}
             >
-              History
+              {t('PlayerDialog.history')}
             </li>
             <li
               role='presentation'
@@ -242,7 +245,7 @@ const PlayerDialog = (props: Props) => {
                 'bg-white': currentTab === 'fixtures',
               })}
             >
-              Fixtures
+              {t('PlayerDialog.fixtures')}
             </li>
           </ul>
 

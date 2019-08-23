@@ -7,6 +7,9 @@ module.exports = {
       '60': '60%',
       '80': '80%',
     },
+    container: {
+      center: true,
+    },
     extend: {
       colors: {
         primary: '#1EE3CF',

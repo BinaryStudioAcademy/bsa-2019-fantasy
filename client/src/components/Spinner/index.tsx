@@ -1,16 +1,16 @@
 import React from 'react';
 
-import './styles.scss';
+import styles from './styles.module.scss';
 
 const Spinner = () => {
-    return (
-        <div className='box'>
-            <div className='shadow' />
-            <div className='gravity'>
-                <div className='ball' />
-            </div>
-        </div>
-    );
+  return (
+    <div className={styles.box}>
+      <div className={styles.shadow} />
+      <div className={styles.gravity}>
+        <div className={styles.ball} />
+      </div>
+    </div>
+  );
 };
 
 export default Spinner;

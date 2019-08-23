@@ -4,13 +4,15 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
 import { createBrowserHistory } from 'history';
 
-import testReducer from '../containers/Test/reducer';
-import profileReducer from '../containers/Profile/reducer';
+import testReducer from 'containers/Test/reducer';
+import transferReducer from 'containers/Transfers/reducer';
+import profileReducer from 'containers/Profile/reducer';
 import playersReducer from 'containers/Players/reducer';
-import fixturesReducer from '../containers/FixturesContainer/reducer';
-import playerSelectionReducer from '../components/PlayersSelection/reducer';
+import fixturesReducer from 'containers/FixturesContainer/reducer';
+import playerSelectionReducer from 'components/PlayersSelection/reducer';
 import clubsReducer from 'containers/Routing/fetchClubs/reducer';
 import gameweeksReducer from 'containers/Routing/fetchGameweeks/reducer';
+import gameweekHistoryReducer from 'containers/GameweekHistory/reducer';
 import leagueReducer from 'containers/Leagues/reducer';
 import currentGameReducer from 'containers/Live/reducer';
 
@@ -32,6 +34,8 @@ const reducers = {
   gameweeks: gameweeksReducer,
   league: leagueReducer,
   currentGame: currentGameReducer,
+  gameweekHistory: gameweekHistoryReducer,
+  transfers: transferReducer,
 };
 
 const rootReducer = combineReducers({

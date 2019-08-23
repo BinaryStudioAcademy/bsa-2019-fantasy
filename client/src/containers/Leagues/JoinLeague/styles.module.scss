@@ -1,0 +1,127 @@
+:local(.join-league) {
+  body {
+    font-family: Helvetica, sans-serif;
+  }
+
+  :global(.react-autosuggest__container) {
+    position: relative;
+  }
+
+  :global(.react-autosuggest__input) {
+    width: 100%;
+    color: #4a5568;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    line-height: 1.25;
+    display: block;
+    border-radius: 3px;
+    border: 1px solid #edf2f7;
+    background-color: #edf2f7;
+  }
+
+  :global(.react-autosuggest__input:focus) {
+    outline: none;
+  }
+
+  :global(.react-autosuggest__container--open .react-autosuggest__input) {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  :global(.react-autosuggest__suggestions-container) {
+    display: none;
+  }
+
+  :global(.react-autosuggest__container--open .react-autosuggest__suggestions-container) {
+    display: block;
+    position: absolute;
+    top: 45px;
+    width: 100%;
+    border: 1px solid #a9acaf;
+    background-color: #fff;
+    font-weight: 300;
+    font-size: 16px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    z-index: 2;
+  }
+
+  :global(.react-autosuggest__suggestions-list) {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  :global(.react-autosuggest__suggestion) {
+    cursor: pointer;
+    padding: 10px 20px;
+  }
+
+  :global(.react-autosuggest__suggestion:not(:first-child)) {
+    border-top: 1px solid #ddd;
+  }
+
+  :global(.react-autosuggest__suggestion--focused) {
+    background-color: #0c7eaf;
+    color: #fff;
+  }
+
+  :local(.suggestion-content) {
+    display: flex;
+    align-items: center;
+    background-repeat: no-repeat;
+  }
+
+  :local(.name) {
+    margin-left: 68px;
+    line-height: 45px;
+  }
+
+  :local(.highlight) {
+    color: #ee0000;
+    font-weight: bold;
+  }
+
+  :global(.react-autosuggest__suggestion--focused .highlight) {
+    color: #120000;
+  }
+}
+
+:local(.join-league-item) {
+  position: relative;
+
+  :local(.title) {
+    font-size: 25px;
+    line-height: 28px;
+  }
+
+  &:first-child {
+    margin-bottom: 40px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  :local(.join-league-content) {
+    &.paper {
+      padding-bottom: 100px;
+      background-color: #fff;
+      box-shadow: 0px 0px 19px rgba(0, 0, 0, 0.08);
+      padding: 60px 50px 100px;
+
+      @media screen and (max-width: 374px) {
+        padding: 60px 30px;
+      }
+    }
+  }
+
+  :local(.join-league-item) {
+    margin-bottom: 0 !important;
+
+    button {
+      position: absolute;
+      bottom: -50px;
+    }
+  }
+}

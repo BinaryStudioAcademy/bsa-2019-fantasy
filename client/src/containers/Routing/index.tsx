@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { feedback } from 'react-feedbacker';
+import { useTranslation } from 'react-i18next';
 
 import { RootState } from 'store/types';
 
@@ -11,9 +12,11 @@ import GuestRoute from 'containers/GuestRoute';
 
 import LoginPage from 'containers/Auth/Login/LoginPage';
 import RegistrationPage from 'containers/Auth/Registration/RegistrationPage';
+import SocialPage from 'containers/Auth/SocialPage';
 
 import MyTeam from 'containers/MyTeam';
 import Transfers from 'containers/Transfers';
+import SquadSelection from 'containers/SquadSelection';
 import Live from 'containers/Live';
 
 import Leagues from 'containers/Leagues';
@@ -21,6 +24,7 @@ import CreateLeague from 'containers/Leagues/CreateLeague';
 import JoinLeague from 'containers/Leagues/JoinLeague';
 
 import GameweekHistory from 'containers/GameweekHistory';
+import NoTeamHome from 'components/NoTeamHome';
 
 import FixturesContainer from 'containers/FixturesContainer';
 import Players from 'containers/Players';
@@ -34,7 +38,7 @@ import Profile from 'containers/Profile';
 import FavouriteClubSelection from 'containers/Profile/components/FavouriteClubSelection';
 
 import SetPassword from 'containers/Profile/components/SetPassword';
-import { loadCurrentUser } from 'containers/Profile/actions';
+import { loadCurrentUser, setLanguage } from 'containers/Profile/actions';
 
 import ForgotPassword from 'containers/ChangePassword/ForgotPassword';
 import ResetPassword from 'containers/ChangePassword/ResetPassword';
@@ -44,14 +48,25 @@ import { fetchGameweeks, fetchGameweekHistory } from './fetchGameweeks/actions';
 import { preloadClubLogos } from 'helpers/images';
 import { currentGameweekSelector } from 'store/selectors/current-gameweek.selector';
 
+import { joinRoom, leaveRoom, requestGames } from 'helpers/socket';
+
+import ConnectFbPage from 'containers/Auth/ConnectFbPage';
+
 const Routing = () => {
+  const { i18n } = useTranslation();
   const dispatch = useDispatch();
   const { isLoading, user, isAuthorized } = useSelector(
     (state: RootState) => state.profile,
   );
 
+  const favorite_club = useSelector(
+    (state: RootState) => state.profile.user && state.profile.user.favorite_club_id,
+  );
+
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
   const currentGameweek = useSelector(currentGameweekSelector);
+
+  const [joinedRoom, setJoinedRoom] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(loadCurrentUser());
@@ -65,6 +80,16 @@ const Routing = () => {
   }, [dispatch, isAuthorized]);
 
   useEffect(() => {
+    if (isAuthorized && favorite_club) {
+      if (!joinedRoom) {
+        setJoinedRoom(true);
+        joinRoom(favorite_club);
+      }
+      requestGames();
+    }
+  }, [dispatch, isAuthorized, favorite_club]);
+
+  useEffect(() => {
     if (user && currentGameweek) {
       dispatch(fetchGameweekHistory(user.id, currentGameweek.id));
     }
@@ -73,6 +98,18 @@ const Routing = () => {
   useEffect(() => {
     clubs.length > 0 && preloadClubLogos(clubs, 80);
   }, [clubs]);
+
+  useEffect(() => {
+    const language = localStorage.getItem('language');
+
+    if (!language) localStorage.setItem('language', 'en');
+
+    i18n
+      .changeLanguage(language || 'en')
+      .then(() => language && localStorage.setItem('language', 'en'))
+      .catch((err) => console.warn(err));
+    language && dispatch(setLanguage({ language }));
+  }, []);
 
   if (isLoading) {
     return <Spinner />;
@@ -84,6 +121,8 @@ const Routing = () => {
         <GuestRoute exact path='/login' component={LoginPage} />
         <GuestRoute exact path='/registration' component={RegistrationPage} />
         <GuestRoute exact path='/forgot' component={ForgotPassword} />
+        {/* <GuestRoute exact path='/social' component={SocialPage} /> */}
+        {/* <GuestRoute exact path='/connect-fb' component={ConnectFbPage} /> */}
         <GuestRoute path='/reset/:id' component={ResetPassword} />
 
         {user && user.favorite_club_id === null && (
@@ -104,10 +143,14 @@ const Routing = () => {
             <Sidebar />
           </div>
           <div className='flex-1 bg-background h-full overflow-y-auto pb-16'>
-            <Header />
+            <Header team_name={user ? user.team_name : undefined} />
             <main className='mx-16 -mt-32'>
               <Switch>
-                <Route path='/' exact component={GameweekHistory} />
+                <Route
+                  path='/'
+                  exact
+                  component={user && user.team_name ? GameweekHistory : NoTeamHome}
+                />
 
                 <Route path='/profile' component={Profile} />
                 <Route path='/profile/set/password' component={SetPassword} />
@@ -119,6 +162,7 @@ const Routing = () => {
                 <Route path='/players-comparison' exact component={PlayersComparison} />
 
                 <Route path='/transfers' exact component={Transfers} />
+                <Route path='/squad-selection' exact component={SquadSelection} />
 
                 <Route path='/fixtures' exact component={FixturesContainer} />
 

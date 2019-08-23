@@ -5,7 +5,7 @@ export enum Position {
   FWD = 'FWD',
 }
 
-export type Player = {
+export type PlayerType = {
   id: string;
   first_name: string;
   second_name: string;

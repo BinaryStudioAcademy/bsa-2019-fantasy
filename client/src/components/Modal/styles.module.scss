@@ -1,0 +1,63 @@
+:local(.modalWrapper) {
+  z-index: 9000;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.5);
+  animation: appear 0.16s;
+}
+
+:local(.modal) {
+  position: relative;
+
+  min-height: 20rem;
+  width: 40rem;
+
+  padding: 2rem;
+  padding-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+
+  cursor: initial;
+  background: #fff;
+}
+
+:local(.modalClose) {
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translate(50%, -50%);
+
+  height: 2rem;
+  width: 2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #fff;
+  border-radius: 50%;
+
+  &:active {
+    outline: none;
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

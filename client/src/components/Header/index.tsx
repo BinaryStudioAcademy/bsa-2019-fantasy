@@ -1,23 +1,32 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 
 import Notifications from 'components/Notifications';
 
-import './styles.scss';
+import styles from './styles.module.scss';
 
-const Header = () => {
-  const menuItems = [
-    { name: 'Leagues', link: '/leagues' },
-    { name: 'Live', link: '/live', dot: true },
-    { name: 'Players', link: '/players' },
-    { name: 'Transfers', link: '/transfers' },
-    { name: 'Fixtures', link: '/fixtures' },
-  ];
+interface HeaderProps {
+  team_name?: string;
+}
+
+const Header = ({ team_name }: HeaderProps) => {
+  const { t } = useTranslation();
+
+  const menuItems = team_name
+    ? [
+        { name: t('Header.leagues'), link: '/leagues' },
+        { name: t('Header.live'), link: '/live', dot: true },
+        { name: t('Header.players'), link: '/players' },
+        { name: t('Header.transfers'), link: '/transfers' },
+        { name: t('Header.fixtures'), link: '/fixtures' },
+      ]
+    : [];
 
   return (
-    <header className='header bg-primary pb-32 text-sm text-secondary2'>
+    <header className={`${styles.header} bg-primary pb-32 text-sm text-secondary2`}>
       <div className='mx-16'>
         <nav className='flex items-center py-4 '>
           <div className='flex flex-initial items-center mr-4'>
@@ -27,8 +36,19 @@ const Header = () => {
               className='font-semibold uppercase p-1 border-solid border-b-2 border-transparent hover:text-secondary mr-12'
               activeClassName='text-secondary border-secondary'
             >
-              Home
+              {t('Header.home')}
             </NavLink>
+            {!team_name && (
+              <NavLink
+                exact
+                to='/squad-selection'
+                className='font-semibold uppercase p-1 border-solid
+                border-b-2 border-transparent hover:text-secondary mr-12'
+                activeClassName='text-secondary border-secondary'
+              >
+                {t('Header.squad')}
+              </NavLink>
+            )}
             <Notifications />
           </div>
           <div

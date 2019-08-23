@@ -1,0 +1,77 @@
+:local(.leagues) {
+  :local(.tables) {
+    display: grid;
+    grid-template: 'private public' 'global global';
+    grid-template-columns: repeat(2, minmax(450px, 1fr));
+
+    @media screen and (max-width: 1023px) {
+      grid-template: 'private' 'public' 'global';
+      grid-template-columns: 100%;
+    }
+
+    :local(.table-title) {
+      font-size: 12px;
+    }
+
+    :local(.movement) {
+      svg {
+        fill: rgb(148, 150, 140);
+      }
+
+      &:local(.up) {
+        svg {
+          fill: #1ee3cf;
+        }
+      }
+
+      &:local(.down) {
+        svg {
+          fill: #ff482f;
+        }
+      }
+    }
+
+    :global(.ReactTable) {
+      border: none;
+      font-size: 13px;
+
+      :global(.rt-thead.-header) {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: none;
+      }
+
+      :global(.rt-thead .rt-th) {
+        border-right: none;
+      }
+
+      :global(.rt-tbody .rt-td) {
+        border-right: none;
+      }
+
+      :global(.rt-noData) {
+        margin-top: 50px;
+        margin-top: 20px;
+        text-align: center;
+        position: static;
+        transform: none;
+        padding: 0;
+      }
+    }
+  }
+
+  :local(.players) {
+    margin-bottom: -60px;
+
+    img {
+      max-height: 450px;
+
+      &:last-child {
+        margin-left: -55px;
+      }
+
+      @media screen and (max-width: 1023px) {
+        display: none;
+      }
+    }
+  }
+}

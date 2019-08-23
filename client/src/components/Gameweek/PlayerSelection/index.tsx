@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import { useDrag } from 'react-dnd';
+import cn from 'classnames';
 
-import './styles.scss';
-import { is } from 'uuidv4';
+import styles from './styles.module.scss';
 
 export interface PlayerInfo {
   id: string;
@@ -10,6 +10,7 @@ export interface PlayerInfo {
   name: string;
   club: string;
   type: string;
+  price: number;
   points: number;
   form: string;
   gameweek_points: string;
@@ -23,6 +24,7 @@ export interface PlayerDraggableProps {
   name: string;
   club: string;
   type: string;
+  price: number;
   points: number;
   form: number;
   gameweek_points: number;
@@ -40,6 +42,7 @@ const PlayerSelection = ({
   name,
   club,
   type,
+  price,
   points,
   form,
   gameweek_points,
@@ -69,23 +72,20 @@ const PlayerSelection = ({
   if (!isGameweek) {
     drag(ref);
   }
-  const isCaptain = captainId === id;
-  const isViceCaptain = viceCaptainId === id;
+  const isCaptain = !!captainId && captainId === id;
+  const isViceCaptain = !!captainId && viceCaptainId === id;
   return (
     <div
       ref={ref}
-      className='text-center relative'
-      onClick={() => {
-        if (onOpen) {
-          onOpen(id, isCaptain, isViceCaptain, name);
-        }
-      }}
+      className='text-center relative h-full pt-2'
+      onClick={() => onOpen && onOpen(id, isCaptain, isViceCaptain, name)}
+      role='presentation'
     >
       <div>
         <div className='absolute'>
           {isGameweek ? null : (
             <React.Fragment>
-              <svg width='18' height='24' viewBox='0 0 24 24'>
+              {/* <svg width='18' height='24' viewBox='0 0 24 24'>
                 <g fill='none'>
                   <path
                     fill='#E9FF03'
@@ -101,37 +101,41 @@ const PlayerSelection = ({
                     d='M20.4,18.75 C20.202173,18.7471822 20.0134728,18.6663107 19.875,18.525 L15.6,14.25 L11.325,18.525 C11.0264098,18.7489427 10.6085889,18.7192491 10.3446699,18.4553301 C10.0807509,18.1914111 10.0510573,17.7735902 10.275,17.475 L15.075,12.675 C15.3666326,12.3891428 15.8333674,12.3891428 16.125,12.675 L20.925,17.475 C21.1350898,17.6892752 21.1972317,18.0081534 21.082974,18.2856363 C20.9687163,18.5631193 20.7000564,18.745785 20.4,18.75 Z'
                   />
                 </g>
-              </svg>
+              </svg> */}
               {(isCaptain || isViceCaptain) && (
                 <svg width='24' height='24' viewBox='0 0 24 24'>
-                  <circle cx='12' cy='12' r='12'></circle>
+                  <circle cx='12' cy='12' r='12' />
                   {isCaptain && (
                     <path
                       d='M15.0769667,14.370341 C14.4472145,15.2780796 13.4066319,15.8124328 12.3019667,15.795341 C10.4380057,15.795341 8.92696674,14.284302 8.92696674,12.420341 C8.92696674,10.55638 10.4380057,9.045341 12.3019667,9.045341 C13.3988206,9.06061696 14.42546,9.58781014 15.0769667,10.470341 L17.2519667,8.295341 C15.3643505,6.02401882 12.1615491,5.35094208 9.51934028,6.67031017 C6.87713147,7.98967826 5.49079334,10.954309 6.17225952,13.8279136 C6.8537257,16.7015182 9.42367333,18.7279285 12.3769667,18.720341 C14.2708124,18.7262708 16.0646133,17.8707658 17.2519667,16.395341 L15.0769667,14.370341 Z'
                       fill='white'
-                    ></path>
+                    />
                   )}
                   {isViceCaptain && (
                     <polygon
                       points='13.5 .375 8.925 12.375 4.65 12.375 0 .375 3.15 .375 6.75 10.05 10.35 .375'
                       transform='translate(5.25 6)'
                       fill='white'
-                    ></polygon>
+                    />
                   )}
                 </svg>
               )}
             </React.Fragment>
           )}
         </div>
-        <img
-          style={{ opacity }}
-          src={src}
-          className='player-img player-shadow'
-          alt='player'
-        />
-        <div>
-          <div className='player-name'> {name}</div>
-          <div className='player-club'>{isGameweek ? points : club}</div>
+        {src && (
+          <img
+            style={{ opacity }}
+            src={src}
+            className={`${styles['player-img']} ${styles['player-shadow']}`}
+            alt='player'
+          />
+        )}
+        <div className='absolute w-full bottom-0 left-0'>
+          <div className='px-1 w-full text-sm bg-green-700 text-white text-center truncate'>
+            {name}
+          </div>
+          <div className={cn(styles['player-club'])}>{isGameweek ? points : price}</div>
         </div>
       </div>
     </div>

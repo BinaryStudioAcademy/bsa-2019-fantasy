@@ -5,6 +5,7 @@ import {
   createLeagueMiddleware,
   joinPrivateLeagueMiddleware,
   joinPublicLeagueMiddleware,
+  getInvitationMiddleware,
 } from '../middlewares/league.middleware';
 import jwtMiddleware from '../middlewares/jwt.middleware';
 
@@ -84,6 +85,12 @@ router
     leagueService
       .searchLeaguesByName(req.body.filter)
       .then((value) => res.json(value))
+      .catch(next);
+  })
+  .post('/invitation-code', jwtMiddleware, getInvitationMiddleware, (req, res, next) => {
+    leagueService
+      .getLeagueId(req.body.name)
+      .then((value) => res.json({ code: value.id }))
       .catch(next);
   })
   .put('/:id', (req, res, next) =>
