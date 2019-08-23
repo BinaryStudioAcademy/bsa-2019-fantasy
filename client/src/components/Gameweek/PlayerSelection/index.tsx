@@ -89,16 +89,14 @@ const PlayerSelection = ({
   const onClick = (e) => {
     e.stopPropagation();
 
-    if (!setCurrentPlayerForSwitching) return;
-
     if (!playerToSwitch) {
-      setCurrentPlayerForSwitching(id);
+      setCurrentPlayerForSwitching!(id);
     } else if (playerToSwitch) {
       if (playerToSwitch.player_stats.id === id) {
-        setCurrentPlayerForSwitching('');
+        setCurrentPlayerForSwitching!('');
       } else if (canSwitch) {
         switchWith && switchWith(id);
-        setCurrentPlayerForSwitching('');
+        setCurrentPlayerForSwitching!('');
       }
     }
   };

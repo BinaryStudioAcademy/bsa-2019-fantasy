@@ -36,14 +36,15 @@ const MyTeam = () => {
   const dispatch = useDispatch();
   const players = useSelector((state: RootState) => state.gameweeks.gameweeks_history);
 
-  if (captainId === '' && players.length > 0) {
-    const givenCaptain = players.find((p) => p.is_captain);
-    givenCaptain && setCaptainId(givenCaptain.player_stats.id);
-  }
-
-  if (viceCaptainId === '' && players.length > 0) {
-    const givenViceCaptain = players.find((p) => p.is_vice_captain);
-    givenViceCaptain && setViceCaptainId(givenViceCaptain.player_stats.id);
+  if (players.length > 0) {
+    if (captainId === '') {
+      const givenCaptain = players.find((p) => p.is_captain);
+      setCaptainId(givenCaptain!.player_stats.id);
+    }
+    if (viceCaptainId === '') {
+      const givenViceCaptain = players.find((p) => p.is_vice_captain);
+      setViceCaptainId(givenViceCaptain!.player_stats.id);
+    }
   }
 
   const setCurrentPlayerForSwitching = (id: string) => {
@@ -51,24 +52,18 @@ const MyTeam = () => {
     setPlayerToSwitch(player);
   };
 
-  const switchWith = (id: string) => {
-    if (!playerToSwitch) return;
-
-    const firstPlayer = players.find(
-      (p) => p.player_stats.id === playerToSwitch.player_stats.id,
-    );
-    const secondPlayer = players.find((p) => p.player_stats.id === id);
-
-    if (!firstPlayer || !secondPlayer) return;
-
-    const newPlayers = players.map((p) => {
-      if (p === firstPlayer || p === secondPlayer) {
+  const switchWith = (secondId: string) => {
+    const newPlayers = players.map((player) => {
+      const {
+        player_stats: { id },
+      } = player;
+      if (id === playerToSwitch!.player_stats.id || id === secondId) {
         return {
-          ...p,
-          is_on_bench: !p.is_on_bench,
+          ...player,
+          is_on_bench: !player.is_on_bench,
         };
       }
-      return p;
+      return player;
     });
 
     dispatch(fetchGameweeksHistorySuccess(newPlayers));

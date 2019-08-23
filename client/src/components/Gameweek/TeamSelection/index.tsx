@@ -83,6 +83,7 @@ const TeamSelection = ({
                 PlayerTypes.MIDDLEFIELDER,
                 PlayerTypes.FORWARD,
               ],
+              position: el.player_stats.position,
               lastDroppedItem: {
                 ...el.player_stats,
                 id: el.player_stats.id,
@@ -104,6 +105,7 @@ const TeamSelection = ({
           .map((el) => {
             return {
               accept: el.player_stats.position,
+              position: el.player_stats.position,
               lastDroppedItem: {
                 ...el.player_stats,
                 id: el.player_stats.id,
@@ -285,133 +287,148 @@ const TeamSelection = ({
         {/* Goalkeeper */}
 
         <div className={`flex justify-around absolute ${styles.team}`}>
-          {playersOnPitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-            if (accept === PlayerTypes.GOALKEEPER) {
-              return (
-                <PlayerSelectionDroppable
-                  index={index}
-                  key={index}
-                  accept={accept}
-                  lastDroppedItem={lastDroppedItem}
-                  onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                  isGameweek={isGameweek}
-                  onOpen={onOpen}
-                  captainId={captainId}
-                  viceCaptainId={viceCaptainId}
-                  playerToSwitch={playerToSwitch}
-                  setCurrentPlayerForSwitching={setPlayerForSwitching}
-                  switchWith={switchWith}
-                  onBench={false}
-                />
-              );
-            } else {
-              return null;
-            }
-          })}
+          {playersOnPitch.map(
+            ({ accept, position, lastDroppedItem }: PlayerDroppable, index) => {
+              if (accept === PlayerTypes.GOALKEEPER) {
+                return (
+                  <PlayerSelectionDroppable
+                    index={index}
+                    key={index}
+                    accept={accept}
+                    position={position}
+                    lastDroppedItem={lastDroppedItem}
+                    onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                    isGameweek={isGameweek}
+                    onOpen={onOpen}
+                    captainId={captainId}
+                    viceCaptainId={viceCaptainId}
+                    playerToSwitch={playerToSwitch}
+                    setCurrentPlayerForSwitching={setPlayerForSwitching}
+                    switchWith={switchWith}
+                    onBench={false}
+                  />
+                );
+              } else {
+                return null;
+              }
+            },
+          )}
         </div>
 
         {/* Defenders */}
         <div className={`flex justify-around absolute top-20 ${styles.team}`}>
-          {playersOnPitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-            if (accept === PlayerTypes.DEFENDER) {
-              return (
-                <PlayerSelectionDroppable
-                  index={index}
-                  key={index}
-                  accept={accept}
-                  lastDroppedItem={lastDroppedItem}
-                  onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                  isGameweek={isGameweek}
-                  onOpen={onOpen}
-                  captainId={captainId}
-                  viceCaptainId={viceCaptainId}
-                  playerToSwitch={playerToSwitch}
-                  setCurrentPlayerForSwitching={setPlayerForSwitching}
-                  switchWith={switchWith}
-                  onBench={false}
-                />
-              );
-            } else {
-              return null;
-            }
-          })}
+          {playersOnPitch.map(
+            ({ accept, position, lastDroppedItem }: PlayerDroppable, index) => {
+              if (accept === PlayerTypes.DEFENDER) {
+                return (
+                  <PlayerSelectionDroppable
+                    index={index}
+                    key={index}
+                    accept={accept}
+                    position={position}
+                    lastDroppedItem={lastDroppedItem}
+                    onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                    isGameweek={isGameweek}
+                    onOpen={onOpen}
+                    captainId={captainId}
+                    viceCaptainId={viceCaptainId}
+                    playerToSwitch={playerToSwitch}
+                    setCurrentPlayerForSwitching={setPlayerForSwitching}
+                    switchWith={switchWith}
+                    onBench={false}
+                  />
+                );
+              } else {
+                return null;
+              }
+            },
+          )}
         </div>
 
         {/* Middlefilders */}
         <div className={`flex justify-around absolute top-40 ${styles.team}`}>
-          {playersOnPitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-            if (accept === PlayerTypes.MIDDLEFIELDER) {
-              return (
-                <PlayerSelectionDroppable
-                  index={index}
-                  key={index}
-                  accept={accept}
-                  lastDroppedItem={lastDroppedItem}
-                  onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                  isGameweek={isGameweek}
-                  onOpen={onOpen}
-                  captainId={captainId}
-                  viceCaptainId={viceCaptainId}
-                  playerToSwitch={playerToSwitch}
-                  setCurrentPlayerForSwitching={setPlayerForSwitching}
-                  switchWith={switchWith}
-                  onBench={false}
-                />
-              );
-            } else {
-              return null;
-            }
-          })}
+          {playersOnPitch.map(
+            ({ accept, position, lastDroppedItem }: PlayerDroppable, index) => {
+              if (accept === PlayerTypes.MIDDLEFIELDER) {
+                return (
+                  <PlayerSelectionDroppable
+                    index={index}
+                    key={index}
+                    accept={accept}
+                    position={position}
+                    lastDroppedItem={lastDroppedItem}
+                    onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                    isGameweek={isGameweek}
+                    onOpen={onOpen}
+                    captainId={captainId}
+                    viceCaptainId={viceCaptainId}
+                    playerToSwitch={playerToSwitch}
+                    setCurrentPlayerForSwitching={setPlayerForSwitching}
+                    switchWith={switchWith}
+                    onBench={false}
+                  />
+                );
+              } else {
+                return null;
+              }
+            },
+          )}
         </div>
         {/* Forwards */}
         <div className={`flex justify-around absolute top-60 ${styles.team}`}>
-          {playersOnPitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-            if (accept === PlayerTypes.FORWARD) {
-              return (
-                <PlayerSelectionDroppable
-                  index={index}
-                  key={index}
-                  accept={accept}
-                  lastDroppedItem={lastDroppedItem}
-                  onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                  isGameweek={isGameweek}
-                  onOpen={onOpen}
-                  captainId={captainId}
-                  viceCaptainId={viceCaptainId}
-                  playerToSwitch={playerToSwitch}
-                  setCurrentPlayerForSwitching={setPlayerForSwitching}
-                  switchWith={switchWith}
-                  onBench={false}
-                />
-              );
-            } else {
-              return null;
-            }
-          })}
+          {playersOnPitch.map(
+            ({ accept, position, lastDroppedItem }: PlayerDroppable, index) => {
+              if (accept === PlayerTypes.FORWARD) {
+                return (
+                  <PlayerSelectionDroppable
+                    index={index}
+                    key={index}
+                    accept={accept}
+                    position={position}
+                    lastDroppedItem={lastDroppedItem}
+                    onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                    isGameweek={isGameweek}
+                    onOpen={onOpen}
+                    captainId={captainId}
+                    viceCaptainId={viceCaptainId}
+                    playerToSwitch={playerToSwitch}
+                    setCurrentPlayerForSwitching={setPlayerForSwitching}
+                    switchWith={switchWith}
+                    onBench={false}
+                  />
+                );
+              } else {
+                return null;
+              }
+            },
+          )}
         </div>
         {/* Bench */}
         <div
           className={`flex justify-around top-80 left-0 w-full m-3 absolute ${styles.team}`}
         >
-          {playersOnBench.map(({ accept, lastDroppedItem }: BenchDroppable, index) => {
-            return (
-              <PlayerSelectionDroppable
-                index={index}
-                key={index}
-                accept={accept}
-                lastDroppedItem={lastDroppedItem}
-                onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
-                isGameweek={isGameweek}
-                onOpen={onOpen}
-                captainId={captainId}
-                viceCaptainId={viceCaptainId}
-                playerToSwitch={playerToSwitch}
-                setCurrentPlayerForSwitching={setPlayerForSwitching}
-                switchWith={switchWith}
-                onBench={true}
-              />
-            );
-          })}
+          {playersOnBench.map(
+            ({ accept, position, lastDroppedItem }: BenchDroppable, index) => {
+              return (
+                <PlayerSelectionDroppable
+                  index={index}
+                  key={index}
+                  accept={accept}
+                  position={position}
+                  lastDroppedItem={lastDroppedItem}
+                  onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
+                  isGameweek={isGameweek}
+                  onOpen={onOpen}
+                  captainId={captainId}
+                  viceCaptainId={viceCaptainId}
+                  playerToSwitch={playerToSwitch}
+                  setCurrentPlayerForSwitching={setPlayerForSwitching}
+                  switchWith={switchWith}
+                  onBench={true}
+                />
+              );
+            },
+          )}
         </div>
         <img src='images/field.svg' alt='field' className='field' />
         <div className='w-full h-40 bg-gray-400 rounded-r-sm' />

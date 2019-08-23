@@ -8,13 +8,17 @@ import { GameweekHistoryType } from 'types/gameweekHistory.type';
 import Player from '../PlayerSelection';
 import styles from './styles.module.scss';
 
+type Position = 'GKP' | 'FWD' | 'DEF' | 'MID';
+
 export interface PlayerDroppable {
   accept: any;
+  position?: Position;
   lastDroppedItem: any;
 }
 export interface PlayerDroppableProps {
   index: number;
   accept: any;
+  position?: Position;
   onDrop: (item: any) => void;
   lastDroppedItem: any;
   isGameweek: boolean;
@@ -29,11 +33,13 @@ export interface PlayerDroppableProps {
 
 export interface BenchDroppable {
   accept: any;
+  position?: Position;
   lastDroppedItem: any;
 }
 export interface BenchDroppableProps {
   index: number;
   accept: any;
+  position?: Position;
   onDrop: (item: any) => void;
   lastDroppedItem: any;
   isGameweek: boolean;
@@ -47,6 +53,7 @@ export interface BenchDroppableProps {
 }
 const PlayerSelectionDroppable = ({
   accept,
+  position,
   index,
   onDrop,
   lastDroppedItem,
@@ -80,7 +87,14 @@ const PlayerSelectionDroppable = ({
   const canSwitch =
     playerToSwitch &&
     onBench !== undefined &&
-    playerToSwitch.player_stats.position === accept &&
+    (playerToSwitch.player_stats.position === accept ||
+      (position &&
+        playerToSwitch.player_stats.position !== 'GKP' &&
+        position !== 'GKP' &&
+        accept.includes(playerToSwitch.player_stats.position)) ||
+      (position &&
+        playerToSwitch.player_stats.position === 'GKP' &&
+        position === 'GKP')) &&
     onBench !== playerToSwitch.is_on_bench;
 
   if (playerToSwitch) {
