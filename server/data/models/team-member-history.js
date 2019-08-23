@@ -10,6 +10,10 @@ export default (orm, DataTypes) => {
         allowNull: false,
         type: DataTypes.BOOLEAN,
       },
+      is_vice_captain: {
+        allowNull: false,
+        type: DataTypes.BOOLEAN,
+      },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
     },

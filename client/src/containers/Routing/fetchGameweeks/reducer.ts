@@ -39,7 +39,6 @@ const initialState: State = {
 };
 
 export default (state = initialState, action: FetchGameweeksAction) => {
-  console.log(action);
   switch (action.type) {
     case FETCH_GAMEWEEKS_REQUEST:
       return { ...state, loading: true };

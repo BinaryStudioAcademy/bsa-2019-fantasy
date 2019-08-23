@@ -60,7 +60,6 @@ const TeamSelection = ({
   if (playersHistory) {
     players = playersHistory;
   }
-  console.log(players);
 
   const [view, setView] = useState<'list' | 'pitch'>('pitch');
   const [playersOnBench, setBench] = useState<any[]>(getBench());
@@ -140,6 +139,7 @@ const TeamSelection = ({
         return {
           is_on_bench: false,
           is_captain: el === captainId ? true : false,
+          is_vice_captain: el === viceCaptainId ? true : false,
           player_id: el,
         };
       }),
@@ -147,6 +147,7 @@ const TeamSelection = ({
         return {
           is_on_bench: true,
           is_captain: el === captainId ? true : false,
+          is_vice_captain: el === viceCaptainId ? true : false,
           player_id: el,
         };
       }),
@@ -233,7 +234,6 @@ const TeamSelection = ({
       if (isGameweek) {
         return;
       }
-      console.log(item);
       const { id } = item;
       const playerPitchIndex = droppedPlayerPitchIds.indexOf(id);
       const playerBenchIndex = droppedPlayerBenchIds.indexOf(id);

@@ -414,6 +414,10 @@ export default {
                 allowNull: false,
                 type: Sequelize.BOOLEAN,
               },
+              is_vice_captain: {
+                allowNull: false,
+                type: Sequelize.BOOLEAN,
+              },
               createdAt: Sequelize.DATE,
               updatedAt: Sequelize.DATE,
             },
