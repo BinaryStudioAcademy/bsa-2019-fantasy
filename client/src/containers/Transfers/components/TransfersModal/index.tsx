@@ -54,6 +54,8 @@ const TransfersModal = ({
     0,
   );
 
+  const canSubmit = totalCost <= user.score && totalMoneyCost <= user.money;
+
   return (
     <Modal className='justify-between' showCondition={showCondition} onClose={onClose}>
       <h2 className='text-5xl text-secondary'>{t('TransfersModal.title')}</h2>
@@ -115,11 +117,11 @@ const TransfersModal = ({
       <div>
         <button
           className={cn(
-            totalCost > user.score && 'opacity-75 cursor-not-allowed',
+            !canSubmit && 'opacity-75 cursor-not-allowed',
             'mt-8 w-full px-4 py-2 font-bold text-white bg-secondary border-2 border-transparent rounded shadow',
           )}
           onClick={() => dispatch(applyTransfers())}
-          disabled={totalCost > user.score}
+          disabled={!canSubmit}
         >
           {t('TransfersModal.submit')}
         </button>
