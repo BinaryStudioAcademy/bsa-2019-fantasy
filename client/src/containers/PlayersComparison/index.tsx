@@ -136,7 +136,7 @@ const PlayersComparisonPage: React.FC<PropsI> = (props: PropsI) => {
   });
 
   secondPlayer.gameweeks_stats.forEach((stats: any) => {
-    firstPlayerMatches.push({
+    secondPlayerMatches.push({
       gameweekName: stats.gameweek.number,
       opp: stats.game.opp,
       res: stats.game.res,
@@ -162,6 +162,8 @@ const PlayersComparisonPage: React.FC<PropsI> = (props: PropsI) => {
       matches: [...secondPlayerMatches],
     },
   ];
+
+  console.log(tableData);
 
   return (
     <>
