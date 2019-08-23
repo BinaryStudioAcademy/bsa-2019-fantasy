@@ -254,6 +254,20 @@
     }
   },
 
+  "SquadSelectionStatus": {
+    "title": "Оберіть максимум 3 гравців з однієї команди або 'Авто Вибір' якшо у вас немає часу.",
+    "autoPickBtn": "Авто Вибір",
+    "resetBtn": "Скинути",
+    "selectedStats": "Гравців Обрано",
+    "moneyStats": "Коштів Залишилось"
+  },
+
+  "SaveTeamModal": {
+    "title": "Введіть ім'я своєї команди",
+    "placeholder": "Iм'я команди",
+    "btn": "Зберегти"
+  },
+
   "TransfersTeamSelection": {
     "switch": {
       "pitch": "Поле",
