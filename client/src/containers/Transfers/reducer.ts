@@ -67,7 +67,7 @@ export default (state = initialState, action: TransferAction) => {
     case ADD_CHANGE:
       return {
         ...state,
-        changes: [...state.changes, action.payload].flat(),
+        changes: [...state.changes, ...action.payload].flat() as Patch[],
       };
 
     case EMPTY_CHANGES:

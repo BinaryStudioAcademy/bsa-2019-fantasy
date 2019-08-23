@@ -53,7 +53,7 @@ const TransfersTeamSelection = ({
   const [view, setView] = useState<'list' | 'pitch'>('pitch');
 
   const handleDrop = useCallback(
-    (index: number, item: PlayerDraggableProps) => {
+    (index: number, { price: _, ...item }: PlayerDraggableProps) => {
       const { id } = item;
 
       const playerOnPitchIdx = players.findIndex((p) => p.lastDroppedItem.id === id);
@@ -99,7 +99,7 @@ const TransfersTeamSelection = ({
     [players],
   );
 
-  const displayPitch = () => {
+  const Pitch = () => {
     return (
       <div className={styles['team-container']}>
         {/* Goalkeepers */}
@@ -109,7 +109,7 @@ const TransfersTeamSelection = ({
               return (
                 <PlayerSelectionDroppable
                   index={index}
-                  key={index}
+                  key={`team-player-${index}`}
                   accept={accept}
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
@@ -132,7 +132,7 @@ const TransfersTeamSelection = ({
               return (
                 <PlayerSelectionDroppable
                   index={index}
-                  key={index}
+                  key={`team-player-${index}`}
                   accept={accept}
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
@@ -155,7 +155,7 @@ const TransfersTeamSelection = ({
               return (
                 <PlayerSelectionDroppable
                   index={index}
-                  key={index}
+                  key={`team-player-${index}`}
                   accept={accept}
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
@@ -177,7 +177,7 @@ const TransfersTeamSelection = ({
               return (
                 <PlayerSelectionDroppable
                   index={index}
-                  key={index}
+                  key={`team-player-${index}`}
                   accept={accept}
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item: PlayerDraggableProps) => handleDrop(index, item)}
@@ -196,7 +196,7 @@ const TransfersTeamSelection = ({
     );
   };
 
-  const displayButtons = () => (
+  const ViewToggles = () => (
     <div className='flex justify-center mb-4'>
       <form className={styles['form-team']}>
         <label
@@ -225,14 +225,13 @@ const TransfersTeamSelection = ({
   return (
     <DndProvider backend={HTML5Backend}>
       <div className={cn(styles['team-select-wrapper'], 'rounded bg-secondary')}>
-        {displayButtons()}
+        <ViewToggles />
         {players ? (
           <React.Fragment>
             {view === 'list' && (
               <div className='overflow-auto w-auto'>
                 <TeamList
                   starters={players}
-                  substitutes={[]}
                   isGameweek={false}
                   onOpen={onOpen}
                   captainId={captainId}
@@ -240,7 +239,7 @@ const TransfersTeamSelection = ({
                 />
               </div>
             )}
-            {view === 'pitch' && displayPitch()}
+            {view === 'pitch' && <Pitch />}
           </React.Fragment>
         ) : (
           <Spinner />

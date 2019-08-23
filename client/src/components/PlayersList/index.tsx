@@ -35,7 +35,7 @@ export const PlayerList = ({ players }: Props) => {
   });
   return (
     <DndProvider backend={HTML5Backend}>
-      <table className='w-full'>
+      <table className='w-full shadow rounded overflow-hidden'>
         <tbody>
           <tr className='bg-yellow-400'>
             <th className='w-1/6' align='left'>

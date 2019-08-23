@@ -38,7 +38,7 @@ export const usePitchPlayers = () => {
         }),
       );
     }
-  }, [players]);
+  }, [players.length]);
 
   return { pitchPlayers, setPitch };
 };
