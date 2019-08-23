@@ -255,6 +255,20 @@
     }
   },
 
+  "SquadSelectionStatus": {
+    "title": "Select a maximum of 3 players from a single team or 'Auto Pick' if you're short of time.",
+    "autoPickBtn": "Auto Pick",
+    "resetBtn": "Reset",
+    "selectedStats": "Players Selected",
+    "moneyStats": "Money Remaining"
+  },
+
+  "SaveTeamModal": {
+    "title": "Enter your team name",
+    "placeholder": "Team name",
+    "btn": "Save"
+  },
+
   "TransfersTeamSelection": {
     "switch": {
       "pitch": "Pitch View",
