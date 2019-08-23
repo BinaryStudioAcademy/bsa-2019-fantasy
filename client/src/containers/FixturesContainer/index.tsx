@@ -44,10 +44,13 @@ const FixturesContainer = ({
       loadGamesAction(currentGameweek + 1);
     }
   }, [currentGameweek, gameweeks, loadGamesAction]);
-  
 
   if (!games || !gameweeks) {
-    return <Spinner />;
+    return (
+      <div className='relative bg-white py-3 min-h-screen shadow-figma'>
+        <Spinner />
+      </div>
+    );
   }
 
   return (

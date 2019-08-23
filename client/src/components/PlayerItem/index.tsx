@@ -18,24 +18,15 @@ export const PlayerItem = (props: any) => {
   return (
     <tr ref={drag} className='bg-white'>
       <td className='w-1/6' align='center' valign='middle'>
-        <button>
+        <button className='p-1 flex justify-center opacity-50 hover:opacity-75'>
           <img src={info} alt='info' />
         </button>
       </td>
       <td className='w-3/6' valign='middle'>
         <button className='flex flex-row'>
-          <img className='w-8 mr-2' src={imageURL} alt='player' />
-          <div className='flex flex-col items-start'>
-            <div
-              style={{
-                maxWidth: '100px',
-                overflow: 'hidden',
-                whiteSpace: 'nowrap',
-                textOverflow: 'ellipsis',
-              }}
-            >
-              {name}
-            </div>
+          <img className='w-8 mr-2 my-1' src={imageURL} alt='player' />
+          <div className='flex flex-col items-start justify-center'>
+            <div className='w-20 text-left truncate'>{name}</div>
             <div>
               <span className='mr-1'>{club}</span>
               <span>{position}</span>
