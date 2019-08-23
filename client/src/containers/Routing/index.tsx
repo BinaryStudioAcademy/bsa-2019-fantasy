@@ -49,6 +49,7 @@ import {
   fetchGameweeks,
   fetchGameweekHistory,
   fetchGameweekHistoryResults,
+  fetchUserRankingForGameweek,
 } from './fetchGameweeks/actions';
 import { preloadClubLogos } from 'helpers/images';
 import { currentGameweekSelector } from 'store/selectors/current-gameweek.selector';
@@ -95,6 +96,7 @@ const Routing = () => {
   useEffect(() => {
     if (user && currentGameweek) {
       dispatch(fetchGameweekHistory(user.id, currentGameweek.id));
+      dispatch(fetchUserRankingForGameweek(user.id, currentGameweek.id));
       dispatch(fetchGameweekHistoryResults());
     }
   }, [dispatch, user, currentGameweek]);

@@ -17,3 +17,7 @@ export type GameweekHistoryResultsType = {
   average: number;
   max: number;
 };
+
+export type GameweekUserRankingType = {
+  rank: number;
+};
