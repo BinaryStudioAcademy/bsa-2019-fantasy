@@ -103,7 +103,7 @@ const PublicLeagues = ({
               : ''
           }`}
           type='submit'
-          disabled={!value || isLoading}
+          disabled={!value || isLoading || leagues.public.length > 3}
         >
           {isLoading ? t('wait') : t('LeaguesPage.joinLeague.public.join')}
         </button>
