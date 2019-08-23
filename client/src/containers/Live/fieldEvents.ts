@@ -67,6 +67,20 @@ const fieldEvents = [
     img: ball,
   },
   {
+    name: 'penalty',
+    team: 'home',
+    style: { bottom: '13%', left: '5%', width: '1.5rem' },
+    direction: { left: true },
+    img: ball,
+  },
+  {
+    name: 'penalty',
+    team: 'away',
+    style: { bottom: '13%', right: '5%', width: '1.5rem' },
+    direction: { right: true },
+    img: ball,
+  },
+  {
     name: 'goal',
     team: 'home',
     style: { top: '20%', right: '8%', width: '2.7rem' },

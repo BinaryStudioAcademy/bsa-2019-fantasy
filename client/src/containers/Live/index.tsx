@@ -309,6 +309,7 @@ class Live extends React.Component<Props, State> {
             <Fade
               {...event.direction}
               when={
+                true &&
                 lastEvent &&
                 lastEvent.name === event.name &&
                 lastEvent.team === event.team
