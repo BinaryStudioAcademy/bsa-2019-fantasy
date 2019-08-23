@@ -28,6 +28,35 @@ class GameRepository extends BaseRepository {
       include: ['hometeam', 'awayteam'],
     });
   }
+
+  getCurrent() {
+    const now = new Date();
+    return this.model.findOne({
+      where: {
+        start: {
+          [Op.lte]: now,
+        },
+        finished: false,
+      },
+    });
+  }
+
+  getNext() {
+    const now = new Date();
+    // return this.model.findAll({
+    //   attributes: ['id', [fn('min', col('start')), 'start']],
+    //   group: ['id'],
+    //   raw: true,
+    // });
+    return this.model.findOne({
+      where: {
+        start: {
+          [Op.gte]: now,
+        },
+      },
+      order: [['start', 'ASC']],
+    });
+  }
 }
 
 export default new GameRepository(GameModel);

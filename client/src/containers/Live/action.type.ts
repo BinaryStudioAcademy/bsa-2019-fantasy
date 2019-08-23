@@ -1,11 +1,36 @@
 import { Thunky } from 'store/types';
+import { Game } from 'types/game.types';
 
-export const SET_TEST_RESULT = 'TEST_ACTION:SET_TEST_RESULT';
+export const LOAD_CURRENT_GAME_REQUEST = 'CURRENT_GAME:LOAD_CURRENT_GAME_REQUEST';
+export const LOAD_CURRENT_GAME_SUCCESS = 'CURRENT_GAME:LOAD_CURRENT_GAME_SUCCESS';
+export const LOAD_CURRENT_GAME_FAILURE = 'CURRENT_GAME:LOAD_CURRENT_GAME_FAILURE';
 
-type SetTestResult = {
-  type: typeof SET_TEST_RESULT;
+export type LoadCurrentGameAction = {
+  type:
+    | typeof LOAD_CURRENT_GAME_REQUEST
+    | typeof LOAD_CURRENT_GAME_SUCCESS
+    | typeof LOAD_CURRENT_GAME_FAILURE;
   payload: any;
 };
 
-export type TestAction = SetTestResult;
-export type AsyncTestAction = Thunky<TestAction>;
+export type AsyncLoadCurrentGameAction = Thunky<LoadCurrentGameAction>;
+
+// type LoadCurrentGameRequest = {
+//   type: typeof LOAD_CURRENT_GAME_REQUEST;
+// };
+
+// type LoadCurrentGameSuccess = {
+//   type: typeof LOAD_CURRENT_GAME_SUCCESS;
+//   payload: { current: Game; next: Game };
+// };
+
+// type LoadCurrentGameFailure = {
+//   type: typeof LOAD_CURRENT_GAME_FAILURE;
+//   payload: { error: string };
+// };
+
+// export type LoadCurrentGameAction =
+//   | LoadCurrentGameRequest
+//   | LoadCurrentGameSuccess
+//   | LoadCurrentGameFailure;
+// export type AsyncLoadCurrentGameAction = Thunky<LoadCurrentGameAction>;
