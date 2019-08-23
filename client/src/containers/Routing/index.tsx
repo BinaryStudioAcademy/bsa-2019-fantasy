@@ -40,17 +40,20 @@ import FavouriteClubSelection from 'containers/Profile/components/FavouriteClubS
 import SetPassword from 'containers/Profile/components/SetPassword';
 import { loadCurrentUser, setLanguage } from 'containers/Profile/actions';
 
+import ConnectFbPage from 'containers/Auth/ConnectFbPage';
 import ForgotPassword from 'containers/ChangePassword/ForgotPassword';
 import ResetPassword from 'containers/ChangePassword/ResetPassword';
 
 import { fetchClubs } from './fetchClubs/actions';
-import { fetchGameweeks, fetchGameweekHistory } from './fetchGameweeks/actions';
+import {
+  fetchGameweeks,
+  fetchGameweekHistory,
+  fetchGameweekHistoryResults,
+} from './fetchGameweeks/actions';
 import { preloadClubLogos } from 'helpers/images';
 import { currentGameweekSelector } from 'store/selectors/current-gameweek.selector';
 
-import { joinRoom, leaveRoom, requestGames } from 'helpers/socket';
-
-import ConnectFbPage from 'containers/Auth/ConnectFbPage';
+import { joinRoom, requestGames } from 'helpers/socket';
 
 const Routing = () => {
   const { i18n } = useTranslation();
@@ -92,6 +95,7 @@ const Routing = () => {
   useEffect(() => {
     if (user && currentGameweek) {
       dispatch(fetchGameweekHistory(user.id, currentGameweek.id));
+      dispatch(fetchGameweekHistoryResults());
     }
   }, [dispatch, user, currentGameweek]);
 

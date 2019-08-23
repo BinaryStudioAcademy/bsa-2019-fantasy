@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Line as LineChart } from 'react-chartjs-2';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
@@ -11,6 +10,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { RootState } from 'store/types';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
+
 import Spinner from 'components/Spinner';
 import { getChartOptions } from 'helpers/gameweekChart';
 
@@ -27,11 +27,15 @@ const GameweekHistory = ({
   isLoading,
 }) => {
   const { t } = useTranslation();
+  const [currentGameweek, setCurrentGameweek] = useState<number>(0);
+
+  const gameweeks = useSelector((state: RootState) => state.gameweeks.gameweeks);
+  const gameweekResults = useSelector(
+    (state: RootState) => state.gameweeks.gameweeks_results,
+  );
   const user_id = useSelector(
     (state: RootState) => state.profile.user && state.profile.user.id,
   );
-
-  const [currentGameweek, setCurrentGameweek] = useState<number>(0);
 
   useEffect(() => {
     document.title = 'Home | Fantasy Football League';
@@ -90,7 +94,11 @@ const GameweekHistory = ({
           </div>
         </div>
         <div className='w-6/12'>
-          <LineChart data={getChartOptions(displayRadar())} />
+          {gameweekResults && gameweeks && (
+            <LineChart
+              data={getChartOptions(gameweeks, gameweekResults, displayRadar())}
+            />
+          )}
         </div>
       </div>
 

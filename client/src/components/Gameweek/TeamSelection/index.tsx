@@ -20,7 +20,6 @@ import { getPitch, getBench } from 'helpers/dragndrop';
 import { getFieldPlayersUniformUrl, getGoalkeepersUniformUrl } from 'helpers/images';
 import { postGameweekHistory } from 'containers/Routing/fetchGameweeks/actions';
 
-import Button from 'components/Button';
 import Spinner from 'components/Spinner';
 import styles from './styles.module.scss';
 

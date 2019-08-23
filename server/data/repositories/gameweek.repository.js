@@ -1,4 +1,4 @@
-import { Op, fn, col } from 'sequelize';
+import { Op } from 'sequelize';
 
 import { GameweekModel } from '../models/index';
 import BaseRepository from './base.repository';
@@ -8,6 +8,10 @@ class GameweekRepository extends BaseRepository {
     return this.model.findOne({
       where: { number },
     });
+  }
+
+  getAll() {
+    return this.model.findAll();
   }
 
   getCurrent() {

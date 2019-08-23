@@ -1,15 +1,45 @@
-export const getChartOptions = (data: any = [10, 59, 80, 81, 56, 55, 40]) => {
+import { GameweekHistoryResultsType } from 'types/gameweekHistory.type';
+import { GameweekType } from 'types/gameweek.type';
+
+export const getChartOptions = (
+  gameweeks: GameweekType[],
+  statistics: GameweekHistoryResultsType[],
+  userPoints: any = [10, 59, 80, 81, 56, 55, 40],
+) => {
+  const statisticsIds = [...statistics].map((s) => s.gameweek);
+
   return {
-    labels: ['GW1', 'GW2', 'GW3', 'GW4', 'GW5', 'GW6', 'GW7'],
+    labels: [
+      ...gameweeks
+        .filter((g) => statisticsIds.includes(g.id))
+        .map((g) => `GW ${g.number}`),
+    ],
     datasets: [
       {
-        label: 'points',
+        label: 'average point',
         fill: true,
         borderColor: '#1EE3CF',
         backgroundColor: 'rgba(30, 227, 207, 0.3)',
         pointHoverBackgroundColor: '#fff',
         pointHoverRadius: 7,
-        data,
+        data: [...statistics.map((s) => (s.average ? s.average : 0))],
+      },
+      {
+        label: 'max point',
+        fill: true,
+        borderColor: '#1EE3CF',
+        backgroundColor: 'rgba(18, 39, 55, 0.678)',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverRadius: 7,
+        data: [...statistics.map((s) => (s.max ? s.max : 0))],
+      },
+      {
+        label: 'user point',
+        fill: false,
+        borderColor: 'rgba(18, 39, 55, 0.678)',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverRadius: 7,
+        data: userPoints,
       },
     ],
   };
