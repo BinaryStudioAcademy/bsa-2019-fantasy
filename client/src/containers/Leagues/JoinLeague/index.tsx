@@ -14,24 +14,22 @@ const JoinLeague = () => {
 
   return (
     <div className={styles['join-league']}>
-      <div className='container'>
-        <div className={`${header.jumbotron} ${header.paper} mb-12 rounded`}>
-          <div className={`${header['jumbotron-content']} mt-12`}>
-            <h2 className={`${header.title} text-secondary`}>
-              <div className={`${header.sub} ${header.title} mb-4 flex items-center`}>
-                <FaStar />
-                {t('LeaguesPage.joinLeague.title.sub')}
-              </div>
-              {t('LeaguesPage.joinLeague.title.main')}
-            </h2>
-          </div>
+      <div className={`${header.jumbotron} ${header.paper} mb-12 rounded`}>
+        <div className={`${header['jumbotron-content']} mt-12`}>
+          <h2 className={`${header.title} text-secondary`}>
+            <div className={`${header.sub} ${header.title} mb-4 flex items-center`}>
+              <FaStar />
+              {t('LeaguesPage.joinLeague.title.sub')}
+            </div>
+            {t('LeaguesPage.joinLeague.title.main')}
+          </h2>
         </div>
-        <div
-          className={`${styles['join-league-content']} ${styles.paper} flex flex-col md:flex-row rounded`}
-        >
-          <PublicLeagues />
-          <PrivateLeagues />
-        </div>
+      </div>
+      <div
+        className={`${styles['join-league-content']} ${styles.paper} flex flex-col md:flex-row rounded`}
+      >
+        <PublicLeagues />
+        <PrivateLeagues />
       </div>
     </div>
   );
