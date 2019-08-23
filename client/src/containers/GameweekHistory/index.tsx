@@ -41,7 +41,7 @@ const GameweekHistory = ({
   useEffect(() => {
     if (gameweeksHistory && gameweeksHistory.length) {
       const gameweekId = gameweeksHistory[currentGameweek].gameweek.id;
-      loadTeamHistoryAction(user_id, gameweekId, currentGameweek+1);
+      loadTeamHistoryAction(user_id, gameweekId, currentGameweek + 1);
     }
   }, [currentGameweek, gameweeksHistory, loadTeamHistoryAction]);
 

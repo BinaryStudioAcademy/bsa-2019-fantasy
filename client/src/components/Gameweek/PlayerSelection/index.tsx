@@ -83,8 +83,8 @@ const PlayerSelection = ({
   if (!isGameweek) {
     drag(ref);
   }
-const isCaptain = !!captainId && captainId === id;
-const isViceCaptain = !!captainId && viceCaptainId === id;
+  const isCaptain = !!captainId && captainId === id;
+  const isViceCaptain = !!captainId && viceCaptainId === id;
 
   const onClick = (e) => {
     e.stopPropagation();
