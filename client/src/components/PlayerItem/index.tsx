@@ -2,7 +2,18 @@ import React from 'react';
 import { useDrag } from 'react-dnd';
 
 export const PlayerItem = (props: any) => {
-  const { id, name, club, position, price, score, info, imageURL } = props;
+  const {
+    id,
+    name,
+    club_id,
+    club,
+    position,
+    price,
+    score,
+    info,
+    imageURL,
+    onOpenInfo,
+  } = props;
 
   const [, drag] = useDrag({
     item: {
@@ -15,10 +26,18 @@ export const PlayerItem = (props: any) => {
       points: score,
     },
   });
+
   return (
     <tr ref={drag} className='bg-white'>
       <td className='w-1/6' align='center' valign='middle'>
-        <button className='p-1 flex justify-center opacity-50 hover:opacity-75'>
+        <button
+          className='p-1 flex justify-center opacity-50 hover:opacity-75'
+          onClick={() => {
+            if (onOpenInfo) {
+              onOpenInfo(id, club_id);
+            }
+          }}
+        >
           <img src={info} alt='info' />
         </button>
       </td>

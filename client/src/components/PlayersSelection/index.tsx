@@ -5,22 +5,37 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
 import { loadPlayersAction } from '../../components/PlayersSelection/actions';
+import {
+  fetchDataForPlayer,
+  resetPlayerDialogData,
+} from '../../containers/Players/actions';
 import { RootState } from 'store/types';
 import { PlayerType } from 'types/player.types';
 import { sortedBy, filteredBy, maxPrice } from './constants';
 
 import { PlayerList } from '../PlayersList/index';
 import Dropdown from 'react-dropdown';
+import PlayerDialog from 'components/PlayerDialog';
 import 'react-dropdown/style.css';
 
 type Props = {
   loadPlayersAction: typeof loadPlayersAction;
+  resetPlayerDialogData: any;
+  fetchDataForPlayer: any;
   players?: PlayerType[];
+  playerData?: any;
+  dialogLoading: boolean;
 };
 
-const PlayersSelection = ({ loadPlayersAction, players }: Props) => {
+const PlayersSelection = ({
+  loadPlayersAction,
+  players,
+  fetchDataForPlayer,
+  resetPlayerDialogData,
+  playerData,
+  dialogLoading,
+}: Props) => {
   const { t } = useTranslation();
-
   const [query, setQuery] = useState({
     limit: 10,
     order_direction: 'DESC',
@@ -30,6 +45,8 @@ const PlayersSelection = ({ loadPlayersAction, players }: Props) => {
     search: undefined,
     max_price: undefined,
   });
+
+  const [currentPlayer, setCurrentPlayer] = useState<PlayerType>();
 
   const [sortSelect, setSortSelect] = useState({
     value: 'player_score',
@@ -70,6 +87,19 @@ const PlayersSelection = ({ loadPlayersAction, players }: Props) => {
     setMaxPriceSelect(item);
     setQuery({ ...query, max_price: item.value });
     loadPlayersAction({ ...query });
+  };
+
+  const onOpenInfo = (id: string, club_id: string) => {
+    if (players) {
+      const player = players.find((p: any) => p && id === p.id);
+      setCurrentPlayer(player);
+      fetchDataForPlayer(id, club_id);
+    }
+  };
+
+  const onModalDismiss = () => {
+    resetPlayerDialogData();
+    setCurrentPlayer(undefined);
   };
 
   return (
@@ -118,16 +148,27 @@ const PlayersSelection = ({ loadPlayersAction, players }: Props) => {
         <strong>10</strong> {t('Transfers.playerSelection.shown')}
       </p>
 
-      {players && <PlayerList players={players} />}
+      {players && <PlayerList players={players} onOpenInfo={onOpenInfo} />}
+      {currentPlayer && (
+        <PlayerDialog
+          playerDialogData={playerData}
+          onDismiss={onModalDismiss}
+          loading={dialogLoading}
+          player={currentPlayer}
+          clubName={'ARS'}
+        />
+      )}
     </div>
   );
 };
 
 const mapStateToProps = (rootState: RootState) => ({
   players: rootState.playerSelection.players,
+  playerData: rootState.players.playerData,
+  dialogLoading: rootState.players.dialogLoading,
 });
 
-const actions = { loadPlayersAction };
+const actions = { loadPlayersAction, fetchDataForPlayer, resetPlayerDialogData };
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
 
 export default connect(

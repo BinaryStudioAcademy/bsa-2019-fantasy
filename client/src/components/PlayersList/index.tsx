@@ -13,9 +13,10 @@ import info from 'assets/images/info.svg';
 
 type Props = {
   players: PlayerType[];
+  onOpenInfo?: (id: string, club_id: string) => void;
 };
 
-export const PlayerList = ({ players }: Props) => {
+export const PlayerList = ({ players, onOpenInfo }: Props) => {
   const { t } = useTranslation();
 
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
@@ -56,11 +57,13 @@ export const PlayerList = ({ players }: Props) => {
               key={`player-goalkeeper-${player.id}`}
               id={player.id}
               name={player.second_name}
+              club_id={player.club_id}
               club={clubs[player.club_id - 1].short_name}
               position={PlayerTypes.GOALKEEPER}
               price={player.player_price}
               score={player.player_score}
               info={info}
+              onOpenInfo={onOpenInfo}
               imageURL={getGoalkeepersUniformUrl(clubs[player.club_id - 1].code)}
             />
           ))}
@@ -83,11 +86,13 @@ export const PlayerList = ({ players }: Props) => {
               key={`player-defender-${player.id}`}
               id={player.id}
               name={player.second_name}
+              club_id={player.club_id}
               club={clubs[player.club_id - 1].short_name}
               position={PlayerTypes.DEFENDER}
               price={player.player_price}
               score={player.player_score}
               info={info}
+              onOpenInfo={onOpenInfo}
               imageURL={getFieldPlayersUniformUrl(clubs[player.club_id - 1].code)}
             />
           ))}
@@ -110,11 +115,13 @@ export const PlayerList = ({ players }: Props) => {
               key={`player-midfielder-${player.id}`}
               id={player.id}
               name={player.second_name}
+              club_id={player.club_id}
               club={clubs[player.club_id - 1].short_name}
               position={PlayerTypes.MIDDLEFIELDER}
               price={player.player_price}
               score={player.player_score}
               info={info}
+              onOpenInfo={onOpenInfo}
               imageURL={getFieldPlayersUniformUrl(clubs[player.club_id - 1].code)}
             />
           ))}
@@ -137,11 +144,13 @@ export const PlayerList = ({ players }: Props) => {
               key={`player-forward-${player.id}`}
               id={player.id}
               name={player.second_name}
+              club_id={player.club_id}
               club={clubs[player.club_id - 1].short_name}
               position={PlayerTypes.FORWARD}
               price={player.player_price}
               score={player.player_score}
               info={info}
+              onOpenInfo={onOpenInfo}
               imageURL={getFieldPlayersUniformUrl(clubs[player.club_id - 1].code)}
             />
           ))}
