@@ -33,11 +33,23 @@ const FixturesContainer = ({
   const { t } = useTranslation();
 
   const [currentGameweek, setCurrentGameweek] = useState<number>(0);
-
   useEffect(() => {
     document.title = 'Fixtures | Fantasy Football League';
     loadGameweeksAction();
   }, [loadGameweeksAction]);
+
+  useEffect(() => {
+    if (gameweeks) {
+      const gameweek = gameweeks.find((gw) => {
+        const now = moment();
+        return moment(gw.end).isBefore(now);
+      });
+      if (gameweek) {
+        const gameweekNumber = gameweek.number;
+        setCurrentGameweek(+gameweekNumber);
+      }
+    }
+  }, [gameweeks]);
 
   useEffect(() => {
     if (gameweeks) {

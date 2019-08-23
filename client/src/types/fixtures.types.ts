@@ -22,6 +22,7 @@ export type FixturesType = {
 export type GameweeksType = [
   {
     id: string;
+    number: string;
     name: string;
     start: string;
     end: string;
