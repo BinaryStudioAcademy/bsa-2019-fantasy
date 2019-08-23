@@ -175,23 +175,23 @@ class Live extends React.Component<Props, State> {
   renderFixture = ({ homeClub, awayClub, content }: RenderFixture) => {
     if (homeClub && awayClub) {
       return (
-        <div className='flex items-center p-3 w-full'>
-          <div className='first-team team justify-end'>
+        <div className='flex items-center justify-center p-3 w-full'>
+          <div className='flex justify-end items-center'>
+            <h5 className='font-bold mx-2'>{homeClub.name}</h5>
             <img
-              className='logo order-1'
+              className='w-16'
               src={`images/club-logos/badge_${homeClub.code}_200.png`}
               alt='logo home'
             />
-            <h5 className='font-bold'>{homeClub.name}</h5>
           </div>
-          <div className='time p-3 py-2 rounded mx-2 bg-green-900'>{content}</div>
-          <div className='text-left team'>
+          <div className='time p-3 py-2 rounded mx-4 bg-green-900'>{content}</div>
+          <div className='flex items-center'>
             <img
-              className='logo'
+              className='w-16'
               src={`images/club-logos/badge_${awayClub.code}_200.png`}
               alt='logo'
             />
-            <h5 className='font-bold'>{awayClub.name}</h5>
+            <h5 className='font-bold mx-2'>{awayClub.name}</h5>
           </div>
         </div>
       );
@@ -202,8 +202,9 @@ class Live extends React.Component<Props, State> {
     const { homeClub, awayClub, score, elapsed = 0 } = this.state;
     const content = (
       <div className='flex'>
-        <p className='home-score score text-white font-bold bg-green-900'>{score[0]}</p>
-        <p className='away-score score text-white font-bold bg-green-900'>{score[1]}</p>
+        <p className='text-white font-bold bg-green-900 w-8'>
+          {score[0]} : {score[1]}
+        </p>
       </div>
     );
     return (
