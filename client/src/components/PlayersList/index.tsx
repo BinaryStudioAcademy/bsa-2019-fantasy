@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { RootState } from 'store/types';
-import { Position, Player } from 'types/player.types';
+import { Position, PlayerType } from 'types/player.types';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 
@@ -12,7 +12,7 @@ import { getFieldPlayersUniformUrl, getGoalkeepersUniformUrl } from 'helpers/ima
 import info from 'assets/images/info.svg';
 
 type Props = {
-  players: Player[];
+  players: PlayerType[];
 };
 
 export const PlayerList = ({ players }: Props) => {

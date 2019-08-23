@@ -36,33 +36,6 @@ const MyTeam = () => {
   const dispatch = useDispatch();
   const players = useSelector((state: RootState) => state.gameweeks.gameweeks_history);
 
-  if (players.length === 8) {
-    players.push(JSON.parse(JSON.stringify(players[0])));
-    players[players.length - 1].is_on_bench = true;
-    players[players.length - 1].player_stats.id = players[
-      players.length - 1
-    ].player_stats.id.replace('d', '1');
-    players[players.length - 1].player_stats.second_name = 'Replace1';
-    players.push(JSON.parse(JSON.stringify(players[1])));
-    players[players.length - 1].is_on_bench = true;
-    players[players.length - 1].player_stats.id = players[
-      players.length - 1
-    ].player_stats.id.replace('a', '2');
-    players[players.length - 1].player_stats.second_name = 'Replace2';
-    players.push(JSON.parse(JSON.stringify(players[2])));
-    players[players.length - 1].is_on_bench = true;
-    players[players.length - 1].player_stats.id = players[
-      players.length - 1
-    ].player_stats.id.replace('a', '3');
-    players[players.length - 1].player_stats.second_name = 'Replace3';
-    players.push(JSON.parse(JSON.stringify(players[3])));
-    players[players.length - 1].is_on_bench = true;
-    players[players.length - 1].player_stats.id = players[
-      players.length - 1
-    ].player_stats.id.replace('b', '4');
-    players[players.length - 1].player_stats.second_name = 'Replace4';
-  }
-
   if (captainId === '' && players.length > 0) {
     const givenCaptain = players.find((p) => p.is_captain);
     givenCaptain && setCaptainId(givenCaptain.player_stats.id);

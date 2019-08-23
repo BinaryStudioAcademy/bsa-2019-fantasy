@@ -1,13 +1,20 @@
-import * as testService from 'services/testService';
-import { SET_TEST_RESULT, TestAction, AsyncTestAction } from './action.type';
+import * as gameService from 'services/gameService';
+import {
+  LOAD_CURRENT_GAME_REQUEST,
+  LOAD_CURRENT_GAME_SUCCESS,
+  LOAD_CURRENT_GAME_FAILURE,
+  LoadCurrentGameAction,
+  AsyncLoadCurrentGameAction,
+} from './action.type';
+import { Game } from 'types/game.types';
 
-const setTestResult = (value: any): TestAction => ({
-  type: SET_TEST_RESULT,
-  payload: value,
+const loadCurrentGameSuccess = (payload: any): LoadCurrentGameAction => ({
+  type: LOAD_CURRENT_GAME_SUCCESS,
+  payload,
 });
 
-export const testAction = (): AsyncTestAction => async (dispatch) => {
-  const result = await testService.getTestResult();
-  const testValue = result.length && result[0].value;
-  dispatch(setTestResult(testValue));
+export const loadCurrentGame = (): AsyncLoadCurrentGameAction => async (dispatch) => {
+  const result = await gameService.getCurrent();
+
+  dispatch(loadCurrentGameSuccess(result));
 };

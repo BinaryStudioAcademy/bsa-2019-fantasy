@@ -22,7 +22,7 @@ const Sidebar = () => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
-  const { name, score } = useSelector(
+  const { name, score, money, team_name } = useSelector(
     (state: RootState) => state.profile.user!,
     shallowEqual,
   );
@@ -31,33 +31,35 @@ const Sidebar = () => {
   const toggleOpened = () => setOpened((o) => !o);
   const noPropagation = (e: React.SyntheticEvent) => e.stopPropagation();
 
-  const menuItems = [
-    {
-      name: t('Sidebar.status'),
-      icon: faStar,
-      link: '/',
-    },
-    {
-      name: t('Sidebar.myTeam'),
-      icon: faFutbol,
-      link: '/my-team',
-    },
-    {
-      name: t('Sidebar.statistics'),
-      icon: faProjectDiagram,
-      link: '/players',
-    },
-    {
-      name: t('Sidebar.transfers'),
-      icon: faExchangeAlt,
-      link: '/transfers',
-    },
-    {
-      name: t('Sidebar.leagues'),
-      icon: faAward,
-      link: '/leagues',
-    },
-  ];
+  const menuItems = team_name
+    ? [
+        {
+          name: t('Sidebar.status'),
+          icon: faStar,
+          link: '/',
+        },
+        {
+          name: t('Sidebar.myTeam'),
+          icon: faFutbol,
+          link: '/my-team',
+        },
+        {
+          name: t('Sidebar.statistics'),
+          icon: faProjectDiagram,
+          link: '/players',
+        },
+        {
+          name: t('Sidebar.transfers'),
+          icon: faExchangeAlt,
+          link: '/transfers',
+        },
+        {
+          name: t('Sidebar.leagues'),
+          icon: faAward,
+          link: '/leagues',
+        },
+      ]
+    : [];
 
   return (
     <div
@@ -95,6 +97,9 @@ const Sidebar = () => {
         </p>
       </Link>
       <div className={`${styles.points} text-sm ${isOpened ? 'pl-6' : 'pl-4'}`}>
+        {t('Sidebar.money')}: £{money}
+      </div>
+      <div className={`${styles.points} text-sm ${isOpened ? 'pl-6' : 'pl-4'}`}>
         {t('Sidebar.score')}: {score}
       </div>
       <div className='menu mt-16'>
@@ -103,7 +108,7 @@ const Sidebar = () => {
             exact
             className='flex px-6 py-5 h-8 justify-start items-center hover:text-primary'
             activeClassName='text-primary'
-            key={name}
+            key={`sidebar-menu-${name}`}
             to={link}
             onClick={noPropagation}
           >

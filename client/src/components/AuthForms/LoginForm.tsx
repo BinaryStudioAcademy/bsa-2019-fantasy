@@ -76,9 +76,12 @@ const LoginForm = withRouter(({ history }) => {
           </button>
         </div>
         <div className='block mt-8'>
-          <button onClick={() => history.push('/social')} /* href='/api/auth/fb' */>
+          <a href='/api/auth/fb'>
             <FaFacebook />
-          </button>
+          </a>
+          {/* <button onClick={() => history.push('/social')}>
+            <FaFacebook />
+          </button> */}
         </div>
       </form>
     </div>

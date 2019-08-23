@@ -7,8 +7,8 @@ import TeamItemHeader from '../TeamItemHeader/TeamItemHeader';
 
 type Props = {
   starters: any; // can be change to type real data
-  substitutes: any; // can be change to type real data
-  isGameweek: boolean;
+  substitutes?: any; // can be change to type real data
+  isGameweek?: boolean;
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
   viceCaptainId?: string;
@@ -17,31 +17,29 @@ type Props = {
 const TeamList = ({
   starters,
   substitutes,
-  isGameweek,
+  isGameweek = false,
   onOpen,
   captainId,
   viceCaptainId,
 }: Props) => {
-  console.log(starters);
-
   const displayPlayers = (arr: any) =>
-    arr.map(({ lastDroppedItem }) => {
+    arr.map(({ lastDroppedItem }, idx) => {
       if (!lastDroppedItem) {
         return null;
       }
       return (
         <TeamItem
-          key={lastDroppedItem.id}
+          key={`teamlist-item-${lastDroppedItem.id}-${lastDroppedItem.id || idx}`}
           id={lastDroppedItem.id}
           info={info}
           name={lastDroppedItem.name}
           imageURL={lastDroppedItem.src}
           club={lastDroppedItem.club}
           position={lastDroppedItem.type}
-          form={lastDroppedItem.form}
-          gameweek_points={lastDroppedItem.gameweek_points}
+          goals={lastDroppedItem.goals}
+          missed_passes={lastDroppedItem.missed_passes}
           total_points={lastDroppedItem.points}
-          fixture={lastDroppedItem.fixture}
+          red_cards={lastDroppedItem.red_cards}
           isGameweek={isGameweek}
           onOpen={arr.length === starters.length ? onOpen : undefined}
           captainId={captainId}
@@ -54,8 +52,12 @@ const TeamList = ({
     <table className={styles['team-list']}>
       <TeamItemHeader name='Starters' />
       <tbody className='w-3/4 bg-white p-3'>{displayPlayers(starters)}</tbody>
-      <TeamItemHeader name='Substitutes' />
-      <tbody className='w-3/4 bg-white p-3'>{displayPlayers(substitutes)}</tbody>
+      {!!substitutes && (
+        <>
+          <TeamItemHeader name='Substitutes' />
+          <tbody className='w-3/4 bg-white p-3'>{displayPlayers(substitutes)}</tbody>
+        </>
+      )}
     </table>
   );
 };

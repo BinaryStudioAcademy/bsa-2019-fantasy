@@ -1,10 +1,11 @@
 import React, { useRef } from 'react';
 import { useDrag } from 'react-dnd';
 import { is } from 'uuidv4';
-import classNames from 'classnames';
+
+import { GameweekHistoryType } from 'types/gameweekHistory.type';
+import cn from 'classnames';
 
 import styles from './styles.module.scss';
-import { GameweekHistoryType } from 'types/gameweekHistory.type';
 
 export interface PlayerInfo {
   id: string;
@@ -12,6 +13,7 @@ export interface PlayerInfo {
   name: string;
   club: string;
   type: string;
+  price: number;
   points: number;
   form: string;
   gameweek_points: string;
@@ -25,6 +27,7 @@ export interface PlayerDraggableProps {
   name: string;
   club: string;
   type: string;
+  price: number;
   points: number;
   form: number;
   gameweek_points: number;
@@ -46,6 +49,7 @@ const PlayerSelection = ({
   name,
   club,
   type,
+  price,
   points,
   form,
   gameweek_points,
@@ -79,8 +83,8 @@ const PlayerSelection = ({
   if (!isGameweek) {
     drag(ref);
   }
-  const isCaptain = captainId === id;
-  const isViceCaptain = viceCaptainId === id;
+const isCaptain = !!captainId && captainId === id;
+const isViceCaptain = !!captainId && viceCaptainId === id;
 
   const onClick = (e) => {
     e.stopPropagation();
@@ -102,12 +106,9 @@ const PlayerSelection = ({
   return (
     <div
       ref={ref}
-      className='text-center relative cursor-pointer'
-      onClick={() => {
-        if (onOpen) {
-          onOpen(id, isCaptain, isViceCaptain, name);
-        }
-      }}
+      className='text-center relative cursor-pointer h-full pt-2'
+      onClick={() => onOpen && onOpen(id, isCaptain, isViceCaptain, name)}
+      role='presentation'
     >
       <div>
         <div className='absolute' onClick={onClick}>
@@ -151,17 +152,19 @@ const PlayerSelection = ({
             </React.Fragment>
           )}
         </div>
-        <img
-          style={{ opacity }}
-          src={src}
-          className={`${styles['player-img']} ${styles['player-shadow']}`}
-          alt='player'
-        />
-        <div>
-          <div className={styles['player-name-container']}>
-            <p className={styles['player-name']}>{name}</p>
+        {src && (
+          <img
+            style={{ opacity }}
+            src={src}
+            className={`${styles['player-img']} ${styles['player-shadow']}`}
+            alt='player'
+          />
+        )}
+        <div className='absolute w-full bottom-0 left-0'>
+          <div className='px-1 w-full text-sm bg-green-700 text-white text-center truncate'>
+            {name}
           </div>
-          <div className={styles['player-club']}>{isGameweek ? points : club}</div>
+          <div className={cn(styles['player-club'])}>{isGameweek ? points : price}</div>
         </div>
       </div>
     </div>

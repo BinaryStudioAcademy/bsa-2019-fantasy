@@ -3,13 +3,23 @@ import { feedback } from 'react-feedbacker';
 import * as leagueService from 'services/leagueService';
 import {
   SET_USER_LEAGUES,
+  CREATE_LEAGUE_FAILURE,
+  CREATE_LEAGUE_SUCCESS,
+  SET_INVITATION_CODE,
+  SET_LOADING,
   SET_LEAGUES_SUGGESTIONS,
+  RESET_LEAGUES_DATA,
   SetLeaguesAction,
   AsyncSetLeaguesAction,
   AsyncCreateLeagueAction,
   AsyncJoinLeagueAction,
   SearchLeaguesAction,
   AsyncSearchLeaguesAction,
+  CreateLeagueFailure,
+  CreateLeagueSuccess,
+  SetInvitationCode,
+  AsyncGetInvitationCode,
+  SetLoading,
 } from './action.types';
 
 const setUserLeagues = (leagues: any): SetLeaguesAction => ({
@@ -22,16 +32,63 @@ const setSuggestions = (payload: any): SearchLeaguesAction => ({
   payload,
 });
 
+const createLeagueFailure = (payload: any): CreateLeagueFailure => ({
+  type: CREATE_LEAGUE_FAILURE,
+  payload,
+});
+
+const createLeagueSuccess = (payload: any): CreateLeagueSuccess => ({
+  type: CREATE_LEAGUE_SUCCESS,
+  payload,
+});
+
+const setLoading = (isLoading: boolean): SetLoading => ({
+  type: SET_LOADING,
+  payload: isLoading,
+});
+
+const setInvitationCode = (payload: string): SetInvitationCode => ({
+  type: SET_INVITATION_CODE,
+  payload,
+});
+
+export const resetLeaguesData = () => ({
+  type: RESET_LEAGUES_DATA,
+});
+
+export const getInvitationCode = (data: {
+  name: string;
+}): AsyncGetInvitationCode => async (dispatch) => {
+  const { name } = data;
+
+  try {
+    const result = await leagueService.getInvitationCode({ name });
+    if (!result.forbidden) {
+      dispatch(setInvitationCode(result.code));
+    }
+  } catch (err) {
+    console.log('wrong');
+  }
+};
+
 export const createLeagueAction = (data: {
   name: string;
   private: boolean;
   start_from: number;
-}): AsyncCreateLeagueAction => async () => {
+}): AsyncCreateLeagueAction => async (dispatch) => {
   try {
+    dispatch(setLoading(true));
     const result = await leagueService.createLeague(data);
+    if (data.private) {
+      const { name } = data;
+      const result = await leagueService.getInvitationCode({ name });
+      dispatch(setInvitationCode(result.code));
+    }
     feedback.success((result && result.message) || result);
+    dispatch(createLeagueSuccess(result.message));
   } catch (err) {
     feedback.error(err.message);
+    dispatch(createLeagueFailure(err.message));
   }
 };
 

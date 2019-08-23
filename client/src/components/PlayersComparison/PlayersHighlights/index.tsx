@@ -2,7 +2,7 @@ import React from 'react';
 import Chart from 'chart.js';
 
 import { Radar } from 'react-chartjs-2';
-import { Player } from 'types/player.types';
+import { PlayerType } from 'types/player.types';
 import { RootState } from 'store/types';
 import { Club } from 'types/club.type';
 import { useSelector } from 'react-redux';
@@ -14,11 +14,11 @@ Object.assign(Chart.defaults.global, {
   defaultFontColor: '#7d8891',
 });
 
-interface IProps {
-  comparisonData: Player[];
-}
+type Props = {
+  comparisonData: PlayerType[];
+};
 
-const PlayersHighlights = (props: IProps) => {
+const PlayersHighlights = (props: Props) => {
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
 
   const getClubById = (id: number) => {

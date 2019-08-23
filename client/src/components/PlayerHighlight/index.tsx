@@ -12,7 +12,7 @@ import { getClubLogoUrl, getPlayerImageUrl } from 'helpers/images';
 import { RootState } from 'store/types';
 
 import styles from './styles.module.scss';
-import { Player } from 'types/player.types';
+import { PlayerType } from 'types/player.types';
 import { Club } from 'types/club.types';
 
 // default chart values
@@ -23,7 +23,11 @@ Object.assign(Chart.defaults.global, {
   // fontSize is set inside component parameters (chartData)
 });
 
-const PlayerHighlight = ({ player }: { player: Player }) => {
+type Props = {
+  player: PlayerType;
+};
+
+const PlayerHighlight = ({ player }: Props) => {
   const { t } = useTranslation();
 
   const clubs = useSelector((state: RootState) => state.clubs.clubs);

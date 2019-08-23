@@ -1,5 +1,5 @@
 import * as playersService from 'services/playersService';
-import { Player } from 'types/player.types';
+import { PlayerType } from 'types/player.types';
 import { Fixture } from 'types/fixture.types';
 import { History } from 'types/history.types';
 import {
@@ -15,11 +15,11 @@ import {
 } from './action.type';
 
 export type PlayerDataType = {
-  fixtures: [Fixture];
-  history: [History];
+  fixtures: Fixture[];
+  history: History[];
 };
 
-const fetchPlayersSuccess = (payload: [Player]): FetchPlayersAction => ({
+const fetchPlayersSuccess = (payload: PlayerType[]): FetchPlayersAction => ({
   type: FETCH_PLAYERS_SUCCESS,
   payload: payload,
 });

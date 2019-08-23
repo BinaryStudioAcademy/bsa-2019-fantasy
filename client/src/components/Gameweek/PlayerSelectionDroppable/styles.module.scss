@@ -2,16 +2,38 @@
   position: relative;
   height: 6.5rem;
   width: 7rem;
+
+  transition: background-color 0.16s;
 }
 
 :local(.player-type) {
-  color: white;
-  font-size: 0.75rem;
-  text-transform: uppercase;
   position: absolute;
-  height: 2rem;
-  width: 100%;
-  left: 0;
-  top: calc(50% - 1rem);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 50%;
+
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 4rem;
   text-align: center;
+  text-transform: uppercase;
+
+  animation: spin 5s infinite linear;
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) rotate(180deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+    opacity: 0.5;
+  }
 }

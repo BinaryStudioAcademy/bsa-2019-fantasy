@@ -6,7 +6,7 @@ import { Link, Redirect } from 'react-router-dom';
 import ReactTable from 'react-table';
 
 import { RootState } from 'store/types';
-import { Player } from 'types/player.types';
+import { PlayerType } from 'types/player.types';
 import {
   fetchPlayers,
   fetchDataForPlayer,
@@ -21,10 +21,8 @@ import { Club } from 'types/club.type';
 
 import { FaPlus, FaTimes } from 'react-icons/fa';
 
-import styles from './styles.module.scss';
-
-type IProps = {
-  players: [Player?];
+type Props = {
+  players: PlayerType[];
   loading: boolean;
   error: string | null;
   fetchPlayers: typeof fetchPlayers;
@@ -36,16 +34,16 @@ type IProps = {
   t: any;
 };
 
-type IState = {
+type State = {
   playerHighlightData: any;
   comparisonData: any;
-  currentPlayer?: Player;
+  currentPlayer?: PlayerType;
   searchBarText: string;
   redirect: boolean;
 };
 
-class PlayersPage extends React.Component<IProps, IState> {
-  state: IState = {
+class PlayersPage extends React.Component<Props, State> {
+  state: State = {
     playerHighlightData: {},
     comparisonData: [],
     searchBarText: '',
@@ -53,7 +51,7 @@ class PlayersPage extends React.Component<IProps, IState> {
   };
   table: any;
 
-  constructor(props: IProps) {
+  constructor(props: Props) {
     super(props);
     this.table = React.createRef();
     this.onFetchData = this.onFetchData.bind(this);

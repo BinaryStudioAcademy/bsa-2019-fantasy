@@ -10,9 +10,9 @@ type Props = {
   club: string;
   position: string;
   total_points: number;
-  form: number;
-  gameweek_points: number;
-  fixture: string;
+  goals: number;
+  missed_passes: number;
+  red_cards: number;
   isGameweek: boolean;
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
@@ -26,26 +26,25 @@ const TeamItem = ({
   name,
   club,
   position,
-  form,
-  gameweek_points,
+  goals,
+  missed_passes,
   total_points,
-  fixture,
+  red_cards,
   isGameweek,
   onOpen,
   captainId,
   viceCaptainId,
 }: Props) => {
-  const isCaptain = captainId === id;
-  const isViceCaptain = viceCaptainId === id;
+  const isCaptain = !!captainId && captainId === id;
+  const isViceCaptain = !!viceCaptainId && viceCaptainId === id;
   return (
     <tr className='bg-white w-full'>
-      <td  className={`w-1/12 ${styles['table-item']}`} align='center' valign='middle'>
-        <button>
-          <img src={info} alt=' info' />
+      <td className={`w-1/12 ${styles['table-item']}`} align='center' valign='middle'>
+        <button className='w-full'>
+          <img className='object-cover' src={info} alt='info' />
         </button>
       </td>
-      <td  className={`w-1/12 ${styles['table-item']}`}>
-        {' '}
+      <td className={`w-1/12 ${styles['table-item']}`}>
         {!isGameweek && (
           <React.Fragment>
             {(isCaptain || isViceCaptain) && (
@@ -78,21 +77,21 @@ const TeamItem = ({
             }
           }}
         >
-          <img className='w-8 mr-2' src={imageURL} alt='player' />
+          {imageURL && <img className='w-8 mr-2' src={imageURL} alt='player' />}
           <div className='flex flex-col items-start'>
-            <div>{name}</div>
+            <div>{name || 'Unassigned'}</div>
             <div>
-              <span className='mr-1'>{club}</span>
+              {club && <span className='mr-1'>{club}</span>}
               <span>{position}</span>
             </div>
           </div>
         </button>
       </td>
       <td className={`w-1/12 text-base ${styles['table-item']}`}>{position}</td>
-      <td className={`w-1/12 text-base ${styles['table-item']}`}>{form}</td>
-      <td className={`w-1/12 text-base ${styles['table-item']}`}>{gameweek_points}</td>
+      <td className={`w-1/12 text-base ${styles['table-item']}`}>{goals}</td>
+      <td className={`w-1/12 text-base ${styles['table-item']}`}>{missed_passes}</td>
       <td className={`w-1/12 text-base ${styles['table-item']}`}>{total_points}</td>
-      <td className={`w-1/12 text-base ${styles['table-item']}`}>{fixture}</td>
+      <td className={`w-1/12 text-base ${styles['table-item']}`}>{red_cards}</td>
     </tr>
   );
 };
