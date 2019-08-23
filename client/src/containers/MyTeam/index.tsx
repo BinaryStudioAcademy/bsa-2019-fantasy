@@ -41,6 +41,11 @@ const MyTeam = () => {
     givenCaptain && setCaptainId(givenCaptain.player_stats.id);
   }
 
+  if (viceCaptainId === '' && players.length > 0) {
+    const givenViceCaptain = players.find((p) => p.is_vice_captain);
+    givenViceCaptain && setViceCaptainId(givenViceCaptain.player_stats.id);
+  }
+
   const setCurrentPlayerForSwitching = (id: string) => {
     const player = players.find((p) => p.player_stats.id === id);
     setPlayerToSwitch(player);

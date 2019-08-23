@@ -10,6 +10,9 @@ import {
   FETCH_GAMEWEEKS_HISTORY_RESULTS_REQUEST,
   FETCH_GAMEWEEKS_HISTORY_RESULTS_SUCCESS,
   FETCH_GAMEWEEKS_HISTORY_RESULTS_FAILURE,
+  FETCH_GAMEWEEK_USER_RANKING_REQUEST,
+  FETCH_GAMEWEEK_USER_RANKING_SUCCESS,
+  FETCH_GAMEWEEK_USER_RANKING_FAILURE,
   FetchGameweeksAction,
   AsyncFetchGameweeksAction,
 } from './action.type';
@@ -17,6 +20,7 @@ import {
   GameweekHistoryType,
   TeamMemberType,
   GameweekHistoryResultsType,
+  GameweekUserRankingType,
 } from 'types/gameweekHistory.type';
 import { GameweekType } from 'types/gameweek.type';
 
@@ -65,6 +69,22 @@ const fetchGameweeksHistoryResultsFailure = (error: string): FetchGameweeksActio
   type: FETCH_GAMEWEEKS_HISTORY_RESULTS_FAILURE,
   payload: error,
 });
+
+const fetchUserRankingForGameweekRequest = (): FetchGameweeksAction => ({
+  type: FETCH_GAMEWEEK_USER_RANKING_REQUEST,
+});
+
+const fetchUserRankingForGameweekSuccess = (
+  payload: GameweekUserRankingType,
+): FetchGameweeksAction => ({
+  type: FETCH_GAMEWEEK_USER_RANKING_SUCCESS,
+  payload: payload,
+});
+
+const fetchUserRankingForGameweekFailure = (error: string): FetchGameweeksAction => ({
+  type: FETCH_GAMEWEEK_USER_RANKING_FAILURE,
+  payload: error,
+});
 export const fetchGameweeks = (): AsyncFetchGameweeksAction => async (dispatch) => {
   dispatch(fetchGameweeksRequest());
 
@@ -103,6 +123,23 @@ export const fetchGameweekHistoryResults = (): AsyncFetchGameweeksAction => asyn
     dispatch(fetchGameweeksHistoryResultsSuccess(result));
   } catch (err) {
     dispatch(fetchGameweeksHistoryResultsFailure(err.message || err));
+  }
+};
+
+export const fetchUserRankingForGameweek = (
+  userId: string,
+  gameweekId: string,
+): AsyncFetchGameweeksAction => async (dispatch) => {
+  dispatch(fetchUserRankingForGameweekRequest());
+
+  try {
+    const result = await gameweeksHistoryService.getUserRankingForGameweek(
+      userId,
+      gameweekId,
+    );
+    dispatch(fetchUserRankingForGameweekSuccess(result));
+  } catch (err) {
+    dispatch(fetchUserRankingForGameweekFailure(err.message || err));
   }
 };
 

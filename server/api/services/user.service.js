@@ -1,5 +1,9 @@
 import userRepository from '../../data/repositories/user.repository';
 
+export const getAllUsers = async () => {
+  const users = await userRepository.getAll();
+  return users;
+};
 export const getUserById = async (userId) => {
   const user = await userRepository.getUserById(userId);
   const { password: _, ...userToSend } = user.dataValues;

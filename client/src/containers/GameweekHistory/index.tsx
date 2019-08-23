@@ -30,6 +30,7 @@ const GameweekHistory = ({
   const [currentGameweek, setCurrentGameweek] = useState<number>(0);
 
   const gameweeks = useSelector((state: RootState) => state.gameweeks.gameweeks);
+  const userRank = useSelector((state: RootState) => state.gameweeks.user_rank);
   const gameweekResults = useSelector(
     (state: RootState) => state.gameweeks.gameweeks_results,
   );
@@ -126,6 +127,14 @@ const GameweekHistory = ({
               </span>
               {` ${t('GameweekHistoryPage.points')}`}
             </p>
+            <h3 className={`${header.title} text-secondary mb-1`}>
+              {t('GameweekHistoryPage.overallRank')}
+            </h3>
+            {userRank ? (
+              <p className={`pl-3 ${styles.points}`}>
+                <span className='font-bold'>{userRank.rank}</span>
+              </p>
+            ) : null}
           </div>
         </React.Fragment>
       </div>

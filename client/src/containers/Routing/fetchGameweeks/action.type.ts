@@ -3,6 +3,7 @@ import { GameweekType } from 'types/gameweek.type';
 import {
   GameweekHistoryType,
   GameweekHistoryResultsType,
+  GameweekUserRankingType,
 } from 'types/gameweekHistory.type';
 
 export const FETCH_GAMEWEEKS_REQUEST = 'GAMEWEEKS:FETCH_FETCH_GAMEWEEKS_REQUEST';
@@ -19,6 +20,12 @@ export const FETCH_GAMEWEEKS_HISTORY_RESULTS_SUCCESS =
   'GAMEWEEKS:FETCH_GAMEWEEKS_HISTORY_RESULTS_SUCCESS';
 export const FETCH_GAMEWEEKS_HISTORY_RESULTS_FAILURE =
   'GAMEWEEKS:FETCH_GAMEWEEKS_HISTORY_RESULTS_FAILURE';
+export const FETCH_GAMEWEEK_USER_RANKING_REQUEST =
+  'GAMEWEEKS:FETCH_GAMEWEEK_USER_RANKING_REQUEST';
+export const FETCH_GAMEWEEK_USER_RANKING_SUCCESS =
+  'GAMEWEEKS:FETCH_GAMEWEEK_USER_RANKING_SUCCESS';
+export const FETCH_GAMEWEEK_USER_RANKING_FAILURE =
+  'GAMEWEEKS:FETCH_GAMEWEEK_USER_RANKING_FAILURE';
 
 type FetchGameweeksRequest = {
   type: typeof FETCH_GAMEWEEKS_REQUEST;
@@ -60,7 +67,19 @@ type FetchGameweeksHistoryResultsFailure = {
   type: typeof FETCH_GAMEWEEKS_HISTORY_RESULTS_FAILURE;
   payload: string;
 };
+type FetchGameweekUserRankingRequest = {
+  type: typeof FETCH_GAMEWEEK_USER_RANKING_REQUEST;
+};
 
+type FetchGameweekUserRankingSuccess = {
+  type: typeof FETCH_GAMEWEEK_USER_RANKING_SUCCESS;
+  payload: GameweekUserRankingType;
+};
+
+type FetchGameweekUserRankingFailure = {
+  type: typeof FETCH_GAMEWEEK_USER_RANKING_FAILURE;
+  payload: string;
+};
 export type FetchGameweeksAction =
   | FetchGameweeksRequest
   | FetchGameweeksSuccess
@@ -70,5 +89,8 @@ export type FetchGameweeksAction =
   | FetchGameweeksHistoryFailure
   | FetchGameweeksHistoryResultsRequest
   | FetchGameweeksHistoryResultsSuccess
-  | FetchGameweeksHistoryResultsFailure;
+  | FetchGameweeksHistoryResultsFailure
+  | FetchGameweekUserRankingRequest
+  | FetchGameweekUserRankingSuccess
+  | FetchGameweekUserRankingFailure;
 export type AsyncFetchGameweeksAction = Thunky<FetchGameweeksAction>;
