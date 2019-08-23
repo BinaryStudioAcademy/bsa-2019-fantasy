@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import * as gameweekHistoryService from '../services/gameweek-history.service';
 import * as teamMemberHistoryService from '../services/team-member-history.service';
+import * as gameweekService from '../services/gameweek.service';
 import * as transferService from '../services/transfer.service';
 import jwtMiddleware from '../middlewares/jwt.middleware';
 
@@ -26,6 +27,39 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
+
+  // TODO: get user ranking in overall league
+  .get('/gameweek/ranking/user/:user', (req, res, next) =>
+    gameweekHistoryService
+      .getGameweekHistoryForUser(req.params.user)
+      .then((value) => res.json(value))
+      .catch(next),
+  )
+  .get('/gameweek/recent/results', (req, res, next) => {
+    gameweekService
+      .getRecentGameweeks()
+      .then((gameweeks) =>
+        gameweekHistoryService
+          .getHistoryByGameweeks(gameweeks)
+          .then((histories) =>
+            res.json(gameweekHistoryService.getGameweeksStatistics(histories)),
+          ),
+      )
+      .catch(next);
+  })
+  .get('/gameweek/best-players/:gameweek', (req, res, next) => {
+    gameweekHistoryService
+      .getHistoryByGameweekId(req.params.gameweek)
+      .then((history) => {
+        teamMemberHistoryService
+          .getPlayersByGameweekIds(history)
+          .then((players) => {
+            return res.json(gameweekHistoryService.getBestPlayersOfTheGameweek(players));
+          })
+          .catch(next);
+      })
+      .catch(next);
+  })
   .get('/user-team/:user/:gameweek', (req, res, next) => {
     gameweekHistoryService
       .getCurrentHistoryById(req.params.user, req.params.gameweek)

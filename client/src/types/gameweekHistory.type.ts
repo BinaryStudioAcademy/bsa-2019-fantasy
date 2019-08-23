@@ -11,3 +11,9 @@ export type TeamMemberType = {
 export type PlayerStatsType = {
   player_stats: PlayerType;
 };
+
+export type GameweekHistoryResultsType = {
+  gameweek: string;
+  average: number;
+  max: number;
+};

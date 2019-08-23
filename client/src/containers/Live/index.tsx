@@ -1,3 +1,4 @@
+/* eslint-disable  */
 import React, { Ref, ReactNode, RefObject } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
@@ -244,6 +245,7 @@ class Live extends React.Component<Props, State> {
           <h3 className='font-bold text-2xl mb-4'>Select clubs</h3>
           <div className='flex -mx-2 mb-8'>
             <div className='w-1/3 px-2'>
+              {/* eslint-disable-next-line rule */}
               <label className='font-semibold text-l'>Home club</label>
               <Dropdown
                 options={options}
@@ -255,6 +257,7 @@ class Live extends React.Component<Props, State> {
               ></Dropdown>
             </div>
             <div className='w-1/3 px-2'>
+              {/* eslint-disable-next-line rule */}
               <label className='font-semibold text-l'>Away club</label>
               <Dropdown
                 options={options}
@@ -266,6 +269,7 @@ class Live extends React.Component<Props, State> {
               ></Dropdown>
             </div>
             <div className='w-1/3 px-2'>
+              {/* eslint-disable-next-line rule */}
               <label className='font-semibold text-l'>Timeout</label>
               <Dropdown
                 options={timeoutOptions}
@@ -301,6 +305,7 @@ class Live extends React.Component<Props, State> {
 
     const home = lastEvent.team === 'home';
     const direction = home ? { left: true } : { right: true };
+    /* eslint-disable-next-line rule */
 
     return (
       <div className='relative mt-16'>

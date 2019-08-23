@@ -7,10 +7,17 @@ import {
   FETCH_GAMEWEEKS_HISTORY_REQUEST,
   FETCH_GAMEWEEKS_HISTORY_SUCCESS,
   FETCH_GAMEWEEKS_HISTORY_FAILURE,
+  FETCH_GAMEWEEKS_HISTORY_RESULTS_REQUEST,
+  FETCH_GAMEWEEKS_HISTORY_RESULTS_SUCCESS,
+  FETCH_GAMEWEEKS_HISTORY_RESULTS_FAILURE,
   FetchGameweeksAction,
   AsyncFetchGameweeksAction,
 } from './action.type';
-import { GameweekHistoryType, TeamMemberType } from 'types/gameweekHistory.type';
+import {
+  GameweekHistoryType,
+  TeamMemberType,
+  GameweekHistoryResultsType,
+} from 'types/gameweekHistory.type';
 import { GameweekType } from 'types/gameweek.type';
 
 const fetchGameweeksRequest = (): FetchGameweeksAction => ({
@@ -31,7 +38,7 @@ const fetchGameweeksHistoryRequest = (): FetchGameweeksAction => ({
   type: FETCH_GAMEWEEKS_HISTORY_REQUEST,
 });
 
-const fetchGameweeksHistorySuccess = (
+export const fetchGameweeksHistorySuccess = (
   payload: GameweekHistoryType[],
 ): FetchGameweeksAction => ({
   type: FETCH_GAMEWEEKS_HISTORY_SUCCESS,
@@ -40,6 +47,22 @@ const fetchGameweeksHistorySuccess = (
 
 const fetchGameweeksHistoryFailure = (error: string): FetchGameweeksAction => ({
   type: FETCH_GAMEWEEKS_HISTORY_FAILURE,
+  payload: error,
+});
+
+const fetchGameweeksHistoryResultsRequest = (): FetchGameweeksAction => ({
+  type: FETCH_GAMEWEEKS_HISTORY_RESULTS_REQUEST,
+});
+
+const fetchGameweeksHistoryResultsSuccess = (
+  payload: GameweekHistoryResultsType[],
+): FetchGameweeksAction => ({
+  type: FETCH_GAMEWEEKS_HISTORY_RESULTS_SUCCESS,
+  payload: payload,
+});
+
+const fetchGameweeksHistoryResultsFailure = (error: string): FetchGameweeksAction => ({
+  type: FETCH_GAMEWEEKS_HISTORY_RESULTS_FAILURE,
   payload: error,
 });
 export const fetchGameweeks = (): AsyncFetchGameweeksAction => async (dispatch) => {
@@ -67,6 +90,19 @@ export const fetchGameweekHistory = (
     dispatch(fetchGameweeksHistorySuccess(result));
   } catch (err) {
     dispatch(fetchGameweeksHistoryFailure(err.message || err));
+  }
+};
+
+export const fetchGameweekHistoryResults = (): AsyncFetchGameweeksAction => async (
+  dispatch,
+) => {
+  dispatch(fetchGameweeksHistoryResultsRequest());
+
+  try {
+    const result = await gameweeksHistoryService.getGameweekHistoryResults();
+    dispatch(fetchGameweeksHistoryResultsSuccess(result));
+  } catch (err) {
+    dispatch(fetchGameweeksHistoryResultsFailure(err.message || err));
   }
 };
 

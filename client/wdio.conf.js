@@ -28,8 +28,8 @@ exports.config = {
   capabilities: [
     {
       maxInstances: 1,
-      browserName: 'chrome'
-    }
+      browserName: 'chrome',
+    },
   ],
   logLevel: 'trace',
   bail: 0,
@@ -47,9 +47,9 @@ exports.config = {
       errorOptions: {
         error: 'message',
         failure: 'message',
-        stacktrace: 'stack'
-      }
-    }
+        stacktrace: 'stack',
+      },
+    },
   },
   coloredLogs: true,
   screenshotPath: path.join(OUTPUT_DIR, 'screenshots'),
@@ -58,7 +58,7 @@ exports.config = {
   // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: 'bdd',
-    timeout: 90000
+    timeout: 90000,
   },
   afterTest: function(test) {
     if (test.passed) {
@@ -70,5 +70,5 @@ exports.config = {
     const filename = encodeURIComponent(test.title.replace(/\s+/g, '-'));
     const filePath = SCREENSHOT_DIR + `/${filename}.png`;
     browser.saveScreenshot(filePath);
-  }
+  },
 };
