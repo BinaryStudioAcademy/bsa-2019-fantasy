@@ -65,7 +65,7 @@ const Sidebar = () => {
     <div
       className={`${
         styles.sidebar
-      } flex flex-col py-6 bg-secondary text-primary2 h-screen relative ${
+      } flex flex-col justify-between py-6 bg-secondary text-primary2 h-screen relative ${
         isOpened ? styles.open : ''
       }`}
       onClick={toggleOpened}
@@ -73,36 +73,34 @@ const Sidebar = () => {
     >
       <Link
         to='/'
-        className={`${styles['sidebar-logo']} font-bold ${
-          isOpened ? 'pl-6 pr-12' : 'pl-3 pr-3'
-        }`}
+        className={`sidebar-logo ${styles['sidebar-logo']} ${isOpened ? 'pl-6' : 'pl-3'}`}
       >
-        <img src='/images/logo.png' alt='logo' />
+        <img src='/images/logo.png' alt='logo' style={{ height: 45, width: 45 }} />
       </Link>
-      <Link
-        className={`${styles['username-link']} mt-32 flex-col ${
-          isOpened ? 'pl-6' : 'pl-3'
-        }`}
-        to='/profile'
-        onClick={noPropagation}
+
+      <div
+        className={`profile-menu ${styles['profile-menu']} ${isOpened ? 'pl-6' : 'pl-3'}`}
       >
-        <img
-          src='https://i2.wp.com/www.ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png'
-          alt='user'
-          style={{ height: 45, width: 45 }}
-          className='rounded-full mb-2'
-        />
-        <p className={`${styles.username} truncate ${isOpened ? styles.open : ''}`}>
-          {name}
-        </p>
-      </Link>
-      <div className={`${styles.points} text-sm ${isOpened ? 'pl-6' : 'pl-4'}`}>
-        {t('Sidebar.money')}: £{money}
+        <Link className={`mt-32 flex-col`} to='/profile' onClick={noPropagation}>
+          <img
+            src='https://i2.wp.com/www.ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png'
+            alt='user'
+            style={{ height: 45, width: 45 }}
+            className='rounded-full mb-2'
+          />
+          <p className={`${styles.username} truncate ${isOpened ? styles.open : ''}`}>
+            {name}
+          </p>
+        </Link>
+        <div className={`${styles.points} text-sm`}>
+          {t('Sidebar.money')}: £{money}
+        </div>
+        <div className={`${styles.points} text-sm`}>
+          {t('Sidebar.score')}: {score}
+        </div>
       </div>
-      <div className={`${styles.points} text-sm ${isOpened ? 'pl-6' : 'pl-4'}`}>
-        {t('Sidebar.score')}: {score}
-      </div>
-      <div className='menu mt-16'>
+
+      <div className='navigation-menu'>
         {menuItems.map(({ name, icon, link }) => (
           <NavLink
             exact
@@ -116,15 +114,18 @@ const Sidebar = () => {
             <div className={styles['link-title']}>{name}</div>
           </NavLink>
         ))}
+      </div>
+
+      <div className='logout-btn px-6'>
         <button
           type='button'
-          className='absolute bottom-0 mb-6 w-full opacity-75 hover:opacity-100 font-bold rounded py-1 px-6 bg-transparent uppercase'
+          className='w-full hover:text-primary font-bold bg-transparent uppercase'
           onClick={(e) => {
             e.stopPropagation();
             dispatch(logout());
           }}
         >
-          {isOpened ? t('Sidebar.logout') : <FaSignOutAlt className='ml-1 opacity-75' />}
+          {isOpened ? t('Sidebar.logout') : <FaSignOutAlt className='ml-1' />}
         </button>
       </div>
     </div>

@@ -4,7 +4,7 @@
   width: 70px;
   transition: width 0.3s;
 
-  &:local(.open){
+  &:local(.open) {
     width: 150px;
 
     :local(.link-title) {
@@ -39,7 +39,7 @@
     transition: visibility 0s, opacity 0.3s, padding 0.3s;
   }
 
-  :local(.username-link) {
+  :local(.profile-menu) {
     transition: padding 0.3s;
   }
 }
