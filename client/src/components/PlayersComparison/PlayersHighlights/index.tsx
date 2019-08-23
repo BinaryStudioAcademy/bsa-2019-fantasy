@@ -7,6 +7,7 @@ import { RootState } from 'store/types';
 import { Club } from 'types/club.type';
 import { useSelector } from 'react-redux';
 import { getClubLogoUrl, getPlayerImageUrl } from 'helpers/images';
+import Button from 'components/Button';
 
 Object.assign(Chart.defaults.global, {
   defaultFontFamily: 'Source Sans Pro',
@@ -199,8 +200,24 @@ const PlayersHighlights = (props: Props) => {
           </div>
         </div>
 
-        <div className='players-chart self-center w-2/5'>
-          <Radar data={chartData} options={chartOptions} />
+        <div className='players-chart-n-btns flex flex-col self-center w-2/5'>
+          <div className='players-chart'>
+            <Radar data={chartData} options={chartOptions} />
+          </div>
+          <div className='players-btns self-center mt-10'>
+            {' '}
+            <Button
+              href='/players'
+              type='link'
+              styling='secondary'
+              className='text-sm xl:text-base mx-2'
+            >
+              Go back
+            </Button>
+            <Button styling='primary' className='text-sm xl:text-base mx-2'>
+              Show AVG
+            </Button>
+          </div>
         </div>
 
         <div className='player-second flex flex-col items-end text-right'>
