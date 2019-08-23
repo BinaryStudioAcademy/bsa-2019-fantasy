@@ -10,6 +10,9 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
+  .get('/current', (req, res, next) =>
+    gameweekService.getCurrentGameweek().then((value) => res.json(value).catch(next)),
+  )
   .get('/:id', (req, res, next) =>
     gameweekService
       .getGameweekById(req.params.id)

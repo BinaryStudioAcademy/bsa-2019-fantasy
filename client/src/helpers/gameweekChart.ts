@@ -2,8 +2,9 @@ import { GameweekHistoryResultsType } from 'types/gameweekHistory.type';
 import { GameweekType } from 'types/gameweek.type';
 
 export const getChartOptions = (
-  gameweeks: Array<GameweekType>,
-  statistics: Array<GameweekHistoryResultsType>,
+  gameweeks: GameweekType[],
+  statistics: GameweekHistoryResultsType[],
+  userPoints: any = [10, 59, 80, 81, 56, 55, 40],
 ) => {
   const statisticsIds = [...statistics].map((s) => s.gameweek);
 
@@ -31,6 +32,14 @@ export const getChartOptions = (
         pointHoverBackgroundColor: '#fff',
         pointHoverRadius: 7,
         data: [...statistics.map((s) => (s.max ? s.max : 0))],
+      },
+      {
+        label: 'user point',
+        fill: false,
+        borderColor: 'rgba(18, 39, 55, 0.678)',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverRadius: 7,
+        data: userPoints,
       },
     ],
   };

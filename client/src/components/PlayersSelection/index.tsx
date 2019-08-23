@@ -6,7 +6,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 
 import { loadPlayersAction } from '../../components/PlayersSelection/actions';
 import { RootState } from 'store/types';
-import { Player } from 'types/player.types';
+import { PlayerType } from 'types/player.types';
 import { sortedBy, filteredBy, maxPrice } from './constants';
 
 import { PlayerList } from '../PlayersList/index';
@@ -15,7 +15,7 @@ import 'react-dropdown/style.css';
 
 type Props = {
   loadPlayersAction: typeof loadPlayersAction;
-  players?: Player[];
+  players?: PlayerType[];
 };
 
 const PlayersSelection = ({ loadPlayersAction, players }: Props) => {
@@ -73,8 +73,8 @@ const PlayersSelection = ({ loadPlayersAction, players }: Props) => {
   };
 
   return (
-    <div className='bg-gray-200 px-4 py-4'>
-      <h3 className='font-bold'>{t('Transfers.playerSelection.title')}</h3>
+    <div className='bg-gray-200 px-4 py-4 rounded' style={{ minWidth: '350px' }}>
+      <h3 className='font-bold text-lg'>{t('Transfers.playerSelection.title')}</h3>
       <form>
         <div className='mt-2'>
           <div className='font-bold'>

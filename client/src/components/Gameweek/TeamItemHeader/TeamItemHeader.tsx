@@ -21,10 +21,10 @@ const TeamItemHeader = ({ name }: Props) => {
           {name}
         </td>
         <td className={`w-1/12 text-base ${stylesItem['table-item']}`}>Pos</td>
-        <td className={`w-1/12 text-base ${stylesItem['table-item']}`}>Form</td>
-        <td className={`w-1/12 text-base ${stylesItem['table-item']}`}>GW</td>
+        <td className={`w-1/12 text-base ${stylesItem['table-item']}`}>Goals</td>
+        <td className={`w-1/12 text-base ${stylesItem['table-item']}`}>MS</td>
         <td className={`w-1/12 text-base ${stylesItem['table-item']}`}>PTS</td>
-        <td className={`w-1/12 text-base ${stylesItem['table-item']}`}>Fix</td>
+        <td className={`w-1/12 text-base ${stylesItem['table-item']}`}>RC</td>
       </tr>
     </thead>
   );

@@ -34,6 +34,7 @@ export interface TeamSelectionProps {
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
   captainId?: string;
   viceCaptainId?: string;
+  playersHistory?: any;
 }
 
 const TeamSelection = ({
@@ -41,14 +42,18 @@ const TeamSelection = ({
   captainId,
   viceCaptainId,
   onOpen,
+  playersHistory,
 }: TeamSelectionProps) => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
   const currentGameweek = useSelector(currentGameweekSelector);
-
-  const players = useSelector((state: RootState) => state.gameweeks.gameweeks_history);
+  let players = useSelector((state: RootState) => state.gameweeks.gameweeks_history);
+  if (playersHistory) {
+    players = playersHistory;
+  }
+  console.log(players);
 
   const [view, setView] = useState<'list' | 'pitch'>('pitch');
   const [playersOnBench, setBench] = useState<any[]>(getBench());
@@ -97,7 +102,9 @@ const TeamSelection = ({
                 ...el.player_stats,
                 id: el.player_stats.id,
                 name: el.player_stats.second_name,
-                club: clubs[el.player_stats.club_id - 1].short_name,
+                club: clubs[el.player_stats.club_id - 1]
+                  ? clubs[el.player_stats.club_id - 1].short_name
+                  : '',
                 points: el.player_stats.player_score,
                 type: el.player_stats.position,
                 src:
@@ -234,6 +241,7 @@ const TeamSelection = ({
         //when we move from the pitch
       } else if (
         playerPitchIndex > -1 &&
+        playerBenchIndex === -1 &&
         playersOnBench[index] &&
         playersOnBench !== undefined
       ) {

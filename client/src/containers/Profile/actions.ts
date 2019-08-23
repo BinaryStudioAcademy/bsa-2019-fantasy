@@ -12,6 +12,10 @@ import {
   ResetPasswordCredentials,
 } from 'types/forgot.password.types';
 
+import { UserTeamDetails } from 'types/user.type';
+import { TeamMemberData } from 'types/teamMemberHistory.types';
+import { GameweekType } from 'types/gameweek.type';
+
 import {
   SET_USER,
   SET_IS_LOADING,
@@ -23,7 +27,7 @@ import {
 const setToken = (token: string) => localStorage.setItem('token', token);
 const clearToken = () => localStorage.removeItem('token');
 
-const setUser = (user: User | null): UserAction => ({
+export const setUser = (user: User | null): UserAction => ({
   type: SET_USER,
   payload: user,
 });
@@ -120,5 +124,25 @@ export const updateFavoriteClub = (id: Club['id']): AsyncUserAction => async (
     feedback.success((res && res.message) || res);
   } catch (err) {
     feedback.error('Failed to update favorite club.');
+  }
+};
+
+export const updateUserTeamDetails = (
+  userData: UserTeamDetails,
+  teamMemberData: TeamMemberData,
+  gameweekId: GameweekType['id'],
+): AsyncUserAction => async (dispatch, getState) => {
+  try {
+    const user = await authService.getCurrentUser();
+    const res = await profileService.updateUserTeamDetails(
+      user!.id,
+      gameweekId,
+      userData,
+      teamMemberData,
+    );
+    loadCurrentUser(true)(dispatch, getState);
+    feedback.success((res && res.message) || res);
+  } catch (err) {
+    feedback.error('Failed to create your team');
   }
 };

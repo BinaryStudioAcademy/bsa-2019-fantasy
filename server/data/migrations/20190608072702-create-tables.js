@@ -51,6 +51,11 @@ export default {
                 type: Sequelize.STRING,
                 unique: true,
               },
+              free_transfers: {
+                allowNull: true,
+                type: Sequelize.INTEGER,
+                defaultValue: 1,
+              },
               createdAt: Sequelize.DATE,
               updatedAt: Sequelize.DATE,
             },

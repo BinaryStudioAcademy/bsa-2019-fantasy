@@ -1,4 +1,5 @@
 import moment from 'moment';
+// eslint-disable-next-line import/no-named-as-default
 import gameweekRepository from '../../data/repositories/gameweek.repository';
 
 export const getGameweeks = async () => {
@@ -29,4 +30,10 @@ export const getRecentGameweeks = async () => {
 export const getGameweekById = async (gameweekId) => {
   const result = await gameweekRepository.getById(gameweekId);
   return result;
+};
+
+export const getCurrentGameweek = async () => {
+  const current = await gameweekRepository.getCurrent();
+  const next = await gameweekRepository.getNext();
+  return { current, next };
 };

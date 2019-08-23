@@ -5,11 +5,11 @@ import classNames from 'classnames';
 
 import { PlayerDataType } from 'containers/Players/actions';
 import Spinner from 'components/Spinner';
-import { Player } from 'types/player.types';
+import { PlayerType } from 'types/player.types';
 
 type Props = {
   playerDialogData: PlayerDataType;
-  player: Player;
+  player: PlayerType;
   onDismiss: () => void;
   loading: boolean;
   clubName: string | undefined;

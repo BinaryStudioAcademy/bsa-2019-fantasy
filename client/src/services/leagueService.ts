@@ -45,3 +45,13 @@ export const searchPublicLeagues = async (request: SearchPublicLeaguesCredential
 
   return response.json();
 };
+
+export const getInvitationCode = async (request: { name: string }) => {
+  const response = await callWebApi({
+    endpoint: `/api/leagues/invitation-code`,
+    type: 'POST',
+    request,
+  });
+
+  return response.json();
+};
