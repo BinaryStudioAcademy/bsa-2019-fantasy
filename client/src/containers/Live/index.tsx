@@ -300,15 +300,6 @@ class Live extends React.Component<Props, State> {
       opposite: true,
       distance: '50%',
     };
-<<<<<<< HEAD
-=======
-    const positionRight = { top: '15%', left: '55%' };
-    const positionLeft = { top: '15%', right: '55%' };
-
-    const home = lastEvent.team === 'home';
-    const direction = home ? { left: true } : { right: true };
-    /* eslint-disable-next-line rule */
->>>>>>> dev
 
     return (
       <div className='relative mt-16'>
