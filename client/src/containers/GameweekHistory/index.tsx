@@ -27,7 +27,7 @@ const GameweekHistory = ({
   isLoading,
 }) => {
   const { t } = useTranslation();
-  const [currentGameweek, setCurrentGameweek] = useState<number>(0);
+  const [currentGameweek, setCurrentGameweek] = useState<number>(1);
 
   const gameweeks = useSelector((state: RootState) => state.gameweeks.gameweeks);
   const userRank = useSelector((state: RootState) => state.gameweeks.user_rank);
@@ -46,8 +46,18 @@ const GameweekHistory = ({
   useEffect(() => {
     if (gameweeksHistory && gameweeksHistory.length) {
       setCurrentGameweek(gameweeksHistory[0].gameweek.number);
-      const gameweekId = gameweeksHistory[currentGameweek].gameweek.id;
-      loadTeamHistoryAction(user_id, gameweekId, currentGameweek + 1);
+    }
+  }, [gameweeksHistory]);
+
+  useEffect(() => {
+    if (gameweeksHistory && gameweeksHistory.length) {
+      const idx = gameweeksHistory.findIndex((gw) => {
+        return gw.gameweek.number === currentGameweek;
+      });
+      if (idx !== -1) {
+        const gameweekId = gameweeksHistory[idx].gameweek.id;
+        loadTeamHistoryAction(user_id, gameweekId, currentGameweek);
+      }
     }
   }, [currentGameweek, gameweeksHistory, loadTeamHistoryAction]);
 
@@ -67,7 +77,7 @@ const GameweekHistory = ({
             <div className={`${header.sub} ${header.title} mb-3 flex items-center`}>
               {t('GameweekHistoryPage.titles.sub')}
             </div>
-            {`${t('GameweekHistoryPage.titles.main')}  ${currentGameweek + 1}`}
+            {`${t('GameweekHistoryPage.titles.main')}  ${currentGameweek}`}
           </h2>
           <div className='text-center mb-4 flex justify-between'>
             {currentGameweek >= 1 && (
@@ -80,7 +90,7 @@ const GameweekHistory = ({
                 {t('previous')}
               </button>
             )}
-            {currentGameweek < gameweeksHistory.length - 1 && (
+            {currentGameweek < gameweeksHistory.length && (
               <button
                 onClick={() => setCurrentGameweek(currentGameweek + 1)}
                 disabled={isLoading}
