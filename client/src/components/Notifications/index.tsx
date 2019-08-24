@@ -47,18 +47,18 @@ const Notifications = () => {
         tabIndex={-1}
       >
         {notifications.find((notification) => notification.isRead === false) ? (
-          <span className='fa-layers fa-fw text-secondary'>
+          <button className='fa-layers fa-fw text-secondary outline-none focus:outline-none'>
             <FontAwesomeIcon icon={faBell} />
             <FontAwesomeIcon
               icon={faCircle}
               color={'#FF482F'}
               transform='shrink-10 right-5 up-4'
             />
-          </span>
+          </button>
         ) : (
-          <span className='fa-layers fa-fw text-secondary'>
+          <button className='fa-layers fa-fw text-secondary outline-none focus:outline-none'>
             <FontAwesomeIcon icon={faBell} />
-          </span>
+          </button>
         )}
       </div>
       {visible && (
@@ -70,7 +70,7 @@ const Notifications = () => {
                 key={notification.id}
               >
                 <button
-                  className='notification-close-btn self-end'
+                  className='notification-close-btn self-end outline-none focus:outline-none'
                   onClick={() => removeSingleNotification(notification.id)}
                 >
                   x
