@@ -12,3 +12,7 @@ export type Game = {
   createdAt: string;
   updatedAt: string;
 };
+export type CurrentGame = {
+  current: Game;
+  next: Game;
+};
