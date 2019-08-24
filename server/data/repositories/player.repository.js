@@ -3,7 +3,7 @@ import { PlayerStatModel } from '../models/index';
 import BaseRepository from './base.repository';
 
 class PlayerRepository extends BaseRepository {
-  async getPlayers({
+  getPlayers({
     offset,
     limit,
     order_field,
@@ -51,7 +51,7 @@ class PlayerRepository extends BaseRepository {
     const order = [];
     if (order_field && order_direction) order.push([order_field, order_direction]);
 
-    return this.model.findAll({ where, order, offset, limit });
+    return this.model.findAndCountAll({ where, order, offset, limit });
   }
 
   getById(id) {
