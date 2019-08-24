@@ -210,7 +210,11 @@
     },
 
     "emailPreferences": {
-      "title": "Email preferences"
+      "title": "Email preferences",
+      "email-select": "Recieve a remind-email to apply a team",
+      "timeSelect": "When to send an email to apply a team?",
+      "hours": "hours",
+      "hour": "hour"
     },
 
     "changePassword": {
