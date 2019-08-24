@@ -1,5 +1,4 @@
-/* eslint-disable  */
-import React, { Ref, ReactNode, RefObject } from 'react';
+import React, { RefObject } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import socketIOClient from 'socket.io-client';
@@ -45,7 +44,7 @@ type RenderFixture = {
   content: any;
 };
 
-const endpoint = 'http://localhost:5004';
+const endpoint = `http://${process.env.FAKER_SOCKET_SERVER}:${process.env.FAKER_SOCKET_SERVER_PORT}/`;
 const timeoutOptions = [1, 2, 5, 10, 15].map((item) => ({
   label: `${item} min`,
   value: String(item),
@@ -121,6 +120,7 @@ class Live extends React.Component<Props, State> {
         break;
       case 'endGame':
         newState.isSimulating = false;
+        break;
       case 'disconnect':
         newState.socketConnected = false;
         break;
@@ -300,17 +300,15 @@ class Live extends React.Component<Props, State> {
       opposite: true,
       distance: '50%',
     };
-    const positionRight = { top: '15%', left: '55%' };
-    const positionLeft = { top: '15%', right: '55%' };
-
-    const home = lastEvent.team === 'home';
-    const direction = home ? { left: true } : { right: true };
-    /* eslint-disable-next-line rule */
 
     return (
       <div className='relative mt-16'>
         {fieldEvents.map((event) => (
-          <div className='absolute' style={event.style}>
+          <div
+            className='absolute'
+            style={event.style}
+            key={`${event.name}-${event.team}`}
+          >
             <Fade
               {...event.direction}
               when={
