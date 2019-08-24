@@ -22,9 +22,9 @@ import Fade from 'react-reveal/Fade';
 import 'react-dropdown/style.css';
 
 type Props = {
-  loadCurrentGame: typeof loadCurrentGame;
+  loadCurrentGame: any;
   clubs: Club[];
-  currentGame: Game;
+  currentGame?: Game;
 };
 type State = {
   isModalActive: boolean;
@@ -55,25 +55,19 @@ class Live extends React.Component<Props, State> {
   //   testRes: 'not received yet',
   // };
   socket: any;
-  eventsLog: RefObject<HTMLDivElement>;
-
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isModalActive: false,
-      isSimulating: false,
-      matchStarted: false,
-      events: [],
-      homeClub: undefined,
-      awayClub: undefined,
-      timeout: 5,
-      score: [0, 0],
-      elapsed: undefined,
-      socketConnected: false,
-    };
-
-    this.eventsLog = React.createRef();
-  }
+  state: State = {
+    isModalActive: false,
+    isSimulating: false,
+    matchStarted: false,
+    events: [],
+    homeClub: undefined,
+    awayClub: undefined,
+    timeout: 5,
+    score: [0, 0],
+    elapsed: undefined,
+    socketConnected: false,
+  };
+  eventsLog = React.createRef<HTMLDivElement>();
 
   componentDidMount() {
     this.socket = socketIOClient(endpoint);
@@ -245,8 +239,8 @@ class Live extends React.Component<Props, State> {
           <h3 className='font-bold text-2xl mb-4'>Select clubs</h3>
           <div className='flex -mx-2 mb-8'>
             <div className='w-1/3 px-2'>
-              {/* eslint-disable-next-line rule */}
               <label className='font-semibold text-l'>Home club</label>
+              {/* eslint-disable-next-line */}
               <Dropdown
                 options={options}
                 value={homeClub && String(homeClub.id)}
@@ -257,8 +251,8 @@ class Live extends React.Component<Props, State> {
               ></Dropdown>
             </div>
             <div className='w-1/3 px-2'>
-              {/* eslint-disable-next-line rule */}
               <label className='font-semibold text-l'>Away club</label>
+              {/* eslint-disable-next-line */}
               <Dropdown
                 options={options}
                 value={awayClub && String(awayClub.id)}
@@ -269,8 +263,8 @@ class Live extends React.Component<Props, State> {
               ></Dropdown>
             </div>
             <div className='w-1/3 px-2'>
-              {/* eslint-disable-next-line rule */}
               <label className='font-semibold text-l'>Timeout</label>
+              {/* eslint-disable-next-line */}
               <Dropdown
                 options={timeoutOptions}
                 value={String(timeout)}
