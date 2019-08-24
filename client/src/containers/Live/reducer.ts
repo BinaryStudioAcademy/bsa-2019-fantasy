@@ -8,10 +8,10 @@ import {
 import { Game } from 'types/game.types';
 
 type State = {
-  current: Game | undefined;
-  next: Game | undefined;
+  current?: Game;
+  next?: Game;
   loading: boolean;
-  error: string | undefined;
+  error?: string;
 };
 
 const initialState: State = {
@@ -28,7 +28,7 @@ export default (state = initialState, action: LoadCurrentGameAction) => {
     case LOAD_CURRENT_GAME_SUCCESS:
       return { ...state, ...action.payload };
     case LOAD_CURRENT_GAME_FAILURE:
-      return { ...state, error: action.payload.error };
+      return { ...state, error: action.payload };
     default:
       return state;
   }
