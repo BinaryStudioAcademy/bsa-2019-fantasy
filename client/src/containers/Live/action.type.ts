@@ -10,7 +10,7 @@ export type LoadCurrentGameAction = {
     | typeof LOAD_CURRENT_GAME_REQUEST
     | typeof LOAD_CURRENT_GAME_SUCCESS
     | typeof LOAD_CURRENT_GAME_FAILURE;
-  payload: any;
+  payload?: any;
 };
 
 export type AsyncLoadCurrentGameAction = Thunky<LoadCurrentGameAction>;
