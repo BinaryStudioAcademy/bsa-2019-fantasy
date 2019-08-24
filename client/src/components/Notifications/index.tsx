@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store/types';
 import { NotificationType } from 'types/notifications.types';
@@ -12,6 +12,27 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faCircle } from '@fortawesome/free-solid-svg-icons';
+
+// onClickOutside hook
+const useOnClickOutside = (ref: any, handler: any) => {
+  useEffect(() => {
+    const listener = (event: { target: any }) => {
+      if (!ref.current || ref.current.contains(event.target)) {
+        return;
+      }
+
+      handler(event);
+    };
+
+    document.addEventListener('mousedown', listener);
+    document.addEventListener('touchstart', listener);
+
+    return () => {
+      document.removeEventListener('mousedown', listener);
+      document.removeEventListener('touchstart', listener);
+    };
+  }, [ref, handler]);
+};
 
 const Notifications = () => {
   const dispatch = useDispatch();
@@ -37,6 +58,10 @@ const Notifications = () => {
     dispatch(markAllNotificationsRead(notifications));
     setVisible(!visible);
   };
+
+  // onClickOutside
+  const ref = useRef();
+  useOnClickOutside(ref, () => setVisible(false));
 
   return (
     <div className='relative'>
@@ -64,7 +89,10 @@ const Notifications = () => {
         )}
       </div>
       {visible && (
-        <div className='notifications-wrapper flex flex-col justify-between absolute rounded shadow-figma left-0 p-2 bg-background w-64 h-56'>
+        <div
+          ref={ref as any}
+          className='notifications-wrapper flex flex-col justify-between absolute rounded shadow-figma left-0 p-2 bg-background w-64 h-56'
+        >
           <div className='notifications-list h-48 overflow-y-auto overflow-x-hidden'>
             {notifications.map((notification: NotificationType) => (
               <div
