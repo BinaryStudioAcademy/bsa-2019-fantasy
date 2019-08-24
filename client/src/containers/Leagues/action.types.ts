@@ -9,6 +9,7 @@ export const JOIN_LEAGUE = 'LEAGUES_ACTION:JOIN_LEAGUE';
 export const SET_LEAGUES_SUGGESTIONS = 'LEAGUES_ACTION:SET_LEAGUES_SUGGESTIONS';
 export const RESET_LEAGUES_DATA = 'LEAGUES_ACTION:RESET_LEAGUES_DATA';
 export const SET_INVITATION_CODE = 'LEAGUES_ACTION:SET_INVITATION_CODE';
+export const SET_LEAGUE_DETAILS = 'LEAGUES_ACTION:SET_LEAGUE_DETAILS';
 
 export type SetLoading = {
   type: typeof SET_LOADING;
@@ -17,6 +18,11 @@ export type SetLoading = {
 
 type SetLeagues = {
   type: typeof SET_USER_LEAGUES;
+  payload: any;
+};
+
+type SetLeagueDetails = {
+  type: typeof SET_LEAGUE_DETAILS;
   payload: any;
 };
 
@@ -69,5 +75,7 @@ export type SetLeaguesAction = SetLeagues;
 export type AsyncSetLeaguesAction = Thunky<SetLeaguesAction>;
 export type AsyncJoinLeagueAction = Thunky<JoinLeagueAction>;
 export type SearchLeaguesAction = SearchLeagues;
+export type SetLeagueDetailsAction = SetLeagueDetails;
 export type AsyncSearchLeaguesAction = Thunky<SearchLeaguesAction>;
 export type AsyncGetInvitationCode = Thunky<GetInvitationCode>;
+export type AsyncSetLeagueDetailsAction = Thunky<SetLeagueDetailsAction>;

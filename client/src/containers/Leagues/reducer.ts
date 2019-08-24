@@ -5,9 +5,11 @@ import {
   SET_LEAGUES_SUGGESTIONS,
   SET_INVITATION_CODE,
   SET_LOADING,
+  SET_LEAGUE_DETAILS,
   RESET_LEAGUES_DATA,
   CREATE_LEAGUE_FAILURE,
   CREATE_LEAGUE_SUCCESS,
+  SetLeagueDetailsAction,
   SetInvitationCode,
   CreateLeagueAction,
   ResetLeagueAction,
@@ -16,6 +18,7 @@ import {
 type State = {
   leagues?: any;
   suggestions?: any;
+  leagueDetails?: any;
   error: string | null;
   success: string | null;
   isLoading: boolean;
@@ -37,7 +40,8 @@ export default (
     | SetLeaguesAction
     | SearchLeaguesAction
     | CreateLeagueAction
-    | ResetLeagueAction,
+    | ResetLeagueAction
+    | SetLeagueDetailsAction,
 ) => {
   switch (action.type) {
     case SET_USER_LEAGUES:
@@ -54,6 +58,8 @@ export default (
       return { ...state, success: null, error: null, code: '' };
     case SET_INVITATION_CODE:
       return { ...state, code: action.payload };
+    case SET_LEAGUE_DETAILS:
+      return { ...state, leagueDetails: action.payload };
     default:
       return state;
   }

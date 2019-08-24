@@ -55,3 +55,12 @@ export const getInvitationCode = async (request: { name: string }) => {
 
   return response.json();
 };
+
+export const getLeagueDetails = async (request: { name: string }) => {
+  const response = await callWebApi({
+    endpoint: `/api/leagues/${request.name}`,
+    type: 'GET',
+  });
+
+  return response.json();
+};

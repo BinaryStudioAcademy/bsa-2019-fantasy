@@ -9,6 +9,8 @@ import {
   SET_LOADING,
   SET_LEAGUES_SUGGESTIONS,
   RESET_LEAGUES_DATA,
+  SET_LEAGUE_DETAILS,
+  AsyncSetLeagueDetailsAction,
   SetLeaguesAction,
   AsyncSetLeaguesAction,
   AsyncCreateLeagueAction,
@@ -20,6 +22,7 @@ import {
   SetInvitationCode,
   AsyncGetInvitationCode,
   SetLoading,
+  SetLeagueDetailsAction,
 } from './action.types';
 
 const setUserLeagues = (leagues: any): SetLeaguesAction => ({
@@ -29,6 +32,11 @@ const setUserLeagues = (leagues: any): SetLeaguesAction => ({
 
 const setSuggestions = (payload: any): SearchLeaguesAction => ({
   type: SET_LEAGUES_SUGGESTIONS,
+  payload,
+});
+
+const setLeagueDetails = (payload: any): SetLeagueDetailsAction => ({
+  type: SET_LEAGUE_DETAILS,
   payload,
 });
 
@@ -95,6 +103,17 @@ export const createLeagueAction = (data: {
 export const loadUserLeagues = (): AsyncSetLeaguesAction => async (dispatch) => {
   const result = await leagueService.getUserLeagues();
   dispatch(setUserLeagues(result));
+};
+
+export const loadLeagueDetails = (name): AsyncSetLeagueDetailsAction => async (
+  dispatch,
+) => {
+  try {
+    const result = await leagueService.getLeagueDetails(name);
+    dispatch(setLeagueDetails(result));
+  } catch (err) {
+    // TODO handle not existing league
+  }
 };
 
 export const joinLeague = (data: {
