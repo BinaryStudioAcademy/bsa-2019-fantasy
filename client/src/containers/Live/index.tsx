@@ -44,7 +44,7 @@ type RenderFixture = {
   content: any;
 };
 
-const endpoint = 'http://localhost:5004';
+const endpoint = `http://${process.env.FAKER_SOCKET_SERVER}:${process.env.FAKER_SOCKET_SERVER_PORT}/`;
 const timeoutOptions = [1, 2, 5, 10, 15].map((item) => ({
   label: `${item} min`,
   value: String(item),
