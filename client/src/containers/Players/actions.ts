@@ -19,7 +19,10 @@ export type PlayerDataType = {
   history: History[];
 };
 
-const fetchPlayersSuccess = (payload: PlayerType[]): FetchPlayersAction => ({
+const fetchPlayersSuccess = (payload: {
+  count: number;
+  rows: PlayerType[];
+}): FetchPlayersAction => ({
   type: FETCH_PLAYERS_SUCCESS,
   payload: payload,
 });

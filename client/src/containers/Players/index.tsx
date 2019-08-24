@@ -27,6 +27,7 @@ import { Option } from 'react-dropdown';
 type Props = {
   players: PlayerType[];
   loading: boolean;
+  count: number;
   error: string | null;
   fetchPlayers: typeof fetchPlayers;
   clubs: Club[];
@@ -255,7 +256,6 @@ class PlayersPage extends React.Component<Props, State> {
   };
 
   renderHeader = (child: string, props: any) => {
-    console.log(props);
     const defaultCursor =
       NOT_SORTABLE_TABLE_COLUMNS.includes(props.column.id) || !props.column.id;
     const cursor = defaultCursor ? 'cursor-default' : null;
@@ -342,13 +342,15 @@ class PlayersPage extends React.Component<Props, State> {
         id,
       };
     });
+    const pageSize = playerTableData.length > 10 ? playerTableData.length : 10;
+    const pages = Math.ceil(this.props.count / pageSize);
     return (
       <ReactTable
         ref={this.table as any}
         style={this.tableStyle}
         data={playerTableData}
-        pageSize={playerTableData.length > 10 ? playerTableData.length : 10}
-        pages={10} // should default to -1 (which means we don't know how many pages we have)
+        pageSize={pageSize}
+        pages={pages} // should default to -1 (which means we don't know how many pages we have)
         manual
         columns={this.columns}
         onFetchData={this.onFetchData}
@@ -464,6 +466,7 @@ class PlayersPage extends React.Component<Props, State> {
 const mapStateToProps = (rootState: RootState) => ({
   players: rootState.players.players,
   loading: rootState.players.loading,
+  count: rootState.players.count,
   error: rootState.players.error,
   clubs: rootState.clubs.clubs,
   playerData: rootState.players.playerData,
