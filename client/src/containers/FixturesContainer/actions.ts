@@ -9,9 +9,10 @@ import {
   AsyncSetGamesAction,
 } from './action.type';
 
-import { GameweeksType, FixturesItemType } from 'types/fixtures.types';
+import { FixturesItemType } from 'types/fixtures.types';
+import { GameweekHistoryType } from 'types/gameweekHistory.type';
 
-const setGameweeks = (gameweeks: GameweeksType): setGameweekAction => ({
+const setGameweeks = (gameweeks: GameweekHistoryType[]): setGameweekAction => ({
   type: SET_GAMEWEEKS,
   payload: gameweeks,
 });
@@ -26,9 +27,7 @@ const setIsLoading = (isLoading: boolean): setGamesAction => ({
   payload: isLoading,
 });
 
-
 export const loadGameweeksAction = (): AsyncSetGameweekAction => async (dispatch) => {
-  
   const result = await gameweekService.getGameweeks();
   dispatch(setGameweeks(result));
 };

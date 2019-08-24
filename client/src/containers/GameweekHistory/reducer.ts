@@ -6,15 +6,19 @@ import {
   setTeamHistoryAction,
 } from './action.type';
 
-import { GameweeksType, FixturesItemType } from 'types/fixtures.types';
+import { LOCAL_GameweekHistoryType } from './types';
 
 type State = {
-  gameweeksHistory?: any;
+  gameweeksHistory: LOCAL_GameweekHistoryType[];
   teamHistory?: any;
   isLoading: boolean;
 };
 
-const initialState: State = { isLoading: true };
+const initialState: State = {
+  gameweeksHistory: [],
+  teamHistory: [],
+  isLoading: true,
+};
 
 export default (
   state = initialState,

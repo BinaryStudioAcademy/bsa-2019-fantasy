@@ -6,11 +6,12 @@ import {
   setGameweekAction,
 } from './action.type';
 
-import { GameweeksType, FixturesItemType } from 'types/fixtures.types';
+import { FixturesItemType } from 'types/fixtures.types';
+import { GameweekType } from 'types/gameweek.type';
 
 type State = {
-  gameweeks?: GameweeksType;
-  games?: [FixturesItemType];
+  gameweeks?: GameweekType[];
+  games?: FixturesItemType[];
   isLoading: boolean;
 };
 

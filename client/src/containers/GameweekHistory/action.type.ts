@@ -1,4 +1,5 @@
 import { Thunky } from 'store/types';
+import { LOCAL_GameweekHistoryType } from './types';
 
 export const SET_GAMEWEEKS_HISTORY = 'GAMEWEEK_HISTORY_ACTION:SET_GAMEWEEKS_HISTORY';
 export const SET_TEAM_HISTORY = 'TEAM_HISTORY_ACTIONS:SET_TEAM_HISTORY';
@@ -6,7 +7,7 @@ export const SET_IS_LOADING = 'TEAM_HISTORY_ACTIONS:SET_IS_LOADING';
 
 type SetGameweeksHistory = {
   type: typeof SET_GAMEWEEKS_HISTORY;
-  payload: any;
+  payload: LOCAL_GameweekHistoryType[];
 };
 
 type SetTeamHistory = {

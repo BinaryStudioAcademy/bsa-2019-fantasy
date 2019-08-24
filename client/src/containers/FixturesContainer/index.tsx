@@ -7,7 +7,8 @@ import moment from 'moment';
 
 import { loadGameweeksAction, loadGamesAction } from './actions';
 import { RootState } from 'store/types';
-import { GameweeksType, FixturesItemType } from 'types/fixtures.types';
+import { FixturesItemType } from 'types/fixtures.types';
+import { GameweekType } from 'types/gameweek.type';
 
 import Fixtures from 'components/Fixtures/Fixtures';
 import Spinner from 'components/Spinner';
@@ -16,7 +17,7 @@ import styles from './styles.module.scss';
 import component from 'components/Fixtures/styles.module.scss';
 
 type Props = {
-  gameweeks?: GameweeksType;
+  gameweeks: GameweekType[];
   loadGameweeksAction: typeof loadGameweeksAction;
   loadGamesAction: typeof loadGamesAction;
   games?: [FixturesItemType];
@@ -53,7 +54,6 @@ const FixturesContainer = ({
 
   useEffect(() => {
     if (gameweeks) {
-      console.log(currentGameweek);
       loadGamesAction(currentGameweek + 1);
     }
   }, [currentGameweek, gameweeks, loadGamesAction]);

@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Line as LineChart } from 'react-chartjs-2';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { useSelector, connect } from 'react-redux';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import cn from 'classnames';
-
-import { bindActionCreators, Dispatch } from 'redux';
 
 import { RootState } from 'store/types';
 
@@ -15,33 +13,38 @@ import Spinner from 'components/Spinner';
 import { getChartOptions } from 'helpers/gameweekChart';
 
 import { loadGameweeksHistoryAction, loadTeamHistoryAction } from './actions';
+
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
 
-const GameweekHistory = ({
-  loadGameweeksHistoryAction,
-  loadTeamHistoryAction,
+const GameweekHistory = () => {
+  useEffect(() => {
+    document.title = 'Home | Fantasy Football League';
+  }, []);
 
-  gameweeksHistory,
-  teamHistory,
-  isLoading,
-}) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [currentGameweek, setCurrentGameweek] = useState<number>(1);
 
-  const gameweeks = useSelector((state: RootState) => state.gameweeks.gameweeks);
-  const userRank = useSelector((state: RootState) => state.gameweeks.user_rank);
-  const gameweekResults = useSelector(
-    (state: RootState) => state.gameweeks.gameweeks_results,
+  const {
+    gameweeks,
+    user_rank: userRank,
+    gameweeks_results: gameweekResults,
+  } = useSelector((state: RootState) => state.gameweeks, shallowEqual);
+  const { gameweeksHistory, teamHistory, isLoading } = useSelector(
+    (state: RootState) => state.gameweekHistory,
+    shallowEqual,
   );
-  const user_id = useSelector(
+  const userId = useSelector(
     (state: RootState) => state.profile.user && state.profile.user.id,
   );
 
+  const [currentGameweek, setCurrentGameweek] = useState<number>(1);
+
   useEffect(() => {
-    document.title = 'Home | Fantasy Football League';
-    loadGameweeksHistoryAction(user_id);
-  }, [loadGameweeksHistoryAction]);
+    if (userId) {
+      dispatch(loadGameweeksHistoryAction(userId));
+    }
+  }, [dispatch, userId]);
 
   useEffect(() => {
     if (gameweeksHistory && gameweeksHistory.length) {
@@ -56,10 +59,10 @@ const GameweekHistory = ({
       });
       if (idx !== -1) {
         const gameweekId = gameweeksHistory[idx].gameweek.id;
-        loadTeamHistoryAction(user_id, gameweekId, currentGameweek);
+        dispatch(loadTeamHistoryAction(userId, gameweekId, currentGameweek));
       }
     }
-  }, [currentGameweek, gameweeksHistory, loadTeamHistoryAction]);
+  }, [currentGameweek, gameweeksHistory.length]);
 
   const displayRadar = () => gameweeksHistory.map((item) => item.team_score);
 
@@ -115,11 +118,12 @@ const GameweekHistory = ({
       </div>
 
       <div className={styles['gameweek-history-content']}>
-        {isLoading && <Spinner />}
         <React.Fragment>
-          <div className={`${header.paper} rounded mr-2`}>
-            {!isLoading && (
-              <TeamSelection isGameweek playersHistory={teamHistory ? teamHistory : []} />
+          <div className={cn(header.paper, 'rounded mr-2 relative')}>
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <TeamSelection isGameweek playersHistory={teamHistory || []} />
             )}
           </div>
 
@@ -152,20 +156,4 @@ const GameweekHistory = ({
   );
 };
 
-const mapStateToProps = (rootState: RootState) => ({
-  gameweeksHistory: rootState.gameweekHistory.gameweeksHistory,
-  teamHistory: rootState.gameweekHistory.teamHistory,
-  isLoading: rootState.gameweekHistory.isLoading,
-});
-
-const actions = {
-  loadGameweeksHistoryAction,
-  loadTeamHistoryAction,
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(GameweekHistory);
+export default GameweekHistory;
