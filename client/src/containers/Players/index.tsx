@@ -4,6 +4,7 @@ import { withTranslation } from 'react-i18next';
 import { bindActionCreators, Dispatch } from 'redux';
 import { Link, Redirect } from 'react-router-dom';
 import ReactTable from 'react-table';
+import cn from 'classnames';
 
 import { RootState } from 'store/types';
 import { PlayerType } from 'types/player.types';
@@ -46,6 +47,8 @@ type State = {
   redirect: boolean;
 };
 
+const NOT_SORTABLE_TABLE_COLUMNS = ['club_id', 'position'];
+
 class PlayersPage extends React.Component<Props, State> {
   state: State = {
     playerHighlightData: {},
@@ -59,6 +62,7 @@ class PlayersPage extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
+    console.log(props);
     this.table = React.createRef();
     this.onFetchData = this.onFetchData.bind(this);
   }
@@ -185,6 +189,7 @@ class PlayersPage extends React.Component<Props, State> {
     options.unshift({ value: '', label: 'Club' });
     return options;
   };
+
   getPositionOptions = () => {
     const position = ['GKP', 'DEF', 'MID', 'FWD'];
     const options = position.map((ps) => {
@@ -204,41 +209,41 @@ class PlayersPage extends React.Component<Props, State> {
   /* eslint-enable */
   readonly columns = [
     {
-      Header: () => this.renderHeader(this.props.t('Players.clubLogo')),
+      Header: (props) => this.renderHeader(this.props.t('Players.clubLogo'), props),
       accessor: 'club_id',
       className: 'flex justify-center bg-white rounded-l',
       style: { marginLeft: '5px' },
       Cell: (props: any) => this.renderClubImageCell(props),
     },
     {
-      Header: () => this.renderHeader(this.props.t('Players.name')),
+      Header: (props) => this.renderHeader(this.props.t('Players.name'), props),
       accessor: 'first_name',
       className: 'flex items-center bg-white',
       Cell: (props: any) => this.renderNameCell(props),
     },
     {
-      Header: () => this.renderHeader(this.props.t('Players.price')),
+      Header: (props) => this.renderHeader(this.props.t('Players.price'), props),
       accessor: 'player_price',
       className: 'flex items-center bg-white',
     },
     {
-      Header: () => this.renderHeader(this.props.t('Players.score')),
+      Header: (props) => this.renderHeader(this.props.t('Players.score'), props),
       accessor: 'player_score',
       className: 'flex items-center bg-white',
     },
     {
-      Header: () => this.renderHeader(this.props.t('Players.position')),
+      Header: (props) => this.renderHeader(this.props.t('Players.position'), props),
       accessor: 'position',
       className: 'flex items-center bg-white',
     },
     {
-      Header: () => this.renderHeader(this.props.t('Players.club')),
+      Header: (props) => this.renderHeader(this.props.t('Players.club'), props),
       accessor: 'club_id',
       className: 'flex items-center bg-white',
       Cell: (props: any) => this.renderClubCell(props),
     },
     {
-      Header: () => this.renderHeader(this.props.t('Players.info')),
+      Header: (props) => this.renderHeader(this.props.t('Players.info'), props),
       className: 'flex items-center justify-end bg-white rounded-r',
       Cell: (props: any) => this.renderComparisonCell(props),
     },
@@ -249,9 +254,15 @@ class PlayersPage extends React.Component<Props, State> {
     boxShadow: 'none',
   };
 
-  renderHeader = (child: string) => {
+  renderHeader = (child: string, props: any) => {
+    console.log(props);
+    const defaultCursor =
+      NOT_SORTABLE_TABLE_COLUMNS.includes(props.column.id) || !props.column.id;
+    const cursor = defaultCursor ? 'cursor-default' : null;
     return (
-      <div className='bg-white shadow-figma font-semibold text-sm rounded border border-greyBorder relative py-2 px-4'>
+      <div
+        className={`bg-white shadow-figma font-semibold text-sm rounded border border-greyBorder relative py-2 px-4 ${cursor}`}
+      >
         {child}
       </div>
     );
@@ -341,8 +352,42 @@ class PlayersPage extends React.Component<Props, State> {
         manual
         columns={this.columns}
         onFetchData={this.onFetchData}
+        ThComponent={this.ThComponent}
+        getTheadThProps={this.getTdProps}
       />
     );
+  }
+
+  ThComponent({ toggleSort, className, children, onClick, column, ...rest }) {
+    return (
+      <div
+        className={cn('rt-th', className)}
+        onClick={(e) =>
+          onClick(e, () => {
+            return toggleSort && toggleSort(e);
+          })
+        }
+        role='columnheader'
+        tabIndex={-1}
+        {...rest}
+      >
+        {children} {/*desc ? <img src={downSvg} /> : <img src={upSvg} />*/}
+      </div>
+    );
+  }
+
+  getTdProps(state, rowInfo, column, instance) {
+    return {
+      onClick: (e, handleOriginal) => {
+        if (
+          handleOriginal &&
+          column.id &&
+          !NOT_SORTABLE_TABLE_COLUMNS.includes(column.id)
+        ) {
+          handleOriginal();
+        }
+      },
+    };
   }
 
   render() {
