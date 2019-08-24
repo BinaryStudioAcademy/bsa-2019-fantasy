@@ -1,5 +1,6 @@
 export type NotificationType = {
   id: string;
-  text: string;
+  msg: string;
   isRead: boolean;
+  time: any;
 };

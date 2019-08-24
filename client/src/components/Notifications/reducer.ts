@@ -17,7 +17,7 @@ const initialState: State = {
 export default (state = initialState, action: any) => {
   switch (action.type) {
     case ADD_NOTIFICATION:
-      return { ...state, notifications: [...state.notifications, action.payload] };
+      return { ...state, notifications: [action.payload, ...state.notifications] };
     case REMOVE_NOTIFICATION:
       const updatedNotifications = [...state.notifications].filter(
         (notification) => notification.id !== action.payload,

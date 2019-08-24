@@ -13,8 +13,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faCircle } from '@fortawesome/free-solid-svg-icons';
 
-import uuidv4 from 'uuidv4';
-
 const Notifications = () => {
   const dispatch = useDispatch();
   const notifications = useSelector(
@@ -23,8 +21,8 @@ const Notifications = () => {
 
   const [visible, setVisible] = useState(false);
 
-  const handleAddNotification = (text: string) => {
-    dispatch(addNotification({ id: uuidv4(), text, isRead: false }));
+  const handleAddNotification = (msg: string) => {
+    dispatch(addNotification(msg));
   };
 
   const handleRemoveNotification = (notificationId: string) => {
@@ -73,13 +71,20 @@ const Notifications = () => {
                 className='notification flex flex-col border-b pr-2 pl-2'
                 key={notification.id}
               >
-                <button
-                  className='notification-close-btn self-end outline-none focus:outline-none'
-                  onClick={() => handleRemoveNotification(notification.id)}
-                >
-                  x
-                </button>
-                <div className='notification-text self-start'>{notification.text}</div>
+                <div className='notification-top flex justify-between items-center'>
+                  <span className='notification-datetime text-xs text-gray-400'>
+                    {notification.time}
+                  </span>
+                  <button
+                    className='notification-close-btn outline-none focus:outline-none'
+                    onClick={() => handleRemoveNotification(notification.id)}
+                  >
+                    x
+                  </button>
+                </div>
+                <div className='notification-text self-start leading-tight'>
+                  {notification.msg}
+                </div>
               </div>
             ))}
           </div>
@@ -90,9 +95,9 @@ const Notifications = () => {
             >
               Clear all
             </button>
-            <button // temporary button
+            <button
               className='clear-btn uppercase font-semibold text-center text-gray-400 mt-2 ml-2'
-              onClick={() => handleAddNotification('Hello world ' + Date.now())}
+              onClick={() => handleAddNotification(`${Date.now()}`)}
             >
               Add One
             </button>

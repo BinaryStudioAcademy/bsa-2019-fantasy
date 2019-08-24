@@ -6,9 +6,23 @@ import {
 } from './action.types';
 import { NotificationType } from 'types/notifications.types';
 
-export const addNotification = (notification: NotificationType) => ({
+import uuidv4 from 'uuidv4';
+import moment from 'moment';
+
+const prepareNotificationObj = (msg: string): NotificationType => {
+  return {
+    id: uuidv4(),
+    msg,
+    isRead: false,
+    time: moment()
+      .format('HH:mm')
+      .toString(),
+  };
+};
+
+export const addNotification = (msg: string) => ({
   type: ADD_NOTIFICATION,
-  payload: notification,
+  payload: prepareNotificationObj(msg),
 });
 
 export const removeNotification = (notificationId: string) => ({
