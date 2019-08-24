@@ -83,7 +83,7 @@ const GameweekHistory = () => {
             {`${t('GameweekHistoryPage.titles.main')}  ${currentGameweek}`}
           </h2>
           <div className='text-center mb-4 flex justify-between'>
-            {currentGameweek >= 1 && (
+            {currentGameweek > 1 && (
               <button
                 onClick={() => setCurrentGameweek(currentGameweek - 1)}
                 disabled={isLoading}

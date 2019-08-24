@@ -1,5 +1,4 @@
-/* eslint-disable  */
-import React, { Ref, ReactNode, RefObject } from 'react';
+import React, { RefObject } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import socketIOClient from 'socket.io-client';
@@ -23,9 +22,9 @@ import Fade from 'react-reveal/Fade';
 import 'react-dropdown/style.css';
 
 type Props = {
-  loadCurrentGame: typeof loadCurrentGame;
+  loadCurrentGame: any;
   clubs: Club[];
-  currentGame: Game;
+  currentGame?: Game;
 };
 type State = {
   isModalActive: boolean;
@@ -45,7 +44,7 @@ type RenderFixture = {
   content: any;
 };
 
-const endpoint = 'http://localhost:5004';
+const endpoint = `http://${process.env.FAKER_SOCKET_SERVER}:${process.env.FAKER_SOCKET_SERVER_PORT}/`;
 const timeoutOptions = [1, 2, 5, 10, 15].map((item) => ({
   label: `${item} min`,
   value: String(item),
@@ -56,25 +55,19 @@ class Live extends React.Component<Props, State> {
   //   testRes: 'not received yet',
   // };
   socket: any;
-  eventsLog: RefObject<HTMLDivElement>;
-
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isModalActive: false,
-      isSimulating: false,
-      matchStarted: false,
-      events: [],
-      homeClub: undefined,
-      awayClub: undefined,
-      timeout: 5,
-      score: [0, 0],
-      elapsed: undefined,
-      socketConnected: false,
-    };
-
-    this.eventsLog = React.createRef();
-  }
+  state: State = {
+    isModalActive: false,
+    isSimulating: false,
+    matchStarted: false,
+    events: [],
+    homeClub: undefined,
+    awayClub: undefined,
+    timeout: 5,
+    score: [0, 0],
+    elapsed: undefined,
+    socketConnected: false,
+  };
+  eventsLog = React.createRef<HTMLDivElement>();
 
   componentDidMount() {
     this.socket = socketIOClient(endpoint);
@@ -121,6 +114,7 @@ class Live extends React.Component<Props, State> {
         break;
       case 'endGame':
         newState.isSimulating = false;
+        break;
       case 'disconnect':
         newState.socketConnected = false;
         break;
@@ -245,8 +239,8 @@ class Live extends React.Component<Props, State> {
           <h3 className='font-bold text-2xl mb-4'>Select clubs</h3>
           <div className='flex -mx-2 mb-8'>
             <div className='w-1/3 px-2'>
-              {/* eslint-disable-next-line rule */}
               <label className='font-semibold text-l'>Home club</label>
+              {/* eslint-disable-next-line */}
               <Dropdown
                 options={options}
                 value={homeClub && String(homeClub.id)}
@@ -257,8 +251,8 @@ class Live extends React.Component<Props, State> {
               ></Dropdown>
             </div>
             <div className='w-1/3 px-2'>
-              {/* eslint-disable-next-line rule */}
               <label className='font-semibold text-l'>Away club</label>
+              {/* eslint-disable-next-line */}
               <Dropdown
                 options={options}
                 value={awayClub && String(awayClub.id)}
@@ -269,8 +263,8 @@ class Live extends React.Component<Props, State> {
               ></Dropdown>
             </div>
             <div className='w-1/3 px-2'>
-              {/* eslint-disable-next-line rule */}
               <label className='font-semibold text-l'>Timeout</label>
+              {/* eslint-disable-next-line */}
               <Dropdown
                 options={timeoutOptions}
                 value={String(timeout)}
@@ -300,17 +294,15 @@ class Live extends React.Component<Props, State> {
       opposite: true,
       distance: '50%',
     };
-    const positionRight = { top: '15%', left: '55%' };
-    const positionLeft = { top: '15%', right: '55%' };
-
-    const home = lastEvent.team === 'home';
-    const direction = home ? { left: true } : { right: true };
-    /* eslint-disable-next-line rule */
 
     return (
       <div className='relative mt-16'>
         {fieldEvents.map((event) => (
-          <div className='absolute' style={event.style}>
+          <div
+            className='absolute'
+            style={event.style}
+            key={`${event.name}-${event.team}`}
+          >
             <Fade
               {...event.direction}
               when={
