@@ -6,11 +6,13 @@ import { applyPatches } from 'immer';
 import { RootState } from 'store/types';
 import { TransferType } from 'types/transfer.type';
 import { removeTransfer, emptyChanges } from './actions';
+
 import { usePitchPlayers } from './use-pitch.hook';
 
 import FixturesContainer from 'containers/FixturesContainer';
 import PlayersSelection from 'components/PlayersSelection';
 import TransfersModal from './components/TransfersModal';
+
 import TransfersTeamSelection from './components/TransfersTeamSelection';
 
 import header from 'styles/header.module.scss';

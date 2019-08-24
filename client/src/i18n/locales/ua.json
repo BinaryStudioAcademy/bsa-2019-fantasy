@@ -74,7 +74,8 @@
       "main": "Gameweek"
     },
     "currentPoints": "Поточні очки",
-    "points": "очків"
+    "points": "очків",
+    "overallRank": "Позиція в Загальній Лізі"
   },
 
   "Gameweek": {
@@ -254,6 +255,20 @@
     }
   },
 
+  "SquadSelectionStatus": {
+    "title": "Оберіть максимум 3 гравців з однієї команди або 'Авто Вибір' якшо у вас немає часу.",
+    "autoPickBtn": "Авто Вибір",
+    "resetBtn": "Скинути",
+    "selectedStats": "Гравців Обрано",
+    "moneyStats": "Коштів Залишилось"
+  },
+
+  "SaveTeamModal": {
+    "title": "Введіть ім'я своєї команди",
+    "placeholder": "Iм'я команди",
+    "btn": "Зберегти"
+  },
+
   "TransfersTeamSelection": {
     "switch": {
       "pitch": "Поле",
@@ -305,6 +320,12 @@
     "season": "Сезон"
   },
 
+  "StatusPlayerModal": {
+    "switch": "Поміняти",
+    "cancel": "Відмінити",
+    "makeCaptain": "Назначити Капітаном",
+    "makeViceCaptain": "Назначити Віце-капітаном"
+  },
   "PrivateLeagueModal": {
     "title": "Це ваш код запрошення",
     "message": "Поділіться цим кодом з іншими, щоб приєднатися до вашої ліги!",

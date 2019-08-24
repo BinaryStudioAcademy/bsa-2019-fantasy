@@ -6,6 +6,10 @@ class UserRepository extends BaseRepository {
     return this.create(user);
   }
 
+  getAll() {
+    return this.model.findAll();
+  }
+
   getByEmail(email) {
     return this.model.findOne({ where: { email } });
   }

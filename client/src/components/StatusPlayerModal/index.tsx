@@ -1,6 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { GameweekHistoryType } from 'types/gameweekHistory.type';
+
 import styles from './styles.module.scss';
 
 type Props = {
@@ -10,6 +12,8 @@ type Props = {
   onSetCaptain: () => void;
   onSetViceCaptain: () => void;
   name: string;
+  funcForSwitching: () => void;
+  toSwitch: boolean;
 };
 
 const StatusPlayerModal = ({
@@ -19,6 +23,8 @@ const StatusPlayerModal = ({
   onSetCaptain,
   onSetViceCaptain,
   name,
+  funcForSwitching,
+  toSwitch,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -41,6 +47,14 @@ const StatusPlayerModal = ({
           </button>
         </div>
         <div className='modal-body p-6 flex flex-col'>
+          <button
+            className='bg-green-700 p-2 mb-4 rounded'
+            onClick={() => {
+              funcForSwitching && funcForSwitching();
+            }}
+          >
+            {toSwitch ? t('StatusPlayerModal.switch') : t('StatusPlayerModal.cancel')}
+          </button>
           {!isCaptain && (
             <button
               className='bg-green-700 p-2 mb-4 rounded'

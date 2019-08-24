@@ -53,6 +53,7 @@ const InitialTeamSelection = ({ history }: Props) => {
       player_id: id,
       is_on_bench: i % 4 === 0,
       is_captain: i === 1,
+      is_vice_captain: i === 2,
     }));
     const gameweek_id = currentGameweek!.id;
     if (!teamName) {

@@ -58,7 +58,11 @@ const Header = ({ team_name }: HeaderProps) => {
             {menuItems.map(({ name, link, dot }) => (
               <div key={name} className='flex flex-grow items-center mx-2'>
                 {dot && (
-                  <FontAwesomeIcon icon={faCircle} color={'#fff'} transform='shrink-11' />
+                  <FontAwesomeIcon
+                    icon={faCircle}
+                    color={'#fff'}
+                    transform='shrink-10 up-1 right-4'
+                  />
                 )}
                 <NavLink
                   to={link}

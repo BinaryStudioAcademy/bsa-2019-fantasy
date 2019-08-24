@@ -5,6 +5,9 @@ describe('Login test suite', () => {
     //basic webdriver test
     await browser.url('https://webdriver.io');
     const title = await browser.getTitle();
-    assert.strictEqual(title, 'WebdriverIO · Next-gen WebDriver test framework for Node.js');
+    assert.strictEqual(
+      title,
+      'WebdriverIO · Next-gen WebDriver test framework for Node.js',
+    );
   });
 });

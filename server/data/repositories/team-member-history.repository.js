@@ -10,6 +10,14 @@ class TeamMemberHistoryRepository extends BaseRepository {
     });
   }
 
+  getByGameweekIds(gameweek_history_ids) {
+    const gameweek_history_id = [...gameweek_history_ids];
+    return this.model.findAll({
+      where: { gameweek_history_id },
+      include: 'player_stats',
+    });
+  }
+
   createTeamMemberHistory(teamMemberHistory, gameweekHistoryId) {
     return teamMemberHistory.map((el) =>
       this.model.create({

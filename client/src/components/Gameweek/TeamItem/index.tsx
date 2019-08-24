@@ -79,7 +79,7 @@ const TeamItem = ({
         >
           {imageURL && <img className='w-8 mr-2' src={imageURL} alt='player' />}
           <div className='flex flex-col items-start'>
-            <div>{name || 'Unassigned'}</div>
+            <div className='text-left'>{name || 'Unassigned'}</div>
             <div>
               {club && <span className='mr-1'>{club}</span>}
               <span>{position}</span>

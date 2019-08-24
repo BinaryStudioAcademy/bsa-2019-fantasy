@@ -33,7 +33,6 @@ const FixturesContainer = ({
   const { t } = useTranslation();
 
   const [currentGameweek, setCurrentGameweek] = useState<number>(0);
-
   useEffect(() => {
     document.title = 'Fixtures | Fantasy Football League';
     loadGameweeksAction();
@@ -41,13 +40,30 @@ const FixturesContainer = ({
 
   useEffect(() => {
     if (gameweeks) {
+      const gameweek = gameweeks.find((gw) => {
+        const now = moment();
+        return moment(gw.end).isBefore(now);
+      });
+      if (gameweek) {
+        const gameweekNumber = gameweek.number;
+        setCurrentGameweek(+gameweekNumber);
+      }
+    }
+  }, [gameweeks]);
+
+  useEffect(() => {
+    if (gameweeks) {
+      console.log(currentGameweek);
       loadGamesAction(currentGameweek + 1);
     }
   }, [currentGameweek, gameweeks, loadGamesAction]);
-  
 
   if (!games || !gameweeks) {
-    return <Spinner />;
+    return (
+      <div className='relative bg-white py-3 min-h-screen shadow-figma'>
+        <Spinner />
+      </div>
+    );
   }
 
   return (

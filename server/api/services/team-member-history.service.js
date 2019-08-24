@@ -1,6 +1,6 @@
 import teamMemberHistoryRepository from '../../data/repositories/team-member-history.repository';
-import playerRepository from '../../data/repositories/player.repository';
 import gameweekHistoryRepository from '../../data/repositories/gameweek-history.repository';
+import playerRepository from '../../data/repositories/player.repository';
 import { getPlayerScoreByGameweeks } from './player-match.service';
 
 export const getPlayersByGameweekId = async (id) => {
@@ -9,7 +9,6 @@ export const getPlayersByGameweekId = async (id) => {
 };
 
 export const getPlayerHistoryByGameweekId = async (id, gameweekNumber) => {
-  console.log(gameweekNumber);
   const result = [];
   await Promise.all(
     await teamMemberHistoryRepository
@@ -26,6 +25,29 @@ export const getPlayerHistoryByGameweekId = async (id, gameweekNumber) => {
   return result;
 };
 
+export const getPlayersByGameweekIds = async (histories) => {
+  const getHistoryId = (history) => {
+    const { id } = history;
+    return id;
+  };
+
+  const historyIds = histories.map((h) => getHistoryId(h));
+  const result = await teamMemberHistoryRepository.getByGameweekIds(historyIds);
+
+  return result;
+};
+
+export const getBestPlayersOfTheGameweek = (players) => {
+  const getPlayerScore = (player) => {
+    const { player_score } = player;
+    return player_score;
+  };
+
+  return players
+    .map((p) => getPlayerScore(p))
+    .sort()
+    .slice(0, 11);
+};
 export const postTeamMemberHistory = async (data, gameweekHistoryId) => {
   const players = getPlayersByGameweekId(gameweekHistoryId);
   if (players) {
@@ -50,7 +72,6 @@ export const postTeamMemberHistory = async (data, gameweekHistoryId) => {
   data.map((p) =>
     playerRepository.getById(p.player_id).then((player) => getPlayerInfo(player)),
   );
-  console.log(result);
 
   return result;
 };

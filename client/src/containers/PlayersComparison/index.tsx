@@ -4,7 +4,6 @@ import PlayersHighlights from 'components/PlayersComparison/PlayersHighlights';
 
 import CompareTable from 'components/PlayersComparison/CompareTable';
 import { Redirect } from 'react-router';
-import Button from 'components/Button';
 
 interface MatchStatsI {
   gameweekName: string;
@@ -136,7 +135,7 @@ const PlayersComparisonPage: React.FC<PropsI> = (props: PropsI) => {
   });
 
   secondPlayer.gameweeks_stats.forEach((stats: any) => {
-    firstPlayerMatches.push({
+    secondPlayerMatches.push({
       gameweekName: stats.gameweek.number,
       opp: stats.game.opp,
       res: stats.game.res,
@@ -168,14 +167,6 @@ const PlayersComparisonPage: React.FC<PropsI> = (props: PropsI) => {
       <PlayersHighlights comparisonData={props.location.state.comparisonData} />
 
       <section className='footer-stats my-6'>
-        <Button
-          href='/players'
-          type='link'
-          styling='primary'
-          className='text-sm xl:text-base mr-4'
-        >
-          Go back
-        </Button>
         <div className='footer-tables flex flex-wrap'>
           {tableData.map((player) => renderTable(player))}
         </div>

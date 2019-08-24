@@ -26,6 +26,12 @@ class GameweekHistoryRepository extends BaseRepository {
     });
   }
 
+  getGameweekHistoryForGameweek(gameweek_id) {
+    return this.model.findAll({
+      where: { gameweek_id },
+    });
+  }
+
   async setTeamScoreById(id, team_score) {
     const result = await this.model.update(
       { team_score },
