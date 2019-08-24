@@ -11,6 +11,8 @@ import {
   SetInvitationCode,
   CreateLeagueAction,
   ResetLeagueAction,
+  JOIN_LEAGUE_SUCCESS,
+  JoinLeagueAction,
 } from './action.types';
 
 type State = {
@@ -37,7 +39,8 @@ export default (
     | SetLeaguesAction
     | SearchLeaguesAction
     | CreateLeagueAction
-    | ResetLeagueAction,
+    | ResetLeagueAction
+    | JoinLeagueAction,
 ) => {
   switch (action.type) {
     case SET_USER_LEAGUES:
@@ -54,6 +57,8 @@ export default (
       return { ...state, success: null, error: null, code: '' };
     case SET_INVITATION_CODE:
       return { ...state, code: action.payload };
+    case JOIN_LEAGUE_SUCCESS:
+      return { ...state, success: action.payload };
     default:
       return state;
   }

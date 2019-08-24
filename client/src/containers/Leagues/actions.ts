@@ -5,6 +5,7 @@ import {
   SET_USER_LEAGUES,
   CREATE_LEAGUE_FAILURE,
   CREATE_LEAGUE_SUCCESS,
+  JOIN_LEAGUE_SUCCESS,
   SET_INVITATION_CODE,
   SET_LOADING,
   SET_LEAGUES_SUGGESTIONS,
@@ -17,6 +18,7 @@ import {
   AsyncSearchLeaguesAction,
   CreateLeagueFailure,
   CreateLeagueSuccess,
+  JoinLeagueSuccess,
   SetInvitationCode,
   AsyncGetInvitationCode,
   SetLoading,
@@ -49,6 +51,11 @@ const setLoading = (isLoading: boolean): SetLoading => ({
 
 const setInvitationCode = (payload: string): SetInvitationCode => ({
   type: SET_INVITATION_CODE,
+  payload,
+});
+
+const joinLeagueSuccess = (payload: any): JoinLeagueSuccess => ({
+  type: JOIN_LEAGUE_SUCCESS,
   payload,
 });
 
@@ -100,10 +107,11 @@ export const loadUserLeagues = (): AsyncSetLeaguesAction => async (dispatch) => 
 export const joinLeague = (data: {
   code: string;
   private: boolean;
-}): AsyncJoinLeagueAction => async () => {
+}): AsyncJoinLeagueAction => async (dispatch) => {
   try {
     const result = await leagueService.joinLeague(data);
     feedback.success((result && result.message) || result);
+    dispatch(joinLeagueSuccess(result.message));
   } catch (err) {
     feedback.error('Invalid League code (or name) provided');
   }

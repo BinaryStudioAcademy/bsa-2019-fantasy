@@ -21,6 +21,7 @@ type Props = {
   history: any;
   error: null | string;
   success: null | string;
+  leagues: any;
   isLoading: boolean;
   code: string;
 };
@@ -30,6 +31,7 @@ const CreateLeague = ({
   resetLeaguesData,
   history,
   success,
+  leagues,
   isLoading,
   code,
 }: Props) => {
@@ -200,10 +202,20 @@ const CreateLeague = ({
           </div>
           <button
             className={`w-40 shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${
-              !name || !isNameValid || isLoading ? 'opacity-50 cursor-not-allowed' : ''
+              !name ||
+              !isNameValid ||
+              isLoading ||
+              (leagues.public.length >= 3 && privacy === 'public')
+                ? 'opacity-50 cursor-not-allowed'
+                : ''
             }`}
             type='submit'
-            disabled={!name || !isNameValid || isLoading}
+            disabled={
+              !name ||
+              !isNameValid ||
+              isLoading ||
+              (leagues.public.length >= 3 && privacy === 'public')
+            }
           >
             {isLoading ? t('wait') : t('LeaguesPage.createLeague.create')}
           </button>
@@ -230,6 +242,7 @@ const mapStateToProps = (rootState: RootState) => ({
   success: rootState.league.success,
   error: rootState.league.error,
   code: rootState.league.code,
+  leagues: rootState.league.leagues,
 });
 
 const actions = { createLeagueAction, resetLeaguesData };

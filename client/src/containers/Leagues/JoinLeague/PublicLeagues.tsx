@@ -5,16 +5,20 @@ import { bindActionCreators, Dispatch } from 'redux';
 
 import Autosuggest from 'react-autosuggest';
 
-import { searchPublicLeagues, joinLeague } from '../actions';
+import { searchPublicLeagues, joinLeague, resetLeaguesData } from '../actions';
 import { RootState } from 'store/types';
 
 import styles from './styles.module.scss';
+import { withRouter } from 'react-router';
 
 type Props = {
   searchPublicLeagues: typeof searchPublicLeagues;
   joinLeague: typeof joinLeague;
+  resetLeaguesData: typeof resetLeaguesData;
   suggestions: any;
   leagues: any;
+  history: any;
+  success: null | string;
 };
 
 const renderSuggestion = (suggestion) => <div>{suggestion.name}</div>;
@@ -23,8 +27,11 @@ const getSuggestionValue = (suggestion) => suggestion.name;
 const PublicLeagues = ({
   searchPublicLeagues,
   suggestions,
+  resetLeaguesData,
   joinLeague,
   leagues,
+  history,
+  success,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -68,6 +75,11 @@ const PublicLeagues = ({
     onChange: handleInputChange,
   };
 
+  if (success) {
+    resetLeaguesData();
+    history.push('/leagues');
+  }
+
   return (
     <div className={`${styles['join-league-item']} w-full md:w-1/2 px-6`}>
       <h3 className={`${styles.title} text-secondary mb-4 font-bold`}>
@@ -98,12 +110,12 @@ const PublicLeagues = ({
         </div>
         <button
           className={`w-48 shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${
-            !value || isLoading || leagues.public.length > 3
+            !value || isLoading || leagues.public.length >= 3
               ? 'opacity-50 cursor-not-allowed'
               : ''
           }`}
           type='submit'
-          disabled={!value || isLoading || leagues.public.length > 3}
+          disabled={!value || isLoading || leagues.public.length >= 3}
         >
           {isLoading ? t('wait') : t('LeaguesPage.joinLeague.public.join')}
         </button>
@@ -115,12 +127,16 @@ const PublicLeagues = ({
 const mapStateToProps = (rootState: RootState) => ({
   suggestions: rootState.league.suggestions,
   leagues: rootState.league.leagues,
+  success: rootState.league.success,
 });
 
-const actions = { searchPublicLeagues, joinLeague };
+const actions = { searchPublicLeagues, joinLeague, resetLeaguesData };
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(PublicLeagues);
+export default withRouter(
+  // @ts-ignore
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(PublicLeagues),
+);
