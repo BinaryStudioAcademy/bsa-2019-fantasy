@@ -104,7 +104,7 @@ const Notifications = () => {
                     {notification.time}
                   </span>
                   <button
-                    className='notification-close-btn outline-none focus:outline-none'
+                    className='notification-close-btn outline-none focus:outline-none hover:text-gray-500'
                     onClick={() => handleRemoveNotification(notification.id)}
                   >
                     x
@@ -118,17 +118,18 @@ const Notifications = () => {
           </div>
           <div className='notifications-control self-center'>
             <button
-              className='clear-btn uppercase font-semibold text-center text-gray-400 mt-2'
+              className='clear-btn uppercase font-semibold text-center text-gray-400 mt-2 mx-2 hover:text-gray-500'
               onClick={() => handleRemoveAllNotifications()}
             >
               Clear all
             </button>
-            <button
-              className='clear-btn uppercase font-semibold text-center text-gray-400 mt-2 ml-2'
+            {/* ADD NOTIFICATION USAGE EXAMPLE */}
+            {/* <button
+              className='clear-btn uppercase font-semibold text-center text-gray-400 mt-2 mx-2 hover:text-gray-500'
               onClick={() => handleAddNotification(`${Date.now()}`)}
             >
               Add One
-            </button>
+            </button> */}
           </div>
         </div>
       )}
