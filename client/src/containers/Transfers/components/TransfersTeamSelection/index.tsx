@@ -17,6 +17,7 @@ import { PlayerDraggableProps } from 'components/Gameweek/PlayerSelection';
 
 import Spinner from 'components/Spinner';
 import TeamList from 'components/Gameweek/TeamList';
+import TransfersTeamList from './../../components/TransfersTeamList';
 
 import styles from './styles.module.scss';
 
@@ -27,9 +28,7 @@ type Props = {
   viceCaptainId?: string;
   players: DroppablePlayer[];
   setPlayers: React.Dispatch<React.SetStateAction<DroppablePlayer[]>>;
-
   onOpen?: (id: string, isCaptain: boolean, isViceCaptain: boolean, name: string) => void;
-
   canSubmit: boolean;
   onSubmit: () => void;
 };
@@ -229,14 +228,20 @@ const TransfersTeamSelection = ({
         {players ? (
           <React.Fragment>
             {view === 'list' && (
-              <div className='overflow-auto w-auto'>
-                <TeamList
+              <div className='w-full'>
+                <TransfersTeamList
+                  players={players}
+                  onOpenInfo={(a, b) => {
+                    console.log('dialog');
+                  }}
+                />
+                {/* <TeamList
                   starters={players}
                   isGameweek={false}
                   onOpen={onOpen}
                   captainId={captainId}
                   viceCaptainId={viceCaptainId}
-                />
+                /> */}
               </div>
             )}
             {view === 'pitch' && <Pitch />}
