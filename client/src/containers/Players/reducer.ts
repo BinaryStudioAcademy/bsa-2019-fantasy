@@ -18,6 +18,7 @@ import {
 
 type State = {
   players: PlayerType[];
+  count: number;
   loading: boolean;
   error: string | null;
   playerData: { history: History; fixtures: Fixture[] } | {};
@@ -26,6 +27,7 @@ type State = {
 
 const initialState: State = {
   players: [],
+  count: 0,
   loading: false,
   error: null,
   playerData: {},
@@ -47,7 +49,8 @@ export default (
     case FETCH_PLAYERS_SUCCESS:
       return {
         ...state,
-        players: action.payload,
+        players: action.payload.rows,
+        count: action.payload.count,
         loading: false,
       };
 
