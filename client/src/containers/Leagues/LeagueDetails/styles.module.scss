@@ -1,4 +1,9 @@
 :local(.league-details) {
+  a,
+  button {
+    transition: 0.2s;
+  }
+
   :local(.tables) {
     flex-grow: 2;
 
@@ -53,7 +58,7 @@
   }
 }
 
-:local(.paper) {
+:local(.background) {
   background-color: #fff;
   display: flex;
 }
@@ -66,4 +71,8 @@
   font-size: 25px;
   line-height: 27px;
   font-weight: bold;
+}
+
+:local(.paper) {
+  background-color: #fff;
 }

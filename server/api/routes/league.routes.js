@@ -3,6 +3,7 @@ import * as leagueService from '../services/league.service';
 import * as leagueParticipantService from '../services/league-participant.service';
 import * as gameweekService from '../services/gameweek.service';
 import * as gameweekHistoryService from '../services/gameweek-history.service';
+import globalLeagues from '../../config/global-leagues.config';
 
 import {
   createLeagueMiddleware,
@@ -32,6 +33,7 @@ router
       const admin_entry = users.some(
         (item) => item.user.id === req.user.id && item.is_creator,
       );
+      const entry_can_leave = !admin_entry && !(globalLeagues.includes(name));
 
       await Promise.all(
         users.map(async (item) => {
@@ -49,7 +51,7 @@ router
           result.push({ ...item, gameweek_points, total_points });
         }),
       );
-      res.json({ name, private: league.private, admin_entry, participants: result });
+      res.json({ name, private: league.private, entry_can_leave, admin_entry, participants: result });
     } catch (err) {
       next(err);
     }

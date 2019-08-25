@@ -134,3 +134,12 @@ export const searchPublicLeagues = (request: {
   const result = await leagueService.searchPublicLeagues(request);
   dispatch(setSuggestions(result));
 };
+
+export const leaveLeague = async ({ name }) => {
+  try {
+    const result = await leagueService.leaveLeague(request);
+    feedback.success((result && result.message) || result);
+  } catch (err) {
+    feedback.error('Invalid League code (or name) provided');
+  }
+};

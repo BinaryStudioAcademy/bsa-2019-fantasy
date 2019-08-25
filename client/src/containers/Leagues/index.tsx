@@ -9,10 +9,9 @@ import { FaStar, FaArrowUp, FaArrowDown, FaMinus, FaUserCog } from 'react-icons/
 
 import Spinner from 'components/Spinner';
 import { LeagueTable } from 'components/Leagues/LeagueTables';
-import PrivateLeagueModal from 'components/Leagues/PrivateLeagueModal';
 
 import { RootState } from 'store/types';
-import { loadUserLeagues, getInvitationCode, resetLeaguesData } from './actions';
+import { loadUserLeagues } from './actions';
 
 import { getClubLogoUrl } from 'helpers/images';
 import styles from './styles.module.scss';
@@ -20,23 +19,12 @@ import header from 'styles/header.module.scss';
 
 type Props = {
   loadUserLeagues: typeof loadUserLeagues;
-  getInvitationCode: typeof getInvitationCode;
-  resetLeaguesData: typeof resetLeaguesData;
-  code: string;
   leagues: any;
   clubs: any;
   user: any;
 };
 
-const Leagues = ({
-  loadUserLeagues,
-  getInvitationCode,
-  resetLeaguesData,
-  leagues,
-  clubs,
-  user,
-  code,
-}: Props) => {
+const Leagues = ({ loadUserLeagues, leagues, clubs, user }: Props) => {
   const { t } = useTranslation();
   const [club, setClub] = useState({ name: '', code: 0 });
 
@@ -47,18 +35,6 @@ const Leagues = ({
     const userFavouriteCLub = clubs.filter((item) => item.id === user.favorite_club_id);
     setClub(userFavouriteCLub[0]);
   }, [clubs]);
-
-  const openModal = (data) => {
-    const { name } = data.league;
-    if (data.league.private) {
-      getInvitationCode({ name });
-    }
-  };
-
-  const closeModal = () => {
-    resetLeaguesData();
-  };
-
   /* eslint-disable */
   const columns = [
     {
@@ -212,7 +188,6 @@ const Leagues = ({
             );
           })}
         </div>
-        <PrivateLeagueModal open={code.length} onClose={closeModal} code={code} />
       </div>
     );
   }
@@ -222,10 +197,9 @@ const mapStateToProps = (rootState: RootState) => ({
   leagues: rootState.league.leagues,
   clubs: rootState.clubs.clubs,
   user: rootState.profile.user,
-  code: rootState.league.code,
 });
 
-const actions = { loadUserLeagues, getInvitationCode, resetLeaguesData };
+const actions = { loadUserLeagues };
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
 
 export default connect(
