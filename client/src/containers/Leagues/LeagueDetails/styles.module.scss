@@ -1,5 +1,7 @@
 :local(.league-details) {
   :local(.tables) {
+    flex-grow: 2;
+
     :local(.table-title) {
       font-size: 12px;
     }
@@ -49,4 +51,19 @@
       }
     }
   }
+}
+
+:local(.paper) {
+  background-color: #fff;
+  display: flex;
+}
+
+:local(.admin) {
+  flex-grow: 2;
+}
+
+:local(.title) {
+  font-size: 25px;
+  line-height: 27px;
+  font-weight: bold;
 }

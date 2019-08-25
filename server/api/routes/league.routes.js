@@ -21,7 +21,7 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
-  .get('/:name', async (req, res, next) => {
+  .get('/:name', jwtMiddleware, async (req, res, next) => {
     try {
       const league = await leagueService.getLeagueParams(req.params.name);
       const { id, name, start_from } = league;
@@ -29,6 +29,9 @@ router
       const result = [];
 
       const users = await leagueParticipantService.getLeagueParticipants(id);
+      const admin_entry = users.some(
+        (item) => item.user.id === req.user.id && item.is_creator,
+      );
 
       await Promise.all(
         users.map(async (item) => {
@@ -46,7 +49,7 @@ router
           result.push({ ...item, gameweek_points, total_points });
         }),
       );
-      res.json({ name, private: league.private, participants: result });
+      res.json({ name, private: league.private, admin_entry, participants: result });
     } catch (err) {
       next(err);
     }

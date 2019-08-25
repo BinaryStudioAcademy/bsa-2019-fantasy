@@ -81,7 +81,9 @@ const LeagueDetails = ({ loadLeagueDetails, leagueDetails, location }: Props) =>
 
     {
       Header: () => (
-        <span className={`${styles['table-title']} uppercase font-bold`}>GW</span>
+        <span className={`${styles['table-title']} uppercase font-bold`}>
+          Gameweek Points
+        </span>
       ),
       accessor: 'gameweek_points',
 
@@ -91,7 +93,9 @@ const LeagueDetails = ({ loadLeagueDetails, leagueDetails, location }: Props) =>
     },
     {
       Header: () => (
-        <span className={`${styles['table-title']} uppercase font-bold`}>TOT</span>
+        <span className={`${styles['table-title']} uppercase font-bold`}>
+          Total Points
+        </span>
       ),
       accessor: 'total_points',
 
@@ -117,8 +121,13 @@ const LeagueDetails = ({ loadLeagueDetails, leagueDetails, location }: Props) =>
           </h2>
         </div>
       </div>
-      <div className={styles.tables}>
-        <LeagueTable columns={columns} data={leagueDetails.participants} title={data} />
+      <div className={styles.paper}>
+        <div className={styles.tables}>
+          <LeagueTable columns={columns} data={leagueDetails.participants} title={data} />
+        </div>
+        {leagueDetails['admin_entry'] && (
+          <div className={`${styles.admin} ${styles.title} text-secondary py-6`}>admin</div>
+        )}
       </div>
     </div>
   );
