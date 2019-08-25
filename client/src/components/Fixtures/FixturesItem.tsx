@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
 import moment from 'moment';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { FixturesItemType } from 'types/fixtures.types';
+import { loadGameDetailsAction } from '../../containers/FixturesContainer/actions';
+import { RootState } from 'store/types';
 
 import styles from './styles.module.scss';
 import MatchStats from 'components/MatchStats';
@@ -11,110 +14,90 @@ type Props = {
   match: FixturesItemType;
 };
 
-const stats = [
-  {
-    title: 'Goals',
-    hometeam_stats: [
-      {
-        player: 'Salah',
-        count: 3,
-      },
-      {
-        player: 'Messi',
-        count: 5,
-      },
-    ],
-    awayteam_stats: [
-      {
-        player: 'Ricardo Milas',
-        count: 2,
-      },
-    ],
-  },
-  {
-    title: 'Assists',
-    hometeam_stats: [
-      {
-        player: 'Flamie',
-        count: 3,
-      },
-      {
-        player: 'Zeus',
-        count: 5,
-      },
-      {
-        player: 'S1mple',
-        count: 5,
-      },
-    ],
-    awayteam_stats: [
-      {
-        player: 'Ricardo Milas',
-        count: 10,
-      },
-    ],
-  },
-  {
-    title: 'Yellow cards',
-    hometeam_stats: [
-      {
-        player: 'Lionel Messi',
-        count: 1,
-      },
-      {
-        player: 'Messi',
-        count: 3,
-      },
-    ],
-    awayteam_stats: [
-      {
-        player: 'Ricardo Milas',
-        count: 2,
-      },
-      {
-        player: 'Ricardo Milas1',
-        count: 4,
-      },
-      {
-        player: 'Ricardo Milas2',
-        count: 8,
-      },
-      {
-        player: 'Ricardo Milas3',
-        count: 1,
-      },
-    ],
-  },
-  {
-    title: 'Saves',
-    hometeam_stats: [
-      {
-        player: 'Salah',
-        count: 3,
-      },
-    ],
-    awayteam_stats: [],
-  },
-];
-
 const FixturesItem = ({ match }: Props) => {
   const [isDisplay, setIsDisplay] = useState(false);
+  const [stats, setStats] = useState<any>([]);
+  const dispatch = useDispatch();
+  const gameDetails = useSelector((state: RootState) => state.fixtures.gameDetails);
+
+  useEffect(() => {
+    if (gameDetails) {
+      gameDetails.forEach((g) => {
+        setStats((stats) => {
+          const team =
+            g.player.player.club_id === match.hometeam_id
+              ? 'hometeam_stats'
+              : 'awayteam_stats';
+          const statsItem = stats.find((st) => st.title === g.event_type);
+          if (statsItem) {
+            const index = statsItem[team].findIndex(
+              (item) => item.player === g.player.player.second_name,
+            );
+            if (index !== -1) {
+              statsItem[team][index].count = statsItem[team][index].count + 1;
+            } else {
+              statsItem[team].push({
+                player: g.player.player.second_name,
+                count: 1,
+              });
+            }
+            const statsItemIndex = stats.findIndex((st) => st.title === g.event_type);
+            return [
+              ...stats.slice(0, statsItemIndex),
+              statsItem,
+              ...stats.slice(statsItemIndex + 1),
+            ];
+          } else {
+            return [
+              ...stats,
+              {
+                title: g.event_type,
+                hometeam_stats: [],
+                awayteam_stats: [],
+                [team]: [
+                  {
+                    player: g.player.player.second_name,
+                    count: 1,
+                  },
+                ],
+              },
+            ];
+          }
+        });
+      });
+    }
+  }, [gameDetails]);
 
   const toggleStats = () => {
+    setStats([]);
     if (match.started) {
+      if (!isDisplay) {
+        dispatch(loadGameDetailsAction(match.id));
+      } else {
+      }
       setIsDisplay(!isDisplay);
     }
   };
 
   const displayStats = () =>
-    stats.map(({ title, awayteam_stats, hometeam_stats }) => (
-      <MatchStats
-        title={title}
-        awayteam_stats={awayteam_stats}
-        hometeam_stats={hometeam_stats}
-        key={`stats-${title}-${match.id}`}
-      />
-    ));
+    stats
+      .sort((a, b) => {
+        if (a.title > b.title) {
+          return 1;
+        }
+        if (a.title < b.title) {
+          return -1;
+        }
+        return 0;
+      })
+      .map(({ title, awayteam_stats, hometeam_stats }) => (
+        <MatchStats
+          title={title}
+          awayteam_stats={awayteam_stats}
+          hometeam_stats={hometeam_stats}
+          key={`stats-${title}-${match.id}`}
+        />
+      ));
 
   let label = <p>{moment(match.start).format('HH:mm')}</p>;
 
@@ -144,7 +127,7 @@ const FixturesItem = ({ match }: Props) => {
         }`}
         onClick={() => toggleStats()}
       >
-      {/* eslint-enable */}
+        {/* eslint-enable */}
         <div className={cn(styles['first-team'], styles.team, 'justify-end')}>
           <img
             className={cn(styles.logo, 'order-1')}
