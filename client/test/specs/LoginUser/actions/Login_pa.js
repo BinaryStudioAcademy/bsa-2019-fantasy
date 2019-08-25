@@ -3,7 +3,7 @@ const page = new LoginPage();
 
 class LoginActions {
   enterEmail(value) {
-    page.emailInput.waitForDisplayed(2000);
+    page.emailInput.waitForDisplayed(10000);
     page.emailInput.clearValue();
     page.emailInput.setValue(value);
   }
