@@ -18,7 +18,7 @@ export default (state = initialState, action: PlayersAction) => {
     case SET_PLAYERS:
       return { ...state, players: action.payload.rows, count: action.payload.count };
     case SET_AUTOPICK_SQUAD:
-      return { ...state, autoPick: action.payload.rows };
+      return { ...state, autoPick: action.payload };
     default:
       return state;
   }

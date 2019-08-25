@@ -151,7 +151,6 @@ const InitialTeamSelection = ({ history }: Props) => {
           },
         };
       });
-      console.log(newAutoPickSquad);
       setSquad(newAutoPickSquad);
       setMoneyRemaining(BUDGET - recalculateMoney(newAutoPickSquad)!);
       setSelectedPlayers(recalculatePlayers(newAutoPickSquad));
