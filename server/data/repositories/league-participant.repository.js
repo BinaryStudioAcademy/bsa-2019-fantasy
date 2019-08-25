@@ -39,6 +39,12 @@ class LeagueParticipantRepository extends BaseRepository {
       ],
     });
   }
+
+  deleteParticipation(participant_id, league_id) {
+    return this.model.destroy({
+      where: { league_id, participant_id },
+    });
+  }
 }
 
 export default new LeagueParticipantRepository(LeagueParticipantModel);

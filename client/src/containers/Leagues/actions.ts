@@ -135,7 +135,7 @@ export const searchPublicLeagues = (request: {
   dispatch(setSuggestions(result));
 };
 
-export const leaveLeague = async ({ name }) => {
+export const leaveLeague = (request: { name: string }) => async () => {
   try {
     const result = await leagueService.leaveLeague(request);
     feedback.success((result && result.message) || result);

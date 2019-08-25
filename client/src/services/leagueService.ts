@@ -67,7 +67,7 @@ export const getLeagueDetails = async (request: { name: string }) => {
 
 export const leaveLeague = async (request: { name: string }) => {
   const response = await callWebApi({
-    endpoint: `/api/league-participant`,
+    endpoint: `/api/league-participants`,
     type: 'DELETE',
     request,
   });

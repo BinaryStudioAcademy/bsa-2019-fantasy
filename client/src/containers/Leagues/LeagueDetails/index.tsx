@@ -21,6 +21,7 @@ type Props = {
   leagueDetails: any;
   code: string;
   location: any;
+  history: any;
 };
 
 const LeagueDetails = ({
@@ -28,6 +29,7 @@ const LeagueDetails = ({
   leagueDetails,
   leaveLeague,
   location,
+  history,
   getInvitationCode,
   code,
 }: Props) => {
@@ -60,6 +62,7 @@ const LeagueDetails = ({
     const { name } = leagueDetails;
     try {
       await leaveLeague({ name });
+      history.push('/leagues');
     } catch (err) {
       console.log(err);
     }

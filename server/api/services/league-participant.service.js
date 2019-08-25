@@ -30,3 +30,11 @@ export const getLeagueParticipants = async (leagueId) => {
   const result = await leagueParticipantRepository.getLeagueParticipants(leagueId);
   return result.map((el) => el.get({ plain: true }));
 };
+
+export const leaveLeague = async (participantId, leagueId) => {
+  const result = await leagueParticipantRepository.deleteParticipation(
+    participantId,
+    leagueId,
+  );
+  return result;
+};
