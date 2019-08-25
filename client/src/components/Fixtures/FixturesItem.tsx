@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
 import moment from 'moment';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { FixturesItemType } from 'types/fixtures.types';
+import { loadGameDetailsAction } from '../../containers/FixturesContainer/actions';
+import { RootState } from 'store/types';
 
 import styles from './styles.module.scss';
 import MatchStats from 'components/MatchStats';
@@ -99,9 +102,14 @@ const stats = [
 
 const FixturesItem = ({ match }: Props) => {
   const [isDisplay, setIsDisplay] = useState(false);
+  const dispatch = useDispatch();
+  const gameDetails = useSelector((state: RootState) => state.fixtures.gameDetails);
 
   const toggleStats = () => {
     if (match.started) {
+      if (!isDisplay) {
+        dispatch(loadGameDetailsAction(match.id));
+      }
       setIsDisplay(!isDisplay);
     }
   };
@@ -144,7 +152,7 @@ const FixturesItem = ({ match }: Props) => {
         }`}
         onClick={() => toggleStats()}
       >
-      {/* eslint-enable */}
+        {/* eslint-enable */}
         <div className={cn(styles['first-team'], styles.team, 'justify-end')}>
           <img
             className={cn(styles.logo, 'order-1')}
