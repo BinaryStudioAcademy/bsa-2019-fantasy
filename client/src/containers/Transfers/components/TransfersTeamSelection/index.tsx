@@ -231,17 +231,8 @@ const TransfersTeamSelection = ({
               <div className='w-full'>
                 <TransfersTeamList
                   players={players}
-                  onOpenInfo={(a, b) => {
-                    console.log('dialog');
-                  }}
+                  onOpenInfo={(a, b) => console.log('dialog')} // add possibility to open PlayerDialog
                 />
-                {/* <TeamList
-                  starters={players}
-                  isGameweek={false}
-                  onOpen={onOpen}
-                  captainId={captainId}
-                  viceCaptainId={viceCaptainId}
-                /> */}
               </div>
             )}
             {view === 'pitch' && <Pitch />}
