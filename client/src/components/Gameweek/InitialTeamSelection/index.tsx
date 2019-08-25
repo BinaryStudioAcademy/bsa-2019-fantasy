@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -7,6 +7,7 @@ import update from 'immutability-helper';
 import cn from 'classnames';
 
 import { updateUserTeamDetails } from 'containers/Profile/actions';
+import { loadAutoPickAction } from 'components/PlayersSelection/actions';
 import PlayerSelectionDroppable, { PlayerDroppable } from '../PlayerSelectionDroppable';
 import { PlayerDraggableProps } from '../PlayerSelection';
 import { PlayerTypes } from '../PlayerSelection/types';
@@ -19,6 +20,7 @@ import TeamList from '../TeamList';
 import { SQUAD, BUDGET, CLUBS, FULLNAMES, AUTOPICKSQUAD } from './helpers';
 
 import styles from './styles.module.scss';
+import { RootState } from 'store/types';
 
 type Props = RouteComponentProps;
 
@@ -43,6 +45,22 @@ const InitialTeamSelection = ({ history }: Props) => {
     status: false,
     club: '',
   });
+  const [query, setQuery] = useState({
+    limit: 15,
+    order_direction: 'DESC',
+    order_field: 'player_score',
+    position: undefined,
+    club_id: undefined,
+    search: undefined,
+    max_price: undefined,
+  });
+
+  useEffect(() => {
+    dispatch(loadAutoPickAction({ ...query }));
+  }, [query]);
+
+  let autoPickSquad = useSelector((state: RootState) => state.playerSelection.autoPick);
+  console.log(autoPickSquad);
 
   const currentGameweek = useSelector(currentGameweekSelector);
 
