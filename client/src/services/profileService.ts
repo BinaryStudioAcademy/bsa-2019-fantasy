@@ -17,6 +17,19 @@ export const updateClub = async (clubId: Club['id']) => {
   return response.json();
 };
 
+export const updateEmailPref = async (
+  userId: User['id'],
+  sendmail_time: User['sendmail_time'],
+) => {
+  const response = await callWebApi({
+    endpoint: `/api/profile/${userId}`,
+    type: 'PUT',
+    request: { sendmail_time },
+  });
+
+  return response.json();
+};
+
 export const updateUserTeamDetails = async (
   userId: User['id'],
   gameweekId: GameweekType['id'],

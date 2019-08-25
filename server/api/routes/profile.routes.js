@@ -35,6 +35,12 @@ router
       })
       .catch(next);
   })
+  .put('/:user', jwtMiddleware, (req, res, next) =>
+    userService
+      .updateById(req.params.user, req.body)
+      .then(() => res.json({ message: 'Your email preferences have been saved' }))
+      .catch(next),
+  )
   .post('/favorite-club', jwtMiddleware, async (req, res, next) => {
     try {
       await userService.updateById(req.user.id, { favorite_club_id: req.body.clubId });
