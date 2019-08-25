@@ -105,11 +105,11 @@ export const loadUserLeagues = (): AsyncSetLeaguesAction => async (dispatch) => 
   dispatch(setUserLeagues(result));
 };
 
-export const loadLeagueDetails = (name): AsyncSetLeagueDetailsAction => async (
+export const loadLeagueDetails = ({ name }): AsyncSetLeagueDetailsAction => async (
   dispatch,
 ) => {
   try {
-    const result = await leagueService.getLeagueDetails(name);
+    const result = await leagueService.getLeagueDetails({ name });
     dispatch(setLeagueDetails(result));
   } catch (err) {
     // TODO handle not existing league

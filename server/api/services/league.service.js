@@ -83,6 +83,6 @@ export const joinGlobalLeague = async (participant_id, league_name) => {
 };
 
 export const getLeagueParams = async (name) => {
-  const { id, start_from } = await leagueRepository.getByName(name);
-  return { id, start_from };
+  const result = await leagueRepository.getByName(name);
+  return result;
 };

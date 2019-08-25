@@ -20,8 +20,8 @@ import header from 'styles/header.module.scss';
 
 type Props = {
   loadUserLeagues: typeof loadUserLeagues;
-  getInvitationCode: any;
-  resetLeaguesData: any;
+  getInvitationCode: typeof getInvitationCode;
+  resetLeaguesData: typeof resetLeaguesData;
   code: string;
   leagues: any;
   clubs: any;
@@ -70,13 +70,13 @@ const Leagues = ({
       accessor: 'league.name',
 
       Cell: (props: any) => (
-        <button
+        <Link
+          to={`/leagues/${props.value}`}
           className={`${styles['table-title-row']} flex items-center`}
-          onClick={() => openModal(props.original)}
         >
           {props.original.is_creator && <FaUserCog className='mr-1' />}
           {props.value}
-        </button>
+        </Link>
       ),
     },
     {
@@ -92,8 +92,8 @@ const Leagues = ({
         return (
           <div className={`${styles.rank} flex justify-center items-center`}>
             <span
-              className={`${styles.movement} mr-1 ${movement > 0 ? 'up' : ''} ${
-                movement < 0 ? 'down' : ''
+              className={`${styles.movement} mr-1 ${movement > 0 ? styles.up : ''} ${
+                movement < 0 ? styles.down : ''
               }`}
             >
               {movement > 0 ? (
@@ -122,8 +122,8 @@ const Leagues = ({
         return (
           <div className={`${styles.rank} flex justify-center items-center`}>
             <span
-              className={`${styles.movement} mr-1 ${movement > 0 ? 'up' : ''} ${
-                movement < 0 ? 'down' : ''
+              className={`${styles.movement} mr-1 ${movement > 0 ? styles.up : ''} ${
+                movement < 0 ? styles.down : ''
               }`}
             >
               {movement > 0 ? (

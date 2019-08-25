@@ -23,7 +23,8 @@ router
   )
   .get('/:name', async (req, res, next) => {
     try {
-      const { id, start_from } = await leagueService.getLeagueParams(req.params.name);
+      const league = await leagueService.getLeagueParams(req.params.name);
+      const { id, name, start_from } = league;
       const startScoringGameweek = await gameweekService.getGameweekById(start_from);
       const result = [];
 
@@ -45,7 +46,7 @@ router
           result.push({ ...item, gameweek_points, total_points });
         }),
       );
-      res.json(result);
+      res.json({ name, private: league.private, participants: result });
     } catch (err) {
       next(err);
     }
