@@ -229,6 +229,7 @@ class Live extends React.Component<Props, State> {
   };
 
   renderModal = () => {
+    const { homeClub, awayClub, timeout } = this.state;
     const options = this.props.clubs.map(({ name, id }) => {
       return { label: name, value: String(id) };
     });
@@ -237,7 +238,8 @@ class Live extends React.Component<Props, State> {
       ({ value }) => value !== String(homeClub && homeClub.id),
     );
 
-    const { homeClub, awayClub, timeout } = this.state;
+    console.log(homeClub && homeClub.id);
+    console.log(optionsAway);
 
     return (
       <Modal onDismiss={this.onModalDismiss}>
@@ -251,9 +253,16 @@ class Live extends React.Component<Props, State> {
                 options={optionsHome}
                 value={homeClub && String(homeClub.id)}
                 className='w-40'
-                onChange={({ value }) =>
-                  this.setState({ homeClub: this.getClubById(value) })
-                }
+                onChange={({ value }) => {
+                  if (value === String(awayClub && awayClub.id)) {
+                    this.setState({
+                      homeClub: this.getClubById(value),
+                      awayClub: undefined,
+                    });
+                  } else {
+                    this.setState({ homeClub: this.getClubById(value) });
+                  }
+                }}
               ></Dropdown>
             </div>
             <div className='w-1/3 px-2'>
