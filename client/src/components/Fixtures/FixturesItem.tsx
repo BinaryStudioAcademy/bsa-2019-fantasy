@@ -80,14 +80,24 @@ const FixturesItem = ({ match }: Props) => {
   };
 
   const displayStats = () =>
-    stats.map(({ title, awayteam_stats, hometeam_stats }) => (
-      <MatchStats
-        title={title}
-        awayteam_stats={awayteam_stats}
-        hometeam_stats={hometeam_stats}
-        key={`stats-${title}-${match.id}`}
-      />
-    ));
+    stats
+      .sort((a, b) => {
+        if (a.title > b.title) {
+          return 1;
+        }
+        if (a.title < b.title) {
+          return -1;
+        }
+        return 0;
+      })
+      .map(({ title, awayteam_stats, hometeam_stats }) => (
+        <MatchStats
+          title={title}
+          awayteam_stats={awayteam_stats}
+          hometeam_stats={hometeam_stats}
+          key={`stats-${title}-${match.id}`}
+        />
+      ));
 
   let label = <p>{moment(match.start).format('HH:mm')}</p>;
 
