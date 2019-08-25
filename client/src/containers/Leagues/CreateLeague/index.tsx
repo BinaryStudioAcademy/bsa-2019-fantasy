@@ -14,10 +14,12 @@ import { createLeagueAction, resetLeaguesData } from '../actions';
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
+import { addNotification } from 'components/Notifications/actions';
 
 type Props = {
   createLeagueAction: typeof createLeagueAction;
   resetLeaguesData: typeof resetLeaguesData;
+  addNotification: typeof addNotification;
   history: any;
   error: null | string;
   success: null | string;
@@ -29,6 +31,7 @@ type Props = {
 const CreateLeague = ({
   createLeagueAction,
   resetLeaguesData,
+  addNotification,
   history,
   success,
   leagues,
@@ -66,6 +69,7 @@ const CreateLeague = ({
       private: isPrivate,
       start_from: Number(gameweek.split(' ')[1]),
     });
+    addNotification(`You have created a ${privacy} '${name}' league.`);
   };
 
   const closeModal = () => {
@@ -245,7 +249,7 @@ const mapStateToProps = (rootState: RootState) => ({
   leagues: rootState.league.leagues,
 });
 
-const actions = { createLeagueAction, resetLeaguesData };
+const actions = { createLeagueAction, resetLeaguesData, addNotification };
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
 /* eslint-disable */
 export default withRouter(
