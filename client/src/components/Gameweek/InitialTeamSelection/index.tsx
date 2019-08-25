@@ -47,19 +47,9 @@ const InitialTeamSelection = ({ history }: Props) => {
     club: '',
   });
 
-  const [query, setQuery] = useState({
-    limit: 15,
-    order_direction: 'DESC',
-    order_field: 'player_score',
-    position: undefined,
-    club_id: undefined,
-    search: undefined,
-    max_price: undefined,
-  });
-
   useEffect(() => {
-    dispatch(loadAutoPickAction({ ...query }));
-  }, [query]);
+    dispatch(loadAutoPickAction());
+  }, []);
 
   const autoPick = useSelector((state: RootState) => state.playerSelection.autoPick);
   const clubs = useSelector((state: RootState) => state.clubs.clubs);

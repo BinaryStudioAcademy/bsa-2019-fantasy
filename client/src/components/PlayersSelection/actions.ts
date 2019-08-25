@@ -26,9 +26,8 @@ export const loadPlayersAction = (filter: any): AsyncPlayersAction => async (
   dispatch(setPlayers(result));
 };
 
-export const loadAutoPickAction = (filter: any): AsyncPlayersAction => async (
-  dispatch,
-) => {
-  const result = await playersService.getPlayers(filter);
+export const loadAutoPickAction = (): AsyncPlayersAction => async (dispatch) => {
+  const result = await playersService.getRandomSquad();
+  console.log(result);
   dispatch(setAutoPickSquad(result));
 };

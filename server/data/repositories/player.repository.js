@@ -57,6 +57,11 @@ class PlayerRepository extends BaseRepository {
   getById(id) {
     return this.model.findOne({ where: { id } });
   }
+
+  getRandomPlayers() {
+    // here
+    return this.model.findAll();
+  }
 }
 
 export default new PlayerRepository(PlayerStatModel);
