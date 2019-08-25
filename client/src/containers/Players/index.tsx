@@ -342,18 +342,23 @@ class PlayersPage extends React.Component<Props, State> {
         id,
       };
     });
+    const pageSize = playerTableData.length > 10 ? playerTableData.length : 10;
+    const pages = 10; //Math.ceil(this.props.count / pageSize);
+    const translations = this.props.t('Table', { returnObjects: true });
+
     return (
       <ReactTable
         ref={this.table as any}
         style={this.tableStyle}
         data={playerTableData}
-        pageSize={playerTableData.length > 10 ? playerTableData.length : 10}
-        pages={10} // should default to -1 (which means we don't know how many pages we have)
+        pageSize={pageSize}
+        pages={pages}
         manual
         columns={this.columns}
         onFetchData={this.onFetchData}
         ThComponent={this.ThComponent}
         getTheadThProps={this.getTdProps}
+        {...translations}
       />
     );
   }
@@ -427,13 +432,13 @@ class PlayersPage extends React.Component<Props, State> {
             </div>
             <div className='ml-auto flex'>
               <Dropdown
-                placeholder='Club'
+                placeholder={this.props.t('Players.club')}
                 options={this.getClubOptions()}
                 onChange={this.onClubChange}
                 value={this.state.searchClub}
               />
               <Dropdown
-                placeholder='Position'
+                placeholder={this.props.t('Players.position')}
                 options={this.getPositionOptions()}
                 onChange={this.onPositionChange}
                 value={this.state.searchPosition}

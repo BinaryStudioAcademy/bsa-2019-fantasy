@@ -1,4 +1,5 @@
 {
+  "search": "Пошук...",
   "wait": "Зачекайте",
   "send": "Відправити",
   "next": "Наступна",
@@ -318,6 +319,18 @@
     "browseAll": "Переглянути всіх переможців",
     "summary": "Підсумок",
     "season": "Сезон"
+  },
+
+  "Table": {
+    "pageText": "сторінка",
+    "rowsText": "рядків",
+    "previousText": "Попередня",
+    "nextText": "Наступна",
+    "ofText": "із",
+    "pageJumpText": "Перейти на сторінку",
+    "rowsSelectorText": "рядків на сторінку",
+    "loadingText": "Завантаження...",
+    "noDataText": "Не знайдено"
   },
 
   "StatusPlayerModal": {
