@@ -340,6 +340,9 @@ const InitialTeamSelection = ({ history }: Props) => {
             disabled={
               !(moneyRemaing >= 0 && selectedPlayers === 15 && !isMoreThree.status)
             }
+            inactive={
+              !(moneyRemaing >= 0 && selectedPlayers === 15 && !isMoreThree.status)
+            }
           >
             <p>Save Your Team</p>
           </Button>
