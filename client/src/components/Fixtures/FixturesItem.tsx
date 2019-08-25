@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,7 +14,7 @@ type Props = {
   match: FixturesItemType;
 };
 
-const stats = [
+const stats1 = [
   {
     title: 'Goals',
     hometeam_stats: [
@@ -102,13 +102,64 @@ const stats = [
 
 const FixturesItem = ({ match }: Props) => {
   const [isDisplay, setIsDisplay] = useState(false);
+  const [stats, setStats] = useState<any>([]);
   const dispatch = useDispatch();
   const gameDetails = useSelector((state: RootState) => state.fixtures.gameDetails);
 
+  useEffect(() => {
+    if (gameDetails) {
+      gameDetails.forEach((g) => {
+        setStats((stats) => {
+          const team =
+            g.player.player.club_id === match.hometeam_id
+              ? 'hometeam_stats'
+              : 'awayteam_stats';
+          const statsItem = stats.find((st) => st.title === g.event_type);
+          if (statsItem) {
+            const index = statsItem[team].findIndex(
+              (item) => item.player === g.player.player.second_name,
+            );
+            if (index !== -1) {
+              statsItem[team][index].count = statsItem[team][index].count + 1;
+            } else {
+              statsItem[team].push({
+                player: g.player.player.second_name,
+                count: 1,
+              });
+            }
+            const statsItemIndex = stats.findIndex((st) => st.title === g.event_type);
+            return [
+              ...stats.slice(0, statsItemIndex),
+              statsItem,
+              ...stats.slice(statsItemIndex + 1),
+            ];
+          } else {
+            return [
+              ...stats,
+              {
+                title: g.event_type,
+                hometeam_stats: [],
+                awayteam_stats: [],
+                [team]: [
+                  {
+                    player: g.player.player.second_name,
+                    count: 1,
+                  },
+                ],
+              },
+            ];
+          }
+        });
+      });
+    }
+  }, [gameDetails]);
+
   const toggleStats = () => {
+    setStats([]);
     if (match.started) {
       if (!isDisplay) {
         dispatch(loadGameDetailsAction(match.id));
+      } else {
       }
       setIsDisplay(!isDisplay);
     }
