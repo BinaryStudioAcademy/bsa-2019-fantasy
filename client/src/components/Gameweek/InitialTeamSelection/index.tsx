@@ -17,7 +17,8 @@ import SquadSelectionStatus from './components/SquadSelectionStatus';
 import SaveTeamModal from './components/SaveTeamModal';
 import TeamList from '../TeamList';
 
-import { SQUAD, BUDGET, CLUBS, FULLNAMES, AUTOPICKSQUAD } from './helpers';
+import { SQUAD, BUDGET, CLUBS, FULLNAMES } from './helpers';
+import { getFieldPlayersUniformUrl, getGoalkeepersUniformUrl } from 'helpers/images';
 
 import styles from './styles.module.scss';
 import { RootState } from 'store/types';
@@ -45,6 +46,7 @@ const InitialTeamSelection = ({ history }: Props) => {
     status: false,
     club: '',
   });
+
   const [query, setQuery] = useState({
     limit: 15,
     order_direction: 'DESC',
@@ -59,9 +61,8 @@ const InitialTeamSelection = ({ history }: Props) => {
     dispatch(loadAutoPickAction({ ...query }));
   }, [query]);
 
-  let autoPickSquad = useSelector((state: RootState) => state.playerSelection.autoPick);
-  console.log(autoPickSquad);
-
+  const autoPick = useSelector((state: RootState) => state.playerSelection.autoPick);
+  const clubs = useSelector((state: RootState) => state.clubs.clubs);
   const currentGameweek = useSelector(currentGameweekSelector);
 
   const handleSaveTeam = (ev: React.SyntheticEvent) => {
@@ -141,14 +142,34 @@ const InitialTeamSelection = ({ history }: Props) => {
     setIsMoreThree({ status: false, club: '' });
   };
 
-  const handleAutoPick = () => {
-    setSquad(AUTOPICKSQUAD);
-    setMoneyRemaining(BUDGET - recalculateMoney(AUTOPICKSQUAD)!);
-    setSelectedPlayers(recalculatePlayers(AUTOPICKSQUAD));
-    checkIsMoreThree(AUTOPICKSQUAD);
-    const squadIds = AUTOPICKSQUAD.map((el) => el.lastDroppedItem.id);
-    setdroppedPlayerSquadIds(squadIds);
-  };
+  const handleAutoPick = useCallback(() => {
+    if (autoPick.length) {
+      const newAutoPickSquad = autoPick.map((el) => {
+        return {
+          accept: el.position,
+          lastDroppedItem: {
+            id: el.id,
+            name: el.second_name,
+            club: clubs[el.club_id - 1] ? clubs[el.club_id - 1].short_name : '',
+            points: el.player_score,
+            price: el.player_price,
+            type: el.position,
+            src:
+              el.position === PlayerTypes.GOALKEEPER
+                ? getGoalkeepersUniformUrl(clubs[el.club_id - 1].code)
+                : getFieldPlayersUniformUrl(clubs[el.club_id - 1].code),
+          },
+        };
+      });
+      console.log(newAutoPickSquad);
+      setSquad(newAutoPickSquad);
+      setMoneyRemaining(BUDGET - recalculateMoney(newAutoPickSquad)!);
+      setSelectedPlayers(recalculatePlayers(newAutoPickSquad));
+      checkIsMoreThree(newAutoPickSquad);
+      const squadIds = newAutoPickSquad.map((el) => el.lastDroppedItem.id);
+      setdroppedPlayerSquadIds(squadIds);
+    }
+  }, [clubs, autoPick]);
 
   // Handles drag&drop action
   const handleDrop = useCallback(
