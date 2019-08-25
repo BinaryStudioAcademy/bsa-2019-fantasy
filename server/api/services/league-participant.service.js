@@ -25,3 +25,8 @@ export const checkIfAParticipantByName = async (participantId, leagueName) => {
   const result = await leagueParticipantRepository.getByLeagueAndId(participantId, id);
   return result;
 };
+
+export const getLeagueParticipants = async (leagueId) => {
+  const result = await leagueParticipantRepository.getLeagueParticipants(leagueId);
+  return result.map((el) => el.get({ plain: true }));
+};
