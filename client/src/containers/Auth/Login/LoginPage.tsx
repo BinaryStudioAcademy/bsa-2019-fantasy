@@ -42,7 +42,9 @@ const LoginPage = () => {
         )}
       >
         <div className={cn(styles.lables, 'mb-6')}>
-          <h2 className={styles['side-lable']}>{t('LoginPage.hey')}</h2>
+          <h2 className={cn(styles['side-lable'], 'leading-tight', 'mb-2')}>
+            {t('LoginPage.hey')}
+          </h2>
           <h3 className={cn(styles['side-lable'], styles['side-lable-small'])}>
             {t('LoginPage.welcome')}
           </h3>

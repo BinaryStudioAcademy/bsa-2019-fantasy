@@ -46,7 +46,9 @@ const RegistrationPage = () => {
         )}
       >
         <div className={cn(styles.lables, 'mb-6')}>
-          <h2 className={styles['side-lable']}>{t('RegistrationPage.welcome')}</h2>
+          <h2 className={cn(styles['side-lable'], 'leading-tight', 'mb-2')}>
+            {t('RegistrationPage.welcome')}
+          </h2>
           <h3 className={cn(styles['side-lable'], styles['side-lable-small'])}>
             {t('RegistrationPage.fill-the-form')}
           </h3>

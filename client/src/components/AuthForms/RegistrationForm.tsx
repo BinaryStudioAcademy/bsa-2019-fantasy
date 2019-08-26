@@ -70,7 +70,7 @@ const RegistrationForm = withRouter(({ history }) => {
 
   return (
     <div className={cn(styles['form-registration'], 'w-full max-w-xs')}>
-      <form className='pt-6' onSubmit={handleClickRegister} autoComplete='off'>
+      <form className='pt-3' onSubmit={handleClickRegister} autoComplete='off'>
         <div className='mb-4'>
           <label>
             {t('AuthForms.name')}
