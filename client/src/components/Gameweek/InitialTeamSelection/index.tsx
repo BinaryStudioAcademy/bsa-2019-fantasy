@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -7,6 +7,7 @@ import update from 'immutability-helper';
 import cn from 'classnames';
 
 import { updateUserTeamDetails } from 'containers/Profile/actions';
+import { loadAutoPickAction } from 'components/PlayersSelection/actions';
 import PlayerSelectionDroppable, { PlayerDroppable } from '../PlayerSelectionDroppable';
 import { PlayerDraggableProps } from '../PlayerSelection';
 import { PlayerTypes } from '../PlayerSelection/types';
@@ -16,9 +17,11 @@ import SquadSelectionStatus from './components/SquadSelectionStatus';
 import SaveTeamModal from './components/SaveTeamModal';
 import TeamList from '../TeamList';
 
-import { SQUAD, BUDGET, CLUBS, FULLNAMES, AUTOPICKSQUAD } from './helpers';
+import { SQUAD, BUDGET, CLUBS, FULLNAMES } from './helpers';
+import { getFieldPlayersUniformUrl, getGoalkeepersUniformUrl } from 'helpers/images';
 
 import styles from './styles.module.scss';
+import { RootState } from 'store/types';
 
 type Props = RouteComponentProps;
 
@@ -44,6 +47,12 @@ const InitialTeamSelection = ({ history }: Props) => {
     club: '',
   });
 
+  useEffect(() => {
+    dispatch(loadAutoPickAction());
+  }, []);
+
+  const autoPick = useSelector((state: RootState) => state.playerSelection.autoPick);
+  const clubs = useSelector((state: RootState) => state.clubs.clubs);
   const currentGameweek = useSelector(currentGameweekSelector);
 
   const handleSaveTeam = (ev: React.SyntheticEvent) => {
@@ -123,14 +132,33 @@ const InitialTeamSelection = ({ history }: Props) => {
     setIsMoreThree({ status: false, club: '' });
   };
 
-  const handleAutoPick = () => {
-    setSquad(AUTOPICKSQUAD);
-    setMoneyRemaining(BUDGET - recalculateMoney(AUTOPICKSQUAD)!);
-    setSelectedPlayers(recalculatePlayers(AUTOPICKSQUAD));
-    checkIsMoreThree(AUTOPICKSQUAD);
-    const squadIds = AUTOPICKSQUAD.map((el) => el.lastDroppedItem.id);
-    setdroppedPlayerSquadIds(squadIds);
-  };
+  const handleAutoPick = useCallback(() => {
+    if (autoPick.length) {
+      const newAutoPickSquad = autoPick.map((el) => {
+        return {
+          accept: el.position,
+          lastDroppedItem: {
+            id: el.id,
+            name: el.second_name,
+            club: clubs[el.club_id - 1] ? clubs[el.club_id - 1].short_name : '',
+            points: el.player_score,
+            price: el.player_price,
+            type: el.position,
+            src:
+              el.position === PlayerTypes.GOALKEEPER
+                ? getGoalkeepersUniformUrl(clubs[el.club_id - 1].code)
+                : getFieldPlayersUniformUrl(clubs[el.club_id - 1].code),
+          },
+        };
+      });
+      setSquad(newAutoPickSquad);
+      setMoneyRemaining(BUDGET - recalculateMoney(newAutoPickSquad)!);
+      setSelectedPlayers(recalculatePlayers(newAutoPickSquad));
+      checkIsMoreThree(newAutoPickSquad);
+      const squadIds = newAutoPickSquad.map((el) => el.lastDroppedItem.id);
+      setdroppedPlayerSquadIds(squadIds);
+    }
+  }, [clubs, autoPick]);
 
   // Handles drag&drop action
   const handleDrop = useCallback(
@@ -299,6 +327,9 @@ const InitialTeamSelection = ({ history }: Props) => {
             className={`${styles.saveTeam} px-8 py-2 rounded`}
             onClick={() => setIsModalOpen(true)}
             disabled={
+              !(moneyRemaing >= 0 && selectedPlayers === 15 && !isMoreThree.status)
+            }
+            inactive={
               !(moneyRemaing >= 0 && selectedPlayers === 15 && !isMoreThree.status)
             }
           >

@@ -32,8 +32,8 @@ type State = {
   matchStarted: boolean;
   socketConnected: boolean;
   events: any[];
-  homeClub: Club | undefined;
-  awayClub: Club | undefined;
+  homeClub?: Club;
+  awayClub?: Club;
   timeout: number;
   score: number[];
   elapsed: number | undefined;
@@ -44,7 +44,8 @@ type RenderFixture = {
   content: any;
 };
 
-const endpoint = `http://${process.env.FAKER_SOCKET_SERVER}:${process.env.FAKER_SOCKET_SERVER_PORT}/`;
+const endpoint = `http://${process.env.REACT_APP_FAKER_SOCKET_SERVER}:${process.env.REACT_APP_FAKER_SOCKET_SERVER_PORT}/`;
+console.log(endpoint);
 const timeoutOptions = [1, 2, 5, 10, 15].map((item) => ({
   label: `${item} min`,
   value: String(item),
@@ -228,10 +229,17 @@ class Live extends React.Component<Props, State> {
   };
 
   renderModal = () => {
+    const { homeClub, awayClub, timeout } = this.state;
     const options = this.props.clubs.map(({ name, id }) => {
       return { label: name, value: String(id) };
     });
-    const { homeClub, awayClub, timeout } = this.state;
+    const optionsHome = options;
+    const optionsAway = options.filter(
+      ({ value }) => value !== String(homeClub && homeClub.id),
+    );
+
+    console.log(homeClub && homeClub.id);
+    console.log(optionsAway);
 
     return (
       <Modal onDismiss={this.onModalDismiss}>
@@ -242,19 +250,26 @@ class Live extends React.Component<Props, State> {
               <label className='font-semibold text-l'>Home club</label>
               {/* eslint-disable-next-line */}
               <Dropdown
-                options={options}
+                options={optionsHome}
                 value={homeClub && String(homeClub.id)}
                 className='w-40'
-                onChange={({ value }) =>
-                  this.setState({ homeClub: this.getClubById(value) })
-                }
+                onChange={({ value }) => {
+                  if (value === String(awayClub && awayClub.id)) {
+                    this.setState({
+                      homeClub: this.getClubById(value),
+                      awayClub: undefined,
+                    });
+                  } else {
+                    this.setState({ homeClub: this.getClubById(value) });
+                  }
+                }}
               ></Dropdown>
             </div>
             <div className='w-1/3 px-2'>
               <label className='font-semibold text-l'>Away club</label>
               {/* eslint-disable-next-line */}
               <Dropdown
-                options={options}
+                options={optionsAway}
                 value={awayClub && String(awayClub.id)}
                 className='w-40'
                 onChange={({ value }) =>

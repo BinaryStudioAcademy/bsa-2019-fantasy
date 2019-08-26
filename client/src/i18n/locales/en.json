@@ -1,4 +1,5 @@
 {
+  "search": "Search...",
   "wait": "Wait",
   "send": "Send",
   "next": "Next",
@@ -318,6 +319,18 @@
     "browseAll": "Browse all winners",
     "summary": "Summary",
     "season": "Season"
+  },
+
+  "Table": {
+    "pageText": "page",
+    "rowsText": "rows",
+    "previousText": "Previous",
+    "nextText": "Next",
+    "ofText": "of",
+    "pageJumpText": "jump to page",
+    "rowsSelectorText": "rows per page",
+    "loadingText": "Loading...",
+    "noDataText": "Not found"
   },
 
   "StatusPlayerModal": {

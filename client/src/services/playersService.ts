@@ -9,6 +9,14 @@ export const getPlayers = async (filter: any) => {
   return response.json();
 };
 
+export const getRandomSquad = async () => {
+  const response = await callWebApi({
+    endpoint: `/api/players/random-squad`,
+    type: 'GET',
+  });
+  return response.json();
+};
+
 export const getPlayerById = async (id: string) => {
   const response = await callWebApi({
     endpoint: `/api/players/${id}`,

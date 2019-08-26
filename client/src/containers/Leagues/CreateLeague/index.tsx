@@ -14,13 +14,16 @@ import { createLeagueAction, resetLeaguesData } from '../actions';
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
+import { addNotification } from 'components/Notifications/actions';
 
 type Props = {
   createLeagueAction: typeof createLeagueAction;
   resetLeaguesData: typeof resetLeaguesData;
+  addNotification: typeof addNotification;
   history: any;
   error: null | string;
   success: null | string;
+  leagues: any;
   isLoading: boolean;
   code: string;
 };
@@ -28,8 +31,10 @@ type Props = {
 const CreateLeague = ({
   createLeagueAction,
   resetLeaguesData,
+  addNotification,
   history,
   success,
+  leagues,
   isLoading,
   code,
 }: Props) => {
@@ -64,6 +69,7 @@ const CreateLeague = ({
       private: isPrivate,
       start_from: Number(gameweek.split(' ')[1]),
     });
+    addNotification(`You have created a ${privacy} '${name}' league.`);
   };
 
   const closeModal = () => {
@@ -200,10 +206,20 @@ const CreateLeague = ({
           </div>
           <button
             className={`w-40 shadow bg-primary hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ${
-              !name || !isNameValid || isLoading ? 'opacity-50 cursor-not-allowed' : ''
+              !name ||
+              !isNameValid ||
+              isLoading ||
+              (leagues.public.length >= 3 && privacy === 'public')
+                ? 'opacity-50 cursor-not-allowed'
+                : ''
             }`}
             type='submit'
-            disabled={!name || !isNameValid || isLoading}
+            disabled={
+              !name ||
+              !isNameValid ||
+              isLoading ||
+              (leagues.public.length >= 3 && privacy === 'public')
+            }
           >
             {isLoading ? t('wait') : t('LeaguesPage.createLeague.create')}
           </button>
@@ -230,9 +246,10 @@ const mapStateToProps = (rootState: RootState) => ({
   success: rootState.league.success,
   error: rootState.league.error,
   code: rootState.league.code,
+  leagues: rootState.league.leagues,
 });
 
-const actions = { createLeagueAction, resetLeaguesData };
+const actions = { createLeagueAction, resetLeaguesData, addNotification };
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
 /* eslint-disable */
 export default withRouter(

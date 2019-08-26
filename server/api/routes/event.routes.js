@@ -15,6 +15,12 @@ router
       .getEventById(req.params.id)
       .then((value) => res.json(value))
       .catch(next),
+  )
+  .get('/game/:id', (req, res, next) =>
+    eventService
+      .getEventByGameId(req.params.id)
+      .then((value) => res.json(value))
+      .catch(next),
   );
 
 export default router;

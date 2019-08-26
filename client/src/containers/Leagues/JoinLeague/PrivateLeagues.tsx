@@ -6,12 +6,14 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { joinLeague } from '../actions';
 
 import styles from './styles.module.scss';
+import { addNotification } from 'components/Notifications/actions';
 
 type Props = {
   joinLeague: typeof joinLeague;
+  addNotification: typeof addNotification;
 };
 
-const PrivateLeagues = ({ joinLeague }: Props) => {
+const PrivateLeagues = ({ joinLeague, addNotification }: Props) => {
   const { t } = useTranslation();
 
   const [code, setCode] = useState('');
@@ -27,6 +29,7 @@ const PrivateLeagues = ({ joinLeague }: Props) => {
     /*eslint-disable*/
     try {
       await joinLeague({ code, private: true });
+      addNotification(`You have joined the new private league.`);
     } catch {
       console.log('Something went wrong!');
     } finally {
@@ -74,7 +77,7 @@ const PrivateLeagues = ({ joinLeague }: Props) => {
   );
 };
 
-const actions = { joinLeague };
+const actions = { joinLeague, addNotification };
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
 
 export default connect(

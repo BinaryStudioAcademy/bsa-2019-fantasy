@@ -11,7 +11,7 @@ type FetchPlayersRequest = {
 
 type FetchPlayersSuccess = {
   type: typeof FETCH_PLAYERS_SUCCESS;
-  payload: PlayerType[];
+  payload: { count: number; rows: PlayerType[] };
 };
 
 type FetchPlayersFailure = {

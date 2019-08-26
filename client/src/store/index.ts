@@ -9,12 +9,14 @@ import transferReducer from 'containers/Transfers/reducer';
 import profileReducer from 'containers/Profile/reducer';
 import playersReducer from 'containers/Players/reducer';
 import fixturesReducer from 'containers/FixturesContainer/reducer';
-import playerSelectionReducer from 'components/PlayersSelection/reducer';
 import clubsReducer from 'containers/Routing/fetchClubs/reducer';
 import gameweeksReducer from 'containers/Routing/fetchGameweeks/reducer';
 import gameweekHistoryReducer from 'containers/GameweekHistory/reducer';
 import leagueReducer from 'containers/Leagues/reducer';
 import currentGameReducer from 'containers/Live/reducer';
+
+import playerSelectionReducer from 'components/PlayersSelection/reducer';
+import notificationsReducer from 'components/Notifications/reducer';
 
 export const history = createBrowserHistory();
 
@@ -36,6 +38,7 @@ const reducers = {
   currentGame: currentGameReducer,
   gameweekHistory: gameweekHistoryReducer,
   transfers: transferReducer,
+  notifications: notificationsReducer,
 };
 
 const rootReducer = combineReducers({
