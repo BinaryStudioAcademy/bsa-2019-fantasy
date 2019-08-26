@@ -88,15 +88,13 @@ class PlayersPage extends React.Component<Props, State> {
     }
   };
 
-  onComparisonAdd = async (props: any) => {
-    if (props.original) {
-      const player = this.props.players.find(
-        (player) => player && props.original.id === player.id,
-      );
+  onComparisonAdd = async (id: string, club: string) => {
+    if (id) {
+      const player = this.props.players.find((player) => player && id === player.id);
 
       if (this.state.comparisonData.length) {
         const playerIndex = this.state.comparisonData.findIndex(
-          (player: any) => player && props.original.id === player.id,
+          (player: any) => player && id === player.id,
         );
 
         if (this.state.comparisonData.length === 2 && playerIndex === -1) {
@@ -116,7 +114,7 @@ class PlayersPage extends React.Component<Props, State> {
         }
       }
 
-      await this.props.fetchDataForPlayer(props.original.id, props.original.club_id);
+      await this.props.fetchDataForPlayer(id, club);
       player!.gameweeks_stats = this.props.playerData.history;
 
       this.setState({
@@ -283,7 +281,7 @@ class PlayersPage extends React.Component<Props, State> {
       <>
         <button
           className='w-6 h-6 justify-center mr-4 leading-none flex bg-background rounded-full'
-          onClick={() => this.onComparisonAdd(props.original.id)}
+          onClick={() => this.onComparisonAdd(props.original.id, props.original.club_id)}
         >
           {addedToComparison ? <FaTimes /> : <FaPlus />}
         </button>
@@ -437,12 +435,14 @@ class PlayersPage extends React.Component<Props, State> {
             <div className='ml-auto flex'>
               <Dropdown
                 placeholder={this.props.t('Players.club')}
+                className='mr-2'
                 options={this.getClubOptions()}
                 onChange={this.onClubChange}
                 value={this.state.searchClub}
               />
               <Dropdown
                 placeholder={this.props.t('Players.position')}
+                className='mr-2'
                 options={this.getPositionOptions()}
                 onChange={this.onPositionChange}
                 value={this.state.searchPosition}
