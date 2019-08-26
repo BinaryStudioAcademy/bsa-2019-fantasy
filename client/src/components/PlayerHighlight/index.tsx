@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Radar } from 'react-chartjs-2';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMedal } from '@fortawesome/free-solid-svg-icons';
+import { FaMedal } from 'react-icons/fa';
 import Chart from 'chart.js';
 
 import Button from 'components/Button';
@@ -139,8 +138,8 @@ const PlayerHighlight = ({ player }: Props) => {
           />
         </div>
 
-        <div className='award text-secondary2 mt-12'>
-          <FontAwesomeIcon icon={faMedal} /> {t('Players.playerOfTheWeek')}
+        <div className='award text-secondary2 mt-12 flex items-center'>
+          <FaMedal className='mr-1' /> {t('Players.playerOfTheWeek')}
         </div>
 
         <h2
