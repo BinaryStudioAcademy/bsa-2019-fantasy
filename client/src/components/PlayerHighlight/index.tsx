@@ -10,7 +10,6 @@ import Button from 'components/Button';
 import { getClubLogoUrl, getPlayerImageUrl } from 'helpers/images';
 import { RootState } from 'store/types';
 
-import styles from './styles.module.scss';
 import { PlayerType } from 'types/player.types';
 import { Club } from 'types/club.types';
 

@@ -10,6 +10,7 @@ import {
   FaAward,
   FaSignOutAlt,
 } from 'react-icons/fa';
+import cn from 'classnames';
 
 import { RootState } from 'store/types';
 
@@ -62,23 +63,30 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`${
-        styles.sidebar
-      } flex flex-col justify-between py-6 bg-secondary text-primary2 h-screen relative ${
-        isOpened ? styles.open : ''
-      }`}
+      className={cn(
+        styles.sidebar,
+        'flex',
+        'flex-col',
+        'justify-between',
+        'py-6',
+        'bg-secondary',
+        'text-primary2',
+        'h-screen',
+        'relative',
+        isOpened ? styles.open : '',
+      )}
       onClick={toggleOpened}
       role='presentation'
     >
       <Link
         to='/'
-        className={`sidebar-logo ${styles['sidebar-logo']} ${isOpened ? 'pl-6' : 'pl-3'}`}
+        className={cn(styles['sidebar-logo'], 'sidebar-logo', isOpened ? 'pl-6' : 'pl-3')}
       >
         <img src='/images/logo.png' alt='logo' style={{ height: 45, width: 45 }} />
       </Link>
 
       <div
-        className={`profile-menu ${styles['profile-menu']} ${isOpened ? 'pl-6' : 'pl-3'}`}
+        className={cn(styles['profile-menu'], 'profile-menu', isOpened ? 'pl-6' : 'pl-3')}
       >
         <Link className={`mt-32 flex-col`} to='/profile' onClick={noPropagation}>
           <img
@@ -87,14 +95,14 @@ const Sidebar = () => {
             style={{ height: 45, width: 45 }}
             className='rounded-full mb-2'
           />
-          <p className={`${styles.username} truncate ${isOpened ? styles.open : ''}`}>
+          <p className={cn(styles.username, 'truncate', isOpened ? styles.open : '')}>
             {name}
           </p>
         </Link>
-        <div className={`${styles.points} text-sm`}>
+        <div className={cn(styles.points, 'text-sm')}>
           {t('Sidebar.money')}: £{money}
         </div>
-        <div className={`${styles.points} text-sm`}>
+        <div className={cn(styles.points, 'text-sm')}>
           {t('Sidebar.score')}: {score}
         </div>
       </div>

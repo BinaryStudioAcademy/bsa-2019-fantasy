@@ -190,7 +190,7 @@ const InitialTeamSelection = ({ history }: Props) => {
   );
 
   const Pitch = () => (
-    <div className={`${styles['team-container']} relative`}>
+    <div className={cn(styles['team-container'], 'relative')}>
       {/* Goalkeeper */}
       <div className={styles.team}>
         {squad.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
@@ -281,9 +281,10 @@ const InitialTeamSelection = ({ history }: Props) => {
     <div className='flex justify-center mb-4'>
       <form className={styles['form-team']}>
         <label
-          className={`${styles['team-selection-radio']} ${
-            view === 'pitch' ? styles['is-active'] : ''
-          }`}
+          className={cn(
+            styles['team-selection-radio'],
+            view === 'pitch' ? styles['is-active'] : '',
+          )}
           onClick={() => setView('pitch')}
         >
           <input className='hidden' type='radio' value='option2' />
@@ -291,9 +292,10 @@ const InitialTeamSelection = ({ history }: Props) => {
         </label>
 
         <label
-          className={`${styles['team-selection-radio']} ${
-            view === 'list' ? styles['is-active'] : ''
-          }`}
+          className={cn(
+            styles['team-selection-radio'],
+            view === 'list' ? styles['is-active'] : '',
+          )}
           onClick={() => setView('list')}
         >
           <input className='hidden' type='radio' value='option3' />
@@ -313,7 +315,7 @@ const InitialTeamSelection = ({ history }: Props) => {
         onAutoPickClick={() => handleAutoPick()}
       />
 
-      <div className={cn(styles['team-select-wrapper'], 'rounded bg-secondary')}>
+      <div className={cn(styles['team-select-wrapper'], 'rounded', 'bg-secondary')}>
         <ViewToggles />
 
         {view === 'list' ? (
@@ -326,7 +328,7 @@ const InitialTeamSelection = ({ history }: Props) => {
 
         <div className='w-full flex justify-center mt-3'>
           <Button
-            className={`${styles.saveTeam} px-8 py-2 rounded`}
+            className={cn(styles.saveTeam, 'px-8', 'py-2', 'rounded')}
             onClick={() => setIsModalOpen(true)}
             disabled={
               !(moneyRemaing >= 0 && selectedPlayers === 15 && !isMoreThree.status)

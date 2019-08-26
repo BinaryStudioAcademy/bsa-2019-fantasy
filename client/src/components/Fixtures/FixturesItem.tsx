@@ -105,12 +105,24 @@ const FixturesItem = ({ match }: Props) => {
     label = (
       <div className='flex'>
         <p
-          className={cn(styles['home-score'], 'score text-white font-bold bg-green-900')}
+          className={cn(
+            styles['home-score'],
+            'score',
+            'text-white',
+            'font-bold',
+            'bg-green-900',
+          )}
         >
           {match.hometeam_score}
         </p>
         <p
-          className={cn(styles['away-score'], 'score text-white font-bold bg-green-900')}
+          className={cn(
+            styles['away-score'],
+            'score',
+            'text-white',
+            'font-bold',
+            'bg-green-900',
+          )}
         >
           {match.awayteam_score}
         </p>
@@ -137,9 +149,14 @@ const FixturesItem = ({ match }: Props) => {
           <h5 className='font-bold'>{match.hometeam.name}</h5>
         </div>
         <div
-          className={`time p-3 py-2 rounded mx-2 ${styles['play-time']} ${
-            match.started ? 'bg-green-900' : ''
-          }`}
+          className={cn(
+            styles['play-time'],
+            'time',
+            'p-3',
+            'py-2',
+            'rounded mx-2',
+            match.started ? 'bg-green-900' : '',
+          )}
         >
           {label}
         </div>

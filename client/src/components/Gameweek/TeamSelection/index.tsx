@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import { feedback } from 'react-feedbacker';
+import cn from 'classnames';
 
 import { RootState } from 'store/types';
 import { GameweekType } from 'types/gameweek.type';
@@ -395,7 +396,7 @@ const TeamSelection = ({
     return (
       <div className='relative team-container'>
         {/* Goalkeeper */}
-        <div className={`flex justify-around absolute ${styles.team}`}>
+        <div className={cn(styles.team, 'flex', 'justify-around', 'absolute')}>
           {playersOnPitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
             if (lastDroppedItem.type === PlayerTypes.GOALKEEPER) {
               return (
@@ -422,7 +423,7 @@ const TeamSelection = ({
         </div>
 
         {/* Defenders */}
-        <div className={`flex justify-around absolute top-20 ${styles.team}`}>
+        <div className={cn(styles.team, 'flex', 'justify-around', 'absolute', 'top-20')}>
           {playersOnPitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
             if (lastDroppedItem.type === PlayerTypes.DEFENDER) {
               return (
@@ -449,7 +450,7 @@ const TeamSelection = ({
         </div>
 
         {/* Middlefilders */}
-        <div className={`flex justify-around absolute top-40 ${styles.team}`}>
+        <div className={cn(styles.team, 'flex', 'justify-around', 'absolute', 'top-40')}>
           {playersOnPitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
             if (lastDroppedItem.type === PlayerTypes.MIDDLEFIELDER) {
               return (
@@ -476,7 +477,7 @@ const TeamSelection = ({
         </div>
 
         {/* Forwards */}
-        <div className={`flex justify-around absolute top-60 ${styles.team}`}>
+        <div className={cn(styles.team, 'flex', 'justify-around', 'absolute', 'top-60')}>
           {playersOnPitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
             if (lastDroppedItem.type === PlayerTypes.FORWARD) {
               return (
@@ -504,7 +505,16 @@ const TeamSelection = ({
 
         {/* Bench */}
         <div
-          className={`flex justify-around top-80 left-0 w-full m-3 absolute ${styles.team}`}
+          className={cn(
+            styles.team,
+            'flex',
+            'justify-around',
+            'absolute',
+            'top-80',
+            'left-0',
+            'w-full',
+            'm-3',
+          )}
         >
           {playersOnBench.map(({ accept, lastDroppedItem }: BenchDroppable, index) => {
             return (
@@ -536,9 +546,10 @@ const TeamSelection = ({
     <div className='flex justify-center mb-8'>
       <form className={styles['form-team']}>
         <label
-          className={`${styles['team-selection-radio']} ${
-            view === 'pitch' ? styles['is-active'] : ''
-          }`}
+          className={cn(
+            styles['team-selection-radio'],
+            view === 'pitch' ? styles['is-active'] : '',
+          )}
           onClick={() => setView('pitch')}
         >
           <input className='invisible' type='radio' value='option2' />
@@ -546,9 +557,10 @@ const TeamSelection = ({
         </label>
 
         <label
-          className={`${styles['team-selection-radio']} ${
-            view === 'list' ? styles['is-active'] : ''
-          }`}
+          className={cn(
+            styles['team-selection-radio'],
+            view === 'list' ? styles['is-active'] : '',
+          )}
           onClick={() => setView('list')}
         >
           <input className='invisible' type='radio' value='option3' />
@@ -561,7 +573,7 @@ const TeamSelection = ({
   return (
     <DndProvider backend={HTML5Backend}>
       <div
-        className={`py-8 ${styles['team-select-wrapper']} ${styles['team-container']}`}
+        className={cn(styles['team-select-wrapper'], styles['team-container'], 'py-8')}
       >
         {displayButtons()}
         {playersOnBench && playersOnPitch ? (

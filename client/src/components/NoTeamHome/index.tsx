@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import cn from 'classnames';
 
 import styles from './styles.module.scss';
 
@@ -57,11 +58,7 @@ interface PlayerProps {
 const Player = ({ src, name, club }: PlayerProps) => {
   return (
     <div className='text-center pr-4'>
-      <img
-        src={src}
-        className={`${styles.playerImg} ${styles.playerShadow}`}
-        alt='player'
-      />
+      <img src={src} className={cn(styles.playerImg, styles.playerShadow)} alt='player' />
       <div>
         <div className={styles.playerName}>{name}</div>
         <div className={styles.playerClub}>{club}</div>
