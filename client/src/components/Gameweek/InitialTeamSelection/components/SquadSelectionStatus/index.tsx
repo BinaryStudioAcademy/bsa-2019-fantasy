@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Button from 'components/Button';
@@ -55,7 +55,7 @@ const SquadSelectionStatus = ({
       </div>
       {isMoreThree.status && (
         <p className='text-center bg-red-700 text-white text-xs mb-4'>
-          {`Too many players selected from ${isMoreThree.club}`}
+          {t('SquadSelectionStatus.validationError') + `${isMoreThree.club}`}
         </p>
       )}
     </div>

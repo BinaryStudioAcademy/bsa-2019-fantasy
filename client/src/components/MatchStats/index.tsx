@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classnames';
 
 import styles from './styles.module.scss';
 
@@ -17,13 +18,13 @@ const MatchStats = ({ title, hometeam_stats, awayteam_stats }: Props) => {
     ));
 
   return (
-    <div className={`w-4/5 ${styles.stats} mb-3`}>
+    <div className={cn(styles.stats, 'w-4/5', 'mb-3')}>
       <h2 className='text-center bg-green-900 text-white p-1 font-bold'>{title}</h2>
       <div className='flex bg-white p-3'>
-        <div className={`${styles['left-team']} ${styles.teamstats}`}>
+        <div className={cn(styles['left-team'], styles.teamstats)}>
           {mapArray(hometeam_stats)}
         </div>
-        <div className={`${styles['right-team']} ${styles.teamstats}`}>
+        <div className={cn(styles['right-team'], styles.teamstats)}>
           {mapArray(awayteam_stats)}
         </div>
       </div>

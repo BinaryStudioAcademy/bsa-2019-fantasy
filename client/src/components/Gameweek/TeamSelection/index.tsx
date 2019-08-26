@@ -4,6 +4,8 @@ import update from 'immutability-helper';
 import { useTranslation } from 'react-i18next';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
+import { feedback } from 'react-feedbacker';
+import cn from 'classnames';
 
 import { RootState } from 'store/types';
 import { GameweekType } from 'types/gameweek.type';
@@ -72,65 +74,85 @@ const TeamSelection = ({
   //sets fetched players to the corresponding places
   useEffect(() => {
     if (players.length) {
+      //arrange players on the bench in the correct order
+      const bench: any[] = [];
+      players
+        .filter((el) => el.is_on_bench)
+        .forEach((el) =>
+          el.player_stats.position === PlayerTypes.GOALKEEPER
+            ? bench.unshift(el)
+            : bench.push(el),
+        );
+      console.log(bench);
       setBench(
-        players
-          .filter((el) => el.is_on_bench)
-          .map((el) => {
-            return {
-              accept: [
-                PlayerTypes.DEFENDER,
-                PlayerTypes.MIDDLEFIELDER,
-                PlayerTypes.FORWARD,
-              ],
-              lastDroppedItem: {
-                ...el.player_stats,
-                id: el.player_stats.id,
-                name: el.player_stats.second_name,
-                club: clubs[el.player_stats.club_id - 1].short_name,
-                points: el.player_stats.player_score,
-                type: el.player_stats.position,
-                src:
-                  el.player_stats.position === PlayerTypes.GOALKEEPER
-                    ? getGoalkeepersUniformUrl(clubs[el.player_stats.club_id - 1].code)
-                    : getFieldPlayersUniformUrl(clubs[el.player_stats.club_id - 1].code),
-              },
-            };
-          }),
+        bench.map((el) => {
+          let accept;
+          if (el.player_stats.position === PlayerTypes.GOALKEEPER) {
+            accept = PlayerTypes.GOALKEEPER;
+          } else {
+            accept = [
+              PlayerTypes.DEFENDER,
+              PlayerTypes.MIDDLEFIELDER,
+              PlayerTypes.FORWARD,
+            ];
+          }
+          return {
+            accept,
+            lastDroppedItem: {
+              ...el.player_stats,
+              id: el.player_stats.id,
+              name: el.player_stats.second_name,
+              club: clubs[el.player_stats.club_id - 1].short_name,
+              points: el.player_stats.player_score,
+              type: el.player_stats.position,
+              src:
+                el.player_stats.position === PlayerTypes.GOALKEEPER
+                  ? getGoalkeepersUniformUrl(clubs[el.player_stats.club_id - 1].code)
+                  : getFieldPlayersUniformUrl(clubs[el.player_stats.club_id - 1].code),
+            },
+          };
+        }),
       );
+
+      const pitch = players.filter((el) => !el.is_on_bench);
       setPitch(
-        players
-          .filter((el) => !el.is_on_bench)
-          .map((el) => {
-            return {
-              accept: [
-                PlayerTypes.DEFENDER,
-                PlayerTypes.MIDDLEFIELDER,
-                PlayerTypes.FORWARD,
-              ],
-              lastDroppedItem: {
-                ...el.player_stats,
-                id: el.player_stats.id,
-                name: el.player_stats.second_name,
-                club: clubs[el.player_stats.club_id - 1]
-                  ? clubs[el.player_stats.club_id - 1].short_name
-                  : '',
-                points: el.player_stats.player_score,
-                type: el.player_stats.position,
-                src:
-                  el.player_stats.position === PlayerTypes.GOALKEEPER
-                    ? getGoalkeepersUniformUrl(clubs[el.player_stats.club_id - 1].code)
-                    : getFieldPlayersUniformUrl(clubs[el.player_stats.club_id - 1].code),
-              },
-            };
-          }),
+        pitch.map((el) => {
+          let accept;
+          if (el.player_stats.position === PlayerTypes.GOALKEEPER) {
+            accept = PlayerTypes.GOALKEEPER;
+          } else {
+            accept = [
+              PlayerTypes.DEFENDER,
+              PlayerTypes.MIDDLEFIELDER,
+              PlayerTypes.FORWARD,
+            ];
+          }
+          return {
+            accept,
+            lastDroppedItem: {
+              ...el.player_stats,
+              id: el.player_stats.id,
+              name: el.player_stats.second_name,
+              club: clubs[el.player_stats.club_id - 1]
+                ? clubs[el.player_stats.club_id - 1].short_name
+                : '',
+              points: el.player_stats.player_score,
+              type: el.player_stats.position,
+              src:
+                el.player_stats.position === PlayerTypes.GOALKEEPER
+                  ? getGoalkeepersUniformUrl(clubs[el.player_stats.club_id - 1].code)
+                  : getFieldPlayersUniformUrl(clubs[el.player_stats.club_id - 1].code),
+            },
+          };
+        }),
       );
 
       setPlayerPitchIds(
-        players.filter((el) => !el.is_on_bench).map((el) => el.player_stats.id),
+        pitch.filter((el) => !el.is_on_bench).map((el) => el.player_stats.id),
       );
 
       setPlayerBenchIds(
-        players.filter((el) => el.is_on_bench).map((el) => el.player_stats.id),
+        bench.filter((el) => el.is_on_bench).map((el) => el.player_stats.id),
       );
     }
   }, [players]);
@@ -321,7 +343,11 @@ const TeamSelection = ({
         playersOnPitch !== undefined
       ) {
         let isAccept = validationPitch(playersOnPitch, index, item);
-        if (isAccept) handlePitchDrop(index, item, playerBenchIndex);
+        isAccept
+          ? handlePitchDrop(index, item, playerBenchIndex)
+          : feedback.error(
+              "On pitch couldn't be less than 3 defenders, 3 midfielders or 1 forward!",
+            );
         //when we move from the pitch
       } else if (
         playerPitchIndex > -1 &&
@@ -330,7 +356,11 @@ const TeamSelection = ({
         playersOnBench !== undefined
       ) {
         let isAccept = validationBench(playersOnPitch, playersOnBench, index, item);
-        if (isAccept) handleBenchDrop(index, item, playerPitchIndex);
+        isAccept
+          ? handleBenchDrop(index, item, playerPitchIndex)
+          : feedback.error(
+              "On pitch couldn't be less than 3 defenders, 3 midfielders or 1 forward!",
+            );
         //when we move from the list
       } else if (playerBenchIndex === -1 && playerPitchIndex === -1) {
         setPitch(
@@ -361,7 +391,7 @@ const TeamSelection = ({
     return (
       <div className='relative team-container'>
         {/* Goalkeeper */}
-        <div className={`flex justify-around absolute ${styles.team}`}>
+        <div className={cn(styles.team, 'flex', 'justify-around', 'absolute')}>
           {playersOnPitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
             if (lastDroppedItem.type === PlayerTypes.GOALKEEPER) {
               return (
@@ -388,7 +418,7 @@ const TeamSelection = ({
         </div>
 
         {/* Defenders */}
-        <div className={`flex justify-around absolute top-20 ${styles.team}`}>
+        <div className={cn(styles.team, 'flex', 'justify-around', 'absolute', 'top-20')}>
           {playersOnPitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
             if (lastDroppedItem.type === PlayerTypes.DEFENDER) {
               return (
@@ -415,7 +445,7 @@ const TeamSelection = ({
         </div>
 
         {/* Middlefilders */}
-        <div className={`flex justify-around absolute top-40 ${styles.team}`}>
+        <div className={cn(styles.team, 'flex', 'justify-around', 'absolute', 'top-40')}>
           {playersOnPitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
             if (lastDroppedItem.type === PlayerTypes.MIDDLEFIELDER) {
               return (
@@ -442,7 +472,7 @@ const TeamSelection = ({
         </div>
 
         {/* Forwards */}
-        <div className={`flex justify-around absolute top-60 ${styles.team}`}>
+        <div className={cn(styles.team, 'flex', 'justify-around', 'absolute', 'top-60')}>
           {playersOnPitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
             if (lastDroppedItem.type === PlayerTypes.FORWARD) {
               return (
@@ -470,7 +500,16 @@ const TeamSelection = ({
 
         {/* Bench */}
         <div
-          className={`flex justify-around top-80 left-0 w-full m-3 absolute ${styles.team}`}
+          className={cn(
+            styles.team,
+            'flex',
+            'justify-around',
+            'absolute',
+            'top-80',
+            'left-0',
+            'w-full',
+            'm-3',
+          )}
         >
           {playersOnBench.map(({ accept, lastDroppedItem }: BenchDroppable, index) => {
             return (
@@ -502,9 +541,10 @@ const TeamSelection = ({
     <div className='flex justify-center mb-8'>
       <form className={styles['form-team']}>
         <label
-          className={`${styles['team-selection-radio']} ${
-            view === 'pitch' ? styles['is-active'] : ''
-          }`}
+          className={cn(
+            styles['team-selection-radio'],
+            view === 'pitch' ? styles['is-active'] : '',
+          )}
           onClick={() => setView('pitch')}
         >
           <input className='invisible' type='radio' value='option2' />
@@ -512,9 +552,10 @@ const TeamSelection = ({
         </label>
 
         <label
-          className={`${styles['team-selection-radio']} ${
-            view === 'list' ? styles['is-active'] : ''
-          }`}
+          className={cn(
+            styles['team-selection-radio'],
+            view === 'list' ? styles['is-active'] : '',
+          )}
           onClick={() => setView('list')}
         >
           <input className='invisible' type='radio' value='option3' />
@@ -527,7 +568,7 @@ const TeamSelection = ({
   return (
     <DndProvider backend={HTML5Backend}>
       <div
-        className={`py-8 ${styles['team-select-wrapper']} ${styles['team-container']}`}
+        className={cn(styles['team-select-wrapper'], styles['team-container'], 'py-8')}
       >
         {displayButtons()}
         {playersOnBench && playersOnPitch ? (

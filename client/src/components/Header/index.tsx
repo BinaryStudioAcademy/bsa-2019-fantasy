@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import cn from 'classnames';
 import { NavLink } from 'react-router-dom';
 
 import { IconContext } from 'react-icons';
@@ -27,7 +28,9 @@ const Header = ({ team_name }: HeaderProps) => {
     : [];
 
   return (
-    <header className={`${styles.header} bg-primary pb-32 text-sm text-secondary2`}>
+    <header
+      className={cn(styles.header, 'bg-primary', 'pb-32', 'text-sm', 'text-secondary2')}
+    >
       <div className='mx-16'>
         <nav className='flex items-center py-4 '>
           <div className='flex flex-initial items-center mr-4'>

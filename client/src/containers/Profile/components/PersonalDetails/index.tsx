@@ -106,7 +106,17 @@ const PersonalDetails = withRouter(({ history }) => {
               className={cn(
                 styles['checkbox-styled'],
                 language === 'en' && styles.checked,
-                'cursor-pointer bg-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded',
+                'cursor-pointer',
+                'bg-transparent',
+                'hover:bg-teal-300',
+                'text-secondary',
+                'hover:text-white',
+                'py-2',
+                'px-6',
+                'border-2',
+                'border-gray-700',
+                'hover:border-transparent',
+                'rounded',
               )}
             >
               <input
@@ -123,7 +133,17 @@ const PersonalDetails = withRouter(({ history }) => {
               className={cn(
                 styles['checkbox-styled'],
                 language === 'ua' && styles.checked,
-                'cursor-pointer bg-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded',
+                'cursor-pointer',
+                'bg-transparent',
+                'hover:bg-teal-300',
+                'text-secondary',
+                'hover:text-white',
+                'py-2',
+                'px-6',
+                'border-2',
+                'border-gray-700',
+                'hover:border-transparent',
+                'rounded',
               )}
             >
               <input

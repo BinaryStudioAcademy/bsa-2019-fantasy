@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { useTranslation } from 'react-i18next';
+import cn from 'classnames';
 
 import { RootState } from 'store/types';
 import { loadLeagueDetails, getInvitationCode, leaveLeague } from '../actions';
@@ -76,7 +77,7 @@ const LeagueDetails = ({
   const columns = [
     {
       Header: () => (
-        <span className={`${styles['table-title']} uppercase font-bold`}>
+        <span className={cn(styles['table-title'], 'uppercase', 'font-bold')}>
           {t('LeagueDetails.table.rank')}
         </span>
       ),
@@ -88,9 +89,13 @@ const LeagueDetails = ({
         return (
           <div className={`h-full flex justify-center items-center`}>
             <span
-              className={`flex items-center ${styles.movement} ${
-                movement > 0 ? styles.up : ''
-              } ${movement < 0 ? styles.down : ''}`}
+              className={cn(
+                styles.movement,
+                'flex',
+                'items-center',
+                movement > 0 ? styles.up : '',
+                movement < 0 ? styles.down : '',
+              )}
             >
               <span className='mr-2'>{props.index + 1}.</span>
               {movement > 0 ? (
@@ -107,7 +112,7 @@ const LeagueDetails = ({
     },
     {
       Header: () => (
-        <span className={`${styles['table-title']} uppercase font-bold`}>
+        <span className={cn(styles['table-title'], 'uppercase', 'font-bold')}>
           {t('LeagueDetails.table.team')}
         </span>
       ),
@@ -125,7 +130,7 @@ const LeagueDetails = ({
 
     {
       Header: () => (
-        <span className={`${styles['table-title']} uppercase font-bold`}>
+        <span className={cn(styles['table-title'], 'uppercase', 'font-bold')}>
           {t('LeagueDetails.table.GW')}
         </span>
       ),
@@ -137,7 +142,7 @@ const LeagueDetails = ({
     },
     {
       Header: () => (
-        <span className={`${styles['table-title']} uppercase font-bold`}>
+        <span className={cn(styles['table-title'], 'uppercase', 'font-bold')}>
           {t('LeagueDetails.table.TOT')}
         </span>
       ),
@@ -155,23 +160,23 @@ const LeagueDetails = ({
 
   return (
     <div className={styles['league-details']}>
-      <div className={`${header.jumbotron} ${header.paper} mb-12 rounded`}>
-        <div className={`${header['jumbotron-content']} mt-12`}>
-          <h2 className={`${header.title} text-secondary`}>
-            <div className={`${header.sub} ${header.title} mb-4 flex items-center`}>
+      <div className={cn(header.jumbotron, header.paper, 'mb-12', 'rounded')}>
+        <div className={cn(header['jumbotron-content'], 'mt-12')}>
+          <h2 className={cn(header.title, 'text-secondary')}>
+            <div className={cn(header.sub, header.title, 'mb-4', 'flex', 'items-center')}>
               {t('LeagueDetails.title.sub')}
             </div>
             {leagueDetails.name}
           </h2>
         </div>
       </div>
-      <div className={`${styles.background} mb-3 p-1`}>
+      <div className={cn(styles.background, 'mb-3', 'p-1')}>
         <div className={styles.tables}>
           <LeagueTable columns={columns} data={leagueDetails.participants} title={data} />
         </div>
         {leagueDetails['admin_entry'] && leagueDetails.private ? (
           <div className={`p-6`}>
-            <h2 className={`${styles.admin} ${styles.title} text-secondary mb-3`}>
+            <h2 className={cn(styles.admin, styles.title, 'text-secondary', 'mb-3')}>
               {t('LeagueDetails.invitation.title')}
             </h2>
             <p className='text-gray-600 text-s italic mb-5'>
@@ -211,8 +216,8 @@ const LeagueDetails = ({
         )}
       </div>
       {leagueDetails['entry_can_leave'] && (
-        <div className={`${styles.paper} p-8 rounded`}>
-          <h2 className={`${styles.title} text-secondary mb-2`}>
+        <div className={cn(styles.paper, 'p-8', 'rounded')}>
+          <h2 className={cn(styles.title, 'text-secondary', 'mb-2')}>
             {t('LeagueDetails.leaveLeague.title')}
           </h2>
           <p className='text-gray-600 text-s italic mb-5'>

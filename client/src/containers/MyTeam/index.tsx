@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import cn from 'classnames';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
 import StatusPlayerModal from 'components/StatusPlayerModal';
@@ -131,11 +132,20 @@ const MyTeam = () => {
   return (
     <div className={styles['team-page']}>
       <div
-        className={`${header.jumbotron} ${header.paper} mb-12 rounded flex items-end justify-between pt-6`}
+        className={cn(
+          header.jumbotron,
+          header.paper,
+          'mb-12',
+          'rounded',
+          'flex',
+          'items-end',
+          'justify-between',
+          'pt-6',
+        )}
       >
-        <div className={`${header['jumbotron-content']} mt-16`}>
-          <h2 className={`${header.title} text-secondary mb-6`}>
-            <div className={`${header.sub} ${header.title} mb-4 flex items-center`}>
+        <div className={cn(header['jumbotron-content'], 'mt-16')}>
+          <h2 className={cn(header.title, 'text-secondary', 'mb-6')}>
+            <div className={cn(header.sub, header.title, 'mb-4', 'flex', 'items-center')}>
               {t('MyTeamPage.title.sub')}
             </div>
             {t('MyTeamPage.title.main')}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
+import cn from 'classnames';
 
 import Autosuggest from 'react-autosuggest';
 
@@ -85,8 +86,8 @@ const PublicLeagues = ({
   }
 
   return (
-    <div className={`${styles['join-league-item']} w-full md:w-1/2 px-6`}>
-      <h3 className={`${styles.title} text-secondary mb-4 font-bold`}>
+    <div className={cn(styles['join-league-item'], 'w-full', 'md:w-1/2', 'px-6')}>
+      <h3 className={cn(styles.title, 'text-secondary', 'mb-4', 'font-bold')}>
         {t('LeaguesPage.joinLeague.public.title')}
       </h3>
       <p className='mb-2'>{t('LeaguesPage.joinLeague.public.message')}</p>

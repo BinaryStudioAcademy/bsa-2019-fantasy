@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { bindActionCreators, Dispatch } from 'redux';
+import cn from 'classnames';
 
 import { joinLeague } from '../actions';
 
@@ -39,8 +40,8 @@ const PrivateLeagues = ({ joinLeague, addNotification }: Props) => {
   };
 
   return (
-    <div className={`${styles['join-league-item']} w-full md:w-1/2 px-6`}>
-      <h3 className={`${styles.title} text-secondary mb-4 font-bold`}>
+    <div className={cn(styles['join-league-item'], 'w-full', 'md:w-1/2', 'px-6')}>
+      <h3 className={cn(styles.title, 'text-secondary', 'mb-4', 'font-bold')}>
         {t('LeaguesPage.joinLeague.private.title')}
       </h3>
       <p className='mb-4'>{t('LeaguesPage.joinLeague.private.message')}</p>

@@ -10,7 +10,6 @@ import Button from 'components/Button';
 import { getClubLogoUrl, getPlayerImageUrl } from 'helpers/images';
 import { RootState } from 'store/types';
 
-import styles from './styles.module.scss';
 import { PlayerType } from 'types/player.types';
 import { Club } from 'types/club.types';
 
@@ -24,9 +23,14 @@ Object.assign(Chart.defaults.global, {
 
 type Props = {
   player: PlayerType;
+  onInfoClick: (
+    id: string,
+    club_id: number,
+    dialogInitialTab: 'fixtures' | 'history',
+  ) => void;
 };
 
-const PlayerHighlight = ({ player }: Props) => {
+const PlayerHighlight = ({ player, onInfoClick }: Props) => {
   const { t } = useTranslation();
 
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
@@ -162,19 +166,12 @@ const PlayerHighlight = ({ player }: Props) => {
             {t('Players.history')}
           </Button>
           <Button
-            href='/fixtures'
-            type='link'
+            onClick={() => onInfoClick(player.id, player.club_id, 'fixtures')}
             styling='secondary'
             className='text-sm xl:text-base'
           >
             {t('Players.fixtures')}
           </Button>
-        </div>
-
-        <div className='allWinners mt-6 text-sm'>
-          <Link className='font-semibold hover:underline' to='/'>
-            {t('Players.browseAll')}
-          </Link>
         </div>
       </div>
 

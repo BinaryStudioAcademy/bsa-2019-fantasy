@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classnames';
 
 import styles from './styles.module.scss';
 
@@ -39,12 +40,12 @@ const TeamItem = ({
   const isViceCaptain = !!viceCaptainId && viceCaptainId === id;
   return (
     <tr className='bg-white w-full'>
-      <td className={`w-1/12 ${styles['table-item']}`} align='center' valign='middle'>
+      <td className={cn(styles['table-item'], 'w-1/12')} align='center' valign='middle'>
         <button className='w-full'>
           <img className='object-cover' src={info} alt='info' />
         </button>
       </td>
-      <td className={`w-1/12 ${styles['table-item']}`}>
+      <td className={cn(styles['table-item'], 'w-1/12')}>
         {!isGameweek && (
           <React.Fragment>
             {(isCaptain || isViceCaptain) && (
@@ -68,9 +69,9 @@ const TeamItem = ({
           </React.Fragment>
         )}
       </td>
-      <td className={`w-5/12 ${styles['table-item']}`} valign='middle'>
+      <td className={cn(styles['table-item'], 'w-5/12')} valign='middle'>
         <button
-          className={`flex flex-row w-full ${styles['team-item-button']}`}
+          className={cn(styles['team-item-button'], 'flex', 'flex-row', 'w-full')}
           onClick={() => {
             if (onOpen) {
               onOpen(id, isCaptain, isViceCaptain, name);
@@ -87,11 +88,11 @@ const TeamItem = ({
           </div>
         </button>
       </td>
-      <td className={`w-1/12 text-base ${styles['table-item']}`}>{position}</td>
-      <td className={`w-1/12 text-base ${styles['table-item']}`}>{goals}</td>
-      <td className={`w-1/12 text-base ${styles['table-item']}`}>{missed_passes}</td>
-      <td className={`w-1/12 text-base ${styles['table-item']}`}>{total_points}</td>
-      <td className={`w-1/12 text-base ${styles['table-item']}`}>{red_cards}</td>
+      <td className={cn(styles['table-item'], 'w-1/12', 'text-base')}>{position}</td>
+      <td className={cn(styles['table-item'], 'w-1/12', 'text-base')}>{goals}</td>
+      <td className={cn(styles['table-item'], 'w-1/12', 'text-base')}>{missed_passes}</td>
+      <td className={cn(styles['table-item'], 'w-1/12', 'text-base')}>{total_points}</td>
+      <td className={cn(styles['table-item'], 'w-1/12', 'text-base')}>{red_cards}</td>
     </tr>
   );
 };

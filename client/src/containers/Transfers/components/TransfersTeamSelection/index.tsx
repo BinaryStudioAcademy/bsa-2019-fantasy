@@ -199,9 +199,10 @@ const TransfersTeamSelection = ({
     <div className='flex justify-center mb-4'>
       <form className={styles['form-team']}>
         <label
-          className={`${styles['team-selection-radio']} ${
-            view === 'pitch' ? styles['is-active'] : ''
-          }`}
+          className={cn(
+            styles['team-selection-radio'],
+            view === 'pitch' ? styles['is-active'] : '',
+          )}
           onClick={() => setView('pitch')}
         >
           <input className='hidden' type='radio' value='option2' />
@@ -209,9 +210,10 @@ const TransfersTeamSelection = ({
         </label>
 
         <label
-          className={`${styles['team-selection-radio']} ${
-            view === 'list' ? styles['is-active'] : ''
-          }`}
+          className={cn(
+            styles['team-selection-radio'],
+            view === 'list' ? styles['is-active'] : '',
+          )}
           onClick={() => setView('list')}
         >
           <input className='hidden' type='radio' value='option3' />
@@ -223,7 +225,7 @@ const TransfersTeamSelection = ({
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className={cn(styles['team-select-wrapper'], 'rounded bg-secondary')}>
+      <div className={cn(styles['team-select-wrapper'], 'rounded', 'bg-secondary')}>
         <ViewToggles />
         {players ? (
           <React.Fragment>

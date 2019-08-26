@@ -46,6 +46,7 @@ type State = {
   searchClub: string;
   searchPosition: string;
   redirect: boolean;
+  dialogInitialTab?: 'fixtures' | 'history';
 };
 
 const NOT_SORTABLE_TABLE_COLUMNS = ['club_id', 'position'];
@@ -282,25 +283,28 @@ class PlayersPage extends React.Component<Props, State> {
       <>
         <button
           className='w-6 h-6 justify-center mr-4 leading-none flex bg-background rounded-full'
-          onClick={() => this.onComparisonAdd(props)}
+          onClick={() => this.onComparisonAdd(props.original.id)}
         >
           {addedToComparison ? <FaTimes /> : <FaPlus />}
         </button>
         <button
           className='w-6 h-6 justify-center mr-4 leading-none flex bg-background rounded-full text-s font-bold'
-          onClick={() => {
-            this.setState({
-              currentPlayer: this.props.players.find(
-                (p: any) => p && props.original.id === p.id,
-              ),
-            });
-            this.props.fetchDataForPlayer(props.original.id, props.original.club_id);
-          }}
+          onClick={() => this.onInfoClick(props.original.id, props.original.club_id)}
         >
           i
         </button>
       </>
     );
+  };
+
+  onInfoClick = (id: string, club_id: number, dialogInitialTab: 'fixtures' | 'history' = 'history') => {
+    this.setState({
+      currentPlayer: this.props.players.find(
+        (p: any) => p && id === p.id,
+      ),
+      dialogInitialTab
+    });
+    this.props.fetchDataForPlayer(id, String(club_id));
   };
 
   renderNameCell = (props) => (
@@ -411,7 +415,7 @@ class PlayersPage extends React.Component<Props, State> {
             }}
           />
         )}
-        <PlayerHighlight player={this.state.playerHighlightData} />
+        <PlayerHighlight player={this.state.playerHighlightData} onInfoClick={this.onInfoClick} />
 
         <section className='allStats my-6'>
           <div className='filters text-sm flex mt-6 mb-1'>
@@ -458,6 +462,7 @@ class PlayersPage extends React.Component<Props, State> {
               loading={this.props.dialogLoading}
               player={this.state.currentPlayer}
               clubName={this.getClubNameById(this.state.currentPlayer.club_id)}
+              tab={this.state.dialogInitialTab}
             />
           )}
         </section>

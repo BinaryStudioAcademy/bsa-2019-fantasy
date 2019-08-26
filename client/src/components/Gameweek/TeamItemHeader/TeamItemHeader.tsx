@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classnames';
 
 import styles from '../TeamList/styles.module.scss';
 import stylesItem from '../TeamItem/styles.module.scss';
@@ -12,19 +13,22 @@ const TeamItemHeader = ({ name }: Props) => {
     <thead>
       <tr className={styles['table-header']}>
         <td
-          className={`w-1/12 ${stylesItem['table-item']}`}
+          className={cn(stylesItem['table-item'], 'w-1/12')}
           align='center'
           valign='middle'
         />
-        <td className={`w-1/12 text-center ${stylesItem['table-item']}`} />
-        <td className={`w-5/12 text-base ${stylesItem['table-item']}`} valign='middle'>
+        <td className={cn(stylesItem['table-item'], 'w-1/12', 'text-center')} />
+        <td
+          className={cn(stylesItem['table-item'], 'w-5/12', 'text-base')}
+          valign='middle'
+        >
           {name}
         </td>
-        <td className={`w-1/12 text-base ${stylesItem['table-item']}`}>Pos</td>
-        <td className={`w-1/12 text-base ${stylesItem['table-item']}`}>Goals</td>
-        <td className={`w-1/12 text-base ${stylesItem['table-item']}`}>MS</td>
-        <td className={`w-1/12 text-base ${stylesItem['table-item']}`}>PTS</td>
-        <td className={`w-1/12 text-base ${stylesItem['table-item']}`}>RC</td>
+        <td className={cn(stylesItem['table-item'], 'w-1/12', 'text-base')}>Pos</td>
+        <td className={cn(stylesItem['table-item'], 'w-1/12', 'text-base')}>Goals</td>
+        <td className={cn(stylesItem['table-item'], 'w-1/12', 'text-base')}>MS</td>
+        <td className={cn(stylesItem['table-item'], 'w-1/12', 'text-base')}>PTS</td>
+        <td className={cn(stylesItem['table-item'], 'w-1/12', 'text-base')}>RC</td>
       </tr>
     </thead>
   );
