@@ -5,19 +5,23 @@ const credentials = require('./../testData.json');
 const pageSteps = new LoginActions();
 
 describe('Login page tests', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     browser.maximizeWindow();
-    browser.url(credentials.appUrl);
+    return await browser.url(credentials.appUrl).catch((err) => console.log(err.message));
   });
 
-  afterEach(() => {
-    browser.reloadSession();
+  afterEach(async () => {
+    await browser.reloadSession().catch((err) => console.log(err.message));
   });
 
-  it('should login user with valid credentials', () => {
-    browser.pause(20000);
-    pageSteps.enterEmail(credentials.email);
-    pageSteps.enterPassword(credentials.password);
-    pageSteps.clickLogin();
+  it('should login user with valid credentials', async () => {
+    //browser.pause(20000);
+    await pageSteps
+      .enterEmail(credentials.email)
+      .catch((err) => console.log(err.message));
+    await pageSteps
+      .enterPassword(credentials.password)
+      .catch((err) => console.log(err.message));
+    await pageSteps.clickLogin().catch((err) => console.log(err.message));
   });
 });

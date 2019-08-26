@@ -2,21 +2,21 @@ const LoginPage = require('../page/Login_po');
 const page = new LoginPage();
 
 class LoginActions {
-  enterEmail(value) {
-    page.emailInput.waitForDisplayed(10000);
-    page.emailInput.clearValue();
-    page.emailInput.setValue(value);
+  async enterEmail(value) {
+    await page.emailInput.then((res) => res.waitForDisplayed(10000));
+    await page.emailInput.then((res) => res.clearValue());
+    await page.emailInput.then((res) => res.setValue(value));
   }
 
-  enterPassword(value) {
-    page.passInput.waitForDisplayed(2000);
-    page.passInput.clearValue();
-    page.passInput.setValue(value);
+  async enterPassword(value) {
+    await page.passInput.then((res) => res.waitForDisplayed(10000));
+    await page.passInput.then((res) => res.clearValue());
+    await page.passInput.then((res) => res.setValue(value));
   }
 
-  clickLogin() {
-    page.loginButton.waitForDisplayed(2000);
-    page.loginButton.click();
+  async clickLogin() {
+    await page.loginButton.then((res) => res.waitForDisplayed(10000));
+    await page.loginButton.then((res) => res.click());
   }
 }
 
