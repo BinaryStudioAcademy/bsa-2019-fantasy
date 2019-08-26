@@ -1,8 +1,5 @@
-body {
-  overflow-y: hidden;
-}
-
 :local(.login-container) {
+  overflow-y: hidden;
   position: relative;
   height: 100%;
   background: url('../../assets/images/login-bg2.jpg') no-repeat;
@@ -38,7 +35,7 @@ body {
   max-width: none !important;
   font-family: 'Khula', sans-serif;
   font-weight: 800;
-  font-size: 4.8rem;
+  font-size: 4.5rem;
   line-height: 6rem;
   color: #1ee3cf;
 }
@@ -64,36 +61,33 @@ body {
   font-weight: 400;
 }
 
+:local(.login-form) {
+  min-height: 100vh;
+  background-color: #122737;
+}
+@media (max-width: 1160px) {
+  :local(.main-lable) {
+    font-size: 3rem;
+  }
+}
 @media (max-width: 745px) {
+  :local(.login-container) {
+    overflow-y: auto;
+  }
   :local(.lable-wrapper) {
-    margin-top: 0.5rem;
+    margin-top: 10rem;
     padding-left: 0 !important;
 
     text-align: center;
   }
 
   :local(.main-lable) {
-    font-size: 3rem;
+    font-size: 4rem;
   }
-
-  :local(.login-form) {
-    min-height: 23rem !important;
-    max-height: 30rem !important;
-  }
-
   :local(.lables) {
     display: none;
   }
   :local(.lable-wrapper) {
     padding-left: 0 !important;
   }
-
-  body {
-    overflow-y: auto;
-  }
-}
-
-:local(.login-form) {
-  min-height: 100vh;
-  background-color: #122737;
 }
