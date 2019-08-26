@@ -2,21 +2,20 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link, NavLink } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faStar,
-  faFutbol,
-  faProjectDiagram,
-  faExchangeAlt,
-  faAward,
-} from '@fortawesome/free-solid-svg-icons';
+  FaStar,
+  FaFutbol,
+  FaProjectDiagram,
+  FaExchangeAlt,
+  FaAward,
+  FaSignOutAlt,
+} from 'react-icons/fa';
 
 import { RootState } from 'store/types';
 
 import { logout } from 'containers/Profile/actions';
 
 import styles from './styles.module.scss';
-import { FaSignOutAlt } from 'react-icons/fa';
 
 const Sidebar = () => {
   const { t } = useTranslation();
@@ -35,27 +34,27 @@ const Sidebar = () => {
     ? [
         {
           name: t('Sidebar.status'),
-          icon: faStar,
+          icon: <FaStar />,
           link: '/',
         },
         {
           name: t('Sidebar.myTeam'),
-          icon: faFutbol,
+          icon: <FaFutbol />,
           link: '/my-team',
         },
         {
           name: t('Sidebar.statistics'),
-          icon: faProjectDiagram,
+          icon: <FaProjectDiagram />,
           link: '/players',
         },
         {
           name: t('Sidebar.transfers'),
-          icon: faExchangeAlt,
+          icon: <FaExchangeAlt />,
           link: '/transfers',
         },
         {
           name: t('Sidebar.leagues'),
-          icon: faAward,
+          icon: <FaAward />,
           link: '/leagues',
         },
       ]
@@ -104,13 +103,13 @@ const Sidebar = () => {
         {menuItems.map(({ name, icon, link }) => (
           <NavLink
             exact
-            className='flex px-6 py-5 h-8 justify-start items-center hover:text-primary'
+            className='block px-6 py-5 flex h-8 justify-start items-center hover:text-primary'
             activeClassName='text-primary'
             key={`sidebar-menu-${name}`}
             to={link}
             onClick={noPropagation}
           >
-            <FontAwesomeIcon className='fa-fw' icon={icon} />
+            <div>{icon}</div>
             <div className={styles['link-title']}>{name}</div>
           </NavLink>
         ))}
