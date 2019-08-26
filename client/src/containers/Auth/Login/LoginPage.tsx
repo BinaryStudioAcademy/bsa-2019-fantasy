@@ -42,7 +42,7 @@ const LoginPage = () => {
       <div
         className={cn(
           styles['login-form'],
-          'w-auto',
+          'w-full',
           'h-full',
           'md:w-1/4',
           'p-6',
