@@ -71,7 +71,11 @@ const FixturesContainer = ({
       <div
         className={cn(
           component['fixtures-list'],
-          'flex flex-col items-stretch text-center max-w-2xl',
+          'flex',
+          'flex-col',
+          'items-stretch',
+          'text-center',
+          'max-w-2xl',
         )}
       >
         <h2 className='text-5xl'>{t('Fixtures.title')}</h2>
@@ -91,7 +95,14 @@ const FixturesContainer = ({
           )}
           {currentGameweek < gameweeks.length - 1 && (
             <button
-              className={cn(styles['btn-next'], 'btn bg-green-600 px-20 py-1 rounded')}
+              className={cn(
+                styles['btn-next'],
+                'btn',
+                'bg-green-600',
+                'px-20',
+                'py-1',
+                'rounded',
+              )}
               onClick={() => setCurrentGameweek(currentGameweek + 1)}
             >
               {t('next')}

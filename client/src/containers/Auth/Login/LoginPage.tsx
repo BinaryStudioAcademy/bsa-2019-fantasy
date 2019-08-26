@@ -17,7 +17,11 @@ const LoginPage = () => {
     <div
       className={cn(
         styles['login-container'],
-        'flex w-full h-full md:flex-row-reverse flex-wrap',
+        'flex',
+        'w-full',
+        'h-full',
+        'md:flex-row-reverse',
+        'flex-wrap',
       )}
     >
       <div className={styles.layer} />
@@ -38,7 +42,15 @@ const LoginPage = () => {
       <div
         className={cn(
           styles['login-form'],
-          'w-full h-full md:w-1/4 p-6 lg:p-10 min-h-screen flex flex-col justify-center',
+          'w-full',
+          'h-full',
+          'md:w-1/4',
+          'p-6',
+          'lg:p-10',
+          'min-h-screen',
+          'flex',
+          'flex-col',
+          'justify-center',
         )}
       >
         <div className={cn(styles.lables, 'mb-6')}>

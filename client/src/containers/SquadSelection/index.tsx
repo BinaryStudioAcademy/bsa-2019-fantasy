@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import cn from 'classnames';
 
 import FixturesContainer from 'containers/FixturesContainer';
 import PlayersSelection from 'components/PlayersSelection';
@@ -16,14 +17,14 @@ const SquadSelection = () => {
 
   return (
     <div className='transfers-page'>
-      <div className={`${header.jumbotron} ${header.paper} mb-12 rounded pt-12`}>
-        <div className={`${header.sub} ${header.title} mb-4 flex items-center`}>
+      <div className={cn(header.jumbotron, header.paper, 'mb-12', 'rounded', 'pt-12')}>
+        <div className={cn(header.sub, header.title, 'mb-4', 'flex', 'items-center')}>
           {t('SquadSelection.title.sub')}
         </div>
-        <h2 className={`${header.title} text-secondary mb-6`}>
+        <h2 className={cn(header.title, 'text-secondary', 'mb-6')}>
           {t('SquadSelection.title.main')}
         </h2>
-        <div className={`${header['jumbotron-content']} mt-8 flex`}>
+        <div className={cn(header['jumbotron-content'], 'mt-8', 'flex')}>
           <div className='flex flex-grow flex-col mr-4'>
             <InitialTeamSelection />
           </div>

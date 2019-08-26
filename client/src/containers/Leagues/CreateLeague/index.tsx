@@ -6,6 +6,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import validator from 'validator';
 import { times } from 'lodash';
 import { FaStar } from 'react-icons/fa';
+import cn from 'classnames';
 
 import PrivateLeagueModal from 'components/Leagues/PrivateLeagueModal';
 
@@ -94,10 +95,10 @@ const CreateLeague = ({
 
   return (
     <div className={styles['create-league']}>
-      <div className={`${header.jumbotron} ${header.paper} mb-12 rounded`}>
-        <div className={`${header['jumbotron-content']} mt-12`}>
-          <h2 className={`${header.title} text-secondary`}>
-            <div className={`${header.sub} ${header.title} mb-4 flex items-center`}>
+      <div className={cn(header.jumbotron, header.paper, 'mb-12', 'rounded')}>
+        <div className={cn(header['jumbotron-content'], 'mt-12')}>
+          <h2 className={cn(header.title, 'text-secondary')}>
+            <div className={cn(header.sub, header.title, 'mb-4', 'flex', 'items-center')}>
               <FaStar />
               {t('LeaguesPage.createLeague.title.sub')}
             </div>
@@ -139,11 +140,20 @@ const CreateLeague = ({
             </p>
             <div className='flex items-center'>
               <label
-                className={`${
-                  styles['checkbox-styled']
-                } g-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded ${
-                  privacy === 'public' ? `${styles.checked}` : ''
-                }`}
+                className={cn(
+                  styles['checkbox-styled'],
+                  'g-transparent',
+                  'hover:bg-teal-300',
+                  'text-secondary',
+                  'hover:text-white',
+                  'py-2',
+                  'px-6',
+                  'border-2',
+                  'border-gray-700',
+                  'hover:border-transparent',
+                  'rounded',
+                  privacy === 'public' ? styles.checked : '',
+                )}
               >
                 <input
                   type='checkbox'
@@ -155,12 +165,22 @@ const CreateLeague = ({
                 <span>{t('LeaguesPage.createLeague.privacy.public')}</span>
               </label>
               <p className='mx-3'>{t('LeaguesPage.createLeague.or')}</p>
+
               <label
-                className={`${
-                  styles['checkbox-styled']
-                } g-transparent hover:bg-teal-300 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded ${
-                  privacy === 'private' ? `${styles.checked}` : ''
-                }`}
+                className={cn(
+                  styles['checkbox-styled'],
+                  'g-transparent',
+                  'hover:bg-teal-300',
+                  'text-secondary',
+                  'hover:text-white',
+                  'py-2',
+                  'px-6',
+                  'border-2',
+                  'border-gray-700',
+                  'hover:border-transparent',
+                  'rounded',
+                  privacy === 'private' ? styles.checked : '',
+                )}
               >
                 <input
                   type='checkbox'
