@@ -24,9 +24,10 @@ Object.assign(Chart.defaults.global, {
 
 type Props = {
   player: PlayerType;
+  onInfoClick: (id: string, club_id: number) => void;
 };
 
-const PlayerHighlight = ({ player }: Props) => {
+const PlayerHighlight = ({ player, onInfoClick }: Props) => {
   const { t } = useTranslation();
 
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
@@ -162,8 +163,7 @@ const PlayerHighlight = ({ player }: Props) => {
             {t('Players.history')}
           </Button>
           <Button
-            href='/fixtures'
-            type='link'
+            onClick={() => onInfoClick(player.id, player.club_id)}
             styling='secondary'
             className='text-sm xl:text-base'
           >
