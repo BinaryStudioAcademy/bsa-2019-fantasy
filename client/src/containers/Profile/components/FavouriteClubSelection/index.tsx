@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RootState } from 'store/types';
 import { updateFavoriteClub } from 'containers/Profile/actions';
+import { addNotification } from 'components/Notifications/actions';
 
 import Spinner from 'components/Spinner';
 import { getClubLogoUrl } from 'helpers/images';
@@ -30,6 +31,7 @@ const FavouriteClubSelection = () => {
       clubs.find((c) => c.id === selectedClubId)
     ) {
       dispatch(updateFavoriteClub(selectedClubId));
+      dispatch(addNotification('You have updated your favorite club.'));
     }
   };
 

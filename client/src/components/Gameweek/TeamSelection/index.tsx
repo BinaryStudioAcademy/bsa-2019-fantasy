@@ -241,7 +241,8 @@ const TeamSelection = ({
       // when we move from the bench
       if (
         playerBenchIndex > -1 &&
-        playerPitchIndex[index] &&
+        playerPitchIndex === -1 &&
+        playersOnPitch[index] &&
         playersOnPitch !== undefined
       ) {
         handlePitchDrop(index, item, playerBenchIndex);

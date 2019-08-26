@@ -1,0 +1,78 @@
+:local(.league-details) {
+  a,
+  button {
+    transition: 0.2s;
+  }
+
+  :local(.tables) {
+    flex-grow: 2;
+
+    :local(.table-title) {
+      font-size: 12px;
+    }
+
+    :local(.movement) {
+      &.up {
+        svg {
+          fill: #1ee3cf;
+        }
+      }
+
+      &:local(.down) {
+        svg {
+          fill: #ff482f;
+        }
+      }
+
+      svg {
+        fill: rgb(148, 150, 140);
+      }
+    }
+
+    :global(.ReactTable) {
+      border: none;
+      font-size: 13px;
+
+      :global(.rt-thead.-header) {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: none;
+      }
+
+      :global(.rt-thead .rt-th) {
+        border-right: none;
+      }
+
+      :global(.rt-tbody .rt-td) {
+        border-right: none;
+      }
+
+      :global(.rt-noData) {
+        margin-top: 50px;
+        margin-top: 20px;
+        text-align: center;
+        position: static;
+        transform: none;
+        padding: 0;
+      }
+    }
+  }
+}
+
+:local(.background) {
+  background-color: #fff;
+  display: flex;
+}
+
+:local(.admin) {
+  flex-grow: 2;
+}
+
+:local(.title) {
+  font-size: 25px;
+  line-height: 27px;
+  font-weight: bold;
+}
+
+:local(.paper) {
+  background-color: #fff;
+}

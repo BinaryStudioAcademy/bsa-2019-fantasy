@@ -51,7 +51,7 @@ export default (models) => {
 
   GameweekHistory.belongsTo(Gameweek, { foreignKey: 'gameweek_id', as: 'gameweek' });
 
-  // PlayerMatchStat.hasOne(PlayerStat, { foreignKey: 'player_id', as: 'player' });
+  PlayerMatchStat.belongsTo(PlayerStat, { foreignKey: 'player_id', as: 'player' });
 
   // You can use templates below to test associations (run npm start)
 

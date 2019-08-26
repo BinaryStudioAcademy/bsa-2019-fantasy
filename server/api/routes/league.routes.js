@@ -1,6 +1,10 @@
 import { Router } from 'express';
 import * as leagueService from '../services/league.service';
 import * as leagueParticipantService from '../services/league-participant.service';
+import * as gameweekService from '../services/gameweek.service';
+import * as gameweekHistoryService from '../services/gameweek-history.service';
+import globalLeagues from '../../config/global-leagues.config';
+
 import {
   createLeagueMiddleware,
   joinPrivateLeagueMiddleware,
@@ -18,13 +22,41 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
-  .get('/:id', (req, res, next) =>
-    leagueService
-      .getLeagueById(req.params.id)
-      .then((value) => res.json(value))
-      .catch(next),
-  )
-  .post('/', createLeagueMiddleware, jwtMiddleware, (req, res, next) =>
+  .get('/:name', jwtMiddleware, async (req, res, next) => {
+    try {
+      const league = await leagueService.getLeagueParams(req.params.name);
+      const { id, name, start_from } = league;
+      const startScoringGameweek = await gameweekService.getGameweekById(start_from);
+      const result = [];
+
+      const users = await leagueParticipantService.getLeagueParticipants(id);
+      const admin_entry = users.some(
+        (item) => item.user.id === req.user.id && item.is_creator,
+      );
+      const entry_can_leave = !admin_entry && !(globalLeagues.includes(name));
+
+      await Promise.all(
+        users.map(async (item) => {
+          let gameweek_points = 0;
+          let total_points = 0;
+          const userGamaweekStats = await gameweekHistoryService.getHistoriesByUserId(
+            item.user.id,
+          );
+          userGamaweekStats.map((data) => {
+            if (startScoringGameweek.number <= data.gameweek.number) {
+              gameweek_points = data.team_score;
+              total_points += gameweek_points;
+            }
+          });
+          result.push({ ...item, gameweek_points, total_points });
+        }),
+      );
+      res.json({ name, private: league.private, entry_can_leave, admin_entry, participants: result });
+    } catch (err) {
+      next(err);
+    }
+  })
+  .post('/', jwtMiddleware, createLeagueMiddleware, (req, res, next) =>
     leagueService
       .createLeague(req.body)
       .then((value) =>
@@ -41,8 +73,8 @@ router
   )
   .post(
     '/join/private',
-    joinPrivateLeagueMiddleware,
     jwtMiddleware,
+    joinPrivateLeagueMiddleware,
     async (req, res, next) => {
       try {
         const result = await leagueParticipantService.checkIfAParticipantById(
@@ -62,8 +94,8 @@ router
   )
   .post(
     '/join/public',
-    joinPublicLeagueMiddleware,
     jwtMiddleware,
+    joinPublicLeagueMiddleware,
     async (req, res, next) => {
       try {
         const result = await leagueParticipantService.checkIfAParticipantByName(
@@ -89,22 +121,11 @@ router
   })
   .post('/invitation-code', jwtMiddleware, getInvitationMiddleware, (req, res, next) => {
     leagueService
-      .getLeagueId(req.body.name)
+      .getLeagueParams(req.body.name)
       .then((value) => res.json({ code: value.id }))
       .catch(next);
-  })
-  .put('/:id', (req, res, next) =>
-    leagueService
-      .updateLeague(req.params.id, req.body)
-      .then((post) => res.send(post))
-      .catch(next),
-  )
-  .delete('/:id', (req, res, next) =>
-    leagueService
-      .deleteLeagueById(req.params.id)
-      .then((status) => res.send({ deleted: status }))
-      .catch(next),
-  );
+  });
+
 /* eslint-disable */
 // router.use(function(err, req, res, next) {
 //   console.log(req.body);

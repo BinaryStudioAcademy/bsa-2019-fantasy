@@ -10,6 +10,12 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
+  .get('/random-squad', (req, res, next) =>
+    playerService
+      .getRandomPlayers()
+      .then((value) => res.json(value))
+      .catch(next),
+  )
   .get('/:id', (req, res, next) =>
     playerService
       .getPlayerById(req.params.id)
