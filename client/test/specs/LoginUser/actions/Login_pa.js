@@ -22,6 +22,11 @@ class LoginActions {
   async waitForLogo() {
     await page.logo.then((res) => res.waitForDisplayed(10000));
   }
+
+  async displayIncorectEmailNotification() {
+    await page.incorrectEmailNotification.then((res) => res.waitForDisplayed(10000));
+    await page.incorrectEmailNotification.then((res) => res.getText());
+  }
 }
 
 module.exports = LoginActions;

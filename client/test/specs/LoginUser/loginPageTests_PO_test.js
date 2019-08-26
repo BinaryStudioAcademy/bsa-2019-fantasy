@@ -14,7 +14,7 @@ describe('Login page tests', () => {
     await browser.reloadSession().catch((err) => console.log(err.message));
   });
 
-  it('should login user with valid credentials', async () => {
+  xit('should login user with valid credentials', async () => {
     await pageSteps
       .enterEmail(credentials.email)
       .catch((err) => console.log(err.message));
@@ -23,5 +23,19 @@ describe('Login page tests', () => {
       .catch((err) => console.log(err.message));
     await pageSteps.clickLogin().catch((err) => console.log(err.message));
     await pageSteps.waitForLogo();
+  });
+
+  it('should show an error if user user tries to login with not registered email', async () => {
+    await pageSteps
+      .enterEmail(credentials.unregisteredEmail)
+      .catch((err) => console.log(err.message));
+    await pageSteps
+      .enterPassword(credentials.password)
+      .catch((err) => console.log(err.message));
+    await pageSteps.clickLogin().catch((err) => console.log(err.message));
+    await assert.strictEqual(
+      pageSteps.displayIncorectEmailNotification(),
+      'Incorrect email.',
+    );
   });
 });
