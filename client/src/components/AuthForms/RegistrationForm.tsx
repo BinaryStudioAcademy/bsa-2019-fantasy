@@ -70,7 +70,7 @@ const RegistrationForm = withRouter(({ history }) => {
 
   return (
     <div className={cn(styles['form-registration'], 'w-full max-w-xs')}>
-      <form className='px-8 pt-6 pb-8' onSubmit={handleClickRegister} autoComplete='off'>
+      <form className='pt-6' onSubmit={handleClickRegister} autoComplete='off'>
         <div className='mb-4'>
           <label>
             {t('AuthForms.name')}
@@ -131,16 +131,16 @@ const RegistrationForm = withRouter(({ history }) => {
             )}
           </label>
         </div>
-        <div className='flex items-center justify-start'>
+        <div className='flex items-center justify-start flex-wrap'>
           <button
             type='submit'
-            className='font-bold rounded py-1 px-6 mr-2 border border-transparent text-secondary bg-primary shadow uppercase'
+            className='font-bold rounded py-1 px-6 mr-2 border border-transparent text-secondary bg-primary shadow uppercase mb-3'
           >
             {t('AuthForms.signup')}
           </button>
           <button
             type='button'
-            className='opacity-50 hover:opacity-100 font-bold rounded py-1 px-6 border border-primary bg-transparent shadow uppercase'
+            className='opacity-50 hover:opacity-100 font-bold rounded py-1 px-6 border border-primary bg-transparent shadow uppercase mb-3'
             onClick={() => history.push('/login')}
           >
             {t('AuthForms.login')}
