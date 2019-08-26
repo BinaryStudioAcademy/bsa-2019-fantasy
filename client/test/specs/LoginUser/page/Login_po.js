@@ -8,6 +8,9 @@ class LoginPage {
   get loginButton() {
     return $('button[type=submit]');
   }
+  get logo() {
+    return $('a.styles_sidebar-logo__1hXCu');
+  }
 }
 
 module.exports = LoginPage;

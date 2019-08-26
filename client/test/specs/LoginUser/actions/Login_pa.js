@@ -18,6 +18,10 @@ class LoginActions {
     await page.loginButton.then((res) => res.waitForDisplayed(10000));
     await page.loginButton.then((res) => res.click());
   }
+
+  async waitForLogo() {
+    await page.logo.then((res) => res.waitForDisplayed(10000));
+  }
 }
 
 module.exports = LoginActions;

@@ -15,7 +15,6 @@ describe('Login page tests', () => {
   });
 
   it('should login user with valid credentials', async () => {
-    //browser.pause(20000);
     await pageSteps
       .enterEmail(credentials.email)
       .catch((err) => console.log(err.message));
@@ -23,5 +22,6 @@ describe('Login page tests', () => {
       .enterPassword(credentials.password)
       .catch((err) => console.log(err.message));
     await pageSteps.clickLogin().catch((err) => console.log(err.message));
+    await pageSteps.waitForLogo();
   });
 });
