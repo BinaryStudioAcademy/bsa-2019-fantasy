@@ -70,7 +70,13 @@ const CreateLeague = ({
       private: isPrivate,
       start_from: Number(gameweek.split(' ')[1]),
     });
-    addNotification(`You have created a ${privacy} '${name}' league.`);
+    addNotification(
+      `${
+        privacy === 'private'
+          ? t('Notifications.messages.createPrivateLeague')
+          : t('Notifications.messages.createPublicLeague')
+      }`,
+    );
   };
 
   const closeModal = () => {

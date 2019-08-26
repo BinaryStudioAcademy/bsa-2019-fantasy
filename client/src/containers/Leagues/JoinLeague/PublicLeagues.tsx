@@ -66,7 +66,7 @@ const PublicLeagues = ({
     /* eslint-disable */
     try {
       await joinLeague({ code: value, private: false });
-      addNotification(`You have joined the new public league.`);
+      addNotification(t('Notifications.messages.joinPublicLeague'));
     } catch {
       console.log('Something went wrong!');
     } finally {

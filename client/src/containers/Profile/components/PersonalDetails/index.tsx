@@ -50,9 +50,11 @@ const PersonalDetails = withRouter(({ history }) => {
       await i18n.changeLanguage(language);
       dispatch(
         addNotification(
-          `You have changed website language to ${
-            language === 'ua' ? 'Ukrainian' : 'English'
-          }.`,
+          `${
+            language === 'ua'
+              ? t('Notifications.messages.setUaLanguage')
+              : t('Notifications.messages.setEnLanguage')
+          }`,
         ),
       );
     }

@@ -30,7 +30,7 @@ const PrivateLeagues = ({ joinLeague, addNotification }: Props) => {
     /*eslint-disable*/
     try {
       await joinLeague({ code, private: true });
-      addNotification(`You have joined the new private league.`);
+      addNotification(t('Notifications.messages.joinPrivateLeague'));
     } catch {
       console.log('Something went wrong!');
     } finally {
