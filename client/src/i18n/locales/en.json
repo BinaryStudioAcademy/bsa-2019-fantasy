@@ -265,7 +265,8 @@
     "autoPickBtn": "Auto Pick",
     "resetBtn": "Reset",
     "selectedStats": "Players Selected",
-    "moneyStats": "Money Remaining"
+    "moneyStats": "Money Remaining",
+    "validationError": "Too many players selected from "
   },
 
   "SaveTeamModal": {
