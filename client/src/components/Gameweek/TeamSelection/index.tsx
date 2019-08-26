@@ -78,17 +78,12 @@ const TeamSelection = ({
       const bench: any[] = [];
       players
         .filter((el) => el.is_on_bench)
-        .forEach((el) => {
-          if (el.player_stats.position === PlayerTypes.GOALKEEPER) {
-            bench[0] = el;
-          } else if (el.player_stats.position === PlayerTypes.DEFENDER) {
-            bench[1] = el;
-          } else if (el.player_stats.position === PlayerTypes.MIDDLEFIELDER) {
-            bench[2] = el;
-          } else if (el.player_stats.position === PlayerTypes.FORWARD) {
-            bench[3] = el;
-          }
-        });
+        .forEach((el) =>
+          el.player_stats.position === PlayerTypes.GOALKEEPER
+            ? bench.unshift(el)
+            : bench.push(el),
+        );
+      console.log(bench);
       setBench(
         bench.map((el) => {
           let accept;

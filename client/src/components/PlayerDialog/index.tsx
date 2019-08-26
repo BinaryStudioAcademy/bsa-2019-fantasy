@@ -13,6 +13,7 @@ type Props = {
   onDismiss: () => void;
   loading: boolean;
   clubName: string | undefined;
+  tab?: 'fixtures' | 'history';
 };
 
 const cellStyle = {
@@ -20,7 +21,14 @@ const cellStyle = {
   padding: '8px 2px',
 };
 
-const PlayerDialog = (props: Props) => {
+const PlayerDialog = ({
+  playerDialogData,
+  player,
+  onDismiss,
+  loading,
+  clubName,
+  tab,
+}: Props) => {
   const { t } = useTranslation();
 
   const positionDict: { [key: string]: { name: string; color: string } } = {
@@ -42,7 +50,8 @@ const PlayerDialog = (props: Props) => {
     },
   };
 
-  const [currentTab, setCurrentTab] = useState('history');
+  const initialTab = tab ? tab : 'history';
+  const [currentTab, setCurrentTab] = useState<'fixtures' | 'history'>(initialTab);
 
   const renderHistoryHeader = (row: any[]) =>
     row.map((obj, i) => {
@@ -109,9 +118,7 @@ const PlayerDialog = (props: Props) => {
     ));
 
   const renderHistory = () => {
-    const {
-      playerDialogData: { history },
-    } = props as Props;
+    const { history } = playerDialogData;
 
     if (history.length < 1) {
       return (
@@ -159,9 +166,7 @@ const PlayerDialog = (props: Props) => {
   };
 
   const renderFixtures = () => {
-    const {
-      playerDialogData: { fixtures },
-    } = props as Props;
+    const { fixtures } = playerDialogData;
 
     return (
       <div
@@ -184,12 +189,7 @@ const PlayerDialog = (props: Props) => {
     );
   };
 
-  const {
-    player: { first_name, second_name, position },
-    loading,
-    onDismiss,
-    clubName,
-  } = props;
+  const { first_name, second_name, position } = player;
 
   return ReactDom.createPortal(
     <div
@@ -223,7 +223,7 @@ const PlayerDialog = (props: Props) => {
             <img
               className='mt-2 mr-10'
               style={{ maxWidth: '100%', height: 'auto', maxHeight: '10rem' }}
-              src={`/images/players/500x500/${props.player.code}.png`}
+              src={`/images/players/500x500/${player.code}.png`}
               alt='playerPhoto'
             />
           </div>
