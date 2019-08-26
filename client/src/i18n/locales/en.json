@@ -345,5 +345,27 @@
     "invitationCode": "Your invitation code",
     "copied": "Copied",
     "clickToCopy": "Click on the code to copy"
+  },
+
+  "LeagueDetails": {
+    "table": {
+      "title": "Participants Statistics",
+      "rank": "Rank",
+      "team": "Team & Manager",
+      "GW": "Gameweek Points",
+      "TOT": "Total points"
+    },
+    "title": {
+      "sub": "League Details"
+    },
+    "invitation": {
+      "title": "Invitation Code",
+      "message": "This is your invitation code. Share this code with others to join your league!"
+    },
+    "leaveLeague": {
+      "title": "Leave a league",
+      "message": "Click the button below to leave the league.",
+      "button": "Leave league"
+    }
   }
 }

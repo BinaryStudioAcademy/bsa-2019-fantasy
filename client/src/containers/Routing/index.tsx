@@ -22,6 +22,7 @@ import Live from 'containers/Live';
 import Leagues from 'containers/Leagues';
 import CreateLeague from 'containers/Leagues/CreateLeague';
 import JoinLeague from 'containers/Leagues/JoinLeague';
+import LeagueDetails from 'containers/Leagues/LeagueDetails';
 
 import GameweekHistory from 'containers/GameweekHistory';
 import NoTeamHome from 'components/NoTeamHome';
@@ -170,6 +171,7 @@ const Routing = () => {
                 <Route path='/leagues' exact component={Leagues} />
                 <Route path='/leagues/create' component={CreateLeague} />
                 <Route path='/leagues/join' component={JoinLeague} />
+                <Route path='/leagues/:name' component={LeagueDetails} />
 
                 <Route render={() => <Redirect to='/404' />} />
               </Switch>

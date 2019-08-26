@@ -7,10 +7,14 @@ import styles from './styles.module.scss';
 interface LeagueTableI {
   columns: {}[];
   data: {}[];
-  title: { id: string; title: string };
+  title: { id?: string; title: string };
 }
 
-export const LeagueTable: React.SFC<LeagueTableI> = ({ columns, data, title }: any) => (
+export const LeagueTable: React.SFC<LeagueTableI> = ({
+  columns,
+  data,
+  title,
+}: LeagueTableI) => (
   <div className={`${styles['league-table']} bg-white p-6 mb-6 rounded`} id={title.id}>
     <h3 className={`${styles.title} text-secondary mb-6`}>{title.title}</h3>
     <ReactTable data={data} columns={columns} showPagination={false} minRows={0} />
