@@ -4,6 +4,7 @@ import update from 'immutability-helper';
 import { useTranslation } from 'react-i18next';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
+import { feedback } from 'react-feedbacker';
 
 import { RootState } from 'store/types';
 import { GameweekType } from 'types/gameweek.type';
@@ -72,65 +73,90 @@ const TeamSelection = ({
   //sets fetched players to the corresponding places
   useEffect(() => {
     if (players.length) {
+      //arrange players on the bench in the correct order
+      const bench: any[] = [];
+      players
+        .filter((el) => el.is_on_bench)
+        .forEach((el) => {
+          if (el.player_stats.position === PlayerTypes.GOALKEEPER) {
+            bench[0] = el;
+          } else if (el.player_stats.position === PlayerTypes.DEFENDER) {
+            bench[1] = el;
+          } else if (el.player_stats.position === PlayerTypes.MIDDLEFIELDER) {
+            bench[2] = el;
+          } else if (el.player_stats.position === PlayerTypes.FORWARD) {
+            bench[3] = el;
+          }
+        });
       setBench(
-        players
-          .filter((el) => el.is_on_bench)
-          .map((el) => {
-            return {
-              accept: [
-                PlayerTypes.DEFENDER,
-                PlayerTypes.MIDDLEFIELDER,
-                PlayerTypes.FORWARD,
-              ],
-              lastDroppedItem: {
-                ...el.player_stats,
-                id: el.player_stats.id,
-                name: el.player_stats.second_name,
-                club: clubs[el.player_stats.club_id - 1].short_name,
-                points: el.player_stats.player_score,
-                type: el.player_stats.position,
-                src:
-                  el.player_stats.position === PlayerTypes.GOALKEEPER
-                    ? getGoalkeepersUniformUrl(clubs[el.player_stats.club_id - 1].code)
-                    : getFieldPlayersUniformUrl(clubs[el.player_stats.club_id - 1].code),
-              },
-            };
-          }),
+        bench.map((el) => {
+          let accept;
+          if (el.player_stats.position === PlayerTypes.GOALKEEPER) {
+            accept = PlayerTypes.GOALKEEPER;
+          } else {
+            accept = [
+              PlayerTypes.DEFENDER,
+              PlayerTypes.MIDDLEFIELDER,
+              PlayerTypes.FORWARD,
+            ];
+          }
+          return {
+            accept,
+            lastDroppedItem: {
+              ...el.player_stats,
+              id: el.player_stats.id,
+              name: el.player_stats.second_name,
+              club: clubs[el.player_stats.club_id - 1].short_name,
+              points: el.player_stats.player_score,
+              type: el.player_stats.position,
+              src:
+                el.player_stats.position === PlayerTypes.GOALKEEPER
+                  ? getGoalkeepersUniformUrl(clubs[el.player_stats.club_id - 1].code)
+                  : getFieldPlayersUniformUrl(clubs[el.player_stats.club_id - 1].code),
+            },
+          };
+        }),
       );
+
+      const pitch = players.filter((el) => !el.is_on_bench);
       setPitch(
-        players
-          .filter((el) => !el.is_on_bench)
-          .map((el) => {
-            return {
-              accept: [
-                PlayerTypes.DEFENDER,
-                PlayerTypes.MIDDLEFIELDER,
-                PlayerTypes.FORWARD,
-              ],
-              lastDroppedItem: {
-                ...el.player_stats,
-                id: el.player_stats.id,
-                name: el.player_stats.second_name,
-                club: clubs[el.player_stats.club_id - 1]
-                  ? clubs[el.player_stats.club_id - 1].short_name
-                  : '',
-                points: el.player_stats.player_score,
-                type: el.player_stats.position,
-                src:
-                  el.player_stats.position === PlayerTypes.GOALKEEPER
-                    ? getGoalkeepersUniformUrl(clubs[el.player_stats.club_id - 1].code)
-                    : getFieldPlayersUniformUrl(clubs[el.player_stats.club_id - 1].code),
-              },
-            };
-          }),
+        pitch.map((el) => {
+          let accept;
+          if (el.player_stats.position === PlayerTypes.GOALKEEPER) {
+            accept = PlayerTypes.GOALKEEPER;
+          } else {
+            accept = [
+              PlayerTypes.DEFENDER,
+              PlayerTypes.MIDDLEFIELDER,
+              PlayerTypes.FORWARD,
+            ];
+          }
+          return {
+            accept,
+            lastDroppedItem: {
+              ...el.player_stats,
+              id: el.player_stats.id,
+              name: el.player_stats.second_name,
+              club: clubs[el.player_stats.club_id - 1]
+                ? clubs[el.player_stats.club_id - 1].short_name
+                : '',
+              points: el.player_stats.player_score,
+              type: el.player_stats.position,
+              src:
+                el.player_stats.position === PlayerTypes.GOALKEEPER
+                  ? getGoalkeepersUniformUrl(clubs[el.player_stats.club_id - 1].code)
+                  : getFieldPlayersUniformUrl(clubs[el.player_stats.club_id - 1].code),
+            },
+          };
+        }),
       );
 
       setPlayerPitchIds(
-        players.filter((el) => !el.is_on_bench).map((el) => el.player_stats.id),
+        pitch.filter((el) => !el.is_on_bench).map((el) => el.player_stats.id),
       );
 
       setPlayerBenchIds(
-        players.filter((el) => el.is_on_bench).map((el) => el.player_stats.id),
+        bench.filter((el) => el.is_on_bench).map((el) => el.player_stats.id),
       );
     }
   }, [players]);
@@ -321,7 +347,11 @@ const TeamSelection = ({
         playersOnPitch !== undefined
       ) {
         let isAccept = validationPitch(playersOnPitch, index, item);
-        if (isAccept) handlePitchDrop(index, item, playerBenchIndex);
+        isAccept
+          ? handlePitchDrop(index, item, playerBenchIndex)
+          : feedback.error(
+              "On pitch couldn't be less than 3 defenders, 3 midfielders or 1 forward!",
+            );
         //when we move from the pitch
       } else if (
         playerPitchIndex > -1 &&
@@ -330,7 +360,11 @@ const TeamSelection = ({
         playersOnBench !== undefined
       ) {
         let isAccept = validationBench(playersOnPitch, playersOnBench, index, item);
-        if (isAccept) handleBenchDrop(index, item, playerPitchIndex);
+        isAccept
+          ? handleBenchDrop(index, item, playerPitchIndex)
+          : feedback.error(
+              "On pitch couldn't be less than 3 defenders, 3 midfielders or 1 forward!",
+            );
         //when we move from the list
       } else if (playerBenchIndex === -1 && playerPitchIndex === -1) {
         setPitch(

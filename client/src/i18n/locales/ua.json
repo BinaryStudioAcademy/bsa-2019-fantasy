@@ -265,7 +265,8 @@
     "autoPickBtn": "Авто Вибір",
     "resetBtn": "Скинути",
     "selectedStats": "Гравців Обрано",
-    "moneyStats": "Коштів Залишилось"
+    "moneyStats": "Коштів Залишилось",
+    "validationError": "Перевищено ліміт гравців з "
   },
 
   "SaveTeamModal": {

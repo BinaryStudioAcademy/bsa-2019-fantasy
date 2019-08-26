@@ -27,7 +27,7 @@ const LoginForm = withRouter(({ history }) => {
 
   return (
     <div className={cn(styles['form-registration'], 'w-full h-full max-w-xs')}>
-      <form onSubmit={handleLogin} className=' px-8 pt-6 pb-8 '>
+      <form onSubmit={handleLogin} className='pt-4'>
         <div className='mb-4'>
           <label>
             {t('AuthForms.email')}
@@ -60,22 +60,22 @@ const LoginForm = withRouter(({ history }) => {
           </Link>
         </div>
 
-        <div className='flex items-center justify-start'>
+        <div className='flex items-center justify-start flex-wrap'>
           <button
             type='submit'
-            className='font-bold rounded py-1 px-6 mr-2 border border-transparent text-secondary bg-primary shadow uppercase'
+            className='font-bold rounded py-1 px-6 mr-2 border border-transparent text-secondary bg-primary shadow uppercase mb-3'
           >
             {t('AuthForms.login')}
           </button>
           <button
             type='button'
-            className='opacity-50 hover:opacity-100 font-bold rounded py-1 px-6 border border-primary bg-transparent shadow uppercase'
+            className='opacity-50 hover:opacity-100 font-bold rounded py-1 px-6 border border-primary bg-transparent shadow uppercase mb-3'
             onClick={() => history.push('/registration')}
           >
             {t('AuthForms.signup')}
           </button>
         </div>
-        <div className='block mt-8'>
+        <div className='block mt-4'>
           <a href='/api/auth/fb'>
             <FaFacebook />
           </a>

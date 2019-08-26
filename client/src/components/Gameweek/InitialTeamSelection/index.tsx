@@ -4,6 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import update from 'immutability-helper';
+import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
 
 import { updateUserTeamDetails } from 'containers/Profile/actions';
@@ -26,6 +27,7 @@ import { RootState } from 'store/types';
 type Props = RouteComponentProps;
 
 const InitialTeamSelection = ({ history }: Props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -285,7 +287,7 @@ const InitialTeamSelection = ({ history }: Props) => {
           onClick={() => setView('pitch')}
         >
           <input className='hidden' type='radio' value='option2' />
-          Pitch View
+          {t('Gameweek.pitchView')}
         </label>
 
         <label
@@ -295,7 +297,7 @@ const InitialTeamSelection = ({ history }: Props) => {
           onClick={() => setView('list')}
         >
           <input className='hidden' type='radio' value='option3' />
-          List View
+          {t('Gameweek.listView')}
         </label>
       </form>
     </div>
@@ -333,7 +335,7 @@ const InitialTeamSelection = ({ history }: Props) => {
               !(moneyRemaing >= 0 && selectedPlayers === 15 && !isMoreThree.status)
             }
           >
-            <p>Save Your Team</p>
+            <p>{t('Gameweek.saveTeam')}</p>
           </Button>
         </div>
       </div>
