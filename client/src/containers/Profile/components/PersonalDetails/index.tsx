@@ -10,6 +10,7 @@ import Spinner from 'components/Spinner';
 import { forgotPassword, setLanguage } from 'containers/Profile/actions';
 
 import styles from './styles.module.scss';
+import { addNotification } from 'components/Notifications/actions';
 
 export const usePersonalDetails = () => {
   const user = useSelector((state: RootState) => state.profile.user);
@@ -47,6 +48,13 @@ const PersonalDetails = withRouter(({ history }) => {
     if (value) {
       dispatch(setLanguage({ language }));
       await i18n.changeLanguage(language);
+      dispatch(
+        addNotification(
+          `You have changed website language to ${
+            language === 'ua' ? 'Ukrainian' : 'English'
+          }.`,
+        ),
+      );
     }
   };
 

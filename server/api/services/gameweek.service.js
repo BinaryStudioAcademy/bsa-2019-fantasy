@@ -19,12 +19,7 @@ export const getRecentGameweeks = async () => {
     .map((g) => getGameweeksData(g))
     .filter((g) => moment(g.start).isSameOrBefore(now));
 
-  return [
-    ...result,
-    gameweeks
-      .map((g) => getGameweeksData(g))
-      .find((g) => moment(g.start).isSameOrAfter(now) && moment(g.end).isAfter(now)),
-  ];
+  return result;
 };
 
 export const getGameweekById = async (gameweekId) => {

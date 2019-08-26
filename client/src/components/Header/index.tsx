@@ -1,8 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
+
+import { IconContext } from 'react-icons';
+import { FaCircle } from 'react-icons/fa';
 
 import Notifications from 'components/Notifications';
 
@@ -57,13 +58,7 @@ const Header = ({ team_name }: HeaderProps) => {
           >
             {menuItems.map(({ name, link, dot }) => (
               <div key={name} className='flex flex-grow items-center mx-2'>
-                {dot && (
-                  <FontAwesomeIcon
-                    icon={faCircle}
-                    color={'#fff'}
-                    transform='shrink-10 up-1 right-4'
-                  />
-                )}
+                {dot && <FaCircle className={styles.dot} />}
                 <NavLink
                   to={link}
                   className='font-semibold uppercase p-1 border-solid border-b-2 border-transparent hover:text-secondary'

@@ -2,6 +2,8 @@ import playerRepository from '../../data/repositories/player.repository';
 
 export const getPlayers = (filter) => playerRepository.getPlayers(filter);
 
+export const getRandomPlayers = () => playerRepository.getRandomPlayers();
+
 export const getPlayerById = async (playerId) => {
   const {
     first_name,

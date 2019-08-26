@@ -1,4 +1,4 @@
-import { Op } from 'sequelize';
+import Sequelize, { Op } from 'sequelize';
 import { PlayerStatModel } from '../models/index';
 import BaseRepository from './base.repository';
 
@@ -56,6 +56,35 @@ class PlayerRepository extends BaseRepository {
 
   getById(id) {
     return this.model.findOne({ where: { id } });
+  }
+
+  getRandomPlayers() {
+    const whereSearch = (position, price, limit) => ({
+      where: { position, player_price: { [Op.between]: price } },
+      order: Sequelize.literal('random()'),
+      limit,
+    });
+
+    const goalkeepers = this.model.findAll(whereSearch('GKP', [50, 60], 2));
+
+    const defenfers = this.model.findAll(whereSearch('DEF', [40, 55], 4));
+    const topDefender = this.model.findAll(whereSearch('DEF', [65, 70], 1));
+
+    const middlefielders = this.model.findAll(whereSearch('MID', [45, 70], 4));
+    const topMiddlefielder = this.model.findAll(whereSearch('MID', [95, 125], 1));
+
+    const forwards = this.model.findAll(whereSearch('FWD', [60, 70], 2));
+    const topForward = this.model.findAll(whereSearch('FWD', [95, 120], 1));
+
+    return Promise.all([
+      goalkeepers,
+      defenfers,
+      topDefender,
+      middlefielders,
+      topMiddlefielder,
+      forwards,
+      topForward,
+    ]);
   }
 }
 

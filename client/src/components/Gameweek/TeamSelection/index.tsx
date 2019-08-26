@@ -4,6 +4,7 @@ import update from 'immutability-helper';
 import { useTranslation } from 'react-i18next';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
+import { feedback } from 'react-feedbacker';
 
 import { RootState } from 'store/types';
 import { GameweekType } from 'types/gameweek.type';
@@ -72,62 +73,90 @@ const TeamSelection = ({
   //sets fetched players to the corresponding places
   useEffect(() => {
     if (players.length) {
+      //arrange players on the bench in the correct order
+      const bench: any[] = [];
+      players
+        .filter((el) => el.is_on_bench)
+        .forEach((el) => {
+          if (el.player_stats.position === PlayerTypes.GOALKEEPER) {
+            bench[0] = el;
+          } else if (el.player_stats.position === PlayerTypes.DEFENDER) {
+            bench[1] = el;
+          } else if (el.player_stats.position === PlayerTypes.MIDDLEFIELDER) {
+            bench[2] = el;
+          } else if (el.player_stats.position === PlayerTypes.FORWARD) {
+            bench[3] = el;
+          }
+        });
       setBench(
-        players
-          .filter((el) => el.is_on_bench)
-          .map((el) => {
-            return {
-              accept: [
-                PlayerTypes.GOALKEEPER,
-                PlayerTypes.DEFENDER,
-                PlayerTypes.MIDDLEFIELDER,
-                PlayerTypes.FORWARD,
-              ],
-              lastDroppedItem: {
-                ...el.player_stats,
-                id: el.player_stats.id,
-                name: el.player_stats.second_name,
-                club: clubs[el.player_stats.club_id - 1].short_name,
-                points: el.player_stats.player_score,
-                type: el.player_stats.position,
-                src:
-                  el.player_stats.position === PlayerTypes.GOALKEEPER
-                    ? getGoalkeepersUniformUrl(clubs[el.player_stats.club_id - 1].code)
-                    : getFieldPlayersUniformUrl(clubs[el.player_stats.club_id - 1].code),
-              },
-            };
-          }),
+        bench.map((el) => {
+          let accept;
+          if (el.player_stats.position === PlayerTypes.GOALKEEPER) {
+            accept = PlayerTypes.GOALKEEPER;
+          } else {
+            accept = [
+              PlayerTypes.DEFENDER,
+              PlayerTypes.MIDDLEFIELDER,
+              PlayerTypes.FORWARD,
+            ];
+          }
+          return {
+            accept,
+            lastDroppedItem: {
+              ...el.player_stats,
+              id: el.player_stats.id,
+              name: el.player_stats.second_name,
+              club: clubs[el.player_stats.club_id - 1].short_name,
+              points: el.player_stats.player_score,
+              type: el.player_stats.position,
+              src:
+                el.player_stats.position === PlayerTypes.GOALKEEPER
+                  ? getGoalkeepersUniformUrl(clubs[el.player_stats.club_id - 1].code)
+                  : getFieldPlayersUniformUrl(clubs[el.player_stats.club_id - 1].code),
+            },
+          };
+        }),
       );
+
+      const pitch = players.filter((el) => !el.is_on_bench);
       setPitch(
-        players
-          .filter((el) => !el.is_on_bench)
-          .map((el) => {
-            return {
-              accept: el.player_stats.position,
-              lastDroppedItem: {
-                ...el.player_stats,
-                id: el.player_stats.id,
-                name: el.player_stats.second_name,
-                club: clubs[el.player_stats.club_id - 1]
-                  ? clubs[el.player_stats.club_id - 1].short_name
-                  : '',
-                points: el.player_stats.player_score,
-                type: el.player_stats.position,
-                src:
-                  el.player_stats.position === PlayerTypes.GOALKEEPER
-                    ? getGoalkeepersUniformUrl(clubs[el.player_stats.club_id - 1].code)
-                    : getFieldPlayersUniformUrl(clubs[el.player_stats.club_id - 1].code),
-              },
-            };
-          }),
+        pitch.map((el) => {
+          let accept;
+          if (el.player_stats.position === PlayerTypes.GOALKEEPER) {
+            accept = PlayerTypes.GOALKEEPER;
+          } else {
+            accept = [
+              PlayerTypes.DEFENDER,
+              PlayerTypes.MIDDLEFIELDER,
+              PlayerTypes.FORWARD,
+            ];
+          }
+          return {
+            accept,
+            lastDroppedItem: {
+              ...el.player_stats,
+              id: el.player_stats.id,
+              name: el.player_stats.second_name,
+              club: clubs[el.player_stats.club_id - 1]
+                ? clubs[el.player_stats.club_id - 1].short_name
+                : '',
+              points: el.player_stats.player_score,
+              type: el.player_stats.position,
+              src:
+                el.player_stats.position === PlayerTypes.GOALKEEPER
+                  ? getGoalkeepersUniformUrl(clubs[el.player_stats.club_id - 1].code)
+                  : getFieldPlayersUniformUrl(clubs[el.player_stats.club_id - 1].code),
+            },
+          };
+        }),
       );
 
       setPlayerPitchIds(
-        players.filter((el) => !el.is_on_bench).map((el) => el.player_stats.id),
+        pitch.filter((el) => !el.is_on_bench).map((el) => el.player_stats.id),
       );
 
       setPlayerBenchIds(
-        players.filter((el) => el.is_on_bench).map((el) => el.player_stats.id),
+        bench.filter((el) => el.is_on_bench).map((el) => el.player_stats.id),
       );
     }
   }, [players]);
@@ -154,6 +183,78 @@ const TeamSelection = ({
     ];
 
     currentGameweek && dispatch(postGameweekHistory(currentGameweek.id, query));
+  };
+
+  const validationPitch = (pitch, index, item) => {
+    let isAccept = true;
+
+    const nDeffendersOnPitch = pitch.filter(
+      (place) => place.lastDroppedItem.type === PlayerTypes.DEFENDER,
+    ).length;
+    const nMiddlefieldersOnPitch = pitch.filter(
+      (place) => place.lastDroppedItem.type === PlayerTypes.MIDDLEFIELDER,
+    ).length;
+    const nForwardsOnPitch = pitch.filter(
+      (place) => place.lastDroppedItem.type === PlayerTypes.FORWARD,
+    ).length;
+
+    if (pitch[index].lastDroppedItem.type === PlayerTypes.DEFENDER) {
+      isAccept =
+        nDeffendersOnPitch === 3 && item.type !== PlayerTypes.DEFENDER ? false : true;
+    }
+    if (pitch[index].lastDroppedItem.type === PlayerTypes.MIDDLEFIELDER) {
+      isAccept =
+        nMiddlefieldersOnPitch === 3 && item.type !== PlayerTypes.MIDDLEFIELDER
+          ? false
+          : true;
+    }
+    if (pitch[index].lastDroppedItem.type === PlayerTypes.FORWARD) {
+      isAccept =
+        nForwardsOnPitch === 1 && item.type !== PlayerTypes.FORWARD ? false : true;
+    }
+
+    return isAccept;
+  };
+
+  const validationBench = (pitch, bench, index, item) => {
+    let isAccept = true;
+
+    const nDeffendersOnPitch = pitch.filter(
+      (place) => place.lastDroppedItem.type === PlayerTypes.DEFENDER,
+    ).length;
+    const nMiddlefieldersOnPitch = pitch.filter(
+      (place) => place.lastDroppedItem.type === PlayerTypes.MIDDLEFIELDER,
+    ).length;
+    const nForwardsOnPitch = pitch.filter(
+      (place) => place.lastDroppedItem.type === PlayerTypes.FORWARD,
+    ).length;
+
+    if (bench[index].lastDroppedItem.type === PlayerTypes.DEFENDER) {
+      if (nMiddlefieldersOnPitch === 3 && item.type === PlayerTypes.MIDDLEFIELDER) {
+        isAccept = false;
+      }
+      if (nForwardsOnPitch === 1 && item.type === PlayerTypes.FORWARD) {
+        isAccept = false;
+      }
+    }
+    if (bench[index].lastDroppedItem.type === PlayerTypes.MIDDLEFIELDER) {
+      if (nDeffendersOnPitch === 3 && item.type === PlayerTypes.DEFENDER) {
+        isAccept = false;
+      }
+      if (nForwardsOnPitch === 1 && item.type === PlayerTypes.FORWARD) {
+        isAccept = false;
+      }
+    }
+    if (bench[index].lastDroppedItem.type === PlayerTypes.FORWARD) {
+      if (nDeffendersOnPitch === 3 && item.type === PlayerTypes.DEFENDER) {
+        isAccept = false;
+      }
+      if (nMiddlefieldersOnPitch === 3 && item.type === PlayerTypes.MIDDLEFIELDER) {
+        isAccept = false;
+      }
+    }
+
+    return isAccept;
   };
 
   //handles drop from bench to the pitch
@@ -245,7 +346,12 @@ const TeamSelection = ({
         playersOnPitch[index] &&
         playersOnPitch !== undefined
       ) {
-        handlePitchDrop(index, item, playerBenchIndex);
+        let isAccept = validationPitch(playersOnPitch, index, item);
+        isAccept
+          ? handlePitchDrop(index, item, playerBenchIndex)
+          : feedback.error(
+              "On pitch couldn't be less than 3 defenders, 3 midfielders or 1 forward!",
+            );
         //when we move from the pitch
       } else if (
         playerPitchIndex > -1 &&
@@ -253,7 +359,12 @@ const TeamSelection = ({
         playersOnBench[index] &&
         playersOnBench !== undefined
       ) {
-        handleBenchDrop(index, item, playerPitchIndex);
+        let isAccept = validationBench(playersOnPitch, playersOnBench, index, item);
+        isAccept
+          ? handleBenchDrop(index, item, playerPitchIndex)
+          : feedback.error(
+              "On pitch couldn't be less than 3 defenders, 3 midfielders or 1 forward!",
+            );
         //when we move from the list
       } else if (playerBenchIndex === -1 && playerPitchIndex === -1) {
         setPitch(
@@ -284,10 +395,9 @@ const TeamSelection = ({
     return (
       <div className='relative team-container'>
         {/* Goalkeeper */}
-
         <div className={`flex justify-around absolute ${styles.team}`}>
           {playersOnPitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-            if (accept === PlayerTypes.GOALKEEPER) {
+            if (lastDroppedItem.type === PlayerTypes.GOALKEEPER) {
               return (
                 <PlayerSelectionDroppable
                   index={index}
@@ -314,7 +424,7 @@ const TeamSelection = ({
         {/* Defenders */}
         <div className={`flex justify-around absolute top-20 ${styles.team}`}>
           {playersOnPitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-            if (accept === PlayerTypes.DEFENDER) {
+            if (lastDroppedItem.type === PlayerTypes.DEFENDER) {
               return (
                 <PlayerSelectionDroppable
                   index={index}
@@ -341,7 +451,7 @@ const TeamSelection = ({
         {/* Middlefilders */}
         <div className={`flex justify-around absolute top-40 ${styles.team}`}>
           {playersOnPitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-            if (accept === PlayerTypes.MIDDLEFIELDER) {
+            if (lastDroppedItem.type === PlayerTypes.MIDDLEFIELDER) {
               return (
                 <PlayerSelectionDroppable
                   index={index}
@@ -364,10 +474,11 @@ const TeamSelection = ({
             }
           })}
         </div>
+
         {/* Forwards */}
         <div className={`flex justify-around absolute top-60 ${styles.team}`}>
           {playersOnPitch.map(({ accept, lastDroppedItem }: PlayerDroppable, index) => {
-            if (accept === PlayerTypes.FORWARD) {
+            if (lastDroppedItem.type === PlayerTypes.FORWARD) {
               return (
                 <PlayerSelectionDroppable
                   index={index}
@@ -390,6 +501,7 @@ const TeamSelection = ({
             }
           })}
         </div>
+
         {/* Bench */}
         <div
           className={`flex justify-around top-80 left-0 w-full m-3 absolute ${styles.team}`}

@@ -56,6 +56,10 @@ export default {
                 type: Sequelize.INTEGER,
                 defaultValue: 1,
               },
+              sendmail_time: {
+                allowNull: true,
+                type: Sequelize.INTEGER,
+              },
               createdAt: Sequelize.DATE,
               updatedAt: Sequelize.DATE,
             },

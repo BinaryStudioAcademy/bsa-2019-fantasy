@@ -22,6 +22,7 @@ import Live from 'containers/Live';
 import Leagues from 'containers/Leagues';
 import CreateLeague from 'containers/Leagues/CreateLeague';
 import JoinLeague from 'containers/Leagues/JoinLeague';
+import LeagueDetails from 'containers/Leagues/LeagueDetails';
 
 import GameweekHistory from 'containers/GameweekHistory';
 import NoTeamHome from 'components/NoTeamHome';
@@ -117,7 +118,7 @@ const Routing = () => {
   }
 
   return (
-    <div className='flex h-screen font-sans font-medium'>
+    <div className='flex min-h-screen h-full font-sans font-medium'>
       <Switch>
         <GuestRoute exact path='/login' component={LoginPage} />
         <GuestRoute exact path='/registration' component={RegistrationPage} />
@@ -170,6 +171,7 @@ const Routing = () => {
                 <Route path='/leagues' exact component={Leagues} />
                 <Route path='/leagues/create' component={CreateLeague} />
                 <Route path='/leagues/join' component={JoinLeague} />
+                <Route path='/leagues/:name' component={LeagueDetails} />
 
                 <Route render={() => <Redirect to='/404' />} />
               </Switch>
