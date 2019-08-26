@@ -1,4 +1,5 @@
-import Sequelize, { Op } from 'sequelize';
+import { Op } from 'sequelize';
+import sequelize from '../db/connection';
 import { PlayerStatModel } from '../models/index';
 import BaseRepository from './base.repository';
 
@@ -59,32 +60,28 @@ class PlayerRepository extends BaseRepository {
   }
 
   getRandomPlayers() {
-    const whereSearch = (position, price, limit) => ({
-      where: { position, player_price: { [Op.between]: price } },
-      order: Sequelize.literal('random()'),
-      limit,
+    const query = (position, limit, condition) => `SELECT DISTINCT ON (club_id)
+     id, first_name, second_name, player_price, player_score, position, club_id, code
+     FROM (select * from player_stats WHERE position='${position}' AND (${condition}) ORDER BY random() LIMIT 10) 
+     as players LIMIT ${limit};`;
+
+    const goalkeepers = sequelize.query(query('GKP', 2, "club_id='7' OR club_id='12'"), {
+      type: sequelize.QueryTypes.SELECT,
     });
 
-    const goalkeepers = this.model.findAll(whereSearch('GKP', [50, 60], 2));
+    const defenfers = sequelize.query(query('DEF', 5, 'club_id NOT IN (7, 12)'), {
+      type: sequelize.QueryTypes.SELECT,
+    });
 
-    const defenfers = this.model.findAll(whereSearch('DEF', [40, 55], 4));
-    const topDefender = this.model.findAll(whereSearch('DEF', [65, 70], 1));
+    const middlefielders = sequelize.query(query('MID', 5, 'club_id NOT IN (7, 12)'), {
+      type: sequelize.QueryTypes.SELECT,
+    });
 
-    const middlefielders = this.model.findAll(whereSearch('MID', [45, 70], 4));
-    const topMiddlefielder = this.model.findAll(whereSearch('MID', [95, 125], 1));
+    const forwards = sequelize.query(query('FWD', 3, 'club_id NOT IN (7, 12)'), {
+      type: sequelize.QueryTypes.SELECT,
+    });
 
-    const forwards = this.model.findAll(whereSearch('FWD', [60, 70], 2));
-    const topForward = this.model.findAll(whereSearch('FWD', [95, 120], 1));
-
-    return Promise.all([
-      goalkeepers,
-      defenfers,
-      topDefender,
-      middlefielders,
-      topMiddlefielder,
-      forwards,
-      topForward,
-    ]);
+    return Promise.all([goalkeepers, defenfers, middlefielders, forwards]);
   }
 }
 
