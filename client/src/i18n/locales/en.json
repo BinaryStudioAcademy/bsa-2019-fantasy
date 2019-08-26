@@ -5,6 +5,8 @@
   "next": "Next",
   "previous": "Previous",
   "submit": "Submit",
+  "subscribe": "Subscribe",
+  "unsubscribe": "Unsubscribe",
   "roles": {
     "goalkeeper": "goalkeeper",
     "goalkeeper_plural": "goalkeepers",

@@ -166,47 +166,31 @@ const FixturesItem = ({ match }: Props) => {
               match.started ? 'bg-green-900' : '',
             )}
           >
-            {/* eslint-enable */}
-            <div className={cn(styles['first-team'], styles.team, 'justify-end')}>
-              <img
-                className={cn(styles.logo, 'order-1')}
-                src={`images/club-logos/badge_${match.hometeam.code}_200.png`}
-                alt='logo'
-              />
-              <h5 className='font-bold'>{match.hometeam.name}</h5>
-            </div>
-            <div
-              className={`time p-3 py-2 rounded mx-2 ${styles['play-time']} ${
-                match.started ? 'bg-green-900' : ''
-              }`}
-            >
-              {label}
-            </div>
-            <div className={cn(styles.team, 'text-left')}>
-              <img
-                className={styles.logo}
-                src={`images/club-logos/badge_${match.awayteam.code}_200.png`}
-                alt='logo'
-              />
-              <h5 className='font-bold'>{match.awayteam.name}</h5>
-            </div>
+            {label}
           </div>
-
-          {isDisplay && <div className='bg-gray-100 mb-4 p-3'>{displayStats()}</div>}
-          {match.started ? null : (
-            <Button
-              className='w-1/4 mb-1'
-              styling={isSubscribed ? 'secondary' : 'primary'}
-              onClick={(e) => onSubscribe()}
-            >
-              {isSubscribed ? (
-                <p className='text-center'>Unsubscribe</p>
-              ) : (
-                <p className='text-center'>Subscribe</p>
-              )}
-            </Button>
-          )}
+          <div className={cn(styles.team, 'text-left')}>
+            <img
+              className={styles.logo}
+              src={`images/club-logos/badge_${match.awayteam.code}_200.png`}
+              alt='logo'
+            />
+            <h5 className='font-bold'>{match.awayteam.name}</h5>
+          </div>
         </li>
+        {isDisplay && <div className='bg-gray-100 mb-4 p-3'>{displayStats()}</div>}
+        {match.started ? null : (
+          <Button
+            className='w-1/4 mb-1'
+            styling={isSubscribed ? 'secondary' : 'primary'}
+            onClick={(e) => onSubscribe()}
+          >
+            {isSubscribed ? (
+              <p className='text-center'> {t('unsubscribe')}</p>
+            ) : (
+              <p className='text-center'> {t('subscribe')}</p>
+            )}
+          </Button>
+        )}
       </div>
     </React.Fragment>
   );

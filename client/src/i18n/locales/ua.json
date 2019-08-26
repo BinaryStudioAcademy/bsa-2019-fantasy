@@ -5,6 +5,8 @@
   "next": "Наступна",
   "previous": "Попередня",
   "submit": "Відправити",
+  "subscribe": "Підписатися",
+  "unsubscribe": "Відписатися",
   "roles": {
     "goalkeeper": "воротар",
     "goalkeeper_plural": "воротарі",
