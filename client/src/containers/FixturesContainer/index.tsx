@@ -43,11 +43,11 @@ const FixturesContainer = ({
     if (gameweeks) {
       const gameweek = gameweeks.find((gw) => {
         const now = moment();
-        return moment(gw.end).isBefore(now);
+        return moment(now).isBefore(gw.end);
       });
       if (gameweek) {
         const gameweekNumber = gameweek.number;
-        setCurrentGameweek(+gameweekNumber);
+        setCurrentGameweek(gameweekNumber - 1);
       }
     }
   }, [gameweeks]);
