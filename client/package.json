@@ -56,6 +56,7 @@
     "react-scroll": "^1.7.12",
     "react-search-box": "^2.0.1",
     "react-table": "^6.10.0",
+    "react-toggle-component": "^2.0.11",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
