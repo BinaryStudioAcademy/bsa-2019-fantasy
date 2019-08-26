@@ -43,9 +43,8 @@ export default (
     | SearchLeaguesAction
     | CreateLeagueAction
     | ResetLeagueAction
-    | SetLeagueDetailsAction,
     | SetLeagueDetailsAction
-    | JoinLeagueAction
+    | JoinLeagueAction,
 ) => {
   switch (action.type) {
     case SET_USER_LEAGUES:
