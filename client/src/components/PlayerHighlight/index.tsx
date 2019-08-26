@@ -24,7 +24,11 @@ Object.assign(Chart.defaults.global, {
 
 type Props = {
   player: PlayerType;
-  onInfoClick: (id: string, club_id: number) => void;
+  onInfoClick: (
+    id: string,
+    club_id: number,
+    dialogInitialTab: 'fixtures' | 'history',
+  ) => void;
 };
 
 const PlayerHighlight = ({ player, onInfoClick }: Props) => {
@@ -163,7 +167,7 @@ const PlayerHighlight = ({ player, onInfoClick }: Props) => {
             {t('Players.history')}
           </Button>
           <Button
-            onClick={() => onInfoClick(player.id, player.club_id)}
+            onClick={() => onInfoClick(player.id, player.club_id, 'fixtures')}
             styling='secondary'
             className='text-sm xl:text-base'
           >

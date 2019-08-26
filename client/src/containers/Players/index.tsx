@@ -46,6 +46,7 @@ type State = {
   searchClub: string;
   searchPosition: string;
   redirect: boolean;
+  dialogInitialTab?: 'fixtures' | 'history';
 };
 
 const NOT_SORTABLE_TABLE_COLUMNS = ['club_id', 'position'];
@@ -296,11 +297,12 @@ class PlayersPage extends React.Component<Props, State> {
     );
   };
 
-  onInfoClick = (id: string, club_id: number) => {
+  onInfoClick = (id: string, club_id: number, dialogInitialTab: 'fixtures' | 'history' = 'history') => {
     this.setState({
       currentPlayer: this.props.players.find(
         (p: any) => p && id === p.id,
       ),
+      dialogInitialTab
     });
     this.props.fetchDataForPlayer(id, String(club_id));
   };
@@ -460,6 +462,7 @@ class PlayersPage extends React.Component<Props, State> {
               loading={this.props.dialogLoading}
               player={this.state.currentPlayer}
               clubName={this.getClubNameById(this.state.currentPlayer.club_id)}
+              tab={this.state.dialogInitialTab}
             />
           )}
         </section>
