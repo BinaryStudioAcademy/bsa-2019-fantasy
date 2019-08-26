@@ -10,8 +10,9 @@ import {
   markAllNotificationsRead,
 } from './actions';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faCircle } from '@fortawesome/free-solid-svg-icons';
+import { FaBell, FaCircle } from 'react-icons/fa';
+
+import styles from './styles.module.scss';
 
 // onClickOutside hook
 const useOnClickOutside = (ref: any, handler: any) => {
@@ -74,17 +75,13 @@ const Notifications = () => {
         {notifications.find(
           (notification: NotificationType) => notification.isRead === false,
         ) ? (
-          <button className='fa-layers fa-fw text-secondary outline-none focus:outline-none'>
-            <FontAwesomeIcon icon={faBell} />
-            <FontAwesomeIcon
-              icon={faCircle}
-              color={'#FF482F'}
-              transform='shrink-10 right-5 up-4'
-            />
+          <button className='fa-layers fa-fw text-secondary outline-none focus:outline-none relative'>
+            <FaBell />
+            <FaCircle className={styles.notification} />
           </button>
         ) : (
           <button className='fa-layers fa-fw text-secondary outline-none focus:outline-none'>
-            <FontAwesomeIcon icon={faBell} />
+            <FaBell />
           </button>
         )}
       </div>

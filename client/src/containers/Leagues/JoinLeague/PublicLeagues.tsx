@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
+import cn from 'classnames';
 
 import Autosuggest from 'react-autosuggest';
 
@@ -10,11 +11,13 @@ import { RootState } from 'store/types';
 
 import styles from './styles.module.scss';
 import { withRouter } from 'react-router';
+import { addNotification } from 'components/Notifications/actions';
 
 type Props = {
   searchPublicLeagues: typeof searchPublicLeagues;
   joinLeague: typeof joinLeague;
   resetLeaguesData: typeof resetLeaguesData;
+  addNotification: typeof addNotification;
   suggestions: any;
   leagues: any;
   history: any;
@@ -29,6 +32,7 @@ const PublicLeagues = ({
   suggestions,
   resetLeaguesData,
   joinLeague,
+  addNotification,
   leagues,
   history,
   success,
@@ -62,6 +66,7 @@ const PublicLeagues = ({
     /* eslint-disable */
     try {
       await joinLeague({ code: value, private: false });
+      addNotification(`You have joined the new public league.`);
     } catch {
       console.log('Something went wrong!');
     } finally {
@@ -81,8 +86,8 @@ const PublicLeagues = ({
   }
 
   return (
-    <div className={`${styles['join-league-item']} w-full md:w-1/2 px-6`}>
-      <h3 className={`${styles.title} text-secondary mb-4 font-bold`}>
+    <div className={cn(styles['join-league-item'], 'w-full', 'md:w-1/2', 'px-6')}>
+      <h3 className={cn(styles.title, 'text-secondary', 'mb-4', 'font-bold')}>
         {t('LeaguesPage.joinLeague.public.title')}
       </h3>
       <p className='mb-2'>{t('LeaguesPage.joinLeague.public.message')}</p>
@@ -130,7 +135,7 @@ const mapStateToProps = (rootState: RootState) => ({
   success: rootState.league.success,
 });
 
-const actions = { searchPublicLeagues, joinLeague, resetLeaguesData };
+const actions = { searchPublicLeagues, joinLeague, resetLeaguesData, addNotification };
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
 
 export default withRouter(

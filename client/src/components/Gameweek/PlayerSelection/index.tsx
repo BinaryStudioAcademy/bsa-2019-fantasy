@@ -158,7 +158,7 @@ const PlayerSelection = ({
           <img
             style={{ opacity }}
             src={src}
-            className={`${styles['player-img']} ${styles['player-shadow']}`}
+            className={cn(styles['player-img'], styles['player-shadow'])}
             alt='player'
           />
         )}

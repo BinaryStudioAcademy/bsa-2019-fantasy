@@ -69,7 +69,7 @@ class ResetPasswordForm extends Component<
 
     return (
       <div className={cn(styles['form-registration'], 'w-full h-full max-w-xs')}>
-        <form className=' px-8 pt-6 pb-8' onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
           <div className='mb-4'>
             <input
               className='shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline'
@@ -82,7 +82,7 @@ class ResetPasswordForm extends Component<
           <button
             type='submit'
             className={cn(
-              'font-bold rounded py-1 px-6 mr-2 border border-transparent text-secondary bg-primary shadow uppercase',
+              'leading-tight font-bold rounded py-1 px-6 mr-2 border border-transparent text-secondary bg-primary shadow uppercase',
               (!isPasswordValid || isLoading) && 'opacity-50 cursor-not-allowed',
             )}
             disabled={!isPasswordValid || isLoading}

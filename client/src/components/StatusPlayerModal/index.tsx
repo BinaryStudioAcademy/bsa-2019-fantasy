@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import cn from 'classnames';
 
 import { GameweekHistoryType } from 'types/gameweekHistory.type';
 
@@ -39,7 +40,15 @@ const StatusPlayerModal = ({
         role='presentation'
       >
         <div
-          className={`${styles['modal-header']} bg-green-700 p-4 font-bold text-xl flex justify-between`}
+          className={cn(
+            styles['modal-header'],
+            'bg-green-700',
+            'p-4',
+            'font-bold',
+            'text-xl',
+            'flex',
+            'justify-between',
+          )}
         >
           <h3>{name}</h3>
           <button onClick={() => onClose()}>

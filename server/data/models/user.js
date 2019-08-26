@@ -45,6 +45,10 @@ export default (orm, DataTypes) => {
         type: DataTypes.INTEGER,
         defaultValue: 1,
       },
+      sendmail_time: {
+        allowNull: true,
+        type: DataTypes.INTEGER,
+      },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
     },

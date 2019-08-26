@@ -26,8 +26,8 @@ const LoginForm = withRouter(({ history }) => {
   };
 
   return (
-    <div className={cn(styles['form-registration'], 'w-full h-full max-w-xs')}>
-      <form onSubmit={handleLogin} className=' px-8 pt-6 pb-8 '>
+    <div className={cn(styles['form-registration'], 'w-full', 'h-full', 'max-w-xs')}>
+      <form onSubmit={handleLogin} className='pt-4'>
         <div className='mb-4'>
           <label>
             {t('AuthForms.email')}
@@ -75,7 +75,7 @@ const LoginForm = withRouter(({ history }) => {
             {t('AuthForms.signup')}
           </button>
         </div>
-        <div className='block mt-8'>
+        <div className='block mt-4'>
           <a href='/api/auth/fb'>
             <FaFacebook />
           </a>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactDom from 'react-dom';
 import { FaTimes } from 'react-icons/fa';
+import cn from 'classnames';
 
 import styles from './styles.module.scss';
 
@@ -25,7 +26,7 @@ const PrivateLeagueModal = ({ open, onClose, code }) => {
   if (open) {
     return ReactDom.createPortal(
       <div className={styles['modal-cover']}>
-        <div className={`${styles.modal} rounded`}>
+        <div className={cn(styles.modal, 'rounded')}>
           <button className={styles['modal-close']} onClick={closeModal}>
             <FaTimes />
           </button>

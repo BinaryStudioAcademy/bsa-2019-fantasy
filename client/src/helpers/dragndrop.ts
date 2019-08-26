@@ -4,53 +4,75 @@ export const getPitch = () => {
   return [
     {
       accept: PlayerTypes.GOALKEEPER,
-      lastDroppedItem: null,
+      lastDroppedItem: {
+        type: PlayerTypes.GOALKEEPER,
+      },
     },
 
     {
-      accept: PlayerTypes.DEFENDER,
-      lastDroppedItem: null,
+      accept: [PlayerTypes.DEFENDER, PlayerTypes.MIDDLEFIELDER, PlayerTypes.FORWARD],
+      lastDroppedItem: {
+        type: PlayerTypes.DEFENDER,
+      },
     },
 
     {
-      accept: PlayerTypes.DEFENDER,
-      lastDroppedItem: null,
+      accept: [PlayerTypes.DEFENDER, PlayerTypes.MIDDLEFIELDER, PlayerTypes.FORWARD],
+      lastDroppedItem: {
+        type: PlayerTypes.DEFENDER,
+      },
     },
     {
-      accept: PlayerTypes.DEFENDER,
-      lastDroppedItem: null,
+      accept: [PlayerTypes.DEFENDER, PlayerTypes.MIDDLEFIELDER, PlayerTypes.FORWARD],
+      lastDroppedItem: {
+        type: PlayerTypes.DEFENDER,
+      },
     },
     {
-      accept: PlayerTypes.DEFENDER,
-      lastDroppedItem: null,
-    },
-
-    {
-      accept: PlayerTypes.MIDDLEFIELDER,
-      lastDroppedItem: null,
-    },
-
-    {
-      accept: PlayerTypes.MIDDLEFIELDER,
-      lastDroppedItem: null,
-    },
-    {
-      accept: PlayerTypes.MIDDLEFIELDER,
-      lastDroppedItem: null,
+      accept: [PlayerTypes.DEFENDER, PlayerTypes.MIDDLEFIELDER, PlayerTypes.FORWARD],
+      lastDroppedItem: {
+        type: PlayerTypes.DEFENDER,
+      },
     },
 
     {
-      accept: PlayerTypes.MIDDLEFIELDER,
-      lastDroppedItem: null,
-    },
-    {
-      accept: PlayerTypes.FORWARD,
-      lastDroppedItem: null,
+      accept: [PlayerTypes.DEFENDER, PlayerTypes.MIDDLEFIELDER, PlayerTypes.FORWARD],
+      lastDroppedItem: {
+        type: PlayerTypes.MIDDLEFIELDER,
+      },
     },
 
     {
-      accept: PlayerTypes.FORWARD,
-      lastDroppedItem: null,
+      accept: [PlayerTypes.DEFENDER, PlayerTypes.MIDDLEFIELDER, PlayerTypes.FORWARD],
+      lastDroppedItem: {
+        type: PlayerTypes.MIDDLEFIELDER,
+      },
+    },
+    {
+      accept: [PlayerTypes.DEFENDER, PlayerTypes.MIDDLEFIELDER, PlayerTypes.FORWARD],
+      lastDroppedItem: {
+        type: PlayerTypes.MIDDLEFIELDER,
+      },
+    },
+
+    {
+      accept: [PlayerTypes.DEFENDER, PlayerTypes.MIDDLEFIELDER, PlayerTypes.FORWARD],
+      lastDroppedItem: {
+        type: PlayerTypes.MIDDLEFIELDER,
+      },
+    },
+    {
+      accept: [PlayerTypes.DEFENDER, PlayerTypes.MIDDLEFIELDER, PlayerTypes.FORWARD],
+      lastDroppedItem: {
+        type: PlayerTypes.FORWARD,
+      },
+    },
+
+    {
+      accept: [PlayerTypes.DEFENDER, PlayerTypes.MIDDLEFIELDER, PlayerTypes.FORWARD],
+      lastDroppedItem: {
+        type: PlayerTypes.FORWARD,
+      },
     },
   ];
 };
@@ -58,40 +80,28 @@ export const getPitch = () => {
 export const getBench = () => {
   return [
     {
-      accept: [
-        PlayerTypes.GOALKEEPER,
-        PlayerTypes.DEFENDER,
-        PlayerTypes.MIDDLEFIELDER,
-        PlayerTypes.FORWARD,
-      ],
-      lastDroppedItem: null,
+      accept: [PlayerTypes.GOALKEEPER],
+      lastDroppedItem: {
+        type: PlayerTypes.GOALKEEPER,
+      },
     },
     {
-      accept: [
-        PlayerTypes.GOALKEEPER,
-        PlayerTypes.DEFENDER,
-        PlayerTypes.MIDDLEFIELDER,
-        PlayerTypes.FORWARD,
-      ],
-      lastDroppedItem: null,
+      accept: [PlayerTypes.DEFENDER, PlayerTypes.MIDDLEFIELDER, PlayerTypes.FORWARD],
+      lastDroppedItem: {
+        type: PlayerTypes.DEFENDER,
+      },
     },
     {
-      accept: [
-        PlayerTypes.GOALKEEPER,
-        PlayerTypes.DEFENDER,
-        PlayerTypes.MIDDLEFIELDER,
-        PlayerTypes.FORWARD,
-      ],
-      lastDroppedItem: null,
+      accept: [PlayerTypes.DEFENDER, PlayerTypes.MIDDLEFIELDER, PlayerTypes.FORWARD],
+      lastDroppedItem: {
+        type: PlayerTypes.MIDDLEFIELDER,
+      },
     },
     {
-      accept: [
-        PlayerTypes.GOALKEEPER,
-        PlayerTypes.DEFENDER,
-        PlayerTypes.MIDDLEFIELDER,
-        PlayerTypes.FORWARD,
-      ],
-      lastDroppedItem: null,
+      accept: [PlayerTypes.DEFENDER, PlayerTypes.MIDDLEFIELDER, PlayerTypes.FORWARD],
+      lastDroppedItem: {
+        type: PlayerTypes.FORWARD,
+      },
     },
   ];
 };

@@ -211,7 +211,11 @@
     },
 
     "emailPreferences": {
-      "title": "Email preferences"
+      "title": "Email preferences",
+      "email-select": "Recieve a remind-email to apply a team",
+      "timeSelect": "When to send an email to apply a team?",
+      "hours": "hours",
+      "hour": "hour"
     },
 
     "changePassword": {
@@ -261,7 +265,8 @@
     "autoPickBtn": "Auto Pick",
     "resetBtn": "Reset",
     "selectedStats": "Players Selected",
-    "moneyStats": "Money Remaining"
+    "moneyStats": "Money Remaining",
+    "validationError": "Too many players selected from "
   },
 
   "SaveTeamModal": {
@@ -345,5 +350,27 @@
     "invitationCode": "Your invitation code",
     "copied": "Copied",
     "clickToCopy": "Click on the code to copy"
+  },
+
+  "LeagueDetails": {
+    "table": {
+      "title": "Participants Statistics",
+      "rank": "Rank",
+      "team": "Team & Manager",
+      "GW": "Gameweek Points",
+      "TOT": "Total points"
+    },
+    "title": {
+      "sub": "League Details"
+    },
+    "invitation": {
+      "title": "Invitation Code",
+      "message": "This is your invitation code. Share this code with others to join your league!"
+    },
+    "leaveLeague": {
+      "title": "Leave a league",
+      "message": "Click the button below to leave the league.",
+      "button": "Leave league"
+    }
   }
 }

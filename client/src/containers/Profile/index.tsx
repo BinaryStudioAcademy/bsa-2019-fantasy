@@ -66,7 +66,10 @@ const Profile = withRouter(({ history }) => {
           <button
             className={cn(
               styles.navButton,
-              'shadow hover:shadow-md text-secondary left-0 -ml-3',
+              'shadow hover:shadow-md',
+              'text-secondary',
+              'left-0',
+              '-ml-3',
               step === 1 && 'hidden',
             )}
             onClick={() => {
@@ -79,7 +82,11 @@ const Profile = withRouter(({ history }) => {
           <button
             className={cn(
               styles.navButton,
-              'shadow hover:shadow-md text-secondary right-0 -mr-3',
+              'shadow',
+              'hover:shadow-md',
+              'text-secondary',
+              'right-0',
+              '-mr-3',
               step === 3 && 'hidden',
             )}
             onClick={() => {

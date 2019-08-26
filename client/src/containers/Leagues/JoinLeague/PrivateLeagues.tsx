@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { bindActionCreators, Dispatch } from 'redux';
+import cn from 'classnames';
 
 import { joinLeague } from '../actions';
 
 import styles from './styles.module.scss';
+import { addNotification } from 'components/Notifications/actions';
 
 type Props = {
   joinLeague: typeof joinLeague;
+  addNotification: typeof addNotification;
 };
 
-const PrivateLeagues = ({ joinLeague }: Props) => {
+const PrivateLeagues = ({ joinLeague, addNotification }: Props) => {
   const { t } = useTranslation();
 
   const [code, setCode] = useState('');
@@ -27,6 +30,7 @@ const PrivateLeagues = ({ joinLeague }: Props) => {
     /*eslint-disable*/
     try {
       await joinLeague({ code, private: true });
+      addNotification(`You have joined the new private league.`);
     } catch {
       console.log('Something went wrong!');
     } finally {
@@ -36,8 +40,8 @@ const PrivateLeagues = ({ joinLeague }: Props) => {
   };
 
   return (
-    <div className={`${styles['join-league-item']} w-full md:w-1/2 px-6`}>
-      <h3 className={`${styles.title} text-secondary mb-4 font-bold`}>
+    <div className={cn(styles['join-league-item'], 'w-full', 'md:w-1/2', 'px-6')}>
+      <h3 className={cn(styles.title, 'text-secondary', 'mb-4', 'font-bold')}>
         {t('LeaguesPage.joinLeague.private.title')}
       </h3>
       <p className='mb-4'>{t('LeaguesPage.joinLeague.private.message')}</p>
@@ -74,7 +78,7 @@ const PrivateLeagues = ({ joinLeague }: Props) => {
   );
 };
 
-const actions = { joinLeague };
+const actions = { joinLeague, addNotification };
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
 
 export default connect(

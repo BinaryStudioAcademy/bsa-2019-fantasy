@@ -12,6 +12,7 @@ export type User = {
   facebook_id: string;
 
   free_transfers: number;
+  sendmail_time: number | null;
 
   createdAt: string;
   updatedAt: string;
