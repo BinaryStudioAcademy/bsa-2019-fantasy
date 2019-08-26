@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import { FixturesItemType } from 'types/fixtures.types';
 import { loadGameDetailsAction } from '../../containers/FixturesContainer/actions';
@@ -22,6 +23,7 @@ const FixturesItem = ({ match }: Props) => {
   const [isSubscribed, setSubscribe] = useState<boolean>(false);
   const dispatch = useDispatch();
   const gameDetails = useSelector((state: RootState) => state.fixtures.gameDetails);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (gameDetails) {
