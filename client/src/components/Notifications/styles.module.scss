@@ -1,2 +1,10 @@
 :local(.header) {
 }
+
+:local(.notification) {
+  color: #ff482f;
+  position: absolute;
+  top: -5px;
+  right: 4px;
+  width: 5px;
+}
