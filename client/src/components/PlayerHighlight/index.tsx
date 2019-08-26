@@ -170,12 +170,6 @@ const PlayerHighlight = ({ player, onInfoClick }: Props) => {
             {t('Players.fixtures')}
           </Button>
         </div>
-
-        <div className='allWinners mt-6 text-sm'>
-          <Link className='font-semibold hover:underline' to='/'>
-            {t('Players.browseAll')}
-          </Link>
-        </div>
       </div>
 
       <div className='playerPhoto flex items-end px-0 xl:px-8 pt-4 -mb-8'>
