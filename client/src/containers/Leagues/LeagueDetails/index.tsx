@@ -69,19 +69,20 @@ const LeagueDetails = ({
   };
 
   const data = {
-    title: 'Participants Statistics',
+    title: t('LeagueDetails.table.title'),
   };
 
   /* eslint-disable */
   const columns = [
     {
       Header: () => (
-        <span className={`${styles['table-title']} uppercase font-bold`}>Rank</span>
+        <span className={`${styles['table-title']} uppercase font-bold`}>
+          {t('LeagueDetails.table.rank')}
+        </span>
       ),
       maxWidth: 100,
       accessor: 'current_rank',
       Cell: (props: any) => {
-        console.log('props: ', props);
         const movement = props.original.current_rank - props.original.last_rank;
 
         return (
@@ -107,7 +108,7 @@ const LeagueDetails = ({
     {
       Header: () => (
         <span className={`${styles['table-title']} uppercase font-bold`}>
-          Team & Manager
+          {t('LeagueDetails.table.team')}
         </span>
       ),
       accessor: 'user',
@@ -125,7 +126,7 @@ const LeagueDetails = ({
     {
       Header: () => (
         <span className={`${styles['table-title']} uppercase font-bold`}>
-          Gameweek Points
+          {t('LeagueDetails.table.GW')}
         </span>
       ),
       accessor: 'gameweek_points',
@@ -137,7 +138,7 @@ const LeagueDetails = ({
     {
       Header: () => (
         <span className={`${styles['table-title']} uppercase font-bold`}>
-          Total Points
+          {t('LeagueDetails.table.TOT')}
         </span>
       ),
       accessor: 'total_points',
@@ -158,7 +159,7 @@ const LeagueDetails = ({
         <div className={`${header['jumbotron-content']} mt-12`}>
           <h2 className={`${header.title} text-secondary`}>
             <div className={`${header.sub} ${header.title} mb-4 flex items-center`}>
-              League Details
+              {t('LeagueDetails.title.sub')}
             </div>
             {leagueDetails.name}
           </h2>
@@ -171,11 +172,10 @@ const LeagueDetails = ({
         {leagueDetails['admin_entry'] && leagueDetails.private ? (
           <div className={`p-6`}>
             <h2 className={`${styles.admin} ${styles.title} text-secondary mb-3`}>
-              Invitation Code
+              {t('LeagueDetails.invitation.title')}
             </h2>
             <p className='text-gray-600 text-s italic mb-5'>
-              This is your invitation code. Share this code with others to join your
-              league!{' '}
+              {t('LeagueDetails.invitation.message')}
             </p>
             <div className='flex flex-wrap -mx-3 mb-6'>
               <div className='w-full md:w-1/2 px-3'>
@@ -212,15 +212,17 @@ const LeagueDetails = ({
       </div>
       {leagueDetails['entry_can_leave'] && (
         <div className={`${styles.paper} p-8 rounded`}>
-          <h2 className={`${styles.title} text-secondary mb-2`}>Leave a league</h2>
+          <h2 className={`${styles.title} text-secondary mb-2`}>
+            {t('LeagueDetails.leaveLeague.title')}
+          </h2>
           <p className='text-gray-600 text-s italic mb-5'>
-            Click the button below to leave the league.
+            {t('LeagueDetails.leaveLeague.message')}
           </p>
           <button
             className='whitespace-no-wrap g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded font-semibold uppercase'
             onClick={handleLeaveLeague}
           >
-            Leave league
+            {t('LeagueDetails.leaveLeague.button')}
           </button>
         </div>
       )}
