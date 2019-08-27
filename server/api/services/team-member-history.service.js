@@ -5,9 +5,7 @@ import { getPlayerScoreByGameweeks } from './player-match.service';
 
 export const getPlayersByGameweekId = async (id) => {
   const result = await teamMemberHistoryRepository.getByGameweekId(id);
-  if (!result) {
-    return { message: 'No team found' };
-  }
+
   return result;
 };
 

@@ -5,7 +5,7 @@ export const getAllHistory = () => gameweekHistoryRepository.getAll();
 export const getCurrentHistoryById = async (userId, gameweekId) => {
   const result = await gameweekHistoryRepository.getByUserGameweekId(userId, gameweekId);
   if (!result) {
-    return { message: 'can`t find gameweek history' };
+    return { message: 'Can`t find gameweek history' };
   }
   return result.id;
 };
