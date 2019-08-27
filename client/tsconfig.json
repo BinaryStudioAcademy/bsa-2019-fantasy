@@ -15,7 +15,12 @@
     "noEmit": true,
     "jsx": "preserve",
     "baseUrl": "src",
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin"
+      }
+    ]
   },
   "include": ["src"]
 }
