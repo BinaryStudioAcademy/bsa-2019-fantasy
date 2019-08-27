@@ -13,27 +13,39 @@ import info from 'assets/images/info.svg';
 
 type Props = {
   players: PlayerType[];
-  onOpenInfo?: (id: string, club_id: string) => void;
+  onOpenInfo?: (id: string, club_id: number) => void;
 };
 
-export const PlayerList = ({ players, onOpenInfo }: Props) => {
+export const PlayerList = ({ players: givenPlayers, onOpenInfo }: Props) => {
   const { t } = useTranslation();
 
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
 
+  const players = givenPlayers.map((p) => ({
+    player_stats: p,
+    display: {
+      src:
+        p.position === PlayerTypes.GOALKEEPER
+          ? getGoalkeepersUniformUrl(clubs[p.club_id - 1].code)
+          : getFieldPlayersUniformUrl(clubs[p.club_id - 1].code),
+    },
+  }));
+
   const { GKP, DEF, MID, FWD } = Position;
-  const goalkeepers = players.filter((player) => {
-    return player.position === GKP ? true : false;
+
+  const goalkeepers = players.filter(({ player_stats }) => {
+    return player_stats.position === GKP ? true : false;
   });
-  const defenders = players.filter((player) => {
-    return player.position === DEF ? true : false;
+  const defenders = players.filter(({ player_stats }) => {
+    return player_stats.position === DEF ? true : false;
   });
-  const midfielders = players.filter((player) => {
-    return player.position === MID ? true : false;
+  const midfielders = players.filter(({ player_stats }) => {
+    return player_stats.position === MID ? true : false;
   });
-  const forwards = players.filter((player) => {
-    return player.position === FWD ? true : false;
+  const forwards = players.filter(({ player_stats }) => {
+    return player_stats.position === FWD ? true : false;
   });
+
   return (
     <DndProvider backend={HTML5Backend}>
       <table className='w-full shadow rounded overflow-hidden'>
@@ -52,19 +64,12 @@ export const PlayerList = ({ players, onOpenInfo }: Props) => {
               **
             </th>
           </tr>
-          {goalkeepers.map((player) => (
+          {goalkeepers.map((p) => (
             <PlayerItem
-              key={`player-goalkeeper-${player.id}`}
-              id={player.id}
-              name={player.second_name}
-              club_id={player.club_id}
-              club={clubs[player.club_id - 1].short_name}
-              position={PlayerTypes.GOALKEEPER}
-              price={player.player_price}
-              score={player.player_score}
+              key={`player-goalkeeper-${p.player_stats.id}`}
+              player={p}
               info={info}
               onOpenInfo={onOpenInfo}
-              imageURL={getGoalkeepersUniformUrl(clubs[player.club_id - 1].code)}
             />
           ))}
           <tr className='bg-green-400'>
@@ -81,19 +86,12 @@ export const PlayerList = ({ players, onOpenInfo }: Props) => {
               **
             </th>
           </tr>
-          {defenders.map((player) => (
+          {defenders.map((p) => (
             <PlayerItem
-              key={`player-defender-${player.id}`}
-              id={player.id}
-              name={player.second_name}
-              club_id={player.club_id}
-              club={clubs[player.club_id - 1].short_name}
-              position={PlayerTypes.DEFENDER}
-              price={player.player_price}
-              score={player.player_score}
+              key={`player-defender-${p.player_stats.id}`}
+              player={p}
               info={info}
               onOpenInfo={onOpenInfo}
-              imageURL={getFieldPlayersUniformUrl(clubs[player.club_id - 1].code)}
             />
           ))}
           <tr className='bg-blue-400'>
@@ -110,19 +108,12 @@ export const PlayerList = ({ players, onOpenInfo }: Props) => {
               **
             </th>
           </tr>
-          {midfielders.map((player) => (
+          {midfielders.map((p) => (
             <PlayerItem
-              key={`player-midfielder-${player.id}`}
-              id={player.id}
-              name={player.second_name}
-              club_id={player.club_id}
-              club={clubs[player.club_id - 1].short_name}
-              position={PlayerTypes.MIDDLEFIELDER}
-              price={player.player_price}
-              score={player.player_score}
+              key={`player-midfielder-${p.player_stats.id}`}
+              player={p}
               info={info}
               onOpenInfo={onOpenInfo}
-              imageURL={getFieldPlayersUniformUrl(clubs[player.club_id - 1].code)}
             />
           ))}
           <tr className='bg-red-400'>
@@ -139,19 +130,12 @@ export const PlayerList = ({ players, onOpenInfo }: Props) => {
               **
             </th>
           </tr>
-          {forwards.map((player) => (
+          {forwards.map((p) => (
             <PlayerItem
-              key={`player-forward-${player.id}`}
-              id={player.id}
-              name={player.second_name}
-              club_id={player.club_id}
-              club={clubs[player.club_id - 1].short_name}
-              position={PlayerTypes.FORWARD}
-              price={player.player_price}
-              score={player.player_score}
+              key={`player-forward-${p.player_stats.id}`}
+              player={p}
               info={info}
               onOpenInfo={onOpenInfo}
-              imageURL={getFieldPlayersUniformUrl(clubs[player.club_id - 1].code)}
             />
           ))}
         </tbody>
