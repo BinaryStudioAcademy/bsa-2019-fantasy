@@ -168,7 +168,27 @@ export const getUserRanking = (userHistory, userId) => {
   return userPosition;
 };
 
+const util = require('util');
+
 export const makeAutoSubsitution = async (gameweekId) => {
   const gameweekHistories = await getHistoryByGameweekId(gameweekId);
-  console.log(gameweekHistories);
+  // console.log(gameweekHistories);
+  const teamMemberHistories = gameweekHistories.map((el) => el.team_member_histories);
+  console.log(util.inspect(teamMemberHistories, false, true, true /* enable colors */));
+  teamMemberHistories.forEach((el) => {
+    console.log(
+      util.inspect(el.team_member_history, false, true, true /* enable colors */),
+    );
+    el.forEach((elem) => {
+      console.log(elem.player_stats.player_price);
+    });
+  });
+  // teamMemberHistories.forEach((el) => {
+  //   console.log(el);
+  // });
+  // gameweekHistories.forEach((element) => {
+  //   element.team_member_histories.forEach((el) => {
+  //     console.log(el);
+  //   });
+  // });
 };
