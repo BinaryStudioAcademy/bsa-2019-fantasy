@@ -44,7 +44,7 @@ type RenderFixture = {
   content: any;
 };
 
-const endpoint = `http://${process.env.REACT_APP_FAKER_SOCKET_SERVER}:${process.env.REACT_APP_FAKER_SOCKET_SERVER_PORT}/`;
+const endpoint = `http://${process.env.REACT_APP_SOCKET_SERVER}:${process.env.REACT_APP_SOCKET_SERVER_PORT}/`;
 console.log(endpoint);
 const timeoutOptions = [1, 2, 5, 10, 15].map((item) => ({
   label: `${item} min`,
