@@ -22,7 +22,7 @@ type Props = {
   loadPlayersAction: typeof loadPlayersAction;
   resetPlayerDialogData: any;
   fetchDataForPlayer: any;
-  players?: PlayerType[];
+  players: PlayerType[];
   playerData?: any;
   dialogLoading: boolean;
 };
@@ -145,10 +145,16 @@ const PlayersSelection = ({
       </form>
 
       <p className='w-full mt-4 text-center'>
-        <strong>10</strong> {t('Transfers.playerSelection.shown')}
+        <strong>{players.length}</strong> {t('Transfers.playerSelection.shown')}
       </p>
 
-      {players && <PlayerList players={players} onOpenInfo={onOpenInfo} />}
+      {players && (
+        <PlayerList
+          players={players}
+          onOpenInfo={onOpenInfo}
+          onFilterSelectChange={onFilterSelectChange}
+        />
+      )}
       {currentPlayer && (
         <PlayerDialog
           playerDialogData={playerData}
