@@ -18,6 +18,10 @@ class FixturesSubscriptionRepository extends BaseRepository {
     });
     return result;
   }
+
+  deleteByUserAndGameId(user_id, game_id) {
+    return this.model.destroy({ where: { user_id, game_id } });
+  }
 }
 
 export default new FixturesSubscriptionRepository(FixturesSubscriptionModel);

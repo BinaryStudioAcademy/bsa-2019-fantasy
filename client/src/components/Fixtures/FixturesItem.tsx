@@ -11,6 +11,10 @@ import { RootState } from 'store/types';
 import styles from './styles.module.scss';
 import MatchStats from 'components/MatchStats';
 import Button from 'components/Button';
+import {
+  createFixtureSubscription,
+  deleteFixtureSubscription,
+} from 'containers/Profile/actions';
 
 type Props = {
   match: FixturesItemType;
@@ -134,6 +138,9 @@ const FixturesItem = ({ match }: Props) => {
     );
   }
   const onSubscribe = () => {
+    isSubscribed
+      ? dispatch(deleteFixtureSubscription(match.id))
+      : dispatch(createFixtureSubscription(match.id));
     setSubscribe(!isSubscribed);
   };
   console.log(match);
