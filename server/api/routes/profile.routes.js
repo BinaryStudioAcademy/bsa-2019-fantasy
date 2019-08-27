@@ -17,12 +17,12 @@ router
       .updateById(req.user.id, { favorite_club_id: req.body.clubId })
       .then(() => res.json({ message: 'Successfuly updated!' }).catch(next)),
 )
-  .put('/avatar/:userId', jwtMiddleware, (req, res, next) => {
-    return userService
+  .put('/avatar/:userId', jwtMiddleware, (req, res, next) =>
+    userService
       .updateById(req.params.userId, { image_id: req.body.image })
-      .then(() => res.json({ message: 'Avatar have been successfuly changed!' })
+        .then(() => res.json({ message: 'Avatar have been successfuly changed!' })
         .catch(next))
-  })
+  )
   .put('/:user/:gameweek', jwtMiddleware, (req, res, next) => {
     userService
       .updateById(req.params.user, req.body.userData)
