@@ -116,6 +116,8 @@ passport.use(
             email,
             name: userWithSuchName ? `${name} ${Math.random()}` : name,
           });
+        } else if (user && !user.facebook_id) {
+          await userRepository.updateById(user.id, { facebook_id: id })
         }
 
         return done(null, {
