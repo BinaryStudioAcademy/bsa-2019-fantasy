@@ -44,8 +44,7 @@ type RenderFixture = {
   content: any;
 };
 
-const endpoint = `http://${process.env.REACT_APP_FAKER_SOCKET_SERVER}:${process.env.REACT_APP_FAKER_SOCKET_SERVER_PORT}/`;
-console.log(endpoint);
+const endpoint = `http://${process.env.REACT_APP_SOCKET_SERVER}:${process.env.REACT_APP_SOCKET_SERVER_PORT}/`;
 const timeoutOptions = [1, 2, 5, 10, 15].map((item) => ({
   label: `${item} min`,
   value: String(item),
@@ -106,6 +105,7 @@ class Live extends React.Component<Props, State> {
         newState.score = event.score;
         break;
       case 'startGame':
+        console.log('inside startGame');
         newState.matchStarted = true;
         newState.score = [0, 0];
         break;
@@ -122,7 +122,7 @@ class Live extends React.Component<Props, State> {
 
   simulate = () => {
     this.onModalDismiss();
-    this.setState({ isSimulating: true });
+    this.setState({ isSimulating: true, score: [0, 0], events: [], elapsed: 0 });
     const { homeClub, awayClub, timeout } = this.state;
     this.socket.emit('simulate', {
       homeClub: homeClub!.id,
