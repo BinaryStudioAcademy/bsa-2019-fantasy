@@ -4,15 +4,13 @@ import express from 'express';
 import path from 'path';
 import passport from 'passport';
 import http from 'http';
-import socketIO from 'socket.io';
-import socketIOClient from 'socket.io-client';
 
 import routes from './api/routes/index';
 import errorHandlerMiddleware from './api/middlewares/error-handler.middleware';
 import socketInjector from './socket/injector';
-import socketHandlers from './socket/handlers';
+import { makeConnectionMain } from './socket/mainSocket';
+import { makeConnectionFaker } from './socket/fakerSocket';
 import initSchedulers from './schedulers';
-import recalculateTeamsScore from './socket/teamScoreRecalculator';
 
 import sequelize from './data/db/connection';
 
@@ -22,24 +20,8 @@ dotenv.config();
 
 const app = express();
 const socketServer = http.Server(app);
-const io = socketIO(socketServer);
-
-const fakerSocket = socketIOClient.connect(
-  `http://localhost:${process.env.FAKER_SOCKET_PORT}`,
-  { reconnection: true },
-);
-
-fakerSocket.on('connect', () => {
-  // eslint-disable-next-line no-console
-  console.log('connected');
-
-  fakerSocket.on('someEvent', (data) => {
-    // eslint-disable-next-line no-console
-    console.log('Received data from faker ', data);
-
-    recalculateTeamsScore();
-  });
-});
+const io = makeConnectionMain(socketServer);
+makeConnectionFaker(`http://localhost:${process.env.FAKER_SOCKET_PORT}`);
 
 sequelize
   .authenticate()
@@ -50,8 +32,6 @@ sequelize
   .catch((err) => {
     console.error('Unable to connect to the database:', err);
   });
-
-io.on('connection', socketHandlers);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
