@@ -5,6 +5,7 @@ import * as leagueParticipantService from '../services/league-participant.servic
 import * as footballClubService from '../services/football-club.service';
 import * as gameweekHistoryService from '../services/gameweek-history.service';
 import * as teamMemberHistoryService from '../services/team-member-history.service';
+import * as fixturesSubscriptionService from '../services/fixtures-subscription.service';
 import globalLeagues from '../../config/global-leagues.config';
 
 import jwtMiddleware from '../middlewares/jwt.middleware';
@@ -53,6 +54,30 @@ router
       next(err);
     }
   })
+  .get('/fixtures-sub/:user/:game', jwtMiddleware, (req, res, next) =>
+    fixturesSubscriptionService
+      .findSubscription(req.params.user, req.params.game)
+      .then((value) =>
+        value ? res.json(value) : res.json({ message: 'Subscription is not found' }),
+      )
+      .catch(next),
+  )
+  .post('/fixtures-sub', jwtMiddleware, (req, res, next) =>
+    fixturesSubscriptionService
+      .createSubscription(req.body)
+      .then(() =>
+        res.json({
+          message: 'Successfuly subscribed to notifications about the fixture ',
+        }),
+      )
+      .catch(next),
+  )
+  .delete('/fixtures-sub', jwtMiddleware, (req, res, next) =>
+    fixturesSubscriptionService
+      .deleteSubscription(req.body.user_id, req.body.game_id)
+      .then(() => res.json({ message: 'Subscribtion succesfully deleted' }))
+      .catch(next),
+  )
   .get('/league-rankings', jwtMiddleware, (req, res, next) => {
     leagueParticipantService
       .getUserRankings(req.user.id)
