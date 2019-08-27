@@ -11,7 +11,6 @@ import { RootState } from 'store/types';
 import styles from './styles.module.scss';
 import MatchStats from 'components/MatchStats';
 import Button from 'components/Button';
-import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
 
 type Props = {
   match: FixturesItemType;
@@ -137,6 +136,7 @@ const FixturesItem = ({ match }: Props) => {
   const onSubscribe = () => {
     setSubscribe(!isSubscribed);
   };
+  console.log(match);
   return (
     <React.Fragment>
       {/* eslint-disable */}

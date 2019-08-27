@@ -12,6 +12,7 @@ import gameweekHistoryRoutes from './gameweek-history.routes';
 import eventRoutes from './event.routes';
 import gameRoutes from './game.routes';
 import forgotPasswordRoutes from './forgot.password.routes';
+import fixturesSubscriptionRoutes from './fixtures-subscription.routes';
 
 // register all routes
 export default (app) => {
@@ -26,6 +27,7 @@ export default (app) => {
   app.use('/api/player-match-stats', playerMatchRoutes);
   app.use('/api/leagues', leagueRoutes);
   app.use('/api/gameweek-history', gameweekHistoryRoutes);
+  app.use('/api/fixtures-sub', fixturesSubscriptionRoutes);
   app.use('/api/events', eventRoutes);
   app.use('/api/games', gameRoutes);
   app.use('/api/forgot', forgotPasswordRoutes);
