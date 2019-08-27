@@ -76,7 +76,13 @@
     },
     "currentPoints": "Current Points",
     "points": "points",
-    "overallRank": "Rank in Overall League"
+    "overallRank": "Rank in Overall League",
+    "chart": {
+      "averagePoint": "average point",
+      "maxPoint": "max point",
+      "userPoint": "user point",
+      "GW": "GW"
+    }
   },
 
   "Gameweek": {
