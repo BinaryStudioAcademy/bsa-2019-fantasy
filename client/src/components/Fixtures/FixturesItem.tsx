@@ -11,6 +11,7 @@ import { RootState } from 'store/types';
 import styles from './styles.module.scss';
 import MatchStats from 'components/MatchStats';
 import Button from 'components/Button';
+import { FaBell, FaCircle } from 'react-icons/fa';
 import {
   createFixtureSubscription,
   deleteFixtureSubscription,
@@ -147,11 +148,11 @@ const FixturesItem = ({ match }: Props) => {
   return (
     <React.Fragment>
       {/* eslint-disable */}
-      <div className='flex flex-col items-center'>
+      <div className='flex items-center justify-around'>
         <li
-          className={`flex items-center p-3 ${match.started ? 'cursor-pointer' : ''} ${
-            isDisplay ? 'bg-green-600 text-white' : ''
-          }`}
+          className={`flex w-5/6 items-center p-3 ${
+            match.started ? 'cursor-pointer' : ''
+          } ${isDisplay ? 'bg-green-600 text-white' : ''}`}
           onClick={() => toggleStats()}
         >
           {/* eslint-enable */}
@@ -175,7 +176,7 @@ const FixturesItem = ({ match }: Props) => {
           >
             {label}
           </div>
-          <div className={cn(styles.team, 'text-left')}>
+          <div className={cn(styles.team, 'text-left ')}>
             <img
               className={styles.logo}
               src={`images/club-logos/badge_${match.awayteam.code}_200.png`}
@@ -184,21 +185,19 @@ const FixturesItem = ({ match }: Props) => {
             <h5 className='font-bold'>{match.awayteam.name}</h5>
           </div>
         </li>
-        {isDisplay && <div className='bg-gray-100 mb-4 p-3'>{displayStats()}</div>}
         {match.started ? null : (
           <Button
-            className='w-1/4 mb-1'
+            className='block w-1/12 h-8 rounded-lg flex justify-center'
             styling={isSubscribed ? 'secondary' : 'primary'}
             onClick={(e) => onSubscribe()}
           >
-            {isSubscribed ? (
-              <p className='text-center'> {t('unsubscribe')}</p>
-            ) : (
-              <p className='text-center'> {t('subscribe')}</p>
-            )}
+            <p>
+              <FaBell />
+            </p>
           </Button>
         )}
       </div>
+      {isDisplay && <div className='bg-gray-100 mb-4 p-3'>{displayStats()}</div>}
     </React.Fragment>
   );
 };
