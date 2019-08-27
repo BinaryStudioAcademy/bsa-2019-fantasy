@@ -33,9 +33,13 @@ describe('Login page tests', () => {
       .enterPassword(credentials.password)
       .catch((err) => console.log(err.message));
     await pageSteps.clickLogin().catch((err) => console.log(err.message));
-    await assert.strictEqual(
+    pageSteps
+      .displayIncorectEmailNotification()
+      .then((res) => assert.strictEqual(res, 'Incorrect email'))
+      .catch((err) => console.error(err));
+    /*assert.strictEqual(
       pageSteps.displayIncorectEmailNotification(),
       'Incorrect email.',
-    );
+    );*/
   });
 });
