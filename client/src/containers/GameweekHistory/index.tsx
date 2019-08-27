@@ -130,7 +130,7 @@ const GameweekHistory = () => {
         <div className='w-6/12'>
           {gameweekResults && gameweeks && (
             <LineChart
-              data={getChartOptions(gameweeks, gameweekResults, displayRadar())}
+              data={getChartOptions(gameweeks, gameweekResults, displayRadar(), t)}
             />
           )}
         </div>

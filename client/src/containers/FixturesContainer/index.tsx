@@ -65,7 +65,6 @@ const FixturesContainer = ({
       </div>
     );
   }
-
   return (
     <div className='bg-white py-3 min-h-screen shadow-figma'>
       <div
@@ -80,7 +79,7 @@ const FixturesContainer = ({
       >
         <h2 className='text-5xl'>{t('Fixtures.title')}</h2>
         <p className='mb-3'>
-          Gameweek {currentGameweek + 1} -{' '}
+          {t('Fixtures.gameweek')} {currentGameweek + 1} -{' '}
           {moment(gameweeks[currentGameweek].start).format('ddd D MMMM YYYY')}
         </p>
 
