@@ -66,7 +66,8 @@
   },
 
   "Fixtures": {
-    "title": "Fixtures"
+    "title": "Fixtures",
+    "gameweek": "Gameweek"
   },
 
   "GameweekHistoryPage": {
