@@ -1,10 +1,11 @@
-import { produce, Patch } from 'immer';
+import { produce } from 'immer';
 import { FaListUl } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import React, { useCallback, useState } from 'react';
 
 import { TeamMemberType } from 'types/gameweekHistory.type';
-import { PitchPlayerType } from '../Pitch/types';
+import { PitchPlayerType, DisplayPlayerType } from '../Pitch/types';
+import { PlayerDropHandler } from './types';
 
 import { Pitch } from 'components/Pitch';
 import TeamList from 'components/TeamList';
@@ -16,28 +17,16 @@ type Props = {
   /**
    * List of players returned by `usePitchPlayers()` hook or analogue one
    */
-  players: (PitchPlayerType | null)[];
+  players: PitchPlayerType[];
   /**
    * `players` setter returned by `usePitchPlayers()` hook or analogue one
    */
-  setPlayers: React.Dispatch<React.SetStateAction<(PitchPlayerType | null)[]>>;
+  setPlayers: React.Dispatch<React.SetStateAction<PitchPlayerType[]>>;
 
   hasBench?: boolean;
 
-  /**
-   * Place specific logic in this function
-   * @param target Value of player cell on which `player` was dropped
-   * @param player Value which was dropped
-   * @param immer_reverse Patch which can be used to reverse changes in pitch via `immer.applyPatches(immer_reverse)`
-   * @param isNewPlayer true if `player` was new to the list
-   */
-  onPlayerDrop?: (
-    target: PitchPlayerType | null,
-    player: PitchPlayerType,
-    immer_reverse: Patch[],
-    isNewPlayer: boolean,
-  ) => void;
-  onPlayerClick?: (player: PitchPlayerType) => void;
+  onPlayerDrop: PlayerDropHandler;
+  onPlayerClick?: (player: DisplayPlayerType) => void;
 
   submit?: {
     onSubmit: () => void;
@@ -56,39 +45,50 @@ const TeamSelection = ({
 }: Props) => {
   const { t } = useTranslation();
 
-  const [view, setView] = useState<'list' | 'pitch'>('list');
+  const [view, setView] = useState<'list' | 'pitch'>('pitch');
 
   const handlePlayerDrop = useCallback(
     (targetIdx: number) => (
-      player: PitchPlayerType | Omit<PitchPlayerType, keyof TeamMemberType>,
+      player: DisplayPlayerType | Omit<DisplayPlayerType, keyof TeamMemberType>,
     ) => {
       const target = players[targetIdx];
 
-      if (!target || target.player_stats.id !== player.player_stats.id) {
+      if (!target.item || target.item.player_stats.id !== player.player_stats.id) {
         const playerOnPitchIdx = players.findIndex(
-          (p) => p === player || (p && p.player_stats.id === player.player_stats.id),
+          (p) =>
+            p.item === player ||
+            (p.item && p.item.player_stats.id === player.player_stats.id),
         );
+        const playerOnPitch = players[playerOnPitchIdx];
 
-        const newPlayer = players[playerOnPitchIdx] || {
-          is_captain: false,
-          is_vice_captain: false,
-          is_on_bench: false,
-          ...target,
-          player_id: player.player_stats.id,
-          ...player,
-        };
+        const newPlayer =
+          playerOnPitch && playerOnPitch.item
+            ? playerOnPitch.item
+            : {
+                is_captain: false,
+                is_vice_captain: false,
+                is_on_bench: false,
+                ...target.item,
+                player_id: player.player_stats.id,
+                ...player,
+              };
 
         const newPlayers = produce(
           players,
           (draft) => {
-            draft[targetIdx] = newPlayer;
+            draft[targetIdx].item = newPlayer;
             if (playerOnPitchIdx !== -1) {
-              draft[playerOnPitchIdx] = target;
+              draft[playerOnPitchIdx].item = target.item;
             }
           },
           (_, immer_reverse) => {
             onPlayerDrop &&
-              onPlayerDrop(target, newPlayer, immer_reverse, playerOnPitchIdx === -1);
+              onPlayerDrop(
+                target.item,
+                newPlayer,
+                immer_reverse,
+                playerOnPitchIdx === -1,
+              );
           },
         );
 

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
 import { RootState } from 'store/types';
-import { PitchPlayerType } from 'components/Pitch/types';
+import { DisplayPlayerType } from 'components/Pitch/types';
 
 const Container = styled.tr`
   width: 100%;
@@ -20,8 +20,8 @@ const Container = styled.tr`
 `;
 
 type Props = {
-  player: PitchPlayerType | null;
-  onClick?: (player: PitchPlayerType) => void;
+  player: DisplayPlayerType | null;
+  onClick?: (player: DisplayPlayerType) => void;
 };
 
 const TeamListItem = ({ player, onClick }: Props) => {

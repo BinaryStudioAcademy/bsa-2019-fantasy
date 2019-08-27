@@ -30,12 +30,3 @@ export const Container = styled.table`
     padding: 0.75rem;
   }
 `;
-
-export const HeaderShadow = styled.div`
-  position: sticky;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3rem;
-  margin-bottom: -3rem;
-`;

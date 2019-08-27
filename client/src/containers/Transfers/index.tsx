@@ -1,4 +1,4 @@
-import { applyPatches, Patch } from 'immer';
+import { applyPatches } from 'immer';
 import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
@@ -7,8 +7,8 @@ import { RootState } from 'store/types';
 import { TransferType } from 'types/transfer.type';
 import { usePitchPlayers } from 'components/Pitch/use-pitch-players.hook';
 import { removeTransfer, emptyChanges, addTransfer, modifyTransfer } from './actions';
+import { PlayerDropHandler } from 'components/TeamSelection/types';
 
-import { PitchPlayerType } from 'components/Pitch/types';
 import FixturesContainer from 'containers/FixturesContainer';
 import PlayersSelection from 'components/PlayersSelection';
 import TransfersModal from './components/TransfersModal';
@@ -52,11 +52,11 @@ const Transfers = () => {
     dispatch(removeTransfer(t));
   };
 
-  const onPlayerDrop = (
-    target: PitchPlayerType | null,
-    player: PitchPlayerType,
-    immer_reverse: Patch[],
-    isNewPlayer: boolean,
+  const onPlayerDrop: PlayerDropHandler = (
+    target,
+    player,
+    immer_reverse,
+    isNewPlayer,
   ) => {
     if (target) {
       const in_player_id = player.player_stats.id;

@@ -7,28 +7,35 @@ import { GameweekHistoryType } from 'types/gameweekHistory.type';
 import { PlayerTypes } from 'components/Gameweek/PlayerSelection/types';
 
 import { getGoalkeepersUniformUrl, getFieldPlayersUniformUrl } from 'helpers/images';
+import { getPitch } from './helpers';
+import produce from 'immer';
 
 export const usePitchPlayers = (players: GameweekHistoryType[]) => {
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
 
-  const [pitchPlayers, setPitch] = useState<(PitchPlayerType | null)[]>([]);
+  const [pitchPlayers, setPitch] = useState<PitchPlayerType[]>([]);
 
   useEffect(() => {
-    if (players.length) {
-      setPitch(
-        players
-          .map((p) => ({
-            ...p,
-            display: {
-              src:
-                p.player_stats.position === PlayerTypes.GOALKEEPER
-                  ? getGoalkeepersUniformUrl(clubs[p.player_stats.club_id - 1].code)
-                  : getFieldPlayersUniformUrl(clubs[p.player_stats.club_id - 1].code),
-            },
-          }))
-          .concat(Array(15 - players.length).fill(null)),
-      );
-    }
+    setPitch(
+      getPitch(players).map((p) =>
+        p.item === null
+          ? (p as PitchPlayerType)
+          : (produce(p, (draft: PitchPlayerType) => {
+              if (draft.item) {
+                draft.item.display = {
+                  src:
+                    draft.type === PlayerTypes.GOALKEEPER
+                      ? getGoalkeepersUniformUrl(
+                          clubs[draft.item.player_stats.club_id - 1].code,
+                        )
+                      : getFieldPlayersUniformUrl(
+                          clubs[draft.item.player_stats.club_id - 1].code,
+                        ),
+                };
+              }
+            }) as PitchPlayerType),
+      ),
+    );
   }, [players.length]);
 
   return { pitchPlayers, setPitch };

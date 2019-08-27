@@ -3,19 +3,19 @@ import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import { PlayerPosition } from 'components/Gameweek/PlayerSelection/types';
-import { PitchPlayerType } from './types';
+import { PitchPlayerType, DisplayPlayerType } from './types';
 
 import PitchPlayer from './components/PitchPlayer';
 
 import * as S from './styles';
 
 type Props = {
-  players: (PitchPlayerType | null)[];
+  players: PitchPlayerType[];
   hasBench: boolean;
   disabled?: boolean;
 
-  onPlayerDrop: (target: number) => (player: PitchPlayerType) => void;
-  onPlayerClick?: (player: PitchPlayerType) => void;
+  onPlayerDrop: (target: number) => (player: DisplayPlayerType) => void;
+  onPlayerClick?: (player: DisplayPlayerType) => void;
 };
 
 export const Pitch = ({
@@ -34,19 +34,19 @@ export const Pitch = ({
           <S.TeamRow key={`pitch-team-row-${type}`}>
             {players
               .filter(
-                (p) =>
-                  !p ||
-                  (p.player_stats.position === type && (!hasBench || !p.is_on_bench)),
+                (p) => p.type === type && !(hasBench && (p.item && p.item.is_on_bench)),
               )
               .map((p, idx) => (
                 <PitchPlayer
                   index={players.indexOf(p)}
                   type={type}
-                  player={p}
+                  player={p.item}
                   disabled={disabled}
                   onDrop={onPlayerDrop}
                   onClick={onPlayerClick}
-                  key={`pitch-${type.toString()}-${p ? p.player_stats.second_name : idx}`}
+                  key={`pitch-${type.toString()}-${
+                    p.item ? p.item.player_stats.second_name : idx
+                  }`}
                 />
               ))}
           </S.TeamRow>

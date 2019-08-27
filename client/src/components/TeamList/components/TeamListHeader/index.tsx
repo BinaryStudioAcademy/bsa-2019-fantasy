@@ -28,7 +28,7 @@ type Props = {
 
 const TeamListHeader = ({ title }: Props) => {
   return (
-    <Container className=''>
+    <Container>
       <td className='w-1/12' />
       <td className='w-6/12 h-full text-left'>{title}</td>
       <td className='w-1/12' title='Position'>

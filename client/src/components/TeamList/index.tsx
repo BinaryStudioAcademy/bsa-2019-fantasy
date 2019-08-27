@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
-import { PitchPlayerType } from 'components/Pitch/types';
+import { PitchPlayerType, DisplayPlayerType } from 'components/Pitch/types';
 import { categorizePlayers } from 'helpers/categorizePlayers';
 
 import TeamListHeader from './components/TeamListHeader';
@@ -9,16 +9,18 @@ import TeamListItem from './components/TeamListItem';
 import * as S from './styles';
 
 type Props = {
-  players: (PitchPlayerType | null)[];
+  players: PitchPlayerType[];
   hasBench: boolean;
 
-  onPlayerClick?: (player: PitchPlayerType) => void;
+  onPlayerClick?: (player: DisplayPlayerType) => void;
 };
 
 const TeamList = ({ players: givenPlayers, hasBench, onPlayerClick }: Props) => {
-  const players = givenPlayers.filter((p) => p) as PitchPlayerType[];
+  const players = useMemo(() => givenPlayers.map((p) => p.item).filter((p) => p), [
+    givenPlayers,
+  ]) as DisplayPlayerType[];
 
-  let categorizedPlayers: { [k: string]: (PitchPlayerType | null)[] };
+  let categorizedPlayers: { [k: string]: (DisplayPlayerType | null)[] };
   if (hasBench) {
     categorizedPlayers = {
       Starters: players.filter((p) => !p.is_on_bench),
@@ -38,8 +40,6 @@ const TeamList = ({ players: givenPlayers, hasBench, onPlayerClick }: Props) => 
   return (
     <S.Container className='rounded'>
       <tbody className='w-full flex flex-col'>
-        <S.HeaderShadow className='shadow' />
-
         {Object.entries(categorizedPlayers).map(([name, items]) => (
           <React.Fragment key={`team-list-${name}`}>
             <TeamListHeader title={name} />

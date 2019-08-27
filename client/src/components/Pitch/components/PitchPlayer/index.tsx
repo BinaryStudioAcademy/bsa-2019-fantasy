@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import { FaFutbol } from 'react-icons/fa';
 import { useDrop, useDrag } from 'react-dnd';
 
-import { PitchPlayerType } from '../../types';
+import { DisplayPlayerType } from '../../types';
 import { PlayerPosition } from 'components/Gameweek/PlayerSelection/types';
 
 import * as S from './styles';
@@ -11,19 +11,19 @@ import * as S from './styles';
 type Props = {
   index: number;
   type: PlayerPosition | PlayerPosition[];
-  player: PitchPlayerType | null;
+  player: DisplayPlayerType | null;
   disabled: boolean;
 
-  onDrop: (targetIdx: number) => (dropped: PitchPlayerType) => any;
-  onClick?: (player: PitchPlayerType) => void;
+  onDrop: (targetIdx: number) => (dropped: DisplayPlayerType) => any;
+  onClick?: (player: DisplayPlayerType) => void;
 };
 
 const PitchPlayer = ({ index, type, player, disabled, onDrop, onClick }: Props) => {
   const dropRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<HTMLDivElement>(null);
   const [{ isOver, canDrop }, drop] = useDrop<
-    PitchPlayerType & { type: PlayerPosition },
-    PitchPlayerType,
+    DisplayPlayerType & { type: PlayerPosition },
+    DisplayPlayerType,
     { isOver: boolean; canDrop: boolean }
   >({
     accept: type,
