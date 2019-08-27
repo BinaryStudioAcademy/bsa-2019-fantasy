@@ -31,7 +31,7 @@ const FavouriteClubSelection = () => {
       clubs.find((c) => c.id === selectedClubId)
     ) {
       dispatch(updateFavoriteClub(selectedClubId));
-      dispatch(addNotification('You have updated your favorite club.'));
+      dispatch(addNotification(t('Notifications.messages.changeFavoriteClub')));
     }
   };
 

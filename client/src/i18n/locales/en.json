@@ -374,5 +374,26 @@
       "message": "Click the button below to leave the league.",
       "button": "Leave league"
     }
+  },
+
+  "Notifications": {
+    "messages": {
+      "setUaLanguage": "You have changed website language to Ukrainian.",
+      "setEnLanguage": "You have changed website language to English.",
+      "joinPrivateLeague": "You have joined the new private league.",
+      "joinPublicLeague": "You have joined the new public league.",
+      "createPrivateLeague": "You have created the new private league.",
+      "createPublicLeague": "You have created the new public league.",
+      "changeFavoriteClub": "You have updated your favorite club."
+    },
+
+    "navigation": {
+      "clearAll": "Clear All"
+    },
+
+    "additional": {
+      "Ukrainian": "Ukrainian",
+      "English": "English"
+    }
   }
 }
