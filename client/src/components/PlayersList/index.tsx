@@ -10,13 +10,15 @@ import { PlayerItem } from '../PlayerItem/index';
 import { PlayerTypes } from 'components/Gameweek/PlayerSelection/types';
 import { getFieldPlayersUniformUrl, getGoalkeepersUniformUrl } from 'helpers/images';
 import info from 'assets/images/info.svg';
+import { filteredBy } from '../PlayersSelection/constants';
 
 type Props = {
   players: PlayerType[];
   onOpenInfo?: (id: string, club_id: string) => void;
+  onFilterSelectChange: (item: any) => void;
 };
 
-export const PlayerList = ({ players, onOpenInfo }: Props) => {
+export const PlayerList = ({ players, onOpenInfo, onFilterSelectChange }: Props) => {
   const { t } = useTranslation();
 
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
@@ -34,6 +36,27 @@ export const PlayerList = ({ players, onOpenInfo }: Props) => {
   const forwards = players.filter((player) => {
     return player.position === FWD ? true : false;
   });
+
+  const handlePositionClick = (ev) => {
+    const pos = ev.currentTarget.innerHTML;
+    const filters = filteredBy[1].items;
+
+    switch (pos) {
+      case 'goalkeepers':
+        onFilterSelectChange(filters[0]);
+        break;
+      case 'defenders':
+        onFilterSelectChange(filters[1]);
+        break;
+      case 'midfielders':
+        onFilterSelectChange(filters[2]);
+        break;
+      case 'forwards':
+        onFilterSelectChange(filters[3]);
+        break;
+    }
+  };
+
   return (
     <DndProvider backend={HTML5Backend}>
       <table className='w-full shadow rounded overflow-hidden'>
@@ -42,7 +65,13 @@ export const PlayerList = ({ players, onOpenInfo }: Props) => {
             <th className='w-1/6' align='left'>
               &nbsp;
             </th>
-            <th className='w-3/6 capitalize' align='left'>
+            <th
+              className='w-3/6 capitalize cursor-pointer'
+              align='left'
+              onClick={(ev) => {
+                handlePositionClick(ev);
+              }}
+            >
               {t('roles.goalkeeper_plural')}
             </th>
             <th className='w-1/6' align='left'>
@@ -71,7 +100,13 @@ export const PlayerList = ({ players, onOpenInfo }: Props) => {
             <th className='w-1/6' align='left'>
               &nbsp;
             </th>
-            <th className='w-3/6 capitalize' align='left'>
+            <th
+              className='w-3/6 capitalize cursor-pointer'
+              align='left'
+              onClick={(ev) => {
+                handlePositionClick(ev);
+              }}
+            >
               {t('roles.defender_plural')}
             </th>
             <th className='w-1/6' align='left'>
@@ -100,7 +135,13 @@ export const PlayerList = ({ players, onOpenInfo }: Props) => {
             <th className='w-1/6' align='left'>
               &nbsp;
             </th>
-            <th className='w-3/6 capitalize' align='left'>
+            <th
+              className='w-3/6 capitalize cursor-pointer'
+              align='left'
+              onClick={(ev) => {
+                handlePositionClick(ev);
+              }}
+            >
               {t('roles.midfielder_plural')}
             </th>
             <th className='w-1/6' align='left'>
@@ -129,7 +170,13 @@ export const PlayerList = ({ players, onOpenInfo }: Props) => {
             <th className='w-1/6' align='left'>
               &nbsp;
             </th>
-            <th className='w-3/6 capitalize' align='left'>
+            <th
+              className='w-3/6 capitalize cursor-pointer'
+              align='left'
+              onClick={(ev) => {
+                handlePositionClick(ev);
+              }}
+            >
               {t('roles.forward_plural')}
             </th>
             <th className='w-1/6' align='left'>
