@@ -15,7 +15,7 @@ const fixturesReminderScheduler = async () => {
   users.forEach(async (u) => {
     // eslint-disable-next-line prefer-const
     const userSubscriptions = subscriptions.filter((s) => s.user_id === u.id);
-    console.log(userSubscriptions);
+
     if (userSubscriptions) {
       userSubscriptions.forEach(async (us) => {
         const userToRemind = await userRepository.getById(us.user_id);
