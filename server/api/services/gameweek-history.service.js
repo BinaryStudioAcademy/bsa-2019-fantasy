@@ -167,3 +167,8 @@ export const getUserRanking = (userHistory, userId) => {
   const userPosition = usersRanking.indexOf(userId) + 1;
   return userPosition;
 };
+
+export const makeAutoSubsitution = async (gameweekId) => {
+  const gameweekHistories = await getHistoryByGameweekId(gameweekId);
+  console.log(gameweekHistories);
+};

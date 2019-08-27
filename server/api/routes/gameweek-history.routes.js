@@ -115,6 +115,16 @@ router
         }),
       )
       .catch(next);
+  })
+  .put('/auto-substitution/:gameweek', (req, res, next) => {
+    gameweekHistoryService
+      .makeAutoSubsitution(req.params.gameweek)
+      .then((response) =>
+        res.send({
+          message: `Here`,
+        }),
+      )
+      .catch(next);
   });
 
 export default router;
