@@ -203,7 +203,9 @@
       "password": "Пароль",
       "email": "Електронна пошта",
       "setPassword": "Налаштувати пароль",
-      "language": "Мова"
+      "language": "Мова",
+      "avatar": "Аватар",
+      "changeAvatar": "Змінити аватар"
     },
 
     "favouriteClub": {

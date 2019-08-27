@@ -203,7 +203,9 @@
       "password": "Password",
       "email": "Email",
       "setPassword": "Set a password",
-      "language": "Language"
+      "language": "Language",
+      "avatar": "Avatar",
+      "changeAvatar": "Change avatar"
     },
 
     "favouriteClub": {

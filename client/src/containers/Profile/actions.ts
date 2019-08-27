@@ -165,3 +165,17 @@ export const updateUserTeamDetails = (
     feedback.error('Failed to create your team');
   }
 };
+
+export const updateUserAvatar = (imageId: string): AsyncUserAction => async (
+  dispatch,
+  getState,
+) => {
+  try {
+    const user = await authService.getCurrentUser();
+    const res = await profileService.updateUserAvatar(user!.id, imageId);
+    loadCurrentUser(true)(dispatch, getState);
+    feedback.success((res && res.message) || res);
+  } catch {
+    feedback.error('Failed to change your avatar');
+  }
+};
