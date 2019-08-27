@@ -147,6 +147,20 @@ export const updateEmailPreferences = (
   }
 };
 
+export const getFixtureSubscription = (
+  gameId: FixturesItemType['id'],
+): AsyncUserAction => async (dispatch, getState) => {
+  try {
+    const user = await authService.getCurrentUser();
+    const res = await profileService.getFixtureSub(user!.id, gameId);
+    loadCurrentUser(true)(dispatch, getState);
+
+    feedback.success((res && res.message) || res);
+  } catch (err) {
+    feedback.error('Failed to update favorite club.');
+  }
+};
+
 export const createFixtureSubscription = (
   gameId: FixturesItemType['id'],
 ): AsyncUserAction => async (dispatch, getState) => {
@@ -160,6 +174,7 @@ export const createFixtureSubscription = (
     feedback.error('Failed to update favorite club.');
   }
 };
+
 export const deleteFixtureSubscription = (
   gameId: FixturesItemType['id'],
 ): AsyncUserAction => async (dispatch, getState) => {
@@ -173,6 +188,7 @@ export const deleteFixtureSubscription = (
     feedback.error('Failed to update favorite club.');
   }
 };
+
 export const updateUserTeamDetails = (
   userData: UserTeamDetails,
   teamMemberData: TeamMemberData,

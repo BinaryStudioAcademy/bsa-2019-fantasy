@@ -54,11 +54,21 @@ router
       next(err);
     }
   })
+  .get('/fixtures-sub/:user/:game', jwtMiddleware, (req, res, next) =>
+    fixturesSubscriptionService
+      .findSubscription(req.params.user, req.params.game)
+      .then((value) =>
+        value ? res.json(value) : res.json({ message: 'Subscription is not found' }),
+      )
+      .catch(next),
+  )
   .post('/fixtures-sub', jwtMiddleware, (req, res, next) =>
     fixturesSubscriptionService
       .createSubscription(req.body)
       .then(() =>
-        res.json({ message: 'Successfuly subscribed to the fixture notification' }),
+        res.json({
+          message: 'Successfuly subscribed to notifications about the fixture ',
+        }),
       )
       .catch(next),
   )

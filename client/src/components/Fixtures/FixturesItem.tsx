@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 
 import { FixturesItemType } from 'types/fixtures.types';
 import { loadGameDetailsAction } from '../../containers/FixturesContainer/actions';
@@ -11,7 +10,7 @@ import { RootState } from 'store/types';
 import styles from './styles.module.scss';
 import MatchStats from 'components/MatchStats';
 import Button from 'components/Button';
-import { FaBell, FaCircle } from 'react-icons/fa';
+import { FaBell } from 'react-icons/fa';
 import {
   createFixtureSubscription,
   deleteFixtureSubscription,
@@ -27,7 +26,6 @@ const FixturesItem = ({ match }: Props) => {
   const [isSubscribed, setSubscribe] = useState<boolean>(false);
   const dispatch = useDispatch();
   const gameDetails = useSelector((state: RootState) => state.fixtures.gameDetails);
-  const { t } = useTranslation();
 
   useEffect(() => {
     if (gameDetails) {
@@ -144,7 +142,7 @@ const FixturesItem = ({ match }: Props) => {
       : dispatch(createFixtureSubscription(match.id));
     setSubscribe(!isSubscribed);
   };
-  console.log(match);
+
   return (
     <React.Fragment>
       {/* eslint-disable */}

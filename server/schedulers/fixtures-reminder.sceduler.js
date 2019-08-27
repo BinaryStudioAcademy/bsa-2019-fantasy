@@ -54,7 +54,7 @@ const fixturesReminderScheduler = async () => {
 
             sendRemind(userToRemind.email, gameDetails);
 
-            //  fixturesReminderScheduler();
+            fixturesReminderScheduler();
           },
         );
         console.log(
@@ -64,31 +64,5 @@ const fixturesReminderScheduler = async () => {
     }
   });
 };
-// users.forEach(async (u) => {
-//   if (u.sendmail_time && u.team_name === null) {
-//     const nextGameweek = gameweeks.find((w) => {
-//       const now = moment().add(u.sendmail_time, 'h');
-
-//       return moment(now).isBefore(w.start);
-//     });
-//     if (!nextGameweek) {
-//       return;
-//     }
-//     const timeToRemind = moment(nextGameweek.start).subtract(u.sendmail_time, 'h');
-
-//     schedule.scheduleJob(
-//       'remind apply team',
-//       new Date(timeToRemind),
-//       async (fireDate) => {
-//         console.log(`remind apply team ${fireDate}`);
-
-//         sendRemind(u.email);
-
-//         teamReminderScheduler();
-//       },
-//     );
-//     console.log(`>>> Remind apply team on: ${timeToRemind}`);
-//   }
-// });
 
 export default fixturesReminderScheduler;

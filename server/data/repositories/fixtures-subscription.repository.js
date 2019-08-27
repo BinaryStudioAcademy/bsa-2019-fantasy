@@ -6,6 +6,10 @@ class FixturesSubscriptionRepository extends BaseRepository {
     return this.create(subscription);
   }
 
+  getByUserAndGameId(user_id, game_id) {
+    return this.model.findOne({ where: { user_id, game_id } });
+  }
+
   getAll() {
     return this.model.findAll();
   }

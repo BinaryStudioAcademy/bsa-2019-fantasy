@@ -30,6 +30,20 @@ export const updateEmailPref = async (
 
   return response.json();
 };
+
+//fixture subscribtions
+export const getFixtureSub = async (
+  user_id: User['id'],
+  game_id: FixturesItemType['id'],
+) => {
+  const response = await callWebApi({
+    endpoint: `/api/profile/fixtures-sub/${user_id}/${game_id}`,
+    type: 'GET',
+  });
+
+  return response.json();
+};
+
 export const createFixtureSub = async (
   user_id: User['id'],
   game_id: FixturesItemType['id'],
