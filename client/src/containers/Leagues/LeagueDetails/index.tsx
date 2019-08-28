@@ -158,6 +158,10 @@ const LeagueDetails = ({
     return <Spinner />;
   }
 
+  if (leagueDetails.forbidden) {
+    history.push('/leagues');
+  } 
+
   return (
     <div className={styles['league-details']}>
       <div className={cn(header.jumbotron, header.paper, 'mb-12', 'rounded')}>

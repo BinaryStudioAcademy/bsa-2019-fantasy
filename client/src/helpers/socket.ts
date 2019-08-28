@@ -3,7 +3,7 @@ import openSocket from 'socket.io-client';
 import handlers from './handlers';
 import { User } from 'types/user.type';
 
-const socket = openSocket('http://localhost:5002');
+const socket = openSocket(`http://${process.env.REACT_APP_FAKER_SOCKET_SERVER}:${process.env.REACT_APP_SOCKET_SERVER_PORT}`);
 handlers(socket);
 
 export const joinRoom = (favorite_club) => {

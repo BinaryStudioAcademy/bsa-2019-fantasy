@@ -1,0 +1,21 @@
+version: 0.0
+
+os: linux
+
+files:
+  - source: /
+    destination: /home/ubuntu/bsa-2019-fantasy
+
+permissions:
+  - object: /
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+
+hooks:
+  BeforeInstall:
+    - location: scripts/before-install.sh
+      runas: ubuntu
+  ApplicationStart:
+    - location: scripts/app-start.sh
+      runas: ubuntu
