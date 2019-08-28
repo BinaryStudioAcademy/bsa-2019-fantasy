@@ -10,6 +10,7 @@ import {
   joinPrivateLeagueMiddleware,
   joinPublicLeagueMiddleware,
   getInvitationMiddleware,
+  leagueDetailsMiddleware
 } from '../middlewares/league.middleware';
 import jwtMiddleware from '../middlewares/jwt.middleware';
 
@@ -22,7 +23,7 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
-  .get('/:name', jwtMiddleware, async (req, res, next) => {
+  .get('/:name', jwtMiddleware, leagueDetailsMiddleware, async (req, res, next) => {
     try {
       const league = await leagueService.getLeagueParams(req.params.name);
       const { id, name, start_from } = league;
