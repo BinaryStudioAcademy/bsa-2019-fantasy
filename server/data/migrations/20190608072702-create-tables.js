@@ -230,15 +230,7 @@ export default {
               },
               event_type: {
                 allowNull: false,
-                type: Sequelize.ENUM(
-                  'goal',
-                  'assist',
-                  'missed_pass',
-                  'goal_conceded',
-                  'save',
-                  'yellow_card',
-                  'red_card',
-                ),
+                type: Sequelize.STRING,
               },
               createdAt: Sequelize.DATE,
               updatedAt: Sequelize.DATE,
