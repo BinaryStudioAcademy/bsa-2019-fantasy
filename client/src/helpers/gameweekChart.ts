@@ -5,6 +5,7 @@ export const getChartOptions = (
   gameweeks: GameweekType[],
   statistics: GameweekHistoryResultsType[],
   userPoints: any = [10, 59, 80, 81, 56, 55, 40],
+  translation?: any,
 ) => {
   const statisticsIds = [...statistics].map((s) => s.gameweek);
 
@@ -12,11 +13,11 @@ export const getChartOptions = (
     labels: [
       ...gameweeks
         .filter((g) => statisticsIds.includes(g.id))
-        .map((g) => `GW ${g.number}`),
+        .map((g) => `${translation('GameweekHistoryPage.chart.GW')} ${g.number}`),
     ],
     datasets: [
       {
-        label: 'average point',
+        label: translation('GameweekHistoryPage.chart.averagePoint'),
         fill: true,
         borderColor: '#1EE3CF',
         backgroundColor: 'rgba(30, 227, 207, 0.3)',
@@ -25,7 +26,7 @@ export const getChartOptions = (
         data: [...statistics.map((s) => (s.average ? s.average : 0))],
       },
       {
-        label: 'max point',
+        label: translation('GameweekHistoryPage.chart.maxPoint'),
         fill: true,
         borderColor: '#1EE3CF',
         backgroundColor: 'rgba(18, 39, 55, 0.678)',
@@ -34,7 +35,7 @@ export const getChartOptions = (
         data: [...statistics.map((s) => (s.max ? s.max : 0))],
       },
       {
-        label: 'user point',
+        label: translation('GameweekHistoryPage.chart.userPoint'),
         fill: false,
         borderColor: 'rgba(18, 39, 55, 0.678)',
         pointHoverBackgroundColor: '#fff',
