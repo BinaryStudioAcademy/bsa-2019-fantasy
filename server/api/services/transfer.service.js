@@ -53,9 +53,13 @@ export const applyTransfers = async (user_id, gameweek_id, transfers) => {
           }
 
           newPlayer.player_id = in_player;
+
+          const nTransfersIn = await playerRepository.getById(in_player).transfers_in;
+          await playerRepository.updateById(in_player, { transfers_in: nTransfersIn + 1 });
+          const nTransfersOut = await playerRepository.getById(out_player).transfers_out;
+          await playerRepository.updateById(out_player, { transfers_out: nTransfersOut + 1 });
         }
       });
-
       return newPlayer;
     });
 
