@@ -1,6 +1,10 @@
 /* eslint-disable no-await-in-loop */
 import gameweekHistoryRepository from '../../data/repositories/gameweek-history.repository';
 import { updateTeamMember } from './team-member-history.service';
+import {
+  findBenchPlayer,
+  findBenchPlayerGKP,
+} from '../../helpers/auto-subsitution.helper';
 
 export const getAllHistory = () => gameweekHistoryRepository.getAll();
 
@@ -172,34 +176,31 @@ export const getUserRanking = (userHistory, userId) => {
   return userPosition;
 };
 
-const util = require('util');
-
 export const makeAutoSubsitution = async (gameweekId) => {
   const gameweekHistories = await getHistoryByGameweekId(gameweekId);
-  const teamMemberHistories = gameweekHistories.map((el) => el.team_member_histories);
+  const teamMembers = gameweekHistories.map((el) => el.team_member_histories);
 
-  console.log(util.inspect(teamMemberHistories, false, true, true /* enable colors */));
+  // For all TeamMembersHistories make substitution if main squad player was injured
+  for (let i = 0; i < teamMembers.length; i += 1) {
+    for (let j = 0; j < teamMembers[i].length; j += 1) {
+      const {
+        is_on_bench,
+        player_stats: { injury, position },
+      } = teamMembers[i][j];
+      const pitchPlayer = teamMembers[i][j];
+      let benchPlayer;
 
-  for (let i = 0; i < teamMemberHistories.length; i += 1) {
-    for (let j = 0; j < teamMemberHistories[i].length; j += 1) {
-      if (!teamMemberHistories[i][j].is_on_bench && j % 5 === 0) {
-        let pitchId = teamMemberHistories[i][j].id;
-        let benchId;
-        if (teamMemberHistories[i][j].player_stats.position === 'GKP') {
-          benchId = teamMemberHistories[i].find(
-            (el) => el.is_on_bench && el.player_stats.position === 'GKP',
-          ).id;
+      if (injury && !is_on_bench) {
+        if (position === 'GKP') {
+          benchPlayer = findBenchPlayerGKP(teamMembers[i]);
         } else {
-          benchId = teamMemberHistories[i].find(
-            (el) => el.is_on_bench && el.player_stats.position !== 'GKP',
-          ).id;
+          benchPlayer = findBenchPlayer(teamMembers[i]);
         }
-        await updateTeamMember(benchId, { is_on_bench: false });
-        await updateTeamMember(pitchId, { is_on_bench: true });
-        console.log(pitchId);
-        console.log(benchId);
+        if (benchPlayer) {
+          await updateTeamMember(benchPlayer.id, { is_on_bench: false });
+          await updateTeamMember(pitchPlayer.id, { is_on_bench: true });
+        }
       }
-      console.log(teamMemberHistories[i][j].is_on_bench);
     }
   }
 };
