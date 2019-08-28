@@ -8,7 +8,7 @@ export default (orm, DataTypes) => {
       },
       time: {
         allowNull: false,
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
       },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,

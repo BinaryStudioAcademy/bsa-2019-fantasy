@@ -234,7 +234,7 @@ export default {
               },
               time: {
                 allowNull: false,
-                type: Sequelize.NUMBER,
+                type: Sequelize.INTEGER,
               },
               createdAt: Sequelize.DATE,
               updatedAt: Sequelize.DATE,
