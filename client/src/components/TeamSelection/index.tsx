@@ -25,7 +25,7 @@ type Props = {
 
   hasBench?: boolean;
 
-  onPlayerDrop: PlayerDropHandler;
+  onPlayerDrop?: PlayerDropHandler;
   onPlayerClick?: (player: DisplayPlayerType) => void;
 
   submit?: {

@@ -195,7 +195,8 @@ export const updateUserTeamDetails = (
   gameweekId: GameweekType['id'],
 ): AsyncUserAction => async (dispatch, getState) => {
   try {
-    const user = await authService.getCurrentUser();
+    const { user } = getState().profile;
+
     const res = await profileService.updateUserTeamDetails(
       user!.id,
       gameweekId,

@@ -42,12 +42,5 @@ export const loadPlayersAction = (filter: any): AsyncPlayersSelectionAction => a
 export const loadAutoPickAction = (): AsyncPlayersSelectionAction => async (dispatch) => {
   const result = await playersService.getRandomSquad();
 
-  // Get all positions from promiseAll
-  const goalkeepers = result[0];
-  const defenders = result[1];
-  const middlefielders = result[2];
-  const forwards = result[3];
-  dispatch(
-    setAutoPickSquad([...goalkeepers, ...defenders, ...middlefielders, ...forwards]),
-  );
+  dispatch(setAutoPickSquad(result));
 };
