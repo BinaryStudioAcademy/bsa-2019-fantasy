@@ -232,6 +232,10 @@ export default {
                 allowNull: false,
                 type: Sequelize.STRING,
               },
+              time: {
+                allowNull: false,
+                type: Sequelize.NUMBER,
+              },
               createdAt: Sequelize.DATE,
               updatedAt: Sequelize.DATE,
             },

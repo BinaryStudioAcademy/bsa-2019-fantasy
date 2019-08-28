@@ -6,6 +6,10 @@ export default (orm, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
       },
+      time: {
+        allowNull: false,
+        type: DataTypes.NUMBER,
+      },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
     },
