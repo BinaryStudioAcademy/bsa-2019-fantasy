@@ -32,6 +32,13 @@ export default class BaseRepository {
   }
 
   getLastUpdated() {
-    return this.model.findOne({ order: ['updatedAt', 'DESC'] });
+    return this.model.findOne({
+      order: [['updatedAt', 'DESC']],
+      attributes: ['updatedAt'],
+    });
+  }
+
+  bulkCreateUpdate(data) {
+    return this.model.bulkCreate(data);
   }
 }

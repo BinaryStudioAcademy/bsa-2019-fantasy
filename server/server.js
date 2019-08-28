@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import dotenv from 'dotenv';
 import fs from 'fs';
 import express from 'express';
@@ -12,7 +13,7 @@ import errorHandlerMiddleware from './api/middlewares/error-handler.middleware';
 import socketInjector from './socket/injector';
 import socketHandlers from './socket/handlers';
 import initSchedulers from './schedulers';
-import updateDbFromFaker from './helpers/update-db-from-faker.helper';
+import { updateDbFromFaker } from './helpers/update-db-from-faker.helper';
 
 import sequelize from './data/db/connection';
 
@@ -34,7 +35,7 @@ sequelize
   .authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
-    //updateDbFromFaker();
+    updateDbFromFaker();
     initSchedulers();
   })
   .catch((err) => {
