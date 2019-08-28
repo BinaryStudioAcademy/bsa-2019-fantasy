@@ -99,30 +99,6 @@ export default {
         options,
       );
 
-      const eventMappedSeeds = eventsSeed.map((event, index) => {
-        let player_match_stat_id = '';
-        let game_id = '';
-        if (index < playerMatchStats.length) {
-          player_match_stat_id = playerMatchStats[index].id;
-        } else {
-          player_match_stat_id =
-            playerMatchStats[randomIndex(playerMatchStats.length)].id;
-        }
-
-        if (index < games.length) {
-          game_id = games[index].id;
-        } else {
-          game_id = games[randomIndex(games.length)].id;
-        }
-        return {
-          ...event,
-          player_match_stat_id,
-          game_id,
-        };
-      });
-
-      await queryInterface.bulkInsert('events', eventMappedSeeds, {});
-
       const usersMappedSeeds = usersSeed.map((user) => ({
         ...user,
         favorite_club_id: footballClubs[randomIndex(footballClubs.length)].id,
