@@ -1,12 +1,12 @@
 class LoginPage {
   get emailInput() {
-    return $('');
+    return $('//input[@id="email"]');
   }
   get passwordInput() {
-    return $('');
+    return $('//input[@id="password"]');
   }
   get submitBtn() {
-    return $('');
+    return $('//button[@type="submit"]');
   }
 }
 

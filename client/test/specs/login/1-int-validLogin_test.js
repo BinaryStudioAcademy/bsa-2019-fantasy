@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 describe('Login test suite', () => {
-  it('should login', async () => {
+  xit('should login', async () => {
     //basic webdriver test
     await browser.url('https://webdriver.io');
     const title = await browser.getTitle();
