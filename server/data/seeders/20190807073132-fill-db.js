@@ -1,7 +1,6 @@
 import usersSeed from '../seed-data/users.seed';
 import playersSeed from '../seed-data/player-stats.seed';
 import footballClubsSeed from '../seed-data/football-clubs.seed';
-import eventsSeed from '../seed-data/events.seed';
 import gamesSeed from '../seed-data/games.seed';
 import gameweeksSeed from '../seed-data/gameweeks.seed';
 import gameweekHistoriesSeed from '../seed-data/gameweek-histories.seed';

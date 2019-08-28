@@ -10,6 +10,12 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
+  .get('/last', (req, res, next) =>
+    eventService
+      .getLastUpdatedEvent(req.params.id)
+      .then((value) => res.json(value))
+      .catch(next),
+  )
   .get('/:id', (req, res, next) =>
     eventService
       .getEventById(req.params.id)
