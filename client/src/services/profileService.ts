@@ -84,3 +84,13 @@ export const updateUserTeamDetails = async (
 
   return response.json();
 };
+
+export const updateUserAvatar = async (userId: User['id'], image: string) => {
+  const response = await callWebApi({
+    endpoint: `/api/profile/avatar/${userId}`,
+    type: 'PUT',
+    request: { image },
+  });
+
+  return response.json();
+};

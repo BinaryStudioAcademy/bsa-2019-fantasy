@@ -1,15 +1,19 @@
 import React, { ReactNode, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
+import { FaSpinner } from 'react-icons/fa';
+
+import style from './styles.module.scss';
 
 type ButtonProps = {
   className?: string;
-  type?: 'link' | 'button';
+  type?: 'link' | 'button' | 'label';
   href?: string;
   styling?: 'primary' | 'secondary';
   inactive?: boolean;
   onClick?: (e: SyntheticEvent) => void;
   children: ReactNode;
   disabled?: boolean;
+  loading?: boolean;
 };
 
 const styles = {
@@ -41,6 +45,12 @@ const Button = (props: ButtonProps) => {
         );
       }
       return <div className={className}>{props.children}</div>;
+    case 'label':
+      return (
+        <label className={className}>
+          {props.loading ? <FaSpinner className={style.spin} /> : props.children}
+        </label>
+      );
     default:
       return (
         <button className={className} onClick={props.onClick} disabled={props.disabled}>
