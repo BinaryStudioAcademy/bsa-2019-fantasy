@@ -15,6 +15,17 @@ export type FixturesItemType = {
   awayteam: Club;
 };
 
+export type FixtureSubType = {
+  start: string;
+  end: string;
+  finished: boolean;
+  homeTeamScore?: number;
+  awayTeamScore?: number;
+  homeTeamName?: string;
+  awayTeamName?: string;
+  isFavClub?: boolean;
+};
+
 export type FixturesType = {
   games: FixturesItemType[];
 };
