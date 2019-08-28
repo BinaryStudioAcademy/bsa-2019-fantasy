@@ -57,10 +57,14 @@ export const getInvitationMiddleware = function(req, res, next) {
 };
 
 export const leagueDetailsMiddleware = function(req, res, next) {
-  leagueParticipantService
-    .checkIfAParticipantByName(req.user.id, req.params.name)
-    .then((result) => {
-      if (result.length) {
+  try {
+    const league = leagueService.getLeagueByName(req.params.name);
+    if (league) {
+      const isParticipant = leagueParticipantService.checkIfAParticipantByName(
+        req.user.id,
+        req.params.name,
+      );
+      if (isParticipant.length) {
         return next();
       } else {
         res.json({
@@ -68,5 +72,10 @@ export const leagueDetailsMiddleware = function(req, res, next) {
           forbidden: true,
         });
       }
-    });
+    } else {
+      res.json({ message: 'There is no league with such name', forbidden: true });
+    }
+  } catch (err) {
+    next(err);
+  }
 };
