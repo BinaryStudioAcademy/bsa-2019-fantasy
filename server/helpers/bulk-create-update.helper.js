@@ -4,8 +4,13 @@ import sequelize from '../data/db/connection';
 // does not escapes field value with uuid
 
 export default (tableName, data) => {
+  if (!data || data.length === 0) return 'nothing to update';
   const escapeRow = (items, char) =>
-    `(${items.map((item) => `${char}${item}${char}`).join(',')})`;
+    `(${items
+      .map((item) =>
+        item === null ? `NULL` : `${char}${String(item).replace(`'`, `''`)}${char}`,
+      )
+      .join(',')})`;
   const keysString = escapeRow(Object.keys(data[0]), `"`);
   const valuesString = data.map((item) => escapeRow(Object.values(item), `'`)).join(',');
   const onConflictString = Object.keys(data[0])

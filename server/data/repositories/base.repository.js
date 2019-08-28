@@ -31,11 +31,13 @@ export default class BaseRepository {
     });
   }
 
-  getLastUpdated() {
-    return this.model.findOne({
+  async getLastUpdated() {
+    const result = await this.model.findOne({
       order: [['updatedAt', 'DESC']],
       attributes: ['updatedAt'],
+      raw: true,
     });
+    return result ? result.updatedAt : undefined;
   }
 
   bulkCreateUpdate(data) {
