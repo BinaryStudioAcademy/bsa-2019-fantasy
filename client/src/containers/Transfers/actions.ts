@@ -148,7 +148,7 @@ export const modifyTransfer = (transfer: TransferLite): AsyncTransferAction => (
 
   if (transferInToModify) {
     const new_in_index = transfer.immer_reverse.find(
-      (r) => r.value.id !== transferInToModify.in_player.id,
+      (r) => r.value.player_stats.id !== transferInToModify.in_player.id,
     )!.path[0];
 
     if (transferInToModify.immer_reverse[0].path[0] === new_in_index) {
@@ -166,7 +166,7 @@ export const modifyTransfer = (transfer: TransferLite): AsyncTransferAction => (
 
   if (transferOutToModify) {
     const new_out_index = transfer.immer_reverse.find(
-      (r) => r.value.id !== transferOutToModify.in_player.id,
+      (r) => r.value.player_stats.id !== transferOutToModify.in_player.id,
     )!.path[0];
 
     if (transferOutToModify.immer_reverse[0].path[0] === new_out_index) {

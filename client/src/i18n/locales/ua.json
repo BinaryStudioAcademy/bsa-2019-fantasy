@@ -5,6 +5,8 @@
   "next": "Наступна",
   "previous": "Попередня",
   "submit": "Відправити",
+  "subscribe": "Підписатися",
+  "unsubscribe": "Відписатися",
   "roles": {
     "goalkeeper": "воротар",
     "goalkeeper_plural": "воротарі",
@@ -66,17 +68,24 @@
   },
 
   "Fixtures": {
-    "title": "Матчі"
+    "title": "Матчі",
+    "gameweek": "Тур"
   },
 
   "GameweekHistoryPage": {
     "titles": {
       "sub": "Прем'єр Ліга",
-      "main": "Gameweek"
+      "main": "Тур"
     },
-    "currentPoints": "Поточні очки",
-    "points": "очків",
-    "overallRank": "Позиція в Загальній Лізі"
+    "currentPoints": "Поточні бали",
+    "points": "балів",
+    "overallRank": "Позиція в Загальній Лізі",
+    "chart": {
+      "averagePoint": "середній бал",
+      "maxPoint": "максимальний бал",
+      "userPoint": "бали користувача",
+      "GW": "Тур"
+    }
   },
 
   "Gameweek": {
@@ -203,7 +212,9 @@
       "password": "Пароль",
       "email": "Електронна пошта",
       "setPassword": "Налаштувати пароль",
-      "language": "Мова"
+      "language": "Мова",
+      "avatar": "Аватар",
+      "changeAvatar": "Змінити аватар"
     },
 
     "favouriteClub": {

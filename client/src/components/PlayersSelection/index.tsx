@@ -3,6 +3,7 @@ import ReactSearchBox from 'react-search-box';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
+import cn from 'classnames';
 
 import { loadPlayersAction } from '../../components/PlayersSelection/actions';
 import {
@@ -16,6 +17,8 @@ import { sortedBy, filteredBy, maxPrice } from './constants';
 import { PlayerList } from '../PlayersList/index';
 import Dropdown from 'react-dropdown';
 import PlayerDialog from 'components/PlayerDialog';
+import styles from './styles.module.scss';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import 'react-dropdown/style.css';
 
 type Props = {
@@ -37,6 +40,7 @@ const PlayersSelection = ({
 }: Props) => {
   const { t } = useTranslation();
   const [query, setQuery] = useState({
+    offset: 0,
     limit: 10,
     order_direction: 'DESC',
     order_field: 'player_score',
@@ -64,6 +68,12 @@ const PlayersSelection = ({
     label: '125',
   });
 
+  const [offset, setOffset] = useState(10);
+
+  useEffect(() => {
+    setQuery({ ...query, offset });
+  }, [offset]);
+
   useEffect(() => {
     loadPlayersAction({ ...query });
   }, [query]);
@@ -76,6 +86,7 @@ const PlayersSelection = ({
   const onFilterSelectChange = (item: any) => {
     setFilterSelect(item);
     setQuery({ ...query, position: undefined, club_id: undefined, ...item.value });
+    setOffset(0);
     loadPlayersAction({ ...query });
   };
   const onSearchChange = (item: any) => {
@@ -89,9 +100,17 @@ const PlayersSelection = ({
     loadPlayersAction({ ...query });
   };
 
-  const onOpenInfo = (id: string, club_id: string) => {
+  const onClickOffset = (side: string) => {
+    if (side === 'back') {
+      if (offset >= 10) setOffset(offset - 10);
+    } else if (side === 'forward') {
+      if (players.length === 10) setOffset(offset + 10);
+    }
+  };
+
+  const onOpenInfo = (id: string, club_id: number) => {
     if (players) {
-      const player = players.find((p: any) => p && id === p.id);
+      const player = players.find((p) => p && id === p.id);
       setCurrentPlayer(player);
       fetchDataForPlayer(id, club_id);
     }
@@ -164,6 +183,25 @@ const PlayersSelection = ({
           clubName={'ARS'}
         />
       )}
+
+      <div className='flex justify-center pt-10 w-full'>
+        <button
+          className={cn(styles.navButton, 'shadow', 'hover:shadow-md')}
+          onClick={() => {
+            onClickOffset('back');
+          }}
+        >
+          <IoIosArrowBack />
+        </button>
+        <button
+          className={cn(styles.navButton, 'shadow', 'hover:shadow-md')}
+          onClick={() => {
+            onClickOffset('forward');
+          }}
+        >
+          <IoIosArrowForward />
+        </button>
+      </div>
     </div>
   );
 };

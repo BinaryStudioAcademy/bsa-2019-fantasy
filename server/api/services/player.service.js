@@ -2,7 +2,16 @@ import playerRepository from '../../data/repositories/player.repository';
 
 export const getPlayers = (filter) => playerRepository.getPlayers(filter);
 
-export const getRandomPlayers = () => playerRepository.getRandomPlayers();
+export const getRandomPlayers = async () => {
+  const result = await playerRepository.getRandomPlayers();
+
+  const goalkeepers = result[0];
+  const defenders = result[1];
+  const middlefielders = result[2];
+  const forwards = result[3];
+
+  return [...goalkeepers, ...defenders, ...middlefielders, ...forwards];
+};
 
 export const getPlayerById = async (playerId) => {
   const {

@@ -39,7 +39,7 @@ const PlayersHighlights = (props: Props) => {
   const firstPlayer = props.comparisonData[0];
   const secondPlayer = props.comparisonData[1];
 
-  const firstDataset = [
+  const firstPlayerAlltimeDataset = [
     firstPlayer.goals,
     firstPlayer.assists,
     firstPlayer.missed_passes,
@@ -47,10 +47,9 @@ const PlayersHighlights = (props: Props) => {
     firstPlayer.saves,
     firstPlayer.yellow_cards,
     firstPlayer.red_cards,
-    firstPlayer.club_id,
   ];
 
-  const secondDataset = [
+  const secondPlayerAlltimeDataset = [
     secondPlayer.goals,
     secondPlayer.assists,
     secondPlayer.missed_passes,
@@ -58,7 +57,6 @@ const PlayersHighlights = (props: Props) => {
     secondPlayer.saves,
     secondPlayer.yellow_cards,
     secondPlayer.red_cards,
-    secondPlayer.club_id,
   ];
 
   const positionDict = {
@@ -89,7 +87,7 @@ const PlayersHighlights = (props: Props) => {
     datasets: [
       {
         label: firstPlayer.first_name + ' ' + firstPlayer.second_name,
-        data: firstDataset,
+        data: firstPlayerAlltimeDataset,
         backgroundColor: 'rgba(30, 227, 207, .5)',
         borderColor: 'rgba(30, 227, 207, .5)',
         pointBackgroundColor: 'rgba(30, 227, 207, 1)',
@@ -98,7 +96,7 @@ const PlayersHighlights = (props: Props) => {
       },
       {
         label: secondPlayer.first_name + ' ' + secondPlayer.second_name,
-        data: secondDataset,
+        data: secondPlayerAlltimeDataset,
         backgroundColor: 'rgba(237, 100, 166, .5)',
         borderColor: 'rgba(237, 100, 166, .5)',
         pointBackgroundColor: 'rgba(237, 100, 166, 1)',
@@ -145,6 +143,36 @@ const PlayersHighlights = (props: Props) => {
       },
     },
   };
+
+  const eventTypes = [
+    'goals',
+    'assists',
+    'missed_passes',
+    'goals_conceded',
+    'saves',
+    'yellow_cards',
+    'red_cards',
+  ];
+
+  const getAverageSeasonValue = (playerGameweeks: any, eventType: string) => {
+    let seasonCounter = 0;
+
+    playerGameweeks.forEach(
+      (gameweek: any) => (seasonCounter += gameweek.stats[eventType]),
+    );
+
+    const averageValue = parseFloat((seasonCounter / playerGameweeks.length).toFixed(2));
+
+    return averageValue;
+  };
+
+  const firstPlayerSeasonDataset = eventTypes.map((eventType) =>
+    getAverageSeasonValue(firstPlayer.gameweeks_stats, eventType),
+  );
+
+  const secondPlayerSeasonDataset = eventTypes.map((eventType) =>
+    getAverageSeasonValue(secondPlayer.gameweeks_stats, eventType),
+  );
 
   return (
     <section className='players-highlights bg-white shadow-figma rounded-sm p-8 text-secondary'>
@@ -200,22 +228,66 @@ const PlayersHighlights = (props: Props) => {
           </div>
         </div>
 
-        <div className='players-chart-n-btns flex flex-col self-center w-2/5'>
+        <div className='players-chart-navigation flex flex-col self-center w-2/5'>
           <div className='players-chart'>
             <Radar data={chartData} options={chartOptions} />
           </div>
-          <div className='players-btns self-center mt-10'>
+
+          <div className='players-navigation-avg flex flex-col items-center mt-8 p-5 rounded-lg shadow-figma'>
+            <div className='players-navigation-avg-title uppercase font-bold text-lg tracking-widest'>
+              Average Stats per Match
+            </div>
+            <div className='players-navigation-avg-sub text-xs text-secondary2 tracking-widest'>
+              (current season)
+            </div>
+            <div className='players-navigation-avg-table flex text-xs uppercase mt-4'>
+              <div className='flex flex-col'>
+                {firstPlayerSeasonDataset.map((field, index) => (
+                  <div
+                    key={index}
+                    className={`${
+                      field > secondPlayerSeasonDataset[index] ? 'font-bold' : ''
+                    }`}
+                  >
+                    {field}
+                  </div>
+                ))}
+              </div>
+
+              <div className='flex flex-col items-center font-semibold mx-12'>
+                <div>Goals</div>
+                <div>Assists</div>
+                <div>Misses Passes</div>
+                <div>Goals Conceded</div>
+                <div>Saves</div>
+                <div>Yellow Cards</div>
+                <div>Red Cards</div>
+              </div>
+
+              <div className='flex flex-col'>
+                {secondPlayerSeasonDataset.map((field, index, array) => (
+                  <div
+                    key={index}
+                    className={`${
+                      field > firstPlayerSeasonDataset[index] ? 'font-bold' : ''
+                    }`}
+                  >
+                    {field}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className='players-btns self-center mt-8'>
             {' '}
             <Button
               href='/players'
               type='link'
               styling='secondary'
-              className='text-sm xl:text-base mx-2'
+              className='text-sm xl:text-base'
             >
               Go back
-            </Button>
-            <Button styling='primary' className='text-sm xl:text-base mx-2'>
-              Show AVG
             </Button>
           </div>
         </div>

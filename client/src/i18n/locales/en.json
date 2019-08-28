@@ -5,6 +5,8 @@
   "next": "Next",
   "previous": "Previous",
   "submit": "Submit",
+  "subscribe": "Subscribe",
+  "unsubscribe": "Unsubscribe",
   "roles": {
     "goalkeeper": "goalkeeper",
     "goalkeeper_plural": "goalkeepers",
@@ -66,7 +68,8 @@
   },
 
   "Fixtures": {
-    "title": "Fixtures"
+    "title": "Fixtures",
+    "gameweek": "Gameweek"
   },
 
   "GameweekHistoryPage": {
@@ -76,7 +79,13 @@
     },
     "currentPoints": "Current Points",
     "points": "points",
-    "overallRank": "Rank in Overall League"
+    "overallRank": "Rank in Overall League",
+    "chart": {
+      "averagePoint": "average point",
+      "maxPoint": "max point",
+      "userPoint": "user point",
+      "GW": "GW"
+    }
   },
 
   "Gameweek": {
@@ -203,7 +212,9 @@
       "password": "Password",
       "email": "Email",
       "setPassword": "Set a password",
-      "language": "Language"
+      "language": "Language",
+      "avatar": "Avatar",
+      "changeAvatar": "Change avatar"
     },
 
     "favouriteClub": {

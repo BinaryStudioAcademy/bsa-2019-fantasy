@@ -548,7 +548,7 @@ const TeamSelection = ({
           onClick={() => setView('pitch')}
         >
           <input className='invisible' type='radio' value='option2' />
-          Pitch View
+          {t('TransfersTeamSelection.switch.pitch')}
         </label>
 
         <label
@@ -559,7 +559,7 @@ const TeamSelection = ({
           onClick={() => setView('list')}
         >
           <input className='invisible' type='radio' value='option3' />
-          List View
+          {t('TransfersTeamSelection.switch.list')}
         </label>
       </form>
     </div>
