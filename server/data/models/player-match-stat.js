@@ -39,6 +39,7 @@ export default (orm, DataTypes) => {
           key: 'id',
         },
       },
+      injury: DataTypes.DATE,
       game_id: {
         type: DataTypes.UUID,
         references: {
