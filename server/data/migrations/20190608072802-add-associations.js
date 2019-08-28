@@ -241,6 +241,20 @@ export default {
           },
           { transaction },
         ),
+        queryInterface.addColumn(
+          'player_match_stats',
+          'game_id',
+          {
+            type: Sequelize.UUID,
+            references: {
+              model: 'games',
+              key: 'id',
+            },
+            onUpdate: 'CASCADE',
+            onDelete: 'SET NULL',
+          },
+          { transaction },
+        ),
       ]),
     ),
 
@@ -293,6 +307,9 @@ export default {
           transaction,
         }),
         queryInterface.removeColumn('player_match_stats', 'player_id', {
+          transaction,
+        }),
+        queryInterface.removeColumn('player_match_stats', 'game_id', {
           transaction,
         }),
       ]),

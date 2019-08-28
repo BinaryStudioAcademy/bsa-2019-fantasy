@@ -39,6 +39,13 @@ export default (orm, DataTypes) => {
           key: 'id',
         },
       },
+      game_id: {
+        type: DataTypes.UUID,
+        references: {
+          model: 'games',
+          key: 'id',
+        },
+      },
     },
     {},
   );
