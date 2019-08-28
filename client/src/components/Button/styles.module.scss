@@ -1,0 +1,11 @@
+:local(.spin) {
+  animation: roll 1s linear infinite;
+}
+
+@keyframes roll {
+  0% {
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
