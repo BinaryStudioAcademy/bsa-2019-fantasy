@@ -2,10 +2,13 @@ import tokenHelper from '../../helpers/token.helper';
 import cryptoHelper from '../../helpers/crypto.helper';
 import userRepository from '../../data/repositories/user.repository';
 
-export const login = async ({ password: _, ...user }) => ({
-  token: tokenHelper.createToken({ id: user.id }),
-  user,
-});
+export const login = async ({ password: _, ...user }) => {
+  console.log('hello');
+  return {
+    token: tokenHelper.createToken({ id: user.id }),
+    user,
+  };
+};
 
 export const register = async ({ password, ...userData }) => {
   if (!password) throw new Error('No password entered!');

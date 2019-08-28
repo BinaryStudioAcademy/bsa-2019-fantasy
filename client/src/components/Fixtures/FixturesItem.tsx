@@ -20,6 +20,16 @@ type Props = {
   match: FixturesItemType;
 };
 
+const names = {
+  goal: 'Goals',
+  assist: 'Assists',
+  goal_conceded: 'Goals conceded',
+  missed_pass: 'Missed passes',
+  yellow_card: 'Yellow cards',
+  red_card: 'Red cards',
+  save: 'Saves',
+};
+
 const FixturesItem = ({ match }: Props) => {
   const [isDisplay, setIsDisplay] = useState(false);
   const [stats, setStats] = useState<any>([]);
@@ -35,7 +45,7 @@ const FixturesItem = ({ match }: Props) => {
             g.player.player.club_id === match.hometeam_id
               ? 'hometeam_stats'
               : 'awayteam_stats';
-          const statsItem = stats.find((st) => st.title === g.event_type);
+          const statsItem = stats.find((st) => st.title === names[g.event_type]);
           if (statsItem) {
             const index = statsItem[team].findIndex(
               (item) => item.player === g.player.player.second_name,
@@ -48,7 +58,9 @@ const FixturesItem = ({ match }: Props) => {
                 count: 1,
               });
             }
-            const statsItemIndex = stats.findIndex((st) => st.title === g.event_type);
+            const statsItemIndex = stats.findIndex(
+              (st) => st.title === names[g.event_type],
+            );
             return [
               ...stats.slice(0, statsItemIndex),
               statsItem,
@@ -58,7 +70,7 @@ const FixturesItem = ({ match }: Props) => {
             return [
               ...stats,
               {
-                title: g.event_type,
+                title: names[g.event_type],
                 hometeam_stats: [],
                 awayteam_stats: [],
                 [team]: [
