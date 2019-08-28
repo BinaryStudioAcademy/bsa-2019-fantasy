@@ -118,7 +118,7 @@ const Routing = () => {
   }
 
   return (
-    <div className='flex min-h-screen h-full font-sans font-medium'>
+    <div className='flex h-screen h-full font-sans font-medium'>
       <Switch>
         <GuestRoute exact path='/login' component={LoginPage} />
         <GuestRoute exact path='/registration' component={RegistrationPage} />

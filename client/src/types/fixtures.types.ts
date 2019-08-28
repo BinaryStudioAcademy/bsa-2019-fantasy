@@ -29,3 +29,16 @@ export type FixtureSubType = {
 export type FixturesType = {
   games: FixturesItemType[];
 };
+
+export type GameDetailsType = {
+  id: string;
+  event_type: string;
+  createdAt: string;
+  updatedAt: string;
+  player_match_stat_id: string;
+  player: any;
+};
+
+export type GamesDetailsType = {
+  gamesDetails: GameDetailsType[];
+};

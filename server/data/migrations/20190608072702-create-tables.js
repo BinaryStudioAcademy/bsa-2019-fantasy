@@ -443,6 +443,28 @@ export default {
             },
             { transaction },
           ),
+          queryInterface.createTable(
+            'images',
+            {
+              id: {
+                allowNull: false,
+                autoIncrement: false,
+                primaryKey: true,
+                type: Sequelize.UUID,
+                defaultValue: Sequelize.literal('gen_random_uuid()')
+              },
+              link: {
+                allowNull: false,
+                type: Sequelize.STRING
+              },
+              deleteHash: {
+                allowNull: false,
+                type: Sequelize.STRING
+              },
+              createdAt: Sequelize.DATE,
+              updatedAt: Sequelize.DATE
+            }, { transaction }
+          ),
         ]),
       ),
     ),
@@ -464,6 +486,7 @@ export default {
         queryInterface.dropTable('seasons', { transaction }),
         queryInterface.dropTable('football_clubs', { transaction }),
         queryInterface.dropTable('team_member_histories', { transaction }),
+        queryInterface.dropTable('images', { transaction }),
       ]),
     ),
 };

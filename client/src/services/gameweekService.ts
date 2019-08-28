@@ -16,7 +16,7 @@ export const getGamesById = async (id: any) => {
   return response.json();
 };
 
-export const getGameDetailsById = async (id: any) => {
+export const getGameDetailsById = async (id: string) => {
   const response = await callWebApi({
     endpoint: `/api/events/game/${id}`,
     type: 'GET',

@@ -44,17 +44,13 @@ type RenderFixture = {
   content: any;
 };
 
-const endpoint = `http://${process.env.REACT_APP_FAKER_SOCKET_SERVER}:${process.env.REACT_APP_FAKER_SOCKET_SERVER_PORT}/`;
-console.log(endpoint);
+const endpoint = `http://${process.env.REACT_APP_SOCKET_SERVER}:${process.env.REACT_APP_SOCKET_SERVER_PORT}/`;
 const timeoutOptions = [1, 2, 5, 10, 15].map((item) => ({
   label: `${item} min`,
   value: String(item),
 }));
 
 class Live extends React.Component<Props, State> {
-  // static defaultProps = {
-  //   testRes: 'not received yet',
-  // };
   socket: any;
   state: State = {
     isModalActive: false,
@@ -91,7 +87,6 @@ class Live extends React.Component<Props, State> {
   };
 
   handleStatusEvent = (data) => {
-    console.log(data);
     const { gameStarted } = data;
     this.setState({ isSimulating: gameStarted });
   };
@@ -110,6 +105,7 @@ class Live extends React.Component<Props, State> {
         newState.score = event.score;
         break;
       case 'startGame':
+        console.log('inside startGame');
         newState.matchStarted = true;
         newState.score = [0, 0];
         break;
@@ -126,7 +122,7 @@ class Live extends React.Component<Props, State> {
 
   simulate = () => {
     this.onModalDismiss();
-    this.setState({ isSimulating: true });
+    this.setState({ isSimulating: true, score: [0, 0], events: [], elapsed: 0 });
     const { homeClub, awayClub, timeout } = this.state;
     this.socket.emit('simulate', {
       homeClub: homeClub!.id,
@@ -238,16 +234,13 @@ class Live extends React.Component<Props, State> {
       ({ value }) => value !== String(homeClub && homeClub.id),
     );
 
-    console.log(homeClub && homeClub.id);
-    console.log(optionsAway);
-
     return (
       <Modal onDismiss={this.onModalDismiss}>
         <div className='p-8'>
           <h3 className='font-bold text-2xl mb-4'>Select clubs</h3>
           <div className='flex -mx-2 mb-8'>
             <div className='w-1/3 px-2'>
-              <label className='font-semibold text-l'>Home club</label>
+              <div className='font-semibold text-l'>Home club</div>
               {/* eslint-disable-next-line */}
               <Dropdown
                 options={optionsHome}
@@ -266,7 +259,7 @@ class Live extends React.Component<Props, State> {
               ></Dropdown>
             </div>
             <div className='w-1/3 px-2'>
-              <label className='font-semibold text-l'>Away club</label>
+              <div className='font-semibold text-l'>Away club</div>
               {/* eslint-disable-next-line */}
               <Dropdown
                 options={optionsAway}
@@ -278,7 +271,7 @@ class Live extends React.Component<Props, State> {
               ></Dropdown>
             </div>
             <div className='w-1/3 px-2'>
-              <label className='font-semibold text-l'>Timeout</label>
+              <div className='font-semibold text-l'>Timeout</div>
               {/* eslint-disable-next-line */}
               <Dropdown
                 options={timeoutOptions}
