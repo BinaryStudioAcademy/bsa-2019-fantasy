@@ -58,6 +58,14 @@ export default (orm, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
+      transfers_in: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
+      transfers_out: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
     },

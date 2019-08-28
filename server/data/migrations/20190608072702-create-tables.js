@@ -170,6 +170,14 @@ export default {
                 allowNull: false,
                 type: Sequelize.INTEGER,
               },
+              transfers_in: {
+                allowNull: false,
+                type: Sequelize.INTEGER,
+              },
+              transfers_out: {
+                allowNull: false,
+                type: Sequelize.INTEGER,
+              },
               createdAt: Sequelize.DATE,
               updatedAt: Sequelize.DATE,
             },
