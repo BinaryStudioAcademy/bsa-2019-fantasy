@@ -23,9 +23,11 @@ class LoginActions {
     await page.logo.then((res) => res.waitForDisplayed(10000));
   }
 
-  async displayIncorectEmailNotification() {
+  async getIncorectEmailNotificationText() {
     await page.incorrectEmailNotification.then((res) => res.waitForDisplayed(10000));
-    await page.incorrectEmailNotification.then((res) => res.getText());
+    return await page.incorrectEmailNotification.then((res) => {
+      return res.getText();
+    });
   }
 }
 

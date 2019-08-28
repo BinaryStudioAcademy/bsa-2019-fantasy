@@ -33,10 +33,11 @@ describe('Login page tests', () => {
       .enterPassword(credentials.password)
       .catch((err) => console.log(err.message));
     await pageSteps.clickLogin().catch((err) => console.log(err.message));
-    pageSteps
-      .displayIncorectEmailNotification()
-      .then((res) => assert.strictEqual(res, 'Incorrect email'))
-      .catch((err) => console.error(err));
+    return await pageSteps
+      .getIncorectEmailNotificationText()
+      .then((res) =>
+        assert.strictEqual(res, 'Incorrect email', `${res} not equal to Incorrect email`),
+      );
     /*assert.strictEqual(
       pageSteps.displayIncorectEmailNotification(),
       'Incorrect email.',
