@@ -1,12 +1,17 @@
 import * as gameweekService from 'services/gameweekService';
+import * as authService from 'services/authService';
+import * as profileService from 'services/profileService';
 import {
   SET_GAMEWEEKS,
+  SET_FIXTURE_SUBSCRIBTIONS,
   SET_GAMES,
   SET_GAME_DETAILS,
   SET_IS_LOADING,
+  setFixtureSubAction,
   setGameweekAction,
   setGamesAction,
   setGameDetailsAction,
+  AsyncSetFixtureSubscribtionAction,
   AsyncSetGameweekAction,
   AsyncSetGamesAction,
   AsyncSetGameDetailsAction,
@@ -14,6 +19,7 @@ import {
 
 import { FixturesItemType, GamesDetailsType } from 'types/fixtures.types';
 import { GameweekHistoryType } from 'types/gameweekHistory.type';
+import { FixtureSubscribtion } from 'types/fixture.types';
 
 const setGameweeks = (gameweeks: GameweekHistoryType[]): setGameweekAction => ({
   type: SET_GAMEWEEKS,
@@ -30,6 +36,12 @@ const setGameDetails = (gamesDetails: GamesDetailsType): setGameDetailsAction =>
   payload: gamesDetails,
 });
 
+const setFixtureSubscriptions = (
+  subscribtions: FixtureSubscribtion[],
+): setFixtureSubAction => ({
+  type: SET_FIXTURE_SUBSCRIBTIONS,
+  payload: subscribtions,
+});
 const setIsLoading = (isLoading: boolean): setGamesAction => ({
   type: SET_IS_LOADING,
   payload: isLoading,
@@ -38,6 +50,15 @@ const setIsLoading = (isLoading: boolean): setGamesAction => ({
 export const loadGameweeksAction = (): AsyncSetGameweekAction => async (dispatch) => {
   const result = await gameweekService.getGameweeks();
   dispatch(setGameweeks(result));
+};
+
+export const loadFixtureSubscriptionsAction = (): AsyncSetFixtureSubscribtionAction => async (
+  dispatch,
+) => {
+  console.log('here');
+  const user = await authService.getCurrentUser();
+  const subscribtions = await profileService.getFixtureSub(user!.id);
+  dispatch(setFixtureSubscriptions(subscribtions));
 };
 
 export const loadGamesAction = (id: number): AsyncSetGamesAction => async (dispatch) => {

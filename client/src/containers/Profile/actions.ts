@@ -147,20 +147,6 @@ export const updateEmailPreferences = (
   }
 };
 
-export const getFixtureSubscription = (
-  gameId: FixturesItemType['id'],
-): AsyncUserAction => async (dispatch, getState) => {
-  try {
-    const user = await authService.getCurrentUser();
-    const res = await profileService.getFixtureSub(user!.id, gameId);
-    loadCurrentUser(true)(dispatch, getState);
-
-    feedback.success((res && res.message) || res);
-  } catch (err) {
-    feedback.error('Failed to update favorite club.');
-  }
-};
-
 export const createFixtureSubscription = (
   gameId: FixturesItemType['id'],
 ): AsyncUserAction => async (dispatch, getState) => {

@@ -19,6 +19,7 @@ import { addNotification } from 'components/Notifications/actions';
 
 type Props = {
   match: FixturesItemType;
+  subscribed: boolean;
 };
 
 const names = {
@@ -31,10 +32,10 @@ const names = {
   save: 'Saves',
 };
 
-const FixturesItem = ({ match }: Props) => {
+const FixturesItem = ({ match, subscribed }: Props) => {
   const [isDisplay, setIsDisplay] = useState(false);
   const [stats, setStats] = useState<any>([]);
-  const [isSubscribed, setSubscribe] = useState<boolean>(false);
+  const [isSubscribed, setSubscribe] = useState<boolean>(subscribed);
   const dispatch = useDispatch();
   const gameDetails = useSelector((state: RootState) => state.fixtures.gameDetails);
 
