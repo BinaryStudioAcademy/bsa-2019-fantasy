@@ -168,8 +168,6 @@ export const createFixtureSubscription = (
     const user = await authService.getCurrentUser();
     const res = await profileService.createFixtureSub(user!.id, gameId);
     loadCurrentUser(true)(dispatch, getState);
-
-    feedback.success((res && res.message) || res);
   } catch (err) {
     feedback.error('Failed to update favorite club.');
   }
@@ -182,8 +180,6 @@ export const deleteFixtureSubscription = (
     const user = await authService.getCurrentUser();
     const res = await profileService.destroyFixtureSub(user!.id, gameId);
     loadCurrentUser(true)(dispatch, getState);
-
-    feedback.success((res && res.message) || res);
   } catch (err) {
     feedback.error('Failed to update favorite club.');
   }

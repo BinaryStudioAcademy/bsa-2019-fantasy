@@ -15,6 +15,7 @@ import {
   createFixtureSubscription,
   deleteFixtureSubscription,
 } from 'containers/Profile/actions';
+import { addNotification } from 'components/Notifications/actions';
 
 type Props = {
   match: FixturesItemType;
@@ -149,9 +150,25 @@ const FixturesItem = ({ match }: Props) => {
     );
   }
   const onSubscribe = () => {
-    isSubscribed
-      ? dispatch(deleteFixtureSubscription(match.id))
-      : dispatch(createFixtureSubscription(match.id));
+    if (isSubscribed) {
+      dispatch(
+        addNotification(
+          `You have unsubscribed from fixture ${match.hometeam.name} - ${
+            match.awayteam.name
+          }, which starts on ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
+        ),
+      );
+      dispatch(deleteFixtureSubscription(match.id));
+    } else {
+      dispatch(
+        addNotification(
+          `You have subscribed to fixture ${match.hometeam.name} - ${
+            match.awayteam.name
+          }, which starts on ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
+        ),
+      );
+      dispatch(createFixtureSubscription(match.id));
+    }
     setSubscribe(!isSubscribed);
   };
 
