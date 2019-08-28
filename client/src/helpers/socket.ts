@@ -1,6 +1,7 @@
 import openSocket from 'socket.io-client';
 
 import handlers from './handlers';
+import { User } from 'types/user.type';
 
 const socket = openSocket(`http://${process.env.REACT_APP_FAKER_SOCKET_SERVER}:${process.env.REACT_APP_SOCKET_SERVER_PORT}`);
 handlers(socket);
@@ -13,6 +14,6 @@ export const leaveRoom = (favorite_club) => {
   socket.emit('leaveRoom', favorite_club);
 };
 
-export const requestGames = () => {
-  socket.emit('requestGames');
+export const requestGames = (userId: User['id']) => {
+  socket.emit('requestGames', userId);
 };

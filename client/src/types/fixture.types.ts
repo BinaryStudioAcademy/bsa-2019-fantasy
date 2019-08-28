@@ -3,3 +3,9 @@ export type Fixture = {
   opp: string;
   round: number;
 };
+
+export type FixtureSubscribtion = {
+  id: string;
+  user_id: string;
+  game_id: string;
+};

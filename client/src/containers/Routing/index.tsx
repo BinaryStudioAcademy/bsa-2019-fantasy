@@ -80,14 +80,14 @@ const Routing = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (isAuthorized && favorite_club) {
+    if (user && isAuthorized && favorite_club) {
       if (!joinedRoom) {
         setJoinedRoom(true);
         joinRoom(favorite_club);
       }
-      requestGames();
+      requestGames(user.id);
     }
-  }, [dispatch, isAuthorized, favorite_club]);
+  }, [dispatch, user, isAuthorized, favorite_club]);
 
   useEffect(() => {
     if (user && currentGameweek) {
