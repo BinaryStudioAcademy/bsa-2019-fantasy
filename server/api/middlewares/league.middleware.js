@@ -56,11 +56,11 @@ export const getInvitationMiddleware = function(req, res, next) {
     .catch(next);
 };
 
-export const leagueDetailsMiddleware = function(req, res, next) {
+export const leagueDetailsMiddleware = async function(req, res, next) {
   try {
-    const league = leagueService.getLeagueByName(req.params.name);
+    const league = await leagueService.getLeagueByName(req.params.name);
     if (league) {
-      const isParticipant = leagueParticipantService.checkIfAParticipantByName(
+      const isParticipant = await leagueParticipantService.checkIfAParticipantByName(
         req.user.id,
         req.params.name,
       );
