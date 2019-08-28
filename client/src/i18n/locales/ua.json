@@ -399,5 +399,10 @@
     "navigation": {
       "clearAll": "Очистити"
     }
+  },
+
+  "EntryHistory": {
+    "title": "Історія",
+    "thisSeasonTitle": "Поточний Сезон"
   }
 }

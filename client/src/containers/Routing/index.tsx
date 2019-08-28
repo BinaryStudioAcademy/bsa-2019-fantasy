@@ -12,7 +12,7 @@ import GuestRoute from 'containers/GuestRoute';
 
 import LoginPage from 'containers/Auth/Login/LoginPage';
 import RegistrationPage from 'containers/Auth/Registration/RegistrationPage';
-import SocialPage from 'containers/Auth/SocialPage';
+// import SocialPage from 'containers/Auth/SocialPage';
 
 import MyTeam from 'containers/MyTeam';
 import Transfers from 'containers/Transfers';
@@ -25,6 +25,7 @@ import JoinLeague from 'containers/Leagues/JoinLeague';
 import LeagueDetails from 'containers/Leagues/LeagueDetails';
 
 import GameweekHistory from 'containers/GameweekHistory';
+import EntryHistory from 'containers/EntryHistory';
 import NoTeamHome from 'components/NoTeamHome';
 
 import FixturesContainer from 'containers/FixturesContainer';
@@ -41,7 +42,7 @@ import FavouriteClubSelection from 'containers/Profile/components/FavouriteClubS
 import SetPassword from 'containers/Profile/components/SetPassword';
 import { loadCurrentUser, setLanguage } from 'containers/Profile/actions';
 
-import ConnectFbPage from 'containers/Auth/ConnectFbPage';
+// import ConnectFbPage from 'containers/Auth/ConnectFbPage';
 import ForgotPassword from 'containers/ChangePassword/ForgotPassword';
 import ResetPassword from 'containers/ChangePassword/ResetPassword';
 
@@ -153,6 +154,7 @@ const Routing = () => {
                   exact
                   component={user && user.team_name ? GameweekHistory : NoTeamHome}
                 />
+                <Route path='/entry-history' exact component={EntryHistory} />
 
                 <Route path='/profile' component={Profile} />
                 <Route path='/profile/set/password' component={SetPassword} />
