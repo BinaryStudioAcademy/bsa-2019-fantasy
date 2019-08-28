@@ -47,8 +47,26 @@ export const getInvitationMiddleware = function(req, res, next) {
       if (result.length && result[0]['is_creator']) {
         return next();
       } else {
-        res.json({ message: 'You are not permitted to get the invitation code', forbidden: true });
+        res.json({
+          message: 'You are not permitted to get the invitation code',
+          forbidden: true,
+        });
       }
     })
     .catch(next);
+};
+
+export const leagueDetailsMiddleware = function(req, res, next) {
+  leagueParticipantService
+    .checkIfAParticipantByName(req.user.id, req.params.name)
+    .then((result) => {
+      if (result.length) {
+        return next();
+      } else {
+        res.json({
+          message: 'You are not permitted to get details about this league',
+          forbidden: true,
+        });
+      }
+    });
 };
