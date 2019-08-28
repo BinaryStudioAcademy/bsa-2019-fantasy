@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { feedback } from 'react-feedbacker';
+import moment from 'moment';
+import 'moment/locale/uk';
 
 import { RootState } from 'store/types';
 
@@ -79,6 +81,8 @@ const PersonalDetails = withRouter(({ history }) => {
     if (value) {
       dispatch(setLanguage({ language }));
       await i18n.changeLanguage(language);
+      language === 'ua' ? moment.locale('uk') : moment.locale('en');
+
       dispatch(
         addNotification(
           `${

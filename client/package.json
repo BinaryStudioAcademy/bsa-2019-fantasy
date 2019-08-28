@@ -58,6 +58,7 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "socket.io-client": "^2.2.0",
+    "styled-components": "^4.3.2",
     "uuidv4": "^4.0.0",
     "validator": "^11.1.0"
   },
@@ -72,6 +73,7 @@
     "@types/react-router-dom": "^4.3.5",
     "@types/react-table": "^6.8.5",
     "@types/socket.io-client": "^1.4.32",
+    "@types/styled-components": "^4.1.18",
     "@types/uuidv4": "^2.0.0",
     "@types/validator": "^10.11.2",
     "@typescript-eslint/eslint-plugin": "1.13.0",
@@ -104,6 +106,7 @@
     "redux-devtools-extension": "^2.13.8",
     "tailwindcss": "^1.1.0",
     "typescript": "^3.5.3",
+    "typescript-styled-plugin": "^0.14.0",
     "wdio-chromedriver-service": "^5.0.2"
   },
   "husky": {

@@ -294,6 +294,22 @@ export default {
             { transaction },
           ),
           queryInterface.createTable(
+            'fixtures_subscriptions',
+            {
+              id: {
+                allowNull: false,
+                autoIncrement: false,
+                primaryKey: true,
+                type: Sequelize.UUID,
+                defaultValue: Sequelize.literal('gen_random_uuid()'),
+              },
+
+              createdAt: Sequelize.DATE,
+              updatedAt: Sequelize.DATE,
+            },
+            { transaction },
+          ),
+          queryInterface.createTable(
             'leagues',
             {
               id: {

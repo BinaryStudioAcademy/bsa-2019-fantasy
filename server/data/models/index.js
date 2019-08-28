@@ -14,6 +14,7 @@ const FootballClub = orm.import('./football-club');
 const Event = orm.import('./event');
 const TeamMemberHistory = orm.import('./team-member-history');
 const Image = orm.import('./image');
+const FixturesSubscription = orm.import('./fixtures-subscription');
 
 associate({
   User,
@@ -28,7 +29,8 @@ associate({
   FootballClub,
   Event,
   TeamMemberHistory,
-  Image
+  Image,
+  FixturesSubscription,
 });
 
 export {
@@ -44,5 +46,6 @@ export {
   FootballClub as FootballClubModel,
   Event as EventModel,
   TeamMemberHistory as TeamMemberHistoryModel,
-  Image as ImageModel
+  Image as ImageModel,
+  FixturesSubscription as FixturesSubscriptionModel,
 };

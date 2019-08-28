@@ -1,13 +1,8 @@
-type PlayerTypesType = {
-  GOALKEEPER: 'GKP';
-  FORWARD: 'FWD';
-  DEFENDER: 'DEF';
-  MIDDLEFIELDER: 'MID';
+export const PlayerTypes = {
+  GOALKEEPER: 'GKP' as const,
+  FORWARD: 'FWD' as const,
+  DEFENDER: 'DEF' as const,
+  MIDDLEFIELDER: 'MID' as const,
 };
 
-export const PlayerTypes: PlayerTypesType = {
-  GOALKEEPER: 'GKP',
-  FORWARD: 'FWD',
-  DEFENDER: 'DEF',
-  MIDDLEFIELDER: 'MID',
-};
+export type PlayerPosition = typeof PlayerTypes[keyof typeof PlayerTypes];

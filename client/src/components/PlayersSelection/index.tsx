@@ -108,9 +108,9 @@ const PlayersSelection = ({
     }
   };
 
-  const onOpenInfo = (id: string, club_id: string) => {
+  const onOpenInfo = (id: string, club_id: number) => {
     if (players) {
-      const player = players.find((p: any) => p && id === p.id);
+      const player = players.find((p) => p && id === p.id);
       setCurrentPlayer(player);
       fetchDataForPlayer(id, club_id);
     }
