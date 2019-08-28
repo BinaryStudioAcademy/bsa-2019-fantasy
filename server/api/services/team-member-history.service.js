@@ -75,3 +75,6 @@ export const postTeamMemberHistory = async (data, gameweekHistoryId) => {
 
   return result;
 };
+
+export const updateTeamMember = (id, data) =>
+  teamMemberHistoryRepository.updateById(id, data);

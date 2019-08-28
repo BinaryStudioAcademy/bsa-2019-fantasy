@@ -26,7 +26,10 @@ class GameweekHistoryRepository extends BaseRepository {
       include: [
         {
           association: 'team_member_histories',
-          include: { association: 'player_stats', attributes: ['id', 'player_price'] },
+          include: {
+            association: 'player_stats',
+            attributes: ['id', 'player_price', 'position'],
+          },
         },
       ],
     });

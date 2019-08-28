@@ -1,4 +1,6 @@
+/* eslint-disable no-await-in-loop */
 import gameweekHistoryRepository from '../../data/repositories/gameweek-history.repository';
+import { updateTeamMember } from './team-member-history.service';
 
 export const getAllHistory = () => gameweekHistoryRepository.getAll();
 
@@ -172,23 +174,30 @@ const util = require('util');
 
 export const makeAutoSubsitution = async (gameweekId) => {
   const gameweekHistories = await getHistoryByGameweekId(gameweekId);
-  // console.log(gameweekHistories);
   const teamMemberHistories = gameweekHistories.map((el) => el.team_member_histories);
+
   console.log(util.inspect(teamMemberHistories, false, true, true /* enable colors */));
-  teamMemberHistories.forEach((el) => {
-    console.log(
-      util.inspect(el.team_member_history, false, true, true /* enable colors */),
-    );
-    el.forEach((elem) => {
-      console.log(elem.player_stats.player_price);
-    });
-  });
-  // teamMemberHistories.forEach((el) => {
-  //   console.log(el);
-  // });
-  // gameweekHistories.forEach((element) => {
-  //   element.team_member_histories.forEach((el) => {
-  //     console.log(el);
-  //   });
-  // });
+
+  for (let i = 0; i < teamMemberHistories.length; i += 1) {
+    for (let j = 0; j < teamMemberHistories[i].length; j += 1) {
+      if (!teamMemberHistories[i][j].is_on_bench && j % 5 === 0) {
+        let pitchId = teamMemberHistories[i][j].id;
+        let benchId;
+        if (teamMemberHistories[i][j].player_stats.position === 'GKP') {
+          benchId = teamMemberHistories[i].find(
+            (el) => el.is_on_bench && el.player_stats.position === 'GKP',
+          ).id;
+        } else {
+          benchId = teamMemberHistories[i].find(
+            (el) => el.is_on_bench && el.player_stats.position !== 'GKP',
+          ).id;
+        }
+        await updateTeamMember(benchId, { is_on_bench: false });
+        await updateTeamMember(pitchId, { is_on_bench: true });
+        console.log(pitchId);
+        console.log(benchId);
+      }
+      console.log(teamMemberHistories[i][j].is_on_bench);
+    }
+  }
 };
