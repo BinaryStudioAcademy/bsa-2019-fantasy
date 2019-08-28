@@ -65,11 +65,15 @@ router
   .get('/user-team/:user/:gameweek', (req, res, next) => {
     gameweekHistoryService
       .getCurrentHistoryById(req.params.user, req.params.gameweek)
-      .then((historyId) => {
+      // eslint-disable-next-line consistent-return
+      .then((history) => {
+        if (history.message) {
+          return res.json(history);
+        }
         teamMemberHistoryService
-          .getPlayersByGameweekId(historyId)
+          .getPlayersByGameweekId(history)
           .then((players) => {
-            return res.json(players);
+            return players ? res.json(players) : res.json({ message: 'No team found' });
           })
           .catch(next);
       })

@@ -5,9 +5,11 @@ import { updateTeamMember } from './team-member-history.service';
 export const getAllHistory = () => gameweekHistoryRepository.getAll();
 
 export const getCurrentHistoryById = async (userId, gameweekId) => {
-  const { id } = await gameweekHistoryRepository.getByUserGameweekId(userId, gameweekId);
-
-  return id;
+  const result = await gameweekHistoryRepository.getByUserGameweekId(userId, gameweekId);
+  if (!result) {
+    return { message: 'Can`t find gameweek history' };
+  }
+  return result.id;
 };
 
 export const getHistoryById = async (gameweekHistoryId) => {

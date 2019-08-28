@@ -9,14 +9,31 @@ import { RootState } from 'store/types';
 
 import styles from './styles.module.scss';
 import MatchStats from 'components/MatchStats';
+import Button from 'components/Button';
+import { FaBell } from 'react-icons/fa';
+import {
+  createFixtureSubscription,
+  deleteFixtureSubscription,
+} from 'containers/Profile/actions';
 
 type Props = {
   match: FixturesItemType;
 };
 
+const names = {
+  goal: 'Goals',
+  assist: 'Assists',
+  goal_conceded: 'Goals conceded',
+  missed_pass: 'Missed passes',
+  yellow_card: 'Yellow cards',
+  red_card: 'Red cards',
+  save: 'Saves',
+};
+
 const FixturesItem = ({ match }: Props) => {
   const [isDisplay, setIsDisplay] = useState(false);
   const [stats, setStats] = useState<any>([]);
+  const [isSubscribed, setSubscribe] = useState<boolean>(false);
   const dispatch = useDispatch();
   const gameDetails = useSelector((state: RootState) => state.fixtures.gameDetails);
 
@@ -28,7 +45,7 @@ const FixturesItem = ({ match }: Props) => {
             g.player.player.club_id === match.hometeam_id
               ? 'hometeam_stats'
               : 'awayteam_stats';
-          const statsItem = stats.find((st) => st.title === g.event_type);
+          const statsItem = stats.find((st) => st.title === names[g.event_type]);
           if (statsItem) {
             const index = statsItem[team].findIndex(
               (item) => item.player === g.player.player.second_name,
@@ -41,7 +58,9 @@ const FixturesItem = ({ match }: Props) => {
                 count: 1,
               });
             }
-            const statsItemIndex = stats.findIndex((st) => st.title === g.event_type);
+            const statsItemIndex = stats.findIndex(
+              (st) => st.title === names[g.event_type],
+            );
             return [
               ...stats.slice(0, statsItemIndex),
               statsItem,
@@ -51,7 +70,7 @@ const FixturesItem = ({ match }: Props) => {
             return [
               ...stats,
               {
-                title: g.event_type,
+                title: names[g.event_type],
                 hometeam_stats: [],
                 awayteam_stats: [],
                 [team]: [
@@ -129,46 +148,65 @@ const FixturesItem = ({ match }: Props) => {
       </div>
     );
   }
+  const onSubscribe = () => {
+    isSubscribed
+      ? dispatch(deleteFixtureSubscription(match.id))
+      : dispatch(createFixtureSubscription(match.id));
+    setSubscribe(!isSubscribed);
+  };
 
   return (
     <React.Fragment>
       {/* eslint-disable */}
-      <li
-        className={`flex items-center p-3 ${match.started ? 'cursor-pointer' : ''} ${
-          isDisplay ? 'bg-green-600 text-white' : ''
-        }`}
-        onClick={() => toggleStats()}
-      >
-        {/* eslint-enable */}
-        <div className={cn(styles['first-team'], styles.team, 'justify-end')}>
-          <img
-            className={cn(styles.logo, 'order-1')}
-            src={`images/club-logos/badge_${match.hometeam.code}_200.png`}
-            alt='logo'
-          />
-          <h5 className='font-bold'>{match.hometeam.name}</h5>
-        </div>
-        <div
-          className={cn(
-            styles['play-time'],
-            'time',
-            'p-3',
-            'py-2',
-            'rounded mx-2',
-            match.started ? 'bg-green-900' : '',
-          )}
+      <div className='flex items-center justify-around'>
+        <li
+          className={`flex w-5/6 items-center p-3 ${
+            match.started ? 'cursor-pointer' : ''
+          } ${isDisplay ? 'bg-green-600 text-white' : ''}`}
+          onClick={() => toggleStats()}
         >
-          {label}
-        </div>
-        <div className={cn(styles.team, 'text-left')}>
-          <img
-            className={styles.logo}
-            src={`images/club-logos/badge_${match.awayteam.code}_200.png`}
-            alt='logo'
-          />
-          <h5 className='font-bold'>{match.awayteam.name}</h5>
-        </div>
-      </li>
+          {/* eslint-enable */}
+          <div className={cn(styles['first-team'], styles.team, 'justify-end')}>
+            <img
+              className={cn(styles.logo, 'order-1')}
+              src={`images/club-logos/badge_${match.hometeam.code}_200.png`}
+              alt='logo'
+            />
+            <h5 className='font-bold'>{match.hometeam.name}</h5>
+          </div>
+          <div
+            className={cn(
+              styles['play-time'],
+              'time',
+              'p-3',
+              'py-2',
+              'rounded mx-2',
+              match.started ? 'bg-green-900' : '',
+            )}
+          >
+            {label}
+          </div>
+          <div className={cn(styles.team, 'text-left ')}>
+            <img
+              className={styles.logo}
+              src={`images/club-logos/badge_${match.awayteam.code}_200.png`}
+              alt='logo'
+            />
+            <h5 className='font-bold'>{match.awayteam.name}</h5>
+          </div>
+        </li>
+        {match.started ? null : (
+          <Button
+            className='block w-1/12 h-8 rounded-lg flex justify-center'
+            styling={isSubscribed ? 'secondary' : 'primary'}
+            onClick={(e) => onSubscribe()}
+          >
+            <p>
+              <FaBell />
+            </p>
+          </Button>
+        )}
+      </div>
       {isDisplay && <div className='bg-gray-100 mb-4 p-3'>{displayStats()}</div>}
     </React.Fragment>
   );

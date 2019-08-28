@@ -102,6 +102,34 @@ export default {
           { transaction },
         ),
         queryInterface.addColumn(
+          'fixtures_subscriptions',
+          'user_id',
+          {
+            type: Sequelize.UUID,
+            references: {
+              model: 'users',
+              key: 'id',
+            },
+            onUpdate: 'CASCADE',
+            onDelete: 'SET NULL',
+          },
+          { transaction },
+        ),
+        queryInterface.addColumn(
+          'fixtures_subscriptions',
+          'game_id',
+          {
+            type: Sequelize.UUID,
+            references: {
+              model: 'games',
+              key: 'id',
+            },
+            onUpdate: 'CASCADE',
+            onDelete: 'SET NULL',
+          },
+          { transaction },
+        ),
+        queryInterface.addColumn(
           'events',
           'player_match_stat_id',
           {
@@ -213,6 +241,20 @@ export default {
           },
           { transaction },
         ),
+        queryInterface.addColumn(
+          'player_match_stats',
+          'game_id',
+          {
+            type: Sequelize.UUID,
+            references: {
+              model: 'games',
+              key: 'id',
+            },
+            onUpdate: 'CASCADE',
+            onDelete: 'SET NULL',
+          },
+          { transaction },
+        ),
       ]),
     ),
 
@@ -265,6 +307,9 @@ export default {
           transaction,
         }),
         queryInterface.removeColumn('player_match_stats', 'player_id', {
+          transaction,
+        }),
+        queryInterface.removeColumn('player_match_stats', 'game_id', {
           transaction,
         }),
       ]),

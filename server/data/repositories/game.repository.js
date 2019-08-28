@@ -1,8 +1,12 @@
 import { Op } from '../db/connection';
-import { GameModel, FootballClubModel } from '../models/index';
+import { GameModel } from '../models/index';
 import BaseRepository from './base.repository';
 
 class GameRepository extends BaseRepository {
+  getAll() {
+    return this.model.findAll();
+  }
+
   getById(id) {
     return this.model.findOne({ where: { id } });
   }
@@ -43,11 +47,6 @@ class GameRepository extends BaseRepository {
 
   getNext() {
     const now = new Date();
-    // return this.model.findAll({
-    //   attributes: ['id', [fn('min', col('start')), 'start']],
-    //   group: ['id'],
-    //   raw: true,
-    // });
     return this.model.findOne({
       where: {
         start: {

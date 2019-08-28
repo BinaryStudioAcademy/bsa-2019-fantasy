@@ -8,13 +8,13 @@ import {
   setGameweekAction,
 } from './action.type';
 
-import { FixturesItemType } from 'types/fixtures.types';
+import { FixturesItemType, GamesDetailsType } from 'types/fixtures.types';
 import { GameweekType } from 'types/gameweek.type';
 
 type State = {
   gameweeks?: GameweekType[];
   games?: FixturesItemType[];
-  gameDetails?: any;
+  gameDetails?: GamesDetailsType;
   isLoading: boolean;
 };
 

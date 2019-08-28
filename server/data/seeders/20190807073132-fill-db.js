@@ -1,8 +1,6 @@
 import usersSeed from '../seed-data/users.seed';
 import playersSeed from '../seed-data/player-stats.seed';
 import footballClubsSeed from '../seed-data/football-clubs.seed';
-import playerMatchSeed from '../seed-data/player-match-stats.seed';
-import eventsSeed from '../seed-data/events.seed';
 import gamesSeed from '../seed-data/games.seed';
 import gameweeksSeed from '../seed-data/gameweeks.seed';
 import gameweekHistoriesSeed from '../seed-data/gameweek-histories.seed';
@@ -61,27 +59,6 @@ export default {
         options,
       );
 
-      const playerMatchMappedSeed = playerMatchSeed.map((match, index) => {
-        let player_id = '';
-        if (index <= 14) {
-          player_id = playerStats[teamMemberIndex1Gameweek[index]].id;
-        } else if (index <= 29) {
-          player_id = playerStats[teamMemberIndex2Gameweek[29 - index]].id;
-        } else {
-          player_id = playerStats[randomIndex(playerStats.length)].id;
-        }
-        return {
-          ...match,
-          player_id,
-        };
-      });
-
-      await queryInterface.bulkInsert('player_match_stats', playerMatchMappedSeed, {});
-      const playerMatchStats = await queryInterface.sequelize.query(
-        'SELECT id FROM "player_match_stats";',
-        options,
-      );
-
       await queryInterface.bulkInsert('seasons', seasonsSeed, {});
       const seasons = await queryInterface.sequelize.query(
         'SELECT id FROM "seasons";',
@@ -98,30 +75,6 @@ export default {
         'SELECT id FROM "gameweeks";',
         options,
       );
-
-      const eventMappedSeeds = eventsSeed.map((event, index) => {
-        let player_match_stat_id = '';
-        let game_id = '';
-        if (index < playerMatchStats.length) {
-          player_match_stat_id = playerMatchStats[index].id;
-        } else {
-          player_match_stat_id =
-            playerMatchStats[randomIndex(playerMatchStats.length)].id;
-        }
-
-        if (index < games.length) {
-          game_id = games[index].id;
-        } else {
-          game_id = games[randomIndex(games.length)].id;
-        }
-        return {
-          ...event,
-          player_match_stat_id,
-          game_id,
-        };
-      });
-
-      await queryInterface.bulkInsert('events', eventMappedSeeds, {});
 
       const usersMappedSeeds = usersSeed.map((user) => ({
         ...user,

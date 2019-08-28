@@ -30,4 +30,8 @@ export default class BaseRepository {
       where: { id },
     });
   }
+
+  getLastUpdated() {
+    return this.model.findOne({ order: ['updatedAt', 'DESC'] });
+  }
 }

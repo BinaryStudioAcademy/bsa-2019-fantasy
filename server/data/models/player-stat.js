@@ -58,6 +58,7 @@ export default (orm, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
+      injury: DataTypes.DATE,
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
     },
