@@ -29,8 +29,12 @@ const updateTableFromFaker = async (repository, tableName, route) => {
 };
 
 export const updateDbFromFaker = async () => {
-  updateTableFromFaker(playerRepository, 'player_stats', '/playerstats');
-  updateTableFromFaker(gameRepository, 'games', '/games');
-  updateTableFromFaker(playerMatchRepository, 'player_match_stats', '/playermatchstats');
-  updateTableFromFaker(eventRepository, 'events', '/events');
+  await updateTableFromFaker(playerRepository, 'player_stats', '/playerstats');
+  await updateTableFromFaker(gameRepository, 'games', '/games');
+  await updateTableFromFaker(
+    playerMatchRepository,
+    'player_match_stats',
+    '/playermatchstats',
+  );
+  await updateTableFromFaker(eventRepository, 'events', '/events');
 };
