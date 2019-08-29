@@ -10,12 +10,9 @@ export const Container = styled.div`
 
   position: relative;
 
-  padding: 2rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 
-  background: border-box center/100% 100% url(${pitchBg}) no-repeat;
   animation: ${appear} 0.32s;
 `;
 
@@ -26,4 +23,20 @@ export const TeamRow = styled.div`
   > div {
     margin: 0 0.5rem;
   }
+`;
+
+export const Pitch = styled.div`
+  flex: 1 0;
+
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background: border-box center/100% 100% url(${pitchBg}) no-repeat;
+`;
+
+export const Bench = styled(TeamRow)`
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 15px rgba(30, 227, 207, 0.1);
 `;

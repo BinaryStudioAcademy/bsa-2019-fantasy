@@ -13,12 +13,21 @@ type Props = {
   type: PlayerPosition | PlayerPosition[];
   player: DisplayPlayerType | null;
   disabled: boolean;
+  benched?: boolean;
 
-  onDrop: (targetIdx: number) => (dropped: DisplayPlayerType) => any;
+  onDrop: (targetIdx: number, benched: boolean) => (dropped: DisplayPlayerType) => any;
   onClick?: (player: DisplayPlayerType) => void;
 };
 
-const PitchPlayer = ({ index, type, player, disabled, onDrop, onClick }: Props) => {
+const PitchPlayer = ({
+  index,
+  type,
+  player,
+  disabled,
+  benched = false,
+  onDrop,
+  onClick,
+}: Props) => {
   const dropRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<HTMLDivElement>(null);
   const [{ isOver, canDrop }, drop] = useDrop<
@@ -27,7 +36,7 @@ const PitchPlayer = ({ index, type, player, disabled, onDrop, onClick }: Props) 
     { isOver: boolean; canDrop: boolean }
   >({
     accept: type,
-    drop: onDrop(index),
+    drop: onDrop(index, benched),
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
