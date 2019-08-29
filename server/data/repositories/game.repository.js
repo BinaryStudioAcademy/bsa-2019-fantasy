@@ -47,11 +47,6 @@ class GameRepository extends BaseRepository {
 
   getNext() {
     const now = new Date();
-    // return this.model.findAll({
-    //   attributes: ['id', [fn('min', col('start')), 'start']],
-    //   group: ['id'],
-    //   raw: true,
-    // });
     return this.model.findOne({
       where: {
         start: {
