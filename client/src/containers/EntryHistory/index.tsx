@@ -25,7 +25,7 @@ const EntryHistory: React.FC = () => {
   // );
 
   /* MOCKED USER ID */
-  const userId = 'b9610f47-61c4-41c4-9919-7065df5623a1';
+  const userId = '464b7d09-57ec-4dd1-adff-64d1f7de4d1f';
 
   useEffect(() => {
     if (userId) {
