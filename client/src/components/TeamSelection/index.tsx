@@ -131,7 +131,7 @@ const TeamSelection = ({
             },
           );
 
-          setPlayers && setPlayers(newPlayers);
+          setPlayers(newPlayers);
         }
       }
     },
