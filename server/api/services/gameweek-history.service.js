@@ -1,4 +1,6 @@
 /* eslint-disable no-await-in-loop */
+import moment from 'moment';
+
 import gameweekHistoryRepository from '../../data/repositories/gameweek-history.repository';
 import { updateTeamMember } from './team-member-history.service';
 import {
@@ -189,13 +191,14 @@ export const makeAutoSubsitution = async (gameweekId) => {
           player_stats: { injury, position },
         } = teamMembers[i][j];
         const pitchPlayer = teamMembers[i][j];
+        const now = moment();
         let benchPlayer;
 
-        if (injury && !is_on_bench) {
+        if (moment(injury).isAfter(now) && !is_on_bench) {
           if (position === 'GKP') {
-            benchPlayer = findBenchPlayerGKP(teamMembers[i]);
+            benchPlayer = findBenchPlayerGKP(teamMembers[i], now);
           } else {
-            benchPlayer = findBenchPlayer(teamMembers[i]);
+            benchPlayer = findBenchPlayer(teamMembers[i], now);
           }
           if (benchPlayer) {
             await updateTeamMember(benchPlayer.id, { is_on_bench: false });
