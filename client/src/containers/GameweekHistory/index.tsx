@@ -180,7 +180,19 @@ const GameweekHistory = () => {
             <div className={cn('entry-history-btn', 'self-center', 'mt-4')}>
               <Link
                 to='/entry-history'
-                className='whitespace-no-wrap g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded'
+                className={cn(
+                  'bg-primary',
+                  'hover:bg-teal-400',
+                  'uppercase',
+                  'font-semibold',
+                  'text-secondary',
+                  'hover:text-white',
+                  'py-2',
+                  'px-8',
+                  'border-2',
+                  'border-teal-300',
+                  'rounded mr-6',
+                )}
               >
                 {t('EntryHistory.title')}
               </Link>
