@@ -23,6 +23,15 @@ class GameweekHistoryRepository extends BaseRepository {
   getByGameweekId(gameweek_id) {
     return this.model.findAll({
       where: { gameweek_id },
+      include: [
+        {
+          association: 'team_member_histories',
+          include: {
+            association: 'player_stats',
+            attributes: ['id', 'injury', 'position'],
+          },
+        },
+      ],
     });
   }
 

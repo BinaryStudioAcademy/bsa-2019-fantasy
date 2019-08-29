@@ -119,6 +119,17 @@ router
         }),
       )
       .catch(next);
+  })
+  // For teset purpose. Shoud be deleted
+  .put('/auto-substitution/:gameweek', (req, res, next) => {
+    gameweekHistoryService
+      .makeAutoSubsitution(req.params.gameweek)
+      .then(() =>
+        res.send({
+          message: 'Succeess test',
+        }),
+      )
+      .catch(next);
   });
 
 export default router;
