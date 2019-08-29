@@ -4,30 +4,31 @@ import userRepository from '../data/repositories/user.repository';
 import fixturesSubscribtionRepository from '../data/repositories/fixtures-subscription.repository';
 import { getNotification } from './send-notification.helper';
 
-export const getFixtureSubscriptions = async (userId, socket) => {
-  const getGameInfo = (game, isFavClub) => {
-    const {
-      start,
-      end,
-      finished,
-      hometeam_score: homeTeamScore,
-      awayteam_score: awayTeamScore,
-      hometeam_id,
-      awayteam_id,
-    } = game;
+export const getGameInfo = (game, isFavClub) => {
+  const {
+    start,
+    end,
+    finished,
+    minutes,
+    hometeam_score: homeTeamScore,
+    awayteam_score: awayTeamScore,
+    hometeam_id,
+    awayteam_id,
+  } = game;
 
-    return {
-      start,
-      end,
-      finished,
-      homeTeamScore,
-      awayTeamScore,
-      hometeam_id,
-      awayteam_id,
-      isFavClub,
-    };
+  return {
+    start,
+    end,
+    finished,
+    minutes,
+    homeTeamScore,
+    awayTeamScore,
+    hometeam_id,
+    awayteam_id,
+    isFavClub,
   };
-
+};
+export const getFixtureSubscriptions = async (userId, socket) => {
   // send notification about the next game of the favorite club
   const user = await userRepository.getById(userId);
   const favClubGame = await getNotification(user.favorite_club_id);
