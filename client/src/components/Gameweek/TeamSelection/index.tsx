@@ -568,8 +568,18 @@ const TeamSelection = ({
   return (
     <DndProvider backend={HTML5Backend}>
       <div
-        className={cn(styles['team-select-wrapper'], styles['team-container'], 'py-8')}
+        className={cn(
+          styles['team-select-wrapper'],
+          styles['team-container'],
+          'py-8',
+          'relative',
+        )}
       >
+        <div
+          className={`${isGameweek && playersHistory.length === 0 ? styles.empty : ''}`}
+        >
+          <p className={styles.text}>Have you even tried to play?</p>
+        </div>
         {displayButtons()}
         {playersOnBench && playersOnPitch ? (
           <React.Fragment>
