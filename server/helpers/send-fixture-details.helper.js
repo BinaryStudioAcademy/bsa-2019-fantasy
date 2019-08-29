@@ -20,16 +20,18 @@ export const sendRemind = (email, gameDetails) => {
     text: gameDetails.finished
       ? `You are receiving this letter, because you have subscribed to the fixture
     ${gameDetails.homeTeamName} - ${gameDetails.awayTeamName},
-    which finished on ${gameDetails.start} with result ${gameDetails.homeTeamScore} - ${gameDetails.awayTeamScore}.
+    which finished on ${moment(gameDetails.start).format('MMM Do YY')} with result ${
+          gameDetails.homeTeamScore
+        } - ${gameDetails.awayTeamScore}.
     Don't miss it!`
       : `You are receiving this letter, because you have subscribed to the fixture
     ${gameDetails.homeTeamName} - ${gameDetails.awayTeamName},
-    which starts on ${moment(gameDetails.start)}. 
+    which starts on ${moment(gameDetails.start).format('MMM Do YY')}. 
     Don't miss it!`,
   };
-  // eslint-disable-next-line func-names
-  smtpTransport.sendMail(mailOptions, function(err) {
+
+  smtpTransport.sendMail(mailOptions, (err) => {
     // eslint-disable-next-line no-console
-    console.log(err);
+    console.error(err);
   });
 };
