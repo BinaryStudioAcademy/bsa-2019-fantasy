@@ -13,12 +13,16 @@ describe('Leagues test suite', () => {
     return await Page.loginWithDefaultUser();
   });
 
+  afterEach(async() => {
+    await browser.reloadSession();
+  });
+
   it('should be able to create a public league', async () => {
     await navSteps.navigateToLeagues();
-    await Wait.forSpinner();
+    //await Wait.forSpinner();
     await leaguesSteps.createPublicLeague(credentials.newLeagueName);
-    //browser.pause(5000);
-    return await leaguesSteps.findLeagueByName(credentials.newLeagueName).then((res) => {
+    await browser.pause(3000);
+    return await leaguesSteps.findPublicLeagueByName(credentials.newLeagueName).then((res) => {
       return assert.strictEqual(
         res,
         true,

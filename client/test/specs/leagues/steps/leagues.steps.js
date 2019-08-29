@@ -85,7 +85,7 @@ class LeaguesSteps {
     await this._submitLeagueCreating();
   }
 
-  async findLeagueByName(name) {
+  async findPublicLeagueByName(name) {
     const listLen = await page.publicListItems.then((res) => {
       return res.length;
     });
@@ -97,6 +97,10 @@ class LeaguesSteps {
       if (itemName === name) return true;
     }
     return false;
+  }
+
+  async findPrivateLeagueByName(name){
+    
   }
 }
 
