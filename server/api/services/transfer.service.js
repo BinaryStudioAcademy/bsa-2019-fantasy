@@ -13,6 +13,7 @@ import playerRepository from '../../data/repositories/player.repository';
 export const applyTransfers = async (user_id, gameweek_id, transfers) => {
   try {
     const transfer_amount = transfers.length;
+    const successTransfers = [];
 
     const user = { ...(await userRepository.getById(user_id)).dataValues };
 
@@ -52,19 +53,34 @@ export const applyTransfers = async (user_id, gameweek_id, transfers) => {
             throw new Error('Not enough money to make transfers!');
           }
 
+          successTransfers.push({ out_player, in_player });
           newPlayer.player_id = in_player;
-
-          const nTransfersIn = await playerRepository.getById(in_player).transfers_in;
-          await playerRepository.updateById(in_player, { transfers_in: nTransfersIn + 1 });
-          const nTransfersOut = await playerRepository.getById(out_player).transfers_out;
-          await playerRepository.updateById(out_player, { transfers_out: nTransfersOut + 1 });
         }
       });
       return newPlayer;
     });
-
     await userRepository.updateById(user.id, user);
     await teamMemberHistoryService.postTeamMemberHistory(newTeamMembers, history_id);
+
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < successTransfers.length; i++) {
+      // eslint-disable-next-line no-await-in-loop
+      const nTransfersIn = await playerRepository
+        .getById(successTransfers[i].in_player)
+        .then((player) => player.dataValues.transfers_in);
+      // eslint-disable-next-line no-await-in-loop
+      await playerRepository.updateById(successTransfers[i].in_player, {
+        transfers_in: nTransfersIn + 1,
+      });
+      // eslint-disable-next-line no-await-in-loop
+      const nTransfersOut = await playerRepository
+        .getById(successTransfers[i].out_player)
+        .then((player) => player.dataValues.transfers_out);
+      // eslint-disable-next-line no-await-in-loop
+      await playerRepository.updateById(successTransfers[i].out_player, {
+        transfers_out: nTransfersOut + 1,
+      });
+    }
 
     return transfer_amount;
   } catch (err) {
