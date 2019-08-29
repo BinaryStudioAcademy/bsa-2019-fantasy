@@ -14,7 +14,7 @@ describe('Login page tests', () => {
     await browser.reloadSession().catch((err) => console.log(err.message));
   });
 
-  xit('should login user with valid credentials', async () => {
+  it('should login user with valid credentials', async () => {
     await pageSteps
       .enterEmail(credentials.email)
       .catch((err) => console.log(err.message));
@@ -34,13 +34,28 @@ describe('Login page tests', () => {
       .catch((err) => console.log(err.message));
     await pageSteps.clickLogin().catch((err) => console.log(err.message));
     return await pageSteps
-      .getIncorectEmailNotificationText()
+      .getNotificationText()
       .then((res) =>
-        assert.strictEqual(res, 'Incorrect email', `${res} not equal to Incorrect email`),
+        assert.strictEqual(
+          res,
+          'Incorrect email.',
+          `${res} not equal to Incorrect email.`,
+        ),
       );
-    /*assert.strictEqual(
-      pageSteps.displayIncorectEmailNotification(),
-      'Incorrect email.',
-    );*/
+  });
+
+  it('should show an error if user user tries to login with wrong password', async () => {
+    await pageSteps
+      .enterEmail(credentials.email)
+      .catch((err) => console.log(err.message));
+    await pageSteps
+      .enterPassword(credentials.incorrectPassword)
+      .catch((err) => console.log(err.message));
+    await pageSteps.clickLogin().catch((err) => console.log(err.message));
+    return await pageSteps
+      .getNotificationText()
+      .then((res) =>
+        assert.strictEqual(res, 'Wrong password.', `${res} not equal to Wrong password.`),
+      );
   });
 });

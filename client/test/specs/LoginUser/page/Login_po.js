@@ -11,7 +11,7 @@ class LoginPage {
   get logo() {
     return $('a.styles_sidebar-logo__1hXCu');
   }
-  get incorrectEmailNotification() {
+  get errorNotification() {
     return $('div.styles_notificationItem__16cw3>span.mx-2');
   }
 }
