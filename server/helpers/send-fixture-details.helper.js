@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import moment from 'moment';
 
 export const sendRemind = (email, gameDetails) => {
   const smtpTransport = nodemailer.createTransport({
@@ -16,14 +17,21 @@ export const sendRemind = (email, gameDetails) => {
     to: email,
     from: 'fantasy.league.noreply@gmail.com',
     subject: 'Fixture reminder',
-    text: `You are receiving this letter, because you have subscribed to the fixture
+    text: gameDetails.finished
+      ? `You are receiving this letter, because you have subscribed to the fixture
     ${gameDetails.homeTeamName} - ${gameDetails.awayTeamName},
-    which starts at ${gameDetails.start}. 
+    which finished on ${moment(gameDetails.start).format('MMM Do YY')} with result ${
+          gameDetails.homeTeamScore
+        } - ${gameDetails.awayTeamScore}.
+    Don't miss it!`
+      : `You are receiving this letter, because you have subscribed to the fixture
+    ${gameDetails.homeTeamName} - ${gameDetails.awayTeamName},
+    which starts on ${moment(gameDetails.start).format('MMM Do YY')}. 
     Don't miss it!`,
   };
-  // eslint-disable-next-line func-names
-  smtpTransport.sendMail(mailOptions, function(err) {
+
+  smtpTransport.sendMail(mailOptions, (err) => {
     // eslint-disable-next-line no-console
-    console.log(err);
+    console.error(err);
   });
 };
