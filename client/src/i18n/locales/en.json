@@ -404,5 +404,11 @@
       "Ukrainian": "Ukrainian",
       "English": "English"
     }
+  },
+
+  "EntryHistory": {
+    "title": "Entry History",
+    "thisSeason": "This Season",
+    "goBackBtn": "Go back"
   }
 }

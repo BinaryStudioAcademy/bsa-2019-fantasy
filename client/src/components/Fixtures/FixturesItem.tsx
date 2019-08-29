@@ -15,9 +15,11 @@ import {
   createFixtureSubscription,
   deleteFixtureSubscription,
 } from 'containers/Profile/actions';
+import { addNotification } from 'components/Notifications/actions';
 
 type Props = {
   match: FixturesItemType;
+  subscribed: boolean;
 };
 
 const names = {
@@ -30,10 +32,10 @@ const names = {
   save: 'Saves',
 };
 
-const FixturesItem = ({ match }: Props) => {
+const FixturesItem = ({ match, subscribed }: Props) => {
   const [isDisplay, setIsDisplay] = useState(false);
   const [stats, setStats] = useState<any>([]);
-  const [isSubscribed, setSubscribe] = useState<boolean>(false);
+  const [isSubscribed, setSubscribe] = useState<boolean>(subscribed);
   const dispatch = useDispatch();
   const gameDetails = useSelector((state: RootState) => state.fixtures.gameDetails);
 
@@ -149,9 +151,25 @@ const FixturesItem = ({ match }: Props) => {
     );
   }
   const onSubscribe = () => {
-    isSubscribed
-      ? dispatch(deleteFixtureSubscription(match.id))
-      : dispatch(createFixtureSubscription(match.id));
+    if (isSubscribed) {
+      dispatch(
+        addNotification(
+          `You have unsubscribed from fixture ${match.hometeam.name} - ${
+            match.awayteam.name
+          }, which starts on ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
+        ),
+      );
+      dispatch(deleteFixtureSubscription(match.id));
+    } else {
+      dispatch(
+        addNotification(
+          `You have subscribed to fixture ${match.hometeam.name} - ${
+            match.awayteam.name
+          }, which starts on ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
+        ),
+      );
+      dispatch(createFixtureSubscription(match.id));
+    }
     setSubscribe(!isSubscribed);
   };
 

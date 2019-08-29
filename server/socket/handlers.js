@@ -1,13 +1,12 @@
-import { getNotification } from '../helpers/send-notification.helper';
+import { getFixtureSubscriptions } from '../helpers/fixture-notification.helper';
 import recalculateTeamsScore from './teamScoreRecalculator';
 
 export default (mainServer, fakerClient) => {
   const mainHandlers = (socket) => {
     socket.on('createRoom', (roomId) => {
       socket.join(roomId);
-      socket.on('requestGames', async () => {
-        const notification = await getNotification(roomId);
-        socket.emit('displayNotification', notification);
+      socket.on('requestGames', async (userId) => {
+        await getFixtureSubscriptions(userId, socket);
       });
     });
     socket.on('leaveRoom', (roomId) => {
