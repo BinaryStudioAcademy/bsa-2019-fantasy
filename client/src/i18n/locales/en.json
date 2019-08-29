@@ -408,6 +408,7 @@
 
   "EntryHistory": {
     "title": "Entry History",
-    "thisSeasonTitle": "This Season"
+    "thisSeason": "This Season",
+    "goBackBtn": "Go back"
   }
 }

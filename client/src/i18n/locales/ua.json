@@ -403,6 +403,7 @@
 
   "EntryHistory": {
     "title": "Історія",
-    "thisSeasonTitle": "Поточний Сезон"
+    "thisSeason": "Поточний Сезон",
+    "goBackBtn": "Повернутися"
   }
 }

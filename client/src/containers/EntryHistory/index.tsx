@@ -59,7 +59,7 @@ const EntryHistory: React.FC = () => {
           <div className={cn('this-season', 'mb-8')}>
             <div className={cn('this-season-header')}>
               <h3 className={cn('font-bold', 'text-xl', 'leading-none', 'mb-2')}>
-                This Season
+                {t('EntryHistory.thisSeason')}
               </h3>
             </div>
             <div className={cn('this-season-table', 'flex', 'flex-col', 'overflow-auto')}>
@@ -138,7 +138,7 @@ const EntryHistory: React.FC = () => {
               'rounded',
             )}
           >
-            Go back
+            {t('EntryHistory.goBackBtn')}
           </Link>
         </div>
       </div>
