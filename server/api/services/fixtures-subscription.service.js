@@ -4,8 +4,8 @@ export const createSubscription = async (data) => {
   return fixturesSubscriptionRepository.addSubscription(data);
 };
 
-export const findSubscription = async (userId, gameId) => {
-  return fixturesSubscriptionRepository.getByUserAndGameId(userId, gameId);
+export const findSubscription = async (userId) => {
+  return fixturesSubscriptionRepository.getByUserId(userId);
 };
 
 export const deleteSubscription = async (userId, gameId) => {

@@ -1,4 +1,5 @@
 import callWebApi from 'helpers/webApiHelper';
+import { PlayerType } from 'types/player.types';
 
 export const getPlayers = async (filter: any) => {
   const response = await callWebApi({
@@ -9,7 +10,7 @@ export const getPlayers = async (filter: any) => {
   return response.json();
 };
 
-export const getRandomSquad = async () => {
+export const getRandomSquad = async (): Promise<PlayerType[]> => {
   const response = await callWebApi({
     endpoint: `/api/players/random-squad`,
     type: 'GET',

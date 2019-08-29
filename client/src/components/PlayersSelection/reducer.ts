@@ -9,7 +9,7 @@ import { PlayerType } from 'types/player.types';
 
 type State = {
   players: PlayerType[];
-  autoPick?: PlayerType[];
+  autoPick: PlayerType[];
   isLoading: boolean;
   count: number;
 };
@@ -17,6 +17,7 @@ type State = {
 const initialState: State = {
   isLoading: true,
   players: [],
+  autoPick: [],
   count: 0,
 };
 

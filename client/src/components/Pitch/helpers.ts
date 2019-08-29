@@ -1,8 +1,8 @@
 import { PlayerPosition } from 'components/Gameweek/PlayerSelection/types';
-import { GameweekHistoryType } from 'types/gameweekHistory.type';
 import { categorizePlayers } from 'helpers/categorizePlayers';
+import { AbstractPlayerType } from 'types/player-with-position.interface';
 
-export const getPitch = (players: GameweekHistoryType[] = []) => {
+export const getPitch = <T extends AbstractPlayerType>(players: T[] = []) => {
   const typeAmountMap: [PlayerPosition, number][] = [
     ['GKP', 2],
     ['DEF', 5],
@@ -14,7 +14,7 @@ export const getPitch = (players: GameweekHistoryType[] = []) => {
 
   const team = typeAmountMap.flatMap<{
     type: PlayerPosition;
-    item: GameweekHistoryType | null;
+    item: T | null;
   }>(([type, amount]) =>
     categorized[type]
       .map((p) => ({ item: p }))

@@ -11,23 +11,39 @@ import teamMemberHistoriesSeed from '../seed-data/team-member-histories.seed';
 
 const randomIndex = (length) => Math.floor(Math.random() * length);
 
-const teamMemberIndex1Gameweek = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 14, 17, 18, 22];
+const teamMemberIndex1Gameweek = [
+  10,
+  46,
+  87,
+  108,
+  138,
+  189,
+  251,
+  290,
+  27,
+  18,
+  421,
+  451,
+  310,
+  294,
+  183,
+];
 const teamMemberIndex2Gameweek = [
-  53,
-  54,
-  55,
-  56,
-  57,
-  58,
-  59,
-  60,
-  64,
-  65,
-  67,
-  49,
-  50,
-  51,
-  52,
+  366,
+  447,
+  122,
+  111,
+  263,
+  353,
+  438,
+  1,
+  2,
+  298,
+  219,
+  261,
+  75,
+  30,
+  245,
 ];
 
 export default {

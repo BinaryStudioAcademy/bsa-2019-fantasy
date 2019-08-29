@@ -17,7 +17,7 @@ type SetLoading = {
 
 type SetAutoPick = {
   type: typeof SET_AUTOPICK_SQUAD;
-  payload: any;
+  payload: PlayerType[];
 };
 
 export type PlayersSelectionAction = SetPlayers | SetLoading | SetAutoPick;

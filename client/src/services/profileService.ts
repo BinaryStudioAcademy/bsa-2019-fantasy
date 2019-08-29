@@ -32,12 +32,9 @@ export const updateEmailPref = async (
 };
 
 //fixture subscribtions
-export const getFixtureSub = async (
-  user_id: User['id'],
-  game_id: FixturesItemType['id'],
-) => {
+export const getFixtureSub = async (user_id: User['id']) => {
   const response = await callWebApi({
-    endpoint: `/api/profile/fixtures-sub/${user_id}/${game_id}`,
+    endpoint: `/api/profile/fixtures-sub/${user_id}`,
     type: 'GET',
   });
 
@@ -80,6 +77,16 @@ export const updateUserTeamDetails = async (
     endpoint: `/api/profile/${userId}/${gameweekId}`,
     type: 'PUT',
     request: { userData, teamMemberData },
+  });
+
+  return response.json();
+};
+
+export const updateUserAvatar = async (userId: User['id'], image: string) => {
+  const response = await callWebApi({
+    endpoint: `/api/profile/avatar/${userId}`,
+    type: 'PUT',
+    request: { image },
   });
 
   return response.json();

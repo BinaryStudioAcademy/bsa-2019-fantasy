@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { feedback } from 'react-feedbacker';
 import moment from 'moment';
 import 'moment/locale/uk';
 
@@ -10,9 +11,13 @@ import { RootState } from 'store/types';
 
 import Spinner from 'components/Spinner';
 import { forgotPassword, setLanguage } from 'containers/Profile/actions';
-
-import styles from './styles.module.scss';
 import { addNotification } from 'components/Notifications/actions';
+import * as imageService from 'services/imageService';
+import Button from 'components/Button';
+import { updateUserAvatar } from '../../actions';
+
+import { generateImageSrc } from 'helpers/avatar';
+import styles from './styles.module.scss';
 
 export const usePersonalDetails = () => {
   const user = useSelector((state: RootState) => state.profile.user);
@@ -31,12 +36,38 @@ const PersonalDetails = withRouter(({ history }) => {
   const dispatch = useDispatch();
 
   const { user, language } = usePersonalDetails();
+
+  const [imageId, setImageId] = useState<string | undefined>(undefined);
+  const [imageLink, setImageLink] = useState<string | undefined>(undefined);
+  const [isUploading, setIsUploading] = useState<true | false>(false);
+
   if (!user) return <Spinner />;
+
+  const uploadImage = (file) => imageService.uploadImage(file);
+
+  const handleUploadFile = async ({ target }) => {
+    setIsUploading(true);
+    try {
+      const { id, link } = await uploadImage(target.files[0]);
+      setImageId(id);
+      setImageLink(link);
+    } catch {
+      feedback.error('Could not upload the file');
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     console.log('Updating personal details:');
+
+    if (!imageId) {
+      return;
+    }
+
+    dispatch(updateUserAvatar(imageId));
   };
 
   const onClick = (e: React.MouseEvent) => {
@@ -67,6 +98,15 @@ const PersonalDetails = withRouter(({ history }) => {
   return (
     <form className='flex flex-col' onSubmit={onSubmit}>
       <h2 className='text-5xl font-bold mb-12'>{t('Profile.personalDetails.title')}</h2>
+
+      <div className='flex justify-end'>
+        <img
+          style={{ height: 180, width: 180 }}
+          className='rounded-full mb-2 '
+          src={generateImageSrc(user, imageLink)}
+          alt='avatar'
+        />
+      </div>
 
       <div className={styles.items}>
         <label className='mb-8 flex'>
@@ -104,6 +144,42 @@ const PersonalDetails = withRouter(({ history }) => {
             {t('Profile.personalDetails.setPassword')}
           </button>
         </div>
+
+        <div className='mb-8 flex'>
+          <div className='w-1/4 font-bold'>{t('Profile.personalDetails.avatar')}</div>
+          <Button
+            loading={isUploading}
+            disabled={isUploading}
+            styling='primary'
+            className='text-sm xl:text-base mr-4'
+            type='label'
+          >
+            {t('Profile.personalDetails.changeAvatar')}
+            <input
+              name='image'
+              accept='.jpg, .png, .jpeg'
+              type='file'
+              onChange={handleUploadFile}
+              hidden
+            />
+          </Button>
+        </div>
+
+        <label className='mb-8 flex'>
+          <div className='w-1/4 font-bold'>
+            {t('Profile.personalDetails.username')}
+            <p className='font-bold text-red-500 text-sm'>
+              {`* ${t('Profile.personalDetails.required')}`}
+            </p>
+          </div>
+          <input
+            className='w-2/4 px-4 py-2 bg-gray-100 shadow rounded-sm'
+            type='text'
+            placeholder='Username'
+            value={user.name}
+            onChange={() => {}}
+          />
+        </label>
 
         <div className='mb-8 flex'>
           <div className='w-1/4 font-bold'>{t('Profile.personalDetails.language')}</div>

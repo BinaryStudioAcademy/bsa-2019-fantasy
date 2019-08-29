@@ -16,6 +16,7 @@ import { loadGameweeksHistoryAction, loadTeamHistoryAction } from './actions';
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
+import { Link } from 'react-router-dom';
 
 const GameweekHistory = () => {
   useEffect(() => {
@@ -150,8 +151,9 @@ const GameweekHistory = () => {
             className={cn(
               header.paper,
               styles['gameweek-stats'],
-              'px-8',
-              'pt-12',
+              'flex',
+              'flex-col',
+              'p-8',
               'rounded',
               'ml-2',
             )}
@@ -175,6 +177,26 @@ const GameweekHistory = () => {
                 <span className='font-bold'>{userRank.rank}</span>
               </p>
             ) : null}
+            <div className={cn('entry-history-btn', 'self-center', 'mt-4')}>
+              <Link
+                to='/entry-history'
+                className={cn(
+                  'bg-primary',
+                  'hover:bg-teal-400',
+                  'uppercase',
+                  'font-semibold',
+                  'text-secondary',
+                  'hover:text-white',
+                  'py-2',
+                  'px-8',
+                  'border-2',
+                  'border-teal-300',
+                  'rounded mr-6',
+                )}
+              >
+                {t('EntryHistory.title')}
+              </Link>
+            </div>
           </div>
         </React.Fragment>
       </div>

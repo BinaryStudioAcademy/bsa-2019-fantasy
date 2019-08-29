@@ -5,7 +5,11 @@ import { useTranslation } from 'react-i18next';
 import { bindActionCreators, Dispatch } from 'redux';
 import moment from 'moment';
 
-import { loadGameweeksAction, loadGamesAction } from './actions';
+import {
+  loadGameweeksAction,
+  loadGamesAction,
+  loadFixtureSubscriptionsAction,
+} from './actions';
 import { RootState } from 'store/types';
 import { FixturesItemType } from 'types/fixtures.types';
 import { GameweekType } from 'types/gameweek.type';
@@ -20,6 +24,7 @@ type Props = {
   gameweeks: GameweekType[];
   loadGameweeksAction: typeof loadGameweeksAction;
   loadGamesAction: typeof loadGamesAction;
+  loadFixtureSubscriptionsAction: typeof loadFixtureSubscriptionsAction;
   games?: [FixturesItemType];
   isLoading: boolean;
 };
@@ -27,6 +32,7 @@ type Props = {
 const FixturesContainer = ({
   loadGameweeksAction,
   loadGamesAction,
+  loadFixtureSubscriptionsAction,
   gameweeks,
   games,
   isLoading,
@@ -37,7 +43,8 @@ const FixturesContainer = ({
   useEffect(() => {
     document.title = 'Fixtures | Fantasy Football League';
     loadGameweeksAction();
-  }, [loadGameweeksAction]);
+    loadFixtureSubscriptionsAction();
+  }, [loadGameweeksAction, loadFixtureSubscriptionsAction]);
 
   useEffect(() => {
     if (gameweeks) {
@@ -123,6 +130,7 @@ const mapStateToProps = (rootState: RootState) => ({
 const actions = {
   loadGameweeksAction,
   loadGamesAction,
+  loadFixtureSubscriptionsAction,
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);

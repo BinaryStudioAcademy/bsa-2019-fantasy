@@ -16,16 +16,16 @@ import { RootState } from 'store/types';
 
 import { logout } from 'containers/Profile/actions';
 
+import { generateImageSrc } from 'helpers/avatar';
 import styles from './styles.module.scss';
 
 const Sidebar = () => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
-  const { name, score, money, team_name } = useSelector(
-    (state: RootState) => state.profile.user!,
-    shallowEqual,
-  );
+  const user = useSelector((state: RootState) => state.profile.user!, shallowEqual);
+
+  const { name, score, money, team_name } = user;
 
   const [isOpened, setOpened] = useState(false);
   const toggleOpened = () => setOpened((o) => !o);
@@ -90,7 +90,7 @@ const Sidebar = () => {
       >
         <Link className={`mt-32 flex-col`} to='/profile' onClick={noPropagation}>
           <img
-            src='https://i2.wp.com/www.ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png'
+            src={generateImageSrc(user)}
             alt='user'
             style={{ height: 45, width: 45 }}
             className='rounded-full mb-2'
