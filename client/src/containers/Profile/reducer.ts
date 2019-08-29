@@ -1,4 +1,10 @@
-import { SET_USER, SET_IS_LOADING, CHANGE_LANGUAGE, UserAction } from './action.type';
+import {
+  SET_USER,
+  SET_IS_LOADING,
+  CHANGE_LANGUAGE,
+  SET_EMAIL_PREF,
+  UserAction,
+} from './action.type';
 import { User } from 'types/user.type';
 
 type State = {
@@ -36,6 +42,7 @@ export default (state = initialState, action: UserAction) => {
         language: action.payload.language,
       };
     }
+
     default:
       return state;
   }

@@ -4,16 +4,20 @@ import { RootState } from 'store/types';
 import { NotificationType } from 'types/notifications.types';
 
 import {
-  addNotification,
   removeNotification,
   removeAllNotifications,
   markAllNotificationsRead,
 } from './actions';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faCircle } from '@fortawesome/free-solid-svg-icons';
+import { FaBell, FaCircle } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
-// onClickOutside hook
+import styles from './styles.module.scss';
+
+/* NOTIFICATION USAGE EXAMPLE */
+/* dispatch(addNotification(msg)) */
+
+/* onClickOutside hook */
 const useOnClickOutside = (ref: any, handler: any) => {
   useEffect(() => {
     const listener = (event: { target: any }) => {
@@ -35,16 +39,14 @@ const useOnClickOutside = (ref: any, handler: any) => {
 };
 
 const Notifications = () => {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const notifications = useSelector(
     (state: RootState) => state.notifications.notifications,
   );
 
   const [visible, setVisible] = useState(false);
-
-  const handleAddNotification = (msg: string) => {
-    dispatch(addNotification(msg));
-  };
 
   const handleRemoveNotification = (notificationId: string) => {
     dispatch(removeNotification(notificationId));
@@ -59,7 +61,6 @@ const Notifications = () => {
     setVisible(!visible);
   };
 
-  // onClickOutside
   const ref = useRef();
   useOnClickOutside(ref, () => setVisible(false));
 
@@ -74,17 +75,13 @@ const Notifications = () => {
         {notifications.find(
           (notification: NotificationType) => notification.isRead === false,
         ) ? (
-          <button className='fa-layers fa-fw text-secondary outline-none focus:outline-none'>
-            <FontAwesomeIcon icon={faBell} />
-            <FontAwesomeIcon
-              icon={faCircle}
-              color={'#FF482F'}
-              transform='shrink-10 right-5 up-4'
-            />
+          <button className='fa-layers fa-fw text-secondary outline-none focus:outline-none relative'>
+            <FaBell />
+            <FaCircle className={styles.notification} />
           </button>
         ) : (
           <button className='fa-layers fa-fw text-secondary outline-none focus:outline-none'>
-            <FontAwesomeIcon icon={faBell} />
+            <FaBell />
           </button>
         )}
       </div>
@@ -118,18 +115,11 @@ const Notifications = () => {
           </div>
           <div className='notifications-control self-center'>
             <button
-              className='clear-btn uppercase font-semibold text-center text-gray-400 mt-2 mx-2 hover:text-gray-500'
+              className='clear-btn uppercase font-semibold text-center text-gray-400 mt-2 mx-2 hover:text-gray-500 outline-none focus:outline-none'
               onClick={() => handleRemoveAllNotifications()}
             >
-              Clear all
+              {t('Notifications.navigation.clearAll')}
             </button>
-            {/* ADD NOTIFICATION USAGE EXAMPLE */}
-            {/* <button
-              className='clear-btn uppercase font-semibold text-center text-gray-400 mt-2 mx-2 hover:text-gray-500'
-              onClick={() => handleAddNotification(`${Date.now()}`)}
-            >
-              Add One
-            </button> */}
           </div>
         </div>
       )}

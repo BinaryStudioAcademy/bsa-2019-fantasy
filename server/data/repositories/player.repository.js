@@ -1,4 +1,5 @@
 import { Op } from 'sequelize';
+import sequelize from '../db/connection';
 import { PlayerStatModel } from '../models/index';
 import BaseRepository from './base.repository';
 
@@ -56,6 +57,30 @@ class PlayerRepository extends BaseRepository {
 
   getById(id) {
     return this.model.findOne({ where: { id } });
+  }
+
+  getRandomPlayers() {
+    const query = (position, limit, condition) => `SELECT DISTINCT ON (club_id) *
+     FROM (select * from player_stats WHERE position='${position}' AND (${condition}) ORDER BY random() LIMIT 10) 
+     as players LIMIT ${limit};`;
+
+    const goalkeepers = sequelize.query(query('GKP', 2, "club_id='7' OR club_id='12'"), {
+      type: sequelize.QueryTypes.SELECT,
+    });
+
+    const defenfers = sequelize.query(query('DEF', 5, 'club_id NOT IN (7, 12)'), {
+      type: sequelize.QueryTypes.SELECT,
+    });
+
+    const middlefielders = sequelize.query(query('MID', 5, 'club_id NOT IN (7, 12)'), {
+      type: sequelize.QueryTypes.SELECT,
+    });
+
+    const forwards = sequelize.query(query('FWD', 3, 'club_id NOT IN (7, 12)'), {
+      type: sequelize.QueryTypes.SELECT,
+    });
+
+    return Promise.all([goalkeepers, defenfers, middlefielders, forwards]);
   }
 }
 

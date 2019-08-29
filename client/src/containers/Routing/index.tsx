@@ -12,7 +12,7 @@ import GuestRoute from 'containers/GuestRoute';
 
 import LoginPage from 'containers/Auth/Login/LoginPage';
 import RegistrationPage from 'containers/Auth/Registration/RegistrationPage';
-import SocialPage from 'containers/Auth/SocialPage';
+// import SocialPage from 'containers/Auth/SocialPage';
 
 import MyTeam from 'containers/MyTeam';
 import Transfers from 'containers/Transfers';
@@ -22,8 +22,10 @@ import Live from 'containers/Live';
 import Leagues from 'containers/Leagues';
 import CreateLeague from 'containers/Leagues/CreateLeague';
 import JoinLeague from 'containers/Leagues/JoinLeague';
+import LeagueDetails from 'containers/Leagues/LeagueDetails';
 
 import GameweekHistory from 'containers/GameweekHistory';
+import EntryHistory from 'containers/EntryHistory';
 import NoTeamHome from 'components/NoTeamHome';
 
 import FixturesContainer from 'containers/FixturesContainer';
@@ -40,7 +42,7 @@ import FavouriteClubSelection from 'containers/Profile/components/FavouriteClubS
 import SetPassword from 'containers/Profile/components/SetPassword';
 import { loadCurrentUser, setLanguage } from 'containers/Profile/actions';
 
-import ConnectFbPage from 'containers/Auth/ConnectFbPage';
+// import ConnectFbPage from 'containers/Auth/ConnectFbPage';
 import ForgotPassword from 'containers/ChangePassword/ForgotPassword';
 import ResetPassword from 'containers/ChangePassword/ResetPassword';
 
@@ -79,14 +81,14 @@ const Routing = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (isAuthorized && favorite_club) {
+    if (user && isAuthorized && favorite_club) {
       if (!joinedRoom) {
         setJoinedRoom(true);
         joinRoom(favorite_club);
       }
-      requestGames();
+      requestGames(user.id);
     }
-  }, [dispatch, isAuthorized, favorite_club]);
+  }, [dispatch, user, isAuthorized, favorite_club]);
 
   useEffect(() => {
     if (user && currentGameweek) {
@@ -117,7 +119,7 @@ const Routing = () => {
   }
 
   return (
-    <div className='flex h-screen font-sans font-medium'>
+    <div className='flex h-screen h-full font-sans font-medium'>
       <Switch>
         <GuestRoute exact path='/login' component={LoginPage} />
         <GuestRoute exact path='/registration' component={RegistrationPage} />
@@ -152,6 +154,7 @@ const Routing = () => {
                   exact
                   component={user && user.team_name ? GameweekHistory : NoTeamHome}
                 />
+                <Route path='/entry-history' exact component={EntryHistory} />
 
                 <Route path='/profile' component={Profile} />
                 <Route path='/profile/set/password' component={SetPassword} />
@@ -170,6 +173,7 @@ const Routing = () => {
                 <Route path='/leagues' exact component={Leagues} />
                 <Route path='/leagues/create' component={CreateLeague} />
                 <Route path='/leagues/join' component={JoinLeague} />
+                <Route path='/leagues/:name' component={LeagueDetails} />
 
                 <Route render={() => <Redirect to='/404' />} />
               </Switch>

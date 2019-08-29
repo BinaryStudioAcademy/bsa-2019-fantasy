@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { RootState } from 'store/types';
 import { updateFavoriteClub } from 'containers/Profile/actions';
+import { addNotification } from 'components/Notifications/actions';
 
 import Spinner from 'components/Spinner';
 import { getClubLogoUrl } from 'helpers/images';
@@ -30,6 +31,7 @@ const FavouriteClubSelection = () => {
       clubs.find((c) => c.id === selectedClubId)
     ) {
       dispatch(updateFavoriteClub(selectedClubId));
+      dispatch(addNotification(t('Notifications.messages.changeFavoriteClub')));
     }
   };
 
@@ -54,7 +56,15 @@ const FavouriteClubSelection = () => {
                 value={item.id}
                 onChange={(e) => setClub(+e.target.value)}
               />
-              <div className={cn(styles.clubLabel, 'h-full w-full rounded shadow p-2')}>
+              <div
+                className={cn(
+                  styles.clubLabel,
+                  'h-full',
+                  'w-full',
+                  'rounded',
+                  'shadow p-2',
+                )}
+              >
                 <img
                   className='rounded w-10'
                   src={getClubLogoUrl(item.code, 200)}

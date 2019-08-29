@@ -16,6 +16,7 @@ import { loadGameweeksHistoryAction, loadTeamHistoryAction } from './actions';
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
+import { Link } from 'react-router-dom';
 
 const GameweekHistory = () => {
   useEffect(() => {
@@ -73,11 +74,20 @@ const GameweekHistory = () => {
   return (
     <div className={styles['gameweek-history']}>
       <div
-        className={`${header.jumbotron} ${header.paper} mb-12 rounded flex items-end justify-between pt-6`}
+        className={cn(
+          header.jumbotron,
+          header.paper,
+          'mb-12',
+          'rounded',
+          'flex',
+          'items-end',
+          'justify-between',
+          'pt-6',
+        )}
       >
-        <div className={`${header['jumbotron-content']} mt-32 mb-12`}>
-          <h2 className={`${header.title} text-secondary mb-12`}>
-            <div className={`${header.sub} ${header.title} mb-3 flex items-center`}>
+        <div className={cn(header['jumbotron-content'], 'mt-32', 'mb-12')}>
+          <h2 className={cn(header.title, 'text-secondary', 'mb-12')}>
+            <div className={cn(header.sub, header.title, 'mb-3', 'flex', 'items-center')}>
               {t('GameweekHistoryPage.titles.sub')}
             </div>
             {`${t('GameweekHistoryPage.titles.main')}  ${currentGameweek}`}
@@ -99,7 +109,17 @@ const GameweekHistory = () => {
                 disabled={isLoading}
                 className={cn(
                   styles['btn-next'],
-                  'g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded font-bold',
+                  'g-transparent',
+                  'hover:bg-teal-400',
+                  'text-secondary',
+                  'hover:text-white',
+                  'py-2',
+                  'px-6',
+                  'border-2',
+                  'border-gray-700',
+                  'hover:border-transparent',
+                  'rounded',
+                  'font-bold',
                 )}
               >
                 {t('next')}
@@ -111,7 +131,7 @@ const GameweekHistory = () => {
         <div className='w-6/12'>
           {gameweekResults && gameweeks && (
             <LineChart
-              data={getChartOptions(gameweeks, gameweekResults, displayRadar())}
+              data={getChartOptions(gameweeks, gameweekResults, displayRadar(), t)}
             />
           )}
         </div>
@@ -119,7 +139,7 @@ const GameweekHistory = () => {
 
       <div className={styles['gameweek-history-content']}>
         <React.Fragment>
-          <div className={cn(header.paper, 'rounded mr-2 relative')}>
+          <div className={cn(header.paper, 'rounded mr-2', 'relative')}>
             {isLoading ? (
               <Spinner />
             ) : (
@@ -128,12 +148,20 @@ const GameweekHistory = () => {
           </div>
 
           <div
-            className={`${header.paper} px-8 pt-12 rounded ${styles['gameweek-stats']} ml-2`}
+            className={cn(
+              header.paper,
+              styles['gameweek-stats'],
+              'flex',
+              'flex-col',
+              'p-8',
+              'rounded',
+              'ml-2',
+            )}
           >
-            <h3 className={`${header.title} text-secondary mb-1`}>
+            <h3 className={cn(header.title, 'text-secondary', 'mb-1')}>
               {t('GameweekHistoryPage.currentPoints')}
             </h3>
-            <p className={`pl-3 ${styles.points}`}>
+            <p className={cn('pl-3', styles.points)}>
               <span className='font-bold'>
                 {gameweeksHistory[gameweeksHistory.length - 1]
                   ? gameweeksHistory[gameweeksHistory.length - 1].team_score
@@ -141,14 +169,34 @@ const GameweekHistory = () => {
               </span>
               {` ${t('GameweekHistoryPage.points')}`}
             </p>
-            <h3 className={`${header.title} text-secondary mb-1`}>
+            <h3 className={cn(header.title, 'text-secondary', 'mb-1')}>
               {t('GameweekHistoryPage.overallRank')}
             </h3>
             {userRank ? (
-              <p className={`pl-3 ${styles.points}`}>
+              <p className={cn('pl-3', styles.points)}>
                 <span className='font-bold'>{userRank.rank}</span>
               </p>
             ) : null}
+            <div className={cn('entry-history-btn', 'self-center', 'mt-4')}>
+              <Link
+                to='/entry-history'
+                className={cn(
+                  'bg-primary',
+                  'hover:bg-teal-400',
+                  'uppercase',
+                  'font-semibold',
+                  'text-secondary',
+                  'hover:text-white',
+                  'py-2',
+                  'px-8',
+                  'border-2',
+                  'border-teal-300',
+                  'rounded mr-6',
+                )}
+              >
+                {t('EntryHistory.title')}
+              </Link>
+            </div>
           </div>
         </React.Fragment>
       </div>

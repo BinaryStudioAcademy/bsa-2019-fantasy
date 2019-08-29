@@ -46,6 +46,7 @@ type State = {
   searchClub: string;
   searchPosition: string;
   redirect: boolean;
+  dialogInitialTab?: 'fixtures' | 'history';
 };
 
 const NOT_SORTABLE_TABLE_COLUMNS = ['club_id', 'position'];
@@ -87,15 +88,13 @@ class PlayersPage extends React.Component<Props, State> {
     }
   };
 
-  onComparisonAdd = async (props: any) => {
-    if (props.original) {
-      const player = this.props.players.find(
-        (player) => player && props.original.id === player.id,
-      );
+  onComparisonAdd = async (id: string, club: string) => {
+    if (id) {
+      const player = this.props.players.find((player) => player && id === player.id);
 
       if (this.state.comparisonData.length) {
         const playerIndex = this.state.comparisonData.findIndex(
-          (player: any) => player && props.original.id === player.id,
+          (player: any) => player && id === player.id,
         );
 
         if (this.state.comparisonData.length === 2 && playerIndex === -1) {
@@ -115,7 +114,7 @@ class PlayersPage extends React.Component<Props, State> {
         }
       }
 
-      await this.props.fetchDataForPlayer(props.original.id, props.original.club_id);
+      await this.props.fetchDataForPlayer(id, club);
       player!.gameweeks_stats = this.props.playerData.history;
 
       this.setState({
@@ -282,25 +281,28 @@ class PlayersPage extends React.Component<Props, State> {
       <>
         <button
           className='w-6 h-6 justify-center mr-4 leading-none flex bg-background rounded-full'
-          onClick={() => this.onComparisonAdd(props)}
+          onClick={() => this.onComparisonAdd(props.original.id, props.original.club_id)}
         >
           {addedToComparison ? <FaTimes /> : <FaPlus />}
         </button>
         <button
           className='w-6 h-6 justify-center mr-4 leading-none flex bg-background rounded-full text-s font-bold'
-          onClick={() => {
-            this.setState({
-              currentPlayer: this.props.players.find(
-                (p: any) => p && props.original.id === p.id,
-              ),
-            });
-            this.props.fetchDataForPlayer(props.original.id, props.original.club_id);
-          }}
+          onClick={() => this.onInfoClick(props.original.id, props.original.club_id)}
         >
           i
         </button>
       </>
     );
+  };
+
+  onInfoClick = (id: string, club_id: number, dialogInitialTab: 'fixtures' | 'history' = 'history') => {
+    this.setState({
+      currentPlayer: this.props.players.find(
+        (p: any) => p && id === p.id,
+      ),
+      dialogInitialTab
+    });
+    this.props.fetchDataForPlayer(id, String(club_id));
   };
 
   renderNameCell = (props) => (
@@ -411,7 +413,7 @@ class PlayersPage extends React.Component<Props, State> {
             }}
           />
         )}
-        <PlayerHighlight player={this.state.playerHighlightData} />
+        <PlayerHighlight player={this.state.playerHighlightData} onInfoClick={this.onInfoClick} />
 
         <section className='allStats my-6'>
           <div className='filters text-sm flex mt-6 mb-1'>
@@ -433,12 +435,14 @@ class PlayersPage extends React.Component<Props, State> {
             <div className='ml-auto flex'>
               <Dropdown
                 placeholder={this.props.t('Players.club')}
+                className='mr-2'
                 options={this.getClubOptions()}
                 onChange={this.onClubChange}
                 value={this.state.searchClub}
               />
               <Dropdown
                 placeholder={this.props.t('Players.position')}
+                className='mr-2'
                 options={this.getPositionOptions()}
                 onChange={this.onPositionChange}
                 value={this.state.searchPosition}
@@ -458,6 +462,7 @@ class PlayersPage extends React.Component<Props, State> {
               loading={this.props.dialogLoading}
               player={this.state.currentPlayer}
               clubName={this.getClubNameById(this.state.currentPlayer.club_id)}
+              tab={this.state.dialogInitialTab}
             />
           )}
         </section>

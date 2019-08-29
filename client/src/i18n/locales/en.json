@@ -5,6 +5,8 @@
   "next": "Next",
   "previous": "Previous",
   "submit": "Submit",
+  "subscribe": "Subscribe",
+  "unsubscribe": "Unsubscribe",
   "roles": {
     "goalkeeper": "goalkeeper",
     "goalkeeper_plural": "goalkeepers",
@@ -66,7 +68,8 @@
   },
 
   "Fixtures": {
-    "title": "Fixtures"
+    "title": "Fixtures",
+    "gameweek": "Gameweek"
   },
 
   "GameweekHistoryPage": {
@@ -76,7 +79,13 @@
     },
     "currentPoints": "Current Points",
     "points": "points",
-    "overallRank": "Rank in Overall League"
+    "overallRank": "Rank in Overall League",
+    "chart": {
+      "averagePoint": "average point",
+      "maxPoint": "max point",
+      "userPoint": "user point",
+      "GW": "GW"
+    }
   },
 
   "Gameweek": {
@@ -203,7 +212,9 @@
       "password": "Password",
       "email": "Email",
       "setPassword": "Set a password",
-      "language": "Language"
+      "language": "Language",
+      "avatar": "Avatar",
+      "changeAvatar": "Change avatar"
     },
 
     "favouriteClub": {
@@ -211,7 +222,11 @@
     },
 
     "emailPreferences": {
-      "title": "Email preferences"
+      "title": "Email preferences",
+      "email-select": "Recieve a remind-email to apply a team",
+      "timeSelect": "When to send an email to apply a team?",
+      "hours": "hours",
+      "hour": "hour"
     },
 
     "changePassword": {
@@ -261,7 +276,8 @@
     "autoPickBtn": "Auto Pick",
     "resetBtn": "Reset",
     "selectedStats": "Players Selected",
-    "moneyStats": "Money Remaining"
+    "moneyStats": "Money Remaining",
+    "validationError": "Too many players selected from "
   },
 
   "SaveTeamModal": {
@@ -345,5 +361,54 @@
     "invitationCode": "Your invitation code",
     "copied": "Copied",
     "clickToCopy": "Click on the code to copy"
+  },
+
+  "LeagueDetails": {
+    "table": {
+      "title": "Participants Statistics",
+      "rank": "Rank",
+      "team": "Team & Manager",
+      "GW": "Gameweek Points",
+      "TOT": "Total points"
+    },
+    "title": {
+      "sub": "League Details"
+    },
+    "invitation": {
+      "title": "Invitation Code",
+      "message": "This is your invitation code. Share this code with others to join your league!"
+    },
+    "leaveLeague": {
+      "title": "Leave a league",
+      "message": "Click the button below to leave the league.",
+      "button": "Leave league"
+    }
+  },
+
+  "Notifications": {
+    "messages": {
+      "setUaLanguage": "You have changed website language to Ukrainian.",
+      "setEnLanguage": "You have changed website language to English.",
+      "joinPrivateLeague": "You have joined the new private league.",
+      "joinPublicLeague": "You have joined the new public league.",
+      "createPrivateLeague": "You have created the new private league.",
+      "createPublicLeague": "You have created the new public league.",
+      "changeFavoriteClub": "You have updated your favorite club."
+    },
+
+    "navigation": {
+      "clearAll": "Clear All"
+    },
+
+    "additional": {
+      "Ukrainian": "Ukrainian",
+      "English": "English"
+    }
+  },
+
+  "EntryHistory": {
+    "title": "Entry History",
+    "thisSeason": "This Season",
+    "goBackBtn": "Go back"
   }
 }

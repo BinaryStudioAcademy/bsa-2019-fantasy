@@ -1,11 +1,12 @@
 import React from 'react';
+import cn from 'classnames';
 import { withRouter } from 'react-router-dom';
 
 import styles from './styles.module.scss';
 
 const SocialForm = withRouter(({ history }) => {
   return (
-    <div className={`${styles['form-registration']} w-full h-full max-w-xs`}>
+    <div className={cn(styles['form-registration'], 'w-full', 'h-full', 'max-w-xs')}>
       <div className='flex flex-col px-8 pt-6 pb-8'>
         <button
           type='button'

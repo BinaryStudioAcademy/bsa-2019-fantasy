@@ -3,9 +3,11 @@ import gameweekHistoryRepository from '../../data/repositories/gameweek-history.
 export const getAllHistory = () => gameweekHistoryRepository.getAll();
 
 export const getCurrentHistoryById = async (userId, gameweekId) => {
-  const { id } = await gameweekHistoryRepository.getByUserGameweekId(userId, gameweekId);
-
-  return id;
+  const result = await gameweekHistoryRepository.getByUserGameweekId(userId, gameweekId);
+  if (!result) {
+    return { message: 'Can`t find gameweek history' };
+  }
+  return result.id;
 };
 
 export const getHistoryById = async (gameweekHistoryId) => {
@@ -69,15 +71,6 @@ export const getMaxGameweekScore = (gameweekResults) => {
 
 export const getGameweeksStatistics = (histories) => {
   const gameweekIds = new Set([...histories].map((h) => h.gameweek_id));
-  // const getGameweek = (gameweekId) => {
-  //   const result = gameweekRepository.getById(gameweekId);
-  //   return result;
-  // };
-  // const getGameweekNumber = (gameweek) => {
-  //   const { number } = gameweek;
-
-  //   return number;
-  // };
 
   let result = [];
   // eslint-disable-next-line no-plusplus

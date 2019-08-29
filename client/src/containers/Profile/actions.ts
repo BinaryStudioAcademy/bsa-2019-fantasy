@@ -19,10 +19,12 @@ import { GameweekType } from 'types/gameweek.type';
 import {
   SET_USER,
   SET_IS_LOADING,
+  SET_EMAIL_PREF,
   CHANGE_LANGUAGE,
   AsyncUserAction,
   UserAction,
 } from './action.type';
+import { FixturesItemType } from 'types/fixtures.types';
 
 const setToken = (token: string) => localStorage.setItem('token', token);
 const clearToken = () => localStorage.removeItem('token');
@@ -36,7 +38,10 @@ const setIsLoading = (isLoading: boolean): UserAction => ({
   type: SET_IS_LOADING,
   payload: isLoading,
 });
-
+const setEmailPref = (sendmailTime: number | null): UserAction => ({
+  type: SET_EMAIL_PREF,
+  payload: sendmailTime,
+});
 export const setLanguage = (request: { language: string }): UserAction => ({
   type: CHANGE_LANGUAGE,
   payload: request,
@@ -127,13 +132,53 @@ export const updateFavoriteClub = (id: Club['id']): AsyncUserAction => async (
   }
 };
 
+export const updateEmailPreferences = (
+  sendmailTime: User['sendmail_time'],
+): AsyncUserAction => async (dispatch, getState) => {
+  try {
+    const user = await authService.getCurrentUser();
+    const res = await profileService.updateEmailPref(user!.id, sendmailTime);
+    loadCurrentUser(true)(dispatch, getState);
+
+    dispatch(setEmailPref(sendmailTime));
+    feedback.success((res && res.message) || res);
+  } catch (err) {
+    feedback.error('Failed to update favorite club.');
+  }
+};
+
+export const createFixtureSubscription = (
+  gameId: FixturesItemType['id'],
+): AsyncUserAction => async (dispatch, getState) => {
+  try {
+    const user = await authService.getCurrentUser();
+    const res = await profileService.createFixtureSub(user!.id, gameId);
+    loadCurrentUser(true)(dispatch, getState);
+  } catch (err) {
+    feedback.error('Failed to update favorite club.');
+  }
+};
+
+export const deleteFixtureSubscription = (
+  gameId: FixturesItemType['id'],
+): AsyncUserAction => async (dispatch, getState) => {
+  try {
+    const user = await authService.getCurrentUser();
+    const res = await profileService.destroyFixtureSub(user!.id, gameId);
+    loadCurrentUser(true)(dispatch, getState);
+  } catch (err) {
+    feedback.error('Failed to update favorite club.');
+  }
+};
+
 export const updateUserTeamDetails = (
   userData: UserTeamDetails,
   teamMemberData: TeamMemberData,
   gameweekId: GameweekType['id'],
 ): AsyncUserAction => async (dispatch, getState) => {
   try {
-    const user = await authService.getCurrentUser();
+    const { user } = getState().profile;
+
     const res = await profileService.updateUserTeamDetails(
       user!.id,
       gameweekId,
@@ -144,5 +189,19 @@ export const updateUserTeamDetails = (
     feedback.success((res && res.message) || res);
   } catch (err) {
     feedback.error('Failed to create your team');
+  }
+};
+
+export const updateUserAvatar = (imageId: string): AsyncUserAction => async (
+  dispatch,
+  getState,
+) => {
+  try {
+    const user = await authService.getCurrentUser();
+    const res = await profileService.updateUserAvatar(user!.id, imageId);
+    loadCurrentUser(true)(dispatch, getState);
+    feedback.success((res && res.message) || res);
+  } catch {
+    feedback.error('Failed to change your avatar');
   }
 };

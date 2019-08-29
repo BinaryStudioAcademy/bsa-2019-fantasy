@@ -61,12 +61,12 @@ passport.use(
 
         return (await userRepository.getByUsername(name))
           ? done(
-              {
-                status: 401,
-                message: 'Username is already taken.',
-              },
-              null,
-            )
+            {
+              status: 401,
+              message: 'Username is already taken.',
+            },
+            null,
+          )
           : done(null, { email, name, password });
       } catch (err) {
         return done(err, null);
@@ -101,6 +101,10 @@ passport.use(
       const { id, first_name, last_name, email } = profile._json;
       const name = `${first_name} ${last_name}`;
 
+      if (!email) {
+        return done({ status: 401, message: 'Facebook profile email does not exist' }, null);
+      }
+
       try {
         let user = await userRepository.getByEmail(email);
 
@@ -112,6 +116,8 @@ passport.use(
             email,
             name: userWithSuchName ? `${name} ${Math.random()}` : name,
           });
+        } else if (user && !user.facebook_id) {
+          await userRepository.updateById(user.id, { facebook_id: id })
         }
 
         return done(null, {

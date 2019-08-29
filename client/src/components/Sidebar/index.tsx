@@ -2,30 +2,30 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link, NavLink } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faStar,
-  faFutbol,
-  faProjectDiagram,
-  faExchangeAlt,
-  faAward,
-} from '@fortawesome/free-solid-svg-icons';
+  FaStar,
+  FaFutbol,
+  FaProjectDiagram,
+  FaExchangeAlt,
+  FaAward,
+  FaSignOutAlt,
+} from 'react-icons/fa';
+import cn from 'classnames';
 
 import { RootState } from 'store/types';
 
 import { logout } from 'containers/Profile/actions';
 
+import { generateImageSrc } from 'helpers/avatar';
 import styles from './styles.module.scss';
-import { FaSignOutAlt } from 'react-icons/fa';
 
 const Sidebar = () => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
-  const { name, score, money, team_name } = useSelector(
-    (state: RootState) => state.profile.user!,
-    shallowEqual,
-  );
+  const user = useSelector((state: RootState) => state.profile.user!, shallowEqual);
+
+  const { name, score, money, team_name } = user;
 
   const [isOpened, setOpened] = useState(false);
   const toggleOpened = () => setOpened((o) => !o);
@@ -35,27 +35,27 @@ const Sidebar = () => {
     ? [
         {
           name: t('Sidebar.status'),
-          icon: faStar,
+          icon: <FaStar />,
           link: '/',
         },
         {
           name: t('Sidebar.myTeam'),
-          icon: faFutbol,
+          icon: <FaFutbol />,
           link: '/my-team',
         },
         {
           name: t('Sidebar.statistics'),
-          icon: faProjectDiagram,
+          icon: <FaProjectDiagram />,
           link: '/players',
         },
         {
           name: t('Sidebar.transfers'),
-          icon: faExchangeAlt,
+          icon: <FaExchangeAlt />,
           link: '/transfers',
         },
         {
           name: t('Sidebar.leagues'),
-          icon: faAward,
+          icon: <FaAward />,
           link: '/leagues',
         },
       ]
@@ -63,39 +63,46 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`${
-        styles.sidebar
-      } flex flex-col justify-between py-6 bg-secondary text-primary2 h-screen relative ${
-        isOpened ? styles.open : ''
-      }`}
+      className={cn(
+        styles.sidebar,
+        'flex',
+        'flex-col',
+        'justify-between',
+        'py-6',
+        'bg-secondary',
+        'text-primary2',
+        'h-screen',
+        'relative',
+        isOpened ? styles.open : '',
+      )}
       onClick={toggleOpened}
       role='presentation'
     >
       <Link
         to='/'
-        className={`sidebar-logo ${styles['sidebar-logo']} ${isOpened ? 'pl-6' : 'pl-3'}`}
+        className={cn(styles['sidebar-logo'], 'sidebar-logo', isOpened ? 'pl-6' : 'pl-3')}
       >
         <img src='/images/logo.png' alt='logo' style={{ height: 45, width: 45 }} />
       </Link>
 
       <div
-        className={`profile-menu ${styles['profile-menu']} ${isOpened ? 'pl-6' : 'pl-3'}`}
+        className={cn(styles['profile-menu'], 'profile-menu', isOpened ? 'pl-6' : 'pl-3')}
       >
         <Link className={`mt-32 flex-col`} to='/profile' onClick={noPropagation}>
           <img
-            src='https://i2.wp.com/www.ahfirstaid.org/wp-content/uploads/2014/07/avatar-placeholder.png'
+            src={generateImageSrc(user)}
             alt='user'
             style={{ height: 45, width: 45 }}
             className='rounded-full mb-2'
           />
-          <p className={`${styles.username} truncate ${isOpened ? styles.open : ''}`}>
+          <p className={cn(styles.username, 'truncate', isOpened ? styles.open : '')}>
             {name}
           </p>
         </Link>
-        <div className={`${styles.points} text-sm`}>
+        <div className={cn(styles.points, 'text-sm')}>
           {t('Sidebar.money')}: £{money}
         </div>
-        <div className={`${styles.points} text-sm`}>
+        <div className={cn(styles.points, 'text-sm')}>
           {t('Sidebar.score')}: {score}
         </div>
       </div>
@@ -104,13 +111,13 @@ const Sidebar = () => {
         {menuItems.map(({ name, icon, link }) => (
           <NavLink
             exact
-            className='flex px-6 py-5 h-8 justify-start items-center hover:text-primary'
+            className='block px-6 py-5 flex h-8 justify-start items-center hover:text-primary'
             activeClassName='text-primary'
             key={`sidebar-menu-${name}`}
             to={link}
             onClick={noPropagation}
           >
-            <FontAwesomeIcon className='fa-fw' icon={icon} />
+            <div>{icon}</div>
             <div className={styles['link-title']}>{name}</div>
           </NavLink>
         ))}

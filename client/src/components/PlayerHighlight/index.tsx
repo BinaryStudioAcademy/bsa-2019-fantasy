@@ -3,15 +3,13 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Radar } from 'react-chartjs-2';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMedal } from '@fortawesome/free-solid-svg-icons';
+import { FaMedal } from 'react-icons/fa';
 import Chart from 'chart.js';
 
 import Button from 'components/Button';
 import { getClubLogoUrl, getPlayerImageUrl } from 'helpers/images';
 import { RootState } from 'store/types';
 
-import styles from './styles.module.scss';
 import { PlayerType } from 'types/player.types';
 import { Club } from 'types/club.types';
 
@@ -25,9 +23,14 @@ Object.assign(Chart.defaults.global, {
 
 type Props = {
   player: PlayerType;
+  onInfoClick: (
+    id: string,
+    club_id: number,
+    dialogInitialTab: 'fixtures' | 'history',
+  ) => void;
 };
 
-const PlayerHighlight = ({ player }: Props) => {
+const PlayerHighlight = ({ player, onInfoClick }: Props) => {
   const { t } = useTranslation();
 
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
@@ -139,8 +142,8 @@ const PlayerHighlight = ({ player }: Props) => {
           />
         </div>
 
-        <div className='award text-secondary2 mt-12'>
-          <FontAwesomeIcon icon={faMedal} /> {t('Players.playerOfTheWeek')}
+        <div className='award text-secondary2 mt-12 flex items-center'>
+          <FaMedal className='mr-1' /> {t('Players.playerOfTheWeek')}
         </div>
 
         <h2
@@ -163,19 +166,12 @@ const PlayerHighlight = ({ player }: Props) => {
             {t('Players.history')}
           </Button>
           <Button
-            href='/fixtures'
-            type='link'
+            onClick={() => onInfoClick(player.id, player.club_id, 'fixtures')}
             styling='secondary'
             className='text-sm xl:text-base'
           >
             {t('Players.fixtures')}
           </Button>
-        </div>
-
-        <div className='allWinners mt-6 text-sm'>
-          <Link className='font-semibold hover:underline' to='/'>
-            {t('Players.browseAll')}
-          </Link>
         </div>
       </div>
 

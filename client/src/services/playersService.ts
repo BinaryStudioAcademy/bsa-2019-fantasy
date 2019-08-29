@@ -1,10 +1,19 @@
 import callWebApi from 'helpers/webApiHelper';
+import { PlayerType } from 'types/player.types';
 
 export const getPlayers = async (filter: any) => {
   const response = await callWebApi({
     endpoint: `/api/players`,
     type: 'GET',
     query: filter,
+  });
+  return response.json();
+};
+
+export const getRandomSquad = async (): Promise<PlayerType[]> => {
+  const response = await callWebApi({
+    endpoint: `/api/players/random-squad`,
+    type: 'GET',
   });
   return response.json();
 };

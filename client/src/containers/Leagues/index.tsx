@@ -4,15 +4,15 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { map } from 'lodash';
+import cn from 'classnames';
 
 import { FaStar, FaArrowUp, FaArrowDown, FaMinus, FaUserCog } from 'react-icons/fa';
 
 import Spinner from 'components/Spinner';
 import { LeagueTable } from 'components/Leagues/LeagueTables';
-import PrivateLeagueModal from 'components/Leagues/PrivateLeagueModal';
 
 import { RootState } from 'store/types';
-import { loadUserLeagues, getInvitationCode, resetLeaguesData } from './actions';
+import { loadUserLeagues } from './actions';
 
 import { getClubLogoUrl } from 'helpers/images';
 import styles from './styles.module.scss';
@@ -20,23 +20,12 @@ import header from 'styles/header.module.scss';
 
 type Props = {
   loadUserLeagues: typeof loadUserLeagues;
-  getInvitationCode: any;
-  resetLeaguesData: any;
-  code: string;
   leagues: any;
   clubs: any;
   user: any;
 };
 
-const Leagues = ({
-  loadUserLeagues,
-  getInvitationCode,
-  resetLeaguesData,
-  leagues,
-  clubs,
-  user,
-  code,
-}: Props) => {
+const Leagues = ({ loadUserLeagues, leagues, clubs, user }: Props) => {
   const { t } = useTranslation();
   const [club, setClub] = useState({ name: '', code: 0 });
 
@@ -47,41 +36,29 @@ const Leagues = ({
     const userFavouriteCLub = clubs.filter((item) => item.id === user.favorite_club_id);
     setClub(userFavouriteCLub[0]);
   }, [clubs]);
-
-  const openModal = (data) => {
-    const { name } = data.league;
-    if (data.league.private) {
-      getInvitationCode({ name });
-    }
-  };
-
-  const closeModal = () => {
-    resetLeaguesData();
-  };
-
   /* eslint-disable */
   const columns = [
     {
       Header: () => (
-        <span className={`${styles['table-title']} uppercase font-bold`}>
+        <span className={cn(styles['table-title'], 'uppercase', 'font-bold')}>
           {t('LeaguesPage.cells.leagues')}
         </span>
       ),
       accessor: 'league.name',
 
       Cell: (props: any) => (
-        <button
-          className={`${styles['table-title-row']} flex items-center`}
-          onClick={() => openModal(props.original)}
+        <Link
+          to={`/leagues/${props.value}`}
+          className={cn(styles['table-title-row'], 'flex', 'items-center')}
         >
           {props.original.is_creator && <FaUserCog className='mr-1' />}
           {props.value}
-        </button>
+        </Link>
       ),
     },
     {
       Header: () => (
-        <span className={`${styles['table-title']} uppercase font-bold`}>
+        <span className={cn(styles['table-title'], 'uppercase', 'font-bold')}>
           {t('LeaguesPage.cells.currentRank')}
         </span>
       ),
@@ -90,11 +67,14 @@ const Leagues = ({
         const movement = props.original.current_rank - props.original.last_rank;
 
         return (
-          <div className={`${styles.rank} flex justify-center items-center`}>
+          <div className={cn(styles.rank, 'flex', 'justify-center', 'items-center')}>
             <span
-              className={`${styles.movement} mr-1 ${movement > 0 ? 'up' : ''} ${
-                movement < 0 ? 'down' : ''
-              }`}
+              className={cn(
+                styles.movement,
+                'mr-1',
+                movement > 0 ? styles.up : '',
+                movement < 0 ? styles.down : '',
+              )}
             >
               {movement > 0 ? (
                 <FaArrowUp />
@@ -111,7 +91,7 @@ const Leagues = ({
     },
     {
       Header: () => (
-        <span className={`${styles['table-title']} uppercase font-bold`}>
+        <span className={cn(styles['table-title'], 'uppercase', 'font-bold')}>
           {t('LeaguesPage.cells.lastRank')}
         </span>
       ),
@@ -120,11 +100,14 @@ const Leagues = ({
         const movement = props.original.current_rank - props.original.last_rank;
 
         return (
-          <div className={`${styles.rank} flex justify-center items-center`}>
+          <div className={cn(styles.rank, 'flex', 'justify-center', 'items-center')}>
             <span
-              className={`${styles.movement} mr-1 ${movement > 0 ? 'up' : ''} ${
-                movement < 0 ? 'down' : ''
-              }`}
+              className={cn(
+                styles.movement,
+                'mr-1',
+                movement > 0 ? styles.up : '',
+                movement < 0 ? styles.down : '',
+              )}
             >
               {movement > 0 ? (
                 <FaArrowUp />
@@ -166,9 +149,18 @@ const Leagues = ({
     return (
       <div className={styles.leagues}>
         <div
-          className={`${header.jumbotron} ${header.paper} mb-12 rounded flex items-end justify-between pt-6`}
+          className={cn(
+            header.jumbotron,
+            header.paper,
+            'mb-12',
+            'rounded',
+            'flex',
+            'items-end',
+            'justify-between',
+            'pt-6',
+          )}
         >
-          <div className={`${header['jumbotron-content']} mt-12 mb-12`}>
+          <div className={cn(header['jumbotron-content'], 'mt-12', 'mb-12')}>
             <div className='inline-flex rounded-full shadow-figma p-4 mb-6'>
               <img
                 style={{ height: 50, width: 50 }}
@@ -176,8 +168,10 @@ const Leagues = ({
                 alt='Club logo'
               />
             </div>
-            <h2 className={`${header.title} mb-12 text-secondary`}>
-              <div className={`${header.sub} ${header.title} mb-3 flex items-center`}>
+            <h2 className={cn(header.title, 'mb-12', 'text-secondary')}>
+              <div
+                className={cn(header.sub, header.title, 'mb-3', 'flex', 'items-center')}
+              >
                 <FaStar />
                 {t('LeaguesPage.title.sub')}
               </div>
@@ -196,7 +190,7 @@ const Leagues = ({
               {t('LeaguesPage.create')}
             </Link>
           </div>
-          <div className={`${styles.players} flex`}>
+          <div className={cn(styles.players, 'flex')}>
             <img src={`/images/leagues_players/${club.code}_player.png`} alt='player' />
           </div>
         </div>
@@ -212,7 +206,6 @@ const Leagues = ({
             );
           })}
         </div>
-        <PrivateLeagueModal open={code.length} onClose={closeModal} code={code} />
       </div>
     );
   }
@@ -222,10 +215,9 @@ const mapStateToProps = (rootState: RootState) => ({
   leagues: rootState.league.leagues,
   clubs: rootState.clubs.clubs,
   user: rootState.profile.user,
-  code: rootState.league.code,
 });
 
-const actions = { loadUserLeagues, getInvitationCode, resetLeaguesData };
+const actions = { loadUserLeagues };
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
 
 export default connect(

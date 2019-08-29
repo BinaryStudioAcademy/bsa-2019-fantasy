@@ -5,7 +5,11 @@ import { useTranslation } from 'react-i18next';
 import { bindActionCreators, Dispatch } from 'redux';
 import moment from 'moment';
 
-import { loadGameweeksAction, loadGamesAction } from './actions';
+import {
+  loadGameweeksAction,
+  loadGamesAction,
+  loadFixtureSubscriptionsAction,
+} from './actions';
 import { RootState } from 'store/types';
 import { FixturesItemType } from 'types/fixtures.types';
 import { GameweekType } from 'types/gameweek.type';
@@ -20,6 +24,7 @@ type Props = {
   gameweeks: GameweekType[];
   loadGameweeksAction: typeof loadGameweeksAction;
   loadGamesAction: typeof loadGamesAction;
+  loadFixtureSubscriptionsAction: typeof loadFixtureSubscriptionsAction;
   games?: [FixturesItemType];
   isLoading: boolean;
 };
@@ -27,6 +32,7 @@ type Props = {
 const FixturesContainer = ({
   loadGameweeksAction,
   loadGamesAction,
+  loadFixtureSubscriptionsAction,
   gameweeks,
   games,
   isLoading,
@@ -37,17 +43,18 @@ const FixturesContainer = ({
   useEffect(() => {
     document.title = 'Fixtures | Fantasy Football League';
     loadGameweeksAction();
-  }, [loadGameweeksAction]);
+    loadFixtureSubscriptionsAction();
+  }, [loadGameweeksAction, loadFixtureSubscriptionsAction]);
 
   useEffect(() => {
     if (gameweeks) {
       const gameweek = gameweeks.find((gw) => {
         const now = moment();
-        return moment(gw.end).isBefore(now);
+        return moment(now).isBefore(gw.end);
       });
       if (gameweek) {
         const gameweekNumber = gameweek.number;
-        setCurrentGameweek(+gameweekNumber);
+        setCurrentGameweek(gameweekNumber - 1);
       }
     }
   }, [gameweeks]);
@@ -65,18 +72,21 @@ const FixturesContainer = ({
       </div>
     );
   }
-
   return (
     <div className='bg-white py-3 min-h-screen shadow-figma'>
       <div
         className={cn(
           component['fixtures-list'],
-          'flex flex-col items-stretch text-center max-w-2xl',
+          'flex',
+          'flex-col',
+          'items-stretch',
+          'text-center',
+          'max-w-2xl',
         )}
       >
         <h2 className='text-5xl'>{t('Fixtures.title')}</h2>
         <p className='mb-3'>
-          Gameweek {currentGameweek + 1} -{' '}
+          {t('Fixtures.gameweek')} {currentGameweek + 1} -{' '}
           {moment(gameweeks[currentGameweek].start).format('ddd D MMMM YYYY')}
         </p>
 
@@ -91,7 +101,14 @@ const FixturesContainer = ({
           )}
           {currentGameweek < gameweeks.length - 1 && (
             <button
-              className={cn(styles['btn-next'], 'btn bg-green-600 px-20 py-1 rounded')}
+              className={cn(
+                styles['btn-next'],
+                'btn',
+                'bg-green-600',
+                'px-20',
+                'py-1',
+                'rounded',
+              )}
               onClick={() => setCurrentGameweek(currentGameweek + 1)}
             >
               {t('next')}
@@ -113,6 +130,7 @@ const mapStateToProps = (rootState: RootState) => ({
 const actions = {
   loadGameweeksAction,
   loadGamesAction,
+  loadFixtureSubscriptionsAction,
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);

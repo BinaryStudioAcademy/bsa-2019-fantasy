@@ -14,7 +14,10 @@ export const Feedbacker = () => (
             <div
               className={cn(
                 styles.notificationItem,
-                'bg-secondary text-primary rounded border-l-8 shadow-lg',
+                'bg-secondary',
+                'text-primary',
+                'rounded border-l-8',
+                'shadow-lg',
                 {
                   'border-red-600': item.kind === 'error',
                   'border-yellow-600': item.kind === 'warning',

@@ -98,7 +98,7 @@ const PlayerSelectionDroppable = ({
   return (
     <div ref={ref}>
       <div
-        className={cn(styles['player-placeholder'], 'rounded shadow')}
+        className={cn(styles['player-placeholder'], 'rounded', 'shadow')}
         style={{ backgroundColor }}
       >
         <div className={styles['player-type']}>{isActive ? <FaFutbol /> : null}</div>

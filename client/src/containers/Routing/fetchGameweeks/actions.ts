@@ -23,6 +23,7 @@ import {
   GameweekUserRankingType,
 } from 'types/gameweekHistory.type';
 import { GameweekType } from 'types/gameweek.type';
+import { feedback } from 'react-feedbacker';
 
 const fetchGameweeksRequest = (): FetchGameweeksAction => ({
   type: FETCH_GAMEWEEKS_REQUEST,
@@ -146,13 +147,17 @@ export const fetchUserRankingForGameweek = (
 export const postGameweekHistory = (
   gameweekId: string,
   data: TeamMemberType[],
-): AsyncFetchGameweeksAction => async (_, getRootState) => {
+): AsyncFetchGameweeksAction => async (dispatch, getRootState) => {
   const { user } = getRootState().profile;
-
-  user &&
-    (await gameweeksHistoryService.postGameweekHistoryForUserById(
-      user.id,
+  try {
+    await gameweeksHistoryService.postGameweekHistoryForUserById(
+      user!.id,
       gameweekId,
       data,
-    ));
+    );
+    await fetchGameweekHistory(user!.id, gameweekId)(dispatch, getRootState);
+    feedback.success('Your team has been saved successfully');
+  } catch (err) {
+    feedback.error('Failed to save your team');
+  }
 };

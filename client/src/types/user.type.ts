@@ -1,3 +1,9 @@
+export type Image = {
+  id: string;
+  link: string;
+  deleteHash: string;
+};
+
 export type User = {
   id: string;
   name: string;
@@ -12,7 +18,9 @@ export type User = {
   facebook_id: string;
 
   free_transfers: number;
+  sendmail_time: number | null;
 
+  image: Image | null;
   createdAt: string;
   updatedAt: string;
 };

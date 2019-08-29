@@ -10,6 +10,8 @@ import {
   SET_LOADING,
   SET_LEAGUES_SUGGESTIONS,
   RESET_LEAGUES_DATA,
+  SET_LEAGUE_DETAILS,
+  AsyncSetLeagueDetailsAction,
   SetLeaguesAction,
   AsyncSetLeaguesAction,
   AsyncCreateLeagueAction,
@@ -22,6 +24,7 @@ import {
   SetInvitationCode,
   AsyncGetInvitationCode,
   SetLoading,
+  SetLeagueDetailsAction,
 } from './action.types';
 
 const setUserLeagues = (leagues: any): SetLeaguesAction => ({
@@ -31,6 +34,11 @@ const setUserLeagues = (leagues: any): SetLeaguesAction => ({
 
 const setSuggestions = (payload: any): SearchLeaguesAction => ({
   type: SET_LEAGUES_SUGGESTIONS,
+  payload,
+});
+
+const setLeagueDetails = (payload: any): SetLeagueDetailsAction => ({
+  type: SET_LEAGUE_DETAILS,
   payload,
 });
 
@@ -104,6 +112,17 @@ export const loadUserLeagues = (): AsyncSetLeaguesAction => async (dispatch) => 
   dispatch(setUserLeagues(result));
 };
 
+export const loadLeagueDetails = ({ name }): AsyncSetLeagueDetailsAction => async (
+  dispatch,
+) => {
+  try {
+    const result = await leagueService.getLeagueDetails({ name });
+    dispatch(setLeagueDetails(result));
+  } catch (err) {
+    // TODO handle not existing league
+  }
+};
+
 export const joinLeague = (data: {
   code: string;
   private: boolean;
@@ -122,4 +141,13 @@ export const searchPublicLeagues = (request: {
 }): AsyncSearchLeaguesAction => async (dispatch) => {
   const result = await leagueService.searchPublicLeagues(request);
   dispatch(setSuggestions(result));
+};
+
+export const leaveLeague = (request: { name: string }) => async () => {
+  try {
+    const result = await leagueService.leaveLeague(request);
+    feedback.success((result && result.message) || result);
+  } catch (err) {
+    feedback.error('Invalid League code (or name) provided');
+  }
 };

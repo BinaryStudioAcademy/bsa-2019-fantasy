@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import cn from 'classnames';
 
 import ConnectFacebookForm from 'components/AuthForms/ConnectFbForm';
 
@@ -11,7 +12,13 @@ const ConnectFbPage = () => {
 
   return (
     <div
-      className={`flex w-full md:flex-row-reverse flex-wrap ${styles['login-container']}`}
+      className={cn(
+        styles['login-container'],
+        'flex',
+        'w-full',
+        'md:flex-row-reverse',
+        'flex-wrap',
+      )}
     >
       <div className={styles.layer} />
       <div className='w-full h-full flex-col items-center justify-center md:w-3/4 '>
@@ -20,10 +27,12 @@ const ConnectFbPage = () => {
           <h1 className='main-lable w-full'>Fantasy Premier League</h1>
         </div>
       </div>
-      <div className={`w-full h-full md:w-1/4 ${styles['form-container']} p-6`}>
-        <div className={`${styles.lables} pl-8 mt-40 mb-6`}>
+      <div
+        className={cn(styles['form-container'], 'w-full', 'h-full', 'md:w-1/4', 'p-6')}
+      >
+        <div className={cn(styles.lables, 'pl-8', 'mt-40', 'mb-6')}>
           <h2 className={styles['side-lable']}>New social network account</h2>
-          <h3 className={`${styles['side-lable']} ${styles['side-lable-small']}`}>
+          <h3 className={cn(styles['side-lable'], styles['side-lable-small'])}>
             You&apos;ve chosen to connect your facebook account with an existing premier
             league account
           </h3>

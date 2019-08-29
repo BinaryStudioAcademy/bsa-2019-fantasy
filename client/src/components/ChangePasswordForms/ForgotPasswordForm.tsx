@@ -67,7 +67,7 @@ class ForgotPasswordForm extends Component<
 
     return (
       <div className={cn(styles['form-registration'], 'w-full h-full max-w-xs')}>
-        <form className=' px-8 pt-6 pb-8' onSubmit={this.handleSubmit}>
+        <form className='pt-4' onSubmit={this.handleSubmit}>
           <div className='mb-4'>
             <input
               className='shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline'
