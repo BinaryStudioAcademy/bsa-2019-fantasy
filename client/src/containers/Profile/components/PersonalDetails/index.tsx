@@ -165,22 +165,6 @@ const PersonalDetails = withRouter(({ history }) => {
           </Button>
         </div>
 
-        <label className='mb-8 flex'>
-          <div className='w-1/4 font-bold'>
-            {t('Profile.personalDetails.username')}
-            <p className='font-bold text-red-500 text-sm'>
-              {`* ${t('Profile.personalDetails.required')}`}
-            </p>
-          </div>
-          <input
-            className='w-2/4 px-4 py-2 bg-gray-100 shadow rounded-sm'
-            type='text'
-            placeholder='Username'
-            value={user.name}
-            onChange={() => {}}
-          />
-        </label>
-
         <div className='mb-8 flex'>
           <div className='w-1/4 font-bold'>{t('Profile.personalDetails.language')}</div>
           <div className='flex items-center'>
