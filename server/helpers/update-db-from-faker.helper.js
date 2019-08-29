@@ -6,7 +6,7 @@ import playerMatchRepository from '../data/repositories/player-match.repository'
 import gameRepository from '../data/repositories/game.repository';
 import eventRepository from '../data/repositories/event.repository';
 
-const updateTableFromFaker = async (repository, tableName, route) => {
+export const updateTableFromFaker = async (repository, tableName, route) => {
   console.log(`Updating ${tableName} from faker`);
 
   const timestamp = await repository.getLastUpdated();
