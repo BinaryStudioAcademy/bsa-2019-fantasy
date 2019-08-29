@@ -1,7 +1,10 @@
 import usersSeed from '../seed-data/users.seed';
 import playersSeed from '../seed-data/player-stats.seed';
-import footballClubsSeed from '../seed-data/football-clubs.seed';
+import playerMatchSeed from '../seed-data/player-match-stats.seed';
 import gamesSeed from '../seed-data/games.seed';
+import eventsSeed from '../seed-data/events.seed';
+
+import footballClubsSeed from '../seed-data/football-clubs.seed';
 import gameweeksSeed from '../seed-data/gameweeks.seed';
 import gameweekHistoriesSeed from '../seed-data/gameweek-histories.seed';
 import leaguesSeed from '../seed-data/leagues.seed';
@@ -74,6 +77,12 @@ export default {
         'SELECT id FROM "games" WHERE finished;',
         options,
       );
+
+      seedsData = await playerMatchSeed;
+      await queryInterface.bulkInsert('player_match_stats', seedsData, {});
+
+      seedsData = await eventsSeed;
+      await queryInterface.bulkInsert('events', seedsData, {});
 
       await queryInterface.bulkInsert('seasons', seasonsSeed, {});
       const seasons = await queryInterface.sequelize.query(

@@ -1,7 +1,7 @@
 import fakerApi from '../../helpers/faker.api.helper';
 
 export default fakerApi
-  .get('/playerstats/after', {
+  .get('/playermatchstats/after', {
     params: { timestamp: undefined },
   })
   .then((res) => res.data)
