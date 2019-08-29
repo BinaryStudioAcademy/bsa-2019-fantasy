@@ -39,7 +39,7 @@ export const getPlayerStatsByGameweeks = async (playerId, playerClubId) => {
               const realEvents = eventsForGame.filter((ev) => ev !== undefined);
 
               const eventsForCurrentPlayer = realEvents.filter(
-                (event) => event.player.player_id.toString() === playerId,
+                (event) => event.player && event.player.player_id.toString() === playerId,
               );
               if (eventsForCurrentPlayer.length < 1) return;
               const {
