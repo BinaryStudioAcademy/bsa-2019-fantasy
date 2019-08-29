@@ -7,11 +7,11 @@ import s from './styles.module.scss';
 type Props = {
   className?: string;
   children: React.ReactNode;
-  showCondition: boolean;
+  showCondition?: boolean;
   onClose: () => void;
 };
 
-const Modal = ({ className, children, onClose, showCondition }: Props) => {
+const Modal = ({ className, children, onClose, showCondition = true }: Props) => {
   return showCondition ? (
     <div className={s.modalWrapper} onMouseDown={onClose} role='presentation'>
       <div

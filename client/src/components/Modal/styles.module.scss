@@ -32,6 +32,7 @@
 }
 
 :local(.modalClose) {
+  z-index: 10000;
   position: absolute;
   right: 0;
   top: 0;
@@ -44,6 +45,7 @@
   justify-content: center;
   align-items: center;
 
+  color: #000;
   background: #fff;
   border-radius: 50%;
 
