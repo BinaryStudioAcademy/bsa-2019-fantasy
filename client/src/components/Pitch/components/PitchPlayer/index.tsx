@@ -98,7 +98,12 @@ const PitchPlayer = ({
             </S.PlayerBadge>
           )}
           {player.display.src && (
-            <img style={{ opacity }} src={player.display.src} alt='player' />
+            <img
+              className='w-18'
+              style={{ opacity }}
+              src={player.display.src}
+              alt='player'
+            />
           )}
           <div className='absolute bottom-0 left-0 w-full'>
             <div className='px-1 w-full text-sm bg-green-800 text-white text-center truncate'>
