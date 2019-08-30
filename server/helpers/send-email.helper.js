@@ -1,31 +1,55 @@
+/* eslint-disable no-console */
 import nodemailer from 'nodemailer';
+import moment from 'moment';
+import { getEmailTemplate } from './email-template.helper';
 
-export const sendRemind = (email) => {
+export const sendRemind = (email, gameDetails) => {
   const smtpTransport = nodemailer.createTransport({
     service: 'gmail',
+    pool: true,
+
     auth: {
-      user: 'fantasy.league.noreply@gmail.com',
-      pass: '1223334444fantasy',
-      pool: true,
+      user: 'fantasy.football.noreply@gmail.com',
+      pass: 'fantasy123123',
     },
     tls: {
       rejectUnauthorized: false,
     },
   });
 
-  const mailOptions = {
-    to: email,
-    from: 'passwordreset@demo.com',
-    subject: 'Reminder to apply team',
-    text: `There are 5 hours left by the beginning of the next gameweek. 
-Please apply your team:
-http://localhost:5003/my-team`,
+  const formEmailText = (details) => {
+    if (details) {
+      if (details.finished) {
+        return `You are receiving this letter, because you have subscribed to the fixture
+   <em>${details.homeTeamName}</em> - <em>${details.awayTeamName}</em>,
+    which finished on <b>${moment(details.start).format('MMM Do YY')}</b> with result ${
+          details.homeTeamScore
+        } - ${details.awayTeamScore}.
+    Don't miss it! Visit <a href="http://ec2-18-224-246-75.us-east-2.compute.amazonaws.com:5001/fixtures">our app</a> for more details`;
+      }
+
+      return `You are receiving this letter, because you have subscribed to the fixture
+    <em>${details.homeTeamName}</em> - <em>${details.awayTeamName}</em>,
+    which starts on <b>${moment(details.start).format(
+      'MMM Do YY',
+    )}</b>. Visit <a href="http://ec2-18-224-246-75.us-east-2.compute.amazonaws.com:5001/live">our app</a>`;
+    }
+    return `You are receiving this letter, because you haven't applied a team yet. Visit <a href="http://ec2-18-224-246-75.us-east-2.compute.amazonaws.com:5001/live">our app</a> to do this!`;
   };
 
-  smtpTransport.sendMail(mailOptions, (err) => {
-    // eslint-disable-next-line no-console
-    console.log(err);
-  });
+  const mailOptions = {
+    to: email,
+    from: 'fantasy.football.noreply@gmail.com',
+    subject: 'Fantasy Premier League',
 
-  smtpTransport.close();
+    html: getEmailTemplate(formEmailText(gameDetails)),
+  };
+
+  smtpTransport.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(info);
+    }
+  });
 };
