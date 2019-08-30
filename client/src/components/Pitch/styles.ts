@@ -7,6 +7,7 @@ import pitchBg from './field.svg';
 export const Container = styled.div`
   flex: 1 0;
   width: 100%;
+  justify-content: center;
 
   position: relative;
 
@@ -19,6 +20,7 @@ export const Container = styled.div`
 export const TeamRow = styled.div`
   display: flex;
   justify-content: space-around;
+  margin: 0.7rem 1rem;
 
   > div {
     margin: 0 0.5rem;
@@ -26,14 +28,12 @@ export const TeamRow = styled.div`
 `;
 
 export const Pitch = styled.div`
-  flex: 1 0;
-
   padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
-  background: border-box center/100% 100% url(${pitchBg}) no-repeat;
+  background: border-box center/100% url(${pitchBg}) no-repeat;
 `;
 
 export const Bench = styled(TeamRow)`

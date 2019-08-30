@@ -30,7 +30,7 @@ export const Container = styled.div`
   max-height: calc(100vh - 2rem);
   overflow-y: auto;
 
-  padding: 1rem 4rem;
+  padding: 1rem 0;
   display: flex;
   flex-direction: column-reverse;
   align-items: center;

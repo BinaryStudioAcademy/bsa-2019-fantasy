@@ -23,13 +23,22 @@ type Props = {
 };
 
 const names = {
+  attack: 'Attack',
+  shot: 'Shots',
+  foul: 'Fouls',
   goal: 'Goals',
-  assist: 'Assists',
-  goal_conceded: 'Goals conceded',
-  missed_pass: 'Missed passes',
-  yellow_card: 'Yellow cards',
-  red_card: 'Red cards',
   save: 'Saves',
+  miss: 'Misses',
+  yellowCard: 'Yellow Cards',
+  goalKick: 'Goal kicks',
+  cornerKick: 'Corner kicks',
+  freeKick: 'Free kicks',
+  penaltyKick: 'Penalty kick',
+  interception: 'Interceptions',
+  out: 'Outs',
+  trauma: 'Traumas',
+  redCard: 'Red cards',
+  nothing: 'Nothing',
 };
 
 const FixturesItem = ({ match, subscribed }: Props) => {
@@ -42,11 +51,18 @@ const FixturesItem = ({ match, subscribed }: Props) => {
   useEffect(() => {
     if (gameDetails) {
       gameDetails.forEach((g) => {
+        if (!g.player) return;
         setStats((stats) => {
-          const team =
-            g.player.player.club_id === match.hometeam_id
-              ? 'hometeam_stats'
-              : 'awayteam_stats';
+          let team;
+          if (g.player) {
+            team =
+              g.player.player.club_id === match.hometeam_id
+                ? 'hometeam_stats'
+                : 'awayteam_stats';
+          } else {
+            team = 'common_stats';
+          }
+
           const statsItem = stats.find((st) => st.title === names[g.event_type]);
           if (statsItem) {
             const index = statsItem[team].findIndex(
@@ -214,15 +230,17 @@ const FixturesItem = ({ match, subscribed }: Props) => {
           </div>
         </li>
 
-        <Button
-          className='block w-1/12 h-8 rounded-lg flex justify-center'
-          styling={isSubscribed ? 'secondary' : 'primary'}
-          onClick={(e) => onSubscribe()}
-        >
-          <p>
-            <FaBell />
-          </p>
-        </Button>
+        {match.started ? null : (
+          <Button
+            className='block w-1/12 h-8 rounded-lg flex justify-center'
+            styling={isSubscribed ? 'secondary' : 'primary'}
+            onClick={(e) => onSubscribe()}
+          >
+            <p>
+              <FaBell />
+            </p>
+          </Button>
+        )}
       </div>
       {isDisplay && <div className='bg-gray-100 mb-4 p-3'>{displayStats()}</div>}
     </React.Fragment>
