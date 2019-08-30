@@ -55,7 +55,6 @@ export const loadGameweeksAction = (): AsyncSetGameweekAction => async (dispatch
 export const loadFixtureSubscriptionsAction = (): AsyncSetFixtureSubscribtionAction => async (
   dispatch,
 ) => {
-  console.log('here');
   const user = await authService.getCurrentUser();
   const subscribtions = await profileService.getFixtureSub(user!.id);
   dispatch(setFixtureSubscriptions(subscribtions));
