@@ -46,6 +46,8 @@ import { loadCurrentUser, setLanguage } from 'containers/Profile/actions';
 import ForgotPassword from 'containers/ChangePassword/ForgotPassword';
 import ResetPassword from 'containers/ChangePassword/ResetPassword';
 
+import AdminPanel from 'components/AdminPanel';
+
 import { fetchClubs } from './fetchClubs/actions';
 import {
   fetchGameweeks,
@@ -127,6 +129,7 @@ const Routing = () => {
         {/* <GuestRoute exact path='/social' component={SocialPage} /> */}
         {/* <GuestRoute exact path='/connect-fb' component={ConnectFbPage} /> */}
         <GuestRoute path='/reset/:id' component={ResetPassword} />
+        <GuestRoute path='/admin' component={AdminPanel} />
 
         {user && user.favorite_club_id === null && (
           <PrivateRoute>
@@ -140,6 +143,7 @@ const Routing = () => {
         )}
 
         <Route exact path='/404' component={NotFound} />
+        <Route exact path='/admin' component={AdminPanel} />
 
         <PrivateRoute path='/'>
           <div className='flex-none h-full'>
