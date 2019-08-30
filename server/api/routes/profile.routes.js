@@ -25,7 +25,7 @@ router
         res.json({ message: 'Avatar have been successfuly changed!' }).catch(next),
       ),
   )
-  .put('/:user/:gameweek', jwtMiddleware, (req, res, next) => {
+  .put('/:user/:gameweek', (req, res, next) => {
     userService
       .updateById(req.params.user, req.body.userData)
       .then(() => {

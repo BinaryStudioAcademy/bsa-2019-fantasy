@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { FaFacebook } from 'react-icons/fa';
 import { withRouter, Link } from 'react-router-dom';
 
-import { login } from 'containers/Profile/actions';
+import { login, setInviteCode } from 'containers/Profile/actions';
 
 import styles from './styles.module.scss';
 
@@ -16,6 +16,16 @@ const LoginForm = withRouter(({ history }) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    if (history.location) {
+      const { pathname } = history.location;
+      const inviteCode = pathname.substring(pathname.lastIndexOf('/') + 1);
+      if (inviteCode && inviteCode.length === 36) {
+        dispatch(setInviteCode(inviteCode));
+      }
+    }
+  }, []);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();

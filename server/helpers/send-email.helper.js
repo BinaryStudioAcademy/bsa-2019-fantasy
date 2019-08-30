@@ -6,6 +6,7 @@ export const sendRemind = (email) => {
     auth: {
       user: 'fantasy.league.noreply@gmail.com',
       pass: '1223334444fantasy',
+      pool: true,
     },
     tls: {
       rejectUnauthorized: false,
@@ -20,9 +21,11 @@ export const sendRemind = (email) => {
 Please apply your team:
 http://localhost:5003/my-team`,
   };
-  // eslint-disable-next-line func-names
-  smtpTransport.sendMail(mailOptions, function(err) {
+
+  smtpTransport.sendMail(mailOptions, (err) => {
     // eslint-disable-next-line no-console
     console.log(err);
   });
+
+  smtpTransport.close();
 };

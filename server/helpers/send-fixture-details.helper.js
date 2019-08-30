@@ -7,6 +7,7 @@ export const sendRemind = (email, gameDetails) => {
     auth: {
       user: 'fantasy.league.noreply@gmail.com',
       pass: '1223334444fantasy',
+      pool: true,
     },
     tls: {
       rejectUnauthorized: false,
@@ -34,4 +35,6 @@ export const sendRemind = (email, gameDetails) => {
     // eslint-disable-next-line no-console
     console.error(err);
   });
+
+  smtpTransport.close();
 };
