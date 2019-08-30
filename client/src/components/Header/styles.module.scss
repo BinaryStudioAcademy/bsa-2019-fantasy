@@ -10,4 +10,14 @@
   width: 5px;
   margin-bottom: 2px;
   color: #fff;
+  &.active {
+    color: red;
+    animation: blink 1s steps(1) infinite;
+  }
+}
+
+@keyframes blink {
+  50% {
+    color: transparent;
+  }
 }

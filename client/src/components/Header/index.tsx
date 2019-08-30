@@ -1,26 +1,25 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
-import { NavLink } from 'react-router-dom';
-
-import { IconContext } from 'react-icons';
-import { FaCircle } from 'react-icons/fa';
 
 import Notifications from 'components/Notifications';
 
+import { FaCircle } from 'react-icons/fa';
 import styles from './styles.module.scss';
 
 interface HeaderProps {
   team_name?: string;
+  live?: boolean;
 }
 
-const Header = ({ team_name }: HeaderProps) => {
+const Header = ({ team_name, live = false }: HeaderProps) => {
   const { t } = useTranslation();
 
   const menuItems = team_name
     ? [
         { name: t('Header.leagues'), link: '/leagues' },
-        { name: t('Header.live'), link: '/live', dot: true },
+        { name: t('Header.live'), link: '/live', dot: live },
         { name: t('Header.players'), link: '/players' },
         { name: t('Header.transfers'), link: '/transfers' },
         { name: t('Header.fixtures'), link: '/fixtures' },
@@ -61,7 +60,9 @@ const Header = ({ team_name }: HeaderProps) => {
           >
             {menuItems.map(({ name, link, dot }) => (
               <div key={name} className='flex flex-grow items-center mx-2'>
-                {dot && <FaCircle className={styles.dot} />}
+                {dot !== undefined && (
+                  <FaCircle className={cn(styles.dot, dot ? styles.active : '')} />
+                )}
                 <NavLink
                   to={link}
                   className='font-semibold uppercase p-1 border-solid border-b-2 border-transparent hover:text-secondary'
