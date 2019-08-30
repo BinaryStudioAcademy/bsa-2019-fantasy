@@ -10,33 +10,40 @@ describe('Leagues test suite', () => {
   beforeEach(async () => {
     browser.maximizeWindow();
     await browser.url(credentials.appUrl);
-    return await Page.loginWithDefaultUser(); //return is needed?
+
+    await Page.loginWithDefaultUser();
+    //await Wait.forSpinner();
+    await navSteps.navigateToLeagues();
+
   });
 
   afterEach(async() => {
     await browser.reloadSession();
   });
 
-  it('should be able to create a public league', async () => {
-    await navSteps.navigateToLeagues();
-    //await Wait.forSpinner();
-    await leaguesSteps.createPublicLeague(credentials.newLeagueName);
+  xit('should be able to create a public league', async () => {
+    const leagueName = Page.getRandomName();
+    await leaguesSteps.createPublicLeague(leagueName);
     await browser.pause(3000);
-
-    /* This way is better to read and maintain
-    const isPresent = await leaguesSteps.findPublicLeagueByName(credentials.newLeagueName);
+    const isPresent = await leaguesSteps.findPublicLeagueByName(leagueName);
     assert.strictEqual(
         isPresent,
         true,
-        `Expected ${credentials.newLeagueName} to be on Public Leagues List`,
+        `Expected ${leagueName} to be on Public Leagues List`,
       );
-    */
-    return await leaguesSteps.findPublicLeagueByName(credentials.newLeagueName).then((res) => {
-      return assert.strictEqual(
-        res,
-        true,
-        `Expected ${credentials.newLeagueName} to be on Public Leagues List`,
-      );
-    });
   });
+
+  it('should be able to create a private league', async() => {
+    const leagueName = Page.getRandomName();
+    await leaguesSteps.createPrivateLeague(leagueName);
+    await browser.pause(3000);
+
+    const isPresent = await leaguesSteps.findPrivateLeagueByName(leagueName);
+    assert.strictEqual(
+        isPresent,
+        true,
+        `Expected ${leagueName} to be on Private Leagues List`,
+    );
+  });
+
 });

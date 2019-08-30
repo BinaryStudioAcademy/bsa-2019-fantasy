@@ -1,6 +1,7 @@
 const page = require('../pages/leagues.po');
 const joinPage = require('../pages/leagues.join.po');
 const createPage = require('../pages/leagues.create.po');
+const Wait = require('../../../helpers/waiters');
 
 class LeaguesSteps {
   async _clickJoinLeagueBtn() {
@@ -60,9 +61,9 @@ class LeaguesSteps {
   }
 
   async _choosePrivateLeagueType() {
-    await createPage.leagueTypePrivateButton.then((res) => res.waitForEnabled(5000));
     await createPage.leagueTypePrivateButton.then((res) => res.scrollIntoView());
-    await createPage.leagueTypePrivateButton.then((res) => (res.checked = true));
+    await createPage.leagueTypePrivateButton.then((res) => res.waitForDisplayed(10000));
+    await createPage.leagueTypePrivateButton.then(res => res.click());
   }
 
   async _submitLeagueCreating() {
@@ -83,6 +84,8 @@ class LeaguesSteps {
     await this._enterLeagueName(name);
     await this._choosePrivateLeagueType();
     await this._submitLeagueCreating();
+    await createPage.inviteCodeModal.then(res => res.waitForDisplayed(5000));
+    await createPage.closeInviteCodeDialogBtn.then(res => res.click());
   }
 
   async findPublicLeagueByName(name) {
@@ -90,7 +93,6 @@ class LeaguesSteps {
       return res.length;
     });
     for (let i = 0; i < listLen; i++) {
-      //await page.publicListItems.then(res => res[i].waitForDisplayed(2000));
       const itemName = await page.publicListItems.then((res) => {
         return res[i].getText();
       });
@@ -100,8 +102,17 @@ class LeaguesSteps {
   }
 
   async findPrivateLeagueByName(name){
-    
-  }
+    const listLen = await page.privateListItems.then((res) => {
+      return res.length;
+    });
+    for (let i = 0; i < listLen; i++) {
+      const itemName = await page.privateListItems.then((res) => {
+        return res[i].getText();
+      });
+      if (itemName === name) return true;
+    }
+    return false;
+  };
 }
 
 module.exports = new LeaguesSteps();
