@@ -8,6 +8,7 @@ import cn from 'classnames';
 import { RootState } from 'store/types';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
+import { TopTransfers } from '../../components/TopTransfers/index';
 
 import Spinner from 'components/Spinner';
 import { getChartOptions } from 'helpers/gameweekChart';
@@ -34,6 +35,7 @@ const GameweekHistory = () => {
     (state: RootState) => state.gameweekHistory,
     shallowEqual,
   );
+
   const userId = useSelector(
     (state: RootState) => state.profile.user && state.profile.user.id,
   );
@@ -175,6 +177,19 @@ const GameweekHistory = () => {
                 <span className='font-bold'>{userRank.rank}</span>
               </p>
             ) : null}
+          </div>
+
+          <div
+            className={cn(
+              header.jumbotron,
+              header.paper,
+              'px-8',
+              'py-8',
+              'rounded',
+              'mt-4',
+            )}
+          >
+            <TopTransfers />
           </div>
         </React.Fragment>
       </div>
