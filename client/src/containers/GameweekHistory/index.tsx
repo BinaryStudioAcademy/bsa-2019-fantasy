@@ -4,6 +4,7 @@ import { Line as LineChart } from 'react-chartjs-2';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import cn from 'classnames';
+import { Redirect } from 'react-router';
 
 import { RootState } from 'store/types';
 
@@ -13,6 +14,7 @@ import Spinner from 'components/Spinner';
 import { getChartOptions } from 'helpers/gameweekChart';
 
 import { loadGameweeksHistoryAction, loadTeamHistoryAction } from './actions';
+import { setInviteCode } from 'containers/Profile/actions';
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
@@ -38,6 +40,7 @@ const GameweekHistory = () => {
   const userId = useSelector(
     (state: RootState) => state.profile.user && state.profile.user.id,
   );
+  const { inviteCode } = useSelector((state: RootState) => state.profile);
 
   const [currentGameweek, setCurrentGameweek] = useState<number>(1);
 
@@ -66,6 +69,11 @@ const GameweekHistory = () => {
   }, [currentGameweek, gameweeksHistory.length]);
 
   const displayRadar = () => gameweeksHistory.map((item) => item.team_score);
+
+  if (inviteCode !== '') {
+    dispatch(setInviteCode(''));
+    return <Redirect to={`/joinLeague/${inviteCode}`} />;
+  }
 
   if (!gameweeksHistory) {
     return <Spinner />;

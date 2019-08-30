@@ -127,6 +127,9 @@ const Routing = () => {
         {/* <GuestRoute exact path='/social' component={SocialPage} /> */}
         {/* <GuestRoute exact path='/connect-fb' component={ConnectFbPage} /> */}
         <GuestRoute path='/reset/:id' component={ResetPassword} />
+        {!user && (
+          <GuestRoute sensitive path='/joinLeague/:leagueToken' component={LoginPage} />
+        )}
 
         {user && user.favorite_club_id === null && (
           <PrivateRoute>
@@ -174,6 +177,7 @@ const Routing = () => {
                 <Route path='/leagues/create' component={CreateLeague} />
                 <Route path='/leagues/join' component={JoinLeague} />
                 <Route path='/leagues/:name' component={LeagueDetails} />
+                <Route exact path='/joinLeague/:leagueToken' component={JoinLeague} />
 
                 <Route render={() => <Redirect to='/404' />} />
               </Switch>

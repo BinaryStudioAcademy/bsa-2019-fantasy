@@ -10,7 +10,7 @@ import PublicLeagues from './PublicLeagues';
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
 
-const JoinLeague = () => {
+const JoinLeague = ({ match }) => {
   const { t } = useTranslation();
 
   return (
@@ -37,7 +37,7 @@ const JoinLeague = () => {
         )}
       >
         <PublicLeagues />
-        <PrivateLeagues />
+        <PrivateLeagues inviteCode={match.params.leagueToken} />
       </div>
     </div>
   );
