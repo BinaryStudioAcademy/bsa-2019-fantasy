@@ -178,20 +178,11 @@ const GameweekHistory = () => {
               </p>
             ) : null}
           </div>
-
-          <div
-            className={cn(
-              header.jumbotron,
-              header.paper,
-              'px-8',
-              'py-8',
-              'rounded',
-              'mt-4',
-            )}
-          >
-            <TopTransfers />
-          </div>
         </React.Fragment>
+      </div>
+
+      <div className={cn(header.paper, 'px-8', 'py-8', 'rounded', 'my-8')}>
+        <TopTransfers />
       </div>
     </div>
   );

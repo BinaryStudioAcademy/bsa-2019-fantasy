@@ -6,9 +6,19 @@ import { RootState } from 'store/types';
 import { Position, PlayerType } from 'types/player.types';
 import PlayerDialog from 'components/PlayerDialog';
 import { loadPlayersAction } from '../../components/PlayersSelection/actions';
+import cn from 'classnames';
 
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from 'react-icons/fa';
 import info from 'assets/images/info.svg';
+
+type topTransferType = {
+  info: string;
+  direction: any;
+  position: string;
+  name: string;
+  club: string;
+  number: number;
+};
 
 export const TopTransfers = () => {
   const columns = [
@@ -37,90 +47,8 @@ export const TopTransfers = () => {
       accessor: 'number',
     },
   ];
-  const dataTransfersIn = [
-    {
-      info: 'info',
-      direction: <FaArrowAltCircleRight />,
-      position: '',
-      name: '',
-      club: '',
-      number: '',
-    },
-    {
-      info: 'info',
-      direction: <FaArrowAltCircleRight />,
-      position: '',
-      name: '',
-      club: '',
-      number: '',
-    },
-    {
-      info: 'info',
-      direction: <FaArrowAltCircleRight />,
-      position: '',
-      name: '',
-      club: '',
-      number: '',
-    },
-    {
-      info: 'info',
-      direction: <FaArrowAltCircleRight />,
-      position: '',
-      name: '',
-      club: '',
-      number: '',
-    },
-    {
-      info: 'info',
-      direction: <FaArrowAltCircleRight />,
-      position: '',
-      name: '',
-      club: '',
-      number: '',
-    },
-  ];
-  const dataTransfersOut = [
-    {
-      info: 'info',
-      direction: <FaArrowAltCircleLeft />,
-      position: '',
-      name: '',
-      club: '',
-      number: '',
-    },
-    {
-      info: 'info',
-      direction: <FaArrowAltCircleLeft />,
-      position: '',
-      name: '',
-      club: '',
-      number: '',
-    },
-    {
-      info: 'info',
-      direction: <FaArrowAltCircleLeft />,
-      position: '',
-      name: '',
-      club: '',
-      number: '',
-    },
-    {
-      info: 'info',
-      direction: <FaArrowAltCircleLeft />,
-      position: '',
-      name: '',
-      club: '',
-      number: '',
-    },
-    {
-      info: 'info',
-      direction: <FaArrowAltCircleLeft />,
-      position: '',
-      name: '',
-      club: '',
-      number: '',
-    },
-  ];
+  const dataTransfersIn: topTransferType[] = [];
+  const dataTransfersOut: topTransferType[] = [];
 
   const dispatch = useDispatch();
   const players = useSelector((state: RootState) => state.playerSelection.players);
@@ -157,37 +85,47 @@ export const TopTransfers = () => {
       topTransfers.transfersOut
     ) {
       for (let i = 0; i < 5; i++) {
-        let clubIndexIn = topTransfers.transfersIn[i].club_id - 1;
-        let clubIndexOut = topTransfers.transfersOut[i].club_id - 1;
+        const clubIndexIn = topTransfers.transfersIn[i].club_id - 1;
+        const clubIndexOut = topTransfers.transfersOut[i].club_id - 1;
 
-        dataTransfersIn[i].position = topTransfers.transfersIn[i].position;
-        dataTransfersIn[i].name = topTransfers.transfersIn[i].second_name;
-        dataTransfersIn[i].club = clubs[clubIndexIn].short_name;
-        dataTransfersIn[i].number = topTransfers.transfersIn[i].transfers_in;
+        const itemIn = {
+          info: 'info',
+          direction: <FaArrowAltCircleRight />,
+          position: topTransfers.transfersIn[i].position,
+          name: topTransfers.transfersIn[i].second_name,
+          club: clubs[clubIndexIn].short_name,
+          number: topTransfers.transfersIn[i].transfers_in,
+        };
+        dataTransfersIn.push(itemIn);
 
-        dataTransfersOut[i].position = topTransfers.transfersOut[i].position;
-        dataTransfersOut[i].name = topTransfers.transfersOut[i].second_name;
-        dataTransfersOut[i].club = clubs[clubIndexOut].short_name;
-        dataTransfersOut[i].number = topTransfers.transfersOut[i].transfers_out;
+        const itemOut = {
+          info: 'info',
+          direction: <FaArrowAltCircleLeft />,
+          position: topTransfers.transfersOut[i].position,
+          name: topTransfers.transfersOut[i].second_name,
+          club: clubs[clubIndexOut].short_name,
+          number: topTransfers.transfersOut[i].transfers_out,
+        };
+        dataTransfersOut.push(itemOut);
       }
-
-      console.log(dataTransfersIn, dataTransfersOut);
     }
   }, [topTransfers]);
 
   return (
-    <div>
+    <div className={cn('flex', 'justify-center')}>
       <ReactTable
         defaultPageSize={5}
         columns={columns}
-        data={dataTransfersIn}
+        data={[...dataTransfersIn]}
         showPagination={false}
+        className={cn('w-1/2', 'mr-8', '')}
       />
       <ReactTable
         defaultPageSize={5}
         columns={columns}
-        data={dataTransfersOut}
+        data={[...dataTransfersOut]}
         showPagination={false}
+        className={cn('w-1/2')}
       />
     </div>
   );
