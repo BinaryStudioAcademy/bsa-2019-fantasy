@@ -71,6 +71,7 @@ const Routing = () => {
 
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
   const currentGameweek = useSelector(currentGameweekSelector);
+  const live = useSelector((state: RootState) => state.currentGame.current.gameStarted);
 
   const [joinedRoom, setJoinedRoom] = useState<boolean>(false);
 
@@ -146,7 +147,7 @@ const Routing = () => {
             <Sidebar />
           </div>
           <div className='flex-1 bg-background h-full overflow-y-auto pb-16'>
-            <Header team_name={user ? user.team_name : undefined} />
+            <Header team_name={user ? user.team_name : undefined} live={live} />
             <main className='mx-16 -mt-32'>
               <Switch>
                 <Route
