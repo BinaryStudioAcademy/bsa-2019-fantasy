@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
+import ShareLink from 'react-facebook-share-link';
 
 import { RootState } from 'store/types';
 import { loadLeagueDetails, getInvitationCode, leaveLeague } from '../actions';
@@ -103,8 +104,8 @@ const LeagueDetails = ({
               ) : movement < 0 ? (
                 <FaArrowDown />
               ) : (
-                <FaMinus />
-              )}
+                    <FaMinus />
+                  )}
             </span>{' '}
           </div>
         );
@@ -160,7 +161,9 @@ const LeagueDetails = ({
 
   if (leagueDetails.forbidden) {
     history.push('/leagues');
-  } 
+  }
+
+  const link = `${window.location.origin}/joinLeague/${code}`;
 
   return (
     <div className={styles['league-details']}>
@@ -172,6 +175,13 @@ const LeagueDetails = ({
             </div>
             {leagueDetails.name}
           </h2>
+          <div className='mt-4'>
+            <ShareLink link={link}>
+              {link => (
+                <a href={link} target='_blank'>Share invite link on my Facebook page</a>
+              )}
+            </ShareLink>
+          </div>
         </div>
       </div>
       <div className={cn(styles.background, 'mb-3', 'p-1')}>
@@ -210,14 +220,14 @@ const LeagueDetails = ({
                 {t('PrivateLeagueModal.copied')}
               </p>
             ) : (
-              <p className='text-xs text-gray-600 italic mb-5'>
-                {t('PrivateLeagueModal.clickToCopy')}
-              </p>
-            )}
+                <p className='text-xs text-gray-600 italic mb-5'>
+                  {t('PrivateLeagueModal.clickToCopy')}
+                </p>
+              )}
           </div>
         ) : (
-          ''
-        )}
+            ''
+          )}
       </div>
       {leagueDetails['entry_can_leave'] && (
         <div className={cn(styles.paper, 'p-8', 'rounded')}>
