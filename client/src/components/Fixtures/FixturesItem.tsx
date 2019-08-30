@@ -214,15 +214,17 @@ const FixturesItem = ({ match, subscribed }: Props) => {
           </div>
         </li>
 
-        <Button
-          className='block w-1/12 h-8 rounded-lg flex justify-center'
-          styling={isSubscribed ? 'secondary' : 'primary'}
-          onClick={(e) => onSubscribe()}
-        >
-          <p>
-            <FaBell />
-          </p>
-        </Button>
+        {match.started ? null : (
+          <Button
+            className='block w-1/12 h-8 rounded-lg flex justify-center'
+            styling={isSubscribed ? 'secondary' : 'primary'}
+            onClick={(e) => onSubscribe()}
+          >
+            <p>
+              <FaBell />
+            </p>
+          </Button>
+        )}
       </div>
       {isDisplay && <div className='bg-gray-100 mb-4 p-3'>{displayStats()}</div>}
     </React.Fragment>
