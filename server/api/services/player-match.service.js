@@ -129,16 +129,26 @@ export const getNextFixtureForPlayer = async (playerId, fixtures) => {
   const { club_id } = await playerRepository.getById(playerId);
 
   // find upcoming match for player
-  const result = fixtures.find(
-    (f) => f.hometeam_id === club_id || f.awayteam_id === club_id,
-  );
-  if (!result) {
+  const hometeamMatch = fixtures.find((f) => f.hometeam_id === club_id);
+  const awayteamMatch = fixtures.find((f) => f.awayteam_id === club_id);
+
+  if (!hometeamMatch && !awayteamMatch) {
     return { message: 'upcoming match for player is not found' };
   }
-  const hometeam = await footballClubRepository.getById(result.hometeam_id);
-  const awayteam = await footballClubRepository.getById(result.awayteam_id);
+
+  // check which of the games starts earlier
+  if (moment(hometeamMatch.start).isBefore(moment(awayteamMatch.start))) {
+    const awayteam = await footballClubRepository.getById(hometeamMatch.awayteam_id);
+    return {
+      fixture: awayteam.short_name,
+      start: hometeamMatch.start,
+      isHome: true,
+    };
+  }
+  const awayteam = await footballClubRepository.getById(awayteamMatch.awayteam_id);
   return {
-    fixture: `${hometeam.short_name} - ${awayteam.short_name}`,
-    start: result.start,
+    fixture: awayteam.short_name,
+    start: awayteamMatch.start,
+    isHome: false,
   };
 };
