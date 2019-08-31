@@ -47,7 +47,6 @@ export const TopTransfers = () => {
       accessor: 'number',
     },
   ];
-  const dataTransfersIn: topTransferType[] = [];
   const dataTransfersOut: topTransferType[] = [];
 
   const dispatch = useDispatch();
@@ -78,16 +77,12 @@ export const TopTransfers = () => {
     }
   }, [players]);
 
-  useEffect(() => {
-    if (
-      topTransfers !== undefined &&
-      topTransfers.transfersIn &&
-      topTransfers.transfersOut
-    ) {
+  const renderDataTransfersIn = () => {
+    const dataTransfersIn: topTransferType[] = [];
+
+    if (topTransfers !== undefined && topTransfers.transfersIn) {
       for (let i = 0; i < 5; i++) {
         const clubIndexIn = topTransfers.transfersIn[i].club_id - 1;
-        const clubIndexOut = topTransfers.transfersOut[i].club_id - 1;
-
         const itemIn = {
           info: 'info',
           direction: <FaArrowAltCircleRight />,
@@ -97,7 +92,18 @@ export const TopTransfers = () => {
           number: topTransfers.transfersIn[i].transfers_in,
         };
         dataTransfersIn.push(itemIn);
+      }
+    }
 
+    return dataTransfersIn;
+  };
+
+  const renderDataTransfersOut = () => {
+    const dataTransfersOut: topTransferType[] = [];
+
+    if (topTransfers !== undefined && topTransfers.transfersOut) {
+      for (let i = 0; i < 5; i++) {
+        const clubIndexOut = topTransfers.transfersOut[i].club_id - 1;
         const itemOut = {
           info: 'info',
           direction: <FaArrowAltCircleLeft />,
@@ -109,23 +115,23 @@ export const TopTransfers = () => {
         dataTransfersOut.push(itemOut);
       }
     }
-  }, [topTransfers]);
+
+    return dataTransfersOut;
+  };
 
   return (
-    <div className={cn('flex', 'justify-center')}>
+    <div>
       <ReactTable
         defaultPageSize={5}
         columns={columns}
-        data={[...dataTransfersIn]}
+        data={renderDataTransfersIn()}
         showPagination={false}
-        className={cn('w-1/2', 'mr-8', '')}
       />
       <ReactTable
         defaultPageSize={5}
         columns={columns}
-        data={[...dataTransfersOut]}
+        data={renderDataTransfersOut()}
         showPagination={false}
-        className={cn('w-1/2')}
       />
     </div>
   );
