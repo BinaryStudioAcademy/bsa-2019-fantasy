@@ -181,7 +181,7 @@ const GameweekHistory = () => {
         </React.Fragment>
       </div>
 
-      <div className={cn(header.paper, 'px-8', 'py-8', 'rounded', 'my-8')}>
+      <div className={cn(header.paper, 'px-8', 'py-8', 'rounded', 'mt-4')}>
         <TopTransfers />
       </div>
     </div>
