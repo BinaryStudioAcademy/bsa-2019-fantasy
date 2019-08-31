@@ -8,10 +8,11 @@ import { RootState } from 'store/types';
 import { loadGameweeksEntryHistoryAction } from './actions';
 
 import { FaArrowUp, FaArrowDown, FaMinus } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { EntryHistoryType } from 'types/entryHistory.types';
+import { setSuperCurrentGameweekAction } from 'containers/GameweekHistory/actions';
 
-const EntryHistory: React.FC = () => {
+const EntryHistory = withRouter(({ history }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -36,6 +37,12 @@ const EntryHistory: React.FC = () => {
   const gameweeksEntryHistoryData = useSelector(
     (state: RootState) => state.gameweeksEntryHistory,
   );
+
+  const onGameweekRedirect = (gameweekNumber: number) => {
+    dispatch(setSuperCurrentGameweekAction(gameweekNumber));
+
+    history.push('/');
+  };
 
   return (
     <>
@@ -90,7 +97,12 @@ const EntryHistory: React.FC = () => {
                     )}
                   >
                     <div className={cn('w-1/6')}>
-                      <a href='/404'>{item.gameweek.name}</a>
+                      <button
+                        className={cn('underline')}
+                        onClick={() => onGameweekRedirect(item.gameweek.number)}
+                      >
+                        {item.gameweek.name}
+                      </button>
                     </div>
                     <div className={cn('w-1/6')}>{item.team_score}</div>
                     <div className={cn('w-1/6')}>
@@ -144,6 +156,6 @@ const EntryHistory: React.FC = () => {
       </div>
     </>
   );
-};
+});
 
 export default EntryHistory;

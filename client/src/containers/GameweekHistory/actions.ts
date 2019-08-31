@@ -7,6 +7,8 @@ import {
   setTeamHistoryAction,
   AsyncSetGameweekHistoryAction,
   AsyncSetTeamHistoryAction,
+  SetSuperCurrentGameweekAction,
+  SET_SUPER_CURRENT_GAMEWEEK,
 } from './action.type';
 
 import { TeamMemberType } from 'types/gameweekHistory.type';
@@ -24,6 +26,11 @@ const setTeamHistory = (teamHistory: TeamMemberType[]): setTeamHistoryAction => 
 const setIsLoading = (isLoading: boolean): any => ({
   type: SET_IS_LOADING,
   payload: isLoading,
+});
+
+export const setSuperCurrentGameweekAction = (gameweekNumber: number): SetSuperCurrentGameweekAction => ({
+  type: SET_SUPER_CURRENT_GAMEWEEK,
+  payload: gameweekNumber,
 });
 
 export const loadGameweeksHistoryAction = (

@@ -14,7 +14,7 @@ import { TopTransfers } from '../../components/TopTransfers/index';
 import Spinner from 'components/Spinner';
 import { getChartOptions } from 'helpers/gameweekChart';
 
-import { loadGameweeksHistoryAction, loadTeamHistoryAction } from './actions';
+import { loadGameweeksHistoryAction, loadTeamHistoryAction, setSuperCurrentGameweekAction } from './actions';
 import { setInviteCode } from 'containers/Profile/actions';
 
 import styles from './styles.module.scss';
@@ -34,7 +34,7 @@ const GameweekHistory = () => {
     user_rank: userRank,
     gameweeks_results: gameweekResults,
   } = useSelector((state: RootState) => state.gameweeks, shallowEqual);
-  const { gameweeksHistory, teamHistory, isLoading } = useSelector(
+  const { gameweeksHistory, teamHistory, isLoading, superCurrentGameweek } = useSelector(
     (state: RootState) => state.gameweekHistory,
     shallowEqual,
   );
@@ -44,31 +44,33 @@ const GameweekHistory = () => {
   );
   const { inviteCode } = useSelector((state: RootState) => state.profile);
 
-  const [currentGameweek, setCurrentGameweek] = useState<number>(1);
-
   useEffect(() => {
     if (userId) {
       dispatch(loadGameweeksHistoryAction(userId));
     }
   }, [dispatch, userId]);
 
-  useEffect(() => {
-    if (gameweeksHistory && gameweeksHistory.length) {
-      setCurrentGameweek(gameweeksHistory[0].gameweek.number);
-    }
-  }, [gameweeksHistory]);
+  // SET GAMEWEEK 1 AFTER PAGE RELOAD
+
+  // useEffect(() => {
+  //   if (gameweeksHistory && gameweeksHistory.length) {
+  //     dispatch(setSuperCurrentGameweekAction(superCurrentGameweek));
+  //   }
+  // }, [gameweeksHistory]);
+
+  console.log(superCurrentGameweek);
 
   useEffect(() => {
     if (gameweeksHistory && gameweeksHistory.length) {
       const idx = gameweeksHistory.findIndex((gw) => {
-        return gw.gameweek.number === currentGameweek;
+        return gw.gameweek.number === superCurrentGameweek;
       });
       if (idx !== -1) {
         const gameweekId = gameweeksHistory[idx].gameweek.id;
-        dispatch(loadTeamHistoryAction(userId, gameweekId, currentGameweek));
+        dispatch(loadTeamHistoryAction(userId, gameweekId, superCurrentGameweek));
       }
     }
-  }, [currentGameweek, gameweeksHistory.length]);
+  }, [superCurrentGameweek, gameweeksHistory.length]);
 
   const displayRadar = () => gameweeksHistory.map((item) => item.team_score);
 
@@ -100,12 +102,12 @@ const GameweekHistory = () => {
             <div className={cn(header.sub, header.title, 'mb-3', 'flex', 'items-center')}>
               {t('GameweekHistoryPage.titles.sub')}
             </div>
-            {`${t('GameweekHistoryPage.titles.main')}  ${currentGameweek}`}
+            {`${t('GameweekHistoryPage.titles.main')}  ${superCurrentGameweek}`}
           </h2>
           <div className='text-center mb-4 flex justify-between'>
-            {currentGameweek > 1 && (
+            {superCurrentGameweek > 1 && (
               <button
-                onClick={() => setCurrentGameweek(currentGameweek - 1)}
+                onClick={() => dispatch(setSuperCurrentGameweekAction(superCurrentGameweek - 1))}
                 disabled={isLoading}
                 className={`g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded mr-6 font-bold`}
               >
@@ -113,9 +115,9 @@ const GameweekHistory = () => {
                 {t('previous')}
               </button>
             )}
-            {currentGameweek < gameweeksHistory.length && (
+            {superCurrentGameweek < gameweeksHistory.length && (
               <button
-                onClick={() => setCurrentGameweek(currentGameweek + 1)}
+                onClick={() => dispatch(setSuperCurrentGameweekAction(superCurrentGameweek + 1))}
                 disabled={isLoading}
                 className={cn(
                   styles['btn-next'],
