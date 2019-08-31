@@ -20,6 +20,10 @@ import { addNotification } from 'components/Notifications/actions';
 type Props = {
   match: FixturesItemType;
   subscribed: boolean;
+  currentMatchStats: FixturesItemType | undefined;
+  setCurrentMatchStats: React.Dispatch<
+    React.SetStateAction<FixturesItemType | undefined>
+  >;
 };
 
 const names = {
@@ -41,7 +45,12 @@ const names = {
   nothing: 'Nothing',
 };
 
-const FixturesItem = ({ match, subscribed }: Props) => {
+const FixturesItem = ({
+  match,
+  subscribed,
+  currentMatchStats,
+  setCurrentMatchStats,
+}: Props) => {
   const [isDisplay, setIsDisplay] = useState(false);
   const [stats, setStats] = useState<any>([]);
   const [isSubscribed, setSubscribe] = useState<boolean>(subscribed);
@@ -105,12 +114,18 @@ const FixturesItem = ({ match, subscribed }: Props) => {
     }
   }, [gameDetails]);
 
+  useEffect(() => {
+    if (currentMatchStats && currentMatchStats.id !== match.id) {
+      setIsDisplay(false);
+    }
+  }, [currentMatchStats]);
+
   const toggleStats = () => {
     setStats([]);
     if (match.started) {
       if (!isDisplay) {
+        setCurrentMatchStats(match);
         dispatch(loadGameDetailsAction(match.id));
-      } else {
       }
       setIsDisplay(!isDisplay);
     }
@@ -196,7 +211,7 @@ const FixturesItem = ({ match, subscribed }: Props) => {
         <li
           className={`flex w-5/6 items-center p-3 ${
             match.started ? 'cursor-pointer' : ''
-          } ${isDisplay ? 'bg-green-600 text-white' : ''}`}
+            } ${isDisplay ? 'bg-green-600 text-white' : ''}`}
           onClick={() => toggleStats()}
         >
           {/* eslint-enable */}

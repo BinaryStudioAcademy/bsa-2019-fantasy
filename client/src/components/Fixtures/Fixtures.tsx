@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 import moment from 'moment';
@@ -16,6 +16,10 @@ const Fixtures = ({ games }: FixturesType) => {
     (state: RootState) => state.fixtures.fixtureSubscribtions,
   );
 
+  const [currentMatchStats, setCurrentMatchStats] = useState<
+    FixturesItemType | undefined
+  >(undefined);
+
   const renderMessages = (subscribtions: FixtureSubscribtion[]) => {
     let currentDate = '';
     const subscribedFixturesIds = subscribtions.map((s) => s.game_id);
@@ -25,6 +29,8 @@ const Fixtures = ({ games }: FixturesType) => {
           match={match}
           subscribed={subscribedFixturesIds.includes(match.id)}
           key={`fixtures-${match.id}`}
+          currentMatchStats={currentMatchStats}
+          setCurrentMatchStats={setCurrentMatchStats}
         />,
       ];
 
