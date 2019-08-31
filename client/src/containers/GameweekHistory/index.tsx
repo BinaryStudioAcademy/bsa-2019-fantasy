@@ -9,6 +9,7 @@ import { Redirect } from 'react-router';
 import { RootState } from 'store/types';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
+import { TopTransfers } from '../../components/TopTransfers/index';
 
 import Spinner from 'components/Spinner';
 import { getChartOptions } from 'helpers/gameweekChart';
@@ -37,6 +38,7 @@ const GameweekHistory = () => {
     (state: RootState) => state.gameweekHistory,
     shallowEqual,
   );
+
   const userId = useSelector(
     (state: RootState) => state.profile.user && state.profile.user.id,
   );
@@ -207,6 +209,10 @@ const GameweekHistory = () => {
             </div>
           </div>
         </React.Fragment>
+      </div>
+
+      <div className={cn(header.paper, 'px-8', 'py-8', 'rounded', 'mt-4')}>
+        <TopTransfers />
       </div>
     </div>
   );
