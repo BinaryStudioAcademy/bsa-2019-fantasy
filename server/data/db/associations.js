@@ -11,6 +11,7 @@ export default (models) => {
     FootballClub,
     Event,
     TeamMemberHistory,
+    Image,
   } = models;
 
   User.belongsTo(FootballClub, { foreignKey: 'favorite_club_id', as: 'football_club' });
@@ -45,6 +46,11 @@ export default (models) => {
     foreignKey: 'user_id',
     as: 'user',
   });
+  GameweekHistory.hasMany(TeamMemberHistory, {
+    foreignKey: 'gameweek_history_id',
+    as: 'team_member_histories',
+  });
+
   Game.belongsTo(FootballClub, { foreignKey: 'hometeam_id', as: 'hometeam' });
   Game.belongsTo(FootballClub, { foreignKey: 'awayteam_id', as: 'awayteam' });
   Event.belongsTo(PlayerMatchStat, { foreignKey: 'player_match_stat_id', as: 'player' });
@@ -52,6 +58,8 @@ export default (models) => {
   GameweekHistory.belongsTo(Gameweek, { foreignKey: 'gameweek_id', as: 'gameweek' });
 
   PlayerMatchStat.belongsTo(PlayerStat, { foreignKey: 'player_id', as: 'player' });
+
+  User.belongsTo(Image, { foreignKey: 'image_id', as: 'image' });
 
   // You can use templates below to test associations (run npm start)
 

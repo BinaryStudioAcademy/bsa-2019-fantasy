@@ -1,25 +1,29 @@
 import React, { ReactNode, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
+import { FaSpinner } from 'react-icons/fa';
+
+import style from './styles.module.scss';
 
 type ButtonProps = {
   className?: string;
-  type?: 'link' | 'button';
+  type?: 'link' | 'button' | 'label';
   href?: string;
   styling?: 'primary' | 'secondary';
   inactive?: boolean;
   onClick?: (e: SyntheticEvent) => void;
   children: ReactNode;
   disabled?: boolean;
+  loading?: boolean;
 };
 
 const styles = {
-  default: 'border-2 font-semibold uppercase rounded px-6 py-2',
+  default: 'border-2 font-semibold uppercase rounded px-6 py-2 focus:outline-none',
   primary: {
-    default: 'bg-primary text-secondary border-primary ',
+    default: 'bg-primary text-secondary border-primary focus:outline-none',
     hover: 'hover:bg-secondary hover:text-white hover:border-secondary',
   },
   secondary: {
-    default: 'bg-white border-secondary2',
+    default: 'bg-white border-secondary2 focus:outline-none',
     hover: 'hover:bg-secondary hover:text-white hover:border-secondary',
   },
   inactive: 'opacity-50 cursor-not-allowed',
@@ -41,6 +45,12 @@ const Button = (props: ButtonProps) => {
         );
       }
       return <div className={className}>{props.children}</div>;
+    case 'label':
+      return (
+        <label className={className}>
+          {props.loading ? <FaSpinner className={style.spin} /> : props.children}
+        </label>
+      );
     default:
       return (
         <button className={className} onClick={props.onClick} disabled={props.disabled}>

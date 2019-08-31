@@ -1,4 +1,12 @@
+/* eslint-disable no-await-in-loop */
+import moment from 'moment';
+
 import gameweekHistoryRepository from '../../data/repositories/gameweek-history.repository';
+import { updateTeamMember } from './team-member-history.service';
+import {
+  findBenchPlayer,
+  findBenchPlayerGKP,
+} from '../../helpers/auto-subsitution.helper';
 
 export const getAllHistory = () => gameweekHistoryRepository.getAll();
 
@@ -168,4 +176,38 @@ export const getUserRanking = (userHistory, userId) => {
   //  get user rank among another users` results
   const userPosition = usersRanking.indexOf(userId) + 1;
   return userPosition;
+};
+
+export const makeAutoSubsitution = async (gameweekId) => {
+  try {
+    const gameweekHistories = await getHistoryByGameweekId(gameweekId);
+    const teamMembers = gameweekHistories.map((el) => el.team_member_histories);
+
+    // For all TeamMembersHistories make substitution if main squad player was injured
+    for (let i = 0; i < teamMembers.length; i += 1) {
+      for (let j = 0; j < teamMembers[i].length; j += 1) {
+        const {
+          is_on_bench,
+          player_stats: { injury, position },
+        } = teamMembers[i][j];
+        const pitchPlayer = teamMembers[i][j];
+        const now = moment();
+        let benchPlayer;
+
+        if (moment(injury).isAfter(now) && !is_on_bench) {
+          if (position === 'GKP') {
+            benchPlayer = findBenchPlayerGKP(teamMembers[i], now);
+          } else {
+            benchPlayer = findBenchPlayer(teamMembers[i], now);
+          }
+          if (benchPlayer) {
+            await updateTeamMember(benchPlayer.id, { is_on_bench: false });
+            await updateTeamMember(pitchPlayer.id, { is_on_bench: true });
+          }
+        }
+      }
+    }
+  } catch (err) {
+    throw err;
+  }
 };

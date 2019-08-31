@@ -4,6 +4,7 @@ import { Line as LineChart } from 'react-chartjs-2';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import cn from 'classnames';
+import { Redirect } from 'react-router';
 
 import { RootState } from 'store/types';
 
@@ -14,9 +15,11 @@ import Spinner from 'components/Spinner';
 import { getChartOptions } from 'helpers/gameweekChart';
 
 import { loadGameweeksHistoryAction, loadTeamHistoryAction } from './actions';
+import { setInviteCode } from 'containers/Profile/actions';
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
+import { Link } from 'react-router-dom';
 
 const GameweekHistory = () => {
   useEffect(() => {
@@ -39,6 +42,7 @@ const GameweekHistory = () => {
   const userId = useSelector(
     (state: RootState) => state.profile.user && state.profile.user.id,
   );
+  const { inviteCode } = useSelector((state: RootState) => state.profile);
 
   const [currentGameweek, setCurrentGameweek] = useState<number>(1);
 
@@ -67,6 +71,11 @@ const GameweekHistory = () => {
   }, [currentGameweek, gameweeksHistory.length]);
 
   const displayRadar = () => gameweeksHistory.map((item) => item.team_score);
+
+  if (inviteCode !== '') {
+    dispatch(setInviteCode(''));
+    return <Redirect to={`/joinLeague/${inviteCode}`} />;
+  }
 
   if (!gameweeksHistory) {
     return <Spinner />;
@@ -152,8 +161,9 @@ const GameweekHistory = () => {
             className={cn(
               header.paper,
               styles['gameweek-stats'],
-              'px-8',
-              'pt-12',
+              'flex',
+              'flex-col',
+              'p-8',
               'rounded',
               'ml-2',
             )}
@@ -177,6 +187,26 @@ const GameweekHistory = () => {
                 <span className='font-bold'>{userRank.rank}</span>
               </p>
             ) : null}
+            <div className={cn('entry-history-btn', 'self-center', 'mt-4')}>
+              <Link
+                to='/entry-history'
+                className={cn(
+                  'bg-primary',
+                  'hover:bg-teal-400',
+                  'uppercase',
+                  'font-semibold',
+                  'text-secondary',
+                  'hover:text-white',
+                  'py-2',
+                  'px-8',
+                  'border-2',
+                  'border-teal-300',
+                  'rounded mr-6',
+                )}
+              >
+                {t('EntryHistory.title')}
+              </Link>
+            </div>
           </div>
         </React.Fragment>
       </div>

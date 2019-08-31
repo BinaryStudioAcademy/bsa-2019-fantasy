@@ -1,114 +1,208 @@
-import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import cn from 'classnames';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import TeamSelection from 'components/Gameweek/TeamSelection';
+import cn from 'classnames';
+import produce from 'immer';
+import { feedback } from 'react-feedbacker';
+import { useTranslation } from 'react-i18next';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { RootState } from 'store/types';
+import { TeamMemberType } from 'types/gameweekHistory.type';
+import { usePitchPlayers } from 'components/Pitch/use-pitch-players.hook';
+import { DisplayPlayerType, PitchPlayerType } from 'components/Pitch/types';
+import { postGameweekHistory } from 'containers/Routing/fetchGameweeks/actions';
+import { currentGameweekSelector } from 'store/selectors/current-gameweek.selector';
+
 import StatusPlayerModal from 'components/StatusPlayerModal';
-import { GameweekHistoryType } from 'types/gameweekHistory.type';
+import TeamSelection from 'components/TeamSelection';
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from 'store/types';
-
-import { fetchGameweeksHistorySuccess } from 'containers/Routing/fetchGameweeks/actions';
 
 const MyTeam = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
 
   useEffect(() => {
-    document.title = 'Home | Fantasy Football League';
+    document.title = 'My Team | Fantasy Football League';
   }, []);
 
+  const [changed, setChanged] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const [isCaptain, setIsCaptain] = useState(false);
-  const [isViceCaptain, setIsViceCaptain] = useState(false);
-
   const [currentId, setCurrentId] = useState('');
-  const [currentName, setCurrentName] = useState('');
 
   const [captainId, setCaptainId] = useState('');
   const [viceCaptainId, setViceCaptainId] = useState('');
 
-  const [playerToSwitch, setPlayerToSwitch] = useState<GameweekHistoryType | undefined>(
-    undefined,
-  );
-  const dispatch = useDispatch();
+  const [playerToSwitch, setPlayerToSwitch] = useState<PitchPlayerType | null>(null);
   const players = useSelector((state: RootState) => state.gameweeks.gameweeks_history);
 
-  if (captainId === '' && players.length > 0) {
-    const givenCaptain = players.find((p) => p.is_captain);
-    givenCaptain && setCaptainId(givenCaptain.player_stats.id);
-  }
+  const { pitchPlayers, setPitch } = usePitchPlayers(players);
+  const currentGameweek = useSelector(currentGameweekSelector);
 
-  if (viceCaptainId === '' && players.length > 0) {
-    const givenViceCaptain = players.find((p) => p.is_vice_captain);
-    givenViceCaptain && setViceCaptainId(givenViceCaptain.player_stats.id);
-  }
+  useEffect(() => {
+    setChanged(false);
+  }, [players]);
 
-  const setCurrentPlayerForSwitching = (id: string) => {
-    const player = players.find((p) => p.player_stats.id === id);
-    setPlayerToSwitch(player);
-  };
+  useEffect(() => {
+    if (players.length > 0) {
+      const givenCaptain = players.find((p) => p.is_captain);
+      givenCaptain && setCaptainId(givenCaptain.player_stats.id);
 
-  const switchWith = (id: string) => {
-    if (!playerToSwitch) return;
-
-    const firstPlayer = players.find(
-      (p) => p.player_stats.id === playerToSwitch.player_stats.id,
-    );
-    const secondPlayer = players.find((p) => p.player_stats.id === id);
-
-    if (!firstPlayer || !secondPlayer) return;
-
-    const newPlayers = players.map((p) => {
-      if (p === firstPlayer || p === secondPlayer) {
-        return {
-          ...p,
-          is_on_bench: !p.is_on_bench,
-        };
-      }
-      return p;
-    });
-
-    dispatch(fetchGameweeksHistorySuccess(newPlayers));
-  };
+      const givenViceCaptain = players.find((p) => p.is_vice_captain);
+      givenViceCaptain && setViceCaptainId(givenViceCaptain.player_stats.id);
+    }
+  }, [players]);
 
   const onClose = () => {
     setShowModal(false);
   };
 
   const onSetCaptain = () => {
-    if (currentId === viceCaptainId) {
-      setViceCaptainId(captainId);
-    }
-    setCaptainId(currentId);
+    setPitch((pitch) =>
+      produce(pitch, (draft) => {
+        /* eslint-disable @typescript-eslint/no-non-null-assertion */
+        const currentCaptain = draft.find((p) => p.item && p.item.is_captain)!.item!;
+        const currentViceCaptain = draft.find((p) => p.item && p.item.is_vice_captain)!
+          .item!;
+        const currentPlayer = draft.find(
+          (p) => p.item && p.item.player_stats.id === currentId,
+        )!.item!;
+        /* eslint-enable @typescript-eslint/no-non-null-assertion */
+
+        if (currentId === viceCaptainId) {
+          setViceCaptainId(captainId);
+
+          currentViceCaptain.is_vice_captain = false;
+          currentViceCaptain.is_captain = true;
+          currentCaptain.is_vice_captain = true;
+        }
+
+        setCaptainId(currentId);
+
+        currentPlayer.is_captain = true;
+        currentCaptain.is_captain = false;
+      }),
+    );
+
+    setChanged(true);
     setShowModal(false);
   };
 
   const onSetViceCaptain = () => {
-    if (currentId === captainId) {
-      setCaptainId(viceCaptainId);
-    }
-    setViceCaptainId(currentId);
+    setPitch((pitch) =>
+      produce(pitch, (draft) => {
+        /* eslint-disable @typescript-eslint/no-non-null-assertion */
+        const currentCaptain = draft.find((p) => p.item && p.item.is_captain)!.item!;
+        const currentViceCaptain = draft.find((p) => p.item && p.item.is_vice_captain)!
+          .item!;
+        const currentPlayer = draft.find(
+          (p) => p.item && p.item.player_stats.id === currentId,
+        )!.item!;
+        /* eslint-enable @typescript-eslint/no-non-null-assertion */
+
+        if (currentId === captainId) {
+          setCaptainId(viceCaptainId);
+
+          currentCaptain.is_captain = false;
+          currentCaptain.is_vice_captain = true;
+          currentViceCaptain.is_captain = true;
+        }
+
+        setViceCaptainId(currentId);
+
+        currentPlayer.is_vice_captain = true;
+        currentViceCaptain.is_vice_captain = false;
+      }),
+    );
+
+    setChanged(true);
     setShowModal(false);
   };
 
-  const onOpen = (
-    id: string,
-    isCaptain: boolean,
-    isViceCaptain: boolean,
-    name: string,
-  ) => {
+  const onOpen = (player: DisplayPlayerType) => {
+    setCurrentId(player.player_stats.id);
     setShowModal(true);
-    setCurrentId(id);
-    setCurrentName(name);
-    setIsCaptain(isCaptain);
-    setIsViceCaptain(isViceCaptain);
   };
 
-  const canSwitch = !playerToSwitch || playerToSwitch.player_stats.id !== currentId;
+  const canSwitch = !playerToSwitch || playerToSwitch.item!.player_stats.id !== currentId;
+
+  const setCurrentPlayerForSwitching = (id: string) => {
+    const player =
+      pitchPlayers.find((p) => p.item && p.item.player_stats.id === id) || null;
+    setPlayerToSwitch(player);
+  };
+
+  const switchWith = (id: string) => {
+    if (!playerToSwitch) return;
+
+    setPitch((pitch) =>
+      produce(pitch, (draft) => {
+        const target = draft.find(
+          (p) =>
+            p.item &&
+            playerToSwitch.item &&
+            p.item.player_stats.id === playerToSwitch.item.player_stats.id,
+        )!;
+
+        const playerOnPitchIdx = draft.findIndex(
+          (p) => p.item && p.item.player_stats.id === id,
+        );
+        const playerOnPitch = draft[playerOnPitchIdx];
+
+        if (
+          target.item!.player_stats.position !== playerOnPitch.item!.player_stats.position
+        ) {
+          feedback.warning('Cannot swap players of different positions!');
+          return;
+        }
+
+        let newPlayer: DisplayPlayerType = { ...playerOnPitch.item! };
+
+        let newTargetItem = target.item;
+        if (playerOnPitch.item && target.item) {
+          const targetItem = target.item;
+          const playerItem = playerOnPitch.item;
+
+          const movedToBench = !playerItem.is_on_bench && target.item.is_on_bench;
+          const movedFromBench = playerItem.is_on_bench && !target.item.is_on_bench;
+
+          if (movedToBench || movedFromBench) {
+            // Captain/vice-captain cannot be on bench
+            if (
+              targetItem.is_captain ||
+              targetItem.is_vice_captain ||
+              playerItem.is_captain ||
+              playerItem.is_vice_captain
+            ) {
+              feedback.warning('Captain or vice captain cannot sit on bench!');
+
+              return;
+            }
+
+            newTargetItem = { ...target.item };
+
+            if (movedToBench) {
+              newTargetItem.is_on_bench = false;
+            } else if (movedFromBench) {
+              newTargetItem.is_on_bench = true;
+            }
+
+            newPlayer.is_on_bench = target.item.is_on_bench;
+          }
+        }
+
+        target.item = newPlayer;
+        if (playerOnPitchIdx !== -1) {
+          draft[playerOnPitchIdx].item = newTargetItem;
+        }
+
+        setChanged(true);
+      }),
+    );
+  };
 
   const onSetPlayerForSwitching = () => {
     if (playerToSwitch) {
@@ -125,9 +219,22 @@ const MyTeam = () => {
     setShowModal(false);
   };
 
-  useEffect(() => {
-    document.title = 'My Team | Fantasy Football League';
-  }, []);
+  const saveTeam = () => {
+    if (!pitchPlayers.some((p) => !p.item)) {
+      const result: TeamMemberType[] = pitchPlayers.map(({ item }) => ({
+        is_on_bench: item!.is_on_bench,
+        is_captain: item!.is_captain,
+        is_vice_captain: item!.is_vice_captain,
+        player_id: item!.player_stats.id,
+      }));
+
+      currentGameweek && dispatch(postGameweekHistory(currentGameweek.id, result));
+    }
+  };
+
+  const handlePlayerDrop = () => setChanged(true);
+
+  // TODO: Implement player highlighting on switching via clicks via context API
 
   return (
     <div className={styles['team-page']}>
@@ -135,7 +242,7 @@ const MyTeam = () => {
         className={cn(
           header.jumbotron,
           header.paper,
-          'mb-12',
+          'mb-6',
           'rounded',
           'flex',
           'items-end',
@@ -152,25 +259,41 @@ const MyTeam = () => {
           </h2>
         </div>
       </div>
-      <div className='p-3'>
+
+      <div
+        className={cn(
+          header.jumbotron,
+          header.paper,
+          'mb-12',
+          'rounded',
+          'flex',
+          'flex-col',
+          'items-center',
+          'justify-between',
+        )}
+      >
         <TeamSelection
-          isGameweek={false}
-          onOpen={onOpen}
-          captainId={captainId}
-          viceCaptainId={viceCaptainId}
-          playerToSwitch={playerToSwitch}
-          setPlayerForSwitching={setCurrentPlayerForSwitching}
-          switchWith={switchWith}
+          players={pitchPlayers}
+          setPlayers={setPitch}
+          onPlayerClick={onOpen}
+          onPlayerDrop={handlePlayerDrop}
+          submit={{
+            label: t('Gameweek.saveTeam'),
+            canSubmit: changed,
+            onSubmit: saveTeam,
+          }}
+          hasBench
         />
       </div>
       {showModal && (
         <StatusPlayerModal
-          isCaptain={isCaptain}
-          isViceCaptain={isViceCaptain}
+          player={
+            pitchPlayers.find((p) => p.item && p.item.player_stats.id === currentId)!
+              .item!
+          }
           onClose={onClose}
           onSetCaptain={onSetCaptain}
           onSetViceCaptain={onSetViceCaptain}
-          name={currentName}
           funcForSwitching={
             canSwitch ? onSetPlayerForSwitching : onCancelPlayerForSwitching
           }

@@ -14,7 +14,7 @@ type Props = {
   hasBench: boolean;
   disabled?: boolean;
 
-  onPlayerDrop: (target: number) => (player: DisplayPlayerType) => void;
+  onPlayerDrop: (target: number, benched: boolean) => (player: DisplayPlayerType) => void;
   onPlayerClick?: (player: DisplayPlayerType) => void;
 };
 
@@ -30,27 +30,49 @@ export const Pitch = ({
   return (
     <S.Container>
       <DndProvider backend={HTML5Backend}>
-        {order.map((type) => (
-          <S.TeamRow key={`pitch-team-row-${type}`}>
+        <S.Pitch>
+          {order.map((type) => (
+            <S.TeamRow key={`pitch-team-row-${type}`}>
+              {players
+                .filter(
+                  (p) => p.type === type && !(hasBench && (p.item && p.item.is_on_bench)),
+                )
+                .map((p, idx) => (
+                  <PitchPlayer
+                    index={players.indexOf(p)}
+                    type={type}
+                    player={p.item}
+                    disabled={disabled}
+                    onDrop={onPlayerDrop}
+                    onClick={onPlayerClick}
+                    key={`pitch-${type.toString()}-${
+                      p.item ? p.item.player_stats.id : idx
+                    }`}
+                  />
+                ))}
+            </S.TeamRow>
+          ))}
+        </S.Pitch>
+        {hasBench && (
+          <S.Bench className='rounded'>
             {players
-              .filter(
-                (p) => p.type === type && !(hasBench && (p.item && p.item.is_on_bench)),
-              )
+              .filter((p) => p.item && p.item.is_on_bench)
               .map((p, idx) => (
                 <PitchPlayer
                   index={players.indexOf(p)}
-                  type={type}
+                  type={
+                    p.item ? p.item.player_stats.position : ['GKP', 'DEF', 'MID', 'FWD']
+                  }
+                  benched
                   player={p.item}
                   disabled={disabled}
                   onDrop={onPlayerDrop}
                   onClick={onPlayerClick}
-                  key={`pitch-${type.toString()}-${
-                    p.item ? p.item.player_stats.second_name : idx
-                  }`}
+                  key={`bench-${p.item ? p.item.player_stats.id : idx}`}
                 />
               ))}
-          </S.TeamRow>
-        ))}
+          </S.Bench>
+        )}
       </DndProvider>
     </S.Container>
   );

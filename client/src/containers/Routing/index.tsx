@@ -12,7 +12,7 @@ import GuestRoute from 'containers/GuestRoute';
 
 import LoginPage from 'containers/Auth/Login/LoginPage';
 import RegistrationPage from 'containers/Auth/Registration/RegistrationPage';
-import SocialPage from 'containers/Auth/SocialPage';
+// import SocialPage from 'containers/Auth/SocialPage';
 
 import MyTeam from 'containers/MyTeam';
 import Transfers from 'containers/Transfers';
@@ -25,6 +25,7 @@ import JoinLeague from 'containers/Leagues/JoinLeague';
 import LeagueDetails from 'containers/Leagues/LeagueDetails';
 
 import GameweekHistory from 'containers/GameweekHistory';
+import EntryHistory from 'containers/EntryHistory';
 import NoTeamHome from 'components/NoTeamHome';
 
 import FixturesContainer from 'containers/FixturesContainer';
@@ -41,9 +42,11 @@ import FavouriteClubSelection from 'containers/Profile/components/FavouriteClubS
 import SetPassword from 'containers/Profile/components/SetPassword';
 import { loadCurrentUser, setLanguage } from 'containers/Profile/actions';
 
-import ConnectFbPage from 'containers/Auth/ConnectFbPage';
+// import ConnectFbPage from 'containers/Auth/ConnectFbPage';
 import ForgotPassword from 'containers/ChangePassword/ForgotPassword';
 import ResetPassword from 'containers/ChangePassword/ResetPassword';
+
+import AdminPanel from 'components/AdminPanel';
 
 import { fetchClubs } from './fetchClubs/actions';
 import {
@@ -70,6 +73,7 @@ const Routing = () => {
 
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
   const currentGameweek = useSelector(currentGameweekSelector);
+  const live = useSelector((state: RootState) => state.currentGame.current.gameStarted);
 
   const [joinedRoom, setJoinedRoom] = useState<boolean>(false);
 
@@ -80,14 +84,14 @@ const Routing = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (isAuthorized && favorite_club) {
+    if (user && isAuthorized && favorite_club) {
       if (!joinedRoom) {
         setJoinedRoom(true);
         joinRoom(favorite_club);
       }
-      requestGames();
+      requestGames(user.id);
     }
-  }, [dispatch, isAuthorized, favorite_club]);
+  }, [dispatch, user, isAuthorized, favorite_club]);
 
   useEffect(() => {
     if (user && currentGameweek) {
@@ -126,7 +130,10 @@ const Routing = () => {
         {/* <GuestRoute exact path='/social' component={SocialPage} /> */}
         {/* <GuestRoute exact path='/connect-fb' component={ConnectFbPage} /> */}
         <GuestRoute path='/reset/:id' component={ResetPassword} />
-
+        {!user && (
+          <GuestRoute sensitive path='/joinLeague/:leagueToken' component={LoginPage} />
+        )}
+        <GuestRoute path='/admin' component={AdminPanel} />
         {user && user.favorite_club_id === null && (
           <PrivateRoute>
             {feedback.warning('Select your favorite club to proceed!')}
@@ -139,13 +146,14 @@ const Routing = () => {
         )}
 
         <Route exact path='/404' component={NotFound} />
+        <Route exact path='/admin' component={AdminPanel} />
 
         <PrivateRoute path='/'>
           <div className='flex-none h-full'>
             <Sidebar />
           </div>
           <div className='flex-1 bg-background h-full overflow-y-auto pb-16'>
-            <Header team_name={user ? user.team_name : undefined} />
+            <Header team_name={user ? user.team_name : undefined} live={live} />
             <main className='mx-16 -mt-32'>
               <Switch>
                 <Route
@@ -153,6 +161,7 @@ const Routing = () => {
                   exact
                   component={user && user.team_name ? GameweekHistory : NoTeamHome}
                 />
+                <Route path='/entry-history' exact component={EntryHistory} />
 
                 <Route path='/profile' component={Profile} />
                 <Route path='/profile/set/password' component={SetPassword} />
@@ -172,6 +181,7 @@ const Routing = () => {
                 <Route path='/leagues/create' component={CreateLeague} />
                 <Route path='/leagues/join' component={JoinLeague} />
                 <Route path='/leagues/:name' component={LeagueDetails} />
+                <Route exact path='/joinLeague/:leagueToken' component={JoinLeague} />
 
                 <Route render={() => <Redirect to='/404' />} />
               </Switch>

@@ -27,13 +27,31 @@ const TeamList = ({ players: givenPlayers, hasBench, onPlayerClick }: Props) => 
       Substitutes: players.filter((p) => p.is_on_bench),
     };
   } else {
-    const { GKP, DEF, MID, FWD } = categorizePlayers(players);
+    const categorized = categorizePlayers(players);
+    const { GKP, DEF, MID, FWD } = categorized;
+
+    const emptyPlayerAmounts = {
+      GKP: 2 - GKP.length,
+      DEF: 5 - DEF.length,
+      MID: 5 - MID.length,
+      FWD: 3 - FWD.length,
+    };
+
+    if (Object.values(emptyPlayerAmounts).some((v) => v < 0)) {
+      // eslint-disable-next-line no-console
+      console.error('Seems like we have some malformed team right here:', categorized);
+      Object.entries(emptyPlayerAmounts).forEach(([type, amount]) => {
+        if (amount < 0) {
+          emptyPlayerAmounts[type] = 0;
+        }
+      });
+    }
 
     categorizedPlayers = {
-      Goalkeepers: GKP.concat(Array(2 - GKP.length).fill(null)),
-      Defenders: DEF.concat(Array(5 - DEF.length).fill(null)),
-      Midfielders: MID.concat(Array(5 - MID.length).fill(null)),
-      Forwards: FWD.concat(Array(3 - FWD.length).fill(null)),
+      Goalkeepers: GKP.concat(Array(emptyPlayerAmounts.GKP).fill(null)),
+      Defenders: DEF.concat(Array(emptyPlayerAmounts.DEF).fill(null)),
+      Midfielders: MID.concat(Array(emptyPlayerAmounts.MID).fill(null)),
+      Forwards: FWD.concat(Array(emptyPlayerAmounts.FWD).fill(null)),
     };
   }
 

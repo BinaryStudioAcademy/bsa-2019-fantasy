@@ -1,4 +1,4 @@
-import { UserModel } from '../models/index';
+import { UserModel, ImageModel } from '../models/index';
 import BaseRepository from './base.repository';
 
 class UserRepository extends BaseRepository {
@@ -20,8 +20,8 @@ class UserRepository extends BaseRepository {
 
   getUserById(id) {
     return this.model.findOne({
-      group: ['user.id'],
       where: { id },
+      include: 'image',
     });
   }
 

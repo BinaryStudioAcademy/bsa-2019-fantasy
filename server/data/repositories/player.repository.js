@@ -60,8 +60,7 @@ class PlayerRepository extends BaseRepository {
   }
 
   getRandomPlayers() {
-    const query = (position, limit, condition) => `SELECT DISTINCT ON (club_id)
-     id, first_name, second_name, player_price, player_score, position, club_id, code
+    const query = (position, limit, condition) => `SELECT DISTINCT ON (club_id) *
      FROM (select * from player_stats WHERE position='${position}' AND (${condition}) ORDER BY random() LIMIT 10) 
      as players LIMIT ${limit};`;
 

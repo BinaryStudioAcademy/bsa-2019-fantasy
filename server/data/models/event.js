@@ -4,15 +4,11 @@ export default (orm, DataTypes) => {
     {
       event_type: {
         allowNull: false,
-        type: DataTypes.ENUM(
-          'goal',
-          'assist',
-          'missed_passes',
-          'goal_conceded',
-          'save',
-          'yellow_card',
-          'red_card',
-        ),
+        type: DataTypes.STRING,
+      },
+      time: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
       },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,

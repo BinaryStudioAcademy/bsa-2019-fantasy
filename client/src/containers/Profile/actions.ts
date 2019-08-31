@@ -23,11 +23,17 @@ import {
   CHANGE_LANGUAGE,
   AsyncUserAction,
   UserAction,
+  SET_INVITE_CODE,
 } from './action.type';
 import { FixturesItemType } from 'types/fixtures.types';
 
 const setToken = (token: string) => localStorage.setItem('token', token);
 const clearToken = () => localStorage.removeItem('token');
+
+export const setInviteCode = (code: string): UserAction => ({
+  type: SET_INVITE_CODE,
+  payload: code,
+});
 
 export const setUser = (user: User | null): UserAction => ({
   type: SET_USER,
@@ -147,20 +153,6 @@ export const updateEmailPreferences = (
   }
 };
 
-export const getFixtureSubscription = (
-  gameId: FixturesItemType['id'],
-): AsyncUserAction => async (dispatch, getState) => {
-  try {
-    const user = await authService.getCurrentUser();
-    const res = await profileService.getFixtureSub(user!.id, gameId);
-    loadCurrentUser(true)(dispatch, getState);
-
-    feedback.success((res && res.message) || res);
-  } catch (err) {
-    feedback.error('Failed to update favorite club.');
-  }
-};
-
 export const createFixtureSubscription = (
   gameId: FixturesItemType['id'],
 ): AsyncUserAction => async (dispatch, getState) => {
@@ -168,8 +160,6 @@ export const createFixtureSubscription = (
     const user = await authService.getCurrentUser();
     const res = await profileService.createFixtureSub(user!.id, gameId);
     loadCurrentUser(true)(dispatch, getState);
-
-    feedback.success((res && res.message) || res);
   } catch (err) {
     feedback.error('Failed to update favorite club.');
   }
@@ -182,8 +172,6 @@ export const deleteFixtureSubscription = (
     const user = await authService.getCurrentUser();
     const res = await profileService.destroyFixtureSub(user!.id, gameId);
     loadCurrentUser(true)(dispatch, getState);
-
-    feedback.success((res && res.message) || res);
   } catch (err) {
     feedback.error('Failed to update favorite club.');
   }
@@ -195,7 +183,8 @@ export const updateUserTeamDetails = (
   gameweekId: GameweekType['id'],
 ): AsyncUserAction => async (dispatch, getState) => {
   try {
-    const user = await authService.getCurrentUser();
+    const { user } = getState().profile;
+
     const res = await profileService.updateUserTeamDetails(
       user!.id,
       gameweekId,
@@ -206,5 +195,19 @@ export const updateUserTeamDetails = (
     feedback.success((res && res.message) || res);
   } catch (err) {
     feedback.error('Failed to create your team');
+  }
+};
+
+export const updateUserAvatar = (imageId: string): AsyncUserAction => async (
+  dispatch,
+  getState,
+) => {
+  try {
+    const user = await authService.getCurrentUser();
+    const res = await profileService.updateUserAvatar(user!.id, imageId);
+    loadCurrentUser(true)(dispatch, getState);
+    feedback.success((res && res.message) || res);
+  } catch {
+    feedback.error('Failed to change your avatar');
   }
 };

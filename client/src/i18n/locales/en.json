@@ -212,7 +212,9 @@
       "password": "Password",
       "email": "Email",
       "setPassword": "Set a password",
-      "language": "Language"
+      "language": "Language",
+      "avatar": "Avatar",
+      "changeAvatar": "Change avatar"
     },
 
     "favouriteClub": {
@@ -402,5 +404,11 @@
       "Ukrainian": "Ukrainian",
       "English": "English"
     }
+  },
+
+  "EntryHistory": {
+    "title": "Entry History",
+    "thisSeason": "This Season",
+    "goBackBtn": "Go back"
   }
 }

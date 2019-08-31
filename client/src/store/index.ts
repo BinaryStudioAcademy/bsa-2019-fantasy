@@ -12,6 +12,7 @@ import fixturesReducer from 'containers/FixturesContainer/reducer';
 import clubsReducer from 'containers/Routing/fetchClubs/reducer';
 import gameweeksReducer from 'containers/Routing/fetchGameweeks/reducer';
 import gameweekHistoryReducer from 'containers/GameweekHistory/reducer';
+import gameweeksEntryHistoryReducer from 'containers/EntryHistory/reducer';
 import leagueReducer from 'containers/Leagues/reducer';
 import currentGameReducer from 'containers/Live/reducer';
 
@@ -39,6 +40,7 @@ const reducers = {
   gameweekHistory: gameweekHistoryReducer,
   transfers: transferReducer,
   notifications: notificationsReducer,
+  gameweeksEntryHistory: gameweeksEntryHistoryReducer,
 };
 
 const rootReducer = combineReducers({

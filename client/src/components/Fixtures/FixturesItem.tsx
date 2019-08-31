@@ -15,27 +15,64 @@ import {
   createFixtureSubscription,
   deleteFixtureSubscription,
 } from 'containers/Profile/actions';
+import { addNotification } from 'components/Notifications/actions';
 
 type Props = {
   match: FixturesItemType;
+  subscribed: boolean;
+  currentMatchStats: FixturesItemType | undefined;
+  setCurrentMatchStats: React.Dispatch<
+    React.SetStateAction<FixturesItemType | undefined>
+  >;
 };
 
-const FixturesItem = ({ match }: Props) => {
+const names = {
+  attack: 'Attack',
+  shot: 'Shots',
+  foul: 'Fouls',
+  goal: 'Goals',
+  save: 'Saves',
+  miss: 'Misses',
+  yellowCard: 'Yellow Cards',
+  goalKick: 'Goal kicks',
+  cornerKick: 'Corner kicks',
+  freeKick: 'Free kicks',
+  penaltyKick: 'Penalty kick',
+  interception: 'Interceptions',
+  out: 'Outs',
+  trauma: 'Traumas',
+  redCard: 'Red cards',
+  nothing: 'Nothing',
+};
+
+const FixturesItem = ({
+  match,
+  subscribed,
+  currentMatchStats,
+  setCurrentMatchStats,
+}: Props) => {
   const [isDisplay, setIsDisplay] = useState(false);
   const [stats, setStats] = useState<any>([]);
-  const [isSubscribed, setSubscribe] = useState<boolean>(false);
+  const [isSubscribed, setSubscribe] = useState<boolean>(subscribed);
   const dispatch = useDispatch();
   const gameDetails = useSelector((state: RootState) => state.fixtures.gameDetails);
 
   useEffect(() => {
     if (gameDetails) {
       gameDetails.forEach((g) => {
+        if (!g.player) return;
         setStats((stats) => {
-          const team =
-            g.player.player.club_id === match.hometeam_id
-              ? 'hometeam_stats'
-              : 'awayteam_stats';
-          const statsItem = stats.find((st) => st.title === g.event_type);
+          let team;
+          if (g.player) {
+            team =
+              g.player.player.club_id === match.hometeam_id
+                ? 'hometeam_stats'
+                : 'awayteam_stats';
+          } else {
+            team = 'common_stats';
+          }
+
+          const statsItem = stats.find((st) => st.title === names[g.event_type]);
           if (statsItem) {
             const index = statsItem[team].findIndex(
               (item) => item.player === g.player.player.second_name,
@@ -48,7 +85,9 @@ const FixturesItem = ({ match }: Props) => {
                 count: 1,
               });
             }
-            const statsItemIndex = stats.findIndex((st) => st.title === g.event_type);
+            const statsItemIndex = stats.findIndex(
+              (st) => st.title === names[g.event_type],
+            );
             return [
               ...stats.slice(0, statsItemIndex),
               statsItem,
@@ -58,7 +97,7 @@ const FixturesItem = ({ match }: Props) => {
             return [
               ...stats,
               {
-                title: g.event_type,
+                title: names[g.event_type],
                 hometeam_stats: [],
                 awayteam_stats: [],
                 [team]: [
@@ -75,12 +114,18 @@ const FixturesItem = ({ match }: Props) => {
     }
   }, [gameDetails]);
 
+  useEffect(() => {
+    if (currentMatchStats && currentMatchStats.id !== match.id) {
+      setIsDisplay(false);
+    }
+  }, [currentMatchStats]);
+
   const toggleStats = () => {
     setStats([]);
     if (match.started) {
       if (!isDisplay) {
+        setCurrentMatchStats(match);
         dispatch(loadGameDetailsAction(match.id));
-      } else {
       }
       setIsDisplay(!isDisplay);
     }
@@ -137,9 +182,25 @@ const FixturesItem = ({ match }: Props) => {
     );
   }
   const onSubscribe = () => {
-    isSubscribed
-      ? dispatch(deleteFixtureSubscription(match.id))
-      : dispatch(createFixtureSubscription(match.id));
+    if (isSubscribed) {
+      dispatch(
+        addNotification(
+          `You have unsubscribed from fixture ${match.hometeam.name} - ${
+            match.awayteam.name
+          }, which starts on ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
+        ),
+      );
+      dispatch(deleteFixtureSubscription(match.id));
+    } else {
+      dispatch(
+        addNotification(
+          `You have subscribed to fixture ${match.hometeam.name} - ${
+            match.awayteam.name
+          }, which starts on ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
+        ),
+      );
+      dispatch(createFixtureSubscription(match.id));
+    }
     setSubscribe(!isSubscribed);
   };
 
@@ -150,7 +211,7 @@ const FixturesItem = ({ match }: Props) => {
         <li
           className={`flex w-5/6 items-center p-3 ${
             match.started ? 'cursor-pointer' : ''
-          } ${isDisplay ? 'bg-green-600 text-white' : ''}`}
+            } ${isDisplay ? 'bg-green-600 text-white' : ''}`}
           onClick={() => toggleStats()}
         >
           {/* eslint-enable */}
@@ -183,6 +244,7 @@ const FixturesItem = ({ match }: Props) => {
             <h5 className='font-bold'>{match.awayteam.name}</h5>
           </div>
         </li>
+
         {match.started ? null : (
           <Button
             className='block w-1/12 h-8 rounded-lg flex justify-center'

@@ -1,9 +1,4 @@
-* text=auto
-
-# Change all text files' EOL to CRLF
-*.* text eol=crlf
-
-# Treat all images as binary files 
+# Treat all images as binary files
 *.jpg binary
 *.jpeg binary
 *.png binary

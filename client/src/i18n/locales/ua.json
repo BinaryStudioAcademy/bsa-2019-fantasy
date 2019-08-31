@@ -212,7 +212,9 @@
       "password": "Пароль",
       "email": "Електронна пошта",
       "setPassword": "Налаштувати пароль",
-      "language": "Мова"
+      "language": "Мова",
+      "avatar": "Аватар",
+      "changeAvatar": "Змінити аватар"
     },
 
     "favouriteClub": {
@@ -397,5 +399,11 @@
     "navigation": {
       "clearAll": "Очистити"
     }
+  },
+
+  "EntryHistory": {
+    "title": "Історія",
+    "thisSeason": "Поточний Сезон",
+    "goBackBtn": "Повернутися"
   }
 }

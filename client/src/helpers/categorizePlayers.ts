@@ -1,10 +1,5 @@
 import { PlayerTypes, PlayerPosition } from 'components/Gameweek/PlayerSelection/types';
-
-interface AbstractPlayerType {
-  player_stats: {
-    position: PlayerPosition;
-  };
-}
+import { AbstractPlayerType } from 'types/player-with-position.interface';
 
 export const categorizePlayers = <T extends AbstractPlayerType>(
   players: T[],

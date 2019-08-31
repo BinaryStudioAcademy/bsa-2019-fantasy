@@ -118,7 +118,7 @@ const PlayerDialog = ({
     ));
 
   const renderHistory = () => {
-    const { history } = playerDialogData;
+    let { history } = playerDialogData;
 
     if (history.length < 1) {
       return (
@@ -128,7 +128,7 @@ const PlayerDialog = ({
         </div>
       );
     }
-
+    history = [...history].sort((a, b) => a.gameweek.number - b.gameweek.number);
     const historyRows = history.map(
       ({
         gameweek: { number },
@@ -145,13 +145,13 @@ const PlayerDialog = ({
       }) => [
         { gameweek: number },
         { opponent: `${opp} ${res}` },
-        { goals },
-        { assists },
-        { missed_passes },
-        { goals_conceded },
-        { saves },
-        { yellow_cards },
-        { red_cards },
+        { goals: goals === 0 ? '-' : goals },
+        { assists: assists === 0 ? '-' : assists },
+        { missed_passes: missed_passes === 0 ? '-' : missed_passes },
+        { goals_conceded: goals_conceded === 0 ? '-' : goals_conceded },
+        { saves: saves === 0 ? '-' : saves },
+        { yellow_cards: yellow_cards === 0 ? '-' : yellow_cards },
+        { red_cards: red_cards === 0 ? '-' : red_cards },
       ],
     );
     return (

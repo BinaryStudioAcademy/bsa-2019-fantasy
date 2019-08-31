@@ -30,4 +30,17 @@ export default class BaseRepository {
       where: { id },
     });
   }
+
+  async getLastUpdated() {
+    const result = await this.model.findOne({
+      order: [['updatedAt', 'DESC']],
+      attributes: ['updatedAt'],
+      raw: true,
+    });
+    return result ? result.updatedAt : undefined;
+  }
+
+  bulkCreateUpdate(data) {
+    return this.model.bulkCreate(data);
+  }
 }

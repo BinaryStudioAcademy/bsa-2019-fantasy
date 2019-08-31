@@ -18,6 +18,20 @@ export default {
           { transaction },
         ),
         queryInterface.addColumn(
+          'users',
+          'image_id',
+          {
+            type: Sequelize.UUID,
+            references: {
+              model: 'images',
+              key: 'id',
+            },
+            onUpdate: 'CASCADE',
+            onDelete: 'SET NULL',
+          },
+          { transaction },
+        ),
+        queryInterface.addColumn(
           'player_stats',
           'club_id',
           {
@@ -241,6 +255,20 @@ export default {
           },
           { transaction },
         ),
+        queryInterface.addColumn(
+          'player_match_stats',
+          'game_id',
+          {
+            type: Sequelize.UUID,
+            references: {
+              model: 'games',
+              key: 'id',
+            },
+            onUpdate: 'CASCADE',
+            onDelete: 'SET NULL',
+          },
+          { transaction },
+        ),
       ]),
     ),
 
@@ -248,6 +276,9 @@ export default {
     queryInterface.sequelize.transaction((transaction) =>
       Promise.all([
         queryInterface.removeColumn('users', 'favorite_club_id', {
+          transaction,
+        }),
+        queryInterface.removeColumn('users', 'image_id', {
           transaction,
         }),
         queryInterface.removeColumn('player_stats', 'club_id', {
@@ -293,6 +324,9 @@ export default {
           transaction,
         }),
         queryInterface.removeColumn('player_match_stats', 'player_id', {
+          transaction,
+        }),
+        queryInterface.removeColumn('player_match_stats', 'game_id', {
           transaction,
         }),
       ]),

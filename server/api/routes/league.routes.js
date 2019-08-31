@@ -10,6 +10,7 @@ import {
   joinPrivateLeagueMiddleware,
   joinPublicLeagueMiddleware,
   getInvitationMiddleware,
+  leagueDetailsMiddleware,
 } from '../middlewares/league.middleware';
 import jwtMiddleware from '../middlewares/jwt.middleware';
 
@@ -22,7 +23,7 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
-  .get('/:name', jwtMiddleware, async (req, res, next) => {
+  .get('/:name', jwtMiddleware, leagueDetailsMiddleware, async (req, res, next) => {
     try {
       const league = await leagueService.getLeagueParams(req.params.name);
       const { id, name, start_from } = league;
@@ -33,7 +34,7 @@ router
       const admin_entry = users.some(
         (item) => item.user.id === req.user.id && item.is_creator,
       );
-      const entry_can_leave = !admin_entry && !(globalLeagues.includes(name));
+      const entry_can_leave = !admin_entry && !globalLeagues.includes(name);
 
       await Promise.all(
         users.map(async (item) => {
@@ -42,7 +43,7 @@ router
           const userGamaweekStats = await gameweekHistoryService.getHistoriesByUserId(
             item.user.id,
           );
-          userGamaweekStats.map((data) => {
+          userGamaweekStats.forEach((data) => {
             if (startScoringGameweek.number <= data.gameweek.number) {
               gameweek_points = data.team_score;
               total_points += gameweek_points;
@@ -51,7 +52,13 @@ router
           result.push({ ...item, gameweek_points, total_points });
         }),
       );
-      res.json({ name, private: league.private, entry_can_leave, admin_entry, participants: result });
+      res.json({
+        name,
+        private: league.private,
+        entry_can_leave,
+        admin_entry,
+        participants: result,
+      });
     } catch (err) {
       next(err);
     }
