@@ -8,11 +8,16 @@ import PlayerDialog from 'components/PlayerDialog';
 import { loadPlayersAction } from '../../components/PlayersSelection/actions';
 import cn from 'classnames';
 
-import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from 'react-icons/fa';
+import {
+  FaArrowAltCircleLeft,
+  FaArrowAltCircleRight,
+  FaArrowLeft,
+  FaArrowRight,
+} from 'react-icons/fa';
 import info from 'assets/images/info.svg';
 
 type topTransferType = {
-  info: string;
+  info: any;
   direction: any;
   position: string;
   name: string;
@@ -25,26 +30,32 @@ export const TopTransfers = () => {
     {
       Header: '',
       accessor: 'info',
+      className: 'flex items-center justify-center rounded-r',
     },
     {
       Header: '',
       accessor: 'direction',
+      className: 'flex items-center justify-center rounded-r',
     },
     {
       Header: 'Positon',
       accessor: 'position',
+      className: 'flex items-center justify-center rounded-r font-bold',
     },
     {
       Header: 'Player',
       accessor: 'name',
+      className: 'flex items-center justify-center rounded-r',
     },
     {
       Header: 'Club',
       accessor: 'club',
+      className: 'flex items-center justify-center rounded-r font-bold',
     },
     {
       Header: 'Number',
       accessor: 'number',
+      className: 'flex items-center justify-center rounded-r font-bold',
     },
   ];
   const dataTransfersOut: topTransferType[] = [];
@@ -84,8 +95,12 @@ export const TopTransfers = () => {
       for (let i = 0; i < 5; i++) {
         const clubIndexIn = topTransfers.transfersIn[i].club_id - 1;
         const itemIn = {
-          info: 'info',
-          direction: <FaArrowAltCircleRight />,
+          info: (
+            <button className='w-6 h-6 justify-center mr-4 leading-none flex bg-background rounded-full text-s font-bold'>
+              i
+            </button>
+          ),
+          direction: <FaArrowRight size={20} className={cn('text-green-500')} />,
           position: topTransfers.transfersIn[i].position,
           name: topTransfers.transfersIn[i].second_name,
           club: clubs[clubIndexIn].short_name,
@@ -105,8 +120,12 @@ export const TopTransfers = () => {
       for (let i = 0; i < 5; i++) {
         const clubIndexOut = topTransfers.transfersOut[i].club_id - 1;
         const itemOut = {
-          info: 'info',
-          direction: <FaArrowAltCircleLeft />,
+          info: (
+            <button className='w-6 h-6 justify-center mr-4 leading-none flex bg-background rounded-full text-s font-bold'>
+              i
+            </button>
+          ),
+          direction: <FaArrowLeft size={20} className={cn('text-red-500')} />,
           position: topTransfers.transfersOut[i].position,
           name: topTransfers.transfersOut[i].second_name,
           club: clubs[clubIndexOut].short_name,
@@ -121,12 +140,25 @@ export const TopTransfers = () => {
 
   return (
     <div>
+      <div className={cn('flex', 'items-center', 'mb-2')}>
+        <FaArrowAltCircleRight size={30} className={cn('text-green-500', 'mr-2')} />
+        <h2 className={cn('text-2xl', 'font-semibold', 'align-middle')}>
+          Top Transfers in
+        </h2>
+      </div>
       <ReactTable
         defaultPageSize={5}
         columns={columns}
         data={renderDataTransfersIn()}
         showPagination={false}
+        className={cn('mb-8')}
       />
+      <div className={cn('flex', 'items-center', 'mb-2')}>
+        <FaArrowAltCircleLeft size={30} className={cn('text-red-500', 'mr-2')} />
+        <h2 className={cn('text-2xl', 'font-semibold', 'align-middle')}>
+          Top Transfers out
+        </h2>
+      </div>
       <ReactTable
         defaultPageSize={5}
         columns={columns}
