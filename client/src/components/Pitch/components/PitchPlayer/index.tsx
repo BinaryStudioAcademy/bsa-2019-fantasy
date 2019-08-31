@@ -28,6 +28,7 @@ const PitchPlayer = ({
   onDrop,
   onClick,
 }: Props) => {
+  console.log(player);
   const dropRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<HTMLDivElement>(null);
   const [{ isOver, canDrop }, drop] = useDrop<

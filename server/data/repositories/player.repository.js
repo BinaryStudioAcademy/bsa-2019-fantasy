@@ -59,6 +59,10 @@ class PlayerRepository extends BaseRepository {
     return this.model.findOne({ where: { id } });
   }
 
+  getByIdAndClubId(id, club_id) {
+    return this.model.findOne({ where: { id, club_id } });
+  }
+
   getRandomPlayers() {
     const query = (position, limit, condition) => `SELECT DISTINCT ON (club_id) *
      FROM (select * from player_stats WHERE position='${position}' AND (${condition}) ORDER BY random() LIMIT 10) 
