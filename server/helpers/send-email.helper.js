@@ -41,7 +41,6 @@ export const sendRemind = (email, gameDetails) => {
     to: email,
     from: 'fantasy.football.noreply@gmail.com',
     subject: 'Fantasy Premier League',
-
     html: getEmailTemplate(formEmailText(gameDetails)),
   };
 

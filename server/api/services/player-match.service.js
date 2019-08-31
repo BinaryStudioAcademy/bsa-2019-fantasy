@@ -41,7 +41,26 @@ export const getPlayerStatsByGameweeks = async (playerId, playerClubId) => {
               const eventsForCurrentPlayer = realEvents.filter(
                 (event) => event.player && event.player.player_id.toString() === playerId,
               );
-              if (eventsForCurrentPlayer.length < 1) return;
+              if (eventsForCurrentPlayer.length < 1) {
+                result.push({
+                  gameweek: { number },
+                  game: {
+                    opp: opponent.short_name,
+                    res: `${hometeam_score} - ${awayteam_score}`,
+                  },
+                  stats: {
+                    goals: 0,
+                    assists: 0,
+                    missed_passes: 0,
+                    goals_conceded: 0,
+                    saves: 0,
+                    yellow_cards: 0,
+                    red_cards: 0,
+                  },
+                });
+                return;
+              }
+
               const {
                 goals,
                 assists,
