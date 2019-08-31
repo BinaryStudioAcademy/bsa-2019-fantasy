@@ -21,7 +21,7 @@ type SetLoading = {
   payload: boolean;
 };
 
-type SetSuperCurrentGameweek = {
+type SetCurrentGameweek = {
   type: typeof SET_SUPER_CURRENT_GAMEWEEK;
   payload: any;
 }
@@ -30,4 +30,4 @@ export type setGameweekHistoryAction = SetGameweeksHistory | SetLoading;
 export type setTeamHistoryAction = SetTeamHistory | SetLoading;
 export type AsyncSetGameweekHistoryAction = Thunky<setGameweekHistoryAction>;
 export type AsyncSetTeamHistoryAction = Thunky<setTeamHistoryAction>;
-export type SetSuperCurrentGameweekAction = SetSuperCurrentGameweek;
+export type SetCurrentGameweekAction = SetCurrentGameweek;

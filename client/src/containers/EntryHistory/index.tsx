@@ -10,7 +10,7 @@ import { loadGameweeksEntryHistoryAction } from './actions';
 import { FaArrowUp, FaArrowDown, FaMinus } from 'react-icons/fa';
 import { Link, withRouter } from 'react-router-dom';
 import { EntryHistoryType } from 'types/entryHistory.types';
-import { setSuperCurrentGameweekAction } from 'containers/GameweekHistory/actions';
+import { setCurrentGameweekAction } from 'containers/GameweekHistory/actions';
 
 const EntryHistory = withRouter(({ history }) => {
   const { t } = useTranslation();
@@ -39,7 +39,7 @@ const EntryHistory = withRouter(({ history }) => {
   );
 
   const onGameweekRedirect = (gameweekNumber: number) => {
-    dispatch(setSuperCurrentGameweekAction(gameweekNumber));
+    dispatch(setCurrentGameweekAction(gameweekNumber));
 
     history.push('/');
   };
@@ -98,7 +98,7 @@ const EntryHistory = withRouter(({ history }) => {
                   >
                     <div className={cn('w-1/6')}>
                       <button
-                        className={cn('underline')}
+                        className={cn('font-semibold')}
                         onClick={() => onGameweekRedirect(item.gameweek.number)}
                       >
                         {item.gameweek.name}
@@ -106,10 +106,9 @@ const EntryHistory = withRouter(({ history }) => {
                     </div>
                     <div className={cn('w-1/6')}>{item.team_score}</div>
                     <div className={cn('w-1/6')}>
-                      {/* to review formula, or to extract logic to db */}
-                      {index === 0
-                        ? array[index].team_score
-                        : array[index].team_score + array[index - 1].team_score}
+                      {array
+                        .slice(0, index + 1)
+                        .reduce((sum, current) => sum + Number(current.team_score), 0)}
                     </div>
                     <div className={cn('w-1/6')}>{item.gameweekUserRank}</div>
                     <div className={cn('w-1/6')}>N/A</div>
