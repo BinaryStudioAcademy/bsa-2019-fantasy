@@ -8,10 +8,11 @@ import { RootState } from 'store/types';
 import { loadGameweeksEntryHistoryAction } from './actions';
 
 import { FaArrowUp, FaArrowDown, FaMinus } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { EntryHistoryType } from 'types/entryHistory.types';
+import { setCurrentGameweekAction } from 'containers/GameweekHistory/actions';
 
-const EntryHistory: React.FC = () => {
+const EntryHistory = withRouter(({ history }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -36,6 +37,12 @@ const EntryHistory: React.FC = () => {
   const gameweeksEntryHistoryData = useSelector(
     (state: RootState) => state.gameweeksEntryHistory,
   );
+
+  const onGameweekRedirect = (gameweekNumber: number) => {
+    dispatch(setCurrentGameweekAction(gameweekNumber));
+
+    history.push('/');
+  };
 
   return (
     <>
@@ -90,14 +97,18 @@ const EntryHistory: React.FC = () => {
                     )}
                   >
                     <div className={cn('w-1/6')}>
-                      <a href='/404'>{item.gameweek.name}</a>
+                      <button
+                        className={cn('font-semibold')}
+                        onClick={() => onGameweekRedirect(item.gameweek.number)}
+                      >
+                        {item.gameweek.name}
+                      </button>
                     </div>
                     <div className={cn('w-1/6')}>{item.team_score}</div>
                     <div className={cn('w-1/6')}>
-                      {/* to review formula, or to extract logic to db */}
-                      {index === 0
-                        ? array[index].team_score
-                        : array[index].team_score + array[index - 1].team_score}
+                      {array
+                        .slice(0, index + 1)
+                        .reduce((sum, current) => sum + Number(current.team_score), 0)}
                     </div>
                     <div className={cn('w-1/6')}>{item.gameweekUserRank}</div>
                     <div className={cn('w-1/6')}>N/A</div>
@@ -144,6 +155,6 @@ const EntryHistory: React.FC = () => {
       </div>
     </>
   );
-};
+});
 
 export default EntryHistory;

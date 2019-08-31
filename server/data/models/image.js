@@ -1,4 +1,5 @@
 export default (orm, DataTypes) => {
+
   const Image = orm.define('image', {
     link: {
       allowNull: false,

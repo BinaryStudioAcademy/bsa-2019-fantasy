@@ -2,8 +2,10 @@ import {
   SET_GAMEWEEKS_HISTORY,
   SET_TEAM_HISTORY,
   SET_IS_LOADING,
+  SET_SUPER_CURRENT_GAMEWEEK,
   setGameweekHistoryAction,
   setTeamHistoryAction,
+  SetCurrentGameweekAction,
 } from './action.type';
 
 import { LOCAL_GameweekHistoryType } from './types';
@@ -12,17 +14,19 @@ type State = {
   gameweeksHistory: LOCAL_GameweekHistoryType[];
   teamHistory?: any;
   isLoading: boolean;
+  currentGameweek: number;
 };
 
 const initialState: State = {
   gameweeksHistory: [],
   teamHistory: [],
   isLoading: true,
+  currentGameweek: 1,
 };
 
 export default (
   state = initialState,
-  action: setGameweekHistoryAction | setTeamHistoryAction,
+  action: setGameweekHistoryAction | setTeamHistoryAction | SetCurrentGameweekAction,
 ) => {
   switch (action.type) {
     case SET_GAMEWEEKS_HISTORY:
@@ -33,6 +37,11 @@ export default (
       return {
         ...state,
         isLoading: action.payload,
+      };
+    case SET_SUPER_CURRENT_GAMEWEEK:
+      return {
+        ...state,
+        currentGameweek: action.payload
       };
     default:
       return state;

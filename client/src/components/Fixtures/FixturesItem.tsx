@@ -16,10 +16,15 @@ import {
   deleteFixtureSubscription,
 } from 'containers/Profile/actions';
 import { addNotification } from 'components/Notifications/actions';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   match: FixturesItemType;
   subscribed: boolean;
+  currentMatchStats: FixturesItemType | undefined;
+  setCurrentMatchStats: React.Dispatch<
+    React.SetStateAction<FixturesItemType | undefined>
+  >;
 };
 
 const names = {
@@ -41,7 +46,13 @@ const names = {
   nothing: 'Nothing',
 };
 
-const FixturesItem = ({ match, subscribed }: Props) => {
+const FixturesItem = ({
+  match,
+  subscribed,
+  currentMatchStats,
+  setCurrentMatchStats,
+}: Props) => {
+  const { t } = useTranslation();
   const [isDisplay, setIsDisplay] = useState(false);
   const [stats, setStats] = useState<any>([]);
   const [isSubscribed, setSubscribe] = useState<boolean>(subscribed);
@@ -105,12 +116,18 @@ const FixturesItem = ({ match, subscribed }: Props) => {
     }
   }, [gameDetails]);
 
+  useEffect(() => {
+    if (currentMatchStats && currentMatchStats.id !== match.id) {
+      setIsDisplay(false);
+    }
+  }, [currentMatchStats]);
+
   const toggleStats = () => {
     setStats([]);
     if (match.started) {
       if (!isDisplay) {
+        setCurrentMatchStats(match);
         dispatch(loadGameDetailsAction(match.id));
-      } else {
       }
       setIsDisplay(!isDisplay);
     }
@@ -170,18 +187,18 @@ const FixturesItem = ({ match, subscribed }: Props) => {
     if (isSubscribed) {
       dispatch(
         addNotification(
-          `You have unsubscribed from fixture ${match.hometeam.name} - ${
+          `${t('Notifications.messages.unsubscribedFromFixture')} ${match.hometeam.name} - ${
             match.awayteam.name
-          }, which starts on ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
+          }, ${t('Notifications.messages.whichStartsOn')} ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
         ),
       );
       dispatch(deleteFixtureSubscription(match.id));
     } else {
       dispatch(
         addNotification(
-          `You have subscribed to fixture ${match.hometeam.name} - ${
+          `${t('Notifications.messages.subscribedToFixture')} ${match.hometeam.name} - ${
             match.awayteam.name
-          }, which starts on ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
+          }, ${t('Notifications.messages.whichStartsOn')} ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
         ),
       );
       dispatch(createFixtureSubscription(match.id));
@@ -196,7 +213,7 @@ const FixturesItem = ({ match, subscribed }: Props) => {
         <li
           className={`flex w-5/6 items-center p-3 ${
             match.started ? 'cursor-pointer' : ''
-          } ${isDisplay ? 'bg-green-600 text-white' : ''}`}
+            } ${isDisplay ? 'bg-green-600 text-white' : ''}`}
           onClick={() => toggleStats()}
         >
           {/* eslint-enable */}
