@@ -393,7 +393,10 @@
       "joinPublicLeague": "Ви щойно приєдналися до нової публічної ліги.",
       "createPrivateLeague": "Ви щойно створили нову приватну лігу.",
       "createPublicLeague": "Ви щойно створили нову публічну лігу.",
-      "changeFavoriteClub": "Ви змінили свій улюблений клуб."
+      "changeFavoriteClub": "Ви змінили свій улюблений клуб.",
+      "subscribedToFixture": "Ви підписались на матч",
+      "unsubscribedFromFixture": "Ви відписались від матчу",
+      "whichStartsOn": "початок:"
     },
 
     "navigation": {
