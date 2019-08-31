@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import ReactTable from 'react-table';
 import { RootState } from 'store/types';
-import { Position, PlayerType } from 'types/player.types';
 import PlayerDialog from 'components/PlayerDialog';
 import { loadPlayersAction } from '../../components/PlayersSelection/actions';
 import cn from 'classnames';
@@ -14,7 +13,6 @@ import {
   FaArrowLeft,
   FaArrowRight,
 } from 'react-icons/fa';
-import info from 'assets/images/info.svg';
 
 type topTransferType = {
   info: any;
