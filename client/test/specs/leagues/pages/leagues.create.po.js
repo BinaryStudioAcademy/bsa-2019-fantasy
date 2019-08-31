@@ -3,10 +3,10 @@ class CreateLeaguesPage {
     return $('//input[@id="league-name"]');
   }
   get leagueTypePublicButton() {
-    return $('//input[@name="public"]/span');
+    return $('//input[@name="public"]/../span');
   }
   get leagueTypePrivateButton() {
-    return $('//input[@name="private"]/span');
+    return $('//input[@name="private"]/../span');
   }
   get scoringStartSelect() {
     return $('//select[@id="league-gameweek"]');
@@ -22,6 +22,10 @@ class CreateLeaguesPage {
   }
   get closeInviteCodeDialogBtn(){
     return $('//div[@id="modal"]//button[contains(@class, "close")]');
+  }
+
+  get inviteCodeModalInp(){
+    return $('//div[@id="modal"]//input[@name="code"]');
   }
 }
 

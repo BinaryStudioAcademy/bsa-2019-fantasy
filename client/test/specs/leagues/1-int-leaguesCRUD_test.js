@@ -12,7 +12,7 @@ describe('Leagues test suite', () => {
     await browser.url(credentials.appUrl);
 
     await Page.loginWithDefaultUser();
-    //await Wait.forSpinner();
+    await Wait.forSpinner();
     await navSteps.navigateToLeagues();
 
   });
@@ -33,17 +33,49 @@ describe('Leagues test suite', () => {
       );
   });
 
-  it('should be able to create a private league', async() => {
+  xit('should be able to create a private league', async() => {
     const leagueName = Page.getRandomName();
     await leaguesSteps.createPrivateLeague(leagueName);
     await browser.pause(3000);
 
     const isPresent = await leaguesSteps.findPrivateLeagueByName(leagueName);
-    assert.strictEqual(
+    return await assert.strictEqual(
         isPresent,
         true,
         `Expected ${leagueName} to be on Private Leagues List`,
     );
   });
 
+  it('should be able to join a public league', async() => {
+    const leagueName = Page.getRandomName();
+    await leaguesSteps.createPublicLeague(leagueName);
+    await navSteps.clicklogOutBtn();
+    await Page.logInAsDifferentUser();
+    await navSteps.navigateToLeagues();
+    await leaguesSteps.joinPublicLeague(leagueName);
+    await browser.pause(3000);
+    const isPresent = await leaguesSteps.findPublicLeagueByName(leagueName);
+    return await assert.strictEqual(
+      isPresent,
+      true,
+      `Expected ${leagueName} to be on Public Leagues List`
+    );
+  });
+
+  it('should be able to join a private league', async() =>{
+    const leagueName = Page.getRandomName();
+    const inviteCode = await leaguesSteps.createPrivateLeague(leagueName);
+    await navSteps.clicklogOutBtn();
+    await Page.logInAsDifferentUser();
+    await navSteps.navigateToLeagues();
+    await browser.pause(2000);
+    await leaguesSteps.joinPrivateLeague(inviteCode);
+    await browser.pause(3000);
+    const isPresent = await leaguesSteps.findPrivateLeagueByName(leagueName);
+    return await assert.strictEqual(
+        isPresent,
+        true,
+        `Expected ${leagueName} to be on Private Leagues List`,
+    );
+  });
 });

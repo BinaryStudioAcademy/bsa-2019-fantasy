@@ -1,8 +1,8 @@
 class CustomWaits {
   async forSpinner() {
     const spinner = $('div[class*="styles_box"]');
-    await spinner.then((res) => res.waitForDisplayed(10000));
-    await spinner.then((res) => res.waitForDisplayed(10000, true));
+    await spinner.then((res) => res.waitForDisplayed(30000));
+    await spinner.then((res) => res.waitForDisplayed(30000, true));
   };
 }
 

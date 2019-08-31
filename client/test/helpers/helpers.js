@@ -5,7 +5,11 @@ const loginSteps = require('../specs/login/steps/login.steps');
 class HelpClass {
   async loginWithDefaultUser() {
     await loginSteps.submitLoginForm(credentials.email, credentials.password);
-  }
+  };
+
+  async logInAsDifferentUser(){
+    await loginSteps.submitLoginForm(credentials.email2, credentials.password);
+  };
 
   getRandomName(){
     var result = '';
@@ -16,6 +20,13 @@ class HelpClass {
     }
     return result;
   };
+
+  async browserClick(elm){
+    return await browser.execute((e) => {
+      console.log(e);
+        document.querySelectorAll(e).then(res => res.click());
+    }, elm);
+  }
 }
 
 module.exports = new HelpClass();

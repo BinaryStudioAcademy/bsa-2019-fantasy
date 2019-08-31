@@ -2,11 +2,15 @@ const page = require('../pages/leagues.po');
 const joinPage = require('../pages/leagues.join.po');
 const createPage = require('../pages/leagues.create.po');
 const Wait = require('../../../helpers/waiters');
+const Help = require('../../../helpers/helpers');
 
 class LeaguesSteps {
+
   async _clickJoinLeagueBtn() {
     await page.joinLeagueBtn.then((res) => res.waitForDisplayed(2000));
-    await page.joinLeagueBtn.then((res) => res.click());
+    await browser.pause(5000);
+    await page.joinLeagueBtn.then(res => res.click())
+    //await page.joinLeagueBtn.then((res) => Help.browserClick(res));
   }
 
   async _enterPublicLeagueJoinCode(value) {
@@ -28,18 +32,22 @@ class LeaguesSteps {
 
   async _enterPrivateLeagueJoinCode(value) {
     await joinPage.privateLeagueCodeInp.then((res) => res.waitForDisplayed(2000));
+    //await joinPage.privateLeagueCodeInp.then(res => res.click());
+    //await browser.keyes(['Meta', 'v']);
     await joinPage.privateLeagueCodeInp.then((res) => res.clearValue());
     await joinPage.privateLeagueCodeInp.then((res) => res.setValue(value));
   }
 
   async _clickSubmitPrivateLeagueJoin() {
-    await joinPage.joinPrivateLeagueBtn.then((res) => res.waitForDisplayed());
+    await joinPage.joinPrivateLeagueBtn.then(res => res.scrollIntoView());
+    await joinPage.joinPrivateLeagueBtn.then((res) => res.waitForDisplayed(2000));
     await joinPage.joinPrivateLeagueBtn.then((res) => res.click());
   }
 
-  async joinPrivateLeague(code) {
+  async joinPrivateLeague(value) {
     await this._clickJoinLeagueBtn();
-    await this._enterPrivateLeagueJoinCode(code);
+    await browser.pause(5000);
+    await this._enterPrivateLeagueJoinCode(value);
     await this._clickSubmitPrivateLeagueJoin();
   }
 
@@ -55,14 +63,15 @@ class LeaguesSteps {
   }
 
   async _choosePublicLeagueType() {
-    await createPage.leagueTypePublicButton.then((res) => res.waitForEnabled(5000));
     await createPage.leagueTypePublicButton.then((res) => res.scrollIntoView());
-    await createPage.leagueTypePublicButton.then((res) => (res.checked = true));
+    await createPage.leagueTypePublicButton.then((res) => res.waitForDisplayed(10000));
+    await createPage.leagueTypePublicButton.then((res) => (res.click()));
   }
 
   async _choosePrivateLeagueType() {
     await createPage.leagueTypePrivateButton.then((res) => res.scrollIntoView());
     await createPage.leagueTypePrivateButton.then((res) => res.waitForDisplayed(10000));
+    //await createPage.leagueTypePrivateButton.then(res => res.checked = true);
     await createPage.leagueTypePrivateButton.then(res => res.click());
   }
 
@@ -84,8 +93,11 @@ class LeaguesSteps {
     await this._enterLeagueName(name);
     await this._choosePrivateLeagueType();
     await this._submitLeagueCreating();
-    await createPage.inviteCodeModal.then(res => res.waitForDisplayed(5000));
+    const inviteCode = await this._getInviteCode();
+    //await createPage.inviteCodeModal.then(res => res.waitForDisplayed(5000));
+    //await this._copyPrivateInviteCode();
     await createPage.closeInviteCodeDialogBtn.then(res => res.click());
+    return inviteCode;
   }
 
   async findPublicLeagueByName(name) {
@@ -112,6 +124,20 @@ class LeaguesSteps {
       if (itemName === name) return true;
     }
     return false;
+  };
+
+  async _getInviteCode(){
+    await createPage.inviteCodeModal.then(res => res.waitForDisplayed(5000));
+    await browser.pause(3000);
+    await createPage.inviteCodeModalInp.then(res => res.waitForExist(2000));
+    return await createPage.inviteCodeModalInp.then(res => res.getValue());
+  }
+
+  async _copyPrivateInviteCode(){
+    await createPage.inviteCodeModal.then(res => res.waitForDisplayed(5000));
+    await browser.pause(3000);
+    await createPage.inviteCodeModalInp.then(res => res.waitForExist(2000));
+    await createPage.inviteCodeModalInp.then(res => res.click());
   };
 }
 
