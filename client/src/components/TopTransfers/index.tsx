@@ -30,35 +30,34 @@ export const TopTransfers = () => {
     {
       Header: '',
       accessor: 'info',
-      className: 'flex items-center justify-center rounded-r',
+      className: 'flex items-center justify-center',
     },
     {
       Header: '',
       accessor: 'direction',
-      className: 'flex items-center justify-center rounded-r',
+      className: 'flex items-center justify-center',
     },
     {
       Header: 'Positon',
       accessor: 'position',
-      className: 'flex items-center justify-center rounded-r font-bold',
+      className: 'flex items-center justify-center font-bold',
     },
     {
       Header: 'Player',
       accessor: 'name',
-      className: 'flex items-center justify-center rounded-r',
+      className: 'flex items-center justify-center',
     },
     {
       Header: 'Club',
       accessor: 'club',
-      className: 'flex items-center justify-center rounded-r font-bold',
+      className: 'flex items-center justify-center font-bold',
     },
     {
       Header: 'Number',
       accessor: 'number',
-      className: 'flex items-center justify-center rounded-r font-bold',
+      className: 'flex items-center justify-center font-bold',
     },
   ];
-  const dataTransfersOut: topTransferType[] = [];
 
   const dispatch = useDispatch();
   const players = useSelector((state: RootState) => state.playerSelection.players);
