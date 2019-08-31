@@ -457,20 +457,19 @@ export default {
                 autoIncrement: false,
                 primaryKey: true,
                 type: Sequelize.UUID,
-                defaultValue: Sequelize.literal('gen_random_uuid()'),
+                defaultValue: Sequelize.literal('gen_random_uuid()')
               },
               link: {
                 allowNull: false,
-                type: Sequelize.STRING,
+                type: Sequelize.STRING
               },
               deleteHash: {
                 allowNull: false,
-                type: Sequelize.STRING,
+                type: Sequelize.STRING
               },
               createdAt: Sequelize.DATE,
-              updatedAt: Sequelize.DATE,
-            },
-            { transaction },
+              updatedAt: Sequelize.DATE
+            }, { transaction }
           ),
         ]),
       ),

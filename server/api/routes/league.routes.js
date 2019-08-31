@@ -10,7 +10,7 @@ import {
   joinPrivateLeagueMiddleware,
   joinPublicLeagueMiddleware,
   getInvitationMiddleware,
-  leagueDetailsMiddleware,
+  leagueDetailsMiddleware
 } from '../middlewares/league.middleware';
 import jwtMiddleware from '../middlewares/jwt.middleware';
 

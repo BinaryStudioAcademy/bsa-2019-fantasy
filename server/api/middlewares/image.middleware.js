@@ -5,8 +5,8 @@ const storage = multer.memoryStorage();
 const upload = multer({
   storage,
   limits: {
-    fileSize,
-  },
+    fileSize
+  }
 });
 
 export default upload.single('image');

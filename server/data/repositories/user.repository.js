@@ -21,7 +21,7 @@ class UserRepository extends BaseRepository {
   getUserById(id) {
     return this.model.findOne({
       where: { id },
-      include: 'image',
+      include: 'image'
     });
   }
 
