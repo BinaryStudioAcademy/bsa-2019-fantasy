@@ -6,4 +6,8 @@
   width: 30rem;
 
   padding: 0;
+
+  button:not(:first-child) {
+    margin-top: 1rem;
+  }
 }

@@ -57,7 +57,7 @@ const StatusPlayerModal = ({
           <>
             {!player.is_captain && (
               <button
-                className='bg-green-700 p-2 mt-4 rounded font-bold'
+                className='bg-green-700 p-2 rounded font-bold'
                 onClick={() => onSetCaptain()}
               >
                 {t('StatusPlayerModal.makeCaptain')}
@@ -65,7 +65,7 @@ const StatusPlayerModal = ({
             )}
             {!player.is_vice_captain && (
               <button
-                className='bg-green-700 p-2 mt-4 rounded font-bold'
+                className='bg-green-700 p-2 rounded font-bold'
                 onClick={() => onSetViceCaptain()}
               >
                 {t('StatusPlayerModal.makeViceCaptain')}

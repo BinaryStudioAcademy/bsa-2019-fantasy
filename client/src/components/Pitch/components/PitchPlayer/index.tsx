@@ -51,7 +51,9 @@ const PitchPlayer = ({
   const isActive = isOver && canDrop;
 
   let backgroundColor = 'rgba(34, 34, 34, 0.3)';
-  if (isActive) {
+  if (player && player.display.highlight) {
+    backgroundColor = player.display.highlight;
+  } else if (isActive) {
     backgroundColor = 'rgba(0, 111, 55, 0.9)';
   } else if (canDrop) {
     backgroundColor = 'rgba(57, 90, 50, 0.9)';

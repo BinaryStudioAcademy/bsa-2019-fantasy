@@ -1,10 +1,7 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 import cn from 'classnames';
 import produce from 'immer';
-import { feedback } from 'react-feedbacker';
 import { useTranslation } from 'react-i18next';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from 'store/types';
@@ -19,6 +16,8 @@ import TeamSelection from 'components/TeamSelection';
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
+import { PlayerDropHandler } from 'components/TeamSelection/types';
+import { feedback } from 'react-feedbacker';
 
 const MyTeam = () => {
   const dispatch = useDispatch();
@@ -39,8 +38,9 @@ const MyTeam = () => {
   const [playerToSwitch, setPlayerToSwitch] = useState<PitchPlayerType | null>(null);
   const players = useSelector((state: RootState) => state.gameweeks.gameweeks_history);
 
-  const { pitchPlayers, setPitch } = usePitchPlayers(players);
   const currentGameweek = useSelector(currentGameweekSelector);
+  const { pitchPlayers, setPitch } = usePitchPlayers(players);
+  const [switchQuery, setSwitchQuery] = useState<PitchPlayerType[][]>([]);
 
   useEffect(() => {
     setChanged(false);
@@ -127,87 +127,71 @@ const MyTeam = () => {
     setShowModal(true);
   };
 
-  const canSwitch = !playerToSwitch || playerToSwitch.item!.player_stats.id !== currentId;
+  const canSwitch = useMemo(
+    () => !playerToSwitch || playerToSwitch.item!.player_stats.id !== currentId,
+    [playerToSwitch, currentId],
+  );
+
+  const currentPlayer = useMemo(
+    () =>
+      currentId
+        ? pitchPlayers.find((p) => p.item && p.item.player_stats.id === currentId)!.item!
+        : null,
+    [currentId],
+  );
 
   const setCurrentPlayerForSwitching = (id: string) => {
-    const player =
-      pitchPlayers.find((p) => p.item && p.item.player_stats.id === id) || null;
-    setPlayerToSwitch(player);
+    const playerIdx = pitchPlayers.findIndex(
+      (p) => p.item && p.item.player_stats.id === id,
+    );
+
+    if (!playerToSwitch) {
+      setPitch(
+        produce(pitchPlayers, (draft) => {
+          const player = draft[playerIdx];
+
+          if (player && player.item) {
+            player.item.display.highlight = 'rgba(255, 255, 0, 0.6)';
+
+            draft.forEach((p) => {
+              if (p && p.item) {
+                if (
+                  p.item.player_stats.position === player.item!.player_stats.position &&
+                  p.item.player_stats.id !== player.item!.player_stats.id
+                ) {
+                  p.item.display.highlight = 'rgba(255, 102, 0, 0.6)';
+                }
+              }
+            });
+          }
+        }),
+      );
+    }
+
+    setPlayerToSwitch(pitchPlayers[playerIdx]);
   };
 
   const switchWith = (id: string) => {
     if (!playerToSwitch) return;
 
-    setPitch((pitch) =>
-      produce(pitch, (draft) => {
-        const target = draft.find(
-          (p) =>
-            p.item &&
-            playerToSwitch.item &&
-            p.item.player_stats.id === playerToSwitch.item.player_stats.id,
-        )!;
+    const switchWithPlayer = pitchPlayers.find(
+      (p) => p.item && p.item.player_stats.id === id,
+    )!;
 
-        const playerOnPitchIdx = draft.findIndex(
-          (p) => p.item && p.item.player_stats.id === id,
-        );
-        const playerOnPitch = draft[playerOnPitchIdx];
-
-        if (
-          target.item!.player_stats.position !== playerOnPitch.item!.player_stats.position
-        ) {
-          feedback.warning('Cannot swap players of different positions!');
-          return;
-        }
-
-        let newPlayer: DisplayPlayerType = { ...playerOnPitch.item! };
-
-        let newTargetItem = target.item;
-        if (playerOnPitch.item && target.item) {
-          const targetItem = target.item;
-          const playerItem = playerOnPitch.item;
-
-          const movedToBench = !playerItem.is_on_bench && target.item.is_on_bench;
-          const movedFromBench = playerItem.is_on_bench && !target.item.is_on_bench;
-
-          if (movedToBench || movedFromBench) {
-            // Captain/vice-captain cannot be on bench
-            if (
-              targetItem.is_captain ||
-              targetItem.is_vice_captain ||
-              playerItem.is_captain ||
-              playerItem.is_vice_captain
-            ) {
-              feedback.warning('Captain or vice captain cannot sit on bench!');
-
-              return;
-            }
-
-            newTargetItem = { ...target.item };
-
-            if (movedToBench) {
-              newTargetItem.is_on_bench = false;
-            } else if (movedFromBench) {
-              newTargetItem.is_on_bench = true;
-            }
-
-            newPlayer.is_on_bench = target.item.is_on_bench;
-          }
-        }
-
-        target.item = newPlayer;
-        if (playerOnPitchIdx !== -1) {
-          draft[playerOnPitchIdx].item = newTargetItem;
-        }
-
-        setChanged(true);
-      }),
-    );
+    if (
+      playerToSwitch.item!.player_stats.position ===
+      switchWithPlayer.item!.player_stats.position
+    ) {
+      setPlayerToSwitch(null);
+      setSwitchQuery((q) => [...q, [playerToSwitch, switchWithPlayer]]);
+    } else {
+      feedback.warning('Cannot switch players of different positions');
+    }
   };
 
   const onSetPlayerForSwitching = () => {
     if (playerToSwitch) {
       switchWith(currentId);
-      setCurrentPlayerForSwitching('');
     } else {
       setCurrentPlayerForSwitching(currentId);
     }
@@ -215,8 +199,17 @@ const MyTeam = () => {
   };
 
   const onCancelPlayerForSwitching = () => {
-    setCurrentPlayerForSwitching('');
+    setPlayerToSwitch(null);
     setShowModal(false);
+    setPitch((pitch) =>
+      produce(pitch, (draft) => {
+        draft.forEach((p, idx) => {
+          if (p.item) {
+            draft[idx].item!.display.highlight = undefined;
+          }
+        });
+      }),
+    );
   };
 
   const saveTeam = () => {
@@ -232,9 +225,10 @@ const MyTeam = () => {
     }
   };
 
-  const handlePlayerDrop = () => setChanged(true);
-
-  // TODO: Implement player highlighting on switching via clicks via context API
+  const handlePlayerDrop: PlayerDropHandler = useCallback(() => {
+    setChanged(true);
+    setPlayerToSwitch(null);
+  }, []);
 
   return (
     <div className={styles['team-page']}>
@@ -275,6 +269,8 @@ const MyTeam = () => {
         <TeamSelection
           players={pitchPlayers}
           setPlayers={setPitch}
+          query={switchQuery}
+          setQuery={setSwitchQuery}
           onPlayerClick={onOpen}
           onPlayerDrop={handlePlayerDrop}
           submit={{
@@ -285,12 +281,9 @@ const MyTeam = () => {
           hasBench
         />
       </div>
-      {showModal && (
+      {showModal && currentPlayer && (
         <StatusPlayerModal
-          player={
-            pitchPlayers.find((p) => p.item && p.item.player_stats.id === currentId)!
-              .item!
-          }
+          player={currentPlayer}
           onClose={onClose}
           onSetCaptain={onSetCaptain}
           onSetViceCaptain={onSetViceCaptain}
