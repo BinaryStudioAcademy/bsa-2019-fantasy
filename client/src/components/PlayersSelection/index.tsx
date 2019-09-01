@@ -80,7 +80,7 @@ const PlayersSelection = ({
 
   const onSortChange = (item: any) => {
     setSortSelect(item);
-    setQuery({ ...query, order_field: item.value });
+    setQuery({ ...query, position: undefined, order_field: item.value });
     loadPlayersAction({ ...query });
   };
   const onFilterSelectChange = (item: any) => {
@@ -91,7 +91,7 @@ const PlayersSelection = ({
   };
   const onSearchChange = (item: any) => {
     setSearch(item);
-    setQuery({ ...query, search: item });
+    setQuery({ ...query, position: undefined, search: item });
     loadPlayersAction({ ...query });
   };
   const onMaxPriceChange = (item: any) => {

@@ -1,6 +1,10 @@
+import store from 'store/index';
+
 import moment from 'moment';
+
 import { feedback } from 'react-feedbacker';
 import { FixtureSubType } from 'types/fixtures.types';
+import { setLiveStatus, addLiveEvent } from 'containers/Live/actions';
 
 export default (socket) => {
   socket.on('displayNotification', (fixture: FixtureSubType) => {
@@ -24,5 +28,11 @@ export default (socket) => {
             );
       }
     }
+  });
+  socket.on('status', (status) => {
+    store.dispatch(setLiveStatus(status));
+  });
+  socket.on('event', (data) => {
+    store.dispatch(addLiveEvent(data));
   });
 };

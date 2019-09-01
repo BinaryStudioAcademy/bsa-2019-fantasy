@@ -4,6 +4,7 @@ import {
   CHANGE_LANGUAGE,
   SET_EMAIL_PREF,
   UserAction,
+  SET_INVITE_CODE,
 } from './action.type';
 import { User } from 'types/user.type';
 
@@ -12,6 +13,7 @@ type State = {
   isAuthorized: boolean;
   isLoading: boolean;
   language: string;
+  inviteCode: string;
 };
 
 const initialState: State = {
@@ -19,6 +21,7 @@ const initialState: State = {
   isAuthorized: false,
   isLoading: true,
   language: 'en',
+  inviteCode: '',
 };
 
 export default (state = initialState, action: UserAction) => {
@@ -40,6 +43,12 @@ export default (state = initialState, action: UserAction) => {
       return {
         ...state,
         language: action.payload.language,
+      };
+    }
+    case SET_INVITE_CODE: {
+      return {
+        ...state,
+        inviteCode: action.payload,
       };
     }
 

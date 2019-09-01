@@ -6,7 +6,7 @@ import userRepository from '../data/repositories/user.repository';
 import gamesRepository from '../data/repositories/game.repository';
 import footballClubRepository from '../data/repositories/football-club.repository';
 import fixturesSubscribtionRepository from '../data/repositories/fixtures-subscription.repository';
-import { sendRemind } from '../helpers/send-fixture-details.helper';
+import { sendRemind } from '../helpers/send-email.helper';
 import { getGameInfo } from '../helpers/fixture-notification.helper';
 
 const fixturesReminderScheduler = async () => {
@@ -38,21 +38,12 @@ const fixturesReminderScheduler = async () => {
         // send user emails at different time depending on match status
         const timeToRemind = getGameInfo(game).finished
           ? moment(gameDetails.start).subtract(24, 'h')
-          : moment(gameDetails.end).add(1, 'm');
+          : moment(gameDetails.end).add(30, 'm');
 
-        schedule.scheduleJob(
-          'fixture remind',
-          new Date(timeToRemind),
-          async (fireDate) => {
-            console.log(
-              `remind about fixture ${gameDetails} at ${fireDate} for user ${userToRemind.email}`,
-            );
-
-            sendRemind(userToRemind.email, gameDetails);
-
-            fixturesReminderScheduler();
-          },
-        );
+        schedule.scheduleJob('fixture remind', new Date(timeToRemind), async () => {
+          sendRemind(userToRemind.email, gameDetails);
+          fixturesReminderScheduler();
+        });
         console.log(
           `>>> Remind about fixture ${gameDetails.homeTeamName} - ${gameDetails.awayTeamName} on: ${timeToRemind} for user ${userToRemind.email}`,
         );

@@ -20,7 +20,7 @@ export const Container = styled.div`
 
 export const TeamRow = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   margin-top: 1rem;
 
   > div {

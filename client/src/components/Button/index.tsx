@@ -17,13 +17,13 @@ type ButtonProps = {
 };
 
 const styles = {
-  default: 'border-2 font-semibold uppercase rounded px-6 py-2',
+  default: 'border-2 font-semibold uppercase rounded px-6 py-2 focus:outline-none',
   primary: {
-    default: 'bg-primary text-secondary border-primary ',
+    default: 'bg-primary text-secondary border-primary focus:outline-none',
     hover: 'hover:bg-secondary hover:text-white hover:border-secondary',
   },
   secondary: {
-    default: 'bg-white border-secondary2',
+    default: 'bg-white border-secondary2 focus:outline-none',
     hover: 'hover:bg-secondary hover:text-white hover:border-secondary',
   },
   inactive: 'opacity-50 cursor-not-allowed',

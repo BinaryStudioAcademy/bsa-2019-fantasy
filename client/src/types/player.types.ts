@@ -24,6 +24,8 @@ export type PlayerType = {
   updatedAt: string;
   club_id: number;
   gameweeks_stats?: any;
+  transfers_in?: number;
+  transfers_out?: number;
 };
 
 export type PlayerFilter = {

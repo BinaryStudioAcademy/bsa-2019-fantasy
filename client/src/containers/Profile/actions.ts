@@ -23,11 +23,17 @@ import {
   CHANGE_LANGUAGE,
   AsyncUserAction,
   UserAction,
+  SET_INVITE_CODE,
 } from './action.type';
 import { FixturesItemType } from 'types/fixtures.types';
 
 const setToken = (token: string) => localStorage.setItem('token', token);
 const clearToken = () => localStorage.removeItem('token');
+
+export const setInviteCode = (code: string): UserAction => ({
+  type: SET_INVITE_CODE,
+  payload: code,
+});
 
 export const setUser = (user: User | null): UserAction => ({
   type: SET_USER,

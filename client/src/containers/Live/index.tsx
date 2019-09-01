@@ -13,6 +13,7 @@ import { loadCurrentGame } from './actions';
 import { RootState } from 'store/types';
 import { Club } from 'types/club.type';
 import { Game } from 'types/game.types';
+import { LiveStatusObject } from './action.type';
 
 import fieldEvents from './fieldEvents';
 import renderComment from './commentary';
@@ -24,7 +25,10 @@ import 'react-dropdown/style.css';
 type Props = {
   loadCurrentGame: any;
   clubs: Club[];
-  currentGame?: Game;
+  currentGame: {
+    current?: LiveStatusObject;
+    next?: Game;
+  };
 };
 type State = {
   isModalActive: boolean;
@@ -68,10 +72,10 @@ class Live extends React.Component<Props, State> {
 
   componentDidMount() {
     this.socket = socketIOClient(endpoint);
-    this.socket.on('connect', this.handleSocketConnect);
-    this.socket.on('status', this.handleStatusEvent);
-    this.socket.on('event', this.handleSocketEvent);
-    this.socket.on('disconnect', this.handleSocketDisconnect);
+    // this.socket.on('connect', this.handleSocketConnect);
+    // this.socket.on('status', this.handleStatusEvent);
+    // this.socket.on('event', this.handleSocketEvent);
+    // this.socket.on('disconnect', this.handleSocketDisconnect);
     this.props.loadCurrentGame();
   }
 
@@ -82,43 +86,43 @@ class Live extends React.Component<Props, State> {
     }
   };
 
-  handleSocketConnect = () => {
-    this.setState({ socketConnected: true });
-  };
+  // handleSocketConnect = () => {
+  //   this.setState({ socketConnected: true });
+  // };
 
-  handleStatusEvent = (data) => {
-    const { gameStarted } = data;
-    this.setState({ isSimulating: gameStarted });
-  };
+  // handleStatusEvent = (data) => {
+  //   const { gameStarted } = data;
+  //   this.setState({ isSimulating: gameStarted });
+  // };
 
-  handleSocketDisconnect = () => {
-    this.handleSocketEvent({ name: 'disconnect' });
-  };
+  // handleSocketDisconnect = () => {
+  //   this.handleSocketEvent({ name: 'disconnect' });
+  // };
 
-  handleSocketEvent = (event) => {
-    const newState = { ...this.state };
-    if (event.name !== 'nothing') newState.events = [...newState.events, event];
-    newState.elapsed = event.elapsed;
+  // handleSocketEvent = (event) => {
+  //   const newState = { ...this.state };
+  //   if (event.name !== 'nothing') newState.events = [...newState.events, event];
+  //   newState.elapsed = event.elapsed;
 
-    switch (event.name) {
-      case 'goal':
-        newState.score = event.score;
-        break;
-      case 'startGame':
-        console.log('inside startGame');
-        newState.matchStarted = true;
-        newState.score = [0, 0];
-        break;
-      case 'endGame':
-        newState.isSimulating = false;
-        break;
-      case 'disconnect':
-        newState.socketConnected = false;
-        break;
-    }
+  //   switch (event.name) {
+  //     case 'goal':
+  //       newState.score = event.score;
+  //       break;
+  //     case 'startGame':
+  //       console.log('inside startGame');
+  //       newState.matchStarted = true;
+  //       newState.score = [0, 0];
+  //       break;
+  //     case 'endGame':
+  //       newState.isSimulating = false;
+  //       break;
+  //     case 'disconnect':
+  //       newState.socketConnected = false;
+  //       break;
+  //   }
 
-    this.setState(newState);
-  };
+  //   this.setState(newState);
+  // };
 
   simulate = () => {
     this.onModalDismiss();
@@ -149,8 +153,10 @@ class Live extends React.Component<Props, State> {
   };
 
   renderElapsed = (elapsed = 0) => {
-    const formatted = moment.utc(elapsed).format('mm:ss');
-    return <div className='time p-3 py-2 rounded bg-gray-200'>{formatted}</div>;
+    const time = moment.utc(elapsed);
+    return (
+      <div className='time p-3 py-2 rounded bg-gray-200'>{time.format('mm:ss')}</div>
+    );
   };
 
   renderScore = (score) => (
@@ -191,7 +197,12 @@ class Live extends React.Component<Props, State> {
   };
 
   renderFixtureLive = () => {
-    const { homeClub, awayClub, score, elapsed = 0 } = this.state;
+    if (!this.props.currentGame.current) return 'Spinner';
+    const { homeClubId, awayClubId, score, elapsed = 0 } = this.props.currentGame.current;
+    const homeClub = this.getClubById(homeClubId);
+    const awayClub = this.getClubById(awayClubId);
+    if (!homeClub || !awayClub || !score) return 'Spinner';
+
     const content = (
       <div className='flex'>
         <p className='text-white font-bold bg-green-900 w-8'>
@@ -202,14 +213,14 @@ class Live extends React.Component<Props, State> {
     return (
       <>
         {this.renderElapsed(elapsed)}
-        {homeClub && awayClub && this.renderFixture({ homeClub, awayClub, content })}
+        {this.renderFixture({ homeClub, awayClub, content })}
       </>
     );
   };
 
   renderFixtureNext = () => {
-    if (!this.props.currentGame) return 'loading';
-    const { hometeam_id, awayteam_id, start } = this.props.currentGame;
+    if (!this.props.currentGame.next) return 'loading';
+    const { hometeam_id, awayteam_id, start } = this.props.currentGame.next;
     const homeClub = this.getClubById(hometeam_id);
     const awayClub = this.getClubById(awayteam_id);
     const content = (
@@ -295,7 +306,7 @@ class Live extends React.Component<Props, State> {
   };
 
   renderField() {
-    const { events } = this.state;
+    const { events } = this.props.currentGame.current || { events: [] };
     const lastEvent = events[events.length - 1] || false;
     const defaultAnimationProps = {
       duration: 500,
@@ -331,19 +342,16 @@ class Live extends React.Component<Props, State> {
   }
 
   render() {
-    const { isSimulating, isModalActive, events } = this.state;
-    const simulateButton = isSimulating ? (
+    const { isModalActive } = this.state;
+    const { current } = this.props.currentGame;
+    const gameStarted = current ? current.gameStarted : false;
+    const events = current ? current.events : [];
+    const simulateButton = gameStarted ? (
       <Button onClick={this.stopSimulation} className='bg-red'>
         Stop simulation
       </Button>
     ) : (
       <Button onClick={this.showModal}>Simulate</Button>
-    );
-    const socketNotConnected = (
-      <div className='flex items-center'>
-        <Button inactive>Simulate</Button>
-        <p className='text-red-600 ml-4'>Cannot connect to event server</p>
-      </div>
     );
 
     return (
@@ -361,13 +369,11 @@ class Live extends React.Component<Props, State> {
             </div>
           </div>
           <div className='w-1/2 pt-4 mx-4 h-64 flex flex-col items-center'>
-            {isSimulating ? this.renderFixtureLive() : this.renderFixtureNext()}
+            {gameStarted ? this.renderFixtureLive() : this.renderFixtureNext()}
             {this.renderField()}
           </div>
         </div>
-        <div className='mt-8'>
-          {this.state.socketConnected ? simulateButton : socketNotConnected}
-        </div>
+        <div className='mt-8'>{simulateButton}</div>
         {isModalActive && this.renderModal()}
       </div>
     );
@@ -376,7 +382,7 @@ class Live extends React.Component<Props, State> {
 
 const mapStateToProps = (rootState: RootState) => ({
   clubs: rootState.clubs.clubs,
-  currentGame: rootState.currentGame.next,
+  currentGame: rootState.currentGame,
 });
 
 const actions = {
