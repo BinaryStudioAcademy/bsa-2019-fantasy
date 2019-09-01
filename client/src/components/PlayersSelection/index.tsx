@@ -32,6 +32,11 @@ type Props = {
   undisplayedPlayers: GameweekHistoryType[];
 };
 
+const intialFilterState = {
+  value: '',
+  label: 'All players',
+};
+
 const PlayersSelection = ({
   loadPlayersAction,
   players,
@@ -59,10 +64,7 @@ const PlayersSelection = ({
     value: 'player_score',
     label: 'Total points',
   });
-  const [filterSelect, setFilterSelect] = useState({
-    value: '',
-    label: 'All players',
-  });
+  const [filterSelect, setFilterSelect] = useState(intialFilterState);
   const [search, setSearch] = useState({
     value: '',
   });
@@ -90,6 +92,7 @@ const PlayersSelection = ({
   }, [undisplayedPlayers]);
 
   const onSortChange = (item: any) => {
+    setFilterSelect(intialFilterState);
     setSortSelect(item);
     setQuery({ ...query, position: undefined, order_field: item.value });
     loadPlayersAction({ ...query });
@@ -101,13 +104,15 @@ const PlayersSelection = ({
     loadPlayersAction({ ...query });
   };
   const onSearchChange = (item: any) => {
+    setFilterSelect(intialFilterState);
     setSearch(item);
     setQuery({ ...query, position: undefined, search: item });
     loadPlayersAction({ ...query });
   };
   const onMaxPriceChange = (item: any) => {
+    setFilterSelect(intialFilterState);
     setMaxPriceSelect(item);
-    setQuery({ ...query, max_price: item.value });
+    setQuery({ ...query, position: undefined, max_price: item.value });
     loadPlayersAction({ ...query });
   };
 

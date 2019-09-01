@@ -134,6 +134,8 @@ const PlayersComparisonPage: React.FC<PropsI> = (props: PropsI) => {
     });
   });
 
+  firstPlayerMatches.sort((a, b) => Number(a.gameweekName) - Number(b.gameweekName));
+
   secondPlayer.gameweeks_stats.forEach((stats: any) => {
     secondPlayerMatches.push({
       gameweekName: stats.gameweek.number,
@@ -148,6 +150,8 @@ const PlayersComparisonPage: React.FC<PropsI> = (props: PropsI) => {
       red_cards: stats.stats.red_cards,
     });
   });
+
+  secondPlayerMatches.sort((a, b) => Number(a.gameweekName) - Number(b.gameweekName));
 
   const tableData = [
     {
