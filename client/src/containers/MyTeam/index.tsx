@@ -32,9 +32,6 @@ const MyTeam = () => {
 
   const [currentId, setCurrentId] = useState('');
 
-  const [captainId, setCaptainId] = useState('');
-  const [viceCaptainId, setViceCaptainId] = useState('');
-
   const [playerToSwitch, setPlayerToSwitch] = useState<PitchPlayerType | null>(null);
   const players = useSelector((state: RootState) => state.gameweeks.gameweeks_history);
 
@@ -44,16 +41,6 @@ const MyTeam = () => {
 
   useEffect(() => {
     setChanged(false);
-  }, [players]);
-
-  useEffect(() => {
-    if (players.length > 0) {
-      const givenCaptain = players.find((p) => p.is_captain);
-      givenCaptain && setCaptainId(givenCaptain.player_stats.id);
-
-      const givenViceCaptain = players.find((p) => p.is_vice_captain);
-      givenViceCaptain && setViceCaptainId(givenViceCaptain.player_stats.id);
-    }
   }, [players]);
 
   const onClose = () => {
@@ -72,15 +59,11 @@ const MyTeam = () => {
         )!.item!;
         /* eslint-enable @typescript-eslint/no-non-null-assertion */
 
-        if (currentId === viceCaptainId) {
-          setViceCaptainId(captainId);
-
+        if (currentId === currentViceCaptain.player_stats.id) {
           currentViceCaptain.is_vice_captain = false;
           currentViceCaptain.is_captain = true;
           currentCaptain.is_vice_captain = true;
         }
-
-        setCaptainId(currentId);
 
         currentPlayer.is_captain = true;
         currentCaptain.is_captain = false;
@@ -103,15 +86,11 @@ const MyTeam = () => {
         )!.item!;
         /* eslint-enable @typescript-eslint/no-non-null-assertion */
 
-        if (currentId === captainId) {
-          setCaptainId(viceCaptainId);
-
+        if (currentId === currentCaptain.player_stats.id) {
           currentCaptain.is_captain = false;
           currentCaptain.is_vice_captain = true;
           currentViceCaptain.is_captain = true;
         }
-
-        setViceCaptainId(currentId);
 
         currentPlayer.is_vice_captain = true;
         currentViceCaptain.is_vice_captain = false;
@@ -137,7 +116,7 @@ const MyTeam = () => {
       currentId
         ? pitchPlayers.find((p) => p.item && p.item.player_stats.id === currentId)!.item!
         : null,
-    [currentId],
+    [currentId, pitchPlayers],
   );
 
   const setCurrentPlayerForSwitching = (id: string) => {
