@@ -9,7 +9,7 @@ import { Redirect } from 'react-router';
 import { RootState } from 'store/types';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
-import { TopTransfers } from '../../components/TopTransfers/index';
+import TopTransfers from '../../components/TopTransfers/index';
 
 import Spinner from 'components/Spinner';
 import { getChartOptions } from 'helpers/gameweekChart';
