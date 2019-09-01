@@ -33,7 +33,11 @@ router
           .postCurrentHistoryById(req.params.user, req.params.gameweek)
           .then((gameweekHistoryId) => {
             teamMemberHistoryService
-              .postTeamMemberHistory(req.body.teamMemberData, gameweekHistoryId)
+              .postTeamMemberHistory(
+                req.body.teamMemberData,
+                gameweekHistoryId,
+                req.params.gameweek,
+              )
               .then(() => {
                 res.json({ message: 'Successfully saved!' });
               })

@@ -1,6 +1,7 @@
 import teamMemberHistoryRepository from '../../data/repositories/team-member-history.repository';
 import gameweekHistoryRepository from '../../data/repositories/gameweek-history.repository';
 import playerRepository from '../../data/repositories/player.repository';
+import gameweekRepository from '../../data/repositories/gameweek.repository';
 import { getPlayerScoreByGameweeks } from './player-match.service';
 
 export const getPlayersByGameweekId = async (id) => {
@@ -49,7 +50,7 @@ export const getBestPlayersOfTheGameweek = (players) => {
     .sort()
     .slice(0, 11);
 };
-export const postTeamMemberHistory = async (data, gameweekHistoryId) => {
+export const postTeamMemberHistory = async (data, gameweekHistoryId, gameweekId) => {
   const players = getPlayersByGameweekId(gameweekHistoryId);
   if (players) {
     await teamMemberHistoryRepository.deleteByGameweekId(gameweekHistoryId);
@@ -59,6 +60,8 @@ export const postTeamMemberHistory = async (data, gameweekHistoryId) => {
     data,
     gameweekHistoryId,
   );
+
+  const { number: gameweekNumber } = await gameweekRepository.getById(gameweekId);
 
   // count total team score for the current gameweek
   let totalTeamScore = 0;
