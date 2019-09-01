@@ -31,10 +31,10 @@ export const PlayerItem = ({ player, info, onOpenInfo }: Props) => {
       <td className='w-1/6' align='center' valign='middle'>
         {onOpenInfo && (
           <button
-            className='p-1 flex justify-center opacity-50 hover:opacity-75'
+            className='w-6 h-6 p-1 flex justify-center leading-none flex bg-background rounded-full text-s font-bold opacity-40 hover:opacity-75 focus:outline-none'
             onClick={() => onOpenInfo(player_stats.id, player_stats.club_id)}
           >
-            <img src={info} alt='info' />
+            i
           </button>
         )}
       </td>

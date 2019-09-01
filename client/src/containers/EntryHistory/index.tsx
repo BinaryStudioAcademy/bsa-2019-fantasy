@@ -95,6 +95,7 @@ const EntryHistory = withRouter(({ history }) => {
                       'px-2',
                       'border-b',
                     )}
+                    key={`entry-history-${item.gameweek.id}`}
                   >
                     <div className={cn('w-1/6')}>
                       <button

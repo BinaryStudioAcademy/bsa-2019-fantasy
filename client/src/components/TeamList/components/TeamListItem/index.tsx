@@ -1,14 +1,23 @@
 import React from 'react';
 import cn from 'classnames';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useSelector } from 'react-redux';
 
 import { RootState } from 'store/types';
 import { DisplayPlayerType } from 'components/Pitch/types';
 
-const Container = styled.tr`
+const Container = styled.tr<{ highlight?: string }>`
   width: 100%;
   display: flex;
+
+  ${({ highlight }) =>
+    highlight
+      ? css`
+          background-color: ${highlight};
+        `
+      : ''}
+
+  transition: background-color .16s;
 
   > td {
     height: 4rem;
@@ -30,7 +39,7 @@ const TeamListItem = ({ player, onClick }: Props) => {
   );
 
   return (
-    <Container>
+    <Container highlight={player ? player.display.highlight : ''}>
       {player ? (
         <>
           <td className='w-1/12'>

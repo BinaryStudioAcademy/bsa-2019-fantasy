@@ -13,9 +13,9 @@ export const getAllPlayerMatch = () => playerMatchRepository.getAll();
 
 export const getPlayerMatchById = (id) => playerMatchRepository.getById(id);
 
-export const getPlayerStatsByGameweeks = async (playerId, playerClubId) => {
+export const getPlayerStatsByGameweeks = async (playerId) => {
   const result = [];
-
+  const { club_id } = await playerRepository.getById(playerId);
   await Promise.all(
     await gameweekRepository
       .getAll()
@@ -36,7 +36,8 @@ export const getPlayerStatsByGameweeks = async (playerId, playerClubId) => {
             }) => {
               if (!gameId || !finished) return;
 
-              const opponent = hometeam.id !== playerClubId ? hometeam : awayteam;
+              if (hometeam.id !== club_id && awayteam.id !== club_id) return;
+              const opponent = hometeam.id !== club_id ? hometeam : awayteam;
               const eventsForGame = await eventRepository
                 .getByGameId(gameId)
                 .map((el) => el.get({ plain: true }));

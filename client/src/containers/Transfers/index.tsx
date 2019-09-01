@@ -15,6 +15,7 @@ import TransfersModal from './components/TransfersModal';
 import TeamSelection from 'components/TeamSelection';
 
 import header from 'styles/header.module.scss';
+import { GameweekHistoryType } from 'types/gameweekHistory.type';
 
 const Transfers = () => {
   useEffect(() => {
@@ -70,6 +71,8 @@ const Transfers = () => {
     }
   };
 
+  const undisplayedPlayers = pitchPlayers.filter((p) => p.item).map((p) => p.item);
+
   return (
     <div>
       <TransfersModal
@@ -100,7 +103,9 @@ const Transfers = () => {
               }}
             />
           </div>
-          <PlayersSelection />
+          <PlayersSelection
+            undisplayedPlayers={undisplayedPlayers as GameweekHistoryType[]}
+          />
         </div>
       </div>
       <FixturesContainer />

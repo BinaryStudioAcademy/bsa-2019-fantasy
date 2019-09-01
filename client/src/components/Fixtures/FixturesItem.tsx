@@ -187,9 +187,11 @@ const FixturesItem = ({
     if (isSubscribed) {
       dispatch(
         addNotification(
-          `${t('Notifications.messages.unsubscribedFromFixture')} ${match.hometeam.name} - ${
-            match.awayteam.name
-          }, ${t('Notifications.messages.whichStartsOn')} ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
+          `${t('Notifications.messages.unsubscribedFromFixture')} ${
+            match.hometeam.name
+          } - ${match.awayteam.name}, ${t(
+            'Notifications.messages.whichStartsOn',
+          )} ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
         ),
       );
       dispatch(deleteFixtureSubscription(match.id));
@@ -198,7 +200,9 @@ const FixturesItem = ({
         addNotification(
           `${t('Notifications.messages.subscribedToFixture')} ${match.hometeam.name} - ${
             match.awayteam.name
-          }, ${t('Notifications.messages.whichStartsOn')} ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
+          }, ${t('Notifications.messages.whichStartsOn')} ${moment(match.start).format(
+            'dddd D MMMM YYYY HH:mm',
+          )} `,
         ),
       );
       dispatch(createFixtureSubscription(match.id));

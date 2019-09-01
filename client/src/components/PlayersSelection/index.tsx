@@ -20,6 +20,7 @@ import PlayerDialog from 'components/PlayerDialog';
 import styles from './styles.module.scss';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import 'react-dropdown/style.css';
+import { GameweekHistoryType } from 'types/gameweekHistory.type';
 
 type Props = {
   loadPlayersAction: typeof loadPlayersAction;
@@ -28,6 +29,12 @@ type Props = {
   players: PlayerType[];
   playerData?: any;
   dialogLoading: boolean;
+  undisplayedPlayers: GameweekHistoryType[];
+};
+
+const intialFilterState = {
+  value: '',
+  label: 'All players',
 };
 
 const PlayersSelection = ({
@@ -37,6 +44,7 @@ const PlayersSelection = ({
   resetPlayerDialogData,
   playerData,
   dialogLoading,
+  undisplayedPlayers,
 }: Props) => {
   const { t } = useTranslation();
   const [query, setQuery] = useState({
@@ -48,18 +56,15 @@ const PlayersSelection = ({
     club_id: undefined,
     search: undefined,
     max_price: undefined,
+    undisplayedPlayersIds: [] as string[],
   });
-
   const [currentPlayer, setCurrentPlayer] = useState<PlayerType>();
 
   const [sortSelect, setSortSelect] = useState({
     value: 'player_score',
     label: 'Total points',
   });
-  const [filterSelect, setFilterSelect] = useState({
-    value: '',
-    label: 'All players',
-  });
+  const [filterSelect, setFilterSelect] = useState(intialFilterState);
   const [search, setSearch] = useState({
     value: '',
   });
@@ -78,7 +83,16 @@ const PlayersSelection = ({
     loadPlayersAction({ ...query });
   }, [query]);
 
+  useEffect(() => {
+    undisplayedPlayers.length > 0 &&
+      setQuery({
+        ...query,
+        undisplayedPlayersIds: undisplayedPlayers.map((p) => p.player_stats.id),
+      });
+  }, [undisplayedPlayers]);
+
   const onSortChange = (item: any) => {
+    setFilterSelect(intialFilterState);
     setSortSelect(item);
     setQuery({ ...query, position: undefined, order_field: item.value });
     loadPlayersAction({ ...query });
@@ -90,13 +104,15 @@ const PlayersSelection = ({
     loadPlayersAction({ ...query });
   };
   const onSearchChange = (item: any) => {
+    setFilterSelect(intialFilterState);
     setSearch(item);
     setQuery({ ...query, position: undefined, search: item });
     loadPlayersAction({ ...query });
   };
   const onMaxPriceChange = (item: any) => {
+    setFilterSelect(intialFilterState);
     setMaxPriceSelect(item);
-    setQuery({ ...query, max_price: item.value });
+    setQuery({ ...query, position: undefined, max_price: item.value });
     loadPlayersAction({ ...query });
   };
 

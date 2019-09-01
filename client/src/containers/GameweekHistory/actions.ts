@@ -28,7 +28,9 @@ const setIsLoading = (isLoading: boolean): any => ({
   payload: isLoading,
 });
 
-export const setCurrentGameweekAction = (gameweekNumber: number): SetCurrentGameweekAction => ({
+export const setCurrentGameweekAction = (
+  gameweekNumber: number,
+): SetCurrentGameweekAction => ({
   type: SET_SUPER_CURRENT_GAMEWEEK,
   payload: gameweekNumber,
 });

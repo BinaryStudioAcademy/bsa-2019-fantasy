@@ -41,7 +41,7 @@ export default (
     case SET_SUPER_CURRENT_GAMEWEEK:
       return {
         ...state,
-        currentGameweek: action.payload
+        currentGameweek: action.payload,
       };
     default:
       return state;
