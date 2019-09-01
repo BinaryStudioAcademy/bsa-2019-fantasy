@@ -10,6 +10,7 @@ import TeamSelection from 'components/TeamSelection';
 import SaveTeamModal from './components/SaveTeamModal';
 
 import { useInitialTeamSelection } from './use-initial-team.hook';
+import { GameweekHistoryType } from 'types/gameweekHistory.type';
 
 import header from 'styles/header.module.scss';
 
@@ -32,7 +33,7 @@ const SquadSelection = withRouter(({ history }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const amountOfPlayersPicked = pitchPlayers.filter((p) => p.item).length;
-
+  const undisplayedPlayers = pitchPlayers.filter((p) => p.item).map((p) => p.item);
   return (
     <div className='transfers-page'>
       <div className={cn(header.jumbotron, header.paper, 'mb-12', 'rounded', 'pt-12')}>
@@ -69,7 +70,9 @@ const SquadSelection = withRouter(({ history }) => {
               }}
             />
           </div>
-          <PlayersSelection />
+          <PlayersSelection
+            undisplayedPlayers={undisplayedPlayers as GameweekHistoryType[]}
+          />
         </div>
       </div>
       <FixturesContainer />

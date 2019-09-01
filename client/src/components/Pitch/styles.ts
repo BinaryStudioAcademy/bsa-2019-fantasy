@@ -11,6 +11,7 @@ export const Container = styled.div`
 
   position: relative;
 
+  padding: 0 1rem;
   display: flex;
   flex-direction: column;
 
@@ -20,7 +21,7 @@ export const Container = styled.div`
 export const TeamRow = styled.div`
   display: flex;
   justify-content: space-around;
-  margin: 0.7rem 1rem;
+  margin-top: 1rem;
 
   > div {
     margin: 0 0.5rem;

@@ -16,8 +16,17 @@ class PlayerRepository extends BaseRepository {
     club_id,
     max_price,
     min_price,
+    undisplayedPlayersIds,
   }) {
+    if (undisplayedPlayersIds && !Array.isArray(undisplayedPlayersIds)) {
+      undisplayedPlayersIds = [undisplayedPlayersIds];
+    };
     const whereFilter = {
+      ...(undisplayedPlayersIds && {
+        id: {
+          [Op.notIn]: undisplayedPlayersIds
+        }
+      }),
       ...(first_name && { first_name }),
       ...(second_name && { second_name }),
       ...(position && { position }),
@@ -32,19 +41,19 @@ class PlayerRepository extends BaseRepository {
 
     const whereSearch = search
       ? {
-          [Op.or]: [
-            {
-              first_name: {
-                [Op.iLike]: `%${search}%`,
-              },
+        [Op.or]: [
+          {
+            first_name: {
+              [Op.iLike]: `%${search}%`,
             },
-            {
-              second_name: {
-                [Op.iLike]: `%${search}%`,
-              },
+          },
+          {
+            second_name: {
+              [Op.iLike]: `%${search}%`,
             },
-          ],
-        }
+          },
+        ],
+      }
       : {};
 
     const where = { ...whereSearch, ...whereFilter };

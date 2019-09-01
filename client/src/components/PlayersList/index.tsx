@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { RootState } from 'store/types';
@@ -27,15 +27,21 @@ export const PlayerList = ({
 
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
 
-  const players = givenPlayers.map((p) => ({
-    player_stats: p,
-    display: {
-      src:
-        p.position === PlayerTypes.GOALKEEPER
-          ? getGoalkeepersUniformUrl(clubs[p.club_id - 1].code)
-          : getFieldPlayersUniformUrl(clubs[p.club_id - 1].code),
-    },
-  }));
+  const players = useMemo(
+    () =>
+      clubs.length > 0
+        ? givenPlayers.map((p) => ({
+            player_stats: p,
+            display: {
+              src:
+                p.position === PlayerTypes.GOALKEEPER
+                  ? getGoalkeepersUniformUrl(clubs[p.club_id - 1].code)
+                  : getFieldPlayersUniformUrl(clubs[p.club_id - 1].code),
+            },
+          }))
+        : [],
+    [clubs.length, givenPlayers],
+  );
 
   const { GKP, DEF, MID, FWD } = Position;
 

@@ -4,6 +4,7 @@ import { PlayerPosition } from 'components/Gameweek/PlayerSelection/types';
 export type DisplayPlayerType = GameweekHistoryType & {
   display: {
     src: string;
+    highlight?: string;
   };
 };
 

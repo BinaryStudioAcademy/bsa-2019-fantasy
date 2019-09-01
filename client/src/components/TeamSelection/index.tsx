@@ -2,7 +2,7 @@ import { produce } from 'immer';
 import { FaListUl } from 'react-icons/fa';
 import { feedback } from 'react-feedbacker';
 import { useTranslation } from 'react-i18next';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 
 import { TeamMemberType } from 'types/gameweekHistory.type';
 import { PitchPlayerType, DisplayPlayerType } from '../Pitch/types';
@@ -25,6 +25,9 @@ type Props = {
   setPlayers: React.Dispatch<React.SetStateAction<PitchPlayerType[]>>;
   disabled?: boolean;
 
+  query?: PitchPlayerType[][];
+  setQuery?: React.Dispatch<React.SetStateAction<PitchPlayerType[][]>>;
+
   hasBench?: boolean;
 
   onPlayerDrop?: PlayerDropHandler;
@@ -40,6 +43,8 @@ type Props = {
 const TeamSelection = ({
   players,
   setPlayers,
+  query,
+  setQuery,
   onPlayerDrop,
   onPlayerClick,
   submit,
@@ -97,6 +102,16 @@ const TeamSelection = ({
               ) {
                 feedback.warning('Captain or vice captain cannot sit on bench!');
 
+                setPlayers((pitch) =>
+                  produce(pitch, (draft) => {
+                    draft.forEach((p, idx) => {
+                      if (p.item) {
+                        draft[idx].item!.display.highlight = undefined;
+                      }
+                    });
+                  }),
+                );
+
                 return;
               }
 
@@ -112,6 +127,14 @@ const TeamSelection = ({
             }
           }
 
+          newPlayer = { ...newPlayer, display: { src: newPlayer.display.src } };
+          if (newTargetItem) {
+            newTargetItem = {
+              ...newTargetItem,
+              display: { src: newTargetItem.display.src },
+            };
+          }
+
           const newPlayers = produce(
             players,
             (draft) => {
@@ -119,6 +142,12 @@ const TeamSelection = ({
               if (playerOnPitchIdx !== -1) {
                 draft[playerOnPitchIdx].item = newTargetItem;
               }
+
+              draft.forEach((p, idx) => {
+                if (p.item) {
+                  draft[idx].item!.display.highlight = undefined;
+                }
+              });
             },
             (_, immer_reverse) => {
               onPlayerDrop &&
@@ -135,10 +164,26 @@ const TeamSelection = ({
         }
       }
     },
-    [players],
+    [players, disabled, hasBench, onPlayerDrop, setPlayers],
   );
 
   // TODO: Think about toolbar at the top in TeamSelection component :)
+
+  useEffect(() => {
+    if (query && query.length && setQuery) {
+      setQuery((query) =>
+        query.filter(([target, player]) => {
+          const targetIdx = players.findIndex(
+            (p) => p.item && p.item.player_stats.id === target.item!.player_stats.id,
+          );
+
+          handlePlayerDrop(targetIdx, players[targetIdx].item!.is_on_bench)(player.item!);
+
+          return false;
+        }),
+      );
+    }
+  }, [query, setQuery, handlePlayerDrop, players]);
 
   return (
     <S.Container className='bg-secondary rounded'>

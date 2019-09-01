@@ -1,4 +1,5 @@
 import playerMatchRepository from '../../data/repositories/player-match.repository';
+import playerRepository from '../../data/repositories/player.repository';
 import gameweekRepository from '../../data/repositories/gameweek.repository';
 import gameRepository from '../../data/repositories/game.repository';
 import eventRepository from '../../data/repositories/event.repository';
@@ -9,9 +10,9 @@ export const getAllPlayerMatch = () => playerMatchRepository.getAll();
 
 export const getPlayerMatchById = (id) => playerMatchRepository.getById(id);
 
-export const getPlayerStatsByGameweeks = async (playerId, playerClubId) => {
+export const getPlayerStatsByGameweeks = async (playerId) => {
   const result = [];
-
+  const { club_id } = await playerRepository.getById(playerId);
   await Promise.all(
     await gameweekRepository
       .getAll()
@@ -32,7 +33,8 @@ export const getPlayerStatsByGameweeks = async (playerId, playerClubId) => {
             }) => {
               if (!gameId || !finished) return;
 
-              const opponent = hometeam.id !== playerClubId ? hometeam : awayteam;
+              if (hometeam.id !== club_id && awayteam.id !== club_id) return;
+              const opponent = hometeam.id !== club_id ? hometeam : awayteam;
               const eventsForGame = await eventRepository
                 .getByGameId(gameId)
                 .map((el) => el.get({ plain: true }));
@@ -41,7 +43,26 @@ export const getPlayerStatsByGameweeks = async (playerId, playerClubId) => {
               const eventsForCurrentPlayer = realEvents.filter(
                 (event) => event.player && event.player.player_id.toString() === playerId,
               );
-              if (eventsForCurrentPlayer.length < 1) return;
+              if (eventsForCurrentPlayer.length < 1) {
+                result.push({
+                  gameweek: { number },
+                  game: {
+                    opp: opponent.short_name,
+                    res: `${hometeam_score} - ${awayteam_score}`,
+                  },
+                  stats: {
+                    goals: 0,
+                    assists: 0,
+                    missed_passes: 0,
+                    goals_conceded: 0,
+                    saves: 0,
+                    yellow_cards: 0,
+                    red_cards: 0,
+                  },
+                });
+                return;
+              }
+
               const {
                 goals,
                 assists,
