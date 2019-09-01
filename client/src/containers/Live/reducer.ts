@@ -11,6 +11,7 @@ import {
   AddLiveEventAction,
 } from './action.type';
 import { Game } from 'types/game.types';
+import produce from 'immer';
 
 type State = {
   current: LiveStatusObject;
@@ -47,11 +48,11 @@ export default (
     case SET_LIVE_STATUS:
       return { ...state, current: { ...state.current, ...action.payload } };
     case ADD_LIVE_EVENT:
-      const newState = { ...state };
-      newState.current.elapsed = action.payload.elapsed;
-      newState.current.events.push(action.payload);
-      newState.current.score = action.payload.score || newState.current.score;
-      return newState;
+      return produce(state, (draft) => {
+        draft.current.elapsed = action.payload.elapsed;
+        draft.current.score = action.payload.score || draft.current.score;
+        draft.current.events.push(action.payload);
+      });
     default:
       return state;
   }
