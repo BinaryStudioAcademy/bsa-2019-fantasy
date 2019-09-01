@@ -1,7 +1,8 @@
 import teamMemberHistoryRepository from '../../data/repositories/team-member-history.repository';
 import gameweekHistoryRepository from '../../data/repositories/gameweek-history.repository';
-import playerRepository from '../../data/repositories/player.repository';
+import playerMatchRepository from '../../data/repositories/player-match.repository';
 import gameweekRepository from '../../data/repositories/gameweek.repository';
+import gameRepository from '../../data/repositories/game.repository';
 import { getPlayerScoreByGameweeks } from './player-match.service';
 
 export const getPlayersByGameweekId = async (id) => {
@@ -63,6 +64,9 @@ export const postTeamMemberHistory = async (data, gameweekHistoryId, gameweekId)
 
   const { number: gameweekNumber } = await gameweekRepository.getById(gameweekId);
 
+  const games = await gameRepository.getByGameweekId(gameweekNumber);
+  const gameIds = games.map((el) => el.id);
+
   // count total team score for the current gameweek
   let totalTeamScore = 0;
   const getPlayerInfo = async (player) => {
@@ -70,11 +74,13 @@ export const postTeamMemberHistory = async (data, gameweekHistoryId, gameweekId)
     totalTeamScore += player_score;
 
     // update team_score in database
+    console.log(totalTeamScore);
     await gameweekHistoryRepository.setTeamScoreById(gameweekHistoryId, totalTeamScore);
   };
-
   data.map((p) =>
-    playerRepository.getById(p.player_id).then((player) => getPlayerInfo(player)),
+    playerMatchRepository
+      .getByIdWithGamesConstraints(p.player_id, gameIds)
+      .then((player) => getPlayerInfo(player)),
   );
 
   return result;
