@@ -1,4 +1,5 @@
 import { PlayerType } from './player.types';
+import { UpcomingFixture } from './fixture.types';
 
 export type GameweekHistoryType = TeamMemberType & PlayerStatsType;
 
@@ -11,6 +12,7 @@ export type TeamMemberType = {
 
 export type PlayerStatsType = {
   player_stats: PlayerType;
+  upcomingFixture: UpcomingFixture;
 };
 
 export type GameweekHistoryResultsType = {

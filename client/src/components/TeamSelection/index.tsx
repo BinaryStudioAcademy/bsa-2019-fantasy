@@ -52,7 +52,7 @@ const TeamSelection = ({
   disabled = false,
 }: Props) => {
   const { t } = useTranslation();
-
+  console.log(players);
   const [view, setView] = useState<'list' | 'pitch'>('pitch');
 
   const handlePlayerDrop = useCallback(

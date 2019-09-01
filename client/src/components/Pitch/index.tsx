@@ -8,7 +8,6 @@ import { PitchPlayerType, DisplayPlayerType } from './types';
 import PitchPlayer from './components/PitchPlayer';
 
 import * as S from './styles';
-
 type Props = {
   players: PitchPlayerType[];
   hasBench: boolean;
@@ -27,6 +26,9 @@ export const Pitch = ({
 }: Props) => {
   const order: PlayerPosition[] = ['GKP', 'DEF', 'MID', 'FWD'];
 
+  // REMOVE THIS
+  console.log('PITCH');
+  console.log(players);
   return (
     <S.Container>
       <DndProvider backend={HTML5Backend}>

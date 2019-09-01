@@ -34,7 +34,11 @@ const MyTeam = () => {
 
   const [playerToSwitch, setPlayerToSwitch] = useState<PitchPlayerType | null>(null);
   const players = useSelector((state: RootState) => state.gameweeks.gameweeks_history);
-
+  // REMOVE THIS
+  if (players) {
+    console.log('MY TEAM');
+    console.log(players);
+  }
   const currentGameweek = useSelector(currentGameweekSelector);
   const { pitchPlayers, setPitch } = usePitchPlayers(players);
   const [switchQuery, setSwitchQuery] = useState<PitchPlayerType[][]>([]);
