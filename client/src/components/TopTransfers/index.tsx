@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import { useTranslation } from 'react-i18next';
 import ReactTable from 'react-table';
 import { RootState } from 'store/types';
 import PlayerDialog from 'components/PlayerDialog';
 import { loadPlayersAction } from '../../components/PlayersSelection/actions';
+import { PlayerType } from 'types/player.types';
+import {
+  fetchDataForPlayer,
+  resetPlayerDialogData,
+} from '../../containers/Players/actions';
 import cn from 'classnames';
 
 import {
@@ -23,7 +29,19 @@ type topTransferType = {
   number: number;
 };
 
-export const TopTransfers = () => {
+type Props = {
+  resetPlayerDialogData: any;
+  fetchDataForPlayer: any;
+  playerData?: any;
+  dialogLoading: boolean;
+};
+
+const TopTransfers = ({
+  resetPlayerDialogData,
+  fetchDataForPlayer,
+  playerData,
+  dialogLoading
+}) => {
   const columns = [
     {
       Header: '',
@@ -68,6 +86,8 @@ export const TopTransfers = () => {
   });
   const [topTransfers, setTopTransfers] = useState();
 
+  const [currentPlayer, setCurrentPlayer] = useState<PlayerType>();
+
   useEffect(() => {
     dispatch(loadPlayersAction(query));
     if (query.order_field === 'transfers_in') {
@@ -93,9 +113,12 @@ export const TopTransfers = () => {
         const clubIndexIn = topTransfers.transfersIn[i].club_id - 1;
         const itemIn = {
           info: (
-            <button className='w-6 h-6 justify-center mr-4 leading-none flex bg-background rounded-full text-s font-bold'>
+            <button
+              className='w-6 h-6 p-1 flex justify-center leading-none flex bg-background rounded-full text-s font-bold opacity-30 hover:opacity-75 focus:outline-none'
+              onClick={() => onOpenInfo('in', topTransfers.transfersIn[i].id, topTransfers.transfersIn[i].club_id)}
+            >
               i
-            </button>
+          </button>
           ),
           direction: <FaArrowRight size={20} className={cn('text-green-500')} />,
           position: topTransfers.transfersIn[i].position,
@@ -118,7 +141,10 @@ export const TopTransfers = () => {
         const clubIndexOut = topTransfers.transfersOut[i].club_id - 1;
         const itemOut = {
           info: (
-            <button className='w-6 h-6 justify-center mr-4 leading-none flex bg-background rounded-full text-s font-bold'>
+            <button
+              className='w-6 h-6 p-1 flex justify-center leading-none flex bg-background rounded-full text-s font-bold opacity-30 hover:opacity-75 focus:outline-none'
+              onClick={() => onOpenInfo('out', topTransfers.transfersOut[i].id, topTransfers.transfersOut[i].club_id)}
+            >
               i
             </button>
           ),
@@ -133,6 +159,20 @@ export const TopTransfers = () => {
     }
 
     return dataTransfersOut;
+  };
+
+  const onOpenInfo = (dir: string, id: string, club_id: string) => {
+    if (topTransfers.transfersIn && topTransfers.transfersOut) {
+      const player = (dir === 'in') ? topTransfers.transfersIn.find((p) => p && id === p.id) : 
+        topTransfers.transfersOut.find((p) => p && id === p.id);
+      setCurrentPlayer(player);
+      fetchDataForPlayer(id, club_id);
+    }
+  };
+
+  const onModalDismiss = () => {
+    resetPlayerDialogData();
+    setCurrentPlayer(undefined);
   };
 
   return (
@@ -162,6 +202,29 @@ export const TopTransfers = () => {
         data={renderDataTransfersOut()}
         showPagination={false}
       />
+
+      {currentPlayer && (
+        <PlayerDialog
+          playerDialogData={playerData}
+          onDismiss={onModalDismiss}
+          loading={dialogLoading}
+          player={currentPlayer}
+          clubName={''}
+        />
+      )}
     </div>
   );
 };
+
+const mapStateToProps = (rootState: RootState) => ({
+  playerData: rootState.players.playerData,
+  dialogLoading: rootState.players.dialogLoading,
+});
+
+const actions = { fetchDataForPlayer, resetPlayerDialogData };
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(TopTransfers);
