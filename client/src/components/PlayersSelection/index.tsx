@@ -20,6 +20,7 @@ import PlayerDialog from 'components/PlayerDialog';
 import styles from './styles.module.scss';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import 'react-dropdown/style.css';
+import { GameweekHistoryType } from 'types/gameweekHistory.type';
 
 type Props = {
   loadPlayersAction: typeof loadPlayersAction;
@@ -28,6 +29,7 @@ type Props = {
   players: PlayerType[];
   playerData?: any;
   dialogLoading: boolean;
+  undisplayedPlayers: GameweekHistoryType[];
 };
 
 const PlayersSelection = ({
@@ -37,6 +39,7 @@ const PlayersSelection = ({
   resetPlayerDialogData,
   playerData,
   dialogLoading,
+  undisplayedPlayers,
 }: Props) => {
   const { t } = useTranslation();
   const [query, setQuery] = useState({
@@ -48,8 +51,8 @@ const PlayersSelection = ({
     club_id: undefined,
     search: undefined,
     max_price: undefined,
+    undisplayedPlayersIds: [] as string[],
   });
-
   const [currentPlayer, setCurrentPlayer] = useState<PlayerType>();
 
   const [sortSelect, setSortSelect] = useState({
@@ -77,6 +80,14 @@ const PlayersSelection = ({
   useEffect(() => {
     loadPlayersAction({ ...query });
   }, [query]);
+
+  useEffect(() => {
+    undisplayedPlayers.length > 0 &&
+      setQuery({
+        ...query,
+        undisplayedPlayersIds: undisplayedPlayers.map((p) => p.player_stats.id),
+      });
+  }, [undisplayedPlayers]);
 
   const onSortChange = (item: any) => {
     setSortSelect(item);
