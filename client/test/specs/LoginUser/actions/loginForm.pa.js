@@ -1,4 +1,4 @@
-const LoginPage = require('../page/Login_po');
+const LoginPage = require('../page/loginForm.po');
 const page = new LoginPage();
 
 class LoginActions {

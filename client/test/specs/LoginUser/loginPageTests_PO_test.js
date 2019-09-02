@@ -25,7 +25,7 @@ describe('Login page tests', () => {
     await pageSteps.waitForLogo();
   });
 
-  it('should show an error if user user tries to login with not registered email', async () => {
+  it('should show an error if user tries to login with not registered email', async () => {
     await pageSteps
       .enterEmail(credentials.unregisteredEmail)
       .catch((err) => console.log(err.message));
@@ -44,7 +44,7 @@ describe('Login page tests', () => {
       );
   });
 
-  it('should show an error if user user tries to login with wrong password', async () => {
+  it('should show an error if user tries to login with wrong password', async () => {
     await pageSteps
       .enterEmail(credentials.email)
       .catch((err) => console.log(err.message));
