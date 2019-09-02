@@ -2,7 +2,7 @@ import cn from 'classnames';
 import produce from 'immer';
 import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, connect } from 'react-redux';
 
 import { RootState } from 'store/types';
 import { TeamMemberType } from 'types/gameweekHistory.type';
@@ -18,10 +18,14 @@ import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
 import { PlayerDropHandler } from 'components/TeamSelection/types';
 import { feedback } from 'react-feedbacker';
+import { PlayerType } from 'types/player.types';
+import PlayerDialog from 'components/PlayerDialog';
+import { fetchDataForPlayer, resetPlayerDialogData } from 'containers/Players/actions';
 
 const MyTeam = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const { playerData, dialogLoading } = useSelector((state: RootState) => state.players);
 
   useEffect(() => {
     document.title = 'My Team | Fantasy Football League';
@@ -37,6 +41,19 @@ const MyTeam = () => {
   const currentGameweek = useSelector(currentGameweekSelector);
   const { pitchPlayers, setPitch } = usePitchPlayers(players);
   const [switchQuery, setSwitchQuery] = useState<PitchPlayerType[][]>([]);
+
+  const [currentDialogPlayer, setCurrentDialogPlayer] = useState<PlayerType>();
+
+  const onOpenInfo = (player: PlayerType) => {
+    setShowModal(false);
+    setCurrentDialogPlayer(player);
+    dispatch(fetchDataForPlayer(player.id, String(player.club_id)));
+  };
+
+  const onModalDismiss = () => {
+    dispatch(resetPlayerDialogData());
+    setCurrentDialogPlayer(undefined);
+  };
 
   useEffect(() => {
     setChanged(false);
@@ -270,6 +287,15 @@ const MyTeam = () => {
             canSwitch ? onSetPlayerForSwitching : onCancelPlayerForSwitching
           }
           toSwitch={canSwitch}
+          onOpenInfo={onOpenInfo}
+        />
+      )}
+      {currentDialogPlayer && (
+        <PlayerDialog
+          playerDialogData={playerData}
+          onDismiss={onModalDismiss}
+          loading={dialogLoading}
+          player={currentDialogPlayer}
         />
       )}
     </div>

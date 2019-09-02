@@ -9,14 +9,20 @@ import {
   LiveStatusObject,
   ADD_LIVE_EVENT,
   AddLiveEventAction,
+  LOAD_LAST_GAMES_REQUEST,
+  LOAD_LAST_GAMES_SUCCESS,
+  LOAD_LAST_GAMES_FAILURE,
+  LoadLastGamesAction,
 } from './action.type';
 import { Game } from 'types/game.types';
+import produce from 'immer';
 
 type State = {
   current: LiveStatusObject;
   next?: Game;
   loading: boolean;
   error?: string;
+  lastGames: Game[];
 };
 
 const initialState: State = {
@@ -29,13 +35,18 @@ const initialState: State = {
     events: [],
   },
   next: undefined,
+  lastGames: [],
   loading: false,
   error: undefined,
 };
 
 export default (
   state = initialState,
-  action: LoadCurrentGameAction | SetLiveStatusAction | AddLiveEventAction,
+  action:
+    | LoadCurrentGameAction
+    | SetLiveStatusAction
+    | AddLiveEventAction
+    | LoadLastGamesAction,
 ) => {
   switch (action.type) {
     case LOAD_CURRENT_GAME_REQUEST:
@@ -47,11 +58,17 @@ export default (
     case SET_LIVE_STATUS:
       return { ...state, current: { ...state.current, ...action.payload } };
     case ADD_LIVE_EVENT:
-      const newState = { ...state };
-      newState.current.elapsed = action.payload.elapsed;
-      newState.current.events.push(action.payload);
-      newState.current.score = action.payload.score || newState.current.score;
-      return newState;
+      return produce(state, (draft) => {
+        draft.current.elapsed = action.payload.elapsed;
+        draft.current.score = action.payload.score || draft.current.score;
+        draft.current.events.push(action.payload);
+      });
+    case LOAD_LAST_GAMES_REQUEST:
+      return { ...state, loading: true };
+    case LOAD_LAST_GAMES_SUCCESS:
+      return { ...state, lastGames: action.payload };
+    case LOAD_LAST_GAMES_FAILURE:
+      return { ...state, error: action.payload };
     default:
       return state;
   }

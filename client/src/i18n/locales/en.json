@@ -353,7 +353,8 @@
     "switch": "Switch",
     "cancel": "Cancel",
     "makeCaptain": "Make Captain",
-    "makeViceCaptain": "Make Vice Captain"
+    "makeViceCaptain": "Make Vice Captain",
+    "viewInfo": "View Information"
   },
   "PrivateLeagueModal": {
     "title": "This is your invitation code",

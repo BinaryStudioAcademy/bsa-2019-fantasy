@@ -223,7 +223,6 @@ const TopTransfers = ({
           onDismiss={onModalDismiss}
           loading={dialogLoading}
           player={currentPlayer}
-          clubName={''}
         />
       )}
     </div>

@@ -353,7 +353,8 @@
     "switch": "Поміняти",
     "cancel": "Відмінити",
     "makeCaptain": "Назначити Капітаном",
-    "makeViceCaptain": "Назначити Віце-капітаном"
+    "makeViceCaptain": "Назначити Віце-капітаном",
+    "viewInfo": "Переглянути Інформацію"
   },
   "PrivateLeagueModal": {
     "title": "Це ваш код запрошення",

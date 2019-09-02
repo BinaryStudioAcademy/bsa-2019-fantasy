@@ -9,6 +9,10 @@ import {
   AsyncLoadCurrentGameAction,
   SetLiveStatusAction,
   AddLiveEventAction,
+  LoadLastGamesAction,
+  AsyncLoadLastGamesAction,
+  LOAD_LAST_GAMES_SUCCESS,
+  LOAD_LAST_GAMES_REQUEST,
 } from './action.type';
 import { Game } from 'types/game.types';
 
@@ -36,3 +40,18 @@ export const addLiveEvent = (payload: any): AddLiveEventAction => ({
   type: ADD_LIVE_EVENT,
   payload,
 });
+
+const loadLastGamesRequest = (): LoadLastGamesAction => ({
+  type: LOAD_LAST_GAMES_REQUEST,
+});
+
+const loadLastGamesSuccess = (payload: any): LoadLastGamesAction => ({
+  type: LOAD_LAST_GAMES_SUCCESS,
+  payload,
+});
+
+export const loadLastGames = (count): AsyncLoadLastGamesAction => async (dispatch) => {
+  dispatch(loadLastGamesRequest());
+  const result = await gameService.getPlayed(count);
+  dispatch(loadLastGamesSuccess(result));
+};
