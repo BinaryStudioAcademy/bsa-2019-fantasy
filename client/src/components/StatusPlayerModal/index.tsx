@@ -7,6 +7,7 @@ import { DisplayPlayerType } from 'components/Pitch/types';
 import Modal from 'components/Modal';
 
 import styles from './styles.module.scss';
+import { PlayerType } from 'types/player.types';
 
 type Props = {
   player: DisplayPlayerType;
@@ -16,6 +17,7 @@ type Props = {
   onSetViceCaptain: () => void;
   funcForSwitching: () => void;
   toSwitch: boolean;
+  onOpenInfo: (player: PlayerType) => void;
 };
 
 const StatusPlayerModal = ({
@@ -25,6 +27,7 @@ const StatusPlayerModal = ({
   onSetViceCaptain,
   funcForSwitching,
   toSwitch,
+  onOpenInfo,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -71,6 +74,12 @@ const StatusPlayerModal = ({
                 {t('StatusPlayerModal.makeViceCaptain')}
               </button>
             )}
+            <button
+              className='bg-green-700 p-2 rounded font-bold'
+              onClick={() => onOpenInfo(player.player_stats)}
+            >
+              {t('StatusPlayerModal.viewInfo')}
+            </button>
           </>
         )}
       </div>

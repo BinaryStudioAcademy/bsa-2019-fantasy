@@ -461,7 +461,6 @@ class PlayersPage extends React.Component<Props, State> {
               onDismiss={this.onModalDismiss}
               loading={this.props.dialogLoading}
               player={this.state.currentPlayer}
-              clubName={this.getClubNameById(this.state.currentPlayer.club_id)}
               tab={this.state.dialogInitialTab}
             />
           )}

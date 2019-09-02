@@ -2,17 +2,19 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactDom from 'react-dom';
 import classNames from 'classnames';
+import { useSelector } from 'react-redux';
 
 import { PlayerDataType } from 'containers/Players/actions';
 import Spinner from 'components/Spinner';
 import { PlayerType } from 'types/player.types';
+import { RootState } from 'store/types';
+import { Club } from 'types/club.type';
 
 type Props = {
   playerDialogData: PlayerDataType;
   player: PlayerType;
   onDismiss: () => void;
   loading: boolean;
-  clubName: string | undefined;
   tab?: 'fixtures' | 'history';
 };
 
@@ -21,14 +23,7 @@ const cellStyle = {
   padding: '8px 2px',
 };
 
-const PlayerDialog = ({
-  playerDialogData,
-  player,
-  onDismiss,
-  loading,
-  clubName,
-  tab,
-}: Props) => {
+const PlayerDialog = ({ playerDialogData, player, onDismiss, loading, tab }: Props) => {
   const { t } = useTranslation();
 
   const positionDict: { [key: string]: { name: string; color: string } } = {
@@ -48,6 +43,12 @@ const PlayerDialog = ({
       name: t('roles.forward'),
       color: 'bg-red-600',
     },
+  };
+
+  const clubs = useSelector((state: RootState) => state.clubs.clubs);
+  const getClubNameById = (club_id: number) => {
+    const club = clubs.find((club: Club | undefined) => club && club.id === club_id);
+    return (club && club.name) || undefined;
   };
 
   const initialTab = tab ? tab : 'history';
@@ -189,7 +190,7 @@ const PlayerDialog = ({
     );
   };
 
-  const { first_name, second_name, position } = player;
+  const { first_name, second_name, position, club_id } = player;
 
   return ReactDom.createPortal(
     <div
@@ -217,7 +218,7 @@ const PlayerDialog = ({
               >
                 {positionDict[position].name}
               </span>
-              <div className='text-sm'>{clubName}</div>
+              <div className='text-sm'>{getClubNameById(club_id)}</div>
             </div>
 
             <img
