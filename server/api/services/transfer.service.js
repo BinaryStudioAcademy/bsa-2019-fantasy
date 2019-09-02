@@ -31,6 +31,11 @@ export const applyTransfers = async (user_id, gameweek_id, transfers) => {
         async (t) => (await playerRepository.getById(t.in_player)).dataValues,
       ),
     );
+    const outPlayers = await Promise.all(
+      transfers.map(
+        async (t) => (await playerRepository.getById(t.out_player)).dataValues,
+      ),
+    );
 
     const newTeamMembers = teamMemberHistory.map((m) => {
       const newPlayer = { ...m };
@@ -38,6 +43,7 @@ export const applyTransfers = async (user_id, gameweek_id, transfers) => {
       transfers.forEach(({ out_player, in_player }, idx) => {
         if (m.player_id === out_player) {
           const in_player_from_db = inPlayers[idx];
+          const out_player_from_db = outPlayers[idx];
 
           if (user.free_transfers > 0) {
             user.free_transfers -= 1;
@@ -49,6 +55,7 @@ export const applyTransfers = async (user_id, gameweek_id, transfers) => {
 
           if (user.money >= in_player_from_db.player_price) {
             user.money -= in_player_from_db.player_price;
+            user.money += out_player_from_db.player_price;
           } else {
             throw new Error('Not enough money to make transfers!');
           }

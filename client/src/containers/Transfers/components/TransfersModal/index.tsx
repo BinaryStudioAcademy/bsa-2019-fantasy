@@ -50,7 +50,7 @@ const TransfersModal = ({
 
   const totalCost = transfers.reduce((prev, t) => prev + t.cost, 0);
   const totalMoneyCost = transfersFull.reduce(
-    (prev, t) => prev + t.in_player.player_price,
+    (prev, t) => prev + t.in_player.player_price - t.out_player.player_price,
     0,
   );
 
@@ -86,7 +86,16 @@ const TransfersModal = ({
             >
               <td className='truncate'>{`${tf.in_player.first_name} ${tf.in_player.second_name}`}</td>
               <td className='truncate'>{`${tf.out_player.first_name} ${tf.out_player.second_name}`}</td>
-              <td className='truncate'>{tf.in_player.player_price}</td>
+              <td
+                className={cn(
+                  'truncate',
+                  tf.out_player.player_price - tf.in_player.player_price >= 0
+                    ? 'text-green-700'
+                    : 'text-red-500',
+                )}
+              >
+                {Math.abs(tf.out_player.player_price - tf.in_player.player_price)}
+              </td>
               <td>
                 <span className={cn(tf.cost === 0 && 'text-green-700')}>
                   {tf.cost} pts
