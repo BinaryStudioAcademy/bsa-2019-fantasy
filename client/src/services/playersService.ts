@@ -34,6 +34,14 @@ export const getFixturesForPlayer = async (playerId: string, clubId: string) => 
   return response.json();
 };
 
+export const getUpcomingFixtureForPlayer = async (playerId: string) => {
+  const response = await callWebApi({
+    endpoint: `/api/player-match-stats/next-fixture/${playerId}`,
+    type: 'GET',
+  });
+  return response.json();
+};
+
 export const getStatsForPlayer = async (playerId: string) => {
   const response = await callWebApi({
     endpoint: `/api/player-match-stats/by-gameweeks/${playerId}`,

@@ -1,4 +1,5 @@
 import * as gameweeksService from 'services/gameweekService';
+import * as playerService from 'services/playersService';
 import * as gameweeksHistoryService from 'services/gameweekHistoryService';
 import {
   FETCH_GAMEWEEKS_REQUEST,
@@ -108,7 +109,17 @@ export const fetchGameweekHistory = (
       userId,
       gameweekId,
     );
-    dispatch(fetchGameweeksHistorySuccess(result));
+
+    // fetching upcomming fixtures for each player
+    if (result) {
+      for await (let r of result) {
+        const upcomingFixture = await playerService.getUpcomingFixtureForPlayer(
+          r.player_stats.id,
+        );
+        r.upcomingFixture = upcomingFixture;
+      }
+      dispatch(fetchGameweeksHistorySuccess(result));
+    }
   } catch (err) {
     dispatch(fetchGameweeksHistoryFailure(err.message || err));
   }

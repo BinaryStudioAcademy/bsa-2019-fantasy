@@ -10,6 +10,12 @@ router
       .then((value) => res.json(value))
       .catch(next),
   )
+  .get('/played', (req, res, next) =>
+    gameService
+      .getPlayedGames(req.query)
+      .then((value) => res.json(value))
+      .catch(next),
+  )
   .get('/current', (req, res, next) =>
     gameService
       .getCurrentGame()
