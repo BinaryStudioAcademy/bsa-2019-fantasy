@@ -1,6 +1,7 @@
 const page = require('../pages/leagues.po');
 const joinPage = require('../pages/leagues.join.po');
 const createPage = require('../pages/leagues.create.po');
+const viewPage = require('../pages/leagues.view.po');
 const Wait = require('../../../helpers/waiters');
 const Help = require('../../../helpers/helpers');
 
@@ -138,6 +139,30 @@ class LeaguesSteps {
     await browser.pause(3000);
     await createPage.inviteCodeModalInp.then(res => res.waitForExist(2000));
     await createPage.inviteCodeModalInp.then(res => res.click());
+  };
+
+  async _observePublicLeague(leagueName){
+    await page.publicLeagueLink(leagueName).then(res => res.waitForDisplayed(2000));
+    await page.publicLeagueLink(leagueName).then(res => res.click());
+  };
+
+  async leavePublicLeague(leagueName){
+    await this._observePublicLeague(leagueName);
+    await viewPage.leaveLeagueBtn.then(res => res.scrollIntoView());
+    await viewPage.leaveLeagueBtn.then(res => res.waitForDisplayed(5000));
+    await viewPage.leaveLeagueBtn.then(res => res.click());
+  };
+
+  async _observePrivateLeague(leagueName){
+    await page.privateLeagueLink(leagueName).then(res => res.waitForDisplayed(2000));
+    await page.privateLeagueLink(leagueName).then(res => res.click());
+  };
+
+  async leavePrivateLeague(leagueName){
+    await this._observePrivateLeague(leagueName);
+    await viewPage.leaveLeagueBtn.then(res => res.scrollIntoView());
+    await viewPage.leaveLeagueBtn.then(res => res.waitForDisplayed(5000));
+    await viewPage.leaveLeagueBtn.then(res => res.click());
   };
 }
 
