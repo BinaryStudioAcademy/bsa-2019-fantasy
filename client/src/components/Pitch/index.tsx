@@ -40,8 +40,7 @@ export const Pitch = ({
                 .map((p, idx) => (
                   <PitchPlayer
                     index={players.indexOf(p)}
-                    type={type}
-                    player={p.item}
+                    player={p}
                     disabled={disabled}
                     onDrop={onPlayerDrop}
                     onClick={onPlayerClick}
@@ -59,12 +58,9 @@ export const Pitch = ({
               .filter((p) => p.item && p.item.is_on_bench)
               .map((p, idx) => (
                 <PitchPlayer
-                  index={players.indexOf(p)}
-                  type={
-                    p.item ? p.item.player_stats.position : ['GKP', 'DEF', 'MID', 'FWD']
-                  }
                   benched
-                  player={p.item}
+                  index={players.indexOf(p)}
+                  player={p}
                   disabled={disabled}
                   onDrop={onPlayerDrop}
                   onClick={onPlayerClick}

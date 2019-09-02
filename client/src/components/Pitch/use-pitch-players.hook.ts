@@ -14,6 +14,7 @@ import { PlayerType } from 'types/player.types';
 
 type AbstractPitchPlayer<P> = {
   type: PlayerPosition;
+  accept: PlayerPosition[];
   item: (P & { display: { src: string } }) | null;
 };
 

@@ -3,15 +3,14 @@ import React, { useRef } from 'react';
 import { FaFutbol } from 'react-icons/fa';
 import { useDrop, useDrag } from 'react-dnd';
 
-import { DisplayPlayerType } from '../../types';
+import { DisplayPlayerType, PitchPlayerType } from '../../types';
 import { PlayerPosition } from 'components/Gameweek/PlayerSelection/types';
 
 import * as S from './styles';
 
 type Props = {
   index: number;
-  type: PlayerPosition | PlayerPosition[];
-  player: DisplayPlayerType | null;
+  player: PitchPlayerType;
   disabled: boolean;
   benched?: boolean;
 
@@ -21,8 +20,7 @@ type Props = {
 
 const PitchPlayer = ({
   index,
-  type,
-  player,
+  player: { type, accept, item: player },
   disabled,
   benched = false,
   onDrop,
@@ -35,16 +33,17 @@ const PitchPlayer = ({
     DisplayPlayerType,
     { isOver: boolean; canDrop: boolean }
   >({
-    accept: type,
+    accept: accept || ['GKP', 'DEF', 'MID', 'FWD'],
     drop: onDrop(index, benched),
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
     }),
   });
+
   const [{ opacity }, drag] = useDrag({
     canDrag: player !== null,
-    item: { ...player, type: player ? player.player_stats.position : 'none' },
+    item: { ...player, type: player ? type : 'none' },
     collect: (monitor) => ({ opacity: monitor.isDragging ? 1 : 0 }),
   });
 
