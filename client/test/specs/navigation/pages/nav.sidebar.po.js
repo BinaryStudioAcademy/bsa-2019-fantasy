@@ -1,7 +1,7 @@
 class NavSide {
-    get logOutBtn() {
-      return $('//div[contains(@class, "logout")]/button');
-    }
+  constructor() {
+    this.logOutBtn = '//div[contains(@class, "logout")]/button';
   }
-  
-  module.exports = new NavSide();
+}
+
+module.exports = new NavSide();

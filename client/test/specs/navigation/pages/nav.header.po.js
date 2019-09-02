@@ -1,6 +1,6 @@
 class NavHeader {
-  get leaguesBtn() {
-    return $('//header//a[@href="/leagues"]');
+  constructor() {
+    this.leaguesBtn = '//header//a[@href="/leagues"]';
   }
 }
 
