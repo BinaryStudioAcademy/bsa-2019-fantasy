@@ -1,6 +1,7 @@
 const page = require('../pages/leagues.po');
 const joinPage = require('../pages/leagues.join.po');
 const createPage = require('../pages/leagues.create.po');
+const viewPage = require('../pages/leagues.view.po');
 const Wait = require('../../../helpers/waiters');
 const Help = require('../../../helpers/helpers');
 
