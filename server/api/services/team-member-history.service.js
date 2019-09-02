@@ -3,7 +3,6 @@ import gameweekHistoryRepository from '../../data/repositories/gameweek-history.
 import playerMatchRepository from '../../data/repositories/player-match.repository';
 import gameweekRepository from '../../data/repositories/gameweek.repository';
 import gameRepository from '../../data/repositories/game.repository';
-import { getPlayerScoreByGameweeks } from './player-match.service';
 
 export const getPlayersByGameweekId = async (id) => {
   const result = await teamMemberHistoryRepository.getByGameweekId(id);
@@ -13,17 +12,23 @@ export const getPlayersByGameweekId = async (id) => {
 
 export const getPlayerHistoryByGameweekId = async (id, gameweekNumber) => {
   const result = [];
-  console.log(id);
-
+  const games = await gameRepository.getByGameweekId(gameweekNumber);
+  const gameIds = games.map((el) => el.id);
   await Promise.all(
     await teamMemberHistoryRepository
       .getByGameweekId(id)
       .map((el) => el.get({ plain: true }))
       .map(async (item) => {
-        const score = await getPlayerScoreByGameweeks(item.player_id, gameweekNumber);
+        const { player_score } = await playerMatchRepository.getByIdWithGamesConstraints(
+          item.player_id,
+          gameIds,
+        );
         result.push({
           ...item,
-          player_stats: { ...item.player_stats, player_score: score },
+          player_stats: {
+            ...item.player_stats,
+            player_score: item.is_captain ? player_score * 3 : player_score,
+          },
         });
       }),
   );
