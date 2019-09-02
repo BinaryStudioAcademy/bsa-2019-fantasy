@@ -3,6 +3,8 @@ import gameWeekRepository from '../../data/repositories/gameweek.repository';
 
 export const getAllGames = () => gameRepository.getAll();
 
+export const getPlayedGames = (query) => gameRepository.getPlayedGames(query);
+
 export const getGameById = (id) => gameRepository.getById(id);
 
 export const getGameByGameweekId = (id) => gameRepository.getByGameweekId(id);

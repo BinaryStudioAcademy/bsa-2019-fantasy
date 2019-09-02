@@ -1,397 +1,209 @@
-import React, { RefObject } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
-import socketIOClient from 'socket.io-client';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import cn from 'classnames';
 import moment from 'moment';
+import Slider from 'react-rangeslider';
+import 'react-rangeslider/lib/index.css';
 
-import Modal from 'containers/Modal';
-import Dropdown from 'react-dropdown';
-import Button from 'components/Button';
+import { Play } from './Play';
+import { Fixture } from './Fixture';
+import { LastGamesList } from './LastGamesList';
 
-import { loadCurrentGame } from './actions';
+import { loadCurrentGame, loadLastGames } from './actions';
+import * as faker from './socket';
+import * as eventsService from 'services/eventsService';
 
 import { RootState } from 'store/types';
-import { Club } from 'types/club.type';
-import { Game } from 'types/game.types';
-import { LiveStatusObject } from './action.type';
 
-import fieldEvents from './fieldEvents';
-import renderComment from './commentary';
+import styles from './styles.module.scss';
+import './progress.style.scss'; // cannot style nested elements of uncontrolled component react-rangeslider with css modules
+import produce from 'immer';
 
-import field from 'assets/images/field.svg';
-import Fade from 'react-reveal/Fade';
-import 'react-dropdown/style.css';
+const Live = () => {
+  // Redux state
+  const currentGame = useSelector((state: RootState) => state.currentGame.current);
+  const nextGame = useSelector((state: RootState) => state.currentGame.next);
+  const lastGames = useSelector((state: RootState) => state.currentGame.lastGames);
 
-type Props = {
-  loadCurrentGame: any;
-  clubs: Club[];
-  currentGame: {
-    current?: LiveStatusObject;
-    next?: Game;
-  };
-};
-type State = {
-  isModalActive: boolean;
-  isSimulating: boolean;
-  matchStarted: boolean;
-  socketConnected: boolean;
-  events: any[];
-  homeClub?: Club;
-  awayClub?: Club;
-  timeout: number;
-  score: number[];
-  elapsed: number | undefined;
-};
-type RenderFixture = {
-  homeClub: Club;
-  awayClub: Club;
-  content: any;
-};
-
-const endpoint = `http://${process.env.REACT_APP_SOCKET_SERVER}:${process.env.REACT_APP_SOCKET_SERVER_PORT}/`;
-const timeoutOptions = [1, 2, 5, 10, 15].map((item) => ({
-  label: `${item} min`,
-  value: String(item),
-}));
-
-class Live extends React.Component<Props, State> {
-  socket: any;
-  state: State = {
-    isModalActive: false,
-    isSimulating: false,
-    matchStarted: false,
-    events: [],
-    homeClub: undefined,
-    awayClub: undefined,
-    timeout: 5,
-    score: [0, 0],
-    elapsed: undefined,
-    socketConnected: false,
-  };
-  eventsLog = React.createRef<HTMLDivElement>();
-
-  componentDidMount() {
-    this.socket = socketIOClient(endpoint);
-    // this.socket.on('connect', this.handleSocketConnect);
-    // this.socket.on('status', this.handleStatusEvent);
-    // this.socket.on('event', this.handleSocketEvent);
-    // this.socket.on('disconnect', this.handleSocketDisconnect);
-    this.props.loadCurrentGame();
-  }
-
-  componentDidUpdate = () => {
-    if (this.eventsLog) {
-      const current = this.eventsLog.current;
-      if (current) current.scrollTop = current.scrollHeight;
-    }
+  const clubs = useSelector((state: RootState) => state.clubs.clubs);
+  const currentEvents = useSelector(
+    (state: RootState) => state.currentGame.current.events,
+  );
+  const getClubById = (id) => {
+    return clubs.find((club) => club.id === Number(id));
   };
 
-  // handleSocketConnect = () => {
-  //   this.setState({ socketConnected: true });
-  // };
+  // Component state
+  const [currentEvent, setCurrentEvent] = useState();
+  const [replayGame, setReplayGame] = useState();
+  const [replayEvents, setReplayEvents] = useState();
 
-  // handleStatusEvent = (data) => {
-  //   const { gameStarted } = data;
-  //   this.setState({ isSimulating: gameStarted });
-  // };
+  console.log(replayGame);
 
-  // handleSocketDisconnect = () => {
-  //   this.handleSocketEvent({ name: 'disconnect' });
-  // };
-
-  // handleSocketEvent = (event) => {
-  //   const newState = { ...this.state };
-  //   if (event.name !== 'nothing') newState.events = [...newState.events, event];
-  //   newState.elapsed = event.elapsed;
-
-  //   switch (event.name) {
-  //     case 'goal':
-  //       newState.score = event.score;
-  //       break;
-  //     case 'startGame':
-  //       console.log('inside startGame');
-  //       newState.matchStarted = true;
-  //       newState.score = [0, 0];
-  //       break;
-  //     case 'endGame':
-  //       newState.isSimulating = false;
-  //       break;
-  //     case 'disconnect':
-  //       newState.socketConnected = false;
-  //       break;
-  //   }
-
-  //   this.setState(newState);
-  // };
-
-  simulate = () => {
-    this.onModalDismiss();
-    this.setState({ isSimulating: true, score: [0, 0], events: [], elapsed: 0 });
-    const { homeClub, awayClub, timeout } = this.state;
-    this.socket.emit('simulate', {
-      homeClub: homeClub!.id,
-      awayClub: awayClub!.id,
-      timeout,
-    });
-  };
-
-  stopSimulation = () => {
-    this.socket.emit('stopSimulation', {});
-    this.setState({ isSimulating: false });
-  };
-
-  showModal = () => {
-    this.setState({ isModalActive: true });
-  };
-
-  onModalDismiss = () => {
-    this.setState({ isModalActive: false });
-  };
-
-  getClubById = (id) => {
-    return this.props.clubs.find((club) => club.id === Number(id));
-  };
-
-  renderElapsed = (elapsed = 0) => {
-    const time = moment.utc(elapsed);
-    return (
-      <div className='time p-3 py-2 rounded bg-gray-200'>{time.format('mm:ss')}</div>
-    );
-  };
-
-  renderScore = (score) => (
-    <div className='flex'>
-      <p className='home-score score text-white font-bold bg-green-900'>{score[0]}</p>
-      <p className='away-score score text-white font-bold bg-green-900'>{score[1]}</p>
-    </div>
+  // Replay game dependent variables
+  const homeClub = getClubById(
+    replayGame ? replayGame.hometeam_id : currentGame.homeClubId,
+  );
+  const awayClub = getClubById(
+    replayGame ? replayGame.awayteam_id : currentGame.awayClubId,
   );
 
-  renderStartTime = (start) => (
-    <p className='font-bold text-white'>{moment(start).format('HH:mm')}</p>
-  );
+  const currentScore = currentGame.score || [0, 0];
+  const replayScore = replayGame
+    ? [replayGame.hometeam_score, replayGame.awayteam_score]
+    : [0, 0];
+  const score = replayGame ? replayScore : currentScore;
 
-  renderFixture = ({ homeClub, awayClub, content }: RenderFixture) => {
-    if (homeClub && awayClub) {
-      return (
-        <div className='flex items-center justify-center p-3 w-full'>
-          <div className='flex justify-end items-center'>
-            <h5 className='font-bold mx-2'>{homeClub.name}</h5>
-            <img
-              className='w-16'
-              src={`images/club-logos/badge_${homeClub.code}_200.png`}
-              alt='logo home'
-            />
-          </div>
-          <div className='time p-3 py-2 rounded mx-4 bg-green-900'>{content}</div>
-          <div className='flex items-center'>
-            <img
-              className='w-16'
-              src={`images/club-logos/badge_${awayClub.code}_200.png`}
-              alt='logo'
-            />
-            <h5 className='font-bold mx-2'>{awayClub.name}</h5>
-          </div>
-        </div>
-      );
-    }
-  };
+  const currentElapsed = currentGame.elapsed || 0;
+  const elapsed = replayGame ? 0 : currentElapsed;
+  const events = replayGame ? replayGame.events : currentGame.events;
 
-  renderFixtureLive = () => {
-    if (!this.props.currentGame.current) return 'Spinner';
-    const { homeClubId, awayClubId, score, elapsed = 0 } = this.props.currentGame.current;
-    const homeClub = this.getClubById(homeClubId);
-    const awayClub = this.getClubById(awayClubId);
-    if (!homeClub || !awayClub || !score) return 'Spinner';
+  // Actions
+  const dispatch = useDispatch();
 
-    const content = (
-      <div className='flex'>
-        <p className='text-white font-bold bg-green-900 w-8'>
-          {score[0]} : {score[1]}
-        </p>
-      </div>
-    );
-    return (
-      <>
-        {this.renderElapsed(elapsed)}
-        {this.renderFixture({ homeClub, awayClub, content })}
-      </>
-    );
-  };
+  // Initial load
+  useEffect(() => {
+    dispatch(loadCurrentGame());
+    dispatch(loadLastGames(9));
+  }, []);
 
-  renderFixtureNext = () => {
-    if (!this.props.currentGame.next) return 'loading';
-    const { hometeam_id, awayteam_id, start } = this.props.currentGame.next;
-    const homeClub = this.getClubById(hometeam_id);
-    const awayClub = this.getClubById(awayteam_id);
-    const content = (
-      <p className='font-bold text-white'>{moment(start).format('DD.MM')}</p>
-    );
-
-    return (
-      <>
-        <h2 className='font-semibold text-xl mb-2'>Next match</h2>
-        {homeClub && awayClub && this.renderFixture({ homeClub, awayClub, content })}
-      </>
-    );
-  };
-
-  renderModal = () => {
-    const { homeClub, awayClub, timeout } = this.state;
-    const options = this.props.clubs.map(({ name, id }) => {
-      return { label: name, value: String(id) };
-    });
-    const optionsHome = options;
-    const optionsAway = options.filter(
-      ({ value }) => value !== String(homeClub && homeClub.id),
-    );
-
-    return (
-      <Modal onDismiss={this.onModalDismiss}>
-        <div className='p-8'>
-          <h3 className='font-bold text-2xl mb-4'>Select clubs</h3>
-          <div className='flex -mx-2 mb-8'>
-            <div className='w-1/3 px-2'>
-              <div className='font-semibold text-l'>Home club</div>
-              {/* eslint-disable-next-line */}
-              <Dropdown
-                options={optionsHome}
-                value={homeClub && String(homeClub.id)}
-                className='w-40'
-                onChange={({ value }) => {
-                  if (value === String(awayClub && awayClub.id)) {
-                    this.setState({
-                      homeClub: this.getClubById(value),
-                      awayClub: undefined,
-                    });
-                  } else {
-                    this.setState({ homeClub: this.getClubById(value) });
-                  }
-                }}
-              ></Dropdown>
-            </div>
-            <div className='w-1/3 px-2'>
-              <div className='font-semibold text-l'>Away club</div>
-              {/* eslint-disable-next-line */}
-              <Dropdown
-                options={optionsAway}
-                value={awayClub && String(awayClub.id)}
-                className='w-40'
-                onChange={({ value }) =>
-                  this.setState({ awayClub: this.getClubById(value) })
-                }
-              ></Dropdown>
-            </div>
-            <div className='w-1/3 px-2'>
-              <div className='font-semibold text-l'>Timeout</div>
-              {/* eslint-disable-next-line */}
-              <Dropdown
-                options={timeoutOptions}
-                value={String(timeout)}
-                className='w-40'
-                onChange={({ value }) => this.setState({ timeout: Number(value) })}
-              ></Dropdown>
-            </div>
-          </div>
-          <div className=''>
-            <Button className='mr-4 text-sm' styling='primary' onClick={this.simulate}>
-              Start simulation
-            </Button>
-            <Button className='text-sm' styling='secondary' onClick={this.onModalDismiss}>
-              Cancel
-            </Button>
-          </div>
-        </div>
-      </Modal>
-    );
-  };
-
-  renderField() {
-    const { events } = this.props.currentGame.current || { events: [] };
-    const lastEvent = events[events.length - 1] || false;
-    const defaultAnimationProps = {
-      duration: 500,
-      opposite: true,
-      distance: '50%',
+  // Load replay game events
+  useEffect(() => {
+    const getEvents = async (id) => {
+      const events = await eventsService.getEventsByGameId(id);
+      setReplayEvents(events);
     };
+    if (replayGame) {
+      // eslint-disable-next-line
+      getEvents(replayGame.id);
+    }
+  }, [replayGame]);
 
-    return (
-      <div className='relative mt-16'>
-        {fieldEvents.map((event) => (
-          <div
-            className='absolute'
-            style={event.style}
-            key={`${event.name}-${event.team}`}
-          >
-            <Fade
-              {...event.direction}
-              when={
-                lastEvent &&
-                lastEvent.name === event.name &&
-                lastEvent.team === event.team
-              }
-              {...defaultAnimationProps}
-            >
-              <img src={event.img} alt={`${event.name} - ${event.team}`} />
-            </Fade>
-          </div>
-        ))}
+  useEffect(() => setCurrentEvent(events[events.length - 1]), [events]);
 
-        <img src={field} alt='Football field' />
+  const requestSimulation = (homeClubId, awayClubId) => {
+    faker.simulate({ homeClubId, awayClubId });
+  };
+
+  const renderCurrentFixture = () => {
+    const centerContent = (
+      <div>
+        {score[0]}:{score[1]}
       </div>
     );
-  }
+    const elapsedSeconds = moment.duration(elapsed).asSeconds();
+    const minutes = Math.floor(elapsedSeconds / 60);
+    const seconds = Math.round(elapsedSeconds - minutes * 60);
+    const format = (number) => {
+      const numStr = String(number);
+      const prefixZeroCount = 2 - numStr.length;
+      return prefixZeroCount <= 0
+        ? numStr
+        : Array(prefixZeroCount + 1).join('0') + numStr;
+    };
+    const belowContent = `${format(minutes)}:${format(seconds)}`;
+    return <Fixture {...{ homeClub, awayClub, centerContent, belowContent }} />;
+  };
 
-  render() {
-    const { isModalActive } = this.state;
-    const { current } = this.props.currentGame;
-    const gameStarted = current ? current.gameStarted : false;
-    const events = current ? current.events : [];
-    const simulateButton = gameStarted ? (
-      <Button onClick={this.stopSimulation} className='bg-red'>
-        Stop simulation
-      </Button>
-    ) : (
-      <Button onClick={this.showModal}>Simulate</Button>
-    );
+  const renderNextFixture = () => {
+    if (!nextGame) return 'spinner';
+    const homeClub = getClubById(nextGame.hometeam_id);
+    const awayClub = getClubById(nextGame.awayteam_id);
+    const centerContent = moment(nextGame.start).format('DD.MM');
+    const belowContent = moment(nextGame.start).format('HH:mm');
+    return <Fixture {...{ homeClub, awayClub, centerContent, belowContent }} />;
+  };
 
+  const fixture =
+    replayGame || currentGame.gameStarted ? renderCurrentFixture() : renderNextFixture();
+
+  const renderProgress = () => {
+    const labels = events
+      .filter((event) => event.name === 'goal')
+      .reduce(
+        (acc, { elapsed, player }) =>
+          Object.assign(acc, {
+            [elapsed]: `${Math.round(moment.duration(elapsed).asMinutes())}' ${
+              player.second_name
+            }`,
+          }),
+        {},
+      );
+    const value = currentEvent ? currentEvent.elapsed : 0;
     return (
+      <Slider
+        className='progress'
+        min={0}
+        max={90 * 60 * 1000}
+        value={value}
+        labels={labels}
+      />
+    );
+  };
+
+  const onPlayClick = () => {
+    console.log('play');
+    setReplayGame(
+      produce((draft) => {
+        draft.isPlaying = true;
+      }),
+    );
+  };
+
+  const onPauseClick = () => {
+    console.log('pause');
+  };
+
+  const renderPlaybackControls = () => {
+    if (!replayGame) return null;
+    const classes =
+      'border rounded px-2 py-1 mr-2 leading-none	uppercase text-sm text-green-500 border-green-500';
+    return (
+      <>
+        <button className={classes} onClick={onPlayClick}>
+          Play
+        </button>
+        <button className={classes} onClick={onPauseClick}>
+          Pause
+        </button>
+      </>
+    );
+  };
+
+  const onFixtureClick = (game) => () => {
+    setReplayGame({
+      ...game,
+      hometeam_score: 0,
+      awayteam_score: 0,
+      isPlaying: false,
+      events: [],
+      currentEvent: undefined,
+    });
+  };
+
+  return (
+    <>
+      <div className='bg-white text-secondary shadow-figma rounded-sm p-12 mb-4'>
+        <Play
+          gameStarted={currentGame.gameStarted}
+          events={events}
+          currentEvent={currentEvent}
+          fixture={fixture}
+          requestSimulation={requestSimulation}
+          playbackControls={renderPlaybackControls()}
+        />
+        <div className='mt-12'>{renderProgress()}</div>
+      </div>
       <div className='bg-white text-secondary shadow-figma rounded-sm p-12'>
-        <div className='flex -mx-4'>
-          <div className='w-1/2 mx-4'>
-            <h2 className='font-semibold text-5xl mt-4 leading-none mb-8'>Live page</h2>
-            <div
-              className='h-64 overflow-auto bg-gray-200 rounded p-4'
-              ref={this.eventsLog}
-            >
-              {events.map((event) => (
-                <div key={event.elapsed}>{renderComment(event, this.state)}</div>
-              ))}
-            </div>
-          </div>
-          <div className='w-1/2 pt-4 mx-4 h-64 flex flex-col items-center'>
-            {gameStarted ? this.renderFixtureLive() : this.renderFixtureNext()}
-            {this.renderField()}
-          </div>
-        </div>
-        <div className='mt-8'>{simulateButton}</div>
-        {isModalActive && this.renderModal()}
+        <h3 className='font-bold text-3xl mb-4'>Replay previous matches</h3>
+        <LastGamesList
+          games={lastGames}
+          getClubById={getClubById}
+          onClick={onFixtureClick}
+        />
       </div>
-    );
-  }
-}
-
-const mapStateToProps = (rootState: RootState) => ({
-  clubs: rootState.clubs.clubs,
-  currentGame: rootState.currentGame,
-});
-
-const actions = {
-  loadCurrentGame,
+    </>
+  );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Live);
+export default Live;
