@@ -28,6 +28,17 @@ class GameweekRepository extends BaseRepository {
     });
   }
 
+  getCurrentGameweek() {
+    const now = new Date();
+    return this.model.findOne({
+      where: {
+        start: {
+          [Op.gte]: now,
+        },
+      },
+    });
+  }
+
   getNext() {
     const now = new Date();
     // return this.model.findAll({
