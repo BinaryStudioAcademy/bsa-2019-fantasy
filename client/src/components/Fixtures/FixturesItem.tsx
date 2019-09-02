@@ -213,11 +213,11 @@ const FixturesItem = ({
   return (
     <React.Fragment>
       {/* eslint-disable */}
-      <div className='flex relative w-full items-center justify-center'>
+      <div className='flex w-full relative items-center justify-center'>
         <li
-          className={`flex items-center justify-center py-3 ${
-            match.started ? 'cursor-pointer' : ''
-          } ${isDisplay ? 'bg-green-600 text-white' : ''}`}
+          className={`flex items-center p-3 ${match.started ? 'cursor-pointer' : ''} ${
+            isDisplay ? 'bg-green-600 text-white' : ''
+          }`}
           onClick={() => toggleStats()}
         >
           {/* eslint-enable */}
@@ -260,9 +260,9 @@ const FixturesItem = ({
               </p>
             </Button>
           )}
-          {isDisplay && <div className='bg-gray-100 mb-4 p-3'>{displayStats()}</div>}
         </li>
       </div>
+      {isDisplay && <div className='bg-gray-100 mb-4 p-3'>{displayStats()}</div>}
     </React.Fragment>
   );
 };

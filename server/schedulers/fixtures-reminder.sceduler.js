@@ -36,13 +36,10 @@ const fixturesReminderScheduler = async () => {
         };
 
         // send user emails at different time depending on match status
-        const timeToRemind = getGameInfo(game).finished
-          ? moment(gameDetails.start).subtract(24, 'h')
-          : moment(gameDetails.end).add(30, 'm');
+        const timeToRemind = moment(gameDetails.start).subtract(24, 'h');
 
         schedule.scheduleJob('fixture remind', new Date(timeToRemind), async () => {
           sendRemind(userToRemind.email, gameDetails);
-          fixturesReminderScheduler();
         });
         console.log(
           `>>> Remind about fixture ${gameDetails.homeTeamName} - ${gameDetails.awayTeamName} on: ${timeToRemind} for user ${userToRemind.email}`,
