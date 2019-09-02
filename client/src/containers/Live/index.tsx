@@ -11,11 +11,13 @@ import { LastGamesList } from './LastGamesList';
 
 import { loadCurrentGame, loadLastGames } from './actions';
 import * as faker from './socket';
+import * as eventsService from 'services/eventsService';
 
 import { RootState } from 'store/types';
 
 import styles from './styles.module.scss';
 import './progress.style.scss'; // cannot style nested elements of uncontrolled component react-rangeslider with css modules
+import produce from 'immer';
 
 const Live = () => {
   // Redux state
@@ -34,6 +36,9 @@ const Live = () => {
   // Component state
   const [currentEvent, setCurrentEvent] = useState();
   const [replayGame, setReplayGame] = useState();
+  const [replayEvents, setReplayEvents] = useState();
+
+  console.log(replayGame);
 
   // Replay game dependent variables
   const homeClub = getClubById(
@@ -56,10 +61,23 @@ const Live = () => {
   // Actions
   const dispatch = useDispatch();
 
+  // Initial load
   useEffect(() => {
     dispatch(loadCurrentGame());
     dispatch(loadLastGames(9));
   }, []);
+
+  // Load replay game events
+  useEffect(() => {
+    const getEvents = async (id) => {
+      const events = await eventsService.getEventsByGameId(id);
+      setReplayEvents(events);
+    };
+    if (replayGame) {
+      // eslint-disable-next-line
+      getEvents(replayGame.id);
+    }
+  }, [replayGame]);
 
   useEffect(() => setCurrentEvent(events[events.length - 1]), [events]);
 
@@ -123,12 +141,41 @@ const Live = () => {
     );
   };
 
+  const onPlayClick = () => {
+    console.log('play');
+    setReplayGame(
+      produce((draft) => {
+        draft.isPlaying = true;
+      }),
+    );
+  };
+
+  const onPauseClick = () => {
+    console.log('pause');
+  };
+
+  const renderPlaybackControls = () => {
+    if (!replayGame) return null;
+    const classes =
+      'border rounded px-2 py-1 mr-2 leading-none	uppercase text-sm text-green-500 border-green-500';
+    return (
+      <>
+        <button className={classes} onClick={onPlayClick}>
+          Play
+        </button>
+        <button className={classes} onClick={onPauseClick}>
+          Pause
+        </button>
+      </>
+    );
+  };
+
   const onFixtureClick = (game) => () => {
-    console.log(game);
     setReplayGame({
       ...game,
       hometeam_score: 0,
       awayteam_score: 0,
+      isPlaying: false,
       events: [],
       currentEvent: undefined,
     });
@@ -143,6 +190,7 @@ const Live = () => {
           currentEvent={currentEvent}
           fixture={fixture}
           requestSimulation={requestSimulation}
+          playbackControls={renderPlaybackControls()}
         />
         <div className='mt-12'>{renderProgress()}</div>
       </div>

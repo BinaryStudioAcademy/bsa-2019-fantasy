@@ -11,6 +11,7 @@ export const Play = ({
   currentEvent,
   fixture,
   requestSimulation,
+  playbackControls,
 }) => {
   const [isMuted, setIsMuted] = useState(false);
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -67,6 +68,7 @@ export const Play = ({
         <div className='flex flex-1 items-center'>
           {renderStatus()}
           {renderUpcoming()}
+          {playbackControls}
         </div>
         {fixture}
         <div className='flex flex-1 items-center justify-end'>
