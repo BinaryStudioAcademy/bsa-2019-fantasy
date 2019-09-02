@@ -69,33 +69,19 @@ const MyTeam = () => {
           'mb-6',
           'rounded',
           'flex',
-          'items-end',
+          'flex-col',
           'justify-between',
-          'pt-6',
+          'pt-12',
         )}
       >
-        <div className={cn(header['jumbotron-content'], 'mt-16')}>
-          <h2 className={cn(header.title, 'text-secondary', 'mb-6')}>
+        <div className={cn(header['jumbotron-content'], 'mb-8')}>
+          <h2 className={cn(header.title, 'text-secondary')}>
             <div className={cn(header.sub, header.title, 'mb-4', 'flex', 'items-center')}>
               {t('MyTeamPage.title.sub')}
             </div>
             {t('MyTeamPage.title.main')}
           </h2>
         </div>
-      </div>
-
-      <div
-        className={cn(
-          header.jumbotron,
-          header.paper,
-          'mb-12',
-          'rounded',
-          'flex',
-          'flex-col',
-          'items-center',
-          'justify-between',
-        )}
-      >
         <TeamSelection
           players={players}
           setPlayers={setPlayers}
@@ -112,6 +98,7 @@ const MyTeam = () => {
           hasBench
         />
       </div>
+
       {openedPlayer && (
         <StatusPlayerModal
           player={openedPlayer}

@@ -29,6 +29,8 @@ export const TeamRow = styled.div`
 `;
 
 export const Pitch = styled.div`
+  flex: 1 0;
+
   padding: 1rem;
   display: flex;
   flex-direction: column;

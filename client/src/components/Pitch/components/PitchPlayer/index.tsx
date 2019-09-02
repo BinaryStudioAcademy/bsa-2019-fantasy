@@ -78,13 +78,8 @@ const PitchPlayer = ({
 
     drag(dragRef);
   }
-  let height = showFixtures ? '6.8rem' : '6rem';
   return (
-    <S.Container
-      className='shadow rounded'
-      style={{ backgroundColor, height }}
-      ref={dropRef}
-    >
+    <S.Container className='shadow rounded' style={{ backgroundColor }} ref={dropRef}>
       {isActive && (
         <S.Spinner>
           <FaFutbol />
