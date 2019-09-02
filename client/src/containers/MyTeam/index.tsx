@@ -34,7 +34,6 @@ const MyTeam = () => {
 
   const [playerToSwitch, setPlayerToSwitch] = useState<PitchPlayerType | null>(null);
   const players = useSelector((state: RootState) => state.gameweeks.gameweeks_history);
-
   const currentGameweek = useSelector(currentGameweekSelector);
   const { pitchPlayers, setPitch } = usePitchPlayers(players);
   const [switchQuery, setSwitchQuery] = useState<PitchPlayerType[][]>([]);
@@ -248,6 +247,7 @@ const MyTeam = () => {
         <TeamSelection
           players={pitchPlayers}
           setPlayers={setPitch}
+          showFixtures={true}
           query={switchQuery}
           setQuery={setSwitchQuery}
           onPlayerClick={onOpen}

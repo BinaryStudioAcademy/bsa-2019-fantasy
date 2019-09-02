@@ -21,6 +21,17 @@ router
       .getPlayerStatsByGameweeks(req.params.id)
       .then((value) => res.json(value))
       .catch(next),
+  )
+  .get('/next-fixture/:id', (req, res, next) =>
+    playerMatchService
+      .getNextFixtures()
+      .then((fixtures) =>
+        playerMatchService
+          .getNextFixtureForPlayer(req.params.id, fixtures)
+          .then((result) => res.json(result))
+          .catch(next),
+      )
+      .catch(next),
   );
 
 export default router;

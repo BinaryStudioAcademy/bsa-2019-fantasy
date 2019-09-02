@@ -94,6 +94,7 @@ const Transfers = () => {
             <TeamSelection
               players={pitchPlayers}
               setPlayers={setPitch}
+              showFixtures={false}
               hasBench={false}
               onPlayerDrop={onPlayerDrop}
               submit={{

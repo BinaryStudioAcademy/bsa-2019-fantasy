@@ -63,6 +63,7 @@ const SquadSelection = withRouter(({ history }) => {
             <TeamSelection
               players={pitchPlayers}
               setPlayers={setPitch}
+              showFixtures={false}
               submit={{
                 label: t('Gameweek.saveTeam'),
                 canSubmit: amountOfPlayersPicked === 15,
