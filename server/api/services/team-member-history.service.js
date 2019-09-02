@@ -63,25 +63,31 @@ export const postTeamMemberHistory = async (data, gameweekHistoryId, gameweekId)
   );
 
   const { number: gameweekNumber } = await gameweekRepository.getById(gameweekId);
+  const { number: currentGameweewNumber } = await gameweekRepository.getCurrentGameweek();
 
   const games = await gameRepository.getByGameweekId(gameweekNumber);
   const gameIds = games.map((el) => el.id);
 
-  // count total team score for the current gameweek
-  let totalTeamScore = 0;
-  const getPlayerInfo = async (player) => {
-    const { player_score } = player;
-    totalTeamScore += player_score;
+  if (gameweekNumber !== currentGameweewNumber) {
+    const pitchPlayers = await Promise.all([
+      ...data
+        .filter((p) => !p.is_on_bench)
+        .map((p) =>
+          playerMatchRepository.getByIdWithGamesConstraints(p.player_id, gameIds),
+        ),
+    ]);
+    const teamCaptain = data.find((p) => p.is_captain).player_id;
+
+    const reducer = (acc, curr) =>
+      curr.player_id === teamCaptain
+        ? acc + curr.player_score * 3
+        : acc + curr.player_score;
+
+    const totalTeamScore = pitchPlayers.reduce(reducer, 0);
 
     // update team_score in database
-    console.log(totalTeamScore);
     await gameweekHistoryRepository.setTeamScoreById(gameweekHistoryId, totalTeamScore);
-  };
-  data.map((p) =>
-    playerMatchRepository
-      .getByIdWithGamesConstraints(p.player_id, gameIds)
-      .then((player) => getPlayerInfo(player)),
-  );
+  }
 
   return result;
 };
