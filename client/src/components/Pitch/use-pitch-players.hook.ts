@@ -22,9 +22,6 @@ export const transformToPitchPlayers = <P extends { player_stats: PlayerType }>(
   players: P[],
   clubs: Club[],
 ): AbstractPitchPlayer<P>[] => {
-  // REMOVE THIS
-  console.log('TRANSFORM HELPER');
-  console.log(players);
   return getPitch(players).map((p) =>
     p.item === null
       ? p

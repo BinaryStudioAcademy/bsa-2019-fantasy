@@ -110,17 +110,16 @@ export const fetchGameweekHistory = (
       gameweekId,
     );
 
+    // fetching upcomming fixtures for each player
     if (result) {
-      result.map(async (r) => {
-        const upcommingFixture = await playerService.getUpcomingFixtureForPlayer(
+      for await (let r of result) {
+        const upcomingFixture = await playerService.getUpcomingFixtureForPlayer(
           r.player_stats.id,
         );
-
-        r.upcommingFixture = upcommingFixture;
-      });
+        r.upcomingFixture = upcomingFixture;
+      }
+      dispatch(fetchGameweeksHistorySuccess(result));
     }
-
-    dispatch(fetchGameweeksHistorySuccess(result));
   } catch (err) {
     dispatch(fetchGameweeksHistoryFailure(err.message || err));
   }

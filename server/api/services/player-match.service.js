@@ -117,12 +117,10 @@ export const getPlayerScoreByGameweeks = async (playerId, gameweekId) => {
 
 export const getNextFixtures = async () => {
   // filter only future fixtures
-  const result = await gameRepository.getAll();
-  result
-    .map((g) => g.get({ plain: true }))
-    .sort((a, b) => moment(a.start).isBefore(moment(b.start)))
-    .filter((g) => !g.finished);
 
+  const result = await gameRepository.getAll();
+  const now = moment();
+  result.map((g) => g.get({ plain: true })).filter((g) => moment(g.start).isAfter(now));
   return result;
 };
 

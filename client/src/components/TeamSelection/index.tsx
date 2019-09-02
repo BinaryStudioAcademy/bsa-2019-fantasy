@@ -24,7 +24,10 @@ type Props = {
    */
   setPlayers: React.Dispatch<React.SetStateAction<PitchPlayerType[]>>;
   disabled?: boolean;
-
+  showFixtures: boolean;
+  /**
+   * `showFixtures` is a flag, which controls what player`s info to display
+   */
   query?: PitchPlayerType[][];
   setQuery?: React.Dispatch<React.SetStateAction<PitchPlayerType[][]>>;
 
@@ -50,9 +53,9 @@ const TeamSelection = ({
   submit,
   hasBench = false,
   disabled = false,
+  showFixtures,
 }: Props) => {
   const { t } = useTranslation();
-  console.log(players);
   const [view, setView] = useState<'list' | 'pitch'>('pitch');
 
   const handlePlayerDrop = useCallback(
@@ -206,6 +209,7 @@ const TeamSelection = ({
           onPlayerDrop={handlePlayerDrop}
           onPlayerClick={onPlayerClick}
           disabled={disabled}
+          showFixtures={showFixtures}
         />
       )}
 

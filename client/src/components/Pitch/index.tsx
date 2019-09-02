@@ -12,6 +12,7 @@ type Props = {
   players: PitchPlayerType[];
   hasBench: boolean;
   disabled?: boolean;
+  showFixtures: boolean;
 
   onPlayerDrop: (target: number, benched: boolean) => (player: DisplayPlayerType) => void;
   onPlayerClick?: (player: DisplayPlayerType) => void;
@@ -20,15 +21,13 @@ type Props = {
 export const Pitch = ({
   players,
   hasBench,
+  showFixtures,
   disabled = false,
   onPlayerDrop,
   onPlayerClick,
 }: Props) => {
   const order: PlayerPosition[] = ['GKP', 'DEF', 'MID', 'FWD'];
 
-  // REMOVE THIS
-  console.log('PITCH');
-  console.log(players);
   return (
     <S.Container>
       <DndProvider backend={HTML5Backend}>
@@ -45,6 +44,7 @@ export const Pitch = ({
                     type={type}
                     player={p.item}
                     disabled={disabled}
+                    showFixtures={showFixtures}
                     onDrop={onPlayerDrop}
                     onClick={onPlayerClick}
                     key={`pitch-${type.toString()}-${
@@ -68,6 +68,7 @@ export const Pitch = ({
                   benched
                   player={p.item}
                   disabled={disabled}
+                  showFixtures={showFixtures}
                   onDrop={onPlayerDrop}
                   onClick={onPlayerClick}
                   key={`bench-${p.item ? p.item.player_stats.id : idx}`}
