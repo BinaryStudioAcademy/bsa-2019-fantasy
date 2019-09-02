@@ -23,8 +23,6 @@ const teamReminderScheduler = async () => {
 
       schedule.scheduleJob('remind apply team', new Date(timeToRemind), async () => {
         sendRemind(u.email);
-
-        teamReminderScheduler();
       });
       console.log(`>>> Remind apply team on: ${timeToRemind} for ${u.email}`);
     }
