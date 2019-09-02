@@ -6,6 +6,7 @@ import playerRepository from '../data/repositories/player.repository';
 import gameweekRepository from '../data/repositories/gameweek.repository';
 import calculatePlayerPrice from '../helpers/calculate-player-price.helper';
 import userRepository from '../data/repositories/user.repository';
+import { makeAutoSubstitution } from '../api/services/gameweek-history.service';
 
 const gameweekScheduler = async () => {
   const gameweeks = await gameweekRepository.getAll();
@@ -48,11 +49,15 @@ const gameweekScheduler = async () => {
         }
       });
 
+      // Make auto substitution
+      await makeAutoSubstitution(currentGameweek.id);
+
       gameweekScheduler();
     },
   );
   console.log(`>>> Players price recalculation job scheduled on: ${currentGameweek.end}`);
   console.log(`>>> Users free transfer giving job scheduled on: ${currentGameweek.end}`);
+  console.log(`>>> Auto substitution job scheduled on: ${currentGameweek.end}`);
 };
 
 export default gameweekScheduler;

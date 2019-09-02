@@ -1,4 +1,6 @@
 import cn from 'classnames';
+import moment from 'moment';
+
 import React, { useRef } from 'react';
 import { FaFutbol } from 'react-icons/fa';
 import { useDrop, useDrag } from 'react-dnd';
@@ -12,6 +14,7 @@ type Props = {
   index: number;
   player: PitchPlayerType;
   disabled: boolean;
+  showFixtures: boolean;
   benched?: boolean;
 
   onDrop: (targetIdx: number, benched: boolean) => (dropped: DisplayPlayerType) => any;
@@ -22,6 +25,7 @@ const PitchPlayer = ({
   index,
   player: { type, accept, item: player },
   disabled,
+  showFixtures,
   benched = false,
   onDrop,
   onClick,
@@ -48,6 +52,17 @@ const PitchPlayer = ({
   });
 
   const isActive = isOver && canDrop;
+  const renderNextFixtureInfo = () => {
+    if (player) {
+      const isHome = player.upcomingFixture.isHome ? '(H)' : '(A)';
+      return (
+        <p>
+          {player.upcomingFixture.fixture}{' '}
+          {moment(player.upcomingFixture.start).calendar()} {isHome}
+        </p>
+      );
+    }
+  };
 
   let backgroundColor = 'rgba(34, 34, 34, 0.3)';
   if (player && player.display.highlight) {
@@ -63,9 +78,13 @@ const PitchPlayer = ({
 
     drag(dragRef);
   }
-
+  let height = showFixtures ? '6.8rem' : '6rem';
   return (
-    <S.Container className='shadow rounded' style={{ backgroundColor }} ref={dropRef}>
+    <S.Container
+      className='shadow rounded'
+      style={{ backgroundColor, height }}
+      ref={dropRef}
+    >
       {isActive && (
         <S.Spinner>
           <FaFutbol />
@@ -110,8 +129,10 @@ const PitchPlayer = ({
             <div className='px-1 w-full text-sm bg-green-800 text-white text-center truncate'>
               {player.player_stats.second_name}
             </div>
-            <div className='bg-green-400 text-sm leading-tight'>
-              {disabled
+            <div className='bg-green-400 text-xs leading-tight'>
+              {showFixtures && player.upcomingFixture
+                ? renderNextFixtureInfo()
+                : disabled
                 ? player.player_stats.player_score
                 : player.player_stats.player_price}
             </div>

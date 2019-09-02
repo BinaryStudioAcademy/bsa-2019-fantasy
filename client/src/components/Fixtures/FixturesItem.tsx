@@ -213,11 +213,11 @@ const FixturesItem = ({
   return (
     <React.Fragment>
       {/* eslint-disable */}
-      <div className='flex items-center justify-around'>
+      <div className='flex w-full relative items-center justify-center'>
         <li
-          className={`flex w-5/6 items-center p-3 ${
-            match.started ? 'cursor-pointer' : ''
-            } ${isDisplay ? 'bg-green-600 text-white' : ''}`}
+          className={`flex items-center p-3 ${match.started ? 'cursor-pointer' : ''} ${
+            isDisplay ? 'bg-green-600 text-white' : ''
+          }`}
           onClick={() => toggleStats()}
         >
           {/* eslint-enable */}
@@ -249,19 +249,18 @@ const FixturesItem = ({
             />
             <h5 className='font-bold'>{match.awayteam.name}</h5>
           </div>
+          {match.started ? null : (
+            <Button
+              className='inline-block absolute right-0  w-1/12 h-8 rounded-lg flex justify-center'
+              styling={isSubscribed ? 'secondary' : 'primary'}
+              onClick={(e) => onSubscribe()}
+            >
+              <p>
+                <FaBell />
+              </p>
+            </Button>
+          )}
         </li>
-
-        {match.started ? null : (
-          <Button
-            className='block w-1/12 h-8 rounded-lg flex justify-center'
-            styling={isSubscribed ? 'secondary' : 'primary'}
-            onClick={(e) => onSubscribe()}
-          >
-            <p>
-              <FaBell />
-            </p>
-          </Button>
-        )}
       </div>
       {isDisplay && <div className='bg-gray-100 mb-4 p-3'>{displayStats()}</div>}
     </React.Fragment>

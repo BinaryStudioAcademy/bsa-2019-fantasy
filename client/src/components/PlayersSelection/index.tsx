@@ -196,7 +196,6 @@ const PlayersSelection = ({
           onDismiss={onModalDismiss}
           loading={dialogLoading}
           player={currentPlayer}
-          clubName={'ARS'}
         />
       )}
 

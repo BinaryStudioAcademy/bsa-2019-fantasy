@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import moment from 'moment';
 
 import userRepository from '../data/repositories/user.repository';
@@ -44,6 +45,7 @@ const recalculateTeamsScore = async () => {
         gameweekHistory.id,
         score,
       );
+
       console.log(result);
     } else {
       console.log('team score have not been changed');

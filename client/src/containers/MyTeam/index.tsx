@@ -1,15 +1,25 @@
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import StatusPlayerModal from './components/StatusPlayerModal';
-import TeamSelection from 'components/TeamSelection';
+import { RootState } from 'store/types';
 import { useMyTeam } from './use-my-team.hook';
+import { fetchDataForPlayer, resetPlayerDialogData } from 'containers/Players/actions';
+
+import PlayerDialog from 'components/PlayerDialog';
+import TeamSelection from 'components/TeamSelection';
+import StatusPlayerModal from './components/StatusPlayerModal';
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
+import { PlayerType } from 'types/player.types';
 
 const MyTeam = () => {
+  useEffect(() => {
+    document.title = 'My Team | Fantasy Football League';
+  }, []);
+
   const { t } = useTranslation();
 
   const {
@@ -34,9 +44,21 @@ const MyTeam = () => {
     handleSubmit,
   } = useMyTeam();
 
-  useEffect(() => {
-    document.title = 'My Team | Fantasy Football League';
-  }, []);
+  const dispatch = useDispatch();
+  const { playerData, dialogLoading } = useSelector((state: RootState) => state.players);
+
+  const [currentDialogPlayer, setCurrentDialogPlayer] = useState<PlayerType | null>(null);
+
+  const handleOpenInfo = (player: PlayerType) => {
+    setCurrentDialogPlayer(player);
+    dispatch(fetchDataForPlayer(player.id, player.club_id + ''));
+    handleCloseModal();
+  };
+
+  const onModalDismiss = () => {
+    dispatch(resetPlayerDialogData());
+    setCurrentDialogPlayer(null);
+  };
 
   return (
     <div className={styles['team-page']}>
@@ -77,6 +99,7 @@ const MyTeam = () => {
         <TeamSelection
           players={players}
           setPlayers={setPlayers}
+          showFixtures
           query={switchQuery}
           setQuery={setSwitchQuery}
           onPlayerClick={handleOpenModal}
@@ -97,6 +120,15 @@ const MyTeam = () => {
           onSetViceCaptain={handleSetViceCaptain}
           onSwitch={handleAddPlayer}
           onCancel={handleCancelAddedPlayer}
+          onOpenInfo={handleOpenInfo}
+        />
+      )}
+      {currentDialogPlayer && (
+        <PlayerDialog
+          playerDialogData={playerData}
+          onDismiss={onModalDismiss}
+          loading={dialogLoading}
+          player={currentDialogPlayer}
         />
       )}
     </div>

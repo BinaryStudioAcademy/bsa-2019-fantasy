@@ -1,8 +1,11 @@
+import moment from 'moment';
+
 import playerMatchRepository from '../../data/repositories/player-match.repository';
 import playerRepository from '../../data/repositories/player.repository';
 import gameweekRepository from '../../data/repositories/gameweek.repository';
 import gameRepository from '../../data/repositories/game.repository';
 import eventRepository from '../../data/repositories/event.repository';
+import footballClubRepository from '../../data/repositories/football-club.repository';
 
 import calculatePlayerScore from '../../helpers/calculate-player-score.helper';
 
@@ -110,4 +113,41 @@ export const getPlayerScoreByGameweeks = async (playerId, gameweekId) => {
   const score = scoreList.reduce((sum, current) => sum + current, 0);
 
   return score;
+};
+
+export const getNextFixtures = async () => {
+  // filter only future fixtures
+
+  const result = await gameRepository.getAll();
+  const now = moment();
+  result.map((g) => g.get({ plain: true })).filter((g) => moment(g.start).isAfter(now));
+  return result;
+};
+
+export const getNextFixtureForPlayer = async (playerId, fixtures) => {
+  const { club_id } = await playerRepository.getById(playerId);
+
+  // find upcoming match for player
+  const hometeamMatch = fixtures.find((f) => f.hometeam_id === club_id);
+  const awayteamMatch = fixtures.find((f) => f.awayteam_id === club_id);
+
+  if (!hometeamMatch && !awayteamMatch) {
+    return { message: 'upcoming match for player is not found' };
+  }
+
+  // check which of the games starts earlier
+  if (moment(hometeamMatch.start).isBefore(moment(awayteamMatch.start))) {
+    const awayteam = await footballClubRepository.getById(hometeamMatch.awayteam_id);
+    return {
+      fixture: awayteam.short_name,
+      start: hometeamMatch.start,
+      isHome: true,
+    };
+  }
+  const awayteam = await footballClubRepository.getById(awayteamMatch.awayteam_id);
+  return {
+    fixture: awayteam.short_name,
+    start: awayteamMatch.start,
+    isHome: false,
+  };
 };

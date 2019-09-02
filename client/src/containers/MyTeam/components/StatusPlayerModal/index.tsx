@@ -7,6 +7,7 @@ import { PitchPlayerType } from 'components/Pitch/types';
 import Modal from 'components/Modal';
 
 import styles from './styles.module.scss';
+import { PlayerType } from 'types/player.types';
 
 type Props = {
   player: {
@@ -20,6 +21,8 @@ type Props = {
   onSetViceCaptain: () => void;
   onSwitch: () => void;
   onCancel: () => void;
+
+  onOpenInfo: (player: PlayerType) => void;
 };
 
 const StatusPlayerModal = ({
@@ -29,6 +32,7 @@ const StatusPlayerModal = ({
   onSetViceCaptain,
   onSwitch,
   onCancel,
+  onOpenInfo,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -84,6 +88,12 @@ const StatusPlayerModal = ({
                 {t('StatusPlayerModal.makeViceCaptain')}
               </button>
             )}
+            <button
+              className='bg-green-700 p-2 rounded font-bold'
+              onClick={() => onOpenInfo(player.item!.player_stats)}
+            >
+              {t('StatusPlayerModal.viewInfo')}
+            </button>
           </>
         )}
         {!canBeSwitched && player.item.is_on_bench && (

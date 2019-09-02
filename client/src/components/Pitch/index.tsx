@@ -8,11 +8,11 @@ import { PitchPlayerType, DisplayPlayerType } from './types';
 import PitchPlayer from './components/PitchPlayer';
 
 import * as S from './styles';
-
 type Props = {
   players: PitchPlayerType[];
   hasBench: boolean;
   disabled?: boolean;
+  showFixtures: boolean;
 
   onPlayerDrop: (target: number, benched: boolean) => (player: DisplayPlayerType) => void;
   onPlayerClick?: (player: DisplayPlayerType) => void;
@@ -21,6 +21,7 @@ type Props = {
 export const Pitch = ({
   players,
   hasBench,
+  showFixtures,
   disabled = false,
   onPlayerDrop,
   onPlayerClick,
@@ -42,6 +43,7 @@ export const Pitch = ({
                     index={players.indexOf(p)}
                     player={p}
                     disabled={disabled}
+                    showFixtures={showFixtures}
                     onDrop={onPlayerDrop}
                     onClick={onPlayerClick}
                     key={`pitch-${type.toString()}-${
@@ -62,6 +64,7 @@ export const Pitch = ({
                   index={players.indexOf(p)}
                   player={p}
                   disabled={disabled}
+                  showFixtures={showFixtures}
                   onDrop={onPlayerDrop}
                   onClick={onPlayerClick}
                   key={`bench-${p.item ? p.item.player_stats.id : idx}`}

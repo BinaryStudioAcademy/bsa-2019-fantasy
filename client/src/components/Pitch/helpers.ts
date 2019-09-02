@@ -29,6 +29,5 @@ export const getPitch = <T extends AbstractPlayerType>(players: T[] = []) => {
       .concat(Array(emptyPlayersAmount).fill({ item: null }))
       .map((p) => ({ ...p, type, accept: [type] }));
   });
-
   return team;
 };

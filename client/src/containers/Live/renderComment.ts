@@ -1,8 +1,7 @@
-import React from 'react';
-export default function renderComment(event, state) {
-  return <>{event.text}</>;
-  // const { homeClub, awayClub } = state;
-  // const [home, away] = state.score;
+export const renderComment = (event) => {
+  return event.text;
+  // const { homeClub, awayClub } = currentGame;
+  // const [home, away] = currentGame.score;
   // const { player, team } = event;
   // const name = player ? `${player.first_name} ${player.second_name}` : '';
   // const club = team ? (team === 'home' ? homeClub : awayClub) : undefined;
@@ -76,4 +75,4 @@ export default function renderComment(event, state) {
   //   default:
   //     return <>{event.text}</>;
   // }
-}
+};

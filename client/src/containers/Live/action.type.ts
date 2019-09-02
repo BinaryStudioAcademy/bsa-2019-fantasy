@@ -46,3 +46,27 @@ export type LoadCurrentGameAction =
   | LoadCurrentGameSuccess
   | LoadCurrentGameFailure;
 export type AsyncLoadCurrentGameAction = Thunky<LoadCurrentGameAction>;
+
+export const LOAD_LAST_GAMES_REQUEST = 'LAST_GAMES:LOAD_LAST_GAMES_REQUEST';
+export const LOAD_LAST_GAMES_SUCCESS = 'LAST_GAMES:LOAD_LAST_GAMES_SUCCESS';
+export const LOAD_LAST_GAMES_FAILURE = 'LAST_GAMES:LOAD_LAST_GAMES_FAILURE';
+
+type LoadLastGamesRequest = {
+  type: typeof LOAD_LAST_GAMES_REQUEST;
+};
+
+type LoadLastGamesSuccess = {
+  type: typeof LOAD_LAST_GAMES_SUCCESS;
+  payload: Game[];
+};
+
+type LoadLastGamesFailure = {
+  type: typeof LOAD_LAST_GAMES_FAILURE;
+  payload: string;
+};
+
+export type LoadLastGamesAction =
+  | LoadLastGamesRequest
+  | LoadLastGamesSuccess
+  | LoadLastGamesFailure;
+export type AsyncLoadLastGamesAction = Thunky<LoadLastGamesAction>;
