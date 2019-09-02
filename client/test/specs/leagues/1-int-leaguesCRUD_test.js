@@ -79,11 +79,11 @@ describe('Leagues test suite', () => {
   });
 
   it('should be able to leave a public league', async () => {
-    const leagueName = Page.getRandomName();
+    const leagueName = Helper.getRandomName();
     await leaguesSteps.createPublicLeague(leagueName);
 
     await navSteps.clicklogOutBtn();
-    await Page.logInAsDifferentUser();
+    await Helper.logInAsDifferentUser();
     await navSteps.navigateToLeagues();
     await leaguesSteps.joinPublicLeague(leagueName);
     await browser.pause(3000);
@@ -107,10 +107,10 @@ describe('Leagues test suite', () => {
   });
 
   it('should be able to leave a private league', async () => {
-    const leagueName = Page.getRandomName();
+    const leagueName = Helper.getRandomName();
     const inviteCode = await leaguesSteps.createPrivateLeague(leagueName);
     await navSteps.clicklogOutBtn();
-    await Page.logInAsDifferentUser();
+    await Helper.logInAsDifferentUser();
     await navSteps.navigateToLeagues();
     await browser.pause(2000);
     await leaguesSteps.joinPrivateLeague(inviteCode);
