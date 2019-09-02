@@ -11,10 +11,11 @@ import { getGoalkeepersUniformUrl, getFieldPlayersUniformUrl } from 'helpers/ima
 import { getPitch } from './helpers';
 import { Club } from 'types/club.type';
 import { PlayerType } from 'types/player.types';
+import { UpcomingFixture } from 'types/fixture.types';
 
 type AbstractPitchPlayer<P> = {
   type: PlayerPosition;
-  item: (P & { display: { src: string } }) | null;
+  item: (P & { display: { src: string } } & { upcomingFixture: UpcomingFixture }) | null;
 };
 
 export const transformToPitchPlayers = <P extends { player_stats: PlayerType }>(

@@ -9,3 +9,9 @@ export type FixtureSubscribtion = {
   user_id: string;
   game_id: string;
 };
+
+export type UpcomingFixture = {
+  fixture: string;
+  start: string;
+  isHome: boolean;
+};
