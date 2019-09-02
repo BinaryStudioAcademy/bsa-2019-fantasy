@@ -3,6 +3,7 @@
   "wait": "Зачекайте",
   "send": "Відправити",
   "next": "Наступна",
+  "change": "Змінити",
   "previous": "Попередня",
   "submit": "Відправити",
   "subscribe": "Підписатися",
@@ -202,7 +203,7 @@
     "steps": {
       "personalDetails": "Персональні дані",
       "favouriteClub": "Улюблений клуб",
-      "emailPreferences": "Налаштування пошти"
+      "notifictaionCenter": "Центр сповіщень"
     },
 
     "personalDetails": {
@@ -221,8 +222,11 @@
       "title": "Улюблений клуб"
     },
 
-    "emailPreferences": {
-      "title": "Налаштування пошти",
+    "notifictaionCenter": {
+      "title": "Центр сповіщень",
+      "clubTitle": "Cповіщення про події улюбленого клуба",
+      "clubSubtitle": "Чи хочете ви отримувати сповіщення про події улюбленого клуба?",
+      "favouriteClub": "Улюблений клуб",
       "email-select": "Отримувати сповіщення обрати команду на пошту",
       "timeSelect": "За який період нагадати обрати команду?",
       "hours": "годин",

@@ -8,7 +8,7 @@ import { useSteps } from 'helpers/hooks/steps.hook';
 
 import FavouriteClubSelection from './components/FavouriteClubSelection';
 import PersonalDetails from './components/PersonalDetails';
-import EmailPreferences from './components/EmailPreferences';
+import NotificationCenter from './components/NotificationCenter';
 import Progress from './components/Progress';
 
 import styles from './styles.module.scss';
@@ -57,7 +57,7 @@ const Profile = withRouter(({ history }) => {
             </Route>
             <Route path='/profile/details' component={PersonalDetails} />
             <Route path='/profile/favorite-club' component={FavouriteClubSelection} />
-            <Route path='/profile/email-preferences' component={EmailPreferences} />
+            <Route path='/profile/email-preferences' component={NotificationCenter} />
             <Route>
               <Redirect to='/404' />
             </Route>
