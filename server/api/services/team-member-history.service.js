@@ -13,6 +13,8 @@ export const getPlayersByGameweekId = async (id) => {
 
 export const getPlayerHistoryByGameweekId = async (id, gameweekNumber) => {
   const result = [];
+  console.log(id);
+
   await Promise.all(
     await teamMemberHistoryRepository
       .getByGameweekId(id)
@@ -69,13 +71,13 @@ export const postTeamMemberHistory = async (data, gameweekHistoryId, gameweekId)
   const gameIds = games.map((el) => el.id);
 
   if (gameweekNumber !== currentGameweewNumber) {
-    const pitchPlayers = await Promise.all([
-      ...data
+    const pitchPlayers = await Promise.all(
+      data
         .filter((p) => !p.is_on_bench)
         .map((p) =>
           playerMatchRepository.getByIdWithGamesConstraints(p.player_id, gameIds),
         ),
-    ]);
+    );
     const teamCaptain = data.find((p) => p.is_captain).player_id;
 
     const reducer = (acc, curr) =>
