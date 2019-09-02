@@ -2,20 +2,23 @@ const loginPage = require('../pages/login.po');
 
 class LoginSteps {
   async _enterEmail(email) {
-    await loginPage.emailInput.then((res) => res.waitForDisplayed(5000));
-    await loginPage.emailInput.then((res) => res.clearValue());
-    await loginPage.emailInput.then((res) => res.setValue(email));
+    const emailInput = await $(loginPage.emailInput);
+    await emailInput.waitForDisplayed(5000);
+    await emailInput.clearValue();
+    await emailInput.setValue(email);
   }
 
   async _enterPassword(password) {
-    await loginPage.passwordInput.then((res) => res.waitForDisplayed(2000));
-    await loginPage.passwordInput.then((res) => res.clearValue());
-    await loginPage.passwordInput.then((res) => res.setValue(password));
+    const passwordInput = await $(loginPage.passwordInput);
+    await passwordInput.waitForDisplayed(2000);
+    await passwordInput.clearValue();
+    await passwordInput.setValue(password);
   }
 
   async _clickSubmitForm() {
-    await loginPage.submitBtn.then((res) => res.waitForDisplayed(2000));
-    await loginPage.submitBtn.then((res) => res.click());
+    const submitBtn = await $(loginPage.submitBtn);
+    await submitBtn.waitForDisplayed(2000);
+    await submitBtn.click();
   }
 
   async submitLoginForm(email, password) {

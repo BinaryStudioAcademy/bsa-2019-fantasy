@@ -1,15 +1,9 @@
 class JoinLeaguesPage {
-  get publicLeagueCodeInp() {
-    return $('//label[@for="public-league-name"]/..//input');
-  }
-  get joinPublicLeagueBtn() {
-    return $('//label[@for="public-league-name"]/../../../button');
-  }
-  get privateLeagueCodeInp() {
-    return $('//label[@for="league-code"]/..//input');
-  }
-  get joinPrivateLeagueBtn() {
-    return $('//label[@for="league-code"]/../../../button');
+  constructor(){
+    this.publicLeagueCodeInp = '//label[@for="public-league-name"]/..//input';
+    this.joinPublicLeagueBtn = '//label[@for="public-league-name"]/../../../button';
+    this.privateLeagueCodeInp = '//label[@for="league-code"]/..//input';
+    this.joinPrivateLeagueBtn = '//label[@for="league-code"]/../../../button';
   }
 }
 

@@ -7,21 +7,24 @@ const Help = require('../../../helpers/helpers');
 
 class LeaguesSteps {
   async _clickJoinLeagueBtn() {
-    await page.joinLeagueBtn.then((res) => res.waitForDisplayed(2000));
+    const joinLeagueBtn = await $(page.joinLeagueBtn);
+    await joinLeagueBtn.waitForDisplayed(2000);
     await browser.pause(5000);
-    await page.joinLeagueBtn.then((res) => res.click());
-    //await page.joinLeagueBtn.then((res) => Help.browserClick(res));
+    await joinLeagueBtn.click();
+    //await Help.browserClick(joinLeagueBtn);
   }
 
   async _enterPublicLeagueJoinCode(value) {
-    await joinPage.publicLeagueCodeInp.then((res) => res.waitForDisplayed(2000));
-    await joinPage.publicLeagueCodeInp.then((res) => res.clearValue());
-    await joinPage.publicLeagueCodeInp.then((res) => res.setValue(value));
+    const publicLeagueCodeInp = await $(joinPage.publicLeagueCodeInp);
+    await publicLeagueCodeInp.waitForDisplayed(2000);
+    await publicLeagueCodeInp.clearValue();
+    await publicLeagueCodeInp.setValue(value);
   }
 
   async _clickSubmitPublicLeagueJoin() {
-    await joinPage.joinPublicLeagueBtn.then((res) => res.waitForDisplayed());
-    await joinPage.joinPublicLeagueBtn.then((res) => res.click());
+    const joinPublicLeagueBtn = await $(joinPage.joinPublicLeagueBtn);
+    await joinPublicLeagueBtn.waitForDisplayed();
+    await joinPublicLeagueBtn.click();
   }
 
   async joinPublicLeague(code) {
@@ -31,17 +34,19 @@ class LeaguesSteps {
   }
 
   async _enterPrivateLeagueJoinCode(value) {
-    await joinPage.privateLeagueCodeInp.then((res) => res.waitForDisplayed(2000));
+    const privateLeagueCodeInp = await $(joinPage.privateLeagueCodeInp);
+    await privateLeagueCodeInp.waitForDisplayed(2000);
     //await joinPage.privateLeagueCodeInp.then(res => res.click());
     //await browser.keyes(['Meta', 'v']);
-    await joinPage.privateLeagueCodeInp.then((res) => res.clearValue());
-    await joinPage.privateLeagueCodeInp.then((res) => res.setValue(value));
+    await privateLeagueCodeInp.clearValue();
+    await privateLeagueCodeInp.setValue(value);
   }
 
   async _clickSubmitPrivateLeagueJoin() {
-    await joinPage.joinPrivateLeagueBtn.then((res) => res.scrollIntoView());
-    await joinPage.joinPrivateLeagueBtn.then((res) => res.waitForDisplayed(2000));
-    await joinPage.joinPrivateLeagueBtn.then((res) => res.click());
+    const joinPrivateLeagueBtn = await $(joinPage.joinPrivateLeagueBtn);
+    await joinPrivateLeagueBtn.scrollIntoView();
+    await joinPrivateLeagueBtn.waitForDisplayed(2000);
+    await joinPrivateLeagueBtn.click();
   }
 
   async joinPrivateLeague(value) {
@@ -52,8 +57,9 @@ class LeaguesSteps {
   }
 
   async _clickCreateLeagueBtn() {
-    await page.createLeagueBtn.then((res) => res.waitForDisplayed(2000));
-    await page.createLeagueBtn.then((res) => res.click());
+    const createLeagueBtn = await $(page.createLeagueBtn);
+    await createLeagueBtn.waitForDisplayed(2000);
+    await createLeagueBtn.click();
   }
 
   async _enterLeagueName(name) {
@@ -101,26 +107,20 @@ class LeaguesSteps {
   }
 
   async findPublicLeagueByName(name) {
-    const listLen = await page.publicListItems.then((res) => {
-      return res.length;
-    });
+    const publicListItems = await $(page.publicListItems);
+    const listLen = await publicListItems.length;
     for (let i = 0; i < listLen; i++) {
-      const itemName = await page.publicListItems.then((res) => {
-        return res[i].getText();
-      });
+      const itemName = await publicListItems[i].getText();
       if (itemName === name) return true;
     }
     return false;
   }
 
   async findPrivateLeagueByName(name) {
-    const listLen = await page.privateListItems.then((res) => {
-      return res.length;
-    });
+    const privateListItems = await $(page.privateListItems);
+    const listLen = await privateListItems.length;
     for (let i = 0; i < listLen; i++) {
-      const itemName = await page.privateListItems.then((res) => {
-        return res[i].getText();
-      });
+      const itemName = await privateListItems[i].getText();
       if (itemName === name) return true;
     }
     return false;
