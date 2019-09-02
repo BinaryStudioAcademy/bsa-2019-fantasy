@@ -7,6 +7,12 @@ class GameRepository extends BaseRepository {
     return this.model.findAll();
   }
 
+  getPlayedGames({ limit = 10, order_direction = 'DESC' }) {
+    const order = [['updatedAt', order_direction]];
+    const where = { finished: true };
+    return this.model.findAll({ where, order, limit });
+  }
+
   getById(id) {
     return this.model.findOne({ where: { id } });
   }

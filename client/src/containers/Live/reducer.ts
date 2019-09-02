@@ -9,6 +9,10 @@ import {
   LiveStatusObject,
   ADD_LIVE_EVENT,
   AddLiveEventAction,
+  LOAD_LAST_GAMES_REQUEST,
+  LOAD_LAST_GAMES_SUCCESS,
+  LOAD_LAST_GAMES_FAILURE,
+  LoadLastGamesAction,
 } from './action.type';
 import { Game } from 'types/game.types';
 import produce from 'immer';
@@ -18,6 +22,7 @@ type State = {
   next?: Game;
   loading: boolean;
   error?: string;
+  lastGames: Game[];
 };
 
 const initialState: State = {
@@ -30,13 +35,18 @@ const initialState: State = {
     events: [],
   },
   next: undefined,
+  lastGames: [],
   loading: false,
   error: undefined,
 };
 
 export default (
   state = initialState,
-  action: LoadCurrentGameAction | SetLiveStatusAction | AddLiveEventAction,
+  action:
+    | LoadCurrentGameAction
+    | SetLiveStatusAction
+    | AddLiveEventAction
+    | LoadLastGamesAction,
 ) => {
   switch (action.type) {
     case LOAD_CURRENT_GAME_REQUEST:
@@ -53,6 +63,12 @@ export default (
         draft.current.score = action.payload.score || draft.current.score;
         draft.current.events.push(action.payload);
       });
+    case LOAD_LAST_GAMES_REQUEST:
+      return { ...state, loading: true };
+    case LOAD_LAST_GAMES_SUCCESS:
+      return { ...state, lastGames: action.payload };
+    case LOAD_LAST_GAMES_FAILURE:
+      return { ...state, error: action.payload };
     default:
       return state;
   }

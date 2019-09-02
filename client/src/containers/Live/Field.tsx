@@ -4,8 +4,7 @@ import Fade from 'react-reveal/Fade';
 import fieldEvents from './fieldEvents';
 import field from 'assets/images/field.svg';
 
-export const Field = ({ events }) => {
-  const lastEvent = events[events.length - 1] || false;
+export const Field = ({ currentEvent }) => {
   const defaultAnimationProps = {
     duration: 500,
     opposite: true,
@@ -19,7 +18,9 @@ export const Field = ({ events }) => {
           <Fade
             {...event.direction}
             when={
-              lastEvent && lastEvent.name === event.name && lastEvent.team === event.team
+              currentEvent &&
+              currentEvent.name === event.name &&
+              currentEvent.team === event.team
             }
             {...defaultAnimationProps}
           >

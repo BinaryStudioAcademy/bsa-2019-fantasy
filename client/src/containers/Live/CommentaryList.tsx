@@ -7,7 +7,6 @@ import styles from './styles.module.scss';
 
 export const CommentaryList = ({ events }) => {
   const logRef = useRef<HTMLDivElement>(null);
-  console.log('render commentaryList');
 
   const scrollDown = () => {
     if (logRef) {
@@ -18,10 +17,7 @@ export const CommentaryList = ({ events }) => {
   useEffect(scrollDown, [events]);
 
   return (
-    <div
-      ref={logRef}
-      className={cn(styles['noScrollbar'], 'h-32 flex-1 max-w-md text-sm')}
-    >
+    <div ref={logRef} className={cn(styles['noScrollbar'], 'text-sm')}>
       {events.map((event) => (
         <p key={event.elapsed}>{renderComment(event)}</p>
       ))}

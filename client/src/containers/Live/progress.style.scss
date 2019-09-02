@@ -1,0 +1,9 @@
+.progress {
+  .rangeslider__handle {
+    background-image: url(../../assets/images/simulation/ball.svg);
+    box-shadow: none;
+    &:after {
+      display: none;
+    }
+  }
+}

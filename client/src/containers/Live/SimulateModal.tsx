@@ -3,8 +3,11 @@ import React, { useState } from 'react';
 import Modal from 'containers/Modal';
 import Dropdown from 'components/Dropdown';
 import Button from 'components/Button';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/types';
 
-export const SimulateModal = ({ clubs, onSubmit, onDismiss }) => {
+export const SimulateModal = ({ onSubmit, onDismiss }) => {
+  const clubs = useSelector((state: RootState) => state.clubs.clubs);
   const options = clubs.map(({ name, id }) => {
     return { label: name, value: String(id) };
   });
