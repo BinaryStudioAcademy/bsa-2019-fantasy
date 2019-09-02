@@ -30,6 +30,10 @@ export default (orm, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
+      player_score: {
+        allowNull: true,
+        type: DataTypes.INTEGER,
+      },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
       player_id: {
