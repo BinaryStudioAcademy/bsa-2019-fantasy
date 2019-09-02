@@ -8,21 +8,10 @@ class LeaguesPage {
         `//h3[text() ="Private classic leagues"]/..//a[contains(@href, ${leagueName})]`,
       );
     };
-  }
-  get joinLeagueBtn() {
-    return $('//a[@href="/leagues/join"]');
-  }
-
-  get createLeagueBtn() {
-    return $('//a[@href="/leagues/create"]');
-  }
-
-  get publicListItems() {
-    return $$('//h3[text()="Public classic leagues"]/..//a');
-  }
-
-  get privateListItems() {
-    return $$('//h3[text() ="Private classic leagues"]/..//a');
+    this.joinLeagueBtn = '//a[@href="/leagues/join"]';
+    this.createLeagueBtn = '//a[@href="/leagues/create"]';
+    this.publicListItems = '//h3[text()="Public classic leagues"]/..//a';
+    this.privateListItems = '//h3[text() ="Private classic leagues"]/..//a';
   }
 }
 

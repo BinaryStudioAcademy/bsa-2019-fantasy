@@ -1,12 +1,8 @@
 class LoginPage {
-  get emailInput() {
-    return $('//input[@id="email"]');
-  }
-  get passwordInput() {
-    return $('//input[@id="password"]');
-  }
-  get submitBtn() {
-    return $('//button[@type="submit"]');
+  constructor(){
+    this.emailInput = '//input[@id="email"]';
+    this.passwordInput = '//input[@id="password"]';
+    this.submitBtn = '//button[@type="submit"]';
   }
 }
 
