@@ -40,7 +40,7 @@ const reducers = {
   gameweekHistory: gameweekHistoryReducer,
   transfers: transferReducer,
   notifications: notificationsReducer,
-  gameweeksEntryHistory: gameweeksEntryHistoryReducer
+  gameweeksEntryHistory: gameweeksEntryHistoryReducer,
 };
 
 const rootReducer = combineReducers({

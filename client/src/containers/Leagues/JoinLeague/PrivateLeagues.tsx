@@ -12,13 +12,16 @@ import { addNotification } from 'components/Notifications/actions';
 type Props = {
   joinLeague: typeof joinLeague;
   addNotification: typeof addNotification;
+  inviteCode?: string;
 };
 
-const PrivateLeagues = ({ joinLeague, addNotification }: Props) => {
+const PrivateLeagues = ({ joinLeague, addNotification, inviteCode }: Props) => {
   const { t } = useTranslation();
 
   const [code, setCode] = useState('');
   const [isLoading, setLoading] = useState(false);
+
+  inviteCode && !code && setCode(inviteCode);
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();

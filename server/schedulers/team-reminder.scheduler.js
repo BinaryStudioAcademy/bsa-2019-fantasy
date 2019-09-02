@@ -21,18 +21,12 @@ const teamReminderScheduler = async () => {
       }
       const timeToRemind = moment(nextGameweek.start).subtract(u.sendmail_time, 'h');
 
-      schedule.scheduleJob(
-        'remind apply team',
-        new Date(timeToRemind),
-        async (fireDate) => {
-          console.log(`remind apply team ${fireDate}`);
+      schedule.scheduleJob('remind apply team', new Date(timeToRemind), async () => {
+        sendRemind(u.email);
 
-          sendRemind(u.email);
-
-          teamReminderScheduler();
-        },
-      );
-      console.log(`>>> Remind apply team on: ${timeToRemind}`);
+        teamReminderScheduler();
+      });
+      console.log(`>>> Remind apply team on: ${timeToRemind} for ${u.email}`);
     }
   });
 };

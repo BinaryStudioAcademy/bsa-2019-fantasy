@@ -16,23 +16,43 @@ import {
   deleteFixtureSubscription,
 } from 'containers/Profile/actions';
 import { addNotification } from 'components/Notifications/actions';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   match: FixturesItemType;
   subscribed: boolean;
+  currentMatchStats: FixturesItemType | undefined;
+  setCurrentMatchStats: React.Dispatch<
+    React.SetStateAction<FixturesItemType | undefined>
+  >;
 };
 
 const names = {
+  attack: 'Attack',
+  shot: 'Shots',
+  foul: 'Fouls',
   goal: 'Goals',
-  assist: 'Assists',
-  goal_conceded: 'Goals conceded',
-  missed_pass: 'Missed passes',
-  yellow_card: 'Yellow cards',
-  red_card: 'Red cards',
   save: 'Saves',
+  miss: 'Misses',
+  yellowCard: 'Yellow Cards',
+  goalKick: 'Goal kicks',
+  cornerKick: 'Corner kicks',
+  freeKick: 'Free kicks',
+  penaltyKick: 'Penalty kick',
+  interception: 'Interceptions',
+  out: 'Outs',
+  trauma: 'Traumas',
+  redCard: 'Red cards',
+  nothing: 'Nothing',
 };
 
-const FixturesItem = ({ match, subscribed }: Props) => {
+const FixturesItem = ({
+  match,
+  subscribed,
+  currentMatchStats,
+  setCurrentMatchStats,
+}: Props) => {
+  const { t } = useTranslation();
   const [isDisplay, setIsDisplay] = useState(false);
   const [stats, setStats] = useState<any>([]);
   const [isSubscribed, setSubscribe] = useState<boolean>(subscribed);
@@ -42,11 +62,18 @@ const FixturesItem = ({ match, subscribed }: Props) => {
   useEffect(() => {
     if (gameDetails) {
       gameDetails.forEach((g) => {
+        if (!g.player) return;
         setStats((stats) => {
-          const team =
-            g.player.player.club_id === match.hometeam_id
-              ? 'hometeam_stats'
-              : 'awayteam_stats';
+          let team;
+          if (g.player) {
+            team =
+              g.player.player.club_id === match.hometeam_id
+                ? 'hometeam_stats'
+                : 'awayteam_stats';
+          } else {
+            team = 'common_stats';
+          }
+
           const statsItem = stats.find((st) => st.title === names[g.event_type]);
           if (statsItem) {
             const index = statsItem[team].findIndex(
@@ -89,12 +116,18 @@ const FixturesItem = ({ match, subscribed }: Props) => {
     }
   }, [gameDetails]);
 
+  useEffect(() => {
+    if (currentMatchStats && currentMatchStats.id !== match.id) {
+      setIsDisplay(false);
+    }
+  }, [currentMatchStats]);
+
   const toggleStats = () => {
     setStats([]);
     if (match.started) {
       if (!isDisplay) {
+        setCurrentMatchStats(match);
         dispatch(loadGameDetailsAction(match.id));
-      } else {
       }
       setIsDisplay(!isDisplay);
     }
@@ -154,18 +187,22 @@ const FixturesItem = ({ match, subscribed }: Props) => {
     if (isSubscribed) {
       dispatch(
         addNotification(
-          `You have unsubscribed from fixture ${match.hometeam.name} - ${
-            match.awayteam.name
-          }, which starts on ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
+          `${t('Notifications.messages.unsubscribedFromFixture')} ${
+            match.hometeam.name
+          } - ${match.awayteam.name}, ${t(
+            'Notifications.messages.whichStartsOn',
+          )} ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
         ),
       );
       dispatch(deleteFixtureSubscription(match.id));
     } else {
       dispatch(
         addNotification(
-          `You have subscribed to fixture ${match.hometeam.name} - ${
+          `${t('Notifications.messages.subscribedToFixture')} ${match.hometeam.name} - ${
             match.awayteam.name
-          }, which starts on ${moment(match.start).format('dddd D MMMM YYYY HH:mm')} `,
+          }, ${t('Notifications.messages.whichStartsOn')} ${moment(match.start).format(
+            'dddd D MMMM YYYY HH:mm',
+          )} `,
         ),
       );
       dispatch(createFixtureSubscription(match.id));
@@ -180,7 +217,7 @@ const FixturesItem = ({ match, subscribed }: Props) => {
         <li
           className={`flex w-5/6 items-center p-3 ${
             match.started ? 'cursor-pointer' : ''
-          } ${isDisplay ? 'bg-green-600 text-white' : ''}`}
+            } ${isDisplay ? 'bg-green-600 text-white' : ''}`}
           onClick={() => toggleStats()}
         >
           {/* eslint-enable */}

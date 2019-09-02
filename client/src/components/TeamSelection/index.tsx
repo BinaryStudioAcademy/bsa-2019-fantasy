@@ -1,7 +1,8 @@
 import { produce } from 'immer';
 import { FaListUl } from 'react-icons/fa';
+import { feedback } from 'react-feedbacker';
 import { useTranslation } from 'react-i18next';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 
 import { TeamMemberType } from 'types/gameweekHistory.type';
 import { PitchPlayerType, DisplayPlayerType } from '../Pitch/types';
@@ -22,6 +23,10 @@ type Props = {
    * `players` setter returned by `usePitchPlayers()` hook or analogue one
    */
   setPlayers: React.Dispatch<React.SetStateAction<PitchPlayerType[]>>;
+  disabled?: boolean;
+
+  query?: PitchPlayerType[][];
+  setQuery?: React.Dispatch<React.SetStateAction<PitchPlayerType[][]>>;
 
   hasBench?: boolean;
 
@@ -38,67 +43,147 @@ type Props = {
 const TeamSelection = ({
   players,
   setPlayers,
-  hasBench = false,
+  query,
+  setQuery,
   onPlayerDrop,
   onPlayerClick,
   submit,
+  hasBench = false,
+  disabled = false,
 }: Props) => {
   const { t } = useTranslation();
 
   const [view, setView] = useState<'list' | 'pitch'>('pitch');
 
   const handlePlayerDrop = useCallback(
-    (targetIdx: number) => (
+    (targetIdx: number, targetIsOnBench: boolean) => (
       player: DisplayPlayerType | Omit<DisplayPlayerType, keyof TeamMemberType>,
     ) => {
-      const target = players[targetIdx];
+      if (!disabled) {
+        const target = players[targetIdx];
 
-      if (!target.item || target.item.player_stats.id !== player.player_stats.id) {
-        const playerOnPitchIdx = players.findIndex(
-          (p) =>
-            p.item === player ||
-            (p.item && p.item.player_stats.id === player.player_stats.id),
-        );
-        const playerOnPitch = players[playerOnPitchIdx];
+        if (!target.item || target.item.player_stats.id !== player.player_stats.id) {
+          const playerOnPitchIdx = players.findIndex(
+            (p) =>
+              p.item === player ||
+              (p.item && p.item.player_stats.id === player.player_stats.id),
+          );
+          const playerOnPitch = players[playerOnPitchIdx];
 
-        const newPlayer =
-          playerOnPitch && playerOnPitch.item
-            ? playerOnPitch.item
-            : {
-                is_captain: false,
-                is_vice_captain: false,
-                is_on_bench: false,
-                ...target.item,
-                player_id: player.player_stats.id,
-                ...player,
-              };
+          let newPlayer =
+            playerOnPitch && playerOnPitch.item
+              ? {
+                  ...playerOnPitch.item,
+                }
+              : {
+                  is_captain: false,
+                  is_on_bench: false,
+                  is_vice_captain: false,
+                  ...target.item,
+                  player_id: player.player_stats.id,
+                  ...player,
+                };
 
-        const newPlayers = produce(
-          players,
-          (draft) => {
-            draft[targetIdx].item = newPlayer;
-            if (playerOnPitchIdx !== -1) {
-              draft[playerOnPitchIdx].item = target.item;
+          let newTargetItem = target.item;
+          if (hasBench && playerOnPitch.item && target.item) {
+            const targetItem = target.item;
+            const playerItem = playerOnPitch.item;
+
+            const movedToBench = !playerItem.is_on_bench && targetIsOnBench;
+            const movedFromBench = playerItem.is_on_bench && !targetIsOnBench;
+
+            if (movedToBench || movedFromBench) {
+              // Captain/vice-captain cannot be on bench
+              if (
+                targetItem.is_captain ||
+                targetItem.is_vice_captain ||
+                playerItem.is_captain ||
+                playerItem.is_vice_captain
+              ) {
+                feedback.warning('Captain or vice captain cannot sit on bench!');
+
+                setPlayers((pitch) =>
+                  produce(pitch, (draft) => {
+                    draft.forEach((p, idx) => {
+                      if (p.item) {
+                        draft[idx].item!.display.highlight = undefined;
+                      }
+                    });
+                  }),
+                );
+
+                return;
+              }
+
+              newTargetItem = { ...target.item };
+
+              if (movedToBench) {
+                newTargetItem.is_on_bench = false;
+              } else if (movedFromBench) {
+                newTargetItem.is_on_bench = true;
+              }
+
+              newPlayer.is_on_bench = targetIsOnBench;
             }
-          },
-          (_, immer_reverse) => {
-            onPlayerDrop &&
-              onPlayerDrop(
-                target.item,
-                newPlayer,
-                immer_reverse,
-                playerOnPitchIdx === -1,
-              );
-          },
-        );
+          }
 
-        setPlayers(newPlayers);
+          newPlayer = { ...newPlayer, display: { src: newPlayer.display.src } };
+          if (newTargetItem) {
+            newTargetItem = {
+              ...newTargetItem,
+              display: { src: newTargetItem.display.src },
+            };
+          }
+
+          const newPlayers = produce(
+            players,
+            (draft) => {
+              draft[targetIdx].item = newPlayer;
+              if (playerOnPitchIdx !== -1) {
+                draft[playerOnPitchIdx].item = newTargetItem;
+              }
+
+              draft.forEach((p, idx) => {
+                if (p.item) {
+                  draft[idx].item!.display.highlight = undefined;
+                }
+              });
+            },
+            (_, immer_reverse) => {
+              onPlayerDrop &&
+                onPlayerDrop(
+                  newTargetItem,
+                  newPlayer,
+                  immer_reverse,
+                  playerOnPitchIdx === -1,
+                );
+            },
+          );
+
+          setPlayers(newPlayers);
+        }
       }
     },
-    [players],
+    [players, disabled, hasBench, onPlayerDrop, setPlayers],
   );
 
   // TODO: Think about toolbar at the top in TeamSelection component :)
+
+  useEffect(() => {
+    if (query && query.length && setQuery) {
+      setQuery((query) =>
+        query.filter(([target, player]) => {
+          const targetIdx = players.findIndex(
+            (p) => p.item && p.item.player_stats.id === target.item!.player_stats.id,
+          );
+
+          handlePlayerDrop(targetIdx, players[targetIdx].item!.is_on_bench)(player.item!);
+
+          return false;
+        }),
+      );
+    }
+  }, [query, setQuery, handlePlayerDrop, players]);
 
   return (
     <S.Container className='bg-secondary rounded'>
@@ -120,6 +205,7 @@ const TeamSelection = ({
           hasBench={hasBench}
           onPlayerDrop={handlePlayerDrop}
           onPlayerClick={onPlayerClick}
+          disabled={disabled}
         />
       )}
 

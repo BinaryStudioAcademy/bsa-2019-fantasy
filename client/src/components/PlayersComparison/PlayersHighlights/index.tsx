@@ -246,7 +246,14 @@ const PlayersHighlights = (props: Props) => {
                   <div
                     key={index}
                     className={`${
-                      field > secondPlayerSeasonDataset[index] ? 'font-bold' : ''
+                      /* [0, 1, 4] are positive events indexes (goals, assists, saves) */
+                      [0, 1, 4].includes(index)
+                        ? field > secondPlayerSeasonDataset[index]
+                          ? 'font-bold'
+                          : ''
+                        : field < secondPlayerSeasonDataset[index]
+                        ? 'font-bold'
+                        : ''
                     }`}
                   >
                     {field}
@@ -265,11 +272,17 @@ const PlayersHighlights = (props: Props) => {
               </div>
 
               <div className='flex flex-col'>
-                {secondPlayerSeasonDataset.map((field, index, array) => (
+                {secondPlayerSeasonDataset.map((field, index) => (
                   <div
                     key={index}
                     className={`${
-                      field > firstPlayerSeasonDataset[index] ? 'font-bold' : ''
+                      [0, 1, 4].includes(index)
+                        ? field > firstPlayerSeasonDataset[index]
+                          ? 'font-bold'
+                          : ''
+                        : field < firstPlayerSeasonDataset[index]
+                        ? 'font-bold'
+                        : ''
                     }`}
                   >
                     {field}

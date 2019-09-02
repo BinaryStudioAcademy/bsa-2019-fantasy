@@ -13,12 +13,21 @@ type Props = {
   type: PlayerPosition | PlayerPosition[];
   player: DisplayPlayerType | null;
   disabled: boolean;
+  benched?: boolean;
 
-  onDrop: (targetIdx: number) => (dropped: DisplayPlayerType) => any;
+  onDrop: (targetIdx: number, benched: boolean) => (dropped: DisplayPlayerType) => any;
   onClick?: (player: DisplayPlayerType) => void;
 };
 
-const PitchPlayer = ({ index, type, player, disabled, onDrop, onClick }: Props) => {
+const PitchPlayer = ({
+  index,
+  type,
+  player,
+  disabled,
+  benched = false,
+  onDrop,
+  onClick,
+}: Props) => {
   const dropRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<HTMLDivElement>(null);
   const [{ isOver, canDrop }, drop] = useDrop<
@@ -27,7 +36,7 @@ const PitchPlayer = ({ index, type, player, disabled, onDrop, onClick }: Props) 
     { isOver: boolean; canDrop: boolean }
   >({
     accept: type,
-    drop: onDrop(index),
+    drop: onDrop(index, benched),
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
@@ -42,7 +51,9 @@ const PitchPlayer = ({ index, type, player, disabled, onDrop, onClick }: Props) 
   const isActive = isOver && canDrop;
 
   let backgroundColor = 'rgba(34, 34, 34, 0.3)';
-  if (isActive) {
+  if (player && player.display.highlight) {
+    backgroundColor = player.display.highlight;
+  } else if (isActive) {
     backgroundColor = 'rgba(0, 111, 55, 0.9)';
   } else if (canDrop) {
     backgroundColor = 'rgba(57, 90, 50, 0.9)';
@@ -89,7 +100,12 @@ const PitchPlayer = ({ index, type, player, disabled, onDrop, onClick }: Props) 
             </S.PlayerBadge>
           )}
           {player.display.src && (
-            <img style={{ opacity }} src={player.display.src} alt='player' />
+            <img
+              className='w-18'
+              style={{ opacity }}
+              src={player.display.src}
+              alt='player'
+            />
           )}
           <div className='absolute bottom-0 left-0 w-full'>
             <div className='px-1 w-full text-sm bg-green-800 text-white text-center truncate'>

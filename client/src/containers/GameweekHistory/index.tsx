@@ -4,15 +4,22 @@ import { Line as LineChart } from 'react-chartjs-2';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import cn from 'classnames';
+import { Redirect } from 'react-router';
 
 import { RootState } from 'store/types';
 
 import TeamSelection from 'components/Gameweek/TeamSelection';
+import TopTransfers from '../../components/TopTransfers/index';
 
 import Spinner from 'components/Spinner';
 import { getChartOptions } from 'helpers/gameweekChart';
 
-import { loadGameweeksHistoryAction, loadTeamHistoryAction } from './actions';
+import {
+  loadGameweeksHistoryAction,
+  loadTeamHistoryAction,
+  setCurrentGameweekAction,
+} from './actions';
+import { setInviteCode } from 'containers/Profile/actions';
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
@@ -31,27 +38,21 @@ const GameweekHistory = () => {
     user_rank: userRank,
     gameweeks_results: gameweekResults,
   } = useSelector((state: RootState) => state.gameweeks, shallowEqual);
-  const { gameweeksHistory, teamHistory, isLoading } = useSelector(
+  const { gameweeksHistory, teamHistory, isLoading, currentGameweek } = useSelector(
     (state: RootState) => state.gameweekHistory,
     shallowEqual,
   );
+
   const userId = useSelector(
     (state: RootState) => state.profile.user && state.profile.user.id,
   );
-
-  const [currentGameweek, setCurrentGameweek] = useState<number>(1);
+  const { inviteCode } = useSelector((state: RootState) => state.profile);
 
   useEffect(() => {
     if (userId) {
       dispatch(loadGameweeksHistoryAction(userId));
     }
   }, [dispatch, userId]);
-
-  useEffect(() => {
-    if (gameweeksHistory && gameweeksHistory.length) {
-      setCurrentGameweek(gameweeksHistory[0].gameweek.number);
-    }
-  }, [gameweeksHistory]);
 
   useEffect(() => {
     if (gameweeksHistory && gameweeksHistory.length) {
@@ -66,6 +67,11 @@ const GameweekHistory = () => {
   }, [currentGameweek, gameweeksHistory.length]);
 
   const displayRadar = () => gameweeksHistory.map((item) => item.team_score);
+
+  if (inviteCode !== '') {
+    dispatch(setInviteCode(''));
+    return <Redirect to={`/joinLeague/${inviteCode}`} />;
+  }
 
   if (!gameweeksHistory) {
     return <Spinner />;
@@ -95,7 +101,7 @@ const GameweekHistory = () => {
           <div className='text-center mb-4 flex justify-between'>
             {currentGameweek > 1 && (
               <button
-                onClick={() => setCurrentGameweek(currentGameweek - 1)}
+                onClick={() => dispatch(setCurrentGameweekAction(currentGameweek - 1))}
                 disabled={isLoading}
                 className={`g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded mr-6 font-bold`}
               >
@@ -105,7 +111,7 @@ const GameweekHistory = () => {
             )}
             {currentGameweek < gameweeksHistory.length && (
               <button
-                onClick={() => setCurrentGameweek(currentGameweek + 1)}
+                onClick={() => dispatch(setCurrentGameweekAction(currentGameweek + 1))}
                 disabled={isLoading}
                 className={cn(
                   styles['btn-next'],
@@ -199,6 +205,10 @@ const GameweekHistory = () => {
             </div>
           </div>
         </React.Fragment>
+      </div>
+
+      <div className={cn(header.paper, 'px-8', 'py-8', 'rounded', 'mt-4')}>
+        <TopTransfers />
       </div>
     </div>
   );

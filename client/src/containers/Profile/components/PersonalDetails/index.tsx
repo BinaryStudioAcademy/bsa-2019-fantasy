@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { feedback } from 'react-feedbacker';
 import moment from 'moment';
 import 'moment/locale/uk';
+import 'moment/locale/en-ie';
 
 import { RootState } from 'store/types';
 

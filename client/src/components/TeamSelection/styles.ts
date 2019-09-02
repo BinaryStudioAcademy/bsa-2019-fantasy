@@ -24,11 +24,13 @@ export const Container = styled.div`
 
   flex: 1 0;
   width: 100%;
+  max-width: 52rem;
   min-height: calc(100vh - 2rem);
+  height: calc(100vh - 2rem);
   max-height: calc(100vh - 2rem);
   overflow-y: auto;
 
-  padding: 1rem 4rem;
+  padding: 1rem 0;
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
@@ -75,6 +77,10 @@ export const Toggle = styled.div<{ isActive: boolean }>`
           background-color: transparent;
           cursor: pointer;
         `}
+
+  svg {
+    font-size: inherit;
+  }
 `;
 
 export const Submit = styled.button`
