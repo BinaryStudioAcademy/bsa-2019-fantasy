@@ -65,7 +65,7 @@ const TransfersModal = ({
         {t('TransfersModal.statement.b')},{' '}
         <span className='font-bold'>{user.score - totalCost}</span> pts{' '}
         {t('TransfersModal.statement.c')} £
-        <span className='font-bold'>{user.money - totalMoneyCost}</span>{' '}
+        <span className='font-bold'>{(user.money - totalMoneyCost).toFixed(2)}</span>{' '}
         {t('TransfersModal.statement.d')}.
       </span>
       <table className='mt-6'>
@@ -73,7 +73,8 @@ const TransfersModal = ({
           <tr className='border-b-2 border-secondary'>
             <td>{t('TransfersModal.table.in')}</td>
             <td>{t('TransfersModal.table.out')}</td>
-            <td>£</td>
+            <td>+ £</td>
+            <td>- £</td>
             <td>{t('TransfersModal.table.scoreCost')}</td>
           </tr>
         </thead>
@@ -86,15 +87,11 @@ const TransfersModal = ({
             >
               <td className='truncate'>{`${tf.in_player.first_name} ${tf.in_player.second_name}`}</td>
               <td className='truncate'>{`${tf.out_player.first_name} ${tf.out_player.second_name}`}</td>
-              <td
-                className={cn(
-                  'truncate',
-                  tf.out_player.player_price - tf.in_player.player_price >= 0
-                    ? 'text-green-700'
-                    : 'text-red-500',
-                )}
-              >
-                {Math.abs(tf.out_player.player_price - tf.in_player.player_price)}
+              <td className='truncate text-green-700'>
+                {tf.out_player.player_price.toFixed(2)}
+              </td>
+              <td className='truncate text-red-500'>
+                {tf.in_player.player_price.toFixed(2)}
               </td>
               <td>
                 <span className={cn(tf.cost === 0 && 'text-green-700')}>
@@ -117,7 +114,8 @@ const TransfersModal = ({
           >
             <td />
             <td>{t('TransfersModal.table.total')}:</td>
-            <td>{totalMoneyCost}</td>
+            <td />
+            <td>{totalMoneyCost.toFixed(2)}</td>
             <td>{totalCost} pts</td>
           </tr>
         </tbody>
