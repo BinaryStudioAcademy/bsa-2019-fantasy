@@ -218,6 +218,7 @@ const FixturesItem = ({
           className={`flex items-center p-3 ${match.started ? 'cursor-pointer' : ''} ${
             isDisplay ? 'bg-green-600 text-white' : ''
           }`}
+          style={{ minWidth: '450px' }}
           onClick={() => toggleStats()}
         >
           {/* eslint-enable */}
