@@ -169,8 +169,8 @@ const GameweekHistory = () => {
             </h3>
             <p className={cn('pl-3', styles.points)}>
               <span className='font-bold'>
-                {gameweeksHistory[gameweeksHistory.length - 1]
-                  ? gameweeksHistory[gameweeksHistory.length - 1].team_score
+                {gameweeksHistory[currentGameweek - 1]
+                  ? gameweeksHistory[currentGameweek - 1].team_score
                   : '0'}
               </span>
               {` ${t('GameweekHistoryPage.points')}`}
