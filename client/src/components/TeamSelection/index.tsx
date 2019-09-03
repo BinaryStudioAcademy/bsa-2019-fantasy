@@ -105,16 +105,6 @@ const TeamSelection = ({
               ) {
                 feedback.warning('Captain or vice captain cannot sit on bench!');
 
-                setPlayers((pitch) =>
-                  produce(pitch, (draft) => {
-                    draft.forEach((p, idx) => {
-                      if (p.item) {
-                        draft[idx].item!.display.highlight = undefined;
-                      }
-                    });
-                  }),
-                );
-
                 return;
               }
 
@@ -130,40 +120,44 @@ const TeamSelection = ({
             }
           }
 
-          newPlayer = { ...newPlayer, display: { src: newPlayer.display.src } };
-          if (newTargetItem) {
-            newTargetItem = {
-              ...newTargetItem,
-              display: { src: newTargetItem.display.src },
-            };
-          }
-
+          let immer_reverse;
           const newPlayers = produce(
             players,
             (draft) => {
-              draft[targetIdx].item = newPlayer;
+              draft[targetIdx] = {
+                type: newPlayer.player_stats.position,
+                accept: [newPlayer.player_stats.position],
+                item: newPlayer,
+              };
               if (playerOnPitchIdx !== -1) {
-                draft[playerOnPitchIdx].item = newTargetItem;
-              }
+                const newTargetType = newTargetItem
+                  ? newTargetItem.player_stats.position
+                  : draft[playerOnPitchIdx].type;
 
-              draft.forEach((p, idx) => {
-                if (p.item) {
-                  draft[idx].item!.display.highlight = undefined;
-                }
-              });
+                draft[playerOnPitchIdx] = {
+                  type: newTargetType,
+                  accept: [newTargetType],
+                  item: newTargetItem,
+                };
+              }
             },
-            (_, immer_reverse) => {
-              onPlayerDrop &&
-                onPlayerDrop(
-                  newTargetItem,
-                  newPlayer,
-                  immer_reverse,
-                  playerOnPitchIdx === -1,
-                );
+            (_, reversePatches) => {
+              immer_reverse = reversePatches;
             },
           );
 
+          const afterPlayerDrop =
+            onPlayerDrop &&
+            onPlayerDrop(
+              newTargetItem,
+              newPlayer,
+              immer_reverse,
+              playerOnPitchIdx === -1,
+            );
+
           setPlayers(newPlayers);
+
+          afterPlayerDrop && afterPlayerDrop(newPlayers);
         }
       }
     },

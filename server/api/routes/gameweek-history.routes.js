@@ -123,10 +123,10 @@ router
   // For teset purpose. Shoud be deleted
   .put('/auto-substitution/:gameweek', (req, res, next) => {
     gameweekHistoryService
-      .makeAutoSubsitution(req.params.gameweek)
+      .makeAutoSubstitution(req.params.gameweek)
       .then(() =>
         res.send({
-          message: 'Succeess test',
+          message: 'Success test',
         }),
       )
       .catch(next);

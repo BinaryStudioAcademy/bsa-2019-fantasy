@@ -12,5 +12,6 @@ export type DisplayPlayerType = GameweekHistoryType & {
 
 export type PitchPlayerType = {
   type: PlayerPosition;
+  accept: PlayerPosition[];
   item: DisplayPlayerType | null;
 };

@@ -102,7 +102,7 @@ export const useInitialTeamSelection = (history: History) => {
   };
 
   const handleResetSquad = () => {
-    setPitch((players) => players.map(({ type }) => ({ type, item: null })));
+    setPitch((players) => players.map(({ item, ...rest }) => ({ ...rest, item: null })));
     setIsMoreThree({ status: false, club: '' });
   };
 

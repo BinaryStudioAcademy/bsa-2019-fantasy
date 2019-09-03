@@ -2,7 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 
-import { DisplayPlayerType } from 'components/Pitch/types';
+import { PitchPlayerType } from 'components/Pitch/types';
 
 import Modal from 'components/Modal';
 
@@ -10,26 +10,35 @@ import styles from './styles.module.scss';
 import { PlayerType } from 'types/player.types';
 
 type Props = {
-  player: DisplayPlayerType;
+  player: {
+    canBeSwitched: boolean;
+    inSwitcheroo: boolean;
+    item: PitchPlayerType;
+  };
 
   onClose: () => void;
   onSetCaptain: () => void;
   onSetViceCaptain: () => void;
-  funcForSwitching: () => void;
-  toSwitch: boolean;
+  onSwitch: () => void;
+  onCancel: () => void;
+
   onOpenInfo: (player: PlayerType) => void;
 };
 
 const StatusPlayerModal = ({
-  player,
+  player: { item: player, canBeSwitched, inSwitcheroo },
   onClose,
   onSetCaptain,
   onSetViceCaptain,
-  funcForSwitching,
-  toSwitch,
+  onSwitch,
+  onCancel,
   onOpenInfo,
 }: Props) => {
   const { t } = useTranslation();
+
+  if (!player.item) {
+    return null;
+  }
 
   return (
     <Modal onClose={onClose} className={cn('p-0 min-h-0', 'text-white', styles.modal)}>
@@ -45,20 +54,25 @@ const StatusPlayerModal = ({
           'rounded',
         )}
       >
-        <h3>{`${player.player_stats.first_name} ${player.player_stats.second_name}`}</h3>
+        <h3 className='w-full truncate'>
+          <span className='text-green-300'>[{player.item.player_stats.position}]</span>{' '}
+          <span>{player.item.player_stats.second_name}</span>
+        </h3>
       </div>
       <div className='flex-grow p-6 flex flex-col justify-center'>
-        <button
-          className='bg-green-700 p-2 rounded font-bold'
-          onClick={() => {
-            funcForSwitching && funcForSwitching();
-          }}
-        >
-          {toSwitch ? t('StatusPlayerModal.switch') : t('StatusPlayerModal.cancel')}
-        </button>
-        {!player.is_on_bench && (
+        {canBeSwitched && (
+          <button
+            className='bg-green-700 p-2 rounded font-bold'
+            onClick={() => {
+              inSwitcheroo ? onCancel() : onSwitch();
+            }}
+          >
+            {inSwitcheroo ? t('StatusPlayerModal.cancel') : t('StatusPlayerModal.switch')}
+          </button>
+        )}
+        {!player.item.is_on_bench && (
           <>
-            {!player.is_captain && (
+            {!player.item.is_captain && (
               <button
                 className='bg-green-700 p-2 rounded font-bold'
                 onClick={() => onSetCaptain()}
@@ -66,7 +80,7 @@ const StatusPlayerModal = ({
                 {t('StatusPlayerModal.makeCaptain')}
               </button>
             )}
-            {!player.is_vice_captain && (
+            {!player.item.is_vice_captain && (
               <button
                 className='bg-green-700 p-2 rounded font-bold'
                 onClick={() => onSetViceCaptain()}
@@ -76,11 +90,14 @@ const StatusPlayerModal = ({
             )}
             <button
               className='bg-green-700 p-2 rounded font-bold'
-              onClick={() => onOpenInfo(player.player_stats)}
+              onClick={() => onOpenInfo(player.item!.player_stats)}
             >
               {t('StatusPlayerModal.viewInfo')}
             </button>
           </>
+        )}
+        {!canBeSwitched && player.item.is_on_bench && (
+          <div className='text-gray-500 text-center'>No actions available</div>
         )}
       </div>
     </Modal>

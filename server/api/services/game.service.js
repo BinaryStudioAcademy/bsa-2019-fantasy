@@ -9,6 +9,9 @@ export const getGameById = (id) => gameRepository.getById(id);
 
 export const getGameByGameweekId = (id) => gameRepository.getByGameweekId(id);
 
+/**
+ * @param {string} playerId Why do we even need it here?
+ */
 export const getFixturesForPlayer = async (playerId, clubId) => {
   function formatDate(date) {
     const monthNames = [
