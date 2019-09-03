@@ -41,6 +41,33 @@ const PersonalDetails = withRouter(({ history }) => {
   const [imageId, setImageId] = useState<string | undefined>(undefined);
   const [imageLink, setImageLink] = useState<string | undefined>(undefined);
   const [isUploading, setIsUploading] = useState<true | false>(false);
+  const [initialUsername, initialEmail] = user ? [user.name, user.email] : ['', ''];
+  const [username, setUsername] = useState<string>(initialUsername);
+  const [email, setEmail] = useState<string>(initialEmail);
+  const [isUsernameValid, setIsUsernameValid] = useState<boolean>(true);
+  const [isEmailValid, setIsEmailValid] = useState(true);
+
+  const nameChanged = (name: string) => {
+    setUsername(name);
+    setIsUsernameValid(true);
+  };
+
+  const emailChanged = (email: string) => {
+    setEmail(email);
+    setIsEmailValid(true);
+  };
+
+  const validateName = () => {
+    const isNameValid = validator.isByteLength(username, { min: 5, max: undefined });
+    setIsUsernameValid(isNameValid);
+    return isNameValid;
+  };
+
+  const validateEmail = () => {
+    const isEmailValid = validator.isEmail(email);
+    setIsEmailValid(isEmailValid);
+    return isEmailValid;
+  };
 
   if (!user) return <Spinner />;
 
@@ -62,11 +89,11 @@ const PersonalDetails = withRouter(({ history }) => {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log('Updating personal details:');
-
     if (!imageId) {
       return;
     }
+
+    console.log('Updating personal details:');
 
     dispatch(updateUserAvatar(imageId));
   };
@@ -96,6 +123,10 @@ const PersonalDetails = withRouter(({ history }) => {
     }
   };
 
+  const onChange = (e) => {
+    setUsername(e.target.value);
+  };
+
   return (
     <form className='flex flex-col' onSubmit={onSubmit}>
       <h2 className='text-5xl font-bold mb-12'>{t('Profile.personalDetails.title')}</h2>
@@ -121,8 +152,8 @@ const PersonalDetails = withRouter(({ history }) => {
             className='w-2/4 px-4 py-2 bg-gray-100 shadow rounded-sm'
             type='text'
             placeholder='Username'
-            value={user.name}
-            onChange={() => {}}
+            value={username}
+            onChange={onChange}
           />
         </label>
         <label className='mb-8 flex'>
