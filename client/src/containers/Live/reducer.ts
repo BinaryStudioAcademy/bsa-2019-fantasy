@@ -16,6 +16,7 @@ import {
 } from './action.type';
 import { Game } from 'types/game.types';
 import produce from 'immer';
+import { createComment } from './createComment';
 
 type State = {
   current: LiveStatusObject;

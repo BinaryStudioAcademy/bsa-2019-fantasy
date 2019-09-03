@@ -5,6 +5,7 @@ type FixtureType = {
   awayClub: any;
   centerContent: any;
   belowContent?: any;
+  belowBelowContent?: any;
   onClick?: any;
 };
 
@@ -13,6 +14,7 @@ export const Fixture: React.SFC<FixtureType> = ({
   awayClub,
   centerContent,
   belowContent,
+  belowBelowContent,
   onClick,
 }) => {
   if (!homeClub || !awayClub) return null;
@@ -41,8 +43,9 @@ export const Fixture: React.SFC<FixtureType> = ({
           {centerContent}
         </div>
         {belowContent && (
-          <div className='absolute inset-x-0 mt-2 py-2 bg-gray-200 rounded text-center'>
-            {belowContent}
+          <div className='absolute inset-x-0 mt-2 text-center'>
+            <div className='py-2 bg-gray-200 rounded'>{belowContent}</div>
+            <div className='py-2'>{belowBelowContent}</div>
           </div>
         )}
       </div>
