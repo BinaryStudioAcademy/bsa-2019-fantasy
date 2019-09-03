@@ -21,7 +21,7 @@ import { RootState } from 'store/types';
 
 import styles from './styles.module.scss';
 import './progress.style.scss'; // cannot style nested elements of uncontrolled component react-rangeslider with css modules
-import { FaRegPlayCircle, FaRegPauseCircle } from 'react-icons/fa';
+import { FaRegPlayCircle, FaRegPauseCircle, FaLongArrowAltLeft } from 'react-icons/fa';
 
 const prepareEvent = (event, homeClubId) => {
   // format event object
@@ -100,6 +100,7 @@ const Live = () => {
   }, [replayGame && replayGame.id]);
 
   const requestSimulation = (homeClubId, awayClubId) => {
+    setReplayGame(undefined);
     faker.simulate({ homeClubId, awayClubId });
   };
 
@@ -115,6 +116,7 @@ const Live = () => {
     () => {
       console.log('interval 1000 ms');
       const event = replayEvents.next().value;
+      console.log(event);
 
       if (event) {
         const status = { homeClub, awayClub, score };
@@ -203,6 +205,7 @@ const Live = () => {
     replayGame || currentGame.gameStarted ? renderCurrentFixture() : renderNextFixture();
 
   const handleProgressChangeStart = () => {
+    if (!replayGame) return false;
     setReplayGame(
       produce((draft) => {
         draft.isPlaying = false;
@@ -259,7 +262,10 @@ const Live = () => {
         labels={labels}
         format={formatElapsed}
         onChangeStart={handleProgressChangeStart}
-        onChange={(value) => setProgress(value)}
+        onChange={(value) => {
+          if (!replayGame) return false;
+          setProgress(value);
+        }}
         onChangeComplete={handleProgressChangeComplete}
       />
     );
@@ -274,8 +280,34 @@ const Live = () => {
       events: [],
       currentEvent: undefined,
     });
+    setProgress(0);
     const scrollElement = document.querySelector('#root>.flex>.flex-1');
     scrollElement && scrollElement.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const renderStatus = () => {
+    const gameStarted = currentGame.gameStarted;
+    const color = gameStarted
+      ? 'text-red-500 border-red-500'
+      : 'text-green-500 border-green-500';
+    const text = gameStarted ? 'Live' : 'Upcoming';
+    const content = replayGame ? (
+      <>
+        <FaLongArrowAltLeft />
+        <span className='ml-1'>Return to {text}</span>
+      </>
+    ) : (
+      text
+    );
+
+    return (
+      <button
+        className={`flex border rounded px-2 py-1 mr-2 leading-none	uppercase text-sm ${color}`}
+        onClick={() => setReplayGame(null)}
+      >
+        {content}
+      </button>
+    );
   };
 
   return (
@@ -283,6 +315,7 @@ const Live = () => {
       <div className='bg-white text-secondary shadow-figma rounded-sm p-12 mb-4'>
         <Play
           gameStarted={currentGame.gameStarted}
+          renderStatus={renderStatus}
           events={events}
           currentEvent={currentEvent}
           fixture={fixture}
