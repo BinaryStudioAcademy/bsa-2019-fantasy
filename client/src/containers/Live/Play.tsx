@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
 import moment from 'moment';
+
 import { CommentaryList } from './CommentaryList';
 import { Field } from './Field';
 import { SimulateModal } from './SimulateModal';
+
+import { FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
 
 export const Play = ({
   gameStarted,
@@ -12,6 +14,7 @@ export const Play = ({
   fixture,
   requestSimulation,
   playbackControls,
+  status,
 }) => {
   const [isMuted, setIsMuted] = useState(false);
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -29,6 +32,7 @@ export const Play = ({
       </div>
     );
   };
+
   const renderUpcoming = () =>
     gameStarted || (
       <div
@@ -79,7 +83,7 @@ export const Play = ({
       <div className='flex'>
         <div className='h-32 w-1/4 flex flex-col'>
           <h5 className='font-bold'>Commentary</h5>
-          <CommentaryList events={events} />
+          <CommentaryList events={events} status={status} />
         </div>
         <div className='flex-1 text-center'>center</div>
         <div className='w-1/4 text-right'>
