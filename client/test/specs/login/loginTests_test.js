@@ -33,15 +33,12 @@ describe('Login page tests', () => {
       .enterPassword(credentials.password)
       .catch((err) => console.log(err.message));
     await pageSteps.clickLogin().catch((err) => console.log(err.message));
-    return await pageSteps
-      .getNotificationText()
-      .then((res) =>
-        assert.strictEqual(
-          res,
-          'Incorrect email.',
-          `${res} not equal to Incorrect email.`,
-        ),
-      );
+    const notificationtext = await pageSteps.getNotificationText();
+    assert.strictEqual(
+      notificationtext,
+      'Incorrect email.',
+      `${notificationtext} not equal to Incorrect email.`,
+    );
   });
 
   it('should show an error if user tries to login with wrong password', async () => {
@@ -52,10 +49,12 @@ describe('Login page tests', () => {
       .enterPassword(credentials.incorrectPassword)
       .catch((err) => console.log(err.message));
     await pageSteps.clickLogin().catch((err) => console.log(err.message));
-    return await pageSteps
-      .getNotificationText()
-      .then((res) =>
-        assert.strictEqual(res, 'Wrong password.', `${res} not equal to Wrong password.`),
-      );
+
+    const notificationtext = await pageSteps.getNotificationText();
+    assert.strictEqual(
+      notificationtext,
+      'Wrong password.',
+      `${notificationtext} not equal to Wrong password.`,
+    );
   });
 });
