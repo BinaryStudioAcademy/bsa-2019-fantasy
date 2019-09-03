@@ -140,7 +140,7 @@ const PlayersSelection = ({
   return (
     <div className='bg-gray-200 px-4 py-4 rounded' style={{ width: '300px' }}>
       <h3 className='font-bold text-lg'>{t('Transfers.playerSelection.title')}</h3>
-      <form>
+      <form onSubmit={(ev) => ev.preventDefault()}>
         <div className='mt-2'>
           <div className='font-bold'>
             <span>{t('Transfers.playerSelection.view')}</span>
