@@ -224,7 +224,7 @@ const FixturesItem = ({
           <div className={cn(styles['first-team'], styles.team, 'justify-end')}>
             <img
               className={cn(styles.logo, 'order-1')}
-              src={`images/club-logos/badge_${match.hometeam.code}_200.png`}
+              src={`../images/club-logos/badge_${match.hometeam.code}_200.png`}
               alt='logo'
             />
             <h5 className='font-bold'>{match.hometeam.name}</h5>
@@ -244,7 +244,7 @@ const FixturesItem = ({
           <div className={cn(styles.team, 'text-left ')}>
             <img
               className={styles.logo}
-              src={`images/club-logos/badge_${match.awayteam.code}_200.png`}
+              src={`../images/club-logos/badge_${match.awayteam.code}_200.png`}
               alt='logo'
             />
             <h5 className='font-bold'>{match.awayteam.name}</h5>

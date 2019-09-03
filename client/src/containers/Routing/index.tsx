@@ -59,6 +59,11 @@ import { preloadClubLogos } from 'helpers/images';
 import { currentGameweekSelector } from 'store/selectors/current-gameweek.selector';
 
 import { joinRoom, requestGames } from 'helpers/socket';
+import {
+  loadFixtureSubscriptionsAction,
+  loadGamesAction,
+  loadGameweeksAction,
+} from 'containers/FixturesContainer/actions';
 
 const Routing = () => {
   const { i18n } = useTranslation();
@@ -70,10 +75,10 @@ const Routing = () => {
   const favorite_club = useSelector(
     (state: RootState) => state.profile.user && state.profile.user.favorite_club_id,
   );
-
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
   const currentGameweek = useSelector(currentGameweekSelector);
   const live = useSelector((state: RootState) => state.currentGame.current.gameStarted);
+  const gameweeks = useSelector((state: RootState) => state.gameweeks.gameweeks);
 
   const [joinedRoom, setJoinedRoom] = useState<boolean>(false);
 
@@ -82,6 +87,13 @@ const Routing = () => {
     dispatch(fetchClubs());
     dispatch(fetchGameweeks());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (currentGameweek && gameweeks) {
+      dispatch(loadGamesAction(currentGameweek.number));
+      dispatch(loadFixtureSubscriptionsAction());
+    }
+  }, [currentGameweek, gameweeks, dispatch]);
 
   useEffect(() => {
     if (user && isAuthorized && favorite_club) {

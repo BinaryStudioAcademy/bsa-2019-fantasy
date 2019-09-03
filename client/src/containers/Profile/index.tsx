@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
@@ -23,11 +23,6 @@ const Profile = withRouter(({ history }) => {
   const { t } = useTranslation();
 
   const { step, nextStep, prevStep, navToStep } = useSteps(3);
-
-  useEffect(() => {
-    document.title = 'Profile | Fantasy Football League';
-    navToStep(stepRouteMap.indexOf(history.location.pathname) + 1);
-  }, []);
 
   const prevStepLink = stepRouteMap[step - 1 - 1];
   const nextStepLink = stepRouteMap[step + 1 - 1];
