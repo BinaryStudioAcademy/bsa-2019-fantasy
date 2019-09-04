@@ -1,4 +1,4 @@
-import { getFixtureSubscriptions } from '../helpers/fixture-notification.helper';
+import { sendNotifications } from '../helpers/fixture-notification.helper';
 import recalculateTeamsScore from './teamScoreRecalculator';
 import { updateDbFromFaker } from '../helpers/update-db-from-faker.helper';
 
@@ -11,7 +11,7 @@ export default (mainServer, fakerClient) => {
     socket.on('createRoom', (roomId) => {
       socket.join(roomId);
       socket.on('requestGames', async (userId) => {
-        await getFixtureSubscriptions(userId, socket);
+        await sendNotifications(userId, socket);
       });
     });
     socket.on('leaveRoom', (roomId) => {

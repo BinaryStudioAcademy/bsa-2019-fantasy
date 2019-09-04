@@ -13,12 +13,9 @@ import { getClubLogoUrl } from 'helpers/images';
 import { FixturesItemType } from 'types/fixtures.types';
 import FixturesItem from 'components/Fixtures/FixturesItem';
 import moment from 'moment';
-import { addNotification } from 'components/Notifications/actions';
+import { withRouter } from 'react-router';
 
-export const sendNotification = (message) => {
-  addNotification(message);
-};
-const NotificationCenter = () => {
+const NotificationCenter = withRouter(({ history }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -39,12 +36,13 @@ const NotificationCenter = () => {
 
   const { clubs, loading } = useSelector((state: RootState) => state.clubs);
 
+  if (!user || loading) return <Spinner />;
+  const userFavClub = clubs.find((c) => c.id === user.favorite_club_id);
   useEffect(() => {
     if (user) {
       if (user.club_email) {
         setClubEmail(true);
       }
-
       if (user.club_notif) {
         setClubAppNotifications(true);
       }
@@ -56,13 +54,9 @@ const NotificationCenter = () => {
       }
     }
   }, [user]);
-
-  if (!user || loading) return <Spinner />;
-  const userFavClub = clubs.find((c) => c.id === user.favorite_club_id);
-
   const renderFavClubNotificationSettings = (favouriteClub) => {
     return (
-      <div className='flex mt-2 justify-end '>
+      <div className='flex mt-2 justify-end'>
         {/* club info */}
         <div className='w-1/3'>
           <div className='flex flex-col mt-1'>
@@ -70,12 +64,12 @@ const NotificationCenter = () => {
               {t('Profile.notificationCenter.favouriteClub')}
             </span>
 
-            <a
-              href='/profile/favorite-club'
-              className='font-bold mb-2 text-base text-teal-400 cursor-pointer'
+            <button
+              onClick={() => history.replace('/profile/favorite-club')}
+              className='font-bold inline mb-2 w-12 focus:outline-none text-base text-teal-400 cursor-pointer'
             >
               {t('change')}
-            </a>
+            </button>
           </div>
           <img
             className='rounded w-20'
@@ -309,6 +303,6 @@ const NotificationCenter = () => {
       </Button>
     </form>
   );
-};
+});
 
 export default NotificationCenter;
