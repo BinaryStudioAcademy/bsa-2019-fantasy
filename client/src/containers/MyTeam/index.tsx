@@ -11,7 +11,6 @@ import PlayerDialog from 'components/PlayerDialog';
 import TeamSelection from 'components/TeamSelection';
 import StatusPlayerModal from './components/StatusPlayerModal';
 
-import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
 import { PlayerType } from 'types/player.types';
 
@@ -61,43 +60,42 @@ const MyTeam = () => {
   };
 
   return (
-    <div className={styles['team-page']}>
-      <div
-        className={cn(
-          header.jumbotron,
-          header.paper,
-          'mb-6',
-          'rounded',
-          'flex',
-          'flex-col',
-          'justify-between',
-          'pt-12',
-        )}
-      >
-        <div className={cn(header['jumbotron-content'], 'mb-8')}>
-          <h2 className={cn(header.title, 'text-secondary')}>
-            <div className={cn(header.sub, header.title, 'mb-4', 'flex', 'items-center')}>
-              {t('MyTeamPage.title.sub')}
-            </div>
-            {t('MyTeamPage.title.main')}
-          </h2>
-        </div>
-        <TeamSelection
-          players={players}
-          setPlayers={setPlayers}
-          showFixtures
-          query={switchQuery}
-          setQuery={setSwitchQuery}
-          onPlayerClick={handleOpenModal}
-          onPlayerDrop={handlePlayerSwitch}
-          submit={{
-            label: t('Gameweek.saveTeam'),
-            canSubmit: changed,
-            onSubmit: handleSubmit,
-          }}
-          hasBench
-        />
+    <div
+      className={cn(
+        header.jumbotron,
+        header.paper,
+        'mb-6',
+        'rounded',
+        'flex',
+        'flex-col',
+        'pt-12',
+      )}
+      style={{ minHeight: '140vh' }}
+    >
+      <div className={cn(header['jumbotron-content'], 'mb-8')}>
+        <h2 className={cn(header.title, 'text-secondary')}>
+          <div className={cn(header.sub, header.title, 'mb-4', 'flex', 'items-center')}>
+            {t('MyTeamPage.title.sub')}
+          </div>
+          {t('MyTeamPage.title.main')}
+        </h2>
       </div>
+
+      <TeamSelection
+        players={players}
+        setPlayers={setPlayers}
+        showFixtures
+        query={switchQuery}
+        setQuery={setSwitchQuery}
+        onPlayerClick={handleOpenModal}
+        onPlayerDrop={handlePlayerSwitch}
+        submit={{
+          label: t('Gameweek.saveTeam'),
+          canSubmit: changed,
+          onSubmit: handleSubmit,
+        }}
+        hasBench
+      />
 
       {openedPlayer && (
         <StatusPlayerModal

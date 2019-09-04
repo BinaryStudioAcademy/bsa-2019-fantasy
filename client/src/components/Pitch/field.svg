@@ -1,4 +1,12 @@
-<svg width="2160" height="1380" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg 
+  width="2208"
+  height="1428"
+  x="24"
+  y="24"
+  xmlns="http://www.w3.org/2000/svg" 
+  xmlns:xlink="http://www.w3.org/1999/xlink" 
+  style="margin-left: .5rem; filter: drop-shadow(0 0 5px #1EE3CF); overflow: visible;"
+>
  <style type="text/css">.st0{enable-background:new    ;}
 	.st1{clip-path:url(#SVGID_2_);}
 	.st2{fill:#01BA5C;}

@@ -8,6 +8,7 @@ import { PitchPlayerType, DisplayPlayerType } from './types';
 import PitchPlayer from './components/PitchPlayer';
 
 import * as S from './styles';
+
 type Props = {
   players: PitchPlayerType[];
   hasBench: boolean;
@@ -29,8 +30,8 @@ export const Pitch = ({
   const order: PlayerPosition[] = ['GKP', 'DEF', 'MID', 'FWD'];
 
   return (
-    <S.Container>
-      <DndProvider backend={HTML5Backend}>
+    <DndProvider backend={HTML5Backend}>
+      <S.Container>
         <S.Pitch>
           {order.map((type) => (
             <S.TeamRow key={`pitch-team-row-${type}`}>
@@ -72,7 +73,7 @@ export const Pitch = ({
               ))}
           </S.Bench>
         )}
-      </DndProvider>
-    </S.Container>
+      </S.Container>
+    </DndProvider>
   );
 };

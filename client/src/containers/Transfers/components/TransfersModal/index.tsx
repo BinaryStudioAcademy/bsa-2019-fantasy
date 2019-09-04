@@ -42,6 +42,12 @@ const TransfersModal = ({
     );
   }
 
+  const deleteTransfer = (t: TransferType) => () => {
+    transfers.length === 1 && onClose();
+
+    onTransferDelete(t);
+  };
+
   const transfersFull = transfers.map((tf) => ({
     ...tf,
     in_player: players.find((p) => p.id === tf.in_player.id)!,
@@ -99,7 +105,7 @@ const TransfersModal = ({
                 </span>
                 <button
                   className='absolute left-0 mt-1 ml-2 text-red-600 opacity-25 hover:opacity-100'
-                  onClick={() => onTransferDelete(tf)}
+                  onClick={deleteTransfer(tf)}
                 >
                   <FaTimes title={t('TransfersModal.table.discardTransfer')} />
                 </button>
