@@ -1,10 +1,10 @@
-const LoginActions = require('./actions/Login_pa');
+const LoginActions = require('./actions/loginForm.pa');
 const assert = require('assert');
 const credentials = require('./../testData.json');
 
 const pageSteps = new LoginActions();
 
-describe('Login page tests', () => {
+describe.skip('Login page tests', () => {
   beforeEach(async () => {
     browser.maximizeWindow();
     return await browser.url(credentials.appUrl).catch((err) => console.log(err.message));

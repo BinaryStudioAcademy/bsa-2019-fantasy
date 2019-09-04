@@ -1,4 +1,4 @@
-const credentials = require('../testData.json');
+const credentials = require('../specs/testData.json');
 
 const loginSteps = require('../specs/login/steps/login.steps');
 
