@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import ReactSearchBox from 'react-search-box';
 import { useTranslation } from 'react-i18next';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import cn from 'classnames';
 
-import { loadPlayersAction } from '../../components/PlayersSelection/actions';
+import { loadPlayersAction, resetPlayersAction } from '../../components/PlayersSelection/actions';
 import {
   fetchDataForPlayer,
   resetPlayerDialogData,
@@ -75,6 +75,8 @@ const PlayersSelection = ({
 
   const [offset, setOffset] = useState(10);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     setQuery({ ...query, offset });
   }, [offset]);
@@ -82,6 +84,12 @@ const PlayersSelection = ({
   useEffect(() => {
     loadPlayersAction({ ...query });
   }, [query]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetPlayersAction());
+    }
+  }, []);
 
   useEffect(() => {
     undisplayedPlayers.length > 0 &&
