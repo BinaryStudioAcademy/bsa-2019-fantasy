@@ -1,5 +1,5 @@
 const assert = require('assert');
-const credentials = require('../../testData.json');
+const credentials = require('../testData.json');
 
 //helper is Helper, page is Page.
 const Helper = require('../../helpers/helpers');
@@ -7,7 +7,9 @@ const Wait = require('../../helpers/waiters');
 const leaguesSteps = require('./steps/leagues.steps');
 const navSteps = require('../navigation/steps/nav.steps');
 
-describe('Leagues test suite', () => {
+describe.only('Leagues test suite', () => {
+  let isPresent;
+
   beforeEach(async () => {
     browser.maximizeWindow();
     await browser.url(credentials.appUrl);
@@ -24,7 +26,7 @@ describe('Leagues test suite', () => {
     const leagueName = Helper.getRandomName();
     await leaguesSteps.createPublicLeague(leagueName);
     await browser.pause(3000);
-    const isPresent = await leaguesSteps.findPublicLeagueByName(leagueName);
+    isPresent = await leaguesSteps.findPublicLeagueByName(leagueName);
     assert.strictEqual(
       isPresent,
       true,
@@ -37,7 +39,7 @@ describe('Leagues test suite', () => {
     await leaguesSteps.createPrivateLeague(leagueName);
     await browser.pause(3000);
 
-    const isPresent = await leaguesSteps.findPrivateLeagueByName(leagueName);
+    isPresent = await leaguesSteps.findPrivateLeagueByName(leagueName);
     return await assert.strictEqual(
       isPresent,
       true,
@@ -53,7 +55,7 @@ describe('Leagues test suite', () => {
     await navSteps.navigateToLeagues();
     await leaguesSteps.joinPublicLeague(leagueName);
     await browser.pause(3000);
-    const isPresent = await leaguesSteps.findPublicLeagueByName(leagueName);
+    isPresent = await leaguesSteps.findPublicLeagueByName(leagueName);
     return await assert.strictEqual(
       isPresent,
       true,
@@ -70,7 +72,7 @@ describe('Leagues test suite', () => {
     await browser.pause(2000);
     await leaguesSteps.joinPrivateLeague(inviteCode);
     await browser.pause(3000);
-    const isPresent = await leaguesSteps.findPrivateLeagueByName(leagueName);
+    isPresent = await leaguesSteps.findPrivateLeagueByName(leagueName);
     return await assert.strictEqual(
       isPresent,
       true,
@@ -88,7 +90,7 @@ describe('Leagues test suite', () => {
     await leaguesSteps.joinPublicLeague(leagueName);
     await browser.pause(3000);
 
-    const isPresent = await leaguesSteps.findPublicLeagueByName(leagueName);
+    isPresent = await leaguesSteps.findPublicLeagueByName(leagueName);
     await assert.strictEqual(
       isPresent,
       true,
@@ -98,7 +100,7 @@ describe('Leagues test suite', () => {
     await leaguesSteps.leavePublicLeague(leagueName);
     await browser.pause(3000);
 
-    const isPresent = await leaguesSteps.findPublicLeagueByName(leagueName);
+    isPresent = await leaguesSteps.findPublicLeagueByName(leagueName);
     await assert.strictEqual(
       isPresent,
       false,
@@ -115,7 +117,7 @@ describe('Leagues test suite', () => {
     await browser.pause(2000);
     await leaguesSteps.joinPrivateLeague(inviteCode);
     await browser.pause(3000);
-    const isPresent = await leaguesSteps.findPrivateLeagueByName(leagueName);
+    isPresent = await leaguesSteps.findPrivateLeagueByName(leagueName);
     await assert.strictEqual(
       isPresent,
       true,
@@ -125,7 +127,7 @@ describe('Leagues test suite', () => {
     await leaguesSteps.leavePrivateLeague(leagueName);
     await browser.pause(3000);
 
-    const isPresent = await leaguesSteps.findPrivateLeagueByName(leagueName);
+    isPresent = await leaguesSteps.findPrivateLeagueByName(leagueName);
     await assert.strictEqual(
       isPresent,
       false,

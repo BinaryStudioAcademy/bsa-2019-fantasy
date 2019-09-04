@@ -21,11 +21,14 @@ export const fadeIn = keyframes`
 export const Container = styled.div`
   position: sticky;
   top: 1rem;
+  bottom: 1rem;
 
   flex: 1 0;
   width: 100%;
   max-width: 52rem;
-  max-height: 800px;
+  height: calc(100vh - 2rem);
+  max-height: 45rem;
+
   overflow: hidden;
   padding: 5rem 1rem 1rem;
   display: flex;

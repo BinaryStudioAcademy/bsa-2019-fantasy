@@ -131,6 +131,7 @@ const TopTransfers = ({
     if (topTransfers !== undefined && topTransfers.transfersIn) {
       for (let i = 0; i < 5; i++) {
         const clubIndexIn = topTransfers.transfersIn[i].club_id - 1;
+
         const itemIn = {
           info: (
             <button
