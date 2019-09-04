@@ -64,6 +64,42 @@
   min-height: 100vh;
   background-color: #122737;
 }
+
+:local(.languages) {
+  position: relative;
+  z-index: 2;
+  color: #1ee3cf;
+
+  label {
+    background-color: white;
+    color: black;
+  }
+}
+
+:local(.checkbox-styled) {
+  display: block;
+  transition: 0.2s;
+
+  input[type='checkbox'] {
+    display: none;
+    + span {
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 15px;
+      text-align: center;
+      cursor: pointer;
+      display: block;
+      position: relative;
+    }
+  }
+
+  &:local(.checked) {
+    color: #fff;
+    background-color: #4fd1c5;
+    border-color: transparent;
+  }
+}
+
 @media (max-width: 1160px) {
   :local(.main-lable) {
     font-size: 3rem;
