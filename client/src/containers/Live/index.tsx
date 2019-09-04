@@ -119,9 +119,7 @@ const Live = () => {
   // Replay playback interval
   useInterval(
     () => {
-      console.log('interval 1000 ms');
       const event = replayEvents.next().value;
-      console.log(event);
 
       if (event) {
         const status = { homeClub, awayClub, score };
@@ -151,7 +149,6 @@ const Live = () => {
   );
 
   const onPlayClick = () => {
-    console.log('play');
     setReplayGame(
       produce((draft) => {
         draft.isPlaying = true;
@@ -160,7 +157,6 @@ const Live = () => {
   };
 
   const onPauseClick = () => {
-    console.log('pause');
     setReplayGame(
       produce((draft) => {
         draft.isPlaying = false;
@@ -189,7 +185,6 @@ const Live = () => {
       </div>
     );
     const belowContent = formatElapsed(elapsed);
-    console.log(elapsed);
     const belowBelowContent = renderPlaybackControls();
     return (
       <Fixture
