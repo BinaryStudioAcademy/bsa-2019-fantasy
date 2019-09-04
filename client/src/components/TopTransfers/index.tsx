@@ -5,9 +5,15 @@ import { useTranslation } from 'react-i18next';
 import ReactTable from 'react-table';
 import { RootState } from 'store/types';
 import PlayerDialog from 'components/PlayerDialog';
-import { loadPlayersAction, resetPlayersAction } from '../../components/PlayersSelection/actions';
+import {
+  loadPlayersAction,
+  resetPlayersAction,
+} from '../../components/PlayersSelection/actions';
 import { PlayerType } from 'types/player.types';
-import { fetchDataForPlayer, resetPlayerDialogData } from '../../containers/Players/actions';
+import {
+  fetchDataForPlayer,
+  resetPlayerDialogData,
+} from '../../containers/Players/actions';
 import cn from 'classnames';
 
 import {
@@ -105,7 +111,7 @@ const TopTransfers = ({
     return () => {
       dispatch(resetPlayersAction());
       console.log('unmount');
-    }
+    };
   }, []);
 
   const onOpenInfo = (dir: string, id: string, club_id: string) => {
@@ -125,6 +131,7 @@ const TopTransfers = ({
     if (topTransfers !== undefined && topTransfers.transfersIn) {
       for (let i = 0; i < 5; i++) {
         const clubIndexIn = topTransfers.transfersIn[i].club_id - 1;
+
         const itemIn = {
           info: (
             <button
