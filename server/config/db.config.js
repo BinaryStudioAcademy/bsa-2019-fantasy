@@ -9,3 +9,4 @@ export const host = process.env.DB_HOST;
 export const port = process.env.DB_PORT;
 export const dialect = process.env.DB_DIALECT;
 export const logging = false;
+export const seederStorage = 'sequelize';

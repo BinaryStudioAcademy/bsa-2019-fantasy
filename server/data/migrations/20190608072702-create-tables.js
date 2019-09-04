@@ -498,6 +498,7 @@ export default {
         queryInterface.dropTable('football_clubs', { transaction }),
         queryInterface.dropTable('team_member_histories', { transaction }),
         queryInterface.dropTable('images', { transaction }),
+        queryInterface.dropTable('fixtures-subscriptions', { transaction }),
       ]),
     ),
 };
