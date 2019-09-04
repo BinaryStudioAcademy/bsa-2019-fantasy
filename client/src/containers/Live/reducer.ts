@@ -34,6 +34,7 @@ const initialState: State = {
     score: undefined,
     elapsed: undefined,
     events: [],
+    isSimulation: undefined,
   },
   next: undefined,
   lastGames: [],

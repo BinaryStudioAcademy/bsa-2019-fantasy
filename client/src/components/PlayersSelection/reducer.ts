@@ -1,5 +1,6 @@
 import {
   SET_PLAYERS,
+  RESET_PLAYERS,
   SET_AUTOPICK_SQUAD,
   SET_LOADING,
   PlayersSelectionAction,
@@ -32,6 +33,11 @@ export default (state = initialState, action: PlayersSelectionAction) => {
         players: action.payload.rows,
         count: action.payload.count,
         isLoading: false,
+      };
+
+    case RESET_PLAYERS:
+      return {
+        ...initialState,
       };
 
     case SET_AUTOPICK_SQUAD:

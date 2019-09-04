@@ -5,12 +5,9 @@ import { useTranslation } from 'react-i18next';
 import ReactTable from 'react-table';
 import { RootState } from 'store/types';
 import PlayerDialog from 'components/PlayerDialog';
-import { loadPlayersAction } from '../../components/PlayersSelection/actions';
+import { loadPlayersAction, resetPlayersAction } from '../../components/PlayersSelection/actions';
 import { PlayerType } from 'types/player.types';
-import {
-  fetchDataForPlayer,
-  resetPlayerDialogData,
-} from '../../containers/Players/actions';
+import { fetchDataForPlayer, resetPlayerDialogData } from '../../containers/Players/actions';
 import cn from 'classnames';
 
 import {
@@ -85,7 +82,6 @@ const TopTransfers = ({
     order_field: 'transfers_in',
   });
   const [topTransfers, setTopTransfers] = useState();
-
   const [currentPlayer, setCurrentPlayer] = useState<PlayerType>();
 
   useEffect(() => {
@@ -104,6 +100,13 @@ const TopTransfers = ({
       }
     }
   }, [players]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetPlayersAction());
+      console.log('unmount');
+    }
+  }, []);
 
   const onOpenInfo = (dir: string, id: string, club_id: string) => {
     if (topTransfers.transfersIn && topTransfers.transfersOut) {
