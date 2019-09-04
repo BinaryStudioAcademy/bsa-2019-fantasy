@@ -31,7 +31,8 @@ const prepareEvent = (event, homeClubId) => {
 };
 
 const formatElapsed = (elapsed) => {
-  const elapsedSeconds = moment.duration(elapsed).asSeconds();
+  let elapsedSeconds = moment.duration(elapsed).asSeconds();
+  if (elapsedSeconds > 90 * 60) elapsedSeconds = 90 * 60;
   const minutes = Math.floor(elapsedSeconds / 60);
   const seconds = Math.round(elapsedSeconds - minutes * 60);
   const format = (number) => {
