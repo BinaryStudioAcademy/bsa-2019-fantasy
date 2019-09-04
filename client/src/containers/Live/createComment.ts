@@ -21,11 +21,11 @@ export const createComment = (event, { homeClub, awayClub, score }) => {
           `;
     case 'attack':
       return `
-            ${player.position} ${name} from ${club.name} starts an attack.
+            ${name} from ${club.name} starts an attack.
           `;
     case 'shot':
       return `
-            ${player.position} ${name} shots.
+            ${name} shots.
           `;
     case 'foul':
       return `${name} gets a foul.`;
@@ -45,7 +45,7 @@ export const createComment = (event, { homeClub, awayClub, score }) => {
       return `${name} will do the corner kick.`;
     case 'freeKick':
       return `
-            ${player.position} ${name} performs a free kick.
+            ${name} performs a free kick.
           `;
     case 'penaltyKick':
       return `Penaty kick! ${name} will shoot at the gate.`;
