@@ -578,7 +578,7 @@ const TeamSelection = ({
         <div
           className={`${isGameweek && playersHistory.length === 0 ? styles.empty : ''}`}
         >
-          <p className={styles.text}>Have you even tried to play?</p>
+          <p className={styles.text}>{t('Gameweek.resultPending')}</p>
         </div>
         {displayButtons()}
         {playersOnBench && playersOnPitch ? (

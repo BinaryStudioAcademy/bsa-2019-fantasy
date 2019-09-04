@@ -92,7 +92,8 @@
   "Gameweek": {
     "saveTeam": "Save your Team",
     "listView": "List View",
-    "pitchView": "Pitch View"
+    "pitchView": "Pitch View",
+    "resultPending": "Players score will be available by the end of game week"
   },
 
   "NoTeamHome": {

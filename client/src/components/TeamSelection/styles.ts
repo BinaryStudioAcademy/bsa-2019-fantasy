@@ -25,11 +25,8 @@ export const Container = styled.div`
   flex: 1 0;
   width: 100%;
   max-width: 52rem;
-  min-height: calc(100vh - 2rem);
-  height: calc(100vh - 2rem);
-  max-height: calc(100vh - 2rem);
+  max-height: 800px;
   overflow: hidden;
-
   padding: 5rem 1rem 1rem;
   display: flex;
   flex-direction: column;
