@@ -231,6 +231,7 @@
       "applyTeamRemindSubtitle": "Do you want to be notified about team selection?",
       "subscribedFixtures": "Subscribed Fixtures",
       "receiveEmail": "Receive an email",
+      "noFixtures": "You haven`t any subscribtions yet",
       "receiveAppNotification": "Receive an app-notification",
       "timeSelect": "When to notify you before events?",
       "hours": "hours",

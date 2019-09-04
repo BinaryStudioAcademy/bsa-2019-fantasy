@@ -24,10 +24,10 @@ export default {
             type: Sequelize.UUID,
             references: {
               model: 'images',
-              key: 'id'
+              key: 'id',
             },
             onUpdate: 'CASCADE',
-            onDelete: 'SET NULL'
+            onDelete: 'SET NULL',
           },
           { transaction },
         ),
@@ -278,8 +278,8 @@ export default {
         queryInterface.removeColumn('users', 'favorite_club_id', {
           transaction,
         }),
-        queryInterface.removeColumn('users', 'image_id', { 
-          transaction
+        queryInterface.removeColumn('users', 'image_id', {
+          transaction,
         }),
         queryInterface.removeColumn('player_stats', 'club_id', {
           transaction,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -13,7 +13,11 @@ import { getClubLogoUrl } from 'helpers/images';
 import { FixturesItemType } from 'types/fixtures.types';
 import FixturesItem from 'components/Fixtures/FixturesItem';
 import moment from 'moment';
+import { addNotification } from 'components/Notifications/actions';
 
+export const sendNotification = (message) => {
+  addNotification(message);
+};
 const NotificationCenter = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -35,13 +39,23 @@ const NotificationCenter = () => {
 
   const { clubs, loading } = useSelector((state: RootState) => state.clubs);
 
-  // useEffect(() => {
-  //   if (user && user.sendmail_time) {
-  //     setChecked(true);
-  //   } else {
-  //     setChecked(false);
-  //   }
-  // }, [dispatch, user]);
+  useEffect(() => {
+    if (user) {
+      if (user.club_email) {
+        setClubEmail(true);
+      }
+
+      if (user.club_notif) {
+        setClubAppNotifications(true);
+      }
+      if (user.team_email) {
+        setTeamEmail(true);
+      }
+      if (user.team_notif) {
+        setTeamAppNotifications(true);
+      }
+    }
+  }, [user]);
 
   if (!user || loading) return <Spinner />;
   const userFavClub = clubs.find((c) => c.id === user.favorite_club_id);
@@ -83,7 +97,7 @@ const NotificationCenter = () => {
             knobHeight='1.7rem'
             leftKnobColor='rgba(18, 39, 55, 0.7)'
             rightKnobColor='#1EE3CF'
-            checked={user.sendmail_time ? true : false}
+            checked={user.club_email ? true : false}
             onToggle={(e) => setClubEmail(!clubEmail)}
           />
         </div>
@@ -96,7 +110,7 @@ const NotificationCenter = () => {
             knobHeight='1.7rem'
             leftKnobColor='rgba(18, 39, 55, 0.7)'
             rightKnobColor='#1EE3CF'
-            checked={user.sendmail_time ? true : false}
+            checked={user.club_notif ? true : false}
             onToggle={(e) => setClubAppNotifications(!clubAppNotifications)}
           />
         </div>
@@ -117,7 +131,7 @@ const NotificationCenter = () => {
             knobHeight='1.7rem'
             leftKnobColor='rgba(18, 39, 55, 0.7)'
             rightKnobColor='#1EE3CF'
-            checked={user.sendmail_time ? true : false}
+            checked={user.team_email ? true : false}
             onToggle={(e) => setTeamEmail(!teamEmail)}
           />
         </div>
@@ -130,7 +144,7 @@ const NotificationCenter = () => {
             knobHeight='1.7rem'
             leftKnobColor='rgba(18, 39, 55, 0.7)'
             rightKnobColor='#1EE3CF'
-            checked={user.sendmail_time ? true : false}
+            checked={user.team_notif ? true : false}
             onToggle={(e) => setTeamAppNotifications(!teamAppNotifications)}
           />
         </div>
@@ -139,6 +153,13 @@ const NotificationCenter = () => {
   };
 
   const renderFixtureSubscribtions = (games, subscribedFixtures) => {
+    if (!subscribedFixtures.length) {
+      return (
+        <h4 className='text-lg  text-gray-500 font-light'>
+          {t('Profile.notificationCenter.noFixtures')}
+        </h4>
+      );
+    }
     let currentDate = '';
     const subscribedFixturesIds = subscribedFixtures.map((f) => f.game_id);
     games = games.filter((g) => subscribedFixturesIds.includes(g.id));
@@ -177,7 +198,15 @@ const NotificationCenter = () => {
       ? Number(timeSelect.options[timeSelect.selectedIndex].value.split(' ').shift())
       : null;
 
-    dispatch(updateEmailPreferences(selectedValue));
+    dispatch(
+      updateEmailPreferences(
+        selectedValue,
+        clubEmail,
+        clubAppNotifications,
+        teamEmail,
+        teamAppNotifications,
+      ),
+    );
   };
 
   const renderTimeSelection = () => {
