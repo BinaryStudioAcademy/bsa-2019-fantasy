@@ -10,6 +10,7 @@ export type LiveStatusObject = {
   awayClubId?: string;
   score?: number[];
   elapsed?: number;
+  isSimulation?: boolean;
   events: any[];
 };
 

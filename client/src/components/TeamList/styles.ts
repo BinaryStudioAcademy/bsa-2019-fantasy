@@ -3,15 +3,14 @@ import styled from 'styled-components';
 import { appear } from 'components/TeamSelection/styles';
 
 export const Container = styled.table`
-  margin-top: 2rem;
   position: relative;
-  overflow: auto;
+  overflow-y: auto;
 
   flex: 1 0;
   height: 100%;
-  width: 82%;
+  width: 100%;
 
-  padding-bottom: 0.5rem;
+  padding-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
 

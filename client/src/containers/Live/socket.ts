@@ -9,3 +9,7 @@ export const simulate = ({ homeClubId, awayClubId }) => {
     awayClub: awayClubId,
   });
 };
+
+export const stopSimulation = () => {
+  socket.emit('stopSimulation');
+};
