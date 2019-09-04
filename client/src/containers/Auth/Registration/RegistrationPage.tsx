@@ -3,6 +3,7 @@ import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import RegistrationForm from 'components/AuthForms/RegistrationForm';
+import LanguageForm from '../LanguageForm';
 
 import styles from '../styles.module.scss';
 
@@ -65,6 +66,7 @@ const RegistrationPage = () => {
           </h3>
         </div>
         <RegistrationForm />
+        <LanguageForm />
       </div>
     </div>
   );

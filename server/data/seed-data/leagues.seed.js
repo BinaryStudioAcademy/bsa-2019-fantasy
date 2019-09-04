@@ -85,14 +85,6 @@ export default [
     name: 'Wolves',
     private: false,
   },
-  {
-    name: 'league1',
-    private: true,
-  },
-  {
-    name: 'league2',
-    private: false,
-  },
 ].map((league) => ({
   ...league,
   createdAt: now,

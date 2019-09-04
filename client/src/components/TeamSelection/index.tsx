@@ -184,49 +184,56 @@ const TeamSelection = ({
 
   return (
     <S.Container className='bg-secondary rounded'>
-      <div className='w-full flex justify-center mt-4 relative'>
-        {submit && (
-          <S.Submit
-            className='rounded'
-            disabled={!submit.canSubmit}
-            onClick={submit.onSubmit}
-          >
-            {submit.label}
-          </S.Submit>
-        )}
-      </div>
+      {players.length > 0 && (
+        <>
+          <S.Tooltip>
+            {submit && (
+              <S.Submit
+                className='rounded'
+                disabled={!submit.canSubmit}
+                onClick={submit.onSubmit}
+              >
+                {submit.label}
+              </S.Submit>
+            )}
+            <S.ViewToggles>
+              <S.Toggle
+                isActive={view === 'pitch'}
+                onClick={() => setView('pitch')}
+                title={t('TransfersTeamSelection.switch.pitch')}
+              >
+                <SoccerField fill='currentColor' height='1em' width='1.5em' />
+              </S.Toggle>
+              <S.Toggle
+                isActive={view === 'list'}
+                onClick={() => setView('list')}
+                title={t('TransfersTeamSelection.switch.list')}
+              >
+                <FaListUl />
+              </S.Toggle>
+            </S.ViewToggles>
+          </S.Tooltip>
 
-      {view === 'pitch' && (
-        <Pitch
-          players={players}
-          hasBench={hasBench}
-          onPlayerDrop={handlePlayerDrop}
-          onPlayerClick={onPlayerClick}
-          disabled={disabled}
-          showFixtures={showFixtures}
-        />
+          {view === 'pitch' && (
+            <Pitch
+              players={players}
+              hasBench={hasBench}
+              onPlayerDrop={handlePlayerDrop}
+              onPlayerClick={onPlayerClick}
+              disabled={disabled}
+              showFixtures={showFixtures}
+            />
+          )}
+
+          {view === 'list' && (
+            <TeamList
+              players={players}
+              hasBench={hasBench}
+              onPlayerClick={onPlayerClick}
+            />
+          )}
+        </>
       )}
-
-      {view === 'list' && (
-        <TeamList players={players} hasBench={hasBench} onPlayerClick={onPlayerClick} />
-      )}
-
-      <S.ViewToggles>
-        <S.Toggle
-          isActive={view === 'pitch'}
-          onClick={() => setView('pitch')}
-          title={t('TransfersTeamSelection.switch.pitch')}
-        >
-          <SoccerField fill='currentColor' height='1em' width='1.5em' />
-        </S.Toggle>
-        <S.Toggle
-          isActive={view === 'list'}
-          onClick={() => setView('list')}
-          title={t('TransfersTeamSelection.switch.list')}
-        >
-          <FaListUl />
-        </S.Toggle>
-      </S.ViewToggles>
     </S.Container>
   );
 };

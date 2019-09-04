@@ -91,7 +91,8 @@
   "Gameweek": {
     "saveTeam": "Зберегти команду",
     "listView": "Список",
-    "pitchView": "Поле"
+    "pitchView": "Поле",
+    "resultPending": "Бали граців будуть доступні в кінці туру"
   },
 
   "NoTeamHome": {
