@@ -42,7 +42,8 @@
     "name": "Ім'я",
     "sendConfirm": "Ми надішлемо email для підтвердження",
     "atLeastName": "Принаймні 5 символів",
-    "atLeastPassword": "Принаймні 8 символів"
+    "atLeastPassword": "Принаймні 8 символів",
+    "invalidEmail": "Некоректний email"
   },
 
   "ChangePasswordPage": {
