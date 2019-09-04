@@ -41,6 +41,7 @@ script:
   - export SKIP_PREFLIGHT_CHECK=true
   - cd client/
   - CI=false npm run build
+  - rm -rf public/
   - rm -rf node_modules/
   - cd ..
   - aws s3 cp s3://bsa-2019-s3-bucket/.env server/.env
