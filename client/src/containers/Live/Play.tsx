@@ -10,11 +10,13 @@ import { RescheduleModal } from './RescheduleModal';
 
 export const Play = ({
   gameStarted,
+  isSimulation,
   renderStatus,
   events,
   currentEvent,
   fixture,
   requestSimulation,
+  stopSimulation,
   playbackControls,
   status,
 }) => {
@@ -25,14 +27,27 @@ export const Play = ({
   const getClassesByStatus = (status) =>
     status ? 'text-red-500 border-red-500' : 'text-gray-300 border-gray-300';
 
-  const renderSimulate = () => (
-    <button
-      className='border rounded px-2 py-1 mr-2 leading-none	uppercase text-sm text-green-500 border-green-500'
-      onClick={() => setIsModalOpened(true)}
-    >
-      Simulate
-    </button>
-  );
+  const renderSimulate = () => {
+    if (isSimulation && gameStarted) {
+      return (
+        <button
+          className='border rounded px-2 py-1 mr-2 leading-none	uppercase text-sm text-red-500 border-red-500'
+          onClick={() => stopSimulation()}
+        >
+          Stop simulation
+        </button>
+      );
+    } else {
+      return (
+        <button
+          className='border rounded px-2 py-1 mr-2 leading-none	uppercase text-sm text-green-500 border-green-500'
+          onClick={() => setIsModalOpened(true)}
+        >
+          Simulate
+        </button>
+      );
+    }
+  };
 
   const renderReschedule = () => (
     <button

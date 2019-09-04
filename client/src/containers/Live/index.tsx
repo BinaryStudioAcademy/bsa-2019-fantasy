@@ -105,6 +105,10 @@ const Live = () => {
     faker.simulate({ homeClubId, awayClubId });
   };
 
+  const stopSimulation = () => {
+    faker.stopSimulation();
+  };
+
   // On every new added event
   useEffect(() => {
     const event = events[events.length - 1];
@@ -317,11 +321,13 @@ const Live = () => {
       <div className='bg-white text-secondary shadow-figma rounded-sm p-12 mb-4'>
         <Play
           gameStarted={currentGame.gameStarted}
+          isSimulation={currentGame.isSimulation}
           renderStatus={renderStatus}
           events={events}
           currentEvent={currentEvent}
           fixture={fixture}
           requestSimulation={requestSimulation}
+          stopSimulation={stopSimulation}
           playbackControls={null}
           status={{ homeClub, awayClub, score }}
         />
