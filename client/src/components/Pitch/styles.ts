@@ -5,7 +5,6 @@ import { appear } from 'components/TeamSelection/styles';
 import pitchBg from './field.svg';
 
 export const Container = styled.div`
-  flex: 1 0;
   width: 100%;
   justify-content: center;
 
