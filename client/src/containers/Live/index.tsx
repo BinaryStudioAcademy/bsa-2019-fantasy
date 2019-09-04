@@ -184,6 +184,7 @@ const Live = () => {
       </div>
     );
     const belowContent = formatElapsed(elapsed);
+    console.log(elapsed);
     const belowBelowContent = renderPlaybackControls();
     return (
       <Fixture
