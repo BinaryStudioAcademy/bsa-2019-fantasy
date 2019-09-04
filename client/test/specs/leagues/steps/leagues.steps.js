@@ -8,6 +8,7 @@ const Help = require('../../../helpers/helpers');
 class LeaguesSteps {
   async _clickJoinLeagueBtn() {
     const joinLeagueBtn = await $(page.joinLeagueBtn);
+
     await joinLeagueBtn.waitForDisplayed(2000);
     await browser.pause(5000);
     await joinLeagueBtn.click();
@@ -58,6 +59,7 @@ class LeaguesSteps {
 
   async _clickCreateLeagueBtn() {
     const createLeagueBtn = await $(page.createLeagueBtn);
+
     await createLeagueBtn.waitForDisplayed(2000);
     await createLeagueBtn.click();
   }
