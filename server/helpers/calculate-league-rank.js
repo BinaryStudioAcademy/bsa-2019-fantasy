@@ -1,3 +1,5 @@
+import * as gameweekHistoryService from '../api/services/gameweek-history.service.js';
+
 import leagueRepository from '../data/repositories/league.repository.js';
 import leagueParticipantRepository from '../data/repositories/league-participant.repository.js';
 import gameweekHistoryRepository from '../data/repositories/gameweek-history.repository.js';
@@ -16,12 +18,11 @@ const recalculateLeagueRankings = async () => {
       const res = [];
       await Promise.all(
         users.map(async (item) => {
-          let totalPoints = 0;
-
-          const userGameweekHistory = await gameweekHistoryRepository.getByUserGameweekId(
+          let total_points = 0;
+          const userGameweekHistory = await gameweekHistoryService.getHistoriesByUserId(
             item.user.id,
           );
-          userGamaweekStats.forEach((data) => {
+          userGameweekHistory.forEach((data) => {
             if (startScoringGameweek.number <= data.gameweek.number) {
               total_points += data.team_score;
             }
@@ -43,6 +44,7 @@ const recalculateLeagueRankings = async () => {
       );
     }),
   );
+  console.log('recalculated league rankings');
 };
 
 export default recalculateLeagueRankings;
