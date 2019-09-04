@@ -20,6 +20,7 @@ import {
   setCurrentGameweekAction,
 } from './actions';
 import { setInviteCode } from 'containers/Profile/actions';
+import { currentGameweekSelector } from 'store/selectors/current-gameweek.selector';
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
@@ -47,6 +48,8 @@ const GameweekHistory = () => {
     (state: RootState) => state.profile.user && state.profile.user.id,
   );
   const { inviteCode } = useSelector((state: RootState) => state.profile);
+
+  const globalCurrentGameweek = useSelector(currentGameweekSelector);
 
   useEffect(() => {
     if (userId) {
@@ -96,7 +99,13 @@ const GameweekHistory = () => {
             <div className={cn(header.sub, header.title, 'mb-3', 'flex', 'items-center')}>
               {t('GameweekHistoryPage.titles.sub')}
             </div>
-            {`${t('GameweekHistoryPage.titles.main')}  ${currentGameweek}`}
+            {`${t('GameweekHistoryPage.titles.main')} ${
+              teamHistory.length
+                ? currentGameweek
+                : globalCurrentGameweek
+                ? globalCurrentGameweek!.number
+                : ''
+            }`}
           </h2>
           <div className='text-center mb-4 flex justify-between'>
             {currentGameweek > 1 && (
