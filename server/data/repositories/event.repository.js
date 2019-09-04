@@ -16,7 +16,7 @@ class EventRepository extends BaseRepository {
           include: 'player',
         },
       ],
-      order: [['createdAt', 'DESC']],
+      order: [['time', 'ASC']],
     });
   }
 }

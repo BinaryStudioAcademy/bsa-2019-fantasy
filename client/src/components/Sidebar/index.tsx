@@ -81,6 +81,7 @@ const Sidebar = () => {
       <Link
         to='/'
         className={cn(styles['sidebar-logo'], 'sidebar-logo', isOpened ? 'pl-6' : 'pl-3')}
+        onClick={(e) => e.stopPropagation()}
       >
         <img src='/images/logo.png' alt='logo' style={{ height: 45, width: 45 }} />
       </Link>

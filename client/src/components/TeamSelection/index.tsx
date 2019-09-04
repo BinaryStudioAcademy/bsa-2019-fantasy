@@ -105,16 +105,6 @@ const TeamSelection = ({
               ) {
                 feedback.warning('Captain or vice captain cannot sit on bench!');
 
-                setPlayers((pitch) =>
-                  produce(pitch, (draft) => {
-                    draft.forEach((p, idx) => {
-                      if (p.item) {
-                        draft[idx].item!.display.highlight = undefined;
-                      }
-                    });
-                  }),
-                );
-
                 return;
               }
 
@@ -130,40 +120,44 @@ const TeamSelection = ({
             }
           }
 
-          newPlayer = { ...newPlayer, display: { src: newPlayer.display.src } };
-          if (newTargetItem) {
-            newTargetItem = {
-              ...newTargetItem,
-              display: { src: newTargetItem.display.src },
-            };
-          }
-
+          let immer_reverse;
           const newPlayers = produce(
             players,
             (draft) => {
-              draft[targetIdx].item = newPlayer;
+              draft[targetIdx] = {
+                type: newPlayer.player_stats.position,
+                accept: [newPlayer.player_stats.position],
+                item: newPlayer,
+              };
               if (playerOnPitchIdx !== -1) {
-                draft[playerOnPitchIdx].item = newTargetItem;
-              }
+                const newTargetType = newTargetItem
+                  ? newTargetItem.player_stats.position
+                  : draft[playerOnPitchIdx].type;
 
-              draft.forEach((p, idx) => {
-                if (p.item) {
-                  draft[idx].item!.display.highlight = undefined;
-                }
-              });
+                draft[playerOnPitchIdx] = {
+                  type: newTargetType,
+                  accept: [newTargetType],
+                  item: newTargetItem,
+                };
+              }
             },
-            (_, immer_reverse) => {
-              onPlayerDrop &&
-                onPlayerDrop(
-                  newTargetItem,
-                  newPlayer,
-                  immer_reverse,
-                  playerOnPitchIdx === -1,
-                );
+            (_, reversePatches) => {
+              immer_reverse = reversePatches;
             },
           );
 
+          const afterPlayerDrop =
+            onPlayerDrop &&
+            onPlayerDrop(
+              newTargetItem,
+              newPlayer,
+              immer_reverse,
+              playerOnPitchIdx === -1,
+            );
+
           setPlayers(newPlayers);
+
+          afterPlayerDrop && afterPlayerDrop(newPlayers);
         }
       }
     },
@@ -190,49 +184,56 @@ const TeamSelection = ({
 
   return (
     <S.Container className='bg-secondary rounded'>
-      <div className='w-full flex justify-center mt-4 relative'>
-        {submit && (
-          <S.Submit
-            className='rounded'
-            disabled={!submit.canSubmit}
-            onClick={submit.onSubmit}
-          >
-            {submit.label}
-          </S.Submit>
-        )}
-      </div>
+      {players.length > 0 && (
+        <>
+          <S.Tooltip>
+            {submit && (
+              <S.Submit
+                className='rounded'
+                disabled={!submit.canSubmit}
+                onClick={submit.onSubmit}
+              >
+                {submit.label}
+              </S.Submit>
+            )}
+            <S.ViewToggles>
+              <S.Toggle
+                isActive={view === 'pitch'}
+                onClick={() => setView('pitch')}
+                title={t('TransfersTeamSelection.switch.pitch')}
+              >
+                <SoccerField fill='currentColor' height='1em' width='1.5em' />
+              </S.Toggle>
+              <S.Toggle
+                isActive={view === 'list'}
+                onClick={() => setView('list')}
+                title={t('TransfersTeamSelection.switch.list')}
+              >
+                <FaListUl />
+              </S.Toggle>
+            </S.ViewToggles>
+          </S.Tooltip>
 
-      {view === 'pitch' && (
-        <Pitch
-          players={players}
-          hasBench={hasBench}
-          onPlayerDrop={handlePlayerDrop}
-          onPlayerClick={onPlayerClick}
-          disabled={disabled}
-          showFixtures={showFixtures}
-        />
+          {view === 'pitch' && (
+            <Pitch
+              players={players}
+              hasBench={hasBench}
+              onPlayerDrop={handlePlayerDrop}
+              onPlayerClick={onPlayerClick}
+              disabled={disabled}
+              showFixtures={showFixtures}
+            />
+          )}
+
+          {view === 'list' && (
+            <TeamList
+              players={players}
+              hasBench={hasBench}
+              onPlayerClick={onPlayerClick}
+            />
+          )}
+        </>
       )}
-
-      {view === 'list' && (
-        <TeamList players={players} hasBench={hasBench} onPlayerClick={onPlayerClick} />
-      )}
-
-      <S.ViewToggles>
-        <S.Toggle
-          isActive={view === 'pitch'}
-          onClick={() => setView('pitch')}
-          title={t('TransfersTeamSelection.switch.pitch')}
-        >
-          <SoccerField fill='currentColor' height='1em' width='1.5em' />
-        </S.Toggle>
-        <S.Toggle
-          isActive={view === 'list'}
-          onClick={() => setView('list')}
-          title={t('TransfersTeamSelection.switch.list')}
-        >
-          <FaListUl />
-        </S.Toggle>
-      </S.ViewToggles>
     </S.Container>
   );
 };

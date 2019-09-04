@@ -3,6 +3,7 @@ import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import LoginForm from 'components/AuthForms/LoginForm';
+import LanguageForm from '../LanguageForm';
 
 import styles from '../styles.module.scss';
 
@@ -62,6 +63,7 @@ const LoginPage = () => {
           </h3>
         </div>
         <LoginForm />
+        <LanguageForm />
       </div>
     </div>
   );

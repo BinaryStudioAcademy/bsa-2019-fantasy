@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'store/types';
 import { NotificationType } from 'types/notifications.types';
+import cn from 'classnames';
 
 import {
   removeNotification,
@@ -88,7 +89,10 @@ const Notifications = () => {
       {visible && (
         <div
           ref={ref as any}
-          className='notifications-wrapper flex flex-col justify-between absolute rounded shadow-figma left-0 p-2 bg-background w-64 h-56'
+          className={cn(
+            styles['notifications-container'],
+            'flex flex-col justify-between absolute rounded shadow-figma left-0 p-2 bg-background w-64 h-56',
+          )}
         >
           <div className='notifications-list h-48 overflow-y-auto overflow-x-hidden'>
             {notifications.map((notification: NotificationType) => (

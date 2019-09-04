@@ -158,8 +158,7 @@ const PlayerHighlight = ({ player, onInfoClick }: Props) => {
 
         <div className='actions mt-auto'>
           <Button
-            href='/history'
-            type='link'
+            onClick={() => onInfoClick(player.id, player.club_id, 'history')}
             styling='primary'
             className='text-sm xl:text-base mr-4'
           >

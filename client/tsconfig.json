@@ -16,6 +16,7 @@
     "jsx": "preserve",
     "baseUrl": "src",
     "noImplicitAny": false,
+    "downlevelIteration": true,
     "plugins": [
       {
         "name": "typescript-styled-plugin"

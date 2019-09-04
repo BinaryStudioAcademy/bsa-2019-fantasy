@@ -1,3 +1,7 @@
+:local(.notifications-container) {
+  z-index: 100000;
+}
+
 :local(.notification) {
   color: #ff482f;
   position: absolute;

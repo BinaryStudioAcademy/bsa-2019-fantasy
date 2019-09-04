@@ -42,6 +42,12 @@ const TransfersModal = ({
     );
   }
 
+  const deleteTransfer = (t: TransferType) => () => {
+    transfers.length === 1 && onClose();
+
+    onTransferDelete(t);
+  };
+
   const transfersFull = transfers.map((tf) => ({
     ...tf,
     in_player: players.find((p) => p.id === tf.in_player.id)!,
@@ -50,7 +56,7 @@ const TransfersModal = ({
 
   const totalCost = transfers.reduce((prev, t) => prev + t.cost, 0);
   const totalMoneyCost = transfersFull.reduce(
-    (prev, t) => prev + t.in_player.player_price,
+    (prev, t) => prev + t.in_player.player_price - t.out_player.player_price,
     0,
   );
 
@@ -65,7 +71,7 @@ const TransfersModal = ({
         {t('TransfersModal.statement.b')},{' '}
         <span className='font-bold'>{user.score - totalCost}</span> pts{' '}
         {t('TransfersModal.statement.c')} £
-        <span className='font-bold'>{user.money - totalMoneyCost}</span>{' '}
+        <span className='font-bold'>{(user.money - totalMoneyCost).toFixed(2)}</span>{' '}
         {t('TransfersModal.statement.d')}.
       </span>
       <table className='mt-6'>
@@ -73,7 +79,8 @@ const TransfersModal = ({
           <tr className='border-b-2 border-secondary'>
             <td>{t('TransfersModal.table.in')}</td>
             <td>{t('TransfersModal.table.out')}</td>
-            <td>£</td>
+            <td>+ £</td>
+            <td>- £</td>
             <td>{t('TransfersModal.table.scoreCost')}</td>
           </tr>
         </thead>
@@ -86,14 +93,19 @@ const TransfersModal = ({
             >
               <td className='truncate'>{`${tf.in_player.first_name} ${tf.in_player.second_name}`}</td>
               <td className='truncate'>{`${tf.out_player.first_name} ${tf.out_player.second_name}`}</td>
-              <td className='truncate'>{tf.in_player.player_price}</td>
+              <td className='truncate text-green-700'>
+                {tf.out_player.player_price.toFixed(2)}
+              </td>
+              <td className='truncate text-red-500'>
+                {tf.in_player.player_price.toFixed(2)}
+              </td>
               <td>
                 <span className={cn(tf.cost === 0 && 'text-green-700')}>
                   {tf.cost} pts
                 </span>
                 <button
                   className='absolute left-0 mt-1 ml-2 text-red-600 opacity-25 hover:opacity-100'
-                  onClick={() => onTransferDelete(tf)}
+                  onClick={deleteTransfer(tf)}
                 >
                   <FaTimes title={t('TransfersModal.table.discardTransfer')} />
                 </button>
@@ -108,7 +120,8 @@ const TransfersModal = ({
           >
             <td />
             <td>{t('TransfersModal.table.total')}:</td>
-            <td>{totalMoneyCost}</td>
+            <td />
+            <td>{totalMoneyCost.toFixed(2)}</td>
             <td>{totalCost} pts</td>
           </tr>
         </tbody>

@@ -36,12 +36,6 @@ const Transfers = () => {
   const { pitchPlayers, setPitch } = usePitchPlayers(players);
 
   useEffect(() => {
-    if (transfers.length === 0) {
-      setShowModal(false);
-    }
-  }, [transfers.length]);
-
-  useEffect(() => {
     if (changes.length > 0) {
       setPitch((p) => applyPatches(p, changes));
       dispatch(emptyChanges());
@@ -77,7 +71,7 @@ const Transfers = () => {
     <div>
       <TransfersModal
         transfers={transfers}
-        showCondition={showModal}
+        showCondition={transfers.length > 0 && showModal}
         onClose={() => setShowModal(false)}
         onTransferDelete={onTransferDelete}
       />

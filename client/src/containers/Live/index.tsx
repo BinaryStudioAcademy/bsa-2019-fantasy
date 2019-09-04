@@ -1,34 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import cn from 'classnames';
+import _ from 'lodash';
+import produce from 'immer';
 import moment from 'moment';
-import Slider from 'react-rangeslider';
+import cn from 'classnames';
 import 'react-rangeslider/lib/index.css';
+import Slider from 'react-rangeslider';
 
 import { Play } from './Play';
 import { Fixture } from './Fixture';
 import { LastGamesList } from './LastGamesList';
 
 import { loadCurrentGame, loadLastGames } from './actions';
+import { createIterator } from './iterator';
 import * as faker from './socket';
 import * as eventsService from 'services/eventsService';
+import { useInterval } from 'helpers/hooks/interval.hook';
 
 import { RootState } from 'store/types';
 
 import styles from './styles.module.scss';
 import './progress.style.scss'; // cannot style nested elements of uncontrolled component react-rangeslider with css modules
-import produce from 'immer';
+import { FaRegPlayCircle, FaRegPauseCircle, FaLongArrowAltLeft } from 'react-icons/fa';
+
+const prepareEvent = (event, homeClubId) => {
+  // format event object
+  const player = event.player && event.player.player;
+  const team = player && player.club_id === homeClubId ? 'home' : 'away';
+  return { ...event, name: event.event_type, elapsed: event.time, team, player };
+};
+
+const formatElapsed = (elapsed) => {
+  let elapsedSeconds = moment.duration(elapsed).asSeconds();
+  if (elapsedSeconds > 90 * 60) elapsedSeconds = 90 * 60;
+  const minutes = Math.floor(elapsedSeconds / 60);
+  const seconds = Math.round(elapsedSeconds - minutes * 60);
+  const format = (number) => {
+    const numStr = String(number);
+    const prefixZeroCount = 2 - numStr.length;
+    return prefixZeroCount <= 0 ? numStr : Array(prefixZeroCount + 1).join('0') + numStr;
+  };
+  return `${format(minutes)}:${format(seconds)}`;
+};
 
 const Live = () => {
   // Redux state
   const currentGame = useSelector((state: RootState) => state.currentGame.current);
   const nextGame = useSelector((state: RootState) => state.currentGame.next);
   const lastGames = useSelector((state: RootState) => state.currentGame.lastGames);
-
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
-  const currentEvents = useSelector(
-    (state: RootState) => state.currentGame.current.events,
-  );
+
   const getClubById = (id) => {
     return clubs.find((club) => club.id === Number(id));
   };
@@ -37,8 +58,7 @@ const Live = () => {
   const [currentEvent, setCurrentEvent] = useState();
   const [replayGame, setReplayGame] = useState();
   const [replayEvents, setReplayEvents] = useState();
-
-  console.log(replayGame);
+  const [progress, setProgress] = useState(0);
 
   // Replay game dependent variables
   const homeClub = getClubById(
@@ -55,8 +75,9 @@ const Live = () => {
   const score = replayGame ? replayScore : currentScore;
 
   const currentElapsed = currentGame.elapsed || 0;
-  const elapsed = replayGame ? 0 : currentElapsed;
+  const elapsed = replayGame ? replayGame.elapsed : currentElapsed;
   const events = replayGame ? replayGame.events : currentGame.events;
+  //console.log(events);
 
   // Actions
   const dispatch = useDispatch();
@@ -71,18 +92,94 @@ const Live = () => {
   useEffect(() => {
     const getEvents = async (id) => {
       const events = await eventsService.getEventsByGameId(id);
-      setReplayEvents(events);
+      setReplayEvents(createIterator(events));
     };
     if (replayGame) {
       // eslint-disable-next-line
       getEvents(replayGame.id);
     }
-  }, [replayGame]);
-
-  useEffect(() => setCurrentEvent(events[events.length - 1]), [events]);
+  }, [replayGame && replayGame.id]);
 
   const requestSimulation = (homeClubId, awayClubId) => {
+    setReplayGame(undefined);
     faker.simulate({ homeClubId, awayClubId });
+  };
+
+  const stopSimulation = () => {
+    faker.stopSimulation();
+  };
+
+  // On every new added event
+  useEffect(() => {
+    const event = events[events.length - 1];
+    setCurrentEvent(event);
+    event && setProgress(event.elapsed);
+  }, [events]);
+
+  // Replay playback interval
+  useInterval(
+    () => {
+      console.log('interval 1000 ms');
+      const event = replayEvents.next().value;
+      console.log(event);
+
+      if (event) {
+        const status = { homeClub, awayClub, score };
+        const preparedEvent = prepareEvent(event, homeClub && homeClub.id);
+        setReplayGame(
+          produce((draft) => {
+            draft.events.push(preparedEvent);
+            draft.elapsed = preparedEvent.elapsed;
+            // Event handlers
+            if (preparedEvent.name === 'goal') {
+              preparedEvent.team === 'home'
+                ? draft.hometeam_score++
+                : draft.awayteam_score++;
+            }
+          }),
+        );
+      } else {
+        // last event reached, stop replay
+        setReplayGame(
+          produce((draft) => {
+            draft.isPlaying = false;
+          }),
+        );
+      }
+    },
+    replayGame && replayGame.isPlaying ? 1000 : null,
+  );
+
+  const onPlayClick = () => {
+    console.log('play');
+    setReplayGame(
+      produce((draft) => {
+        draft.isPlaying = true;
+      }),
+    );
+  };
+
+  const onPauseClick = () => {
+    console.log('pause');
+    setReplayGame(
+      produce((draft) => {
+        draft.isPlaying = false;
+      }),
+    );
+  };
+
+  const renderPlaybackControls = () => {
+    if (!replayGame) return null;
+    const classes = 'text-4xl text-secondary';
+    return replayGame.isPlaying ? (
+      <button className={classes} onClick={onPauseClick}>
+        <FaRegPauseCircle />
+      </button>
+    ) : (
+      <button className={classes} onClick={onPlayClick}>
+        <FaRegPlayCircle />
+      </button>
+    );
   };
 
   const renderCurrentFixture = () => {
@@ -91,18 +188,14 @@ const Live = () => {
         {score[0]}:{score[1]}
       </div>
     );
-    const elapsedSeconds = moment.duration(elapsed).asSeconds();
-    const minutes = Math.floor(elapsedSeconds / 60);
-    const seconds = Math.round(elapsedSeconds - minutes * 60);
-    const format = (number) => {
-      const numStr = String(number);
-      const prefixZeroCount = 2 - numStr.length;
-      return prefixZeroCount <= 0
-        ? numStr
-        : Array(prefixZeroCount + 1).join('0') + numStr;
-    };
-    const belowContent = `${format(minutes)}:${format(seconds)}`;
-    return <Fixture {...{ homeClub, awayClub, centerContent, belowContent }} />;
+    const belowContent = formatElapsed(elapsed);
+    console.log(elapsed);
+    const belowBelowContent = renderPlaybackControls();
+    return (
+      <Fixture
+        {...{ homeClub, awayClub, centerContent, belowContent, belowBelowContent }}
+      />
+    );
   };
 
   const renderNextFixture = () => {
@@ -117,7 +210,43 @@ const Live = () => {
   const fixture =
     replayGame || currentGame.gameStarted ? renderCurrentFixture() : renderNextFixture();
 
-  const renderProgress = () => {
+  const handleProgressChangeStart = () => {
+    if (!replayGame) return false;
+    setReplayGame(
+      produce((draft) => {
+        draft.isPlaying = false;
+      }),
+    );
+  };
+
+  const handleProgressChangeComplete = () => {
+    const value = progress;
+    if (!replayGame) return false;
+    const events = replayEvents.getItems();
+    const closest = events.reduce(function(prev, curr) {
+      return Math.abs(curr.time - value) < Math.abs(prev.time - value) ? curr : prev;
+    });
+    const index = events.indexOf(closest);
+    replayEvents.setIndex(index);
+    const passedEvents = events
+      .slice(0, index)
+      .map((event) => prepareEvent(event, homeClub && homeClub.id));
+
+    setReplayGame(
+      produce((draft) => {
+        draft.hometeam_score = passedEvents.filter(
+          (event) => event.name === 'goal' && event.team === 'home',
+        ).length;
+        draft.awayteam_score = passedEvents.filter(
+          (event) => event.name === 'goal' && event.team === 'away',
+        ).length;
+        draft.events = passedEvents;
+        draft.isPlaying = true;
+      }),
+    );
+  };
+
+  const renderProgress = (events) => {
     const labels = events
       .filter((event) => event.name === 'goal')
       .reduce(
@@ -129,44 +258,22 @@ const Live = () => {
           }),
         {},
       );
-    const value = currentEvent ? currentEvent.elapsed : 0;
     return (
       <Slider
         className='progress'
         min={0}
+        step={90 * 1000}
         max={90 * 60 * 1000}
-        value={value}
+        value={progress}
         labels={labels}
+        format={formatElapsed}
+        onChangeStart={handleProgressChangeStart}
+        onChange={(value) => {
+          if (!replayGame) return false;
+          setProgress(value);
+        }}
+        onChangeComplete={handleProgressChangeComplete}
       />
-    );
-  };
-
-  const onPlayClick = () => {
-    console.log('play');
-    setReplayGame(
-      produce((draft) => {
-        draft.isPlaying = true;
-      }),
-    );
-  };
-
-  const onPauseClick = () => {
-    console.log('pause');
-  };
-
-  const renderPlaybackControls = () => {
-    if (!replayGame) return null;
-    const classes =
-      'border rounded px-2 py-1 mr-2 leading-none	uppercase text-sm text-green-500 border-green-500';
-    return (
-      <>
-        <button className={classes} onClick={onPlayClick}>
-          Play
-        </button>
-        <button className={classes} onClick={onPauseClick}>
-          Pause
-        </button>
-      </>
     );
   };
 
@@ -179,6 +286,34 @@ const Live = () => {
       events: [],
       currentEvent: undefined,
     });
+    setProgress(0);
+    const scrollElement = document.querySelector('#root>.flex>.flex-1');
+    scrollElement && scrollElement.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const renderStatus = () => {
+    const gameStarted = currentGame.gameStarted;
+    const color = gameStarted
+      ? 'text-red-500 border-red-500'
+      : 'text-green-500 border-green-500';
+    const text = gameStarted ? 'Live' : 'Upcoming';
+    const content = replayGame ? (
+      <>
+        <FaLongArrowAltLeft />
+        <span className='ml-1'>Return to {text}</span>
+      </>
+    ) : (
+      text
+    );
+
+    return (
+      <button
+        className={`flex border rounded px-2 py-1 mr-2 leading-none	uppercase text-sm ${color}`}
+        onClick={() => setReplayGame(null)}
+      >
+        {content}
+      </button>
+    );
   };
 
   return (
@@ -186,13 +321,17 @@ const Live = () => {
       <div className='bg-white text-secondary shadow-figma rounded-sm p-12 mb-4'>
         <Play
           gameStarted={currentGame.gameStarted}
+          isSimulation={currentGame.isSimulation}
+          renderStatus={renderStatus}
           events={events}
           currentEvent={currentEvent}
           fixture={fixture}
           requestSimulation={requestSimulation}
-          playbackControls={renderPlaybackControls()}
+          stopSimulation={stopSimulation}
+          playbackControls={null}
+          status={{ homeClub, awayClub, score }}
         />
-        <div className='mt-12'>{renderProgress()}</div>
+        <div className='mt-12'>{renderProgress(events)}</div>
       </div>
       <div className='bg-white text-secondary shadow-figma rounded-sm p-12'>
         <h3 className='font-bold text-3xl mb-4'>Replay previous matches</h3>
@@ -200,6 +339,7 @@ const Live = () => {
           games={lastGames}
           getClubById={getClubById}
           onClick={onFixtureClick}
+          value={replayGame && replayGame.id}
         />
       </div>
     </>

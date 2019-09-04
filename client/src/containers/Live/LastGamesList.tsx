@@ -3,7 +3,7 @@ import Spinner from 'components/Spinner';
 import { Fixture } from './Fixture';
 import _ from 'lodash';
 
-export const LastGamesList = ({ games, getClubById, onClick }) => {
+export const LastGamesList = ({ games, getClubById, onClick, value }) => {
   if (games.length === 0) return <Spinner />;
 
   const gamesGrouped = _.chain(games)
@@ -33,9 +33,10 @@ export const LastGamesList = ({ games, getClubById, onClick }) => {
                   {hometeam_score}:{awayteam_score}
                 </div>
               );
+              const background = value === id ? 'bg-gray-300' : '';
               return (
-                <div className='my-2 px-2 w-1/2' key={game.id}>
-                  <div className='shadow-figma p-2 rounded'>
+                <div className='my-2 px-2 w-1/2' key={id}>
+                  <div className={`shadow-figma p-2 rounded ${background}`}>
                     <Fixture
                       {...{ homeClub, awayClub, centerContent, onClick: onClick(game) }}
                     />

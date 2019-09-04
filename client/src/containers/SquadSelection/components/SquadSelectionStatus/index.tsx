@@ -49,7 +49,7 @@ const SquadSelectionStatus = ({
           <hr className='mt-4' />
           <div className='text-center mt-2'>
             <p className='font-bold text-xs'>{t('SquadSelectionStatus.moneyStats')}</p>
-            <p className={moneyClass}>{money}</p>
+            <p className={moneyClass}>{money.toFixed(2)}</p>
           </div>
         </div>
       </div>
