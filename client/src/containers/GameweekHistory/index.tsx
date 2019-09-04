@@ -104,6 +104,7 @@ const GameweekHistory = () => {
                 onClick={() => dispatch(setCurrentGameweekAction(currentGameweek - 1))}
                 disabled={isLoading}
                 className={`g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded mr-6 font-bold`}
+                style={{ outline: 'none' }}
               >
                 <FaChevronLeft />
                 {t('previous')}
@@ -127,6 +128,7 @@ const GameweekHistory = () => {
                   'rounded',
                   'font-bold',
                 )}
+                style={{ outline: 'none' }}
               >
                 {t('next')}
                 <FaChevronRight />
