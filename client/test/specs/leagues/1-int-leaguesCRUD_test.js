@@ -1,5 +1,5 @@
 const assert = require('assert');
-const credentials = require('../../testData.json');
+const credentials = require('../testData.json');
 
 //helper is Helper, page is Page.
 const Helper = require('../../helpers/helpers');
@@ -32,7 +32,7 @@ describe('Leagues test suite', () => {
     );
   });
 
-  xit('should be able to create a private league', async () => {
+  it('should be able to create a private league', async () => {
     const leagueName = Helper.getRandomName();
     await leaguesSteps.createPrivateLeague(leagueName);
     await browser.pause(3000);
@@ -45,7 +45,7 @@ describe('Leagues test suite', () => {
     );
   });
 
-  it('should be able to join a public league', async () => {
+  xit('should be able to join a public league', async () => {
     const leagueName = Helper.getRandomName();
     await leaguesSteps.createPublicLeague(leagueName);
     await navSteps.clicklogOutBtn();
@@ -78,7 +78,7 @@ describe('Leagues test suite', () => {
     );
   });
 
-  it('should be able to leave a public league', async () => {
+  xit('should be able to leave a public league', async () => {
     const leagueName = Helper.getRandomName();
     await leaguesSteps.createPublicLeague(leagueName);
 
@@ -98,7 +98,7 @@ describe('Leagues test suite', () => {
     await leaguesSteps.leavePublicLeague(leagueName);
     await browser.pause(3000);
 
-    const isPresent = await leaguesSteps.findPublicLeagueByName(leagueName);
+    isPresent = await leaguesSteps.findPublicLeagueByName(leagueName);
     await assert.strictEqual(
       isPresent,
       false,
@@ -114,7 +114,7 @@ describe('Leagues test suite', () => {
     await navSteps.navigateToLeagues();
     await browser.pause(2000);
     await leaguesSteps.joinPrivateLeague(inviteCode);
-    await browser.pause(3000);
+    await browser.pause(5000);
     const isPresent = await leaguesSteps.findPrivateLeagueByName(leagueName);
     await assert.strictEqual(
       isPresent,
@@ -125,7 +125,7 @@ describe('Leagues test suite', () => {
     await leaguesSteps.leavePrivateLeague(leagueName);
     await browser.pause(3000);
 
-    const isPresent = await leaguesSteps.findPrivateLeagueByName(leagueName);
+    isPresent = await leaguesSteps.findPrivateLeagueByName(leagueName);
     await assert.strictEqual(
       isPresent,
       false,

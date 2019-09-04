@@ -1,8 +1,6 @@
-const LoginActions = require('./actions/Login_pa');
+const pageSteps = require('./actions/loginForm.pa.js');
 const assert = require('assert');
 const credentials = require('./../testData.json');
-
-const pageSteps = new LoginActions();
 
 describe('Login page tests', () => {
   beforeEach(async () => {

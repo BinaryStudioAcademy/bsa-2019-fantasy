@@ -1,6 +1,6 @@
-const credentials = require('../testData.json');
+const credentials = require('../specs/testData.json');
 
-const loginSteps = require('../specs/login/steps/login.steps');
+const loginSteps = require('../specs/login/actions/loginForm.pa.js');
 
 class HelpClass {
   async loginWithDefaultUser() {
