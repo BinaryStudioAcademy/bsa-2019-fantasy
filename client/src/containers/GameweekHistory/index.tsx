@@ -156,7 +156,7 @@ const GameweekHistory = () => {
 
       <div className={styles['gameweek-history-content']}>
         <React.Fragment>
-          <div className={cn(header.paper, 'rounded', 'mr-2', 'p-8', 'relative')}>
+          <div className={cn(header.paper, 'rounded', 'p-8', 'relative')}>
             {isLoading ? (
               <Spinner />
             ) : (
