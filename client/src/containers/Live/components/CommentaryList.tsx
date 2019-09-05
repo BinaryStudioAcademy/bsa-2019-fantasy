@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import cn from 'classnames';
 
-import styles from './styles.module.scss';
-import { createComment } from './createComment';
+import styles from '../styles.module.scss';
+import { createComment } from '../helpers/createComment';
 import SingleComment from './SingleComment';
 
 export const CommentaryList = ({ events, status }) => {
@@ -19,6 +19,7 @@ export const CommentaryList = ({ events, status }) => {
   return (
     <div ref={logRef} className={cn(styles['noScrollbar'], 'text-sm')}>
       {events.map((event) => {
+        if (event.name === 'nothing' || event.name === 'stop') return null;
         const comment = event.comment || createComment(event, status);
         return (
           <p key={`${event.elapsed}-${event.name}`}>

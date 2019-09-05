@@ -3,7 +3,6 @@ import cryptoHelper from '../../helpers/crypto.helper';
 import userRepository from '../../data/repositories/user.repository';
 
 export const login = async ({ password: _, ...user }) => {
-  console.log('hello');
   return {
     token: tokenHelper.createToken({ id: user.id }),
     user,

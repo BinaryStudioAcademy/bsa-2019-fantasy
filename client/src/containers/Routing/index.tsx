@@ -200,6 +200,7 @@ const Routing = () => {
                 <Route path='/leagues/join' component={JoinLeague} />
                 <Route path='/leagues/:name' component={LeagueDetails} />
                 <Route exact path='/joinLeague/:leagueToken' component={JoinLeague} />
+                <Route path='/profile/set/password' component={ResetPassword} />
 
                 <Route render={() => <Redirect to='/404' />} />
               </Switch>

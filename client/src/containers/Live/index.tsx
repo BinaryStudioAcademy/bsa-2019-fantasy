@@ -3,25 +3,28 @@ import { useSelector, useDispatch } from 'react-redux';
 import _ from 'lodash';
 import produce from 'immer';
 import moment from 'moment';
-import cn from 'classnames';
 import 'react-rangeslider/lib/index.css';
 import Slider from 'react-rangeslider';
+import cn from 'classnames';
 
-import { Play } from './Play';
-import { Fixture } from './Fixture';
-import { LastGamesList } from './LastGamesList';
+import { Play } from './components/Play';
+import { Fixture } from './components/Fixture';
+import { LastGamesList } from './components/LastGamesList';
+import { EventBar } from './components/EventBar';
 
 import { loadCurrentGame, loadLastGames } from './actions';
-import { createIterator } from './iterator';
-import * as faker from './socket';
+import { createIterator } from './helpers/iterator';
+import * as faker from './helpers/socket';
 import * as eventsService from 'services/eventsService';
 import { useInterval } from 'helpers/hooks/interval.hook';
 
 import { RootState } from 'store/types';
 
-import styles from './styles.module.scss';
-import './progress.style.scss'; // cannot style nested elements of uncontrolled component react-rangeslider with css modules
+// cannot style nested elements of uncontrolled component react-rangeslider with css modules
+import './progress.style.scss';
 import { FaRegPlayCircle, FaRegPauseCircle, FaLongArrowAltLeft } from 'react-icons/fa';
+
+import { useTranslation } from 'react-i18next';
 
 const prepareEvent = (event, homeClubId) => {
   // format event object
@@ -44,6 +47,13 @@ const formatElapsed = (elapsed) => {
 };
 
 const Live = () => {
+  const { t } = useTranslation();
+
+  //Set a title
+  useEffect(() => {
+    document.title = 'LIVE | Fantasy Football League';
+  }, []);
+
   // Redux state
   const currentGame = useSelector((state: RootState) => state.currentGame.current);
   const nextGame = useSelector((state: RootState) => state.currentGame.next);
@@ -119,9 +129,8 @@ const Live = () => {
   // Replay playback interval
   useInterval(
     () => {
-      console.log('interval 1000 ms');
+      if (!replayGame.isPlaying) return;
       const event = replayEvents.next().value;
-      console.log(event);
 
       if (event) {
         const status = { homeClub, awayClub, score };
@@ -151,7 +160,6 @@ const Live = () => {
   );
 
   const onPlayClick = () => {
-    console.log('play');
     setReplayGame(
       produce((draft) => {
         draft.isPlaying = true;
@@ -160,10 +168,10 @@ const Live = () => {
   };
 
   const onPauseClick = () => {
-    console.log('pause');
     setReplayGame(
       produce((draft) => {
         draft.isPlaying = false;
+        draft.events.push({ name: 'stop' });
       }),
     );
   };
@@ -189,7 +197,6 @@ const Live = () => {
       </div>
     );
     const belowContent = formatElapsed(elapsed);
-    console.log(elapsed);
     const belowBelowContent = renderPlaybackControls();
     return (
       <Fixture
@@ -247,46 +254,48 @@ const Live = () => {
   };
 
   const renderProgress = (events) => {
-    const labels = events
-      .filter((event) => event.name === 'goal')
-      .reduce(
-        (acc, { elapsed, player }) =>
-          Object.assign(acc, {
-            [elapsed]: `${Math.round(moment.duration(elapsed).asMinutes())}' ${
-              player.second_name
-            }`,
-          }),
-        {},
-      );
     return (
-      <Slider
-        className='progress'
-        min={0}
-        step={90 * 1000}
-        max={90 * 60 * 1000}
-        value={progress}
-        labels={labels}
-        format={formatElapsed}
-        onChangeStart={handleProgressChangeStart}
-        onChange={(value) => {
-          if (!replayGame) return false;
-          setProgress(value);
-        }}
-        onChangeComplete={handleProgressChangeComplete}
-      />
+      <div>
+        {/* <EventBar events={homeEvents} /> */}
+        <Slider
+          className='progress'
+          min={0}
+          step={90 * 1000}
+          max={90 * 60 * 1000}
+          value={progress}
+          format={formatElapsed}
+          onChangeStart={handleProgressChangeStart}
+          onChange={(value) => {
+            if (!replayGame) return false;
+            setProgress(value);
+          }}
+          onChangeComplete={handleProgressChangeComplete}
+        />
+        {/* <EventBar events={awayEvents} /> */}
+      </div>
     );
   };
 
   const onFixtureClick = (game) => () => {
-    setReplayGame({
-      ...game,
-      hometeam_score: 0,
-      awayteam_score: 0,
-      isPlaying: false,
-      events: [],
-      currentEvent: undefined,
-    });
-    setProgress(0);
+    if (!replayGame || replayGame.id !== game.id) {
+      console.log('set replay game');
+      setReplayGame({
+        ...game,
+        hometeam_score: 0,
+        awayteam_score: 0,
+        isPlaying: false,
+        events: [{ name: 'stop' }], // event to stop all sounds
+        currentEvent: undefined,
+      });
+
+      // progress element
+      setProgress(0);
+
+      // rewind event iterator to start
+      replayEvents && replayEvents.setIndex(0);
+    }
+
+    // scrollTop
     const scrollElement = document.querySelector('#root>.flex>.flex-1');
     scrollElement && scrollElement.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -296,11 +305,14 @@ const Live = () => {
     const color = gameStarted
       ? 'text-red-500 border-red-500'
       : 'text-green-500 border-green-500';
-    const text = gameStarted ? 'Live' : 'Upcoming';
+
+    const text = gameStarted ? t('LIVE.live') : t('LIVE.upcoming');
     const content = replayGame ? (
       <>
         <FaLongArrowAltLeft />
-        <span className='ml-1'>Return to {text}</span>
+        <span className='ml-1'>
+          {t('LIVE.returnTo')} {text}
+        </span>
       </>
     ) : (
       text
@@ -328,13 +340,12 @@ const Live = () => {
           fixture={fixture}
           requestSimulation={requestSimulation}
           stopSimulation={stopSimulation}
-          playbackControls={null}
           status={{ homeClub, awayClub, score }}
         />
         <div className='mt-12'>{renderProgress(events)}</div>
       </div>
       <div className='bg-white text-secondary shadow-figma rounded-sm p-12'>
-        <h3 className='font-bold text-3xl mb-4'>Replay previous matches</h3>
+        <h3 className='font-bold text-3xl mb-4'>{t('LIVE.replayPreviousMatches')}</h3>
         <LastGamesList
           games={lastGames}
           getClubById={getClubById}

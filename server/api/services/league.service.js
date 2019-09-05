@@ -1,3 +1,5 @@
+import { recalculateLeagueRankings } from '../../helpers/calculate-league-rank.js';
+
 import leagueRepository from '../../data/repositories/league.repository';
 import leagueParticipantRepository from '../../data/repositories/league-participant.repository';
 import gameweekRepository from '../../data/repositories/gameweek.repository';
@@ -27,6 +29,11 @@ export const getPublicLeagues = async () => {
   return result;
 };
 
+export const getLeagues = async () => {
+  const result = await leagueRepository.getAll();
+  return result;
+}
+
 export const createLeague = async (data) => {
   const { name, start_from } = data;
   const { id } = await gameweekRepository.getByNumber(start_from);
@@ -47,9 +54,13 @@ export const joinLeagueById = async (participant_id, league_id, is_creator) => {
     is_creator,
     league_id,
     participant_id,
-    current_rank: 0,
-    last_rank: 0,
+    current_rank: is_creator ? 1 : 0,
+    last_rank: is_creator ? 1 : 0,
   });
+
+  if (!is_creator) {
+    recalculateLeagueRankings(league_id);
+  }
 
   return newParticipant;
 };
@@ -61,9 +72,13 @@ export const joinLeagueByName = async (participant_id, league_name, is_creator) 
     is_creator,
     league_id: id,
     participant_id,
-    current_rank: 0,
-    last_rank: 0,
+    current_rank: is_creator ? 1 : 0,
+    last_rank: is_creator ? 1 : 0,
   });
+
+  if (!is_creator) {
+    recalculateLeagueRankings(id);
+  }
 
   return newParticipant;
 };
@@ -78,6 +93,8 @@ export const joinGlobalLeague = async (participant_id, league_name) => {
     current_rank: 0,
     last_rank: 0,
   });
+
+  recalculateLeagueRankings(id);
 
   return newParticipant;
 };

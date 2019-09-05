@@ -1,7 +1,7 @@
 import React from 'react';
 import Fade from 'react-reveal/Fade';
 
-import fieldEvents from './fieldEvents';
+import fieldEvents from '../helpers/fieldEvents';
 import field from 'assets/images/field.svg';
 
 export const Field = ({ currentEvent }) => {

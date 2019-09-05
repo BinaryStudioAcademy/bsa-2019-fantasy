@@ -6,7 +6,11 @@ import Button from 'components/Button';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/types';
 
+import { useTranslation } from 'react-i18next';
+
 export const SimulateModal = ({ onSubmit, onDismiss }) => {
+  const { t } = useTranslation();
+
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
   const options = clubs.map(({ name, id }) => {
     return { label: name, value: String(id) };
@@ -21,10 +25,10 @@ export const SimulateModal = ({ onSubmit, onDismiss }) => {
   return (
     <Modal onDismiss={onDismiss}>
       <div className='p-8'>
-        <h3 className='font-bold text-2xl mb-4'>Select clubs</h3>
+        <h3 className='font-bold text-2xl mb-4'>{t('LIVE.simulateModal.selectClubs')}</h3>
         <div className='flex -mx-2 mb-8'>
           <div className='w-1/3 px-2'>
-            <div className='font-semibold text-l'>Home club</div>
+            <div className='font-semibold text-l'>{t('LIVE.simulateModal.homeClub')}</div>
             <Dropdown
               options={optionsHome}
               value={homeClubId}
@@ -40,7 +44,7 @@ export const SimulateModal = ({ onSubmit, onDismiss }) => {
             ></Dropdown>
           </div>
           <div className='w-1/3 px-2'>
-            <div className='font-semibold text-l'>Away club</div>
+            <div className='font-semibold text-l'>{t('LIVE.simulateModal.awayClub')}</div>
             <Dropdown
               options={optionsAway}
               value={awayClubId}
@@ -55,10 +59,10 @@ export const SimulateModal = ({ onSubmit, onDismiss }) => {
             styling='primary'
             onClick={() => onSubmit(homeClubId, awayClubId)}
           >
-            Start simulation
+            {t('LIVE.simulateModal.startSimulation')}
           </Button>
           <Button className='text-sm' styling='secondary' onClick={onDismiss}>
-            Cancel
+            {t('LIVE.simulateModal.cancel')}
           </Button>
         </div>
       </div>

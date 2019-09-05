@@ -4,21 +4,12 @@
     vertical-align: initial;
     font-size: 10px;
   }
-
-  :local(.gameweek-stats) {
-    :local(.points) {
-      font-size: 18px;
-
-      span {
-        font-size: 35px;
-      }
-    }
-  }
 }
 
 :local(.gameweek-history-content) {
   display: grid;
-  grid-template-columns: 70% 30%;
+  grid-template-columns: 7fr 3fr;
+  gap: 1em;
 
   .title {
     font-size: 25px;

@@ -85,7 +85,8 @@ const LeagueDetails = ({
       maxWidth: 100,
       accessor: 'current_rank',
       Cell: (props: any) => {
-        const movement = props.original.current_rank - props.original.last_rank;
+        const movement = props.original.current_rank < props.original.last_rank;
+        const noMovement = props.original.last_rank === 0 || (props.original.current_rank === props.original.last_rank)
 
         return (
           <div className={`h-full flex justify-center items-center`}>
@@ -94,18 +95,17 @@ const LeagueDetails = ({
                 styles.movement,
                 'flex',
                 'items-center',
-                movement > 0 ? styles.up : '',
-                movement < 0 ? styles.down : '',
+                movement ? styles.up : !noMovement ? styles.down : '',
               )}
             >
               <span className='mr-2'>{props.index + 1}.</span>
-              {movement > 0 ? (
+              {movement ? (
                 <FaArrowUp />
-              ) : movement < 0 ? (
-                <FaArrowDown />
+              ) : noMovement ? (
+                <FaMinus />
               ) : (
-                    <FaMinus />
-                  )}
+                <FaArrowDown />
+              )}
             </span>{' '}
           </div>
         );
@@ -164,6 +164,7 @@ const LeagueDetails = ({
   }
 
   const link = `${window.location.origin}/joinLeague/${code}`;
+  const tableData = leagueDetails.participants.sort((a, b) => parseFloat(b.total_points) - parseFloat(a.total_points));
 
   return (
     <div className={styles['league-details']}>
@@ -178,7 +179,7 @@ const LeagueDetails = ({
           <div className='mt-4'>
             <ShareLink link={link}>
               {link => (
-                <a href={link} target='_blank'>Share invite link on my Facebook page</a>
+                <a href={link} target='_blank'>{ t('LeagueDetails.facebookInvite') }</a>
               )}
             </ShareLink>
           </div>
@@ -186,7 +187,7 @@ const LeagueDetails = ({
       </div>
       <div className={cn(styles.background, 'mb-3', 'p-1')}>
         <div className={styles.tables}>
-          <LeagueTable columns={columns} data={leagueDetails.participants} title={data} />
+          <LeagueTable columns={columns} data={tableData} title={data} />
         </div>
         {leagueDetails['admin_entry'] && leagueDetails.private ? (
           <div className={`p-6`}>

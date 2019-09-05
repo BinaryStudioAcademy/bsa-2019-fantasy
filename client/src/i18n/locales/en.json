@@ -43,7 +43,8 @@
     "name": "Name",
     "sendConfirm": "We will send you a confirmation email",
     "atLeastName": "Should be at least 5 characters",
-    "atLeastPassword": "Should be at least 8 characters"
+    "atLeastPassword": "Should be at least 8 characters",
+    "invalidEmail": "Email is incorrect"
   },
 
   "ChangePasswordPage": {
@@ -86,6 +87,14 @@
       "maxPoint": "max point",
       "userPoint": "user point",
       "GW": "GW"
+    },
+    "TopTransfers": {
+      "topTransfersIn": "Top Transfers in",
+      "topTransfersOut": "Top Transfers out",
+      "position": "Position",
+      "player": "Player",
+      "club": "Club",
+      "number": "Number"
     }
   },
 
@@ -94,6 +103,40 @@
     "listView": "List View",
     "pitchView": "Pitch View",
     "resultPending": "Players score will be available by the end of game week"
+  },
+
+  "LIVE": {
+    "live": "live",
+    "upcoming": "Upcoming",
+    "returnTo": "Return to",
+    "play": {
+      "stopSimulation": "Stop simulation",
+      "simulate": "Simulate",
+      "reschedule": "Reschedule",
+      "mute": "Mute",
+      "muted": "Muted",
+      "commentary": "Commentary",
+      "highlights": "Highlights",
+      "yellowCards": "Yellow cards",
+      "redCards": "Red cards"
+    },
+    "rescheduleModal": {
+      "rescheduleMatch": "Reschedule match",
+      "gameweek": "Gameweek",
+      "game": "Game",
+      "time": "Time",
+      "reschedule": "Reschedule",
+      "dismiss": "Dismiss"
+    },
+    "simulateModal": {
+      "selectClubs": "Select clubs",
+      "homeClub": "Home club",
+      "awayClub": "Away club",
+      "startSimulation": "Start simulation",
+      "cancel": "Cancel"
+    },
+    "replayPreviousMatches": "Replay previous matches",
+    "gameweek": "Gameweek"
   },
 
   "NoTeamHome": {
@@ -329,6 +372,15 @@
   },
 
   "Players": {
+    "PlayerHighlight": {
+      "goals": "Goals",
+      "assists": "Assists",
+      "missedPasses": "Missed passes",
+      "goalsConceded": "Goals conceded",
+      "saves": "Saves",
+      "yellowCards": "Yellow cards",
+      "redCards": "Red cards"
+    },
     "name": "Name",
     "price": "Price",
     "score": "Score",
@@ -393,7 +445,8 @@
       "title": "Leave a league",
       "message": "Click the button below to leave the league.",
       "button": "Leave league"
-    }
+    },
+    "facebookInvite": "SHARE INVITE LINK ON MY FACEBOOK PAGE"
   },
 
   "Notifications": {

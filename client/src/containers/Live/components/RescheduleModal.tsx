@@ -9,7 +9,11 @@ import Button from 'components/Button';
 import * as gameweekService from 'services/gameweekService';
 import moment from 'moment';
 
+import { useTranslation } from 'react-i18next';
+
 export const RescheduleModal = ({ onDismiss }) => {
+  const { t } = useTranslation();
+
   const [gameweek, setGameweek] = useState('1');
   const [fixturesList, setFixturesList] = useState();
   const [fixture, setFixture] = useState();
@@ -31,10 +35,14 @@ export const RescheduleModal = ({ onDismiss }) => {
   return (
     <Modal onDismiss={onDismiss}>
       <div className='p-8'>
-        <h3 className='font-bold text-2xl mb-4'>Reschedule match</h3>
+        <h3 className='font-bold text-2xl mb-4'>
+          {t('LIVE.rescheduleModal.rescheduleMatch')}
+        </h3>
         <div className='flex -mx-2 mb-8'>
           <div className='px-2'>
-            <div className='font-semibold text-l'>Gameweek</div>
+            <div className='font-semibold text-l'>
+              {t('LIVE.rescheduleModal.gameweek')}
+            </div>
             <Dropdown
               options={gameweekOptions}
               value={gameweek}
@@ -44,7 +52,7 @@ export const RescheduleModal = ({ onDismiss }) => {
             ></Dropdown>
           </div>
           <div className='w-64 px-2'>
-            <div className='font-semibold text-l'>Game</div>
+            <div className='font-semibold text-l'>{t('LIVE.rescheduleModal.game')}</div>
             {fixturesOptions && (
               <Dropdown
                 options={fixturesOptions}
@@ -59,7 +67,7 @@ export const RescheduleModal = ({ onDismiss }) => {
             )}
           </div>
           <div className=' px-2'>
-            <div className='font-semibold text-l'>Time</div>
+            <div className='font-semibold text-l'>{t('LIVE.rescheduleModal.time')}</div>
             <Datetime
               value={dateTime}
               dateFormat='MMMM Do YYYY'
@@ -70,10 +78,10 @@ export const RescheduleModal = ({ onDismiss }) => {
         </div>
         <div className=''>
           <Button className='mr-4 text-sm' styling='primary' onClick={() => false}>
-            Reschedule
+            {t('LIVE.rescheduleModal.reschedule')}
           </Button>
           <Button className='text-sm' styling='secondary' onClick={onDismiss}>
-            Dismiss
+            {t('LIVE.rescheduleModal.dismiss')}
           </Button>
         </div>
       </div>

@@ -43,7 +43,8 @@
     "name": "Ім'я",
     "sendConfirm": "Ми надішлемо email для підтвердження",
     "atLeastName": "Принаймні 5 символів",
-    "atLeastPassword": "Принаймні 8 символів"
+    "atLeastPassword": "Принаймні 8 символів",
+    "invalidEmail": "Некоректний email"
   },
 
   "ChangePasswordPage": {
@@ -78,14 +79,22 @@
       "sub": "Прем'єр Ліга",
       "main": "Тур"
     },
-    "currentPoints": "Бали за тур",
+    "currentPoints": "Бали за поточний тур",
     "points": "балів",
-    "overallRank": "Позиція в Загальній Лізі",
+    "overallRank": "Позиція у загальній лізі",
     "chart": {
       "averagePoint": "середній бал",
       "maxPoint": "максимальний бал",
       "userPoint": "бали користувача",
       "GW": "Тур"
+    },
+    "TopTransfers": {
+      "topTransfersIn": "Найпопулярніші придбання",
+      "topTransfersOut": "Найпопулярніші продажі",
+      "position": "Позиція",
+      "player": "Гравець",
+      "club": "Клуб",
+      "number": "Кількість"
     }
   },
 
@@ -94,6 +103,40 @@
     "listView": "Список",
     "pitchView": "Поле",
     "resultPending": "Бали граців будуть доступні в кінці туру"
+  },
+
+  "LIVE": {
+    "live": "Наживо",
+    "upcoming": "Майбутній матч",
+    "returnTo": "Повернутися до",
+    "play": {
+      "stopSimulation": "Зупинити трансляцію",
+      "simulate": "Трансляція",
+      "reschedule": "Повтор",
+      "mute": "Вимкнути",
+      "muted": "Вимкнено",
+      "commentary": "Коментарі",
+      "highlights": "Основні моменти",
+      "yellowCards": "Жовті картки",
+      "redCards": "Червоні картки"
+    },
+    "rescheduleModal": {
+      "rescheduleMatch": "Повтор матчу",
+      "gameweek": "Ігровий тиждень",
+      "game": "Гра",
+      "time": "Час",
+      "reschedule": "Переглянути",
+      "dismiss": "Відміна"
+    },
+    "simulateModal": {
+      "selectClubs": "Обрати клуби",
+      "homeClub": "Домашній клуб",
+      "awayClub": "Гостьовий клуб",
+      "startSimulation": "Почати трансляцію",
+      "cancel": "Скасувати"
+    },
+    "replayPreviousMatches": "Повторити попередні матчі",
+    "gameweek": "Ігровий тиждень"
   },
 
   "NoTeamHome": {
@@ -180,7 +223,7 @@
     "statistics": "Статистика",
     "transfers": "Трансфери",
     "leagues": "Ліги",
-    "score": "Очки",
+    "score": "Бали",
     "money": "Гроші",
     "logout": "Вийти"
   },
@@ -198,7 +241,7 @@
   "Profile": {
     "title": {
       "main": "Ваш аккаунт",
-      "sub": "Обновіть ваш аккаунт"
+      "sub": "Оновіть ваш аккаунт"
     },
 
     "steps": {
@@ -301,7 +344,7 @@
       "pitch": "Поле",
       "list": "Список"
     },
-    "submit": "Виконати трансфери"
+    "submit": "Підтвердити трансфери"
   },
 
   "TransfersModal": {
@@ -315,7 +358,7 @@
     "table": {
       "in": "Трансфер",
       "out": "На зміну",
-      "scoreCost": "Ціна в очках",
+      "scoreCost": "Ціна в балах",
       "discardTransfer": "Відмінити трансфер",
       "total": "Загалом"
     },
@@ -329,6 +372,15 @@
   },
 
   "Players": {
+    "PlayerHighlight": {
+      "goals": "Голи",
+      "assists": "Асисти",
+      "missedPasses": "Пропущені паси",
+      "goalsConceded": "Пропущені голи",
+      "saves": "Сейви",
+      "yellowCards": "Жовті картки",
+      "redCards": "Червоні картки"
+    },
     "name": "Ім'я",
     "price": "Ціна",
     "score": "Рахунок",
@@ -383,7 +435,7 @@
       "TOT": "Загальні бали"
     },
     "title": {
-      "sub": "Деталі Ліги"
+      "sub": "Деталі ліги"
     },
     "invitation": {
       "title": "Код запрошення",
@@ -393,7 +445,8 @@
       "title": "Покинути Лігу",
       "message": "Натисніть кнопку нижче, щоб вийти з ліги.",
       "button": "Покинути лігу"
-    }
+    },
+    "facebookInvite": "Поділитися запрошенням на моїй фейсбук сторінці"
   },
 
   "Notifications": {
