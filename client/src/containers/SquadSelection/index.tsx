@@ -59,17 +59,18 @@ const SquadSelection = withRouter(({ history }) => {
               onResetClick={() => handleResetSquad()}
               onAutoPickClick={() => handleAutoPick()}
             />
-
-            <TeamSelection
-              players={pitchPlayers}
-              setPlayers={setPitch}
-              showFixtures={false}
-              submit={{
-                label: t('Gameweek.saveTeam'),
-                canSubmit: amountOfPlayersPicked === 15,
-                onSubmit: () => setIsModalOpen(true),
-              }}
-            />
+            <div className='flex-1'>
+              <TeamSelection
+                players={pitchPlayers}
+                setPlayers={setPitch}
+                showFixtures={false}
+                submit={{
+                  label: t('Gameweek.saveTeam'),
+                  canSubmit: amountOfPlayersPicked === 15,
+                  onSubmit: () => setIsModalOpen(true),
+                }}
+              />
+            </div>
           </div>
           <PlayersSelection
             undisplayedPlayers={undisplayedPlayers as GameweekHistoryType[]}
