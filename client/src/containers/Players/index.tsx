@@ -295,19 +295,21 @@ class PlayersPage extends React.Component<Props, State> {
     );
   };
 
-  onInfoClick = (id: string, club_id: number, dialogInitialTab: 'fixtures' | 'history' = 'history') => {
+  onInfoClick = (
+    id: string,
+    club_id: number,
+    dialogInitialTab: 'fixtures' | 'history' = 'history',
+  ) => {
     this.setState({
-      currentPlayer: this.props.players.find(
-        (p: any) => p && id === p.id,
-      ),
-      dialogInitialTab
+      currentPlayer: this.props.players.find((p: any) => p && id === p.id),
+      dialogInitialTab,
     });
     this.props.fetchDataForPlayer(id, String(club_id));
   };
 
   renderNameCell = (props) => (
     <div
-      className='mr-4 font-semibold hover:text-secondary2 cursor-pointer'
+      className='mr-4 font-semibold hover:text-secondary2 cursor-pointer truncate'
       role='presentation'
       onClick={() => this.setPlayerHighlight(props.original.id)}
     >
@@ -413,7 +415,10 @@ class PlayersPage extends React.Component<Props, State> {
             }}
           />
         )}
-        <PlayerHighlight player={this.state.playerHighlightData} onInfoClick={this.onInfoClick} />
+        <PlayerHighlight
+          player={this.state.playerHighlightData}
+          onInfoClick={this.onInfoClick}
+        />
 
         <section className='allStats my-6'>
           <div className='filters text-sm flex mt-6 mb-1'>

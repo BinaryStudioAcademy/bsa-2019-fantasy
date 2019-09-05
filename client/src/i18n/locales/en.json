@@ -3,6 +3,7 @@
   "wait": "Wait",
   "send": "Send",
   "next": "Next",
+  "change": "Change",
   "previous": "Previous",
   "submit": "Submit",
   "subscribe": "Subscribe",
@@ -246,7 +247,7 @@
     "steps": {
       "personalDetails": "Personal Details",
       "favouriteClub": "Favourite Club",
-      "emailPreferences": "Email Preferences"
+      "notificationCenter": "Notification Center"
     },
 
     "personalDetails": {
@@ -265,10 +266,18 @@
       "title": "Favourite Club"
     },
 
-    "emailPreferences": {
-      "title": "Email preferences",
-      "email-select": "Recieve a remind-email to apply a team",
-      "timeSelect": "When to send an email to apply a team?",
+    "notificationCenter": {
+      "title": "Notification Center",
+      "clubTitle": "Club Email Communications",
+      "clubSubtitle": "Let us know if you would like to hear about the club you support",
+      "favouriteClub": "Favourite Club",
+      "applyTeamRemind": "Remind to apply a team",
+      "applyTeamRemindSubtitle": "Do you want to be notified about team selection?",
+      "subscribedFixtures": "Subscribed Fixtures",
+      "receiveEmail": "Receive an email",
+      "noFixtures": "You haven`t any subscribtions yet",
+      "receiveAppNotification": "Receive an app-notification",
+      "timeSelect": "When to notify you before events?",
       "hours": "hours",
       "hour": "hour"
     },

@@ -3,6 +3,7 @@
   "wait": "Зачекайте",
   "send": "Відправити",
   "next": "Наступна",
+  "change": "Змінити",
   "previous": "Попередня",
   "submit": "Відправити",
   "subscribe": "Підписатися",
@@ -246,7 +247,7 @@
     "steps": {
       "personalDetails": "Персональні дані",
       "favouriteClub": "Улюблений клуб",
-      "emailPreferences": "Налаштування пошти"
+      "notifictaionCenter": "Центр сповіщень"
     },
 
     "personalDetails": {
@@ -265,10 +266,18 @@
       "title": "Улюблений клуб"
     },
 
-    "emailPreferences": {
-      "title": "Налаштування пошти",
-      "email-select": "Отримувати сповіщення про обрану команду на пошту",
-      "timeSelect": "За який період нагадати обрати команду?",
+    "notifictaionCenter": {
+      "title": "Центр сповіщень",
+      "clubTitle": "Cповіщення про події улюбленого клуба",
+      "clubSubtitle": "Чи хочете ви отримувати сповіщення про події улюбленого клуба?",
+      "favouriteClub": "Улюблений клуб",
+      "applyTeamRemind": "Нагадування обрати команду",
+      "applyTeamRemindSubtitle": "Чи хочете ви отримувати нагаування обрати команду?",
+      "subscribedFixtures": "Підписка на матчі",
+      "receiveEmail": "Отримували електронного листа",
+      "noFixtures": "У вас немає підписок на матчі",
+      "receiveAppNotification": "Отримувати сповіщення в додатку",
+      "timeSelect": "Оберіть за скільки годин нагадувати про події",
       "hours": "годин",
       "hour": "годину"
     },

@@ -19,6 +19,10 @@ export type User = {
 
   free_transfers: number;
   sendmail_time: number | null;
+  club_email: boolean;
+  club_notif: boolean;
+  team_email: boolean;
+  team_notif: boolean;
 
   image: Image | null;
   createdAt: string;

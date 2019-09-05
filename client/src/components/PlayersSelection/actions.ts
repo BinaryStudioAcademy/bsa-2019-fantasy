@@ -33,7 +33,9 @@ const setAutoPickSquad = (autoPick: PlayerType[]): PlayersSelectionAction => ({
   payload: autoPick,
 });
 
-export const loadPlayersAction = (filter: any): AsyncPlayersSelectionAction => async (dispatch) => {
+export const loadPlayersAction = (filter: any): AsyncPlayersSelectionAction => async (
+  dispatch,
+) => {
   dispatch(setLoading(true));
 
   const result = await playersService.getPlayers(filter);

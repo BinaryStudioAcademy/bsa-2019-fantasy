@@ -10,7 +10,7 @@ const teamReminderScheduler = async () => {
   const gameweeks = await gameweekRepository.getAll();
   const users = await userRepository.getAll();
   users.forEach(async (u) => {
-    if (u.sendmail_time && u.team_name === null) {
+    if (u.sendmail_time && !u.team_name && u.team_email) {
       const nextGameweek = gameweeks.find((w) => {
         const now = moment().add(u.sendmail_time, 'h');
 
@@ -24,7 +24,9 @@ const teamReminderScheduler = async () => {
       schedule.scheduleJob('remind apply team', new Date(timeToRemind), async () => {
         sendRemind(u.email);
       });
-      console.log(`>>> Remind apply team on: ${timeToRemind} for ${u.email}`);
+      console.log(
+        `>>> Send remind-email to apply team on: ${timeToRemind} for ${u.email}`,
+      );
     }
   });
 };
