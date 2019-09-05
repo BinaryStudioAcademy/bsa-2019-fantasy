@@ -56,9 +56,15 @@ router
   .post('/favorite-club', jwtMiddleware, async (req, res, next) => {
     try {
       await userService.updateById(req.user.id, { favorite_club_id: req.body.clubId });
-
+      
       const club = await footballClubService.getFootballClubById(req.body.clubId);
-      await leagueService.joinGlobalLeague(req.user.id, club.name);
+      const isLeagueParticipant = await leagueParticipantService.checkIfAParticipantByName(
+        req.user.id,
+        club.name,
+      );
+      if (!isLeagueParticipant.length) {
+        await leagueService.joinGlobalLeague(req.user.id, club.name);
+      }
 
       res.json({ message: 'Successfuly updated favorite club!' });
     } catch (err) {
