@@ -1,6 +1,6 @@
 import { getFixtureSubscriptions } from '../helpers/fixture-notification.helper';
 import recalculateTeamsScore from './teamScoreRecalculator';
-import recalculateLeagueRankings from '../helpers/calculate-league-rank.js';
+import { recalculateLeagueRankingsAfterEvent } from '../helpers/calculate-league-rank.js';
 import { updateDbFromFaker } from '../helpers/update-db-from-faker.helper';
 
 let status = { gameStarted: false };
@@ -45,7 +45,7 @@ export default (mainServer, fakerClient) => {
     console.log('Received data from faker ', data);
     mainServer.emit('event', data);
     recalculateTeamsScore();
-    recalculateLeagueRankings()
+    recalculateLeagueRankingsAfterEvent()
   });
   fakerClient.on('update', () => {
     // eslint-disable-next-line no-console
