@@ -2,7 +2,8 @@
 import moment from 'moment';
 
 import gameweekHistoryRepository from '../../data/repositories/gameweek-history.repository';
-import { updateTeamMember } from './team-member-history.service';
+import gameweekRepository from '../../data/repositories/gameweek.repository';
+import { updateTeamMember, postTeamMemberHistory } from './team-member-history.service';
 import {
   findBenchPlayer,
   findBenchPlayerGKP,
@@ -206,6 +207,33 @@ export const makeAutoSubstitution = async (gameweekId) => {
           }
         }
       }
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const createGameWeekHistoriesForAllUsers = async (gameweekId) => {
+  try {
+    const gameweekHistories = await getHistoryByGameweekId(gameweekId);
+    const nextGameweek = await gameweekRepository.getCurrentGameweek();
+    for (let i = 0; i < gameweekHistories.length; i += 1) {
+      const history = gameweekHistories[i];
+      const createdHistoryId = await postCurrentHistoryById(
+        history.user_id,
+        nextGameweek.id,
+      );
+      const newTeamMemberHistories = history.team_member_histories.map((el) => ({
+        is_on_bench: el.is_on_bench,
+        is_captain: el.is_captain,
+        is_vice_captain: el.is_vice_captain,
+        player_id: el.player_id,
+      }));
+      await postTeamMemberHistory(
+        newTeamMemberHistories,
+        createdHistoryId,
+        nextGameweek.id,
+      );
     }
   } catch (err) {
     throw err;
