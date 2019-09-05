@@ -24,6 +24,8 @@ import { RootState } from 'store/types';
 import './progress.style.scss';
 import { FaRegPlayCircle, FaRegPauseCircle, FaLongArrowAltLeft } from 'react-icons/fa';
 
+import { useTranslation } from 'react-i18next';
+
 const prepareEvent = (event, homeClubId) => {
   // format event object
   const player = event.player && event.player.player;
@@ -45,6 +47,8 @@ const formatElapsed = (elapsed) => {
 };
 
 const Live = () => {
+  const { t } = useTranslation();
+
   //Set a title
   useEffect(() => {
     document.title = 'LIVE | Fantasy Football League';
@@ -313,11 +317,14 @@ const Live = () => {
     const color = gameStarted
       ? 'text-red-500 border-red-500'
       : 'text-green-500 border-green-500';
-    const text = gameStarted ? 'Live' : 'Upcoming';
+
+    const text = gameStarted ? t('LIVE.live') : t('LIVE.upcoming');
     const content = replayGame ? (
       <>
         <FaLongArrowAltLeft />
-        <span className='ml-1'>Return to {text}</span>
+        <span className='ml-1'>
+          {t('LIVE.returnTo')} {text}
+        </span>
       </>
     ) : (
       text
@@ -350,7 +357,7 @@ const Live = () => {
         <div className='mt-12'>{renderProgress(events)}</div>
       </div>
       <div className='bg-white text-secondary shadow-figma rounded-sm p-12'>
-        <h3 className='font-bold text-3xl mb-4'>Replay previous matches</h3>
+        <h3 className='font-bold text-3xl mb-4'>{t('LIVE.replayPreviousMatches')}</h3>
         <LastGamesList
           games={lastGames}
           getClubById={getClubById}

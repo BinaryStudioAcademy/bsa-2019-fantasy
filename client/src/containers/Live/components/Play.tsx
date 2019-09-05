@@ -7,6 +7,7 @@ import { RescheduleModal } from './RescheduleModal';
 import { Sound } from './Sound';
 
 import { FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 export const Play = ({
   gameStarted,
@@ -19,6 +20,8 @@ export const Play = ({
   stopSimulation,
   status,
 }) => {
+  const { t } = useTranslation();
+
   const [isMuted, setIsMuted] = useState(false);
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [isRescheduleOpened, setIsRescheduleOpened] = useState(false);
@@ -30,7 +33,7 @@ export const Play = ({
           className='border rounded px-2 py-1 mr-2 leading-none	uppercase text-sm text-red-500 border-red-500'
           onClick={() => stopSimulation()}
         >
-          Stop simulation
+          {t('LIVE.play.stopSimulation')}
         </button>
       );
     } else {
@@ -39,7 +42,7 @@ export const Play = ({
           className='border rounded px-2 py-1 mr-2 leading-none	uppercase text-sm text-green-500 border-green-500'
           onClick={() => setIsModalOpened(true)}
         >
-          Simulate
+          {t('LIVE.play.simulate')}
         </button>
       );
     }
@@ -50,7 +53,7 @@ export const Play = ({
       className='border rounded px-2 py-1 mr-2 leading-none	uppercase text-sm text-green-500 border-green-500'
       onClick={() => setIsRescheduleOpened(true)}
     >
-      Reschedule
+      {t('LIVE.play.reschedule')}
     </button>
   );
 
@@ -59,7 +62,7 @@ export const Play = ({
       ? 'text-red-500 border-red-500'
       : 'text-green-500 border-green-500';
     /* eslint-disable-next-line */
-    const [icon, text] = isMuted ? [<FaVolumeMute />, 'Muted'] : [<FaVolumeUp />, 'Mute'];
+    const [icon, text] = isMuted ? [<FaVolumeMute />, t('LIVE.play.muted')] : [<FaVolumeUp />, t('LIVE.play.mute')];
     return (
       <button
         className={`flex items-center border rounded px-2 py-1 leading-none	uppercase text-sm ${classes}`}
@@ -85,15 +88,15 @@ export const Play = ({
       </div>
       <div className='flex'>
         <div className='h-32 w-1/4 flex flex-col'>
-          <h5 className='font-bold'>Commentary</h5>
+          <h5 className='font-bold'>{t('LIVE.play.commentary')}</h5>
           <CommentaryList events={events} status={status} />
         </div>
         <div className='flex-1 text-center'></div>
         <div className='w-1/4 text-right'>
-          <h5 className='font-bold'>Highlights</h5>
+          <h5 className='font-bold'>{t('LIVE.play.highlights')}</h5>
           <div className='text-sm'>
-            <p>Yellow cards</p>
-            <p>Red cards</p>
+            <p>{t('LIVE.play.yellowCards')}</p>
+            <p>{t('LIVE.play.redCards')}</p>
           </div>
         </div>
       </div>

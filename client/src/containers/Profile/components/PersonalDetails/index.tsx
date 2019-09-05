@@ -20,6 +20,7 @@ import { updateUser } from '../../actions';
 
 import { generateImageSrc } from 'helpers/avatar';
 import styles from './styles.module.scss';
+import { Submit } from './Submit';
 
 export const usePersonalDetails = () => {
   const user = useSelector((state: RootState) => state.profile.user);
@@ -52,6 +53,17 @@ const PersonalDetails = withRouter(({ history }) => {
   const [isEmailValid, setIsEmailValid] = useState(true);
 
   const [toChangePassword, setToChangePassword] = useState<boolean>(false);
+  const [canSubmit, setCanSubmit] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (
+      user &&
+      (username !== user.name ||
+        email !== user.email ||
+        (user.image && imageId !== user.image.id))
+    )
+      setCanSubmit(true);
+  }, [username, email, imageId]);
 
   if (!user) return <Spinner />;
 
@@ -130,8 +142,13 @@ const PersonalDetails = withRouter(({ history }) => {
     }
   };
 
-  const onUsernameChange = (e) => setUsername(e.target.value);
-  const onEmailChange = (e) => setEmail(e.target.value);
+  const onUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const onEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
 
   let validInputClass = 'w-full px-4 py-2 bg-gray-100 shadow rounded-sm';
 
@@ -293,12 +310,12 @@ const PersonalDetails = withRouter(({ history }) => {
           </div>
         </div>
 
-        <button
-          type='submit'
+        <Submit
           className='mt-4 py-2 px-16 text-lg max-w-xs rounded shadow bg-primary text-secondary font-bold'
+          disabled={!canSubmit}
         >
           {t('submit')}
-        </button>
+        </Submit>
       </div>
     </form>
   );
