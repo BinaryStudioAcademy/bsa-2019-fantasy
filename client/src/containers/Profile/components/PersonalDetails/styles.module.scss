@@ -27,3 +27,7 @@
     border-color: transparent;
   }
 }
+
+:local(.error) {
+  border: 1px solid #e60000;
+}
