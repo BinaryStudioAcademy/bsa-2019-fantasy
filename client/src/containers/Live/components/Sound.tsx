@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactHowler from 'react-howler';
 import produce from 'immer';
+import _ from 'lodash';
 
 const eventSounds = {
   startGame: {
@@ -91,11 +92,15 @@ const eventSounds = {
     name: 'crowdLoop',
     action: 'stop',
   },
+  stop: {
+    name: 'stop',
+    action: 'stop-all',
+  },
 };
 
 type Sound = {
   name: string;
-  action: 'start' | 'stop';
+  action: 'start' | 'stop' | 'stop-all';
   src?: string;
   loop?: boolean;
   volume?: number;
@@ -107,7 +112,12 @@ export const Sound = ({ currentEvent, isMuted }) => {
   const audioRef = useRef<any>(null);
 
   const stopSound = (sound) => {
-    console.log(`stop sound ${sound.name}`);
+    if (!sound) return;
+    console.log(`stop sound ${sound}`);
+    if (_.isString(sound)) {
+      setSounds(produce((draft) => draft.filter((item) => item.src !== sound)));
+      return;
+    }
     setSounds(produce((draft) => draft.filter((item) => item.key !== sound.key)));
   };
 
@@ -119,12 +129,9 @@ export const Sound = ({ currentEvent, isMuted }) => {
       console.log(`${sound.action} - ${sound.name}`);
       switch (sound.action) {
         case 'start':
-          setSounds([
-            ...sounds,
-            { ...sound, key: `${currentEvent.elapsed}-${currentEvent.name}` },
-          ]);
+          setSounds([...sounds, { ...sound, key: Date.now() }]);
           return;
-        case 'stop':
+        case 'stop': {
           const instance = (window as any).Howler._howls.find(
             (item) => item.src === sound.src,
           );
@@ -133,6 +140,17 @@ export const Sound = ({ currentEvent, isMuted }) => {
           });
           instance.fade(instance._volume, 0, 1000);
           return;
+        }
+        case 'stop-all': {
+          const instances = (window as any).Howler._howls;
+          instances.forEach((instance) => {
+            instance.on('fade', function() {
+              setSounds([]);
+            });
+            instance.fade(instance._volume, 0, 1000);
+          });
+          return;
+        }
       }
     }
   }, [currentEvent]);

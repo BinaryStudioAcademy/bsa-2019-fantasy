@@ -17,7 +17,6 @@ export const Play = ({
   fixture,
   requestSimulation,
   stopSimulation,
-  playbackControls,
   status,
 }) => {
   const [isMuted, setIsMuted] = useState(false);

@@ -124,6 +124,7 @@ const Live = () => {
   // Replay playback interval
   useInterval(
     () => {
+      if (!replayGame.isPlaying) return;
       const event = replayEvents.next().value;
 
       if (event) {
@@ -165,6 +166,7 @@ const Live = () => {
     setReplayGame(
       produce((draft) => {
         draft.isPlaying = false;
+        draft.events.push({ name: 'stop' });
       }),
     );
   };
@@ -278,15 +280,25 @@ const Live = () => {
   };
 
   const onFixtureClick = (game) => () => {
-    setReplayGame({
-      ...game,
-      hometeam_score: 0,
-      awayteam_score: 0,
-      isPlaying: false,
-      events: [],
-      currentEvent: undefined,
-    });
-    setProgress(0);
+    if (!replayGame || replayGame.id !== game.id) {
+      console.log('set replay game');
+      setReplayGame({
+        ...game,
+        hometeam_score: 0,
+        awayteam_score: 0,
+        isPlaying: false,
+        events: [{ name: 'stop' }], // event to stop all sounds
+        currentEvent: undefined,
+      });
+
+      // progress element
+      setProgress(0);
+
+      // rewind event iterator to start
+      replayEvents && replayEvents.setIndex(0);
+    }
+
+    // scrollTop
     const scrollElement = document.querySelector('#root>.flex>.flex-1');
     scrollElement && scrollElement.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -328,7 +340,6 @@ const Live = () => {
           fixture={fixture}
           requestSimulation={requestSimulation}
           stopSimulation={stopSimulation}
-          playbackControls={null}
           status={{ homeClub, awayClub, score }}
         />
         <div className='mt-12'>{renderProgress(events)}</div>
