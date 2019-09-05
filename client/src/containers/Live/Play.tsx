@@ -1,54 +1,67 @@
 import React, { useState } from 'react';
-import { FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
-import moment from 'moment';
+
 import { CommentaryList } from './CommentaryList';
 import { Field } from './Field';
 import { SimulateModal } from './SimulateModal';
+import { RescheduleModal } from './RescheduleModal';
+import { Sound } from './Sound';
+
+import { FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
 
 export const Play = ({
   gameStarted,
+  isSimulation,
+  renderStatus,
   events,
   currentEvent,
   fixture,
   requestSimulation,
+  stopSimulation,
   playbackControls,
+  status,
 }) => {
   const [isMuted, setIsMuted] = useState(false);
   const [isModalOpened, setIsModalOpened] = useState(false);
+  const [isRescheduleOpened, setIsRescheduleOpened] = useState(false);
 
   const getClassesByStatus = (status) =>
     status ? 'text-red-500 border-red-500' : 'text-gray-300 border-gray-300';
 
-  const renderStatus = () => {
-    const classes = getClassesByStatus(gameStarted);
-    return (
-      <div
-        className={`border rounded px-2 py-1 mr-2 leading-none	uppercase text-sm ${classes}`}
-      >
-        Live
-      </div>
-    );
+  const renderSimulate = () => {
+    if (isSimulation && gameStarted) {
+      return (
+        <button
+          className='border rounded px-2 py-1 mr-2 leading-none	uppercase text-sm text-red-500 border-red-500'
+          onClick={() => stopSimulation()}
+        >
+          Stop simulation
+        </button>
+      );
+    } else {
+      return (
+        <button
+          className='border rounded px-2 py-1 mr-2 leading-none	uppercase text-sm text-green-500 border-green-500'
+          onClick={() => setIsModalOpened(true)}
+        >
+          Simulate
+        </button>
+      );
+    }
   };
-  const renderUpcoming = () =>
-    gameStarted || (
-      <div
-        className={`border rounded px-2 py-1 mr-2 leading-none	uppercase text-sm text-green-500 border-green-500`}
-      >
-        Upcoming
-      </div>
-    );
 
-  const renderSimulate = () => (
+  const renderReschedule = () => (
     <button
       className='border rounded px-2 py-1 mr-2 leading-none	uppercase text-sm text-green-500 border-green-500'
-      onClick={() => setIsModalOpened(true)}
+      onClick={() => setIsRescheduleOpened(true)}
     >
-      Simulate
+      Reschedule
     </button>
   );
 
   const renderMute = () => {
-    const classes = getClassesByStatus(gameStarted);
+    const classes = isMuted
+      ? 'text-red-500 border-red-500'
+      : 'text-green-500 border-green-500';
     /* eslint-disable-next-line */
     const [icon, text] = isMuted ? [<FaVolumeMute />, 'Muted'] : [<FaVolumeUp />, 'Mute'];
     return (
@@ -64,14 +77,12 @@ export const Play = ({
 
   return (
     <>
+      <Sound {...{ currentEvent, isMuted }} />
       <div className='flex'>
-        <div className='flex flex-1 items-center'>
-          {renderStatus()}
-          {renderUpcoming()}
-          {playbackControls}
-        </div>
+        <div className='flex flex-1 items-center'>{renderStatus()}</div>
         {fixture}
         <div className='flex flex-1 items-center justify-end'>
+          {renderReschedule()}
           {renderSimulate()}
           {renderMute()}
         </div>
@@ -79,9 +90,9 @@ export const Play = ({
       <div className='flex'>
         <div className='h-32 w-1/4 flex flex-col'>
           <h5 className='font-bold'>Commentary</h5>
-          <CommentaryList events={events} />
+          <CommentaryList events={events} status={status} />
         </div>
-        <div className='flex-1 text-center'>center</div>
+        <div className='flex-1 text-center'></div>
         <div className='w-1/4 text-right'>
           <h5 className='font-bold'>Highlights</h5>
           <div className='text-sm'>
@@ -104,6 +115,10 @@ export const Play = ({
           }}
           onDismiss={() => setIsModalOpened(false)}
         />
+      )}
+
+      {isRescheduleOpened && (
+        <RescheduleModal onDismiss={() => setIsRescheduleOpened(false)} />
       )}
     </>
   );

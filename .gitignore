@@ -88,4 +88,4 @@ package-lock.json
 yarn.lock
 
 # Test
-test/output/
+client/test/output/

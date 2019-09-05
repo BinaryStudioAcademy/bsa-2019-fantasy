@@ -15,6 +15,7 @@ import { UpcomingFixture } from 'types/fixture.types';
 
 type AbstractPitchPlayer<P> = {
   type: PlayerPosition;
+  accept: PlayerPosition[];
   item: (P & { display: { src: string } } & { upcomingFixture: UpcomingFixture }) | null;
 };
 

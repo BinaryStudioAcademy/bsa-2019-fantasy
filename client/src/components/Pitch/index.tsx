@@ -8,6 +8,7 @@ import { PitchPlayerType, DisplayPlayerType } from './types';
 import PitchPlayer from './components/PitchPlayer';
 
 import * as S from './styles';
+
 type Props = {
   players: PitchPlayerType[];
   hasBench: boolean;
@@ -29,8 +30,8 @@ export const Pitch = ({
   const order: PlayerPosition[] = ['GKP', 'DEF', 'MID', 'FWD'];
 
   return (
-    <S.Container>
-      <DndProvider backend={HTML5Backend}>
+    <DndProvider backend={HTML5Backend}>
+      <S.Container>
         <S.Pitch>
           {order.map((type) => (
             <S.TeamRow key={`pitch-team-row-${type}`}>
@@ -41,8 +42,7 @@ export const Pitch = ({
                 .map((p, idx) => (
                   <PitchPlayer
                     index={players.indexOf(p)}
-                    type={type}
-                    player={p.item}
+                    player={p}
                     disabled={disabled}
                     showFixtures={showFixtures}
                     onDrop={onPlayerDrop}
@@ -61,12 +61,9 @@ export const Pitch = ({
               .filter((p) => p.item && p.item.is_on_bench)
               .map((p, idx) => (
                 <PitchPlayer
-                  index={players.indexOf(p)}
-                  type={
-                    p.item ? p.item.player_stats.position : ['GKP', 'DEF', 'MID', 'FWD']
-                  }
                   benched
-                  player={p.item}
+                  index={players.indexOf(p)}
+                  player={p}
                   disabled={disabled}
                   showFixtures={showFixtures}
                   onDrop={onPlayerDrop}
@@ -76,7 +73,7 @@ export const Pitch = ({
               ))}
           </S.Bench>
         )}
-      </DndProvider>
-    </S.Container>
+      </S.Container>
+    </DndProvider>
   );
 };

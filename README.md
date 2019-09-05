@@ -15,9 +15,5 @@ This project was inspired by the English Premier League Fantasy Football applica
 Node.js | Express | PostgreSQL | Sequelize | socket.io | Passport.js
 React | Redux | Thunk | SCSS | Tailwind CSS
 
-#### Tested with
-![BrowserStack](./assets/Browserstack-logo.svg)
-
 ## License
-
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details

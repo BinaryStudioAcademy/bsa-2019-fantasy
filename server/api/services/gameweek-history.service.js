@@ -178,7 +178,7 @@ export const getUserRanking = (userHistory, userId) => {
   return userPosition;
 };
 
-export const makeAutoSubsitution = async (gameweekId) => {
+export const makeAutoSubstitution = async (gameweekId) => {
   try {
     const gameweekHistories = await getHistoryByGameweekId(gameweekId);
     const teamMembers = gameweekHistories.map((el) => el.team_member_histories);

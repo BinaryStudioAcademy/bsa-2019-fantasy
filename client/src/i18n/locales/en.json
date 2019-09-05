@@ -78,7 +78,7 @@
       "sub": "Premier League",
       "main": "Gameweek"
     },
-    "currentPoints": "Current Points",
+    "currentPoints": "Gameweek Points",
     "points": "points",
     "overallRank": "Rank in Overall League",
     "chart": {
@@ -92,7 +92,8 @@
   "Gameweek": {
     "saveTeam": "Save your Team",
     "listView": "List View",
-    "pitchView": "Pitch View"
+    "pitchView": "Pitch View",
+    "resultPending": "Players score will be available by the end of game week"
   },
 
   "NoTeamHome": {

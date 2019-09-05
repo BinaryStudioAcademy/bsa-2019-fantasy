@@ -16,6 +16,7 @@ import {
 } from './action.type';
 import { Game } from 'types/game.types';
 import produce from 'immer';
+import { createComment } from './createComment';
 
 type State = {
   current: LiveStatusObject;
@@ -33,6 +34,7 @@ const initialState: State = {
     score: undefined,
     elapsed: undefined,
     events: [],
+    isSimulation: undefined,
   },
   next: undefined,
   lastGames: [],

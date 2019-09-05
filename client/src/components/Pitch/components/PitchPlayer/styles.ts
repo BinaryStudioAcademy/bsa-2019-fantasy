@@ -3,7 +3,8 @@ import styled, { keyframes } from 'styled-components';
 export const Container = styled.div`
   position: relative;
 
-  width: 7rem;
+  height: 6.5em;
+  width: 7em;
   overflow: hidden;
 
   transition: background-color 0.16s;

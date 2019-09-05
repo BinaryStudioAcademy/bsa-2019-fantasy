@@ -14,6 +14,7 @@ export const getPitch = <T extends AbstractPlayerType>(players: T[] = []) => {
 
   const team = typeAmountMap.flatMap<{
     type: PlayerPosition;
+    accept: PlayerPosition[];
     item: T | null;
   }>(([type, amount]) => {
     let emptyPlayersAmount = amount - categorized[type].length;
@@ -26,7 +27,7 @@ export const getPitch = <T extends AbstractPlayerType>(players: T[] = []) => {
     return categorized[type]
       .map((p) => ({ item: p }))
       .concat(Array(emptyPlayersAmount).fill({ item: null }))
-      .map((p) => ({ ...p, type }));
+      .map((p) => ({ ...p, type, accept: [type] }));
   });
   return team;
 };

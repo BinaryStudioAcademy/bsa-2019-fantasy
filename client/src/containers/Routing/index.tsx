@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { feedback } from 'react-feedbacker';
 import { useTranslation } from 'react-i18next';
 
@@ -63,7 +63,7 @@ import { joinRoom, requestGames } from 'helpers/socket';
 const Routing = () => {
   const { i18n } = useTranslation();
   const dispatch = useDispatch();
-  const { isLoading, user, isAuthorized } = useSelector(
+  const { isLoading: userLoading, user, isAuthorized } = useSelector(
     (state: RootState) => state.profile,
   );
 
@@ -71,11 +71,16 @@ const Routing = () => {
     (state: RootState) => state.profile.user && state.profile.user.favorite_club_id,
   );
 
-  const clubs = useSelector((state: RootState) => state.clubs.clubs);
+  const { loading: clubsLoading, clubs } = useSelector(
+    (state: RootState) => state.clubs,
+    shallowEqual,
+  );
   const currentGameweek = useSelector(currentGameweekSelector);
   const live = useSelector((state: RootState) => state.currentGame.current.gameStarted);
 
   const [joinedRoom, setJoinedRoom] = useState<boolean>(false);
+
+  const isLoading = userLoading && clubsLoading;
 
   useEffect(() => {
     dispatch(loadCurrentUser());

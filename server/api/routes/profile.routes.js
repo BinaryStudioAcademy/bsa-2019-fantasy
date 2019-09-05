@@ -3,6 +3,7 @@ import * as userService from '../services/user.service';
 import * as leagueService from '../services/league.service';
 import * as leagueParticipantService from '../services/league-participant.service';
 import * as footballClubService from '../services/football-club.service';
+import * as gameweekService from '../services/gameweek.service.js';  
 import * as gameweekHistoryService from '../services/gameweek-history.service';
 import * as teamMemberHistoryService from '../services/team-member-history.service';
 import * as fixturesSubscriptionService from '../services/fixtures-subscription.service';
@@ -32,7 +33,11 @@ router
           .postCurrentHistoryById(req.params.user, req.params.gameweek)
           .then((gameweekHistoryId) => {
             teamMemberHistoryService
-              .postTeamMemberHistory(req.body.teamMemberData, gameweekHistoryId)
+              .postTeamMemberHistory(
+                req.body.teamMemberData,
+                gameweekHistoryId,
+                req.params.gameweek,
+              )
               .then(() => {
                 res.json({ message: 'Successfully saved!' });
               })
@@ -89,6 +94,53 @@ router
       .getUserRankings(req.user.id)
       .then((value) => res.json(value))
       .catch(next);
+  })
+  .get('/leagues/mobile/:id', async (req, res, next) => {
+    try {
+      const leagues = await leagueService.getLeaguesByUserId(req.params.id);
+      const result = {
+        public: [],
+        private: [],
+        global: [],
+      };
+
+      await Promise.all(
+        leagues.map(async (item) => {
+          const { league } = item;
+          const { start_from } = await leagueService.getLeagueParams(league.name);
+
+
+          let gameweek_points = 0;
+          let total_points = 0;
+
+          const startScoringGameweek = await gameweekService.getGameweekById(start_from);
+          const userGamaweekStats = await gameweekHistoryService.getHistoriesByUserId(
+            req.params.id,
+          );
+
+          userGamaweekStats.forEach((data) => {
+            if (startScoringGameweek.number <= data.gameweek.number) {
+              gameweek_points = data.team_score;
+              total_points += gameweek_points;
+            }
+          });
+          
+          if (league.private) {
+              result.private.push({...item.toJSON(), gameweek_points, total_points});
+            } else if (globalLeagues.includes(league.name)) {
+              result.global.push({...item.toJSON(), gameweek_points, total_points});
+            } else {
+              result.public.push({...item.toJSON(), gameweek_points, total_points});
+            }
+
+          return result;
+        })
+      )
+
+      res.json(result);
+    } catch (err) {
+      next(err);
+    } 
   })
   .get('/leagues', jwtMiddleware, (req, res, next) => {
     leagueService
