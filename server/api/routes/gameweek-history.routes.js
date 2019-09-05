@@ -99,7 +99,7 @@ router
       .postCurrentHistoryById(req.params.user, req.params.gameweek)
       .then((gameweekHistoryId) => {
         teamMemberHistoryService
-          .postTeamMemberHistory(req.body, gameweekHistoryId)
+          .postTeamMemberHistory(req.body, gameweekHistoryId, req.params.gameweek)
           .then((players) => res.json(players))
           .catch(next);
       });
