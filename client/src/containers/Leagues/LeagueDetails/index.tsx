@@ -164,7 +164,7 @@ const LeagueDetails = ({
   }
 
   const link = `${window.location.origin}/joinLeague/${code}`;
-  const tableData = leagueDetails.participants.sort((a, b) => parseFloat(b.total_points) - parseFloat(a.total_points));
+  const tableData = leagueDetails.participants.sort((a, b) => parseFloat(a.current_rank) - parseFloat(b.current_rank));
 
   return (
     <div className={styles['league-details']}>
