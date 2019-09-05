@@ -178,7 +178,7 @@ const LeagueDetails = ({
           <div className='mt-4'>
             <ShareLink link={link}>
               {link => (
-                <a href={link} target='_blank'>Share invite link on my Facebook page</a>
+                <a href={link} target='_blank'>{ t('LeagueDetails.facebookInvite') }</a>
               )}
             </ShareLink>
           </div>
