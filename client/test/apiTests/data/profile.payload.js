@@ -7,4 +7,10 @@ const updateUserTeamDetailsPayload = (userData, teamMemberData) => {
   };
 };
 
-module.exports = { updateUserTeamDetailsPayload };
+const favouriteClubPayload = (clubId) => {
+  return {
+    clubId: clubId,
+  };
+};
+
+module.exports = { updateUserTeamDetailsPayload, favouriteClubPayload };
