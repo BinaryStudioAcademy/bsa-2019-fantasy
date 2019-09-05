@@ -1,4 +1,6 @@
 .progress {
+  cursor: pointer;
+  z-index: 5;
   .rangeslider__handle {
     background-image: url(../../assets/images/simulation/ball.svg);
     box-shadow: none;

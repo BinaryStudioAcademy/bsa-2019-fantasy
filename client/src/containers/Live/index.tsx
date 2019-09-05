@@ -254,9 +254,12 @@ const Live = () => {
   };
 
   const renderProgress = (events) => {
+    const homeEvents = events.filter(({ team }) => team === 'home');
+    const awayEvents = events.filter(({ team }) => team === 'away');
+
     return (
       <div>
-        {/* <EventBar events={homeEvents} /> */}
+        <EventBar events={homeEvents} position='top' />
         <Slider
           className='progress'
           min={0}
@@ -271,7 +274,7 @@ const Live = () => {
           }}
           onChangeComplete={handleProgressChangeComplete}
         />
-        {/* <EventBar events={awayEvents} /> */}
+        <EventBar events={awayEvents} position='bottom' />
       </div>
     );
   };
