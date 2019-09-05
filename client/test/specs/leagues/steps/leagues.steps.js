@@ -65,24 +65,21 @@ class LeaguesSteps {
   }
 
   async _enterLeagueName(name) {
-    const leagueNameInput = await $(page.leagueNameInput);
-
+    const leagueNameInput = await $(createPage.leagueNameInput);
     await leagueNameInput.waitForDisplayed(5000);
     await leagueNameInput.clearValue();
     await leagueNameInput.setValue(name);
   }
 
   async _choosePublicLeagueType() {
-    const leagueTypePublicButton = await $(page.leagueTypePublicButton);
-
+    const leagueTypePublicButton = await $(createPage.leagueTypePublicButton);
     await leagueTypePublicButton.scrollIntoView();
     await leagueTypePublicButton.waitForDisplayed(10000);
     await leagueTypePublicButton.click();
   }
 
   async _choosePrivateLeagueType() {
-    const leagueTypePrivateButton = await $(page.leagueTypePrivateButton);
-
+    const leagueTypePrivateButton = await $(createPage.leagueTypePrivateButton);
     await leagueTypePrivateButton.scrollIntoView();
     await leagueTypePrivateButton.waitForDisplayed(10000);
     //await leagueTypePrivateButton.checked = true);
@@ -90,8 +87,7 @@ class LeaguesSteps {
   }
 
   async _submitLeagueCreating() {
-    const createLeagueBtn = await $(page.createLeagueBtn);
-
+    const createLeagueBtn = await $(createPage.createLeagueBtn);
     await createLeagueBtn.scrollIntoView();
     await createLeagueBtn.waitForDisplayed(5000);
     await createLeagueBtn.click();
@@ -112,12 +108,13 @@ class LeaguesSteps {
     const inviteCode = await this._getInviteCode();
     //await $(createPage.inviteCodeModal).waitForDisplayed(5000);
     //await this._copyPrivateInviteCode();
-    await $(createPage.closeInviteCodeDialogBtn).click();
+    const closeInviteCodeDialogBtn = await $(createPage.closeInviteCodeDialogBtn);
+    await closeInviteCodeDialogBtn.click();
     return inviteCode;
   }
 
   async findPublicLeagueByName(name) {
-    const publicListItems = await $(page.publicListItems);
+    const publicListItems = await $$(page.publicListItems);
     const listLen = await publicListItems.length;
     for (let i = 0; i < listLen; i++) {
       const itemName = await publicListItems[i].getText();
@@ -127,7 +124,7 @@ class LeaguesSteps {
   }
 
   async findPrivateLeagueByName(name) {
-    const privateListItems = await $(page.privateListItems);
+    const privateListItems = await $$(page.privateListItems);
     const listLen = await privateListItems.length;
     for (let i = 0; i < listLen; i++) {
       const itemName = await privateListItems[i].getText();
@@ -138,23 +135,19 @@ class LeaguesSteps {
 
   async _getInviteCode() {
     const inviteCodeModal = await $(createPage.inviteCodeModal);
-    const inviteCodeModalInp = await $(createPage.inviteCodeModalInp);
-
     await inviteCodeModal.waitForDisplayed(5000);
-    await browser.pause(3000);
+    //await browser.pause(3000);
+    const inviteCodeModalInp = await $(createPage.inviteCodeModalInp);
     await inviteCodeModalInp.waitForExist(2000);
     return await inviteCodeModalInp.getValue();
   }
 
-  async _copyPrivateInviteCode() {
-    const inviteCodeModal = await $(createPage.inviteCodeModal);
-    const inviteCodeModalInp = await $(createPage.inviteCodeModalInp);
-
-    await inviteCodeModal.waitForDisplayed(5000);
+  /*async _copyPrivateInviteCode() {
+    await $(createPage.inviteCodeModal).waitForDisplayed(5000);
     await browser.pause(3000);
-    await inviteCodeModalInp.waitForExist(2000);
-    await inviteCodeModalInp.click();
-  }
+    await $(createPage.inviteCodeModalInp).waitForExist(2000);
+    await $(createPage.inviteCodeModalInp).click();
+  }*/
 }
 
 module.exports = new LeaguesSteps();
