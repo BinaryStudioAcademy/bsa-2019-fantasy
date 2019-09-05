@@ -60,9 +60,11 @@ const PersonalDetails = withRouter(({ history }) => {
       user &&
       (username !== user.name ||
         email !== user.email ||
+        (!user.image && imageId) ||
         (user.image && imageId !== user.image.id))
-    )
+    ) {
       setCanSubmit(true);
+    }
   }, [username, email, imageId]);
 
   if (!user) return <Spinner />;
