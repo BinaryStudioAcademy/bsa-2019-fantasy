@@ -120,10 +120,21 @@ router
       )
       .catch(next);
   })
-  // For teset purpose. Shoud be deleted
+  // For test purpose. Should be deleted
   .put('/auto-substitution/:gameweek', (req, res, next) => {
     gameweekHistoryService
       .makeAutoSubstitution(req.params.gameweek)
+      .then(() =>
+        res.send({
+          message: 'Success test',
+        }),
+      )
+      .catch(next);
+  })
+  // For test purpose. Should be deleted
+  .put('/auto-team-creation/:gameweek', (req, res, next) => {
+    gameweekHistoryService
+      .createGameWeekHistoriesForAllUsers(req.params.gameweek)
       .then(() =>
         res.send({
           message: 'Success test',

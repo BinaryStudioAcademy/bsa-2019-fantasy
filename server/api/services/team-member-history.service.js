@@ -70,12 +70,12 @@ export const postTeamMemberHistory = async (data, gameweekHistoryId, gameweekId)
   );
 
   const { number: gameweekNumber } = await gameweekRepository.getById(gameweekId);
-  const { number: currentGameweewNumber } = await gameweekRepository.getCurrentGameweek();
+  const { number: currentGameweekNumber } = await gameweekRepository.getCurrentGameweek();
 
   const games = await gameRepository.getByGameweekId(gameweekNumber);
   const gameIds = games.map((el) => el.id);
 
-  if (gameweekNumber !== currentGameweewNumber) {
+  if (gameweekNumber !== currentGameweekNumber) {
     const pitchPlayers = await Promise.all(
       data
         .filter((p) => !p.is_on_bench)
