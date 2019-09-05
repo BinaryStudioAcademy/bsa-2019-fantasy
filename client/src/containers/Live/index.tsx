@@ -254,17 +254,6 @@ const Live = () => {
   };
 
   const renderProgress = (events) => {
-    const labels = events
-      .filter((event) => event.name === 'goal')
-      .reduce(
-        (acc, { elapsed, player }) =>
-          Object.assign(acc, {
-            [elapsed]: `${Math.round(moment.duration(elapsed).asMinutes())}' ${
-              player.second_name
-            }`,
-          }),
-        {},
-      );
     return (
       <div>
         {/* <EventBar events={homeEvents} /> */}
@@ -274,7 +263,6 @@ const Live = () => {
           step={90 * 1000}
           max={90 * 60 * 1000}
           value={progress}
-          labels={labels}
           format={formatElapsed}
           onChangeStart={handleProgressChangeStart}
           onChange={(value) => {

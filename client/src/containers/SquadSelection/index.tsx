@@ -59,7 +59,7 @@ const SquadSelection = withRouter(({ history }) => {
               onResetClick={() => handleResetSquad()}
               onAutoPickClick={() => handleAutoPick()}
             />
-            <div className='flex-1'>
+            <div className='flex flex-1 justify-center'>
               <TeamSelection
                 players={pitchPlayers}
                 setPlayers={setPitch}

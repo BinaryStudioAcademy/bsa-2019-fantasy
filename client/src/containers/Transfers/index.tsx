@@ -86,7 +86,7 @@ const Transfers = () => {
           {t('Transfers.title.main')}
         </h2>
         <div className={`relative ${header['jumbotron-content']} mt-8 flex`}>
-          <div className='flex flex-grow flex-col mr-4'>
+          <div className='flex flex-grow justify-center mr-4'>
             <TeamSelection
               players={pitchPlayers}
               setPlayers={setPitch}
