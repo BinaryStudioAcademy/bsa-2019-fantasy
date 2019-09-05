@@ -329,6 +329,12 @@ export default {
         queryInterface.removeColumn('player_match_stats', 'game_id', {
           transaction,
         }),
+        queryInterface.removeColumn('fixtures_subscriptions', 'user_id', {
+          transaction,
+        }),
+        queryInterface.removeColumn('fixtures_subscriptions', 'game_id', {
+          transaction,
+        }),
       ]),
     ),
 };
