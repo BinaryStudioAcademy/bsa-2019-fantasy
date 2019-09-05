@@ -44,6 +44,11 @@ const formatElapsed = (elapsed) => {
 };
 
 const Live = () => {
+  //Set a title
+  useEffect(() => {
+    document.title = 'LIVE | Fantasy Football League';
+  }, [])
+
   // Redux state
   const currentGame = useSelector((state: RootState) => state.currentGame.current);
   const nextGame = useSelector((state: RootState) => state.currentGame.next);
