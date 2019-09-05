@@ -124,7 +124,7 @@ const PitchPlayer = ({
             <div className='px-1 w-full text-sm bg-green-800 text-white text-center truncate'>
               {player.player_stats.second_name}
             </div>
-            <div className='bg-green-400 text-xs leading-tight'>
+            <div className='bg-green-400 text-xs leading-tight whitespace-no-wrap overflow-hidden'>
               {showFixtures && player.upcomingFixture
                 ? renderNextFixtureInfo()
                 : disabled
