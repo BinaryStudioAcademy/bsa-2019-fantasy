@@ -7,7 +7,7 @@ const Wait = require('../../helpers/waiters');
 const leaguesSteps = require('./steps/leagues.steps');
 const navSteps = require('../navigation/steps/nav.steps');
 
-describe.only('Leagues test suite', () => {
+describe('Leagues test suite', () => {
   let isPresent;
 
   beforeEach(async () => {
