@@ -54,16 +54,20 @@ const PersonalDetails = withRouter(({ history }) => {
 
   const [toChangePassword, setToChangePassword] = useState<boolean>(false);
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
+  const [currentLanguage, setCurrentLanguage] = useState<'ua' | 'en'>(language);
 
   useEffect(() => {
     if (
-      user &&
-      (username !== user.name ||
-        email !== user.email ||
-        (user.image && imageId !== user.image.id))
-    )
+      currentLanguage !== language ||
+      (user &&
+        (username !== user.name ||
+          email !== user.email ||
+          (!user.image && imageId) ||
+          (user.image && imageId !== user.image.id)))
+    ) {
       setCanSubmit(true);
-  }, [username, email, imageId]);
+    }
+  }, [username, email, imageId, currentLanguage]);
 
   if (!user) return <Spinner />;
 
@@ -104,7 +108,7 @@ const PersonalDetails = withRouter(({ history }) => {
     }
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const valid = [validateEmail(), validateUsername()].every(Boolean);
@@ -113,6 +117,21 @@ const PersonalDetails = withRouter(({ history }) => {
       return;
     }
 
+    if (language !== currentLanguage) {
+      dispatch(setLanguage({ language: currentLanguage }));
+      await i18n.changeLanguage(currentLanguage);
+      currentLanguage === 'ua' ? moment.locale('uk') : moment.locale('en');
+
+      dispatch(
+        addNotification(
+          `${
+            currentLanguage === 'ua'
+              ? t('Notifications.messages.setUaLanguage')
+              : t('Notifications.messages.setEnLanguage')
+          }`,
+        ),
+      );
+    }
     dispatch(updateUser(imageId, username, email));
   };
 
@@ -122,24 +141,6 @@ const PersonalDetails = withRouter(({ history }) => {
     setToChangePassword(true);
     dispatch(forgotPassword({ email: user.email }));
     // history.push('/profile/set/password');
-  };
-
-  const changeLanguage = async (value: boolean, language: 'ua' | 'en') => {
-    if (value) {
-      dispatch(setLanguage({ language }));
-      await i18n.changeLanguage(language);
-      language === 'ua' ? moment.locale('uk') : moment.locale('en');
-
-      dispatch(
-        addNotification(
-          `${
-            language === 'ua'
-              ? t('Notifications.messages.setUaLanguage')
-              : t('Notifications.messages.setEnLanguage')
-          }`,
-        ),
-      );
-    }
   };
 
   const onUsernameChange = (e) => {
@@ -257,7 +258,7 @@ const PersonalDetails = withRouter(({ history }) => {
             <label
               className={cn(
                 styles['checkbox-styled'],
-                language === 'en' && styles.checked,
+                currentLanguage === 'en' && styles.checked,
                 'cursor-pointer',
                 'bg-transparent',
                 'hover:bg-teal-300',
@@ -275,8 +276,8 @@ const PersonalDetails = withRouter(({ history }) => {
                 type='checkbox'
                 name='english'
                 value='English'
-                checked={language === 'en'}
-                onChange={(ev) => changeLanguage(ev.target.checked, 'en')}
+                checked={currentLanguage === 'en'}
+                onChange={(ev) => setCurrentLanguage('en')}
               />
               <span>EN</span>
             </label>
@@ -284,7 +285,7 @@ const PersonalDetails = withRouter(({ history }) => {
             <label
               className={cn(
                 styles['checkbox-styled'],
-                language === 'ua' && styles.checked,
+                currentLanguage === 'ua' && styles.checked,
                 'cursor-pointer',
                 'bg-transparent',
                 'hover:bg-teal-300',
@@ -302,8 +303,8 @@ const PersonalDetails = withRouter(({ history }) => {
                 type='checkbox'
                 name='ukrainian'
                 value='Ukrainian'
-                checked={language === 'ua'}
-                onChange={(ev) => changeLanguage(ev.target.checked, 'ua')}
+                checked={currentLanguage === 'ua'}
+                onChange={(ev) => setCurrentLanguage('ua')}
               />
               <span>UA</span>
             </label>

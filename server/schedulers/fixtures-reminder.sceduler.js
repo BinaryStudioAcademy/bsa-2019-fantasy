@@ -2,6 +2,7 @@
 import moment from 'moment';
 import schedule from 'node-schedule';
 
+import { getNotification } from '../helpers/send-notification.helper';
 import userRepository from '../data/repositories/user.repository';
 import gamesRepository from '../data/repositories/game.repository';
 import footballClubRepository from '../data/repositories/football-club.repository';
@@ -14,6 +15,29 @@ const fixturesReminderScheduler = async () => {
   const subscriptions = await fixturesSubscribtionRepository.getAll();
 
   users.forEach(async (u) => {
+    // send email notification about favourite club event
+    if (u.club_email) {
+      const favClubGame = await getNotification(u.favorite_club_id);
+
+      const { name: homeTeamName } = await footballClubRepository.getById(
+        getGameInfo(favClubGame).hometeam_id,
+      );
+      const { name: awayTeamName } = await footballClubRepository.getById(
+        getGameInfo(favClubGame).awayteam_id,
+      );
+      const gameDetails = {
+        ...getGameInfo(favClubGame),
+        homeTeamName,
+        awayTeamName,
+      };
+      const timeToRemind = moment(gameDetails.start).subtract(u.sendmail_time, 'h');
+      schedule.scheduleJob('fixture remind', new Date(timeToRemind), async () => {
+        sendRemind(u.email, gameDetails);
+      });
+      console.log(
+        `>>> Send remind email about favourite club game for user ${u.email} on ${timeToRemind}`,
+      );
+    }
     // eslint-disable-next-line prefer-const
     const userSubscriptions = subscriptions.filter((s) => s.user_id === u.id);
 
@@ -36,13 +60,16 @@ const fixturesReminderScheduler = async () => {
         };
 
         // send user emails at different time depending on match status
-        const timeToRemind = moment(gameDetails.start).subtract(24, 'h');
+        const timeToRemind = moment(gameDetails.start).subtract(
+          userToRemind.sendmail_time,
+          'h',
+        );
 
         schedule.scheduleJob('fixture remind', new Date(timeToRemind), async () => {
           sendRemind(userToRemind.email, gameDetails);
         });
         console.log(
-          `>>> Remind about fixture ${gameDetails.homeTeamName} - ${gameDetails.awayTeamName} on: ${timeToRemind} for user ${userToRemind.email}`,
+          `>>> Send remind email about fixture ${gameDetails.homeTeamName} - ${gameDetails.awayTeamName} on: ${timeToRemind} for user ${userToRemind.email}`,
         );
       });
     }

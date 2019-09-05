@@ -73,13 +73,13 @@ const LoginForm = withRouter(({ history }) => {
         <div className='w-full flex items-center justify-between flex-wrap'>
           <button
             type='submit'
-            className='lg:w-5/12 md:w-full truncate font-bold rounded py-1 px-6 mb-2 border border-transparent text-secondary bg-primary shadow uppercase'
+            className='break-all lg:w-5/12 md:w-full font-bold rounded py-1 text-center mr-2 mb-2 border border-transparent text-secondary bg-primary shadow uppercase'
           >
             {t('AuthForms.login')}
           </button>
           <button
             type='button'
-            className='lg:w-6/12 md:w-full truncate opacity-50 hover:opacity-100 font-bold rounded py-1 px-6 mb-2 border border-primary bg-transparent shadow uppercase'
+            className='break-all lg:w-6/12 md:w-full opacity-50 hover:opacity-100 font-bold rounded py-1 text-center mb-2 border border-primary bg-transparent shadow uppercase'
             onClick={() => history.push('/registration')}
           >
             {t('AuthForms.signup')}

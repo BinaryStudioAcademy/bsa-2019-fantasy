@@ -21,11 +21,15 @@ export const updateClub = async (clubId: Club['id']) => {
 export const updateEmailPref = async (
   userId: User['id'],
   sendmail_time: User['sendmail_time'],
+  club_email: User['club_email'],
+  club_notif: User['club_notif'],
+  team_email: User['team_email'],
+  team_notif: User['team_notif'],
 ) => {
   const response = await callWebApi({
     endpoint: `/api/profile/${userId}`,
     type: 'PUT',
-    request: { sendmail_time },
+    request: { sendmail_time, club_email, club_notif, team_email, team_notif },
   });
 
   return response.json();

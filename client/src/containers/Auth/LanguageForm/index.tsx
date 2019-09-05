@@ -40,7 +40,9 @@ const LanguageForm = () => {
   };
 
   return (
-    <div className={`flex items-center justify-center z-10  mt-10 ${styles.languages}`}>
+    <div
+      className={`opacity-50 w-10/12 absolute bottom-0 mb-4 flex z-10 justify-end ${styles.languages}`}
+    >
       <label
         className={cn(
           styles['checkbox-styled'],
