@@ -20,7 +20,7 @@ const eventSounds = {
   endTime: {
     name: 'endTime',
     action: 'start',
-    src: '/sounds/start-time.ogg',
+    src: '/sounds/end-time.ogg',
     loop: false,
     volume: 0.4,
   },

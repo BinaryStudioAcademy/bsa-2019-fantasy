@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import cn from 'classnames';
 
-import styles from './styles.module.scss';
-import { createComment } from './createComment';
+import styles from '../styles.module.scss';
+import { createComment } from '../helpers/createComment';
 import SingleComment from './SingleComment';
 
 export const CommentaryList = ({ events, status }) => {

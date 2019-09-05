@@ -7,13 +7,13 @@ import cn from 'classnames';
 import 'react-rangeslider/lib/index.css';
 import Slider from 'react-rangeslider';
 
-import { Play } from './Play';
-import { Fixture } from './Fixture';
-import { LastGamesList } from './LastGamesList';
+import { Play } from './components/Play';
+import { Fixture } from './components/Fixture';
+import { LastGamesList } from './components/LastGamesList';
 
 import { loadCurrentGame, loadLastGames } from './actions';
-import { createIterator } from './iterator';
-import * as faker from './socket';
+import { createIterator } from './helpers/iterator';
+import * as faker from './helpers/socket';
 import * as eventsService from 'services/eventsService';
 import { useInterval } from 'helpers/hooks/interval.hook';
 
@@ -47,7 +47,7 @@ const Live = () => {
   //Set a title
   useEffect(() => {
     document.title = 'LIVE | Fantasy Football League';
-  }, [])
+  }, []);
 
   // Redux state
   const currentGame = useSelector((state: RootState) => state.currentGame.current);

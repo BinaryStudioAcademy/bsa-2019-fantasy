@@ -24,9 +24,6 @@ export const Play = ({
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [isRescheduleOpened, setIsRescheduleOpened] = useState(false);
 
-  const getClassesByStatus = (status) =>
-    status ? 'text-red-500 border-red-500' : 'text-gray-300 border-gray-300';
-
   const renderSimulate = () => {
     if (isSimulation && gameStarted) {
       return (
