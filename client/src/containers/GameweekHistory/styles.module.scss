@@ -4,16 +4,6 @@
     vertical-align: initial;
     font-size: 10px;
   }
-
-  :local(.gameweek-stats) {
-    :local(.points) {
-      font-size: 18px;
-
-      span {
-        font-size: 35px;
-      }
-    }
-  }
 }
 
 :local(.gameweek-history-content) {

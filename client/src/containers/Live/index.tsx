@@ -3,13 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import _ from 'lodash';
 import produce from 'immer';
 import moment from 'moment';
-import cn from 'classnames';
 import 'react-rangeslider/lib/index.css';
 import Slider from 'react-rangeslider';
+import cn from 'classnames';
 
 import { Play } from './components/Play';
 import { Fixture } from './components/Fixture';
 import { LastGamesList } from './components/LastGamesList';
+import { EventBar } from './components/EventBar';
 
 import { loadCurrentGame, loadLastGames } from './actions';
 import { createIterator } from './helpers/iterator';
@@ -19,8 +20,8 @@ import { useInterval } from 'helpers/hooks/interval.hook';
 
 import { RootState } from 'store/types';
 
-import styles from './styles.module.scss';
-import './progress.style.scss'; // cannot style nested elements of uncontrolled component react-rangeslider with css modules
+// cannot style nested elements of uncontrolled component react-rangeslider with css modules
+import './progress.style.scss';
 import { FaRegPlayCircle, FaRegPauseCircle, FaLongArrowAltLeft } from 'react-icons/fa';
 
 const prepareEvent = (event, homeClubId) => {
@@ -261,21 +262,25 @@ const Live = () => {
         {},
       );
     return (
-      <Slider
-        className='progress'
-        min={0}
-        step={90 * 1000}
-        max={90 * 60 * 1000}
-        value={progress}
-        labels={labels}
-        format={formatElapsed}
-        onChangeStart={handleProgressChangeStart}
-        onChange={(value) => {
-          if (!replayGame) return false;
-          setProgress(value);
-        }}
-        onChangeComplete={handleProgressChangeComplete}
-      />
+      <div>
+        {/* <EventBar events={homeEvents} /> */}
+        <Slider
+          className='progress'
+          min={0}
+          step={90 * 1000}
+          max={90 * 60 * 1000}
+          value={progress}
+          labels={labels}
+          format={formatElapsed}
+          onChangeStart={handleProgressChangeStart}
+          onChange={(value) => {
+            if (!replayGame) return false;
+            setProgress(value);
+          }}
+          onChangeComplete={handleProgressChangeComplete}
+        />
+        {/* <EventBar events={awayEvents} /> */}
+      </div>
     );
   };
 
