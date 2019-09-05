@@ -40,21 +40,18 @@ const LanguageForm = () => {
   };
 
   return (
-    <div
-      className={`opacity-50 w-10/12 absolute bottom-0 mb-4 flex z-10 justify-end ${styles.languages}`}
-    >
+    <div className={'opacity-50 absolute bottom-0 left-0 flex z-10'}>
       <label
         className={cn(
-          styles['checkbox-styled'],
+          styles['language-checkbox-styled'],
           language === 'en' && styles.checked,
           'cursor-pointer',
           'bg-transparent',
           'hover:bg-teal-300',
-          'text-secondary',
-          'hover:text-white',
+          'text-white',
           'py-1',
           'px-4',
-          'border-2',
+          'border-1',
           'border-gray-700',
           'hover:border-transparent',
           'rounded',
@@ -69,19 +66,17 @@ const LanguageForm = () => {
         />
         <span>EN</span>
       </label>
-      <p className='mx-3'>{t('LeaguesPage.createLeague.or')}</p>
       <label
         className={cn(
-          styles['checkbox-styled'],
+          styles['language-checkbox-styled'],
           language === 'ua' && styles.checked,
           'cursor-pointer',
           'bg-transparent',
           'hover:bg-teal-300',
-          'text-secondary',
-          'hover:text-white',
+          'text-white',
           'py-1',
           'px-4',
-          'border-2',
+          'border-1',
           'border-gray-700',
           'hover:border-transparent',
           'rounded',
