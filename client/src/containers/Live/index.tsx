@@ -7,13 +7,13 @@ import cn from 'classnames';
 import 'react-rangeslider/lib/index.css';
 import Slider from 'react-rangeslider';
 
-import { Play } from './Play';
-import { Fixture } from './Fixture';
-import { LastGamesList } from './LastGamesList';
+import { Play } from './components/Play';
+import { Fixture } from './components/Fixture';
+import { LastGamesList } from './components/LastGamesList';
 
 import { loadCurrentGame, loadLastGames } from './actions';
-import { createIterator } from './iterator';
-import * as faker from './socket';
+import { createIterator } from './helpers/iterator';
+import * as faker from './helpers/socket';
 import * as eventsService from 'services/eventsService';
 import { useInterval } from 'helpers/hooks/interval.hook';
 
@@ -51,7 +51,7 @@ const Live = () => {
   //Set a title
   useEffect(() => {
     document.title = 'LIVE | Fantasy Football League';
-  }, [])
+  }, []);
 
   // Redux state
   const currentGame = useSelector((state: RootState) => state.currentGame.current);
@@ -128,6 +128,7 @@ const Live = () => {
   // Replay playback interval
   useInterval(
     () => {
+      if (!replayGame.isPlaying) return;
       const event = replayEvents.next().value;
 
       if (event) {
@@ -169,6 +170,7 @@ const Live = () => {
     setReplayGame(
       produce((draft) => {
         draft.isPlaying = false;
+        draft.events.push({ name: 'stop' });
       }),
     );
   };
@@ -282,15 +284,25 @@ const Live = () => {
   };
 
   const onFixtureClick = (game) => () => {
-    setReplayGame({
-      ...game,
-      hometeam_score: 0,
-      awayteam_score: 0,
-      isPlaying: false,
-      events: [],
-      currentEvent: undefined,
-    });
-    setProgress(0);
+    if (!replayGame || replayGame.id !== game.id) {
+      console.log('set replay game');
+      setReplayGame({
+        ...game,
+        hometeam_score: 0,
+        awayteam_score: 0,
+        isPlaying: false,
+        events: [{ name: 'stop' }], // event to stop all sounds
+        currentEvent: undefined,
+      });
+
+      // progress element
+      setProgress(0);
+
+      // rewind event iterator to start
+      replayEvents && replayEvents.setIndex(0);
+    }
+
+    // scrollTop
     const scrollElement = document.querySelector('#root>.flex>.flex-1');
     scrollElement && scrollElement.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -334,7 +346,6 @@ const Live = () => {
           fixture={fixture}
           requestSimulation={requestSimulation}
           stopSimulation={stopSimulation}
-          playbackControls={null}
           status={{ homeClub, awayClub, score }}
         />
         <div className='mt-12'>{renderProgress(events)}</div>
