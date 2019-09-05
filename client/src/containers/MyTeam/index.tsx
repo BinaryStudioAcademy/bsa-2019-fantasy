@@ -81,21 +81,23 @@ const MyTeam = () => {
         </h2>
       </div>
 
-      <TeamSelection
-        players={players}
-        setPlayers={setPlayers}
-        showFixtures
-        query={switchQuery}
-        setQuery={setSwitchQuery}
-        onPlayerClick={handleOpenModal}
-        onPlayerDrop={handlePlayerSwitch}
-        submit={{
-          label: t('Gameweek.saveTeam'),
-          canSubmit: changed,
-          onSubmit: handleSubmit,
-        }}
-        hasBench
-      />
+      <div className={cn('self-center w-4/5')}>
+        <TeamSelection
+          players={players}
+          setPlayers={setPlayers}
+          showFixtures
+          query={switchQuery}
+          setQuery={setSwitchQuery}
+          onPlayerClick={handleOpenModal}
+          onPlayerDrop={handlePlayerSwitch}
+          submit={{
+            label: t('Gameweek.saveTeam'),
+            canSubmit: changed,
+            onSubmit: handleSubmit,
+          }}
+          hasBench
+        />
+      </div>
 
       {openedPlayer && (
         <StatusPlayerModal
