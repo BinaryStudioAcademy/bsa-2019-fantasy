@@ -11,7 +11,10 @@ class UserRepository extends BaseRepository {
   }
 
   getByEmail(email) {
-    return this.model.findOne({ where: { email } });
+    return this.model.findOne({ 
+      where: { email },
+      include: 'image',
+    });
   }
 
   getByUsername(name) {
