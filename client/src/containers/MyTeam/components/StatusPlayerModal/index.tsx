@@ -88,14 +88,14 @@ const StatusPlayerModal = ({
                 {t('StatusPlayerModal.makeViceCaptain')}
               </button>
             )}
-            <button
-              className='bg-green-700 p-2 rounded font-bold'
-              onClick={() => onOpenInfo(player.item!.player_stats)}
-            >
-              {t('StatusPlayerModal.viewInfo')}
-            </button>
           </>
         )}
+        <button
+          className='bg-green-700 p-2 rounded font-bold'
+          onClick={() => onOpenInfo(player.item!.player_stats)}
+        >
+          {t('StatusPlayerModal.viewInfo')}
+        </button>
         {!canBeSwitched && player.item.is_on_bench && (
           <div className='text-gray-500 text-center'>No actions available</div>
         )}

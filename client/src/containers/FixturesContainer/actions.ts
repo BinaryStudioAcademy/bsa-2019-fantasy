@@ -56,6 +56,9 @@ export const loadFixtureSubscriptionsAction = (): AsyncSetFixtureSubscribtionAct
   dispatch,
 ) => {
   const user = await authService.getCurrentUser();
+  if (!user) {
+    return;
+  }
   const subscribtions = await profileService.getFixtureSub(user!.id);
   dispatch(setFixtureSubscriptions(subscribtions));
 };

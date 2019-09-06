@@ -13,9 +13,8 @@ import { getClubLogoUrl } from 'helpers/images';
 import { FixturesItemType } from 'types/fixtures.types';
 import FixturesItem from 'components/Fixtures/FixturesItem';
 import moment from 'moment';
-import { withRouter } from 'react-router';
 
-const NotificationCenter = withRouter(({ history }) => {
+const NotificationCenter = ({ switchToFavouriteClubTab }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -35,9 +34,7 @@ const NotificationCenter = withRouter(({ history }) => {
   const user = useSelector((state: RootState) => state.profile.user);
 
   const { clubs, loading } = useSelector((state: RootState) => state.clubs);
-
-  if (!user || loading) return <Spinner />;
-  const userFavClub = clubs.find((c) => c.id === user.favorite_club_id);
+  const userFavClub = clubs.find((c) => c.id === user!.favorite_club_id);
   useEffect(() => {
     if (user) {
       if (user.club_email) {
@@ -54,6 +51,9 @@ const NotificationCenter = withRouter(({ history }) => {
       }
     }
   }, [user]);
+
+  if (!user || loading) return <Spinner />;
+
   const renderFavClubNotificationSettings = (favouriteClub) => {
     return (
       <div className='flex mt-2 justify-end'>
@@ -65,7 +65,8 @@ const NotificationCenter = withRouter(({ history }) => {
             </span>
 
             <button
-              onClick={() => history.replace('/profile/favorite-club')}
+              onClick={switchToFavouriteClubTab}
+              // onClick={() => history.replace('/profile/favorite-club')}
               className='font-bold inline mb-2 w-12 focus:outline-none text-base text-teal-400 cursor-pointer'
             >
               {t('change')}
@@ -303,6 +304,6 @@ const NotificationCenter = withRouter(({ history }) => {
       </Button>
     </form>
   );
-});
+};
 
 export default NotificationCenter;

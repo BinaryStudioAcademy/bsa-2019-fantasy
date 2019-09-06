@@ -132,3 +132,27 @@ export const Toggle = styled.div<{ isActive: boolean }>`
     font-size: inherit;
   }
 `;
+
+export const EmptyMessage = styled.div`
+  z-index: 100500;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 2.5rem;
+  color: white;
+
+  background-color: rgba(0, 0, 0, 0.5);
+
+  > p {
+    max-width: 30rem;
+    font-weight: bold;
+    text-align: center;
+  }
+`;

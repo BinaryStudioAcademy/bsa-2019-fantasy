@@ -18,7 +18,6 @@ class NavSteps {
 
   async clicklogOutBtn() {
     const logOutBtn = await $(navSide.logOutBtn);
-
     await logOutBtn.waitForDisplayed(2000);
     await logOutBtn.click();
   }

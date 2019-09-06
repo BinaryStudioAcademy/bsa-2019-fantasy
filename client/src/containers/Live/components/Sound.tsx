@@ -113,7 +113,6 @@ export const Sound = ({ currentEvent, isMuted }) => {
 
   const stopSound = (sound) => {
     if (!sound) return;
-    console.log(`stop sound ${sound}`);
     if (_.isString(sound)) {
       setSounds(produce((draft) => draft.filter((item) => item.src !== sound)));
       return;
@@ -122,11 +121,9 @@ export const Sound = ({ currentEvent, isMuted }) => {
   };
 
   useEffect(() => {
-    console.log(sounds);
     if (currentEvent) {
       const sound = eventSounds[currentEvent.name];
       if (!sound) return;
-      console.log(`${sound.action} - ${sound.name}`);
       switch (sound.action) {
         case 'start':
           setSounds([...sounds, { ...sound, key: Date.now() }]);

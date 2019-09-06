@@ -67,7 +67,11 @@ export const applyTransfers = async (user_id, gameweek_id, transfers) => {
       return newPlayer;
     });
     await userRepository.updateById(user.id, user);
-    await teamMemberHistoryService.postTeamMemberHistory(newTeamMembers, history_id);
+    await teamMemberHistoryService.postTeamMemberHistory(
+      newTeamMembers,
+      history_id,
+      gameweek_id,
+    );
 
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < successTransfers.length; i++) {
@@ -91,6 +95,7 @@ export const applyTransfers = async (user_id, gameweek_id, transfers) => {
 
     return transfer_amount;
   } catch (err) {
+    console.log('ERRORROOROR:', err);
     throw err;
   }
 };

@@ -12,7 +12,7 @@ import { Fixture } from './components/Fixture';
 import { LastGamesList } from './components/LastGamesList';
 import { EventBar } from './components/EventBar';
 
-import { loadCurrentGame, loadLastGames } from './actions';
+import { loadCurrentGame, loadLastGames, addLiveEvent } from './actions';
 import { createIterator } from './helpers/iterator';
 import * as faker from './helpers/socket';
 import * as eventsService from 'services/eventsService';
@@ -117,13 +117,14 @@ const Live = () => {
 
   const stopSimulation = () => {
     faker.stopSimulation();
+    dispatch(addLiveEvent({ name: 'stop' }));
   };
 
   // On every new added event
   useEffect(() => {
     const event = events[events.length - 1];
     setCurrentEvent(event);
-    event && setProgress(event.elapsed);
+    event && event.elapsed && setProgress(event.elapsed);
   }, [events]);
 
   // Replay playback interval
