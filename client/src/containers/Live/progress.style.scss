@@ -8,4 +8,9 @@
       display: none;
     }
   }
+  // Animations
+  .rangeslider__fill,
+  .rangeslider__handle {
+    transition: all 0.2s linear 0s;
+  }
 }

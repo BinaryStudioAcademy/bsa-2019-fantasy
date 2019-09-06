@@ -123,7 +123,7 @@ const Live = () => {
   useEffect(() => {
     const event = events[events.length - 1];
     setCurrentEvent(event);
-    event && setProgress(event.elapsed);
+    event && event.elapsed && setProgress(event.elapsed);
   }, [events]);
 
   // Replay playback interval
@@ -254,6 +254,7 @@ const Live = () => {
   };
 
   const renderProgress = (events) => {
+    console.log(progress);
     const homeEvents = events.filter(({ team }) => team === 'home');
     const awayEvents = events.filter(({ team }) => team === 'away');
 
