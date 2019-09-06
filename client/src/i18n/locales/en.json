@@ -256,7 +256,7 @@
       "username": "Username",
       "password": "Password",
       "email": "Email",
-      "setPassword": "Set a password",
+      "setPassword": "Click to reset a password",
       "language": "Language",
       "avatar": "Avatar",
       "changeAvatar": "Change avatar"
