@@ -49,12 +49,12 @@ const TopTransfers = ({
 
   const columns = [
     {
-      Header: '',
+      Header: t('GameweekHistoryPage.TopTransfers.info'),
       accessor: 'info',
       className: 'flex items-center justify-center',
     },
     {
-      Header: '',
+      Header: t('GameweekHistoryPage.TopTransfers.direction'),
       accessor: 'direction',
       className: 'flex items-center justify-center',
     },
