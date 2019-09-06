@@ -355,6 +355,7 @@ class PlayersPage extends React.Component<Props, State> {
         data={playerTableData}
         pageSize={pageSize}
         pages={pages}
+        pageSizeOptions={[10, 20, 25, 50, 100]}
         manual
         columns={this.columns}
         onFetchData={this.onFetchData}
