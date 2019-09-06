@@ -23,6 +23,7 @@ import { Club } from 'types/club.type';
 
 import { FaPlus, FaTimes } from 'react-icons/fa';
 import { Option } from 'react-dropdown';
+import { any } from 'prop-types';
 
 type Props = {
   players: PlayerType[];
@@ -278,6 +279,11 @@ class PlayersPage extends React.Component<Props, State> {
     const addedToComparison = this.state.comparisonData.find(
       (player: any) => player.id === props.original.id,
     );
+
+    const playerData = this.props.players.find(
+      (p: any) => p && props.original.id === p.id,
+    );
+
     return (
       <>
         <button
@@ -288,7 +294,7 @@ class PlayersPage extends React.Component<Props, State> {
         </button>
         <button
           className='w-6 h-6 justify-center mr-4 leading-none flex bg-background rounded-full text-s font-bold'
-          onClick={() => this.onInfoClick()}
+          onClick={() => this.onInfoClick({ player: playerData })}
         >
           i
         </button>
@@ -296,10 +302,16 @@ class PlayersPage extends React.Component<Props, State> {
     );
   };
 
-  onInfoClick = (dialogInitialTab: 'fixtures' | 'history' = 'history') => {
-    const player = this.state.currentPlayer;
+  onInfoClick = ({
+    player = this.state.playerHighlightData,
+    dialogInitialTab = 'fixtures',
+  }: {
+    player?: any;
+    dialogInitialTab?: 'fixtures' | 'history';
+  }) => {
     if (!player) return;
     this.setState({
+      currentPlayer: player,
       dialogInitialTab,
     });
     this.props.fetchDataForPlayer(player.id, String(player.club_id));

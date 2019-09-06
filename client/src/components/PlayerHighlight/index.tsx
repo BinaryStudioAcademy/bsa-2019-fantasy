@@ -23,7 +23,7 @@ Object.assign(Chart.defaults.global, {
 
 type Props = {
   player: PlayerType;
-  onInfoClick: (dialogInitialTab: 'fixtures' | 'history') => void;
+  onInfoClick: any;
 };
 
 const PlayerHighlight = ({ player, onInfoClick }: Props) => {
@@ -154,14 +154,14 @@ const PlayerHighlight = ({ player, onInfoClick }: Props) => {
 
         <div className='actions mt-auto'>
           <Button
-            onClick={() => onInfoClick('history')}
+            onClick={() => onInfoClick({ dialogInitialTab: 'history' })}
             styling='primary'
             className='text-sm xl:text-base mr-4'
           >
             {t('Players.history')}
           </Button>
           <Button
-            onClick={() => onInfoClick('fixtures')}
+            onClick={() => onInfoClick({ dialogInitialTab: 'fixtures' })}
             styling='secondary'
             className='text-sm xl:text-base'
           >
