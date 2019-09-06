@@ -27,6 +27,11 @@ const Profile = withRouter(({ history }) => {
   const prevStepLink = stepRouteMap[step - 1 - 1];
   const nextStepLink = stepRouteMap[step + 1 - 1];
 
+  const navToStepProp = (step: number) => {
+    navToStep(step);
+    history.replace(stepRouteMap[step - 1]);
+  };
+
   return (
     <section>
       <div className='mb-8 p-10 pt-5 bg-white rounded shadow-figma'>
@@ -37,13 +42,7 @@ const Profile = withRouter(({ history }) => {
       </div>
 
       <div className='flex'>
-        <Progress
-          step={step}
-          navToStep={(step: number) => {
-            navToStep(step);
-            history.replace(stepRouteMap[step - 1]);
-          }}
-        />
+        <Progress step={step} navToStep={navToStepProp} />
 
         <div className='flex-1 bg-white rounded py-12 px-16 shadow-figma relative min-h-screen'>
           <Switch>
@@ -52,7 +51,15 @@ const Profile = withRouter(({ history }) => {
             </Route>
             <Route path='/profile/details' component={PersonalDetails} />
             <Route path='/profile/favorite-club' component={FavouriteClubSelection} />
-            <Route path='/profile/email-preferences' component={NotificationCenter} />
+            <Route
+              path='/profile/email-preferences'
+              component={(props) => (
+                <NotificationCenter
+                  {...props}
+                  switchToFavouriteClubTab={() => navToStepProp(2)}
+                />
+              )}
+            />
             <Route>
               <Redirect to='/404' />
             </Route>
