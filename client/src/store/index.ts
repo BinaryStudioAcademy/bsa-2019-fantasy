@@ -18,6 +18,7 @@ import currentGameReducer from 'containers/Live/reducer';
 
 import playerSelectionReducer from 'components/PlayersSelection/reducer';
 import notificationsReducer from 'components/Notifications/reducer';
+import topTransfersReducer from 'components/TopTransfers/reducer';
 
 export const history = createBrowserHistory();
 
@@ -41,6 +42,7 @@ const reducers = {
   transfers: transferReducer,
   notifications: notificationsReducer,
   gameweeksEntryHistory: gameweeksEntryHistoryReducer,
+  topTransfers: topTransfersReducer
 };
 
 const rootReducer = combineReducers({
