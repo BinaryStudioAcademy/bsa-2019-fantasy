@@ -1,3 +1,5 @@
+import { recalculateLeagueRankings } from '../../helpers/calculate-league-rank.js';
+
 import leagueParticipantRepository from '../../data/repositories/league-participant.repository';
 import leagueRepository from '../../data/repositories/league.repository';
 
@@ -36,5 +38,8 @@ export const leaveLeague = async (participantId, leagueId) => {
     participantId,
     leagueId,
   );
+
+  recalculateLeagueRankings(leagueId);
+  
   return result;
 };

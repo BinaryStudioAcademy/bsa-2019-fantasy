@@ -24,7 +24,7 @@ import { currentGameweekSelector } from 'store/selectors/current-gameweek.select
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
-import { Link } from 'react-router-dom';
+import { GameweekStatsSidebar } from 'components/GameweekStatsSidebar';
 
 const GameweekHistory = () => {
   useEffect(() => {
@@ -156,7 +156,7 @@ const GameweekHistory = () => {
 
       <div className={styles['gameweek-history-content']}>
         <React.Fragment>
-          <div className={cn(header.paper, 'rounded mr-2', 'relative')}>
+          <div className={cn(header.paper, 'rounded', 'p-8', 'relative')}>
             {isLoading ? (
               <Spinner />
             ) : (
@@ -164,57 +164,10 @@ const GameweekHistory = () => {
             )}
           </div>
 
-          <div
-            className={cn(
-              header.paper,
-              styles['gameweek-stats'],
-              'flex',
-              'flex-col',
-              'p-8',
-              'rounded',
-              'ml-2',
-            )}
-          >
-            <h3 className={cn(header.title, 'text-secondary', 'mb-1')}>
-              {t('GameweekHistoryPage.currentPoints')}
-            </h3>
-            <p className={cn('pl-3', styles.points)}>
-              <span className='font-bold'>
-                {gameweeksHistory[currentGameweek - 1]
-                  ? gameweeksHistory[currentGameweek - 1].team_score
-                  : '0'}
-              </span>
-              {` ${t('GameweekHistoryPage.points')}`}
-            </p>
-            <h3 className={cn(header.title, 'text-secondary', 'mb-1')}>
-              {t('GameweekHistoryPage.overallRank')}
-            </h3>
-            {userRank ? (
-              <p className={cn('pl-3', styles.points)}>
-                <span className='font-bold'>{userRank.rank}</span>
-              </p>
-            ) : null}
-            <div className={cn('entry-history-btn', 'self-center', 'mt-4')}>
-              <Link
-                to='/entry-history'
-                className={cn(
-                  'bg-primary',
-                  'hover:bg-teal-400',
-                  'uppercase',
-                  'font-semibold',
-                  'text-secondary',
-                  'hover:text-white',
-                  'py-2',
-                  'px-8',
-                  'border-2',
-                  'border-teal-300',
-                  'rounded mr-6',
-                )}
-              >
-                {t('EntryHistory.title')}
-              </Link>
-            </div>
-          </div>
+          <GameweekStatsSidebar
+            gameweekHistory={gameweeksHistory[currentGameweek - 1]}
+            userRank={userRank}
+          />
         </React.Fragment>
       </div>
 

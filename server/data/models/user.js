@@ -49,6 +49,26 @@ export default (orm, DataTypes) => {
         allowNull: true,
         type: DataTypes.INTEGER,
       },
+      club_email: {
+        allowNull: false,
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      club_notif: {
+        allowNull: false,
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      team_email: {
+        allowNull: false,
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      team_notif: {
+        allowNull: false,
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
     },

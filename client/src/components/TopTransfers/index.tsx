@@ -45,6 +45,8 @@ const TopTransfers = ({
   playerData,
   dialogLoading,
 }) => {
+  const { t } = useTranslation();
+
   const columns = [
     {
       Header: '',
@@ -57,22 +59,22 @@ const TopTransfers = ({
       className: 'flex items-center justify-center',
     },
     {
-      Header: 'Positon',
+      Header: t('GameweekHistoryPage.TopTransfers.position'),
       accessor: 'position',
       className: 'flex items-center justify-center font-bold',
     },
     {
-      Header: 'Player',
+      Header: t('GameweekHistoryPage.TopTransfers.player'),
       accessor: 'name',
       className: 'flex items-center justify-center',
     },
     {
-      Header: 'Club',
+      Header: t('GameweekHistoryPage.TopTransfers.club'),
       accessor: 'club',
       className: 'flex items-center justify-center font-bold',
     },
     {
-      Header: 'Number',
+      Header: t('GameweekHistoryPage.TopTransfers.number'),
       accessor: 'number',
       className: 'flex items-center justify-center font-bold',
     },
@@ -204,7 +206,7 @@ const TopTransfers = ({
       <div className={cn('flex', 'items-center', 'mb-2')}>
         <FaArrowAltCircleRight size={30} className={cn('text-green-500', 'mr-2')} />
         <h2 className={cn('text-2xl', 'font-semibold', 'align-middle')}>
-          Top Transfers in
+          {t('GameweekHistoryPage.TopTransfers.topTransfersIn')}
         </h2>
       </div>
       <ReactTable
@@ -217,7 +219,7 @@ const TopTransfers = ({
       <div className={cn('flex', 'items-center', 'mb-2')}>
         <FaArrowAltCircleLeft size={30} className={cn('text-red-500', 'mr-2')} />
         <h2 className={cn('text-2xl', 'font-semibold', 'align-middle')}>
-          Top Transfers out
+          {t('GameweekHistoryPage.TopTransfers.topTransfersOut')}
         </h2>
       </div>
       <ReactTable

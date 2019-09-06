@@ -25,5 +25,5 @@ type SetAutoPick = {
   payload: PlayerType[];
 };
 
-export type PlayersSelectionAction = SetPlayers |  ResetPlayers | SetLoading | SetAutoPick;
+export type PlayersSelectionAction = SetPlayers | ResetPlayers | SetLoading | SetAutoPick;
 export type AsyncPlayersSelectionAction = Thunky<PlayersSelectionAction>;

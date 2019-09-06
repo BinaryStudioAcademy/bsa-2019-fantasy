@@ -1,5 +1,6 @@
-import { getFixtureSubscriptions } from '../helpers/fixture-notification.helper';
+import { sendNotifications } from '../helpers/fixture-notification.helper';
 import recalculateTeamsScore from './teamScoreRecalculator';
+import { recalculateLeagueRankingsAfterEvent } from '../helpers/calculate-league-rank.js';
 import { updateDbFromFaker } from '../helpers/update-db-from-faker.helper';
 
 let status = { gameStarted: false };
@@ -11,7 +12,7 @@ export default (mainServer, fakerClient) => {
     socket.on('createRoom', (roomId) => {
       socket.join(roomId);
       socket.on('requestGames', async (userId) => {
-        await getFixtureSubscriptions(userId, socket);
+        await sendNotifications(userId, socket);
       });
     });
     socket.on('leaveRoom', (roomId) => {
@@ -44,6 +45,7 @@ export default (mainServer, fakerClient) => {
     console.log('Received data from faker ', data);
     mainServer.emit('event', data);
     recalculateTeamsScore();
+    recalculateLeagueRankingsAfterEvent()
   });
   fakerClient.on('update', () => {
     // eslint-disable-next-line no-console

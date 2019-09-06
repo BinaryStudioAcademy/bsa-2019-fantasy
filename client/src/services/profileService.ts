@@ -21,11 +21,15 @@ export const updateClub = async (clubId: Club['id']) => {
 export const updateEmailPref = async (
   userId: User['id'],
   sendmail_time: User['sendmail_time'],
+  club_email: User['club_email'],
+  club_notif: User['club_notif'],
+  team_email: User['team_email'],
+  team_notif: User['team_notif'],
 ) => {
   const response = await callWebApi({
     endpoint: `/api/profile/${userId}`,
     type: 'PUT',
-    request: { sendmail_time },
+    request: { sendmail_time, club_email, club_notif, team_email, team_notif },
   });
 
   return response.json();
@@ -82,11 +86,16 @@ export const updateUserTeamDetails = async (
   return response.json();
 };
 
-export const updateUserAvatar = async (userId: User['id'], image: string) => {
+export const updateUser = async (
+  userId: User['id'],
+  image_id: string,
+  name: string,
+  email: string,
+) => {
   const response = await callWebApi({
-    endpoint: `/api/profile/avatar/${userId}`,
+    endpoint: `/api/profile/update/${userId}`,
     type: 'PUT',
-    request: { image },
+    request: { image_id, name, email },
   });
 
   return response.json();

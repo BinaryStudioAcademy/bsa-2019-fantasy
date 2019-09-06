@@ -132,7 +132,7 @@ export const joinLeague = (data: {
     feedback.success((result && result.message) || result);
     dispatch(joinLeagueSuccess(result.message));
   } catch (err) {
-    feedback.error('Invalid League code (or name) provided');
+    feedback.error('Your team has already joined the league');
   }
 };
 

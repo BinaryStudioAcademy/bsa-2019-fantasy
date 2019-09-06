@@ -44,6 +44,7 @@ export const createComment = (event, { homeClub, awayClub, score }) => {
     case 'trauma':
       return `${name} from ${club.name} is injuried.`;
     case 'nothing':
+    case 'stop':
       return null;
     default:
       return `${event.text}`;

@@ -144,7 +144,7 @@ export const getNextFixtureForPlayer = async (playerId, fixtures) => {
       isHome: true,
     };
   }
-  const awayteam = await footballClubRepository.getById(awayteamMatch.awayteam_id);
+  const awayteam = await footballClubRepository.getById(awayteamMatch.hometeam_id);
   return {
     fixture: awayteam.short_name,
     start: awayteamMatch.start,

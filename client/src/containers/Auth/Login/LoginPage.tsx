@@ -52,6 +52,7 @@ const LoginPage = () => {
           'flex',
           'flex-col',
           'justify-center',
+          'relative',
         )}
       >
         <div className={cn(styles.lables, 'mb-6')}>

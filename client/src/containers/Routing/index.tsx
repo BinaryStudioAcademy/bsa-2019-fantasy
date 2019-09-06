@@ -59,6 +59,11 @@ import { preloadClubLogos } from 'helpers/images';
 import { currentGameweekSelector } from 'store/selectors/current-gameweek.selector';
 
 import { joinRoom, requestGames } from 'helpers/socket';
+import {
+  loadFixtureSubscriptionsAction,
+  loadGamesAction,
+  loadGameweeksAction,
+} from 'containers/FixturesContainer/actions';
 
 const Routing = () => {
   const { i18n } = useTranslation();
@@ -77,6 +82,7 @@ const Routing = () => {
   );
   const currentGameweek = useSelector(currentGameweekSelector);
   const live = useSelector((state: RootState) => state.currentGame.current.gameStarted);
+  const gameweeks = useSelector((state: RootState) => state.gameweeks.gameweeks);
 
   const [joinedRoom, setJoinedRoom] = useState<boolean>(false);
 
@@ -87,6 +93,13 @@ const Routing = () => {
     dispatch(fetchClubs());
     dispatch(fetchGameweeks());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (currentGameweek && gameweeks) {
+      dispatch(loadGamesAction(currentGameweek.number));
+      dispatch(loadFixtureSubscriptionsAction());
+    }
+  }, [currentGameweek, gameweeks, dispatch]);
 
   useEffect(() => {
     if (user && isAuthorized && favorite_club) {
@@ -187,6 +200,7 @@ const Routing = () => {
                 <Route path='/leagues/join' component={JoinLeague} />
                 <Route path='/leagues/:name' component={LeagueDetails} />
                 <Route exact path='/joinLeague/:leagueToken' component={JoinLeague} />
+                <Route path='/profile/set/password' component={ResetPassword} />
 
                 <Route render={() => <Redirect to='/404' />} />
               </Switch>

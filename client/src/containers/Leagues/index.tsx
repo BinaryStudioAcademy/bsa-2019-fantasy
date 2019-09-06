@@ -64,7 +64,8 @@ const Leagues = ({ loadUserLeagues, leagues, clubs, user }: Props) => {
       ),
       accessor: 'current_rank',
       Cell: (props: any) => {
-        const movement = props.original.current_rank - props.original.last_rank;
+        const movement = props.original.current_rank < props.original.last_rank;
+        const noMovement = props.original.last_rank === 0 || (props.original.current_rank === props.original.last_rank)
 
         return (
           <div className={cn(styles.rank, 'flex', 'justify-center', 'items-center')}>
@@ -72,16 +73,15 @@ const Leagues = ({ loadUserLeagues, leagues, clubs, user }: Props) => {
               className={cn(
                 styles.movement,
                 'mr-1',
-                movement > 0 ? styles.up : '',
-                movement < 0 ? styles.down : '',
+                movement ? styles.up : !noMovement ? styles.down : '',
               )}
             >
-              {movement > 0 ? (
+              {movement ? (
                 <FaArrowUp />
-              ) : movement < 0 ? (
-                <FaArrowDown />
-              ) : (
+              ) : noMovement ? (
                 <FaMinus />
+              ) : (
+                <FaArrowDown />
               )}
             </span>{' '}
             {props.value}
@@ -97,7 +97,8 @@ const Leagues = ({ loadUserLeagues, leagues, clubs, user }: Props) => {
       ),
       accessor: 'last_rank',
       Cell: (props: any) => {
-        const movement = props.original.current_rank - props.original.last_rank;
+        const movement = props.original.current_rank < props.original.last_rank;
+        const noMovement = props.original.last_rank === 0 || (props.original.current_rank === props.original.last_rank)
 
         return (
           <div className={cn(styles.rank, 'flex', 'justify-center', 'items-center')}>
@@ -105,19 +106,18 @@ const Leagues = ({ loadUserLeagues, leagues, clubs, user }: Props) => {
               className={cn(
                 styles.movement,
                 'mr-1',
-                movement > 0 ? styles.up : '',
-                movement < 0 ? styles.down : '',
+                movement ? styles.up : !noMovement ? styles.down : '',
               )}
             >
-              {movement > 0 ? (
+              {movement ? (
                 <FaArrowUp />
-              ) : movement < 0 ? (
-                <FaArrowDown />
-              ) : (
+              ) : noMovement ? (
                 <FaMinus />
+              ) : (
+                <FaArrowDown />
               )}
             </span>{' '}
-            {props.value}
+            {props.value !== 0 ? props.value : props.original.current_rank}
           </div>
         );
       },

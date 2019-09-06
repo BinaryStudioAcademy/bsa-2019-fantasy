@@ -26,7 +26,6 @@ export const Container = styled.div`
   flex: 1 0;
   width: 100%;
   max-width: 52rem;
-  height: calc(100vh - 2rem);
   max-height: 45rem;
 
   overflow: hidden;

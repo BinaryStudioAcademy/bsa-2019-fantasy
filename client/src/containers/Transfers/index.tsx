@@ -2,6 +2,7 @@ import { applyPatches } from 'immer';
 import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import cn from 'classnames';
 
 import { RootState } from 'store/types';
 import { TransferType } from 'types/transfer.type';
@@ -12,6 +13,7 @@ import { PlayerDropHandler } from 'components/TeamSelection/types';
 import FixturesContainer from 'containers/FixturesContainer';
 import PlayersSelection from 'components/PlayersSelection';
 import TransfersModal from './components/TransfersModal';
+import TopTransfers from '../../components/TopTransfers/index';
 import TeamSelection from 'components/TeamSelection';
 
 import header from 'styles/header.module.scss';
@@ -84,7 +86,7 @@ const Transfers = () => {
           {t('Transfers.title.main')}
         </h2>
         <div className={`relative ${header['jumbotron-content']} mt-8 flex`}>
-          <div className='flex flex-grow flex-col mr-4'>
+          <div className='flex flex-grow justify-center mr-4'>
             <TeamSelection
               players={pitchPlayers}
               setPlayers={setPitch}
@@ -104,6 +106,9 @@ const Transfers = () => {
         </div>
       </div>
       <FixturesContainer />
+      <div className={cn(header.paper, 'px-8', 'py-8', 'rounded', 'mt-4')}>
+        <TopTransfers />
+      </div>
     </div>
   );
 };

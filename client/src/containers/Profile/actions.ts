@@ -140,10 +140,21 @@ export const updateFavoriteClub = (id: Club['id']): AsyncUserAction => async (
 
 export const updateEmailPreferences = (
   sendmailTime: User['sendmail_time'],
+  clubEmail: User['club_email'],
+  clubNotif: User['club_notif'],
+  teamEmail: User['team_email'],
+  teamNotif: User['team_notif'],
 ): AsyncUserAction => async (dispatch, getState) => {
   try {
     const user = await authService.getCurrentUser();
-    const res = await profileService.updateEmailPref(user!.id, sendmailTime);
+    const res = await profileService.updateEmailPref(
+      user!.id,
+      sendmailTime,
+      clubEmail,
+      clubNotif,
+      teamEmail,
+      teamNotif,
+    );
     loadCurrentUser(true)(dispatch, getState);
 
     dispatch(setEmailPref(sendmailTime));
@@ -198,16 +209,17 @@ export const updateUserTeamDetails = (
   }
 };
 
-export const updateUserAvatar = (imageId: string): AsyncUserAction => async (
-  dispatch,
-  getState,
-) => {
+export const updateUser = (
+  imageId: string,
+  name: string,
+  email: string,
+): AsyncUserAction => async (dispatch, getState) => {
   try {
     const user = await authService.getCurrentUser();
-    const res = await profileService.updateUserAvatar(user!.id, imageId);
+    const res = await profileService.updateUser(user!.id, imageId, name, email);
     loadCurrentUser(true)(dispatch, getState);
     feedback.success((res && res.message) || res);
   } catch {
-    feedback.error('Failed to change your avatar');
+    feedback.error('Failed to update profile datails');
   }
 };

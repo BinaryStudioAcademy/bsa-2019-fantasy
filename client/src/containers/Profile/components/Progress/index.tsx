@@ -23,7 +23,7 @@ const Progress = ({ step, navToStep }: Props) => {
       Icon: FaStar,
     },
     {
-      name: `3. ${t('Profile.steps.emailPreferences')}`,
+      name: `3. ${t('Profile.steps.notificationCenter')}`,
       Icon: FaEnvelope,
     },
   ];

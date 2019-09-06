@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 
 import { PlayerDataType } from 'containers/Players/actions';
 import Spinner from 'components/Spinner';
+import { FaTimes } from 'react-icons/fa';
 import { PlayerType } from 'types/player.types';
 import { RootState } from 'store/types';
 import { Club } from 'types/club.type';
@@ -203,10 +204,13 @@ const PlayerDialog = ({ playerDialogData, player, onDismiss, loading, tab }: Pro
         <Spinner />
       ) : (
         <form
-          className='modal flex flex-col m-auto max-w-xl max-h-full bg-white w-6/12 p-4'
+          className='modal relative flex flex-col m-auto max-w-xl max-h-full bg-white w-6/12 p-6'
           onClick={(e) => e.stopPropagation()}
           role='presentation'
         >
+          <div className='absolute cursor-pointer top-0 right-0 p-1' onClick={onDismiss}>
+            <FaTimes />
+          </div>
           <div className='flex justify-between bg-secondary p-4 pb-0'>
             <div className='text-white'>
               <div className='text-xl font-semibold mb-2'>

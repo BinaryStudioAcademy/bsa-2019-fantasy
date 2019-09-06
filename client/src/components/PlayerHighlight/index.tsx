@@ -69,13 +69,13 @@ const PlayerHighlight = ({ player, onInfoClick }: Props) => {
 
   const chartData = {
     labels: [
-      'Goals',
-      'Assists',
-      'Missed passes',
-      'Goals conceded',
-      'Saves',
-      'Yellow cards',
-      'Red cards',
+      t('Players.PlayerHighlight.goals'),
+      t('Players.PlayerHighlight.assists'),
+      t('Players.PlayerHighlight.missedPasses'),
+      t('Players.PlayerHighlight.goalsConceded'),
+      t('Players.PlayerHighlight.saves'),
+      t('Players.PlayerHighlight.yellowCards'),
+      t('Players.PlayerHighlight.redCards'),
     ],
     datasets: [
       {

@@ -2,8 +2,11 @@ import React from 'react';
 import Spinner from 'components/Spinner';
 import { Fixture } from './Fixture';
 import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
 
 export const LastGamesList = ({ games, getClubById, onClick, value }) => {
+  const { t } = useTranslation();
+
   if (games.length === 0) return <Spinner />;
 
   const gamesGrouped = _.chain(games)
@@ -15,7 +18,9 @@ export const LastGamesList = ({ games, getClubById, onClick, value }) => {
     .map((gw) => {
       return (
         <div key={gw}>
-          <h4 className='text-xl font-bold mt-8 mb-2'>Gameweek {gw}</h4>
+          <h4 className='text-xl font-bold mt-8 mb-2'>
+            {t('LIVE.gameweek')} {gw}
+          </h4>
           <div className='flex flex-wrap -mx-2'>
             {gamesGrouped[gw].map((game) => {
               const {

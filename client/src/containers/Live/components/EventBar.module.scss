@@ -1,0 +1,35 @@
+:local(.marker) {
+  position: absolute;
+
+  :local(.lineTop) {
+    position: absolute;
+    width: 1px;
+    left: calc(50% - 1px);
+    top: 100%;
+    height: 2em;
+    background: #dbdbdb;
+  }
+  :local(.lineBottom) {
+    position: absolute;
+    width: 1px;
+    left: calc(50% - 1px);
+    bottom: 100%;
+    height: 2em;
+    background: #dbdbdb;
+  }
+
+  :local(.tooltip) {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 10;
+    transition: visibility 300ms, opacity 300ms;
+  }
+  &:hover :local(.tooltip) {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0ms, opacity 300ms;
+  }
+}

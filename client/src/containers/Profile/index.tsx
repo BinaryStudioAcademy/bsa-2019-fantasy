@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { useSteps } from 'helpers/hooks/steps.hook';
 
 import FavouriteClubSelection from './components/FavouriteClubSelection';
 import PersonalDetails from './components/PersonalDetails';
-import EmailPreferences from './components/EmailPreferences';
+import NotificationCenter from './components/NotificationCenter';
 import Progress from './components/Progress';
 
 import styles from './styles.module.scss';
@@ -24,13 +24,13 @@ const Profile = withRouter(({ history }) => {
 
   const { step, nextStep, prevStep, navToStep } = useSteps(3);
 
-  useEffect(() => {
-    document.title = 'Profile | Fantasy Football League';
-    navToStep(stepRouteMap.indexOf(history.location.pathname) + 1);
-  }, []);
-
   const prevStepLink = stepRouteMap[step - 1 - 1];
   const nextStepLink = stepRouteMap[step + 1 - 1];
+
+  const navToStepProp = (step: number) => {
+    navToStep(step);
+    history.replace(stepRouteMap[step - 1]);
+  };
 
   return (
     <section>
@@ -42,13 +42,7 @@ const Profile = withRouter(({ history }) => {
       </div>
 
       <div className='flex'>
-        <Progress
-          step={step}
-          navToStep={(step: number) => {
-            navToStep(step);
-            history.replace(stepRouteMap[step - 1]);
-          }}
-        />
+        <Progress step={step} navToStep={navToStepProp} />
 
         <div className='flex-1 bg-white rounded py-12 px-16 shadow-figma relative min-h-screen'>
           <Switch>
@@ -57,7 +51,15 @@ const Profile = withRouter(({ history }) => {
             </Route>
             <Route path='/profile/details' component={PersonalDetails} />
             <Route path='/profile/favorite-club' component={FavouriteClubSelection} />
-            <Route path='/profile/email-preferences' component={EmailPreferences} />
+            <Route
+              path='/profile/email-preferences'
+              component={(props) => (
+                <NotificationCenter
+                  {...props}
+                  switchToFavouriteClubTab={() => navToStepProp(2)}
+                />
+              )}
+            />
             <Route>
               <Redirect to='/404' />
             </Route>
