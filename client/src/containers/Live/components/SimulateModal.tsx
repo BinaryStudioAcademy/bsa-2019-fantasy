@@ -27,7 +27,7 @@ export const SimulateModal = ({ onSubmit, onDismiss }) => {
       <div className='p-8'>
         <h3 className='font-bold text-2xl mb-4'>{t('LIVE.simulateModal.selectClubs')}</h3>
         <div className='flex -mx-2 mb-8'>
-          <div className='w-1/3 px-2'>
+          <div className='px-2'>
             <div className='font-semibold text-l'>{t('LIVE.simulateModal.homeClub')}</div>
             <Dropdown
               options={optionsHome}
@@ -43,7 +43,7 @@ export const SimulateModal = ({ onSubmit, onDismiss }) => {
               }}
             ></Dropdown>
           </div>
-          <div className='w-1/3 px-2'>
+          <div className='px-2'>
             <div className='font-semibold text-l'>{t('LIVE.simulateModal.awayClub')}</div>
             <Dropdown
               options={optionsAway}
