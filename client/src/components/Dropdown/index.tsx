@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDropdown, { ReactDropdownProps } from 'react-dropdown';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
-import './style.scss';
 
 const Dropdown = (props: ReactDropdownProps) => {
   return (
