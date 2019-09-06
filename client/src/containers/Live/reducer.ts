@@ -63,6 +63,7 @@ export default (
       return produce(state, (draft) => {
         draft.current.elapsed = action.payload.elapsed;
         draft.current.score = action.payload.score || draft.current.score;
+        if (action.payload.name === 'startGame') draft.current.events = [];
         draft.current.events.push(action.payload);
       });
     case LOAD_LAST_GAMES_REQUEST:

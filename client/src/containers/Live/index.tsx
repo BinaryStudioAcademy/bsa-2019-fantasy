@@ -12,7 +12,7 @@ import { Fixture } from './components/Fixture';
 import { LastGamesList } from './components/LastGamesList';
 import { EventBar } from './components/EventBar';
 
-import { loadCurrentGame, loadLastGames } from './actions';
+import { loadCurrentGame, loadLastGames, addLiveEvent } from './actions';
 import { createIterator } from './helpers/iterator';
 import * as faker from './helpers/socket';
 import * as eventsService from 'services/eventsService';
@@ -117,6 +117,7 @@ const Live = () => {
 
   const stopSimulation = () => {
     faker.stopSimulation();
+    dispatch(addLiveEvent({ name: 'stop' }));
   };
 
   // On every new added event
@@ -254,7 +255,6 @@ const Live = () => {
   };
 
   const renderProgress = (events) => {
-    console.log(progress);
     const homeEvents = events.filter(({ team }) => team === 'home');
     const awayEvents = events.filter(({ team }) => team === 'away');
 
