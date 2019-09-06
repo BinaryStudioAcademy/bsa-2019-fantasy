@@ -5,10 +5,7 @@ import { connect, useDispatch } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import cn from 'classnames';
 
-import {
-  loadPlayersAction,
-  resetPlayersAction,
-} from '../../components/PlayersSelection/actions';
+import { loadPlayersAction } from '../../components/PlayersSelection/actions';
 import {
   fetchDataForPlayer,
   resetPlayerDialogData,
@@ -87,12 +84,6 @@ const PlayersSelection = ({
   useEffect(() => {
     loadPlayersAction({ ...query });
   }, [query]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(resetPlayersAction());
-    };
-  }, []);
 
   useEffect(() => {
     undisplayedPlayers.length > 0 &&

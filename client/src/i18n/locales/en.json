@@ -91,6 +91,8 @@
     "TopTransfers": {
       "topTransfersIn": "Top Transfers in",
       "topTransfersOut": "Top Transfers out",
+      "info": "Info",
+      "direction": "Direction",
       "position": "Position",
       "player": "Player",
       "club": "Club",

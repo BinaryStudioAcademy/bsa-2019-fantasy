@@ -91,6 +91,8 @@
     "TopTransfers": {
       "topTransfersIn": "Найпопулярніші придбання",
       "topTransfersOut": "Найпопулярніші продажі",
+      "info": "Інфо",
+      "direction": "Напрямок",
       "position": "Позиція",
       "player": "Гравець",
       "club": "Клуб",
