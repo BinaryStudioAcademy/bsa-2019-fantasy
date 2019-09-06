@@ -7,7 +7,7 @@ const Wait = require('../../helpers/waiters');
 const leaguesSteps = require('./steps/leagues.steps');
 const navSteps = require('../navigation/steps/nav.steps');
 
-describe.only('Leagues test suite', () => {
+describe('Leagues test suite', () => {
   let isPresent;
 
   beforeEach(async () => {
@@ -34,7 +34,7 @@ describe.only('Leagues test suite', () => {
     );
   });
 
-  xit('should be able to create a private league', async () => {
+  it('should be able to create a private league', async () => {
     const leagueName = Helper.getRandomName();
     await leaguesSteps.createPrivateLeague(leagueName);
     await browser.pause(3000);
@@ -47,7 +47,7 @@ describe.only('Leagues test suite', () => {
     );
   });
 
-  it('should be able to join a public league', async () => {
+  xit('should be able to join a public league', async () => {
     const leagueName = Helper.getRandomName();
     await leaguesSteps.createPublicLeague(leagueName);
     await navSteps.clicklogOutBtn();
@@ -80,7 +80,7 @@ describe.only('Leagues test suite', () => {
     );
   });
 
-  it('should be able to leave a public league', async () => {
+  xit('should be able to leave a public league', async () => {
     const leagueName = Helper.getRandomName();
     await leaguesSteps.createPublicLeague(leagueName);
 
