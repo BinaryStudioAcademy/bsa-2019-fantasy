@@ -20,8 +20,8 @@ class GameRepository extends BaseRepository {
   getByGameweekId(id) {
     return this.model.findAll({
       where: { gameweek_id: id },
-
       include: ['hometeam', 'awayteam'],
+      order: [['start', 'ASC']],
     });
   }
 
