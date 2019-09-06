@@ -66,7 +66,10 @@ const SquadSelection = withRouter(({ history }) => {
                 showFixtures={false}
                 submit={{
                   label: t('Gameweek.saveTeam'),
-                  canSubmit: amountOfPlayersPicked === 15,
+                  canSubmit:
+                    amountOfPlayersPicked === 15 &&
+                    moneyRemaining >= 0 &&
+                    !isMoreThree.status,
                   onSubmit: () => setIsModalOpen(true),
                 }}
               />
