@@ -204,7 +204,7 @@ const PlayerDialog = ({ playerDialogData, player, onDismiss, loading, tab }: Pro
         <Spinner />
       ) : (
         <form
-          className='modal relative flex flex-col m-auto max-w-xl max-h-full bg-white w-6/12 p-6'
+          className='modal rounded relative flex flex-col m-auto max-w-xl max-h-full bg-white w-6/12 p-6'
           onClick={(e) => e.stopPropagation()}
           role='presentation'
         >

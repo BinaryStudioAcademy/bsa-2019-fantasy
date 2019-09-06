@@ -134,13 +134,14 @@ class PlayersPage extends React.Component<Props, State> {
 
   onModalDismiss = () => {
     this.props.resetPlayerDialogData();
-    this.setState({ currentPlayer: undefined });
+    this.setState({ dialogInitialTab: undefined });
   };
 
   setPlayerHighlight = (id: string) => {
     const player = this.props.players.find((player) => player && player.id === id);
     this.setState({
       playerHighlightData: player,
+      currentPlayer: player,
     });
     const scrollElement = document.querySelector('#root>.flex>.flex-1');
     scrollElement && scrollElement.scrollTo({ top: 0, behavior: 'smooth' });
@@ -287,7 +288,7 @@ class PlayersPage extends React.Component<Props, State> {
         </button>
         <button
           className='w-6 h-6 justify-center mr-4 leading-none flex bg-background rounded-full text-s font-bold'
-          onClick={() => this.onInfoClick(props.original.id, props.original.club_id)}
+          onClick={() => this.onInfoClick()}
         >
           i
         </button>
@@ -295,16 +296,13 @@ class PlayersPage extends React.Component<Props, State> {
     );
   };
 
-  onInfoClick = (
-    id: string,
-    club_id: number,
-    dialogInitialTab: 'fixtures' | 'history' = 'history',
-  ) => {
+  onInfoClick = (dialogInitialTab: 'fixtures' | 'history' = 'history') => {
+    const player = this.state.currentPlayer;
+    if (!player) return;
     this.setState({
-      currentPlayer: this.props.players.find((p: any) => p && id === p.id),
       dialogInitialTab,
     });
-    this.props.fetchDataForPlayer(id, String(club_id));
+    this.props.fetchDataForPlayer(player.id, String(player.club_id));
   };
 
   renderNameCell = (props) => (
@@ -460,7 +458,7 @@ class PlayersPage extends React.Component<Props, State> {
           </div>
           {this.renderTable()}
 
-          {this.state.currentPlayer && (
+          {this.state.currentPlayer && this.state.dialogInitialTab && (
             <PlayerDialog
               playerDialogData={this.props.playerData}
               onDismiss={this.onModalDismiss}
