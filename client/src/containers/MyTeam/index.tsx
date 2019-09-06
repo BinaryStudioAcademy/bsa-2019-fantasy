@@ -94,7 +94,7 @@ const MyTeam = () => {
       <div className='flex -mx-2'>
         <div
           className='mx-2 p-8 shadow-figma rounded bg-white flex self-center justify-center'
-          style={{ width: '70%' }}
+          style={{ width: '70%', minHeight: '110vh' }}
         >
           <TeamSelection
             players={players}

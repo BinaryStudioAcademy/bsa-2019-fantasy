@@ -1,9 +1,10 @@
 :local(.gameweek-history) {
-  svg {
-    display: inline;
-    vertical-align: initial;
-    font-size: 10px;
-  }
+}
+
+:local(.svg-button) {
+  display: inline;
+  vertical-align: initial;
+  font-size: 10px;
 }
 
 :local(.gameweek-history-content) {

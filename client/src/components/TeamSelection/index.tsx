@@ -24,10 +24,12 @@ type Props = {
    */
   setPlayers: React.Dispatch<React.SetStateAction<PitchPlayerType[]>>;
   disabled?: boolean;
-  showFixtures: boolean;
+
   /**
    * `showFixtures` is a flag, which controls what player`s info to display
    */
+  showFixtures?: boolean;
+
   query?: PitchPlayerType[][];
   setQuery?: React.Dispatch<React.SetStateAction<PitchPlayerType[][]>>;
 
@@ -53,7 +55,7 @@ const TeamSelection = ({
   submit,
   hasBench = false,
   disabled = false,
-  showFixtures,
+  showFixtures = false,
 }: Props) => {
   const { t } = useTranslation();
   const [view, setView] = useState<'list' | 'pitch'>('pitch');
@@ -184,6 +186,11 @@ const TeamSelection = ({
 
   return (
     <S.Container className='bg-secondary rounded'>
+      {disabled && !players.some((p) => p.item) && (
+        <S.EmptyMessage>
+          <p>{t('Gameweek.resultPending')}</p>
+        </S.EmptyMessage>
+      )}
       {players.length > 0 && (
         <>
           <S.Tooltip>
