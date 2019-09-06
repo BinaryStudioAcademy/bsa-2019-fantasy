@@ -44,6 +44,11 @@ const formatElapsed = (elapsed) => {
 };
 
 const Live = () => {
+  //Set a title
+  useEffect(() => {
+    document.title = 'LIVE | Fantasy Football League';
+  }, [])
+
   // Redux state
   const currentGame = useSelector((state: RootState) => state.currentGame.current);
   const nextGame = useSelector((state: RootState) => state.currentGame.next);
@@ -119,9 +124,7 @@ const Live = () => {
   // Replay playback interval
   useInterval(
     () => {
-      console.log('interval 1000 ms');
       const event = replayEvents.next().value;
-      console.log(event);
 
       if (event) {
         const status = { homeClub, awayClub, score };
@@ -151,7 +154,6 @@ const Live = () => {
   );
 
   const onPlayClick = () => {
-    console.log('play');
     setReplayGame(
       produce((draft) => {
         draft.isPlaying = true;
@@ -160,7 +162,6 @@ const Live = () => {
   };
 
   const onPauseClick = () => {
-    console.log('pause');
     setReplayGame(
       produce((draft) => {
         draft.isPlaying = false;
@@ -189,7 +190,6 @@ const Live = () => {
       </div>
     );
     const belowContent = formatElapsed(elapsed);
-    console.log(elapsed);
     const belowBelowContent = renderPlaybackControls();
     return (
       <Fixture

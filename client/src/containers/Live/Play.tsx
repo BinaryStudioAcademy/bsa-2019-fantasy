@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import moment from 'moment';
 
 import { CommentaryList } from './CommentaryList';
 import { Field } from './Field';
 import { SimulateModal } from './SimulateModal';
-
-import { FaLongArrowAltLeft, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
 import { RescheduleModal } from './RescheduleModal';
+import { Sound } from './Sound';
+
+import { FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
 
 export const Play = ({
   gameStarted,
@@ -59,7 +59,9 @@ export const Play = ({
   );
 
   const renderMute = () => {
-    const classes = getClassesByStatus(gameStarted);
+    const classes = isMuted
+      ? 'text-red-500 border-red-500'
+      : 'text-green-500 border-green-500';
     /* eslint-disable-next-line */
     const [icon, text] = isMuted ? [<FaVolumeMute />, 'Muted'] : [<FaVolumeUp />, 'Mute'];
     return (
@@ -75,6 +77,7 @@ export const Play = ({
 
   return (
     <>
+      <Sound {...{ currentEvent, isMuted }} />
       <div className='flex'>
         <div className='flex flex-1 items-center'>{renderStatus()}</div>
         {fixture}
