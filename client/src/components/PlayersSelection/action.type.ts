@@ -3,16 +3,11 @@ import { PlayerType } from 'types/player.types';
 
 export const SET_LOADING = 'PLAYERS_SELECTION:SET_LOADING';
 export const SET_PLAYERS = 'PLAYERS_SELECTION:SET_PLAYERS';
-export const RESET_PLAYERS = 'PLAYERS_SELECTION:RESET_PLAYERS';
 export const SET_AUTOPICK_SQUAD = 'PLAYERS:SET_AUTOPICK_SQUAD';
 
 type SetPlayers = {
   type: typeof SET_PLAYERS;
   payload: { rows: PlayerType[]; count: number };
-};
-
-type ResetPlayers = {
-  type: typeof RESET_PLAYERS;
 };
 
 type SetLoading = {
@@ -25,5 +20,5 @@ type SetAutoPick = {
   payload: PlayerType[];
 };
 
-export type PlayersSelectionAction = SetPlayers | ResetPlayers | SetLoading | SetAutoPick;
+export type PlayersSelectionAction = SetPlayers | SetLoading | SetAutoPick;
 export type AsyncPlayersSelectionAction = Thunky<PlayersSelectionAction>;

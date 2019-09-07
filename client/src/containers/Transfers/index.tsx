@@ -33,6 +33,7 @@ const Transfers = () => {
     (state: RootState) => state.transfers,
     shallowEqual,
   );
+  const user = useSelector((state: RootState) => state.profile.user);
   const players = useSelector((state: RootState) => state.gameweeks.gameweeks_history);
 
   const { pitchPlayers, setPitch } = usePitchPlayers(players);
@@ -79,26 +80,25 @@ const Transfers = () => {
       />
 
       <div className={`${header.jumbotron} ${header.paper} mb-12 rounded pt-12`}>
-        <div className={`${header.sub} ${header.title} mb-4 flex items-center`}>
-          {t('Transfers.title.sub')}
-        </div>
         <h2 className={`${header.title} text-secondary mb-6`}>
           {t('Transfers.title.main')}
         </h2>
         <div className={`relative ${header['jumbotron-content']} mt-8 flex`}>
-          <div className='flex flex-grow justify-center mr-4'>
-            <TeamSelection
-              players={pitchPlayers}
-              setPlayers={setPitch}
-              showFixtures={false}
-              hasBench={false}
-              onPlayerDrop={onPlayerDrop}
-              submit={{
-                label: `Make Transfers (${transfers.length})`,
-                canSubmit: Boolean(transfers.length),
-                onSubmit: () => setShowModal(true),
-              }}
-            />
+          <div className='flex flex-col flex-grow mr-4'>
+            <div className='flex-grow'>
+              <TeamSelection
+                players={pitchPlayers}
+                setPlayers={setPitch}
+                showFixtures={false}
+                hasBench={false}
+                onPlayerDrop={onPlayerDrop}
+                submit={{
+                  label: `${t('TransfersTeamSelection.submit')} (${transfers.length})`,
+                  canSubmit: Boolean(transfers.length),
+                  onSubmit: () => setShowModal(true),
+                }}
+              />
+            </div>
           </div>
           <PlayersSelection
             undisplayedPlayers={undisplayedPlayers as GameweekHistoryType[]}

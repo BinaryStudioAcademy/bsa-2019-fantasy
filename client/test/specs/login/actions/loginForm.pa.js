@@ -22,7 +22,7 @@ class LoginActions {
     await loginButton.click();
   }
 
-  async submitLoginForm(email, password){
+  async submitLoginForm(email, password) {
     await this.enterEmail(email);
     await this.enterPassword(password);
     await this.clickLogin();

@@ -26,13 +26,12 @@ export const SimulateModal = ({ onSubmit, onDismiss }) => {
     <Modal onDismiss={onDismiss}>
       <div className='p-8'>
         <h3 className='font-bold text-2xl mb-4'>{t('LIVE.simulateModal.selectClubs')}</h3>
-        <div className='flex -mx-2 mb-8'>
-          <div className='px-2'>
+        <div className='flex w-full justify-around items-center mb-8'>
+          <div className='w-1/2 mr-1'>
             <div className='font-semibold text-l'>{t('LIVE.simulateModal.homeClub')}</div>
             <Dropdown
               options={optionsHome}
               value={homeClubId}
-              className='w-40'
               onChange={({ value }) => {
                 if (value === awayClubId) {
                   setHomeClubId(value);
@@ -43,12 +42,11 @@ export const SimulateModal = ({ onSubmit, onDismiss }) => {
               }}
             ></Dropdown>
           </div>
-          <div className='px-2'>
+          <div className='w-1/2 '>
             <div className='font-semibold text-l'>{t('LIVE.simulateModal.awayClub')}</div>
             <Dropdown
               options={optionsAway}
               value={awayClubId}
-              className='w-40'
               onChange={({ value }) => setAwayClubId(value)}
             ></Dropdown>
           </div>

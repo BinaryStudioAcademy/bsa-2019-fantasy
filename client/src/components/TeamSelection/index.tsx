@@ -3,10 +3,12 @@ import { FaListUl } from 'react-icons/fa';
 import { feedback } from 'react-feedbacker';
 import { useTranslation } from 'react-i18next';
 import React, { useCallback, useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import { TeamMemberType } from 'types/gameweekHistory.type';
 import { PitchPlayerType, DisplayPlayerType } from '../Pitch/types';
 import { PlayerDropHandler } from './types';
+import { RootState } from 'store/types';
 
 import { Pitch } from 'components/Pitch';
 import TeamList from 'components/TeamList';
@@ -24,10 +26,12 @@ type Props = {
    */
   setPlayers: React.Dispatch<React.SetStateAction<PitchPlayerType[]>>;
   disabled?: boolean;
-  showFixtures: boolean;
+
   /**
    * `showFixtures` is a flag, which controls what player`s info to display
    */
+  showFixtures?: boolean;
+
   query?: PitchPlayerType[][];
   setQuery?: React.Dispatch<React.SetStateAction<PitchPlayerType[][]>>;
 
@@ -53,10 +57,15 @@ const TeamSelection = ({
   submit,
   hasBench = false,
   disabled = false,
-  showFixtures,
+  showFixtures = false,
 }: Props) => {
   const { t } = useTranslation();
   const [view, setView] = useState<'list' | 'pitch'>('pitch');
+
+  const submitText = t('TransfersTeamSelection.submit').split(' ')[0];
+  const buttonText = (submit !== undefined) ? submit!.label.split(' ')[0] : '';
+  
+  const user = useSelector((state: RootState) => state.profile.user);
 
   const handlePlayerDrop = useCallback(
     (targetIdx: number, targetIsOnBench: boolean) => (
@@ -184,18 +193,14 @@ const TeamSelection = ({
 
   return (
     <S.Container className='bg-secondary rounded'>
+      {disabled && !players.some((p) => p.item) && (
+        <S.EmptyMessage>
+          <p>{t('Gameweek.resultPending')}</p>
+        </S.EmptyMessage>
+      )}
       {players.length > 0 && (
         <>
           <S.Tooltip>
-            {submit && (
-              <S.Submit
-                className='rounded'
-                disabled={!submit.canSubmit}
-                onClick={submit.onSubmit}
-              >
-                {submit.label}
-              </S.Submit>
-            )}
             <S.ViewToggles>
               <S.Toggle
                 isActive={view === 'pitch'}
@@ -212,6 +217,29 @@ const TeamSelection = ({
                 <FaListUl />
               </S.Toggle>
             </S.ViewToggles>
+            {(buttonText === submitText) && (
+              <S.TransfScoreMoney>
+                <tr>
+                  <td>{ t('TransfersTeamSelection.freeTransfers') }</td>
+                  <td>{ t('TransfersTeamSelection.score') }</td>
+                  <td>{ t('TransfersTeamSelection.money') }</td>
+                </tr>
+                <tr>
+                  <td>{ user!.free_transfers }</td>
+                  <td>{ user!.score }</td>
+                  <td>{ user!.money }</td>
+                </tr>
+              </S.TransfScoreMoney>
+            )}
+            {submit && (
+              <S.Submit
+                className='rounded'
+                disabled={!submit.canSubmit}
+                onClick={submit.onSubmit}
+              >
+                {submit.label}
+              </S.Submit>
+            )}
           </S.Tooltip>
 
           {view === 'pitch' && (

@@ -91,6 +91,8 @@
     "TopTransfers": {
       "topTransfersIn": "Найпопулярніші придбання",
       "topTransfersOut": "Найпопулярніші продажі",
+      "info": "Інфо",
+      "direction": "Напрямок",
       "position": "Позиція",
       "player": "Гравець",
       "club": "Клуб",
@@ -256,7 +258,7 @@
       "username": "Ім'я користувача",
       "password": "Пароль",
       "email": "Електронна пошта",
-      "setPassword": "Налаштувати пароль",
+      "setPassword": "Натисніть, щоб скинути пароль",
       "language": "Мова",
       "avatar": "Аватар",
       "changeAvatar": "Змінити аватар"
@@ -344,7 +346,10 @@
       "pitch": "Поле",
       "list": "Список"
     },
-    "submit": "Підтвердити трансфери"
+    "submit": "Підтвердити",
+    "freeTransfers": "Безкоштовні трансфери",
+    "score": "Бали",
+    "money": "Гроші"
   },
 
   "TransfersModal": {

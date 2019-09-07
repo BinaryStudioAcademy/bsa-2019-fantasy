@@ -91,6 +91,8 @@
     "TopTransfers": {
       "topTransfersIn": "Top Transfers in",
       "topTransfersOut": "Top Transfers out",
+      "info": "Info",
+      "direction": "Direction",
       "position": "Position",
       "player": "Player",
       "club": "Club",
@@ -256,7 +258,7 @@
       "username": "Username",
       "password": "Password",
       "email": "Email",
-      "setPassword": "Set a password",
+      "setPassword": "Click to reset a password",
       "language": "Language",
       "avatar": "Avatar",
       "changeAvatar": "Change avatar"
@@ -344,7 +346,10 @@
       "pitch": "Pitch View",
       "list": "List View"
     },
-    "submit": "Make transfers"
+    "submit": "Make transfers",
+    "freeTransfers": "Free Transfers",
+    "score": "Score",
+    "money": "Money"
   },
 
   "TransfersModal": {

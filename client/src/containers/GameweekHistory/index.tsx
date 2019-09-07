@@ -8,8 +8,9 @@ import { Redirect } from 'react-router';
 
 import { RootState } from 'store/types';
 
-import TeamSelection from 'components/Gameweek/TeamSelection';
-import TopTransfers from '../../components/TopTransfers/index';
+// import TeamSelectionOLD from 'components/Gameweek/TeamSelection';
+import TeamSelection from 'components/TeamSelection';
+import TopTransfers from 'components/TopTransfers';
 
 import Spinner from 'components/Spinner';
 import { getChartOptions } from 'helpers/gameweekChart';
@@ -25,6 +26,8 @@ import { currentGameweekSelector } from 'store/selectors/current-gameweek.select
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
 import { GameweekStatsSidebar } from 'components/GameweekStatsSidebar';
+
+import { usePitchPlayers } from 'components/Pitch/use-pitch-players.hook';
 
 const GameweekHistory = () => {
   useEffect(() => {
@@ -50,6 +53,8 @@ const GameweekHistory = () => {
   const { inviteCode } = useSelector((state: RootState) => state.profile);
 
   const globalCurrentGameweek = useSelector(currentGameweekSelector);
+
+  const { pitchPlayers, setPitch } = usePitchPlayers(teamHistory);
 
   useEffect(() => {
     if (userId) {
@@ -107,7 +112,7 @@ const GameweekHistory = () => {
                 : ''
             }`}
           </h2>
-          <div className='text-center mb-4 flex justify-between'>
+          <div className='text-center mb-4 flex justify-between text-sm'>
             {currentGameweek > 1 && (
               <button
                 onClick={() => dispatch(setCurrentGameweekAction(currentGameweek - 1))}
@@ -115,7 +120,7 @@ const GameweekHistory = () => {
                 className={`g-transparent hover:bg-teal-400 text-secondary hover:text-white py-2 px-6 border-2 border-gray-700 hover:border-transparent rounded mr-6 font-bold`}
                 style={{ outline: 'none' }}
               >
-                <FaChevronLeft />
+                <FaChevronLeft className={styles['svg-button']} />
                 {t('previous')}
               </button>
             )}
@@ -140,7 +145,7 @@ const GameweekHistory = () => {
                 style={{ outline: 'none' }}
               >
                 {t('next')}
-                <FaChevronRight />
+                <FaChevronRight className={styles['svg-button']} />
               </button>
             )}
           </div>
@@ -160,7 +165,14 @@ const GameweekHistory = () => {
             {isLoading ? (
               <Spinner />
             ) : (
-              <TeamSelection isGameweek playersHistory={teamHistory || []} />
+              // <TeamSelectionOLD isGameweek playersHistory={teamHistory || []} />
+              <TeamSelection
+                players={pitchPlayers}
+                setPlayers={setPitch}
+                showFixtures={false}
+                hasBench
+                disabled
+              />
             )}
           </div>
 

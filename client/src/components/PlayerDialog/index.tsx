@@ -11,6 +11,9 @@ import { PlayerType } from 'types/player.types';
 import { RootState } from 'store/types';
 import { Club } from 'types/club.type';
 
+import cn from 'classnames';
+import styles from 'components/Modal/styles.module.scss';
+
 type Props = {
   playerDialogData: PlayerDataType;
   player: PlayerType;
@@ -208,9 +211,15 @@ const PlayerDialog = ({ playerDialogData, player, onDismiss, loading, tab }: Pro
           onClick={(e) => e.stopPropagation()}
           role='presentation'
         >
-          <div className='absolute cursor-pointer top-0 right-0 p-1' onClick={onDismiss}>
+          <button
+            className={cn(
+              styles.modalClose,
+              'absolute cursor-pointer bottom-2 right-0 p-1',
+            )}
+            onClick={onDismiss}
+          >
             <FaTimes />
-          </div>
+          </button>
           <div className='flex justify-between bg-secondary p-4 pb-0'>
             <div className='text-white'>
               <div className='text-xl font-semibold mb-2'>
