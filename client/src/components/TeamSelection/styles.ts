@@ -53,17 +53,16 @@ export const Tooltip = styled.div`
   overflow: hidden;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   background-color: rgba(255, 255, 255, 0.1);
   animation: ${fadeIn} 0.32s;
 `;
 
 export const ViewToggles = styled.div`
-  position: absolute;
-  left: 1rem;
+  margin-left: 15px;
 
   display: flex;
-  justify-content: center;
   overflow: hidden;
 
   background-color: rgb(33, 156, 105);
@@ -71,11 +70,24 @@ export const ViewToggles = styled.div`
   box-shadow: 0 5px 10px -2px rgba(0, 0, 0, 0.5);
 `;
 
-export const Submit = styled.button`
-  position: absolute;
-  right: 1rem;
+export const TransfScoreMoney = styled.table`
+  text-align: center;
 
-  padding: 0.5rem 2rem;
+  color: #fff;
+  font-weight: bold;
+
+  td {
+    padding-right: 1.5rem;
+  }
+
+  td:nth-child(3) {
+    padding-right: 0;
+  }
+`;
+
+export const Submit = styled.button`
+  margin-right: 15px;
+  padding: 0.5rem 0.7rem;
 
   color: #fff;
   font-weight: bold;

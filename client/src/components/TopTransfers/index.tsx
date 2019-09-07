@@ -8,7 +8,7 @@ import PlayerDialog from 'components/PlayerDialog';
 import {
   loadPlayersAction,
   resetPlayersAction,
-} from '../../components/PlayersSelection/actions';
+} from '../../components/TopTransfers/actions';
 import { PlayerType } from 'types/player.types';
 import {
   fetchDataForPlayer,
@@ -40,6 +40,7 @@ type Props = {
 };
 
 const TopTransfers = ({
+  players,
   resetPlayerDialogData,
   fetchDataForPlayer,
   playerData,
@@ -49,12 +50,12 @@ const TopTransfers = ({
 
   const columns = [
     {
-      Header: '',
+      Header: t('GameweekHistoryPage.TopTransfers.info'),
       accessor: 'info',
       className: 'flex items-center justify-center',
     },
     {
-      Header: '',
+      Header: t('GameweekHistoryPage.TopTransfers.direction'),
       accessor: 'direction',
       className: 'flex items-center justify-center',
     },
@@ -81,7 +82,6 @@ const TopTransfers = ({
   ];
 
   const dispatch = useDispatch();
-  const players = useSelector((state: RootState) => state.playerSelection.players);
   const clubs = useSelector((state: RootState) => state.clubs.clubs);
 
   const [query, setQuery] = useState({
@@ -112,7 +112,6 @@ const TopTransfers = ({
   useEffect(() => {
     return () => {
       dispatch(resetPlayersAction());
-      console.log('unmount');
     };
   }, []);
 
@@ -242,6 +241,7 @@ const TopTransfers = ({
 };
 
 const mapStateToProps = (rootState: RootState) => ({
+  players: rootState.topTransfers.players,
   playerData: rootState.players.playerData,
   dialogLoading: rootState.players.dialogLoading,
 });
