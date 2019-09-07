@@ -213,40 +213,51 @@ class PlayersPage extends React.Component<Props, State> {
     {
       Header: (props) => this.renderHeader(this.props.t('Players.clubLogo'), props),
       accessor: 'club_id',
-      className: 'flex justify-center bg-white rounded-l',
-      style: { marginLeft: '5px' },
+      className: 'flex justify-center items-center bg-white rounded-l',
+      headerClassName: 'text-center',
+      minWidth: 50,
       Cell: (props: any) => this.renderClubImageCell(props),
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.name'), props),
       accessor: 'first_name',
-      className: 'flex items-center bg-white',
+      className: 'flex flex-col items-center justify-center bg-white ',
       Cell: (props: any) => this.renderNameCell(props),
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.price'), props),
       accessor: 'player_price',
-      className: 'flex items-center bg-white',
+      className: 'flex flex-col items-center justify-center bg-white',
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.score'), props),
       accessor: 'player_score',
-      className: 'flex items-center bg-white',
+      className: 'flex flex-col items-center justify-center bg-white',
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.position'), props),
       accessor: 'position',
-      className: 'flex items-center bg-white',
+      className: 'flex flex-col items-center justify-center bg-white',
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.club'), props),
       accessor: 'club_id',
-      className: 'flex items-center bg-white',
+      className: 'flex flex-col items-center justify-center bg-white',
       Cell: (props: any) => this.renderClubCell(props),
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.info'), props),
-      className: 'flex items-center justify-end bg-white rounded-r',
+      className: 'flex items-center justify-center bg-white rounded-r',
+      accessor: 'info',
+      minWidth: 50,
+      Cell: (props: any) => this.renderInfoCell(props),
+    },
+    {
+      Header: (props) => this.renderHeader(this.props.t('Players.compare'), props),
+      className: 'flex items-center justify-center  bg-white rounded-r',
+      accessor: 'comparison',
+      headerClassName: 'text-center',
+      minWidth: 50,
       Cell: (props: any) => this.renderComparisonCell(props),
     },
   ];
@@ -262,7 +273,7 @@ class PlayersPage extends React.Component<Props, State> {
     const cursor = defaultCursor ? 'cursor-default' : null;
     return (
       <div
-        className={`bg-white shadow-figma font-semibold text-sm rounded border border-greyBorder relative py-2 px-4 ${cursor}`}
+        className={`bg-white shadow-figma font-semibold text-sm  rounded border border-greyBorder relative py-2 px-4 ${cursor}`}
       >
         {child}
       </div>
@@ -275,13 +286,26 @@ class PlayersPage extends React.Component<Props, State> {
     </div>
   );
 
+  renderInfoCell = (props: any) => {
+    const playerData = this.props.players.find(
+      (p: any) => p && props.original.id === p.id,
+    );
+
+    return (
+      <>
+        <button
+          className='w-6 h-6 justify-center mr-4 leading-none flex bg-background rounded-full text-s font-bold'
+          onClick={() => this.onInfoClick({ player: playerData })}
+        >
+          i
+        </button>
+      </>
+    );
+  };
+
   renderComparisonCell = (props: any) => {
     const addedToComparison = this.state.comparisonData.find(
       (player: any) => player.id === props.original.id,
-    );
-
-    const playerData = this.props.players.find(
-      (p: any) => p && props.original.id === p.id,
     );
 
     return (
@@ -291,12 +315,6 @@ class PlayersPage extends React.Component<Props, State> {
           onClick={() => this.onComparisonAdd(props.original.id, props.original.club_id)}
         >
           {addedToComparison ? <FaTimes /> : <FaPlus />}
-        </button>
-        <button
-          className='w-6 h-6 justify-center mr-4 leading-none flex bg-background rounded-full text-s font-bold'
-          onClick={() => this.onInfoClick({ player: playerData })}
-        >
-          i
         </button>
       </>
     );
@@ -319,7 +337,7 @@ class PlayersPage extends React.Component<Props, State> {
 
   renderNameCell = (props) => (
     <div
-      className='mr-4 font-semibold hover:text-secondary2 cursor-pointer truncate'
+      className='mr-4 w-full text-center truncate font-semibold hover:text-secondary2 cursor-pointer'
       role='presentation'
       onClick={() => this.setPlayerHighlight(props.original.id)}
     >
