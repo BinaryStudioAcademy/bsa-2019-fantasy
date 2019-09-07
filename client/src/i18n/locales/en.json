@@ -344,7 +344,10 @@
       "pitch": "Pitch View",
       "list": "List View"
     },
-    "submit": "Make transfers"
+    "submit": "Make transfers",
+    "freeTransfers": "Free Transfers",
+    "score": "Score",
+    "money": "Money"
   },
 
   "TransfersModal": {
