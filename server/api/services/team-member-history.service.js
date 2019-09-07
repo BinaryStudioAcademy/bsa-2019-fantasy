@@ -19,10 +19,15 @@ export const getPlayerHistoryByGameweekId = async (id, gameweekNumber) => {
       .getByGameweekId(id)
       .map((el) => el.get({ plain: true }))
       .map(async (item) => {
-        const { player_score } = await playerMatchRepository.getByIdWithGamesConstraints(
+        const playerStats = await playerMatchRepository.getByIdWithGamesConstraints(
           item.player_id,
           gameIds,
         );
+        let player_score = 0;
+        if (playerStats) {
+          // eslint-disable-next-line prefer-destructuring
+          player_score = playerStats.player_score;
+        }
         result.push({
           ...item,
           player_stats: {
