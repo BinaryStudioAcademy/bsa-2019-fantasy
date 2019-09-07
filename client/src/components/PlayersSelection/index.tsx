@@ -112,9 +112,8 @@ const PlayersSelection = ({
     loadPlayersAction({ ...query });
   };
   const onMaxPriceChange = (item: any) => {
-    setFilterSelect(intialFilterState);
     setMaxPriceSelect(item);
-    setQuery({ ...query, position: undefined, max_price: item.value });
+    setQuery({ ...query, max_price: item.value });
     loadPlayersAction({ ...query });
   };
 
