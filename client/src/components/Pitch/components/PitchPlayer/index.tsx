@@ -57,8 +57,7 @@ const PitchPlayer = ({
       const isHome = player.upcomingFixture.isHome ? '(H)' : '(A)';
       return (
         <p>
-          {player.upcomingFixture.fixture}{' '}
-          {moment(player.upcomingFixture.start).calendar()} {isHome}
+          {player.upcomingFixture.fixture} {isHome}
         </p>
       );
     }
