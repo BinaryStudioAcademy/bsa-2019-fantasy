@@ -80,9 +80,6 @@ const Transfers = () => {
       />
 
       <div className={`${header.jumbotron} ${header.paper} mb-12 rounded pt-12`}>
-        <div className={`${header.sub} ${header.title} mb-4 flex items-center`}>
-          {t('Transfers.title.sub')}
-        </div>
         <h2 className={`${header.title} text-secondary mb-6`}>
           {t('Transfers.title.main')}
         </h2>
