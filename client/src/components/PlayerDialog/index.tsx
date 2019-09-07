@@ -81,7 +81,7 @@ const PlayerDialog = ({ playerDialogData, player, onDismiss, loading, tab }: Pro
         <div
           key={i + string}
           className={classNames(
-            'bg-gray-400 w-1/12',
+            ' bg-gray-400 w-1/12  p-1',
             {
               'w-4/12': string === 'Opponent',
             },
@@ -163,8 +163,10 @@ const PlayerDialog = ({ playerDialogData, player, onDismiss, loading, tab }: Pro
       <div>
         <h3 className='text-lg font-medium'>{t('PlayerDialog.thisSeason')}</h3>
         <div className='overflow-y-auto' style={{ width: '100%', maxHeight: '300px' }}>
-          <div className='flex text-sm mt-4'>{renderHistoryHeader(historyRows[0])}</div>
-          {renderHistoryRows(historyRows)}
+          <div className='flex w-1/3 fixed text-sm '>
+            {renderHistoryHeader(historyRows[0])}
+          </div>
+          <div className='mt-8'>{renderHistoryRows(historyRows)}</div>
         </div>
       </div>
     );
@@ -178,11 +180,12 @@ const PlayerDialog = ({ playerDialogData, player, onDismiss, loading, tab }: Pro
         className='self-center overflow-y-auto'
         style={{ width: '100%', maxHeight: '300px' }}
       >
-        <div className='flex'>
-          <div className='w-7/12 bg-gray-400'>{t('PlayerDialog.date')}</div>
-          <div className='w-2/12 bg-gray-400'>{t('PlayerDialog.round')}</div>
-          <div className='w-3/12 bg-gray-400'>{t('PlayerDialog.opponent')}</div>
+        <div className='flex fixed w-1/3 '>
+          <div className='w-7/12 bg-gray-400 p-1'>{t('PlayerDialog.date')}</div>
+          <div className='w-2/12 bg-gray-400 p-1'>{t('PlayerDialog.round')}</div>
+          <div className='w-3/12 bg-gray-400 p-1'>{t('PlayerDialog.opponent')}</div>
         </div>
+        <div className='mt-8'></div>
         {fixtures.map((fixture, i) => (
           <div key={fixture.start} style={cellStyle} className='flex text-sm'>
             <div className='w-7/12'>{fixture.start}</div>
