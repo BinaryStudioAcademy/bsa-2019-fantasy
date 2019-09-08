@@ -18,6 +18,7 @@ import TeamSelection from 'components/TeamSelection';
 
 import header from 'styles/header.module.scss';
 import { GameweekHistoryType } from 'types/gameweekHistory.type';
+import { feedback } from 'react-feedbacker';
 
 const Transfers = () => {
   useEffect(() => {
@@ -57,14 +58,27 @@ const Transfers = () => {
     isNewPlayer,
   ) => {
     if (target) {
-      const in_player_id = player.player_stats.id;
-      const out_player_id = target.player_stats.id;
+      const newTransfer = {
+        in_player_id: player.player_stats.id,
+        out_player_id: target.player_stats.id,
+        immer_reverse,
+      };
 
-      dispatch(
-        isNewPlayer
-          ? addTransfer({ in_player_id, out_player_id, immer_reverse })
-          : modifyTransfer({ in_player_id, out_player_id, immer_reverse }),
-      );
+      const playerTeamMembersAmount = pitchPlayers.filter(
+        ({ item }) => item && item.player_stats.club_id === player.player_stats.club_id,
+      ).length;
+
+      if (
+        playerTeamMembersAmount < 3 ||
+        target.player_stats.club_id === player.player_stats.club_id
+      ) {
+        dispatch(isNewPlayer ? addTransfer(newTransfer) : modifyTransfer(newTransfer));
+      } else {
+        return (newPlayers) => {
+          feedback.error('You cannot have more than 3 players from the same team!');
+          setPitch(applyPatches(newPlayers, immer_reverse));
+        };
+      }
     }
   };
 
