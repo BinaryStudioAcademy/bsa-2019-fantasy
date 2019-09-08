@@ -75,7 +75,7 @@ class PlayersPage extends React.Component<Props, State> {
   }
 
   onFetchData = async ({ page, pageSize, sorted }: any) => {
-    const defaultSort = { order_field: 'player_price', order_direction: 'DESC' };
+    const defaultSort = { order_field: 'player_score', order_direction: 'DESC' };
     const sort = sorted[0]
       ? { order_field: sorted[0].id, order_direction: sorted[0].desc ? 'DESC' : 'ASC' }
       : defaultSort;
@@ -144,8 +144,14 @@ class PlayersPage extends React.Component<Props, State> {
 
   setPlayerHighlight = (id: string) => {
     const player = this.props.players.find((player) => player && player.id === id);
+    let isPlayerOfTheWeek = false;
+    if (player) {
+      isPlayerOfTheWeek =
+        Math.max(...this.props.players.map((p) => p.player_score)) ===
+        player.player_score;
+    }
     this.setState({
-      playerHighlightData: player,
+      playerHighlightData: { ...player, isPlayerOfTheWeek },
       currentPlayer: player,
     });
     const scrollElement = document.querySelector('#root>.flex>.flex-1');
