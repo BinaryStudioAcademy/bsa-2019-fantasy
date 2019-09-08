@@ -121,7 +121,7 @@ const TransfersModal = ({
             <td />
             <td>{t('TransfersModal.table.total')}:</td>
             <td />
-            <td>{totalMoneyCost.toFixed(2)}</td>
+            <td>{(-totalMoneyCost).toFixed(2)}</td>
             <td>{totalCost} pts</td>
           </tr>
         </tbody>
