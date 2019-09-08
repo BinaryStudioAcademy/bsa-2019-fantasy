@@ -215,9 +215,9 @@ export const addTransfer = (transfer: TransferLite): AsyncTransferAction => (
     out_player = { id: complementaryTransfer.out_player.id };
     immer_reverse = complementaryTransfer.immer_reverse;
 
-    if (!out_player) return;
+    dispatch(modifyTransferPlain({ ...complementaryTransfer, in_player }));
 
-    removeTransfer(complementaryTransfer)(dispatch, getRootState);
+    return;
   }
 
   const recomplementaryTransfer = transfers.find(
