@@ -3,6 +3,9 @@ import gameweekHistoryRepository from '../../data/repositories/gameweek-history.
 import playerMatchRepository from '../../data/repositories/player-match.repository';
 import gameweekRepository from '../../data/repositories/gameweek.repository';
 import gameRepository from '../../data/repositories/game.repository';
+import * as gameweekHistoryService from './gameweek-history.service';
+import * as userService from './user.service';
+import * as gameweekService from './gameweek.service';
 
 export const getPlayersByGameweekId = async (id) => {
   const result = await teamMemberHistoryRepository.getByGameweekId(id);
@@ -64,44 +67,58 @@ export const getBestPlayersOfTheGameweek = (players) => {
     .slice(0, 11);
 };
 export const postTeamMemberHistory = async (data, gameweekHistoryId, gameweekId) => {
-  const players = getPlayersByGameweekId(gameweekHistoryId);
-  if (players) {
-    await teamMemberHistoryRepository.deleteByGameweekId(gameweekHistoryId);
-  }
+  try {
+    const players = getPlayersByGameweekId(gameweekHistoryId);
+    if (players) {
+      await teamMemberHistoryRepository.deleteByGameweekId(gameweekHistoryId);
+    }
 
-  const result = await teamMemberHistoryRepository.createTeamMemberHistory(
-    data,
-    gameweekHistoryId,
-  );
-
-  const { number: gameweekNumber } = await gameweekRepository.getById(gameweekId);
-  const { number: currentGameweekNumber } = await gameweekRepository.getCurrentGameweek();
-
-  const games = await gameRepository.getByGameweekId(gameweekNumber);
-  const gameIds = games.map((el) => el.id);
-
-  if (gameweekNumber !== currentGameweekNumber) {
-    const pitchPlayers = await Promise.all(
-      data
-        .filter((p) => !p.is_on_bench)
-        .map((p) =>
-          playerMatchRepository.getByIdWithGamesConstraints(p.player_id, gameIds),
-        ),
+    const result = await teamMemberHistoryRepository.createTeamMemberHistory(
+      data,
+      gameweekHistoryId,
     );
-    const teamCaptain = data.find((p) => p.is_captain).player_id;
 
-    const reducer = (acc, curr) =>
-      curr.player_id === teamCaptain
-        ? acc + curr.player_score * 3
-        : acc + curr.player_score;
+    const { number: gameweekNumber } = await gameweekRepository.getById(gameweekId);
+    const { current, next } = await gameweekService.getCurrentGameweek();
 
-    const totalTeamScore = pitchPlayers.reduce(reducer, 0);
+    const mostRecentGameweek = current || next;
 
-    // update team_score in database
-    await gameweekHistoryRepository.setTeamScoreById(gameweekHistoryId, totalTeamScore);
+    const games = await gameRepository.getByGameweekId(gameweekNumber);
+    const gameIds = games.map((el) => el.id);
+
+    if (gameweekNumber !== mostRecentGameweek.number) {
+      const pitchPlayers = await Promise.all(
+        data
+          .filter((p) => !p.is_on_bench)
+          .map((p) =>
+            playerMatchRepository.getByIdWithGamesConstraints(p.player_id, gameIds),
+          ),
+      );
+      const teamCaptain = data.find((p) => p.is_captain).player_id;
+
+      const reducer = (acc, curr) =>
+        curr.player_id === teamCaptain
+          ? acc + curr.player_score * 3
+          : acc + curr.player_score;
+
+      const totalTeamScore = pitchPlayers.reduce(reducer, 0);
+
+      // update team_score in database
+      await gameweekHistoryRepository.setTeamScoreById(gameweekHistoryId, totalTeamScore);
+
+      const { user_id } = await gameweekHistoryRepository.getById(gameweekHistoryId);
+
+      // update user_score in database
+      gameweekHistoryService.getHistoriesByUserId(user_id).then((histories) => {
+        const totalUserScore = histories.reduce((acc, item) => acc + item.team_score, 0);
+        userService.updateById(user_id, { score: totalUserScore });
+      });
+    }
+
+    return result;
+  } catch (err) {
+    throw err;
   }
-
-  return result;
 };
 
 export const updateTeamMember = (id, data) =>
