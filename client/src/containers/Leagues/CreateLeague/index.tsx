@@ -101,18 +101,20 @@ const CreateLeague = ({
 
   return (
     <div className={styles['create-league']}>
-      <div className={cn(header.jumbotron, header.paper, 'mb-12', 'rounded')}>
-        <div className={cn(header['jumbotron-content'], 'mt-12')}>
-          <h2 className={cn(header.title, 'text-secondary')}>
-            <div className={cn(header.sub, header.title, 'mb-4', 'flex', 'items-center')}>
-              <FaStar />
-              {t('LeaguesPage.createLeague.title.sub')}
-            </div>
-            {t('LeaguesPage.createLeague.title.main')}
-          </h2>
-        </div>
-      </div>
       <div className={header.paper}>
+        <div className={cn(header.jumbotron, 'mb-32')}>
+          <div className={cn(header['jumbotron-content'], 'mt-12')}>
+            <h2 className={cn(header.title, 'text-secondary')}>
+              <div
+                className={cn(header.sub, header.title, 'mb-4', 'flex', 'items-center')}
+              >
+                <FaStar />
+                {t('LeaguesPage.createLeague.title.sub')}
+              </div>
+              {t('LeaguesPage.createLeague.title.main')}
+            </h2>
+          </div>
+        </div>
         <form className='w-full max-w-lg' onSubmit={handleSubmit}>
           <div className='flex flex-wrap -mx-3 mb-6'>
             <div className='w-full px-3'>
