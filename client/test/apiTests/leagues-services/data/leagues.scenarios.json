@@ -31,7 +31,7 @@
             "code": "league1",
             "private": false,
             "status": 400,
-            "message": "Invalid League Code provided"
+            "message": "You have already joined this league"
         },
         {
             "testCaseName": "should not join private league, invalid code format",
@@ -55,15 +55,16 @@
     ],
     "leaveLeagueScenarios":[
         {
-            "testCaseName": "should leave a league",
+            "testCaseName": "should leave a public league",
             "name": "league1",
             "message": "Successfully left a league",
             "status": 200
         },
         {
-            "testCaseName": "creator shouldn't leave league",
-            "name": "league2",
-            "status": 400
+            "testCaseName": "should leave a rivate league",
+            "name": "aaaaa",
+            "message": "Successfully left a league",
+            "status": 200
         }
     ]
 }
