@@ -23,7 +23,6 @@ import { Club } from 'types/club.type';
 
 import { FaPlus, FaTimes } from 'react-icons/fa';
 import { Option } from 'react-dropdown';
-import { any } from 'prop-types';
 
 type Props = {
   players: PlayerType[];
@@ -44,6 +43,9 @@ type State = {
   comparisonData: any;
   currentPlayer?: PlayerType;
   searchBarText: string;
+  rowEdit: number | null;
+  selectedRowIndex: number[];
+  selectionChanged: boolean;
   searchClub: string;
   searchPosition: string;
   redirect: boolean;
@@ -57,6 +59,9 @@ class PlayersPage extends React.Component<Props, State> {
     playerHighlightData: {},
     comparisonData: [],
     searchBarText: '',
+    rowEdit: null,
+    selectedRowIndex: [],
+    selectionChanged: false,
     redirect: false,
     searchClub: '',
     searchPosition: '',
@@ -65,13 +70,12 @@ class PlayersPage extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    console.log(props);
     this.table = React.createRef();
     this.onFetchData = this.onFetchData.bind(this);
   }
 
   onFetchData = async ({ page, pageSize, sorted }: any) => {
-    const defaultSort = { order_field: 'player_price', order_direction: 'DESC' };
+    const defaultSort = { order_field: 'player_score', order_direction: 'DESC' };
     const sort = sorted[0]
       ? { order_field: sorted[0].id, order_direction: sorted[0].desc ? 'DESC' : 'ASC' }
       : defaultSort;
@@ -140,8 +144,14 @@ class PlayersPage extends React.Component<Props, State> {
 
   setPlayerHighlight = (id: string) => {
     const player = this.props.players.find((player) => player && player.id === id);
+    let isPlayerOfTheWeek = false;
+    if (player) {
+      isPlayerOfTheWeek =
+        Math.max(...this.props.players.map((p) => p.player_score)) ===
+        player.player_score;
+    }
     this.setState({
-      playerHighlightData: player,
+      playerHighlightData: { ...player, isPlayerOfTheWeek },
       currentPlayer: player,
     });
     const scrollElement = document.querySelector('#root>.flex>.flex-1');
@@ -213,40 +223,51 @@ class PlayersPage extends React.Component<Props, State> {
     {
       Header: (props) => this.renderHeader(this.props.t('Players.clubLogo'), props),
       accessor: 'club_id',
-      className: 'flex justify-center bg-white rounded-l',
-      style: { marginLeft: '5px' },
+      className: 'flex justify-center items-center rounded-l',
+      headerClassName: 'text-center',
+      minWidth: 50,
       Cell: (props: any) => this.renderClubImageCell(props),
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.name'), props),
       accessor: 'first_name',
-      className: 'flex items-center bg-white',
+      className: 'flex flex-col items-center justify-center',
       Cell: (props: any) => this.renderNameCell(props),
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.price'), props),
       accessor: 'player_price',
-      className: 'flex items-center bg-white',
+      className: 'flex flex-col items-center justify-center ',
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.score'), props),
       accessor: 'player_score',
-      className: 'flex items-center bg-white',
+      className: 'flex flex-col items-center justify-center ',
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.position'), props),
       accessor: 'position',
-      className: 'flex items-center bg-white',
+      className: 'flex flex-col items-center justify-center',
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.club'), props),
       accessor: 'club_id',
-      className: 'flex items-center bg-white',
+      className: 'flex flex-col items-center justify-center',
       Cell: (props: any) => this.renderClubCell(props),
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.info'), props),
-      className: 'flex items-center justify-end bg-white rounded-r',
+      className: 'flex items-center justify-center  rounded-r',
+      accessor: 'info',
+      minWidth: 50,
+      Cell: (props: any) => this.renderInfoCell(props),
+    },
+    {
+      Header: (props) => this.renderHeader(this.props.t('Players.compare'), props),
+      className: 'flex items-center justify-center   rounded-r',
+      accessor: 'comparison',
+      headerClassName: 'text-center',
+      minWidth: 50,
       Cell: (props: any) => this.renderComparisonCell(props),
     },
   ];
@@ -262,7 +283,7 @@ class PlayersPage extends React.Component<Props, State> {
     const cursor = defaultCursor ? 'cursor-default' : null;
     return (
       <div
-        className={`bg-white shadow-figma font-semibold text-sm rounded border border-greyBorder relative py-2 px-4 ${cursor}`}
+        className={`bg-white shadow-figma font-semibold text-sm  rounded border border-greyBorder relative py-2 px-4 ${cursor}`}
       >
         {child}
       </div>
@@ -275,13 +296,26 @@ class PlayersPage extends React.Component<Props, State> {
     </div>
   );
 
+  renderInfoCell = (props: any) => {
+    const playerData = this.props.players.find(
+      (p: any) => p && props.original.id === p.id,
+    );
+
+    return (
+      <>
+        <button
+          className='w-6 h-6 justify-center mr-4 leading-none flex bg-background rounded-full text-s font-bold'
+          onClick={() => this.onInfoClick({ player: playerData })}
+        >
+          i
+        </button>
+      </>
+    );
+  };
+
   renderComparisonCell = (props: any) => {
     const addedToComparison = this.state.comparisonData.find(
       (player: any) => player.id === props.original.id,
-    );
-
-    const playerData = this.props.players.find(
-      (p: any) => p && props.original.id === p.id,
     );
 
     return (
@@ -291,12 +325,6 @@ class PlayersPage extends React.Component<Props, State> {
           onClick={() => this.onComparisonAdd(props.original.id, props.original.club_id)}
         >
           {addedToComparison ? <FaTimes /> : <FaPlus />}
-        </button>
-        <button
-          className='w-6 h-6 justify-center mr-4 leading-none flex bg-background rounded-full text-s font-bold'
-          onClick={() => this.onInfoClick({ player: playerData })}
-        >
-          i
         </button>
       </>
     );
@@ -319,7 +347,7 @@ class PlayersPage extends React.Component<Props, State> {
 
   renderNameCell = (props) => (
     <div
-      className='mr-4 font-semibold hover:text-secondary2 cursor-pointer truncate'
+      className='mr-4 w-full text-center truncate font-semibold hover:text-secondary2 cursor-pointer'
       role='presentation'
       onClick={() => this.setPlayerHighlight(props.original.id)}
     >
@@ -373,6 +401,36 @@ class PlayersPage extends React.Component<Props, State> {
         onFetchData={this.onFetchData}
         ThComponent={this.ThComponent}
         getTheadThProps={this.getTdProps}
+        getTrProps={(state, rowInfo) => {
+          if (rowInfo && rowInfo.row) {
+            return {
+              onClick: (e) => {
+                if (rowInfo.index !== this.state.rowEdit) {
+                  this.setState({
+                    rowEdit: rowInfo.index,
+                    selectedRowIndex: rowInfo.original,
+                    selectionChanged: this.state.selectionChanged ? false : true,
+                  });
+                } else {
+                  this.setState({
+                    rowEdit: null,
+                  });
+                }
+              },
+              style: {
+                background:
+                  (rowInfo.index === this.state.rowEdit &&
+                    this.state.comparisonData.length < 2) ||
+                  this.state.comparisonData.map((p) => p.id).includes(rowInfo.original.id)
+                    ? '#81e6d9'
+                    : 'white',
+                color: 'black',
+              },
+            };
+          } else {
+            return {};
+          }
+        }}
         {...translations}
       />
     );

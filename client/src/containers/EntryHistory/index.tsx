@@ -20,13 +20,9 @@ const EntryHistory = withRouter(({ history }) => {
     document.title = 'Entry History | Fantasy Football League';
   }, []);
 
-  // USERID OF ACTIVE SESSION (!)
-  // const userId = useSelector(
-  //   (state: RootState) => state.profile.user && state.profile.user.id,
-  // );
-
-  /* MOCKED USER ID */
-  const userId = '464b7d09-57ec-4dd1-adff-64d1f7de4d1f';
+  const userId = useSelector(
+    (state: RootState) => state.profile.user && state.profile.user.id,
+  );
 
   useEffect(() => {
     if (userId) {

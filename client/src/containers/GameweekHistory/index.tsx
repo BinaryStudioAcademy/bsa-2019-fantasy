@@ -54,7 +54,15 @@ const GameweekHistory = () => {
 
   const globalCurrentGameweek = useSelector(currentGameweekSelector);
 
-  const { pitchPlayers, setPitch } = usePitchPlayers(teamHistory);
+  const { pitchPlayers, setPitch, setPitchFromPlainPlayers } = usePitchPlayers(
+    teamHistory,
+  );
+
+  useEffect(() => {
+    if (teamHistory.length) {
+      setPitchFromPlainPlayers(teamHistory);
+    }
+  }, [teamHistory]);
 
   useEffect(() => {
     if (userId) {
