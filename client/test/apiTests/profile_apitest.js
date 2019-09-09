@@ -1,12 +1,13 @@
 const request = require('supertest');
 const expect = require('chai').expect;
-const profilePayload = require('./data/profile.payload');
+const profilePayload = require('./data/profile.payload.js');
+const profileModels = require('./data/profile.schema.js');
 const data = require('./data/profile.scenarios.json');
 
 const URL = 'http://ec2-18-224-246-75.us-east-2.compute.amazonaws.com:5001/api/profile/';
 
 describe('Profile services test suite', () => {
-  let payload, PATH;
+  let payload, PATH, actualProperties;
 
   data.updateTeamDetailsScenarios.forEach((scenario) => {
     payload = Object.assign(
@@ -17,8 +18,8 @@ describe('Profile services test suite', () => {
       ),
     );
     it(scenario.testCaseName, () => {
-      console.log('WORKS');
-      console.log('PAYLOAD', payload);
+      // console.log('WORKS');
+      // console.log('PAYLOAD', payload);
       // request(URL)
       //   .put(`/${userId}/${gameweekId}`)
       //   .send(payload)
@@ -33,16 +34,22 @@ describe('Profile services test suite', () => {
   it('should change favourite club', () => {
     const randomClubID = Math.floor(Math.random() * 20 + 1);
     payload = Object.assign({}, profilePayload.favouriteClubPayload(randomClubID));
+    actualProperties = profileModels.favouriteClub;
     PATH = 'favorite-club';
-    request(URL)
+
+    return request(URL)
       .post(PATH)
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
-      .auth('test1@test.com', '12345678')
       .send(payload)
       .expect(200)
       .then((res) => {
-        console.log('RESPONSE', res.message);
+        actualProperties.forEach((prop) => {
+          expect(response).to.have.property(prop);
+        });
+      })
+      .catch((e) => {
+        throw new Error(e);
       });
   });
 });
