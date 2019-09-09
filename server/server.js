@@ -81,7 +81,7 @@ if (process.env.PROTOCOL === 'https') {
   });
 
   // set up a server to redirect http to https
-  const httpServer = express.createServer();
+  const httpServer = express();
   httpServer.get('*', (req, res) => {
     res.redirect(`https://${req.headers.host}${req.url}`);
   });
