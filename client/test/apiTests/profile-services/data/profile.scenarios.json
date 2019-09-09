@@ -16,14 +16,15 @@
 
   "getUserSubscribedFixturesScenarios": [
     {
-      "testCaseName": "Should get user's subscribed Fixtures"
+      "testCaseName": "Should get user's subscribed Fixtures",
+      "status": 200
     }
   ],
 
   "updateUserFixtureSubscrScenarios": [
     {
       "testCaseName": "Should update user's Subscribed Fixtures",
-      "game_id": "68239367-cc7e-440f-b9b3-3da249ea79c5",
+      "game_id": "7af2db9a-82e3-4b32-903a-8b199abdebb2",
       "message": "Successfuly subscribed to notifications about the fixture"
     }
   ],
@@ -31,7 +32,7 @@
   "deleteUserFixtureSubscrScenarios": [
     {
       "testCaseName": "Should delete user's Subscribed Fixtures",
-      "game_id": "68239367-cc7e-440f-b9b3-3da249ea79c5",
+      "game_id": "7af2db9a-82e3-4b32-903a-8b199abdebb2",
       "message": "Subscribtion succesfully deleted"
     }
   ],
