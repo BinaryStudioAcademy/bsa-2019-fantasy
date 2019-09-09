@@ -79,16 +79,18 @@ if (process.env.PROTOCOL === 'https') {
     // eslint-disable-next-line no-console
     console.log(`HTTPS Server running on port ${process.env.APP_PORT}`);
   });
+
+  // set up a server to redirect http to https
+  const httpServer = express.createServer();
+  httpServer.get('*', (req, res) => {
+    res.redirect(`https://${req.headers.host}${req.url}`);
+  });
+  httpServer.listen(8080);
 } else {
   app.listen(process.env.APP_PORT, () => {
     // eslint-disable-next-line no-console
     console.log(`HTTP Server running on port ${process.env.APP_PORT}`);
   });
 }
-
-// app.listen(process.env.APP_PORT, () => {
-//   // eslint-disable-next-line no-console
-//   console.log(`Server listening on port ${process.env.APP_PORT}!`);
-// });
 
 socketServer.listen(process.env.SOCKET_PORT);
