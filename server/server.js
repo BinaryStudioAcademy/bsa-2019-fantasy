@@ -5,6 +5,7 @@ import express from 'express';
 import path from 'path';
 import passport from 'passport';
 import http from 'http';
+import https from 'https';
 import socketIO from 'socket.io';
 import socketIOClient from 'socket.io-client';
 
@@ -61,9 +62,33 @@ app.get('*', (req, res) => {
 });
 
 app.use(errorHandlerMiddleware);
-app.listen(process.env.APP_PORT, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Server listening on port ${process.env.APP_PORT}!`);
-});
+
+if (process.env.PROTOCOL === 'https') {
+  // Certificate
+  const privateKey = fs.readFileSync(`${process.env.CERT_PATH}privkey.pem`, 'utf8');
+  const certificate = fs.readFileSync(`${process.env.CERT_PATH}cert.pem`, 'utf8');
+  const ca = fs.readFileSync(`${process.env.CERT_PATH}chain.pem`, 'utf8');
+
+  const credentials = {
+    key: privateKey,
+    cert: certificate,
+    ca,
+  };
+  const httpsServer = https.createServer(credentials, app);
+  httpsServer.listen(process.env.APP_PORT, () => {
+    // eslint-disable-next-line no-console
+    console.log(`HTTPS Server running on port ${process.env.APP_PORT}`);
+  });
+} else {
+  app.listen(process.env.APP_PORT, () => {
+    // eslint-disable-next-line no-console
+    console.log(`HTTP Server running on port ${process.env.APP_PORT}`);
+  });
+}
+
+// app.listen(process.env.APP_PORT, () => {
+//   // eslint-disable-next-line no-console
+//   console.log(`Server listening on port ${process.env.APP_PORT}!`);
+// });
 
 socketServer.listen(process.env.SOCKET_PORT);
