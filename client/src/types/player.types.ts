@@ -26,6 +26,7 @@ export type PlayerType = {
   gameweeks_stats?: any;
   transfers_in?: number;
   transfers_out?: number;
+  isPlayerOfTheWeek?: boolean;
 };
 
 export type PlayerFilter = {
