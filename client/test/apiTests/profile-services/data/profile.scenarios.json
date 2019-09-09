@@ -1,30 +1,141 @@
 {
+  "updateUserFavClubScenarios": [
+    {
+      "testCaseName": "Should update user favorite club",
+      "message": "Successfuly updated favorite club!"
+    }
+  ],
+
+  "updateUserSendMailTime": [
+    {
+      "testCaseName": "Should update user send mail time",
+      "sendmail_time": 6,
+      "message": "Your email preferences have been saved"
+    }
+  ],
+
+  "getUserSubscribedFixturesScenarios": [
+    {
+      "testCaseName": "Should get user's subscribed Fixtures"
+    }
+  ],
+
+  "updateUserFixtureSubscrScenarios": [
+    {
+      "testCaseName": "Should update user's Subscribed Fixtures",
+      "game_id": "68239367-cc7e-440f-b9b3-3da249ea79c5",
+      "message": "Successfuly subscribed to notifications about the fixture"
+    }
+  ],
+
+  "deleteUserFixtureSubscrScenarios": [
+    {
+      "testCaseName": "Should delete user's Subscribed Fixtures",
+      "game_id": "68239367-cc7e-440f-b9b3-3da249ea79c5",
+      "message": "Subscribtion succesfully deleted"
+    }
+  ],
+
   "updateTeamDetailsScenarios": [
     {
-      "testCaseName": "should update user team details",
+      "testCaseName": "Should update user team details",
       "userData": {
-        "team_name": "TeamName",
-        "money": 100
+        "team_name": "My team",
+        "money": 175
       },
-      "teamMemberData": {
-        "player_id": "53135",
-        "is_on_bench": true,
-        "is_captain": false,
-        "is_vice_captain": true
-      }
-    },
-    {
-      "testCaseName": "should not update user team details, input data with wrong types",
-      "userData": {
-        "team_name": "TeamName",
-        "money": "100"
-      },
-      "teamMemberData": {
-        "player_id": "53135",
-        "is_on_bench": "true",
-        "is_captain": false,
-        "is_vice_captain": true
-      }
-    }
+      "teamMemberData":[
+        {
+          "player_id":"11a48bf0-bbdd-46dd-ad3a-d0c13e0dcdd8",
+          "is_on_bench":true,
+          "is_captain":false,
+          "is_vice_captain":false
+        },
+        {
+          "player_id":"6f3dfd74-4266-47e3-ba40-a88dde27b0b9",
+          "is_on_bench":false,
+          "is_captain":true,
+          "is_vice_captain":false
+        },
+        {
+          "player_id":"db7e4e9d-42ab-401c-bd03-9f4f6324e16c",
+          "is_on_bench":false,
+          "is_captain":false,
+          "is_vice_captain":true
+        },
+        {
+          "player_id":"7bde63cc-d07e-420a-b930-cb42961957b1",
+          "is_on_bench":false,
+          "is_captain":false,
+          "is_vice_captain":false
+        },
+        {
+          "player_id":"f89aad61-d776-4868-8e87-b159307f1e3c",
+          "is_on_bench":true,
+          "is_captain":false,
+          "is_vice_captain":false
+        },
+        {
+          "player_id":"57b74e88-590a-4e49-83a7-fc6f604a5f17",
+          "is_on_bench":false,
+          "is_captain":false,
+          "is_vice_captain":false
+        },
+        {
+          "player_id":"4ac62bfe-50f2-4372-a438-03b2d7fb91d1",
+          "is_on_bench":false,
+          "is_captain":false,
+          "is_vice_captain":false
+        },
+        {
+          "player_id":"c4bff42f-18f9-49d8-8a1f-dc6fa976d025",
+          "is_on_bench":false,
+          "is_captain":false,
+          "is_vice_captain":false
+        },
+        {
+          "player_id":"7957a9c1-44ff-4a4b-a8dc-7d44235fef14",
+          "is_on_bench":true,
+          "is_captain":false,
+          "is_vice_captain":false
+        },
+        {
+          "player_id":"0d2b7489-a6e4-4a42-aa32-6a77df78ff8b",
+          "is_on_bench":false,
+          "is_captain":false,
+          "is_vice_captain":false
+        },
+        {
+          "player_id":"86d5cafb-22c5-49b8-b728-e9ab1519a840",
+          "is_on_bench":false,
+          "is_captain":false,
+          "is_vice_captain":false
+        },
+        {
+          "player_id":"6a87d466-8d56-4651-a504-1394110af876",
+          "is_on_bench":false,
+          "is_captain":false,
+          "is_vice_captain":false
+        },
+        {
+          "player_id":"ad8f09fd-3e66-4b8c-90f3-4894573f4b59",
+          "is_on_bench":true,
+          "is_captain":false,
+          "is_vice_captain":false
+        },
+        {
+          "player_id":"87d71466-968c-469d-8b50-cedd8b94f235",
+          "is_on_bench":false,
+          "is_captain":false,
+          "is_vice_captain":false
+        },
+        {
+          "player_id":"c54b342a-810c-4bde-a25e-555d049d0fcb",
+          "is_on_bench":false,
+          "is_captain":false,
+          "is_vice_captain":false
+        }
+      ],
+      "message": "Successfully saved!"
+    }   
   ]
 }
