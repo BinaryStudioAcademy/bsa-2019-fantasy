@@ -24,7 +24,7 @@ import './config/passport.config';
 dotenv.config();
 
 const app = express();
-let socketServer;
+let io;
 
 if (process.env.PROTOCOL === 'https') {
   // Certificate
@@ -49,19 +49,15 @@ if (process.env.PROTOCOL === 'https') {
   });
   httpServer.listen(8080);
 
-  // HTTPS socket connection
-  socketServer = https.Server(app);
+  io = socketIO(httpsServer);
 } else {
-  app.listen(process.env.APP_PORT, () => {
+  const httpServer = http.createServer(app);
+  httpServer.listen(process.env.APP_PORT, () => {
     // eslint-disable-next-line no-console
     console.log(`HTTP Server running on port ${process.env.APP_PORT}`);
   });
-
-  // HTTP socket connection
-  socketServer = http.Server(app);
+  io = socketIO(httpServer);
 }
-
-const io = socketIO(socketServer);
 
 const fakerSocket = socketIOClient(`http://localhost:${process.env.FAKER_SOCKET_PORT}`, {
   reconnection: true,
@@ -98,4 +94,4 @@ app.get('*', (req, res) => {
 });
 
 app.use(errorHandlerMiddleware);
-socketServer.listen(process.env.SOCKET_PORT);
+//socketServer.listen(process.env.SOCKET_PORT);
