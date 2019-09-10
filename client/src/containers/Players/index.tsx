@@ -75,6 +75,9 @@ class PlayersPage extends React.Component<Props, State> {
   }
 
   onFetchData = async ({ page, pageSize, sorted }: any) => {
+    this.setState({
+      rowSelect: null,
+    });
     const defaultSort = { order_field: 'player_score', order_direction: 'DESC' };
     const sort = sorted[0]
       ? { order_field: sorted[0].id, order_direction: sorted[0].desc ? 'DESC' : 'ASC' }
