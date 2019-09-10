@@ -11,7 +11,9 @@ const format = (number) => {
 };
 
 export const SingleNumber = ({ children, className = 'bg-red-500' }) => (
-  <div className={`text-white text-5xl font-semibold rounded py-2 px-4 m-1 ${className}`}>
+  <div
+    className={`text-white text-6xl font-semibold rounded px-3 m-1 shadow-figma ${className}`}
+  >
     {children}
   </div>
 );
@@ -27,28 +29,30 @@ export const Unit = ({ children, subtitle, className = 'bg-red-500' }) => {
           </SingleNumber>
         ))}
       </div>
-      <p className='text-center'>{subtitle}</p>
+      <p className='text-center font-bold text-white'>{subtitle}</p>
     </div>
   );
 };
 
-export const Countdown = () => {
-  const time = moment(1568111642050).add(1, 'day');
+export const Countdown = ({ time }) => {
   const [left, setLeft] = useState(getLeft(time));
   useInterval(() => setLeft(getLeft(time)), 1000);
 
   return (
-    <div className='flex'>
-      <Unit className='bg-orange-500' subtitle='days'>
+    <div
+      className='flex mt-6 mb-auto rounded'
+      style={{ backgroundColor: 'rgba(18, 39, 55, 0.67)' }}
+    >
+      <Unit className='bg-orange-600' subtitle='days'>
         {left.days()}
       </Unit>
-      <Unit className='bg-green-500' subtitle='hours'>
+      <Unit className='bg-green-600' subtitle='hours'>
         {left.hours()}
       </Unit>
-      <Unit className='bg-red-500' subtitle='minutes'>
+      <Unit className='bg-red-600' subtitle='minutes'>
         {left.minutes()}
       </Unit>
-      <Unit className='bg-purple-500' subtitle='seconds'>
+      <Unit className='bg-purple-600' subtitle='seconds'>
         {left.seconds()}
       </Unit>
     </div>

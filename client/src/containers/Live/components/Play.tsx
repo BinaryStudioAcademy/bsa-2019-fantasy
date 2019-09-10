@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { CommentaryList } from './CommentaryList';
-import { Field } from './Field';
+
 import { SimulateModal } from './SimulateModal';
 import { RescheduleModal } from './RescheduleModal';
 import { Sound } from './Sound';
 
 import { FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
-import { useTranslation } from 'react-i18next';
-import { Countdown } from './Countdown';
 
 export const Play = ({
   gameStarted,
@@ -102,14 +101,6 @@ export const Play = ({
             <p>{t('LIVE.play.yellowCards')}</p>
             <p>{t('LIVE.play.redCards')}</p>
           </div>
-        </div>
-      </div>
-      <div className='relative flex justify-center'>
-        <div className='w-4/5'>
-          <Field currentEvent={currentEvent} />
-        </div>
-        <div className='absolute inset-0 flex justify-center items-center'>
-          <Countdown />
         </div>
       </div>
 

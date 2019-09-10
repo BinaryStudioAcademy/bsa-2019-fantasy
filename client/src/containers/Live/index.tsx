@@ -11,6 +11,7 @@ import { Fixture } from './components/Fixture';
 import { LastGamesList } from './components/LastGamesList';
 import { EventBar } from './components/EventBar';
 import { Countdown } from './components/Countdown';
+import { Field } from './components/Field';
 
 import { loadCurrentGame, loadLastGames, addLiveEvent } from './actions';
 import { createIterator } from './helpers/iterator';
@@ -357,7 +358,22 @@ const Live = () => {
           stopSimulation={stopSimulation}
           status={{ homeClub, awayClub, score }}
         />
-        <div className='mt-12'>{renderProgress(events)}</div>
+        <div className='relative -mt-12'>
+          <div className='flex justify-center'>
+            <div className='w-4/5'>
+              <Field currentEvent={currentEvent} />
+            </div>
+          </div>
+          <div className='mt-12'>{renderProgress(events)}</div>
+          {!currentGame.gameStarted && !replayGame && (
+            <div
+              className='absolute inset-0 flex justify-center pt-16 z-10'
+              style={{ backgroundColor: 'rgba(255, 255, 255, 0.20)' }}
+            >
+              {nextGame && nextGame.start && <Countdown time={nextGame.start} />}
+            </div>
+          )}
+        </div>
       </div>
       <div className='bg-white text-secondary shadow-figma rounded-sm p-12'>
         <h3 className='font-bold text-3xl mb-4'>{t('LIVE.replayPreviousMatches')}</h3>
