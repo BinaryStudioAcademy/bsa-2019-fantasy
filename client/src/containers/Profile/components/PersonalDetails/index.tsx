@@ -153,11 +153,11 @@ const PersonalDetails = withRouter(({ history }) => {
 
   return (
     <form className='flex flex-col' onSubmit={onSubmit}>
-      <h2 className='text-5xl font-bold mb-12'>{t('Profile.personalDetails.title')}</h2>
+      <h2 className='text-5xl font-bold mb-8'>{t('Profile.personalDetails.title')}</h2>
 
-      <div className='flex justify-end'>
+      <div className='mb-8'>
         <img
-          style={{ height: 180, width: 180 }}
+          style={{ height: 150, width: 150 }}
           className='rounded-full mb-2 '
           src={generateImageSrc(user, imageLink)}
           alt='avatar'
