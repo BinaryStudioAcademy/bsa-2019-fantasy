@@ -48,9 +48,13 @@ export const usePitchPlayers = (players: GameweekHistoryType[] = []) => {
 
   const [pitchPlayers, setPitch] = useState<PitchPlayerType[]>([]);
 
+  const setPitchFromPlainPlayers = (plrs: typeof players) => {
+    setPitch(transformToPitchPlayers(plrs, clubs));
+  };
+
   useEffect(() => {
-    setPitch(transformToPitchPlayers(players, clubs));
+    setPitchFromPlainPlayers(players);
   }, [players.length]);
 
-  return { pitchPlayers, setPitch };
+  return { pitchPlayers, setPitch, setPitchFromPlainPlayers };
 };

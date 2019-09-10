@@ -75,8 +75,6 @@ const PlayersSelection = ({
 
   const [offset, setOffset] = useState(10);
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     setQuery({ ...query, offset });
   }, [offset]);
@@ -94,9 +92,8 @@ const PlayersSelection = ({
   }, [undisplayedPlayers]);
 
   const onSortChange = (item: any) => {
-    setFilterSelect(intialFilterState);
     setSortSelect(item);
-    setQuery({ ...query, position: undefined, order_field: item.value });
+    setQuery({ ...query, order_field: item.value });
     loadPlayersAction({ ...query });
   };
   const onFilterSelectChange = (item: any) => {
@@ -106,9 +103,9 @@ const PlayersSelection = ({
     loadPlayersAction({ ...query });
   };
   const onSearchChange = (item: any) => {
-    setFilterSelect(intialFilterState);
     setSearch(item);
-    setQuery({ ...query, position: undefined, search: item });
+    setQuery({ ...query, search: item });
+    setOffset(0);
     loadPlayersAction({ ...query });
   };
   const onMaxPriceChange = (item: any) => {
@@ -116,7 +113,7 @@ const PlayersSelection = ({
     setQuery({ ...query, max_price: item.value });
     loadPlayersAction({ ...query });
   };
-
+  
   const onClickOffset = (side: string) => {
     if (side === 'back') {
       if (offset >= 10) setOffset(offset - 10);

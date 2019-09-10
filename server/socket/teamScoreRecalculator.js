@@ -1,56 +1,53 @@
+/* eslint-disable no-loop-func */
+/* eslint-disable no-await-in-loop */
 /* eslint-disable no-console */
-import moment from 'moment';
-
-import userRepository from '../data/repositories/user.repository';
 import gameweekHistoryRepository from '../data/repositories/gameweek-history.repository';
-import teamMemberHistoryReposiory from '../data/repositories/team-member-history.repository';
 import gameweekRepository from '../data/repositories/gameweek.repository';
+import playerMatchRepository from '../data/repositories/player-match.repository';
+import gameRepository from '../data/repositories/game.repository';
 
 const recalculateTeamsScore = async () => {
-  const gameweeks = await gameweekRepository.getAll();
-  const currentGameweek = gameweeks.find((w) => {
-    const now = moment().add(2, 's');
-    return moment(w.start).isBefore(now) && moment(w.end).isAfter(now);
-  });
+  try {
+    const currentGameweek = await gameweekRepository.getCurrent();
+    if (!currentGameweek) return;
 
-  if (!currentGameweek) {
-    return;
-  }
-
-  const users = await userRepository.getAll();
-  users.map(async (user) => {
-    let score = 0;
-
-    const gameweekHistory = await gameweekHistoryRepository.getByUserGameweekId(
-      user.id,
+    const { number: gameweekNumber } = await gameweekRepository.getById(
       currentGameweek.id,
     );
-    if (!gameweekHistory) return;
+    const games = await gameRepository.getByGameweekId(gameweekNumber);
+    const gameIds = games.map((el) => el.id);
 
-    const teamMemberHistories = await teamMemberHistoryReposiory.getByGameweekId(
-      gameweekHistory.id,
+    const gameweekHistories = await gameweekHistoryRepository.getByGameweekId(
+      currentGameweek.id,
     );
 
-    [...teamMemberHistories].forEach(({ is_on_bench, is_captain, player_stats }) => {
-      if (!is_on_bench) {
-        if (is_captain) {
-          score += 2 * player_stats.player_score;
-        } else {
-          score += player_stats.player_score;
-        }
-      }
-    });
-    if (gameweekHistory.team_score !== score) {
-      const result = await gameweekHistoryRepository.setTeamScoreById(
-        gameweekHistory.id,
-        score,
+    for (let i = 0; i < gameweekHistories.length; i += 1) {
+      const historyId = gameweekHistories[i].id;
+      const teamHistory = gameweekHistories[i].team_member_histories;
+      const pitchPlayersRaw = await Promise.all(
+        teamHistory
+          .filter((p) => !p.is_on_bench)
+          .map((p) =>
+            playerMatchRepository.getByIdWithGamesConstraints(p.player_id, gameIds),
+          ),
       );
 
-      console.log(result);
-    } else {
-      console.log('team score have not been changed');
+      const teamCaptain = teamHistory.find((p) => p.is_captain).player_id;
+      const pitchPlayers = pitchPlayersRaw.filter((p) => p !== null);
+
+      const reducer = (acc, curr) =>
+        curr.player_id === teamCaptain
+          ? acc + curr.player_score * 3
+          : acc + curr.player_score;
+
+      const totalTeamScore = pitchPlayers.reduce(reducer, 0);
+
+      // update team_score in database
+      await gameweekHistoryRepository.setTeamScoreById(historyId, totalTeamScore);
     }
-  });
+  } catch (err) {
+    throw err;
+  }
 };
 
 export default recalculateTeamsScore;

@@ -134,13 +134,13 @@ const RegistrationForm = withRouter(({ history }) => {
         <div className='flex items-center justify-between flex-wrap'>
           <button
             type='submit'
-            className='break-all lg:w-6/12 md:w-full font-bold rounded py-1 text-center mr-2 mb-2 border border-transparent text-secondary bg-primary shadow uppercase'
+            className='truncate lg:w-7/12 md:w-full font-bold rounded py-1 text-center mr-2 mb-2 border border-transparent text-secondary bg-primary shadow uppercase'
           >
             {t('AuthForms.signup')}
           </button>
           <button
             type='button'
-            className='break-all lg:w-5/12 md:w-full opacity-50 hover:opacity-100 font-bold rounded py-1 text-center mb-2 border border-primary bg-transparent shadow uppercase'
+            className='break-all lg:w-4/12 md:w-full opacity-50 hover:opacity-100 font-bold rounded py-1 text-center mb-2 border border-primary bg-transparent shadow uppercase'
             onClick={() => history.push('/login')}
           >
             {t('AuthForms.login')}

@@ -1,3 +1,3 @@
-const getClientURL = () => `http://${process.env.CLIENT_HOST}:${process.env.CLIENT_PORT}`;
+const getClientURL = () => `${process.env.CLIENT_PROTOCOL}://${process.env.CLIENT_HOST}`;
 
 export default getClientURL;

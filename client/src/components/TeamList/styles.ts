@@ -6,7 +6,6 @@ export const Container = styled.table`
   position: relative;
   overflow-y: auto;
 
-  flex: 1 0;
   height: 100%;
   width: 100%;
 

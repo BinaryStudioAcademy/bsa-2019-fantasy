@@ -1,0 +1,70 @@
+{
+    "createLeagueScenarios": [
+        {
+            "testCaseName": "should create public league",
+            "private": false,
+            "start_from": 1
+        },
+        {
+            "testCaseName": "should create private league",
+            "private": true,
+            "start_from": 1
+        }
+    ],
+    "joinLeagueScenarios": [
+        {
+            "testCaseName": "should join public league",
+            "code": "league1",
+            "private": false,
+            "status": 200,
+            "message": "Successfully joined a league"
+        },
+        {
+            "testCaseName": "should join private league",
+            "code": "c1fbdf7f-84b8-469d-9218-d5bbe2709a60",
+            "private": true,
+            "status": 200,
+            "message": "Successfully joined a league"
+        },
+        {
+            "testCaseName": "should not join public league, which is already joined",
+            "code": "league1",
+            "private": false,
+            "status": 400,
+            "message": "You have already joined this league"
+        },
+        {
+            "testCaseName": "should not join private league, invalid code format",
+            "code": "xx",
+            "private": true,
+            "status": 500,
+            "message": "invalid input syntax for type uuid: \"xx\""
+        }
+    ],
+    "getInvitationCodeScenarios": [
+        {
+            "testCaseName": "should get invitation code",
+            "name": "jtfty"
+        }
+    ],
+    "getLeagueDetailsScenarios": [
+        {
+            "testCaseName": "should get league details",
+            "name": "Overall"
+        }
+    ],
+    "leaveLeagueScenarios":[
+        {
+            "testCaseName": "should leave a public league",
+            "name": "league1",
+            "message": "Successfully left a league",
+            "status": 200
+        },
+        {
+            "testCaseName": "should leave a rivate league",
+            "name": "aaaaa",
+            "message": "Successfully left a league",
+            "status": 200
+        }
+    ]
+}

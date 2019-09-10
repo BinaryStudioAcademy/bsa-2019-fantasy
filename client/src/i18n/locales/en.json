@@ -155,6 +155,7 @@
       "currentRank": "Current Rank",
       "lastRank": "Last Rank"
     },
+    "noDataText": "No leagues created yet",
     "tables": {
       "private": "Private classic leagues",
       "public": "Public classic leagues",
@@ -395,6 +396,7 @@
     "info": "Info",
     "compare": "Compare",
     "compareQueue": "Comparison queue",
+    "compareAdd": "Add to comparison",
     "need": "need",
     "playerOfTheWeek": "Player of the week",
     "history": "History",

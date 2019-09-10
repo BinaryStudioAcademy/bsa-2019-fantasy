@@ -63,8 +63,8 @@ const TeamSelection = ({
   const [view, setView] = useState<'list' | 'pitch'>('pitch');
 
   const submitText = t('TransfersTeamSelection.submit').split(' ')[0];
-  const buttonText = (submit !== undefined) ? submit!.label.split(' ')[0] : '';
-  
+  const buttonText = submit !== undefined ? submit!.label.split(' ')[0] : '';
+
   const user = useSelector((state: RootState) => state.profile.user);
 
   const handlePlayerDrop = useCallback(
@@ -217,18 +217,20 @@ const TeamSelection = ({
                 <FaListUl />
               </S.Toggle>
             </S.ViewToggles>
-            {(buttonText === submitText) && (
+            {buttonText === submitText && (
               <S.TransfScoreMoney>
-                <tr>
-                  <td>{ t('TransfersTeamSelection.freeTransfers') }</td>
-                  <td>{ t('TransfersTeamSelection.score') }</td>
-                  <td>{ t('TransfersTeamSelection.money') }</td>
-                </tr>
-                <tr>
-                  <td>{ user!.free_transfers }</td>
-                  <td>{ user!.score }</td>
-                  <td>{ user!.money }</td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td>{t('TransfersTeamSelection.freeTransfers')}</td>
+                    <td>{t('TransfersTeamSelection.score')}</td>
+                    <td>{t('TransfersTeamSelection.money')}</td>
+                  </tr>
+                  <tr>
+                    <td>{user!.free_transfers}</td>
+                    <td>{user!.score}</td>
+                    <td>{user!.money}</td>
+                  </tr>
+                </tbody>
               </S.TransfScoreMoney>
             )}
             {submit && (
