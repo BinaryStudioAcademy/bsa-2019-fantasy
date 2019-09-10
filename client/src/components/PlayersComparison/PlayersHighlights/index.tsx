@@ -338,9 +338,9 @@ const PlayersHighlights = (props: Props) => {
 
           <div className='player-points'>
             <div className='player-points-logo flex justify-between mb-4'>
-              <div className='rectangle-1 w-10 h-1 mr-1 rounded-sm bg-primary' />{' '}
-              <div className='rectangle-2 w-10 h-1 mr-1 rounded-sm bg-teal-200' />
-              <div className='rectangle-3 w-10 h-1 mr-1 rounded-sm bg-teal-100' />
+              <div className='rectangle-1 w-10 h-1 mr-1 rounded-sm bg-pink-500' />{' '}
+              <div className='rectangle-2 w-10 h-1 mr-1 rounded-sm bg-pink-200' />
+              <div className='rectangle-3 w-10 h-1 mr-1 rounded-sm bg-pink-100' />
             </div>
             <div className='player-points-counter font-bold mb-8 uppercase'>
               {secondPlayer.player_price + ' pts'}
