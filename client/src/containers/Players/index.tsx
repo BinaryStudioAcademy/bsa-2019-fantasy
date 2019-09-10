@@ -223,8 +223,7 @@ class PlayersPage extends React.Component<Props, State> {
     {
       Header: (props) => this.renderHeader(this.props.t('Players.clubLogo'), props),
       accessor: 'club_id',
-      className: 'flex justify-center items-center rounded-l',
-      headerClassName: 'text-center',
+      className: 'flex flex-col justify-center items-center rounded-l',
       minWidth: 50,
       Cell: (props: any) => this.renderClubImageCell(props),
     },
@@ -257,16 +256,15 @@ class PlayersPage extends React.Component<Props, State> {
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.info'), props),
-      className: 'flex items-center justify-center  rounded-r',
+      className: 'flex flex-col items-center justify-center  rounded-r',
       accessor: 'info',
       minWidth: 50,
       Cell: (props: any) => this.renderInfoCell(props),
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.compare'), props),
-      className: 'flex items-center justify-center   rounded-r',
+      className: 'flex flex-col items-center justify-center   rounded-r',
       accessor: 'comparison',
-      headerClassName: 'text-center',
       minWidth: 50,
       Cell: (props: any) => this.renderComparisonCell(props),
     },
