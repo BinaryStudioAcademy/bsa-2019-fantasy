@@ -4,6 +4,7 @@ const profilePayload = require('./data/profile.payload');
 const profileModels = require('./data/profile.schema');
 const data = require('./data/profile.scenarios.json');
 const args = require('../../specs/testData.json');
+const gwIDs = require('../utils/get-gameweeksID');
 
 const appUrl = args.appUrl;
 const URL = 'https://fantasy-football.tk/api/profile/';
@@ -34,7 +35,7 @@ describe('Profile services test suite', () => {
 
   //Update team details
   data.updateTeamDetailsScenarios.forEach((scenario) => {
-    it(scenario.testCaseName, () => {
+    it(scenario.testCaseName, async () => {
       payload = Object.assign(
         {},
         profilePayload.updateUserTeamDetailsPayload(
@@ -43,8 +44,9 @@ describe('Profile services test suite', () => {
           scenario.teamMemberData,
         ),
       );
-      //const rndGameweek = Math.floor(Math.random() * 37) + 1;
-      path = `${userId}/${scenario.gameweekId}`;
+      const gameweekIds = await gwIDs.gameweeksID(`${appUrl}api`, token);
+
+      path = `${userId}/${gameweekIds[4]}`;
       return request(URL)
         .put(path)
         .set('Authorization', `Bearer ${token}`)
@@ -162,7 +164,7 @@ describe('Profile services test suite', () => {
       return request(URL)
         .delete(path)
         .set('Authorization', `Bearer ${token}`)
-        .send(payload) //забыла пйэлоад передать
+        .send(payload)
         .expect(200)
         .then((response) => {
           expect(response.body.message).to.be.equal(scenario.message);
