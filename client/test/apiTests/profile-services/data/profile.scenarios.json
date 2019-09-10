@@ -24,7 +24,7 @@
   "updateUserFixtureSubscrScenarios": [
     {
       "testCaseName": "Should update user's Subscribed Fixtures",
-      "game_id": "7af2db9a-82e3-4b32-903a-8b199abdebb2",
+      "game_id": "0d9e9593-26d3-4a80-8537-71cbd4260b28",
       "message": "Successfuly subscribed to notifications about the fixture"
     }
   ],
@@ -32,7 +32,7 @@
   "deleteUserFixtureSubscrScenarios": [
     {
       "testCaseName": "Should delete user's Subscribed Fixtures",
-      "game_id": "7af2db9a-82e3-4b32-903a-8b199abdebb2",
+      "game_id": "0d9e9593-26d3-4a80-8537-71cbd4260b28",
       "message": "Subscribtion succesfully deleted"
     }
   ],
@@ -44,99 +44,99 @@
         "team_name": "My team",
         "money": 175
       },
-      "teamMemberData":[
+      "teamMemberData": [
         {
-          "player_id":"11a48bf0-bbdd-46dd-ad3a-d0c13e0dcdd8",
-          "is_on_bench":true,
-          "is_captain":false,
-          "is_vice_captain":false
+          "player_id": "696f5480-7ab3-4b90-906e-9afd702b20f0",
+          "is_on_bench": true,
+          "is_captain": false,
+          "is_vice_captain": false
         },
         {
-          "player_id":"6f3dfd74-4266-47e3-ba40-a88dde27b0b9",
-          "is_on_bench":false,
-          "is_captain":true,
-          "is_vice_captain":false
+          "player_id": "bedb977a-31b8-40c5-94ed-a7bf4f45feaa",
+          "is_on_bench": false,
+          "is_captain": true,
+          "is_vice_captain": false
         },
         {
-          "player_id":"db7e4e9d-42ab-401c-bd03-9f4f6324e16c",
-          "is_on_bench":false,
-          "is_captain":false,
-          "is_vice_captain":true
+          "player_id": "3de059f9-1bdd-4b87-a56d-7f977a683cf3",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": true
         },
         {
-          "player_id":"7bde63cc-d07e-420a-b930-cb42961957b1",
-          "is_on_bench":false,
-          "is_captain":false,
-          "is_vice_captain":false
+          "player_id": "4fb0d5b7-364a-4429-80a0-32ae1cc6d114",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": false
         },
         {
-          "player_id":"f89aad61-d776-4868-8e87-b159307f1e3c",
-          "is_on_bench":true,
-          "is_captain":false,
-          "is_vice_captain":false
+          "player_id": "7157efef-9e77-4f0e-9a9e-df99f6bfa574",
+          "is_on_bench": true,
+          "is_captain": false,
+          "is_vice_captain": false
         },
         {
-          "player_id":"57b74e88-590a-4e49-83a7-fc6f604a5f17",
-          "is_on_bench":false,
-          "is_captain":false,
-          "is_vice_captain":false
+          "player_id": "dad7e7d2-7645-4e3b-8270-966fce931ce4",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": false
         },
         {
-          "player_id":"4ac62bfe-50f2-4372-a438-03b2d7fb91d1",
-          "is_on_bench":false,
-          "is_captain":false,
-          "is_vice_captain":false
+          "player_id": "f23784c6-1a20-4be2-ac03-31aab7df5a72",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": false
         },
         {
-          "player_id":"c4bff42f-18f9-49d8-8a1f-dc6fa976d025",
-          "is_on_bench":false,
-          "is_captain":false,
-          "is_vice_captain":false
+          "player_id": "3eb4f023-6b0c-4aba-ba81-1836395e9e8e",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": false
         },
         {
-          "player_id":"7957a9c1-44ff-4a4b-a8dc-7d44235fef14",
-          "is_on_bench":true,
-          "is_captain":false,
-          "is_vice_captain":false
+          "player_id": "eb7fdf9f-66e9-44a0-ae84-7a03f4612ac4",
+          "is_on_bench": true,
+          "is_captain": false,
+          "is_vice_captain": false
         },
         {
-          "player_id":"0d2b7489-a6e4-4a42-aa32-6a77df78ff8b",
-          "is_on_bench":false,
-          "is_captain":false,
-          "is_vice_captain":false
+          "player_id": "a7caa0bf-9dce-4fb5-b931-2e4a23d36e0c",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": false
         },
         {
-          "player_id":"86d5cafb-22c5-49b8-b728-e9ab1519a840",
-          "is_on_bench":false,
-          "is_captain":false,
-          "is_vice_captain":false
+          "player_id": "08e577ef-a79d-4464-bdb4-26ffb523aaaf",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": false
         },
         {
-          "player_id":"6a87d466-8d56-4651-a504-1394110af876",
-          "is_on_bench":false,
-          "is_captain":false,
-          "is_vice_captain":false
+          "player_id": "2a13cd2f-7590-4603-8d67-aac8c890e860",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": false
         },
         {
-          "player_id":"ad8f09fd-3e66-4b8c-90f3-4894573f4b59",
-          "is_on_bench":true,
-          "is_captain":false,
-          "is_vice_captain":false
+          "player_id": "0cb87909-a014-4df9-9931-40bf3cbdb35d",
+          "is_on_bench": true,
+          "is_captain": false,
+          "is_vice_captain": false
         },
         {
-          "player_id":"87d71466-968c-469d-8b50-cedd8b94f235",
-          "is_on_bench":false,
-          "is_captain":false,
-          "is_vice_captain":false
+          "player_id": "7b4f08fc-80fd-47b2-817b-0710dc779050",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": false
         },
         {
-          "player_id":"c54b342a-810c-4bde-a25e-555d049d0fcb",
-          "is_on_bench":false,
-          "is_captain":false,
-          "is_vice_captain":false
+          "player_id": "ee5b2eb9-ab01-43e8-b869-3639c70e1b49",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": false
         }
       ],
       "message": "Successfully saved!"
-    }   
+    }
   ]
 }
