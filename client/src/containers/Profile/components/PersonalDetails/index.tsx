@@ -12,7 +12,7 @@ import validator from 'validator';
 import { RootState } from 'store/types';
 
 import Spinner from 'components/Spinner';
-import { forgotPassword, resetPassword, setLanguage } from 'containers/Profile/actions';
+import { setLanguage } from 'containers/Profile/actions';
 import { addNotification } from 'components/Notifications/actions';
 import * as imageService from 'services/imageService';
 import Button from 'components/Button';

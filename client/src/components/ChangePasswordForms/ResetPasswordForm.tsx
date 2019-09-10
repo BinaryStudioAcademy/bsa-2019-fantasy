@@ -6,7 +6,6 @@ import { withTranslation } from 'react-i18next';
 import cn from 'classnames';
 import validator from 'validator';
 import { feedback } from 'react-feedbacker';
-import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/types';
 
 import { resetPassword, loadCurrentUser } from 'containers/Profile/actions';
@@ -64,8 +63,7 @@ class ResetPasswordForm extends Component<
         this.props.history.replace('/');
       }
       feedback.success('Successfully changed your password!');
-    } catch (err) {
-      console.log(err);
+    } catch {
       this.setState({ isLoading: false, isError: true, isSuccess: false });
       feedback.error('Could not change the password');
     }
