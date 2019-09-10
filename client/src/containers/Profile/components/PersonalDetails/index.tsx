@@ -35,9 +35,7 @@ export const usePersonalDetails = () => {
 
 const PersonalDetails = withRouter(({ history }) => {
   const { t, i18n } = useTranslation();
-
   const dispatch = useDispatch();
-
   const { user, language } = usePersonalDetails();
 
   const [initialUsername, initialEmail] = user ? [user.name, user.email] : ['', ''];
@@ -51,7 +49,6 @@ const PersonalDetails = withRouter(({ history }) => {
   const [email, setEmail] = useState<string>(initialEmail);
   const [isUsernameValid, setIsUsernameValid] = useState<boolean>(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
-
   const [toChangePassword, setToChangePassword] = useState<boolean>(false);
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
   const [currentLanguage, setCurrentLanguage] = useState<'ua' | 'en'>(language);
@@ -69,7 +66,9 @@ const PersonalDetails = withRouter(({ history }) => {
     }
   }, [username, email, imageId, currentLanguage]);
 
-  if (!user) return <Spinner />;
+  if (!user) {
+    return <Spinner />;
+  }
 
   const usernameChanged = (name: string) => {
     setUsername(name);
@@ -133,6 +132,7 @@ const PersonalDetails = withRouter(({ history }) => {
       );
     }
     dispatch(updateUser(imageId, username, email));
+    setCanSubmit(false);
   };
 
   const onPasswordClick = (e: React.MouseEvent) => {
