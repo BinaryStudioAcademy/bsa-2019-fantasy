@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { CommentaryList } from './CommentaryList';
-
 import { SimulateModal } from './SimulateModal';
 import { RescheduleModal } from './RescheduleModal';
 import { Sound } from './Sound';
 
+import eventList from '../helpers/highlightedEvents';
+
 import { FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
+import moment from 'moment';
 
 export const Play = ({
   gameStarted,
@@ -77,9 +79,31 @@ export const Play = ({
     );
   };
 
+  const renderHighlights = () => {
+    const elements = events.reduce((acc, event, index) => {
+      const eventProps = eventList[event.name];
+      if (eventProps) {
+        const elapsed = Math.round(moment.duration(event.elapsed).asMinutes());
+        const element = (
+          <div className='flex items-center' key={index}>
+            <img
+              className='h-4 w-4 object-contain mr-2'
+              src={eventProps.icon}
+              alt={event.name}
+            />
+            <p>{`${elapsed}′ - ${event.player.second_name}`}</p>
+          </div>
+        );
+        return [...acc, element];
+      } else {
+        return acc;
+      }
+    }, []);
+    return elements;
+  };
+
   return (
     <>
-      <Sound {...{ currentEvent, isMuted }} />
       <div className='flex'>
         <div className='flex flex-1 items-center'>{renderStatus()}</div>
         {fixture}
@@ -89,21 +113,18 @@ export const Play = ({
           {renderMute()}
         </div>
       </div>
-      <div className='flex'>
-        <div className='h-32 w-1/4 flex flex-col'>
+      <div className='flex relative z-10 h-32'>
+        <div className='w-1/4 flex flex-col'>
           <h5 className='font-bold'>{t('LIVE.play.commentary')}</h5>
           <CommentaryList events={events} status={status} />
         </div>
         <div className='flex-1 text-center'></div>
         <div className='w-1/4 text-right'>
           <h5 className='font-bold'>{t('LIVE.play.highlights')}</h5>
-          <div className='text-sm'>
-            <p>{t('LIVE.play.yellowCards')}</p>
-            <p>{t('LIVE.play.redCards')}</p>
-          </div>
+          <div className='text-sm flex flex-col items-end'>{renderHighlights()}</div>
         </div>
       </div>
-
+      <Sound {...{ currentEvent, isMuted }} />
       {isModalOpened && (
         <SimulateModal
           onSubmit={(...props) => {
