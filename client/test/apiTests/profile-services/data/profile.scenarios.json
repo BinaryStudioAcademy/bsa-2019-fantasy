@@ -1,0 +1,142 @@
+{
+  "updateUserFavClubScenarios": [
+    {
+      "testCaseName": "Should update user favorite club",
+      "message": "Successfuly updated favorite club!"
+    }
+  ],
+
+  "updateUserSendMailTime": [
+    {
+      "testCaseName": "Should update user send mail time",
+      "sendmail_time": 6,
+      "message": "Your email preferences have been saved"
+    }
+  ],
+
+  "getUserSubscribedFixturesScenarios": [
+    {
+      "testCaseName": "Should get user's subscribed Fixtures",
+      "status": 200
+    }
+  ],
+
+  "updateUserFixtureSubscrScenarios": [
+    {
+      "testCaseName": "Should update user's Subscribed Fixtures",
+      "game_id": "0d9e9593-26d3-4a80-8537-71cbd4260b28",
+      "message": "Successfuly subscribed to notifications about the fixture"
+    }
+  ],
+
+  "deleteUserFixtureSubscrScenarios": [
+    {
+      "testCaseName": "Should delete user's Subscribed Fixtures",
+      "game_id": "0d9e9593-26d3-4a80-8537-71cbd4260b28",
+      "message": "Subscribtion succesfully deleted"
+    }
+  ],
+
+  "updateTeamDetailsScenarios": [
+    {
+      "testCaseName": "Should update user team details",
+      "userData": {
+        "team_name": "My team",
+        "money": 175
+      },
+      "teamMemberData": [
+        {
+          "player_id": "696f5480-7ab3-4b90-906e-9afd702b20f0",
+          "is_on_bench": true,
+          "is_captain": false,
+          "is_vice_captain": false
+        },
+        {
+          "player_id": "bedb977a-31b8-40c5-94ed-a7bf4f45feaa",
+          "is_on_bench": false,
+          "is_captain": true,
+          "is_vice_captain": false
+        },
+        {
+          "player_id": "3de059f9-1bdd-4b87-a56d-7f977a683cf3",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": true
+        },
+        {
+          "player_id": "4fb0d5b7-364a-4429-80a0-32ae1cc6d114",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": false
+        },
+        {
+          "player_id": "7157efef-9e77-4f0e-9a9e-df99f6bfa574",
+          "is_on_bench": true,
+          "is_captain": false,
+          "is_vice_captain": false
+        },
+        {
+          "player_id": "dad7e7d2-7645-4e3b-8270-966fce931ce4",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": false
+        },
+        {
+          "player_id": "f23784c6-1a20-4be2-ac03-31aab7df5a72",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": false
+        },
+        {
+          "player_id": "3eb4f023-6b0c-4aba-ba81-1836395e9e8e",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": false
+        },
+        {
+          "player_id": "eb7fdf9f-66e9-44a0-ae84-7a03f4612ac4",
+          "is_on_bench": true,
+          "is_captain": false,
+          "is_vice_captain": false
+        },
+        {
+          "player_id": "a7caa0bf-9dce-4fb5-b931-2e4a23d36e0c",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": false
+        },
+        {
+          "player_id": "08e577ef-a79d-4464-bdb4-26ffb523aaaf",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": false
+        },
+        {
+          "player_id": "2a13cd2f-7590-4603-8d67-aac8c890e860",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": false
+        },
+        {
+          "player_id": "0cb87909-a014-4df9-9931-40bf3cbdb35d",
+          "is_on_bench": true,
+          "is_captain": false,
+          "is_vice_captain": false
+        },
+        {
+          "player_id": "7b4f08fc-80fd-47b2-817b-0710dc779050",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": false
+        },
+        {
+          "player_id": "ee5b2eb9-ab01-43e8-b869-3639c70e1b49",
+          "is_on_bench": false,
+          "is_captain": false,
+          "is_vice_captain": false
+        }
+      ],
+      "message": "Successfully saved!"
+    }
+  ]
+}

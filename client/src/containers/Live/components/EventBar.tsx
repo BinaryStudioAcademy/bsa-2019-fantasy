@@ -1,24 +1,14 @@
 import React from 'react';
-import yellowCard from 'assets/images/yellow-card.svg';
-import ball from 'assets/images/ball.svg';
 import cn from 'classnames';
 import moment from 'moment';
 
+import eventList from '../helpers/highlightedEvents';
 import styles from './EventBar.module.scss';
 
 interface EventsProps {
   events: any[];
   position: 'top' | 'bottom';
 }
-
-const eventList = {
-  goal: {
-    icon: ball,
-  },
-  yellowCard: {
-    icon: yellowCard,
-  },
-};
 
 export const EventBar: React.SFC<EventsProps> = ({ events, position }) => {
   const elements = events.reduce((acc, event, index) => {
@@ -34,7 +24,7 @@ export const EventBar: React.SFC<EventsProps> = ({ events, position }) => {
       const element = (
         <div
           key={index}
-          className={cn(styles.marker, 'pointer')}
+          className={cn(styles.marker, 'cursor-pointer')}
           style={{ left: (event.elapsed / (90 * 60 * 1000)) * 100 + '%' }}
         >
           <img className='h-4' src={eventProps.icon} alt={event.name} />

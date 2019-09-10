@@ -3,6 +3,7 @@ import React from 'react';
 type FixtureType = {
   homeClub: any;
   awayClub: any;
+  aboveContent?: any;
   centerContent: any;
   belowContent?: any;
   belowBelowContent?: any;
@@ -12,6 +13,7 @@ type FixtureType = {
 export const Fixture: React.SFC<FixtureType> = ({
   homeClub,
   awayClub,
+  aboveContent,
   centerContent,
   belowContent,
   belowBelowContent,
@@ -36,20 +38,27 @@ export const Fixture: React.SFC<FixtureType> = ({
   );
 
   return (
-    <div className='flex flex-1 cursor-pointer' onClick={onClick}>
-      {renderClub(homeClub)}
-      <div className='relative self-center'>
-        <div className='px-3 py-2 text-white font-bold bg-green-900 rounded'>
-          {centerContent}
+    <div className='relative z-20'>
+      {aboveContent && (
+        <div className='flex font-semibold justify-center text-2xl mb-4'>
+          {aboveContent}
         </div>
-        {belowContent && (
-          <div className='absolute inset-x-0 mt-2 text-center'>
-            <div className='py-2 bg-gray-200 rounded'>{belowContent}</div>
-            <div className='py-2'>{belowBelowContent}</div>
+      )}
+      <div className='flex flex-1 cursor-pointer' onClick={onClick}>
+        {renderClub(homeClub)}
+        <div className='relative self-center'>
+          <div className='px-3 py-2 text-white font-bold bg-green-900 rounded'>
+            {centerContent}
           </div>
-        )}
+          {belowContent && (
+            <div className='absolute inset-x-0 mt-2 text-center'>
+              <div className='py-2 bg-gray-200 rounded'>{belowContent}</div>
+              <div className='py-2'>{belowBelowContent}</div>
+            </div>
+          )}
+        </div>
+        {renderClub(awayClub, true)}
       </div>
-      {renderClub(awayClub, true)}
     </div>
   );
 };

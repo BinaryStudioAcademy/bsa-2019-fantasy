@@ -4,19 +4,24 @@ import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { FixturesItemType } from 'types/fixtures.types';
-import { loadGameDetailsAction } from '../../containers/FixturesContainer/actions';
+import {
+  loadGameDetailsAction,
+  loadFixtureSubscriptionsAction,
+} from '../../containers/FixturesContainer/actions';
 import { RootState } from 'store/types';
 
 import styles from './styles.module.scss';
 import MatchStats from 'components/MatchStats';
 import Button from 'components/Button';
-import { FaBell } from 'react-icons/fa';
+import { FaBell, FaSpinner } from 'react-icons/fa';
 import {
   createFixtureSubscription,
   deleteFixtureSubscription,
 } from 'containers/Profile/actions';
 import { addNotification } from 'components/Notifications/actions';
 import { useTranslation } from 'react-i18next';
+
+import style from 'components/Button/styles.module.scss';
 
 type Props = {
   match: FixturesItemType;
@@ -58,6 +63,7 @@ const FixturesItem = ({
   const [isSubscribed, setSubscribe] = useState<boolean>(subscribed);
   const dispatch = useDispatch();
   const gameDetails = useSelector((state: RootState) => state.fixtures.gameDetails);
+  const { currentSubscribeLoadingId } = useSelector((state: RootState) => state.profile);
 
   useEffect(() => {
     if (gameDetails) {
@@ -195,6 +201,7 @@ const FixturesItem = ({
         ),
       );
       dispatch(deleteFixtureSubscription(match.id));
+      dispatch(loadFixtureSubscriptionsAction());
     } else {
       dispatch(
         addNotification(
@@ -206,6 +213,7 @@ const FixturesItem = ({
         ),
       );
       dispatch(createFixtureSubscription(match.id));
+      dispatch(loadFixtureSubscriptionsAction());
     }
     setSubscribe(!isSubscribed);
   };
@@ -257,7 +265,11 @@ const FixturesItem = ({
               onClick={(e) => onSubscribe()}
             >
               <p>
-                <FaBell />
+                {currentSubscribeLoadingId === match.id ? (
+                  <FaSpinner className={style.spin} />
+                ) : (
+                  <FaBell />
+                )}
               </p>
             </Button>
           )}
