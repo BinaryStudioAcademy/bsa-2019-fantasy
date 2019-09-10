@@ -94,4 +94,3 @@ app.get('*', (req, res) => {
 });
 
 app.use(errorHandlerMiddleware);
-//socketServer.listen(process.env.SOCKET_PORT);
