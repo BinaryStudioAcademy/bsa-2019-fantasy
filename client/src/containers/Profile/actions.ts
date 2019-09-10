@@ -24,6 +24,7 @@ import {
   AsyncUserAction,
   UserAction,
   SET_INVITE_CODE,
+  SET_CURRENT_SUBSCRIBE_LOADING,
 } from './action.type';
 import { FixturesItemType } from 'types/fixtures.types';
 
@@ -57,6 +58,11 @@ const setAuthData = (user: User, token: string): AsyncUserAction => (dispatch) =
   setToken(token);
   dispatch(setUser(user));
 };
+
+const setCurrentSubscribeLoading = (id: FixturesItemType['id'] | ''): UserAction => ({
+  type: SET_CURRENT_SUBSCRIBE_LOADING,
+  payload: id,
+});
 
 const handleAuthResponse = (
   authResponsePromise: Promise<{
@@ -168,11 +174,14 @@ export const createFixtureSubscription = (
   gameId: FixturesItemType['id'],
 ): AsyncUserAction => async (dispatch, getState) => {
   try {
+    dispatch(setCurrentSubscribeLoading(gameId));
     const user = await authService.getCurrentUser();
     const res = await profileService.createFixtureSub(user!.id, gameId);
     loadCurrentUser(true)(dispatch, getState);
   } catch (err) {
     feedback.error('Failed to update favorite club.');
+  } finally {
+    dispatch(setCurrentSubscribeLoading(''));
   }
 };
 
@@ -180,11 +189,14 @@ export const deleteFixtureSubscription = (
   gameId: FixturesItemType['id'],
 ): AsyncUserAction => async (dispatch, getState) => {
   try {
+    dispatch(setCurrentSubscribeLoading(gameId));
     const user = await authService.getCurrentUser();
     const res = await profileService.destroyFixtureSub(user!.id, gameId);
     loadCurrentUser(true)(dispatch, getState);
   } catch (err) {
     feedback.error('Failed to update favorite club.');
+  } finally {
+    dispatch(setCurrentSubscribeLoading(''));
   }
 };
 

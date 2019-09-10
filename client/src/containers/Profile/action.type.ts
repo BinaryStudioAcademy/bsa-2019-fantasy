@@ -6,6 +6,7 @@ export const SET_IS_LOADING = 'PROFILE_ACTION:SET_IS_LOADING';
 export const SET_EMAIL_PREF = 'PROFILE_ACTION:SET_EMAIL_PREF';
 export const CHANGE_LANGUAGE = 'PROFILE_ACTION:CHANGE_LANGUAGE';
 export const SET_INVITE_CODE = 'SET_INVITE_CODE';
+export const SET_CURRENT_SUBSCRIBE_LOADING = 'SET_CURRENT_SUBSCRIBE_LOADING';
 
 type SetUser = {
   type: typeof SET_USER;
@@ -30,10 +31,16 @@ type ChangeLanguage = {
   payload: any;
 };
 
+type SetCurrentSubscribeLoading = {
+  type: typeof SET_CURRENT_SUBSCRIBE_LOADING;
+  payload: string;
+};
+
 export type UserAction =
   | SetUser
   | SetLoading
   | ChangeLanguage
   | SetEmailPref
+  | SetCurrentSubscribeLoading
   | SetInviteCode;
 export type AsyncUserAction = Thunky<UserAction>;
