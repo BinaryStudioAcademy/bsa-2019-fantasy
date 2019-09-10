@@ -43,8 +43,8 @@ describe('Profile services test suite', () => {
           scenario.teamMemberData,
         ),
       );
-      const rndGameweek = Math.floor(Math.random() * 37) + 1;
-      path = `${userId}/5d5cf96f-157b-4e5a-ae67-f058c7f1caae`; //${rndGameweek}
+      //const rndGameweek = Math.floor(Math.random() * 37) + 1;
+      path = `${userId}/${scenario.gameweekId}`;
       return request(URL)
         .put(path)
         .set('Authorization', `Bearer ${token}`)

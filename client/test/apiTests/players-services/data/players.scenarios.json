@@ -1,0 +1,83 @@
+{
+    "getPlayersScenarios": [
+        {
+            "testCaseName": "should get players filtered by club",
+            "query_params": [
+                {
+                    "club_id": 6,
+                    "order_direction": "DESC"
+                }
+            ]
+        },
+        {
+            "testCaseName": "should get players filtered by position",
+            "query_params": [
+                {
+                    "order_direction": "DESC",
+                    "position": "DEF"
+                }
+            ]
+        },
+        {
+            "testCaseName": "should get players filtered by search string",
+            "query_params": [
+                {
+                    "order_direction": "DESC",
+                    "search": "lis"
+                }
+            ]
+        },
+        {
+            "testCaseName": "should get players ordered by first name",
+            "query_params": [
+                {
+                    "order_direction": "DESC",
+                    "order_field": "first_name"
+                }
+            ]
+        },
+        {
+            "testCaseName": "should get players ordered by price",
+            "query_params": [
+                {
+                    "order_direction": "DESC",
+                    "order_field": "player_price"
+                }
+            ]
+        },
+        {
+            "testCaseName": "should get players ordered by score",
+            "query_params": [
+                {
+                    "order_direction": "DESC",
+                    "order_field": "player_score"
+                }
+            ]
+        }
+    ],
+    "getPlayerByIdScenarios": [
+        {
+            "testCaseName": "should get player by id",
+            "playerId": "994d686d-107a-4fd0-983d-a37d226ef33d"
+        }
+    ],
+    "getFixturesForPlayer":[
+        {
+            "testCaseName": "should get Fixtures for player",
+            "playerId": "994d686d-107a-4fd0-983d-a37d226ef33d",
+            "clubId": 5
+        }
+    ],
+    "getPlayerNextFixtureScenarios": [
+        {
+            "testCaseName": "should get player next fixture",
+            "playerId": "994d686d-107a-4fd0-983d-a37d226ef33d"
+        }
+    ],
+    "getPlayerStatsScenarios": [
+        {
+            "testCaseName": "should get player stats",
+            "playerId": "994d686d-107a-4fd0-983d-a37d226ef33d"
+        }
+    ]
+}

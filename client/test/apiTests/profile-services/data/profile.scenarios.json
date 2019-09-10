@@ -40,6 +40,7 @@
   "updateTeamDetailsScenarios": [
     {
       "testCaseName": "Should update user team details",
+      "gameweekId": "5d5cf96f-157b-4e5a-ae67-f058c7f1caae",
       "userData": {
         "team_name": "My team",
         "money": 175
