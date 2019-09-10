@@ -1,57 +1,32 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router';
 import cn from 'classnames';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import validator from 'validator';
 
 import { registration } from 'containers/Profile/actions';
 
 import styles from './styles.module.scss';
+import useValidation from './useValidation';
 
 const RegistrationForm = withRouter(({ history }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isNameValid, setIsNameValid] = useState(true);
-  const [isEmailValid, setIsEmailValid] = useState(true);
-  const [isPasswordValid, setIsPasswordlValid] = useState(true);
-
-  const nameChanged = (name: string) => {
-    setName(name);
-    setIsNameValid(true);
-  };
-
-  const emailChanged = (email: string) => {
-    setEmail(email);
-    setIsEmailValid(true);
-  };
-
-  const passwordChanged = (password: string) => {
-    setPassword(password);
-    setIsPasswordlValid(true);
-  };
-
-  const validateEmail = () => {
-    const isEmailValid = validator.isEmail(email);
-    setIsEmailValid(isEmailValid);
-    return isEmailValid;
-  };
-
-  const validatePassword = () => {
-    const isPasswordValid = validator.isByteLength(password, { min: 8, max: undefined });
-    setIsPasswordlValid(isPasswordValid);
-    return isPasswordValid;
-  };
-
-  const validateName = () => {
-    const isNameValid = validator.isByteLength(name, { min: 5, max: undefined });
-    setIsNameValid(isNameValid);
-    return isNameValid;
-  };
+  const {
+    name,
+    email,
+    password,
+    isNameValid,
+    isEmailValid,
+    isPasswordValid,
+    nameChanged,
+    emailChanged,
+    passwordChanged,
+    validateEmail,
+    validatePassword,
+    validateName,
+  } = useValidation();
 
   const handleClickRegister = (ev: React.FormEvent) => {
     ev.preventDefault();
@@ -70,7 +45,7 @@ const RegistrationForm = withRouter(({ history }) => {
 
   return (
     <div className={cn(styles['form-registration'], 'w-full', 'max-w-xs')}>
-      <form className='pt-3' onSubmit={handleClickRegister} autoComplete='off'>
+      <form className='pt-3' onSubmit={handleClickRegister} autoComplete='off' noValidate>
         <div className='mb-4'>
           <label>
             {t('AuthForms.name')}
