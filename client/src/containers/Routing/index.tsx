@@ -147,7 +147,7 @@ const Routing = () => {
         <GuestRoute exact path='/forgot' component={ForgotPassword} />
         {/* <GuestRoute exact path='/social' component={SocialPage} /> */}
         {/* <GuestRoute exact path='/connect-fb' component={ConnectFbPage} /> */}
-        {!user && <GuestRoute path='/reset/:id' component={ResetPassword} />}
+        <Route path='/reset/:id' component={ResetPassword} />
         {!user && (
           <GuestRoute sensitive path='/joinLeague/:leagueToken' component={LoginPage} />
         )}
@@ -200,7 +200,6 @@ const Routing = () => {
                 <Route path='/leagues/join' component={JoinLeague} />
                 <Route path='/leagues/:name' component={LeagueDetails} />
                 <Route exact path='/joinLeague/:leagueToken' component={JoinLeague} />
-                <Route path='/reset/:id' component={ResetPassword} />
 
                 <Route render={() => <Redirect to='/404' />} />
               </Switch>

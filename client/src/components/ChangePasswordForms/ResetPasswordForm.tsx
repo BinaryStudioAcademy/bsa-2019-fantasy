@@ -58,9 +58,7 @@ class ResetPasswordForm extends Component<
         isError: false,
       });
 
-      const dispatch = useDispatch();
-      const user = useSelector((state: RootState) => state.profile.user);
-      if (user) {
+      if (this.props.user) {
         window.close();
       } else {
         this.props.history.replace('/');
@@ -118,12 +116,13 @@ class ResetPasswordForm extends Component<
 const actions = { resetPassword, loadCurrentUser };
 //TODO: fix any type
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
+const mapStateToProps = (state: RootState) => ({ user: state.profile.user });
 
 export default withTranslation()(
   withRouter(
     //@ts-ignore
     connect(
-      null,
+      mapStateToProps,
       mapDispatchToProps,
     )(ResetPasswordForm),
   ),
