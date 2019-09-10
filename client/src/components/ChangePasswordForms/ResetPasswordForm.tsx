@@ -6,6 +6,7 @@ import { withTranslation } from 'react-i18next';
 import cn from 'classnames';
 import validator from 'validator';
 import { feedback } from 'react-feedbacker';
+import { RootState } from 'store/types';
 
 import { resetPassword, loadCurrentUser } from 'containers/Profile/actions';
 
@@ -55,8 +56,13 @@ class ResetPasswordForm extends Component<
         isSuccess: true,
         isError: false,
       });
+
+      if (this.props.user) {
+        window.close();
+      } else {
+        this.props.history.replace('/');
+      }
       feedback.success('Successfully changed your password!');
-      this.props.history.replace('/');
     } catch {
       this.setState({ isLoading: false, isError: true, isSuccess: false });
       feedback.error('Could not change the password');
@@ -108,12 +114,13 @@ class ResetPasswordForm extends Component<
 const actions = { resetPassword, loadCurrentUser };
 //TODO: fix any type
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
+const mapStateToProps = (state: RootState) => ({ user: state.profile.user });
 
 export default withTranslation()(
   withRouter(
     //@ts-ignore
     connect(
-      null,
+      mapStateToProps,
       mapDispatchToProps,
     )(ResetPasswordForm),
   ),
