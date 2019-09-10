@@ -5,12 +5,12 @@ import produce from 'immer';
 import moment from 'moment';
 import 'react-rangeslider/lib/index.css';
 import Slider from 'react-rangeslider';
-import cn from 'classnames';
 
 import { Play } from './components/Play';
 import { Fixture } from './components/Fixture';
 import { LastGamesList } from './components/LastGamesList';
 import { EventBar } from './components/EventBar';
+import { Countdown } from './components/Countdown';
 
 import { loadCurrentGame, loadLastGames, addLiveEvent } from './actions';
 import { createIterator } from './helpers/iterator';
@@ -197,11 +197,19 @@ const Live = () => {
         {score[0]}:{score[1]}
       </div>
     );
+    const aboveContent = replayGame ? 'Replay' : 'Live';
     const belowContent = formatElapsed(elapsed);
     const belowBelowContent = renderPlaybackControls();
     return (
       <Fixture
-        {...{ homeClub, awayClub, centerContent, belowContent, belowBelowContent }}
+        {...{
+          homeClub,
+          awayClub,
+          aboveContent,
+          centerContent,
+          belowContent,
+          belowBelowContent,
+        }}
       />
     );
   };
@@ -210,9 +218,12 @@ const Live = () => {
     if (!nextGame) return 'spinner';
     const homeClub = getClubById(nextGame.hometeam_id);
     const awayClub = getClubById(nextGame.awayteam_id);
+    const aboveContent = 'Next game';
     const centerContent = moment(nextGame.start).format('DD.MM');
     const belowContent = moment(nextGame.start).format('HH:mm');
-    return <Fixture {...{ homeClub, awayClub, centerContent, belowContent }} />;
+    return (
+      <Fixture {...{ homeClub, awayClub, aboveContent, centerContent, belowContent }} />
+    );
   };
 
   const fixture =
@@ -334,7 +345,7 @@ const Live = () => {
 
   return (
     <>
-      <div className='bg-white text-secondary shadow-figma rounded-sm p-12 mb-4'>
+      <div className='relative bg-white text-secondary shadow-figma rounded-sm p-12 mb-4'>
         <Play
           gameStarted={currentGame.gameStarted}
           isSimulation={currentGame.isSimulation}

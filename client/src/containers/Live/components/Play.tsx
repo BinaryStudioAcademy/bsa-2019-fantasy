@@ -8,6 +8,7 @@ import { Sound } from './Sound';
 
 import { FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
+import { Countdown } from './Countdown';
 
 export const Play = ({
   gameStarted,
@@ -61,8 +62,11 @@ export const Play = ({
     const classes = isMuted
       ? 'text-red-500 border-red-500'
       : 'text-green-500 border-green-500';
-    /* eslint-disable-next-line */
-    const [icon, text] = isMuted ? [<FaVolumeMute />, t('LIVE.play.muted')] : [<FaVolumeUp />, t('LIVE.play.mute')];
+    /* eslint-disable react/jsx-key */
+    const [icon, text] = isMuted
+      ? [<FaVolumeMute />, t('LIVE.play.muted')]
+      : [<FaVolumeUp />, t('LIVE.play.mute')];
+    /* eslint-enable react/jsx-key */
     return (
       <button
         className={`flex items-center border rounded px-2 py-1 leading-none	uppercase text-sm ${classes}`}
@@ -100,9 +104,12 @@ export const Play = ({
           </div>
         </div>
       </div>
-      <div className='flex justify-center'>
+      <div className='relative flex justify-center'>
         <div className='w-4/5'>
           <Field currentEvent={currentEvent} />
+        </div>
+        <div className='absolute inset-0 flex justify-center items-center'>
+          <Countdown />
         </div>
       </div>
 
