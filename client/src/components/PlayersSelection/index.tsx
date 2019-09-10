@@ -19,7 +19,6 @@ import Dropdown from 'react-dropdown';
 import PlayerDialog from 'components/PlayerDialog';
 import styles from './styles.module.scss';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
-import 'react-dropdown/style.css';
 import { GameweekHistoryType } from 'types/gameweekHistory.type';
 
 type Props = {
@@ -113,7 +112,7 @@ const PlayersSelection = ({
     setQuery({ ...query, max_price: item.value });
     loadPlayersAction({ ...query });
   };
-  
+
   const onClickOffset = (side: string) => {
     if (side === 'back') {
       if (offset >= 10) setOffset(offset - 10);
