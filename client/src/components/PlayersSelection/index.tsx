@@ -198,7 +198,7 @@ const PlayersSelection = ({
 
       <div className='flex justify-center pt-10 w-full'>
         <button
-          className={cn(styles.navButton, 'shadow', 'hover:shadow-md')}
+          className={cn(styles.navButton, 'shadow', 'hover:shadow-md', 'mx-2')}
           onClick={() => {
             onClickOffset('back');
           }}
@@ -206,7 +206,7 @@ const PlayersSelection = ({
           <IoIosArrowBack />
         </button>
         <button
-          className={cn(styles.navButton, 'shadow', 'hover:shadow-md')}
+          className={cn(styles.navButton, 'shadow', 'hover:shadow-md', 'mx-2')}
           onClick={() => {
             onClickOffset('forward');
           }}
