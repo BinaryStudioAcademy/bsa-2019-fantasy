@@ -8,7 +8,7 @@ const port = process.env.REACT_APP_SOCKET_SERVER_PORT;
 const socket = openSocket(
   `${process.env.REACT_APP_SOCKET_SERVER_PROTOCOL}://${
     process.env.REACT_APP_SOCKET_SERVER
-  }${port === '443' ? '' : `:${port}`}`,
+  }${port === '553' ? '' : `:${port}`}`,
 );
 handlers(socket);
 
