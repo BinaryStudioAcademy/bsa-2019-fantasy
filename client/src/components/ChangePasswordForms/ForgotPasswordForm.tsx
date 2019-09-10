@@ -66,7 +66,7 @@ class ForgotPasswordForm extends Component<
     const { t } = this.props;
 
     return (
-      <div className={cn(styles['form-registration'], 'w-full h-full max-w-xs')}>
+      <div className={cn(styles['form-registration'], 'w-full', 'max-w-xs')}>
         <form className='pt-4' onSubmit={this.handleSubmit}>
           <div className='mb-4'>
             <input
