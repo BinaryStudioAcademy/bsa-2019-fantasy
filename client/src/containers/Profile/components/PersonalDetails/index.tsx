@@ -12,7 +12,7 @@ import validator from 'validator';
 import { RootState } from 'store/types';
 
 import Spinner from 'components/Spinner';
-import { forgotPassword, setLanguage } from 'containers/Profile/actions';
+import { forgotPassword, resetPassword, setLanguage } from 'containers/Profile/actions';
 import { addNotification } from 'components/Notifications/actions';
 import * as imageService from 'services/imageService';
 import Button from 'components/Button';
@@ -138,9 +138,7 @@ const PersonalDetails = withRouter(({ history }) => {
   const onPasswordClick = (e: React.MouseEvent) => {
     e.preventDefault();
 
-    setToChangePassword(true);
-    dispatch(forgotPassword({ email: user.email }));
-    // history.push('/profile/set/password');
+    history.push('/set/password');
   };
 
   const onUsernameChange = (e) => {
