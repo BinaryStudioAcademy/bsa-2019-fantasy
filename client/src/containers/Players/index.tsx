@@ -43,7 +43,7 @@ type State = {
   comparisonData: any;
   currentPlayer?: PlayerType;
   searchBarText: string;
-  rowEdit: number | null;
+  rowSelect: number | null;
   selectedRowIndex: number[];
   selectionChanged: boolean;
   searchClub: string;
@@ -52,14 +52,14 @@ type State = {
   dialogInitialTab?: 'fixtures' | 'history';
 };
 
-const NOT_SORTABLE_TABLE_COLUMNS = ['club_id', 'position'];
+const NOT_SORTABLE_TABLE_COLUMNS = ['club_id', 'position', 'info', 'comparison'];
 
 class PlayersPage extends React.Component<Props, State> {
   state: State = {
     playerHighlightData: {},
     comparisonData: [],
     searchBarText: '',
-    rowEdit: null,
+    rowSelect: null,
     selectedRowIndex: [],
     selectionChanged: false,
     redirect: false,
@@ -403,26 +403,27 @@ class PlayersPage extends React.Component<Props, State> {
           if (rowInfo && rowInfo.row) {
             return {
               onClick: (e) => {
-                if (rowInfo.index !== this.state.rowEdit) {
+                if (rowInfo.index !== this.state.rowSelect) {
                   this.setState({
-                    rowEdit: rowInfo.index,
-                    selectedRowIndex: rowInfo.original,
-                    selectionChanged: this.state.selectionChanged ? false : true,
+                    rowSelect: rowInfo.index,
                   });
                 } else {
                   this.setState({
-                    rowEdit: null,
+                    rowSelect: null,
                   });
                 }
               },
               style: {
-                background:
-                  (rowInfo.index === this.state.rowEdit &&
-                    this.state.comparisonData.length < 2) ||
-                  this.state.comparisonData.map((p) => p.id).includes(rowInfo.original.id)
-                    ? '#81e6d9'
-                    : 'white',
-                color: 'black',
+                background: this.state.comparisonData
+                  .map((p) => p.id)
+                  .includes(rowInfo.original.id)
+                  ? '#81e6d9'
+                  : rowInfo.index === this.state.rowSelect &&
+                    this.state.comparisonData.length !== 1
+                  ? '#81e6d9'
+                  : '#fff',
+
+                color: '#000',
               },
             };
           } else {
