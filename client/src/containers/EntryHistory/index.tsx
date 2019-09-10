@@ -79,7 +79,6 @@ const EntryHistory = withRouter(({ history }) => {
                 <div className={cn('w-1/6')}>GP</div>
                 <div className={cn('w-1/6')}>OP</div>
                 <div className={cn('w-1/6')}>OR</div>
-                <div className={cn('w-1/6')}>TR</div>
                 <div className={cn('w-1/6')}>#</div>
               </div>
               {gameweeksEntryHistoryData.gameweeksEntryHistory.map(
@@ -108,7 +107,6 @@ const EntryHistory = withRouter(({ history }) => {
                         .reduce((sum, current) => sum + Number(current.team_score), 0)}
                     </div>
                     <div className={cn('w-1/6')}>{item.gameweekUserRank}</div>
-                    <div className={cn('w-1/6')}>N/A</div>
                     <div className={cn('w-1/6', 'flex', 'items-center')}>
                       {index === 0 ||
                       array[index].gameweekUserRank ===
