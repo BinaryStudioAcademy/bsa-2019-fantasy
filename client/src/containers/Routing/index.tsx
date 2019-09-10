@@ -135,7 +135,9 @@ const Routing = () => {
     language && dispatch(setLanguage({ language }));
   }, []);
 
-  if (isLoading) {
+  const token = localStorage.getItem('token');
+
+  if (isLoading || (token && !isAuthorized)) {
     return <Spinner />;
   }
 
