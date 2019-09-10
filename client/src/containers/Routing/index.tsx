@@ -147,7 +147,7 @@ const Routing = () => {
         <GuestRoute exact path='/forgot' component={ForgotPassword} />
         {/* <GuestRoute exact path='/social' component={SocialPage} /> */}
         {/* <GuestRoute exact path='/connect-fb' component={ConnectFbPage} /> */}
-        <GuestRoute path='/reset/:id' component={ResetPassword} />
+        <Route path='/reset/:id' component={ResetPassword} />
         {!user && (
           <GuestRoute sensitive path='/joinLeague/:leagueToken' component={LoginPage} />
         )}
@@ -182,7 +182,7 @@ const Routing = () => {
                 <Route path='/entry-history' exact component={EntryHistory} />
 
                 <Route path='/profile' component={Profile} />
-                <Route path='/profile/set/password' component={SetPassword} />
+                <Route path='/set/password' component={SetPassword} />
 
                 <Route path='/my-team' component={MyTeam} />
                 <Route path='/live' component={Live} />
@@ -200,7 +200,6 @@ const Routing = () => {
                 <Route path='/leagues/join' component={JoinLeague} />
                 <Route path='/leagues/:name' component={LeagueDetails} />
                 <Route exact path='/joinLeague/:leagueToken' component={JoinLeague} />
-                <Route path='/profile/set/password' component={ResetPassword} />
 
                 <Route render={() => <Redirect to='/404' />} />
               </Switch>
