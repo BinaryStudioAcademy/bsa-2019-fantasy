@@ -12,15 +12,18 @@ interface LeagueTableI {
   columns: {}[];
   data: {}[];
   title: { id?: string; title: string };
+  isLeaguePatcicipatnts?: boolean;
 }
 
 export const LeagueTable: React.SFC<LeagueTableI> = ({
   columns,
   data,
   title,
+  isLeaguePatcicipatnts,
 }: LeagueTableI) => {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.profile.user);
+  const translations = t('Table', { returnObjects: true });
 
   return (
     <div
@@ -31,7 +34,9 @@ export const LeagueTable: React.SFC<LeagueTableI> = ({
       <ReactTable
         data={data}
         columns={columns}
-        showPagination={false}
+        showPagination={isLeaguePatcicipatnts && data.length > 10 ? true : false}
+        defaultPageSize={10}
+        pageSizeOptions={[10, 20, 25, 50, 100]}
         minRows={0}
         noDataText={t('LeaguesPage.noDataText')}
         getTrProps={(state, rowInfo) => {
@@ -45,6 +50,7 @@ export const LeagueTable: React.SFC<LeagueTableI> = ({
             return {};
           }
         }}
+        {...translations}
       />
     </div>
   );

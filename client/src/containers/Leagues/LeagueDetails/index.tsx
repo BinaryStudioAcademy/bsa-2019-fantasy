@@ -86,7 +86,9 @@ const LeagueDetails = ({
       accessor: 'current_rank',
       Cell: (props: any) => {
         const movement = props.original.current_rank < props.original.last_rank;
-        const noMovement = props.original.last_rank === 0 || (props.original.current_rank === props.original.last_rank)
+        const noMovement =
+          props.original.last_rank === 0 ||
+          props.original.current_rank === props.original.last_rank;
 
         return (
           <div className={`h-full flex justify-center items-center`}>
@@ -99,13 +101,7 @@ const LeagueDetails = ({
               )}
             >
               <span className='mr-2'>{props.index + 1}.</span>
-              {movement ? (
-                <FaArrowUp />
-              ) : noMovement ? (
-                <FaMinus />
-              ) : (
-                <FaArrowDown />
-              )}
+              {movement ? <FaArrowUp /> : noMovement ? <FaMinus /> : <FaArrowDown />}
             </span>{' '}
           </div>
         );
@@ -164,7 +160,9 @@ const LeagueDetails = ({
   }
 
   const link = `${window.location.origin}/joinLeague/${code}`;
-  const tableData = leagueDetails.participants.sort((a, b) => parseFloat(a.current_rank) - parseFloat(b.current_rank));
+  const tableData = leagueDetails.participants.sort(
+    (a, b) => parseFloat(a.current_rank) - parseFloat(b.current_rank),
+  );
 
   return (
     <div className={styles['league-details']}>
@@ -178,8 +176,10 @@ const LeagueDetails = ({
           </h2>
           <div className='mt-4'>
             <ShareLink link={link}>
-              {link => (
-                <a href={link} target='_blank'>{ t('LeagueDetails.facebookInvite') }</a>
+              {(link) => (
+                <a href={link} target='_blank'>
+                  {t('LeagueDetails.facebookInvite')}
+                </a>
               )}
             </ShareLink>
           </div>
@@ -187,7 +187,12 @@ const LeagueDetails = ({
       </div>
       <div className={cn(styles.background, 'mb-3', 'p-1')}>
         <div className={styles.tables}>
-          <LeagueTable columns={columns} data={tableData} title={data} />
+          <LeagueTable
+            columns={columns}
+            data={tableData}
+            title={data}
+            isLeaguePatcicipatnts={true}
+          />
         </div>
         {leagueDetails['admin_entry'] && leagueDetails.private ? (
           <div className={`p-6`}>
@@ -221,14 +226,14 @@ const LeagueDetails = ({
                 {t('PrivateLeagueModal.copied')}
               </p>
             ) : (
-                <p className='text-xs text-gray-600 italic mb-5'>
-                  {t('PrivateLeagueModal.clickToCopy')}
-                </p>
-              )}
+              <p className='text-xs text-gray-600 italic mb-5'>
+                {t('PrivateLeagueModal.clickToCopy')}
+              </p>
+            )}
           </div>
         ) : (
-            ''
-          )}
+          ''
+        )}
       </div>
       {leagueDetails['entry_can_leave'] && (
         <div className={cn(styles.paper, 'p-8', 'rounded')}>
