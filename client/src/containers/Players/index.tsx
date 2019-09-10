@@ -43,7 +43,7 @@ type State = {
   comparisonData: any;
   currentPlayer?: PlayerType;
   searchBarText: string;
-  rowEdit: number | null;
+  rowSelect: number | null;
   selectedRowIndex: number[];
   selectionChanged: boolean;
   searchClub: string;
@@ -52,14 +52,14 @@ type State = {
   dialogInitialTab?: 'fixtures' | 'history';
 };
 
-const NOT_SORTABLE_TABLE_COLUMNS = ['club_id', 'position'];
+const NOT_SORTABLE_TABLE_COLUMNS = ['club_id', 'position', 'info', 'comparison'];
 
 class PlayersPage extends React.Component<Props, State> {
   state: State = {
     playerHighlightData: {},
     comparisonData: [],
     searchBarText: '',
-    rowEdit: null,
+    rowSelect: null,
     selectedRowIndex: [],
     selectionChanged: false,
     redirect: false,
@@ -75,6 +75,9 @@ class PlayersPage extends React.Component<Props, State> {
   }
 
   onFetchData = async ({ page, pageSize, sorted }: any) => {
+    this.setState({
+      rowSelect: null,
+    });
     const defaultSort = { order_field: 'player_score', order_direction: 'DESC' };
     const sort = sorted[0]
       ? { order_field: sorted[0].id, order_direction: sorted[0].desc ? 'DESC' : 'ASC' }
@@ -216,8 +219,7 @@ class PlayersPage extends React.Component<Props, State> {
     {
       Header: (props) => this.renderHeader(this.props.t('Players.clubLogo'), props),
       accessor: 'club_id',
-      className: 'flex justify-center items-center rounded-l',
-      headerClassName: 'text-center',
+      className: 'flex flex-col justify-center items-center rounded-l',
       minWidth: 50,
       Cell: (props: any) => this.renderClubImageCell(props),
     },
@@ -254,16 +256,15 @@ class PlayersPage extends React.Component<Props, State> {
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.info'), props),
-      className: 'flex items-center justify-center  rounded-r',
+      className: 'flex flex-col items-center justify-center  rounded-r',
       accessor: 'info',
       minWidth: 50,
       Cell: (props: any) => this.renderInfoCell(props),
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.compare'), props),
-      className: 'flex items-center justify-center   rounded-r',
+      className: 'flex flex-col items-center justify-center   rounded-r',
       accessor: 'comparison',
-      headerClassName: 'text-center',
       minWidth: 50,
       Cell: (props: any) => this.renderComparisonCell(props),
     },
@@ -402,26 +403,27 @@ class PlayersPage extends React.Component<Props, State> {
           if (rowInfo && rowInfo.row) {
             return {
               onClick: (e) => {
-                if (rowInfo.index !== this.state.rowEdit) {
-                  this.setState((prevState) => ({
-                    rowEdit: rowInfo.index,
-                    selectedRowIndex: rowInfo.original,
-                    selectionChanged: prevState.selectionChanged ? false : true,
-                  }));
+                if (rowInfo.index !== this.state.rowSelect) {
+                  this.setState({
+                    rowSelect: rowInfo.index,
+                  });
                 } else {
                   this.setState({
-                    rowEdit: null,
+                    rowSelect: null,
                   });
                 }
               },
               style: {
-                background:
-                  (rowInfo.index === this.state.rowEdit &&
-                    this.state.comparisonData.length < 2) ||
-                  this.state.comparisonData.map((p) => p.id).includes(rowInfo.original.id)
-                    ? '#81e6d9'
-                    : 'white',
-                color: 'black',
+                background: this.state.comparisonData
+                  .map((p) => p.id)
+                  .includes(rowInfo.original.id)
+                  ? '#81e6d9'
+                  : rowInfo.index === this.state.rowSelect &&
+                    this.state.comparisonData.length !== 1
+                  ? '#81e6d9'
+                  : '#fff',
+
+                color: '#000',
               },
             };
           } else {

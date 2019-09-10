@@ -17,7 +17,7 @@ interface LeagueTableI {
 export const LeagueTable: React.SFC<LeagueTableI> = ({
   columns,
   data,
-  title
+  title,
 }: LeagueTableI) => {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.profile.user);
@@ -38,16 +38,14 @@ export const LeagueTable: React.SFC<LeagueTableI> = ({
           if (rowInfo.row.user && user && rowInfo.row.user.id === user.id) {
             return {
               style: {
-                background: '#81e6d9'
-              }
-            }
+                background: '#81e6d9',
+              },
+            };
+          } else {
+            return {};
           }
-          else {
-            return {}
-          }
-        }
-        }
+        }}
       />
     </div>
-  )
+  );
 };
