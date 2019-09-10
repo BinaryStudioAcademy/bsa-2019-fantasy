@@ -34,7 +34,7 @@ export const EventBar: React.SFC<EventsProps> = ({ events, position }) => {
       const element = (
         <div
           key={index}
-          className={cn(styles.marker, 'pointer')}
+          className={cn(styles.marker, 'cursor-pointer')}
           style={{ left: (event.elapsed / (90 * 60 * 1000)) * 100 + '%' }}
         >
           <img className='h-4' src={eventProps.icon} alt={event.name} />
