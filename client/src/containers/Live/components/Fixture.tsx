@@ -38,7 +38,7 @@ export const Fixture: React.SFC<FixtureType> = ({
   );
 
   return (
-    <div>
+    <div className='relative z-20'>
       {aboveContent && (
         <div className='flex font-semibold justify-center text-2xl mb-4'>
           {aboveContent}
