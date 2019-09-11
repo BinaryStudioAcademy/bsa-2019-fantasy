@@ -211,13 +211,6 @@ class PlayersPage extends React.Component<Props, State> {
     return options;
   };
 
-  renderClubs = () => (
-    <Dropdown
-      options={this.getClubOptions()}
-      onChange={this.onClubChange}
-      value={this.state.searchClub}
-    />
-  );
   /* eslint-enable */
   readonly columns = [
     {
@@ -232,22 +225,26 @@ class PlayersPage extends React.Component<Props, State> {
       Header: (props) => this.renderHeader(this.props.t('Players.name'), props),
       accessor: 'first_name',
       className: 'flex flex-col items-center justify-center',
+      minWidth: 150,
       Cell: (props: any) => this.renderNameCell(props),
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.price'), props),
       accessor: 'player_price',
       className: 'flex flex-col items-center justify-center ',
+      minWidth: 50,
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.score'), props),
       accessor: 'player_score',
       className: 'flex flex-col items-center justify-center ',
+      minWidth: 50,
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.position'), props),
       accessor: 'position',
       className: 'flex flex-col items-center justify-center',
+      minWidth: 50,
     },
     {
       Header: (props) => this.renderHeader(this.props.t('Players.club'), props),
@@ -304,7 +301,7 @@ class PlayersPage extends React.Component<Props, State> {
     return (
       <>
         <button
-          className='w-6 h-6 justify-center mr-4 leading-none flex bg-background rounded-full text-s font-bold'
+          className='w-6 h-6 justify-center leading-none flex bg-background rounded-full text-s font-bold'
           onClick={() => this.onInfoClick({ player: playerData })}
         >
           i
@@ -321,7 +318,7 @@ class PlayersPage extends React.Component<Props, State> {
     return (
       <>
         <button
-          className='w-6 h-6 justify-center mr-4 leading-none flex bg-background rounded-full'
+          className='w-6 h-6 justify-center leading-none flex bg-background rounded-full'
           onClick={() => this.onComparisonAdd(props.original.id, props.original.club_id)}
         >
           {addedToComparison ? <FaTimes /> : <FaPlus />}
@@ -406,11 +403,11 @@ class PlayersPage extends React.Component<Props, State> {
             return {
               onClick: (e) => {
                 if (rowInfo.index !== this.state.rowEdit) {
-                  this.setState({
+                  this.setState((prevState) => ({
                     rowEdit: rowInfo.index,
                     selectedRowIndex: rowInfo.original,
-                    selectionChanged: this.state.selectionChanged ? false : true,
-                  });
+                    selectionChanged: prevState.selectionChanged ? false : true,
+                  }));
                 } else {
                   this.setState({
                     rowEdit: null,
@@ -449,7 +446,7 @@ class PlayersPage extends React.Component<Props, State> {
         tabIndex={-1}
         {...rest}
       >
-        {children} {/*desc ? <img src={downSvg} /> : <img src={upSvg} />*/}
+        {children}
       </div>
     );
   }
@@ -509,14 +506,14 @@ class PlayersPage extends React.Component<Props, State> {
             <div className='ml-auto flex'>
               <Dropdown
                 placeholder={this.props.t('Players.club')}
-                className='mr-2'
+                className='w-32 mr-2'
                 options={this.getClubOptions()}
                 onChange={this.onClubChange}
                 value={this.state.searchClub}
               />
               <Dropdown
                 placeholder={this.props.t('Players.position')}
-                className='mr-2'
+                className='w-32 mr-2'
                 options={this.getPositionOptions()}
                 onChange={this.onPositionChange}
                 value={this.state.searchPosition}
