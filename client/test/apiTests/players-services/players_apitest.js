@@ -5,7 +5,10 @@ const data = require('./data/players.scenarios.json');
 const Help = require('../../helpers/helpers');
 const playersModels = require('./data/players.schema');
 const args = require('../../specs/testData.json');
+const playerIds = require('../utils/get-players.js');
+const playerClubIds = require('../utils/get-playerClubID.js');
 
+const appUrl = args.appUrl;
 const URL = 'https://fantasy-football.tk/api/';
 
 describe('Players services test suite', () => {
@@ -81,8 +84,9 @@ describe('Players services test suite', () => {
   });
 
   data.getPlayerByIdScenarios.forEach((scenario) => {
-    it(scenario.testCaseName, () => {
-      path = `players/${scenario.playerId}`;
+    it(scenario.testCaseName,  async () => {
+      const playerId = await playerIds.playersID(`${appUrl}api`, token);
+      path = `players/${playerId[0]}`;
       actualProperties = playersModels.playersSchema;
       return (
         request(URL)
@@ -102,9 +106,11 @@ describe('Players services test suite', () => {
   });
 
   data.getFixturesForPlayer.forEach((scenario) => {
-    it(scenario.testCaseName, () => {
+    it(scenario.testCaseName, async () => {
+      const playerId = await playerIds.playersID(`${appUrl}api`, token);
+      const playerClubID = await playerClubIds.playersClubID(`${appUrl}api`, token);
       actualProperties = playersModels.playerFixtures;
-      path = `games/player/${scenario.playerId}/${scenario.clubId}`;
+      path = `games/player/${playerId[0]}/${playerClubID[0]}`;
       return (
         request(URL)
           .get(path)
@@ -124,9 +130,10 @@ describe('Players services test suite', () => {
   });
 
   data.getPlayerNextFixtureScenarios.forEach((scenario) => {
-    it(scenario.testCaseName, () => {
+    it(scenario.testCaseName, async () => {
       actualProperties = playersModels.nextFixtureSchema;
-      path = `player-match-stats/next-fixture/${scenario.playerId}`;
+      const playerId = await playerIds.playersID(`${appUrl}api`, token);
+      path = `player-match-stats/next-fixture/${playerId[0]}`;
       return (
         request(URL)
           .get(path)
@@ -145,9 +152,10 @@ describe('Players services test suite', () => {
   });
 
   data.getPlayerStatsScenarios.forEach((scenario) => {
-    it(scenario.testCaseName, () => {
+    it(scenario.testCaseName, async () => {
       actualProperties = playersModels.playerStatsSchema;
-      path = `player-match-stats/by-gameweeks/${scenario.playerId}`;
+      const playerId = await playerIds.playersID(`${appUrl}api`, token);
+      path = `player-match-stats/by-gameweeks/${playerId[0]}`;
       return (
         request(URL)
           .get(path)

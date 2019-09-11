@@ -5,6 +5,8 @@ const profileModels = require('./data/profile.schema');
 const data = require('./data/profile.scenarios.json');
 const args = require('../../specs/testData.json');
 const gwIDs = require('../utils/get-gameweeksID');
+const gameIds = require('../utils/get-gamesID.js');
+const playerIds = require('../utils/get-players');
 
 const appUrl = args.appUrl;
 const URL = 'https://fantasy-football.tk/api/profile/';
@@ -36,12 +38,22 @@ describe('Profile services test suite', () => {
   //Update team details
   data.updateTeamDetailsScenarios.forEach((scenario) => {
     it(scenario.testCaseName, async () => {
+      const playerID = await playerIds.playersID(`${appUrl}api`, token);
+      let teamMemberData = [];
+      for(let i = 0; i < 15; i++){
+        teamMemberData[i] = {
+          player_id: playerID[i],
+          is_on_bench: scenario.teamMemberData[i].is_on_bench,
+          is_captain: scenario.teamMemberData[i].is_captain,
+          is_vice_captain: scenario.teamMemberData[i].is_vice_captain
+        }
+      }
       payload = Object.assign(
         {},
         profilePayload.updateUserTeamDetailsPayload(
           userId,
           scenario.userData,
-          scenario.teamMemberData,
+          teamMemberData,
         ),
       );
       const gameweekIds = await gwIDs.gameweeksID(`${appUrl}api`, token);
@@ -131,11 +143,12 @@ describe('Profile services test suite', () => {
 
   //POST
   data.updateUserFixtureSubscrScenarios.forEach((scenario) => {
-    it(scenario.testCaseName, () => {
+    it(scenario.testCaseName, async () => {
+      const game_id = await gameIds.gamesID(`${appUrl}api`, token, 6);
       path = 'fixtures-sub';
       payload = Object.assign(
         {},
-        profilePayload.updateUserFixtureSubscriptionPayload(userId, scenario.game_id),
+        profilePayload.updateUserFixtureSubscriptionPayload(userId, game_id[0]),
       );
       return request(URL)
         .post(path)
@@ -155,11 +168,12 @@ describe('Profile services test suite', () => {
 
   //DELETE
   data.deleteUserFixtureSubscrScenarios.forEach((scenario) => {
-    it(scenario.testCaseName, () => {
+    it(scenario.testCaseName, async () => {
+      const game_id = await gameIds.gamesID(`${appUrl}api`, token, 6);
       path = 'fixtures-sub';
       payload = Object.assign(
         {},
-        profilePayload.deleteUserFixtureSubscrPayload(userId, scenario.game_id),
+        profilePayload.deleteUserFixtureSubscrPayload(userId, game_id[0]),
       );
       return request(URL)
         .delete(path)

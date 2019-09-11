@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-const playersID = async (url, token) => {
+const playersClubID = async (url, token) => {
   const response = await fetch(`${url}/players`, {
     method: 'GET',
     headers: {
@@ -11,12 +11,12 @@ const playersID = async (url, token) => {
   const result = await response.json();
 
   const ids = result.rows.map((e) => {
-    return e.id;
+    return e.club_id;
   });
 
   return ids;
 };
 
 module.exports = {
-  playersID,
+  playersClubID,
 };

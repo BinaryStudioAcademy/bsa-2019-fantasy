@@ -30,12 +30,12 @@ describe('Leagues services test suite', () => {
   });
 
   data.createLeagueScenarios.forEach((scenario) => {
-    const rndName = Help.getRandomName();
+    //const rndName = Help.getRandomName();
     it(scenario.testCaseName, () => {
       payload = Object.assign(
         {},
         leaguesPayload.createLeaguePayload(
-          rndName,
+          scenario.name,
           scenario.private,
           scenario.start_from,
         ),
@@ -74,50 +74,6 @@ describe('Leagues services test suite', () => {
       });
   });
 
-  data.joinLeagueScenarios.forEach((scenario) => {
-    it(scenario.testCaseName, () => {
-      const privacy = scenario.private ? 'private' : 'public';
-      path = `leagues/join/${privacy}`;
-      payload = Object.assign(
-        {},
-        leaguesPayload.joinLeaguePayload(scenario.code, scenario.private),
-      );
-      return request(URL)
-        .post(path)
-        .set('Authorization', `Bearer ${token}`)
-        .set('Accept', 'application/json')
-        .set('Content-Type', 'application/json')
-        .send(payload)
-        .expect('Content-Type', /json/)
-        .expect(scenario.status)
-        .then((response) => {
-          expect(response.body.message).to.be.equal(scenario.message);
-        });
-    });
-  });
-
-  data.getInvitationCodeScenarios.forEach((scenario) => {
-    it(scenario.testCaseName, () => {
-      path = 'leagues/invitation-code';
-      actualProperties = props.getInviteCodeSchema;
-
-      payload = Object.assign({}, leaguesPayload.getInviteCodePayload(scenario.name));
-      return request(URL)
-        .post(path)
-        .set('Authorization', `Bearer ${token}`)
-        .set('Accept', 'application/json')
-        .set('Content-Type', 'application/json')
-        .send(payload)
-        .expect('Content-Type', /json/)
-        .expect(200)
-        .then((response) => {
-          actualProperties.forEach((prop) => {
-            expect(response.body).to.have.property(prop);
-          });
-        });
-    });
-  });
-
   data.getLeagueDetailsScenarios.forEach((scenario) => {
     it(scenario.testCaseName, () => {
       path = `leagues/${scenario.name}`;
@@ -132,28 +88,6 @@ describe('Leagues services test suite', () => {
             expect(response.body).to.have.property(prop);
           });
         });
-    });
-  });
-
-  data.leaveLeagueScenarios.forEach((scenario) => {
-    it(scenario.testCaseName, () => {
-      path = 'league-participants';
-      payload = Object.assign({}, leaguesPayload.leaveLeaguePayload(scenario.name));
-
-      return (
-        request(URL)
-          .delete(path)
-          .set('Authorization', `Bearer ${token}`)
-          .set('Accept', 'application/json')
-          .set('Content-Type', 'application/json')
-          .send(payload)
-          //.expect('Content-Type', /json/)
-          .expect(scenario.status)
-          .then((response) => {
-            if (!response.admin_entry)
-              expect(response.body.message).to.be.equal(scenario.message);
-          })
-      );
     });
   });
 });
