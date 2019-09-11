@@ -154,6 +154,27 @@
     "gameweek": "Gameweek"
   },
 
+  "Commentary": {
+    "startGame": "The match {{homeClubName}} - {{awayClubName}} started.",
+    "endGame": "The match {{homeClubName}} - {{awayClubName}} finished with score {{home}}:{{away}}.",
+    "startTime": "Time started.",
+    "endTime": "Time ended with score {{home}}:{{away}}.",
+    "attack": "{{name}} from {{clubName}} starts an attack.",
+    "shot": "{{name}} shots.",
+    "foul": "{{name}} gets a foul.",
+    "goal": "{{name}} from {{clubName}} scores!!! New score {{home}}:{{away}}.",
+    "save": "Goalkeeper {{name}} saves a day.",
+    "miss": "The ball goes off target.",
+    "yellowCard": "{{name}} gets a yellow card.",
+    "goalKick": "Time for a goal kick for {{clubName}}.",
+    "cornerKick": "{{name}} will do the corner kick.",
+    "freeKick": "{{name}} performs a free kick.",
+    "penaltyKick": "Penaty kick! {{name}} will shoot at the gate.",
+    "interception": "What a great interception from {{name}}.",
+    "out": "Out from {{clubName}}",
+    "trauma": "{{name}} from {{clubName}} is injuried."
+  },
+
   "NoTeamHome": {
     "leftTitle": "Pick Your Squad",
     "leftMain": "Use your budget of £100m to pick a squad of 15 players from the Premier League.",

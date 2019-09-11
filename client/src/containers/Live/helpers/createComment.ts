@@ -1,3 +1,5 @@
+import i18n from 'i18n';
+
 export const createComment = (event, { homeClub, awayClub, score }) => {
   const [home, away] = score;
   const { player, team } = event;
@@ -6,43 +8,49 @@ export const createComment = (event, { homeClub, awayClub, score }) => {
 
   switch (event.name) {
     case 'startGame':
-      return `The match ${homeClub && homeClub.name} - ${awayClub &&
-        awayClub.name} started.`;
+      return i18n.t('Commentary.startGame', {
+        homeClubName: homeClub.name,
+        awayClubName: awayClub.name,
+      });
     case 'endGame':
-      return `The match ${homeClub && homeClub.name} - ${awayClub &&
-        awayClub.name} finished with score ${home}:${away}.`;
+      return i18n.t('Commentary.endGame', {
+        homeClubName: homeClub.name,
+        awayClubName: awayClub.name,
+        home,
+        away,
+      });
     case 'startTime':
-      return `Time started.`;
+      return i18n.t('Commentary.startTime');
     case 'endTime':
-      return `Time ended with score ${home}:${away}.`;
+      return i18n.t('Commentary.endTime', { home, away });
     case 'attack':
-      return `${name} from ${club.name} starts an attack.`;
+      return i18n.t('Commentary.attack', { name, clubName: club.name });
     case 'shot':
-      return `${name} shots.`;
+      return i18n.t('Commentary.shot', { name });
     case 'foul':
-      return `${name} gets a foul.`;
+      return i18n.t('Commentary.foul', { name });
     case 'goal':
-      return `${name} from ${club.name} scores!!! New score ${home}:${away}.`;
+      return i18n.t('Commentary.goal', { name, clubName: club.name, home, away });
     case 'save':
-      return `Goalkeeper ${name} saves a day.`;
+      return i18n.t('Commentary.save', { name });
     case 'miss':
-      return `The ball goes off target.`;
+      return i18n.t('Commentary.miss');
     case 'yellowCard':
-      return `${name} gets a yellow card.`;
+      return i18n.t('Commentary.yellowCard', { name });
     case 'goalKick':
-      return `Time for a goal kick for ${club.name}.`;
+      return i18n.t('Commentary.goalKick', { clubName: club.name });
     case 'cornerKick':
-      return `${name} will do the corner kick.`;
+      return i18n.t('Commentary.cornerKick', { name });
     case 'freeKick':
-      return `${name} performs a free kick.`;
+      return i18n.t('Commentary.freeKick', { name });
     case 'penaltyKick':
-      return `Penaty kick! ${name} will shoot at the gate.`;
+      return i18n.t('Commentary.penaltyKick', { name });
     case 'interception':
-      return `What a great interception from ${name}.`;
+      return i18n.t('Commentary.interception', { name });
     case 'out':
-      return `Out from ${club.name}`;
+      return i18n.t('Commentary.out', { clubName: club.name });
     case 'trauma':
-      return `${name} from ${club.name} is injuried.`;
+      return i18n.t('Commentary.trauma', { name, clubName: club.name });
     case 'nothing':
     case 'stop':
       return null;
