@@ -1,5 +1,5 @@
 import store from 'store/index';
-import { useTranslation } from 'react-i18next';
+
 import moment from 'moment';
 
 import { feedback } from 'react-feedbacker';
@@ -7,53 +7,51 @@ import { FixtureSubType } from 'types/fixtures.types';
 import { setLiveStatus, addLiveEvent } from 'containers/Live/actions';
 import { addNotification } from 'components/Notifications/actions';
 
-const { t } = useTranslation();
 export default (socket) => {
   socket.on('displayNotification', (fixture: FixtureSubType) => {
     if (!fixture) {
-      feedback.success(t('feedback.forgotApply'));
-      store.dispatch(addNotification(t('feedback.forgotApply')));
+      feedback.success(
+        `Seems like you forgot to apply a team. Hurry up, the gameweek starts soon!`,
+      );
+      store.dispatch(
+        addNotification(
+          `Seems like you forgot to apply a team. Hurry up, the gameweek starts soon!`,
+        ),
+      );
     }
     if (fixture.isFavClub) {
       feedback.success(
-        `${t('feedback.clubPlayInfo')}
+        `Your favorite club will play on
          ${moment(fixture.start).format('dddd D MMMM YYYY HH:mm')}`,
       );
       store.dispatch(
-        addNotification(`${t('feedback.clubPlayInfo')}
+        addNotification(`Your favorite club will play on
          ${moment(fixture.start).format('dddd D MMMM YYYY HH:mm')}`),
       );
     } else {
       if (fixture.finished) {
         feedback.success(
-          `${t('feedback.fixture')} ${fixture.homeTeamName} - ${fixture.awayTeamName} ${t(
-            'feedback.finishedOn',
-          )}
-         ${moment(fixture.end).format('dddd D MMMM YYYY HH:mm')} ${t(
-            'feedback.withResults',
-          )} ${fixture.homeTeamScore} - ${fixture.awayTeamScore}`,
+          `Fixture ${fixture.homeTeamName} - ${fixture.awayTeamName} finished on 
+         ${moment(fixture.end).format('dddd D MMMM YYYY HH:mm')} with results ${
+            fixture.homeTeamScore
+          } - ${fixture.awayTeamScore}`,
         );
         store.dispatch(
-          addNotification(
-            `${t('feedback.fixture')} ${fixture.homeTeamName} - ${
-              fixture.awayTeamName
-            } ${t('feedback.finishedOn')} ${moment(fixture.end).format(
-              'dddd D MMMM YYYY HH:mm',
-            )} ${t('feedback.withResults')}  ${fixture.homeTeamScore} - ${
-              fixture.awayTeamScore
-            }`,
-          ),
+          addNotification(`Fixture ${fixture.homeTeamName} - ${
+            fixture.awayTeamName
+          } finished on 
+         ${moment(fixture.end).format('dddd D MMMM YYYY HH:mm')} with results ${
+            fixture.homeTeamScore
+          } - ${fixture.awayTeamScore}`),
         );
       } else {
         feedback.success(
-          `${fixture.homeTeamName} - ${fixture.awayTeamName} ${t('feedback.willPlayOn')}
+          `${fixture.homeTeamName} - ${fixture.awayTeamName} will play on
          ${moment(fixture.start).format('dddd D MMMM YYYY HH:mm')}`,
         );
 
         store.dispatch(
-          addNotification(`${fixture.homeTeamName} - ${fixture.awayTeamName} ${t(
-            'feedback.willPlayOn',
-          )}
+          addNotification(`${fixture.homeTeamName} - ${fixture.awayTeamName} will play on
          ${moment(fixture.start).format('dddd D MMMM YYYY HH:mm')}`),
         );
       }
