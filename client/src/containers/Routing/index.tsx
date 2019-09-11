@@ -66,7 +66,7 @@ import {
 } from 'containers/FixturesContainer/actions';
 
 const Routing = () => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const dispatch = useDispatch();
   const { isLoading: userLoading, user, isAuthorized } = useSelector(
     (state: RootState) => state.profile,
@@ -156,7 +156,7 @@ const Routing = () => {
         <GuestRoute path='/admin' component={AdminPanel} />
         {user && user.favorite_club_id === null && (
           <PrivateRoute>
-            {feedback.warning(t('selectClub'))}
+            {feedback.warning('Select your favorite club to proceed!')}
             <div className='w-full p-24 bg-secondary text-primary'>
               <div className='w-full'>
                 <FavouriteClubSelection />
