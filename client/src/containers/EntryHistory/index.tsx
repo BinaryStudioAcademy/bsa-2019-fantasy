@@ -11,6 +11,7 @@ import { FaArrowUp, FaArrowDown, FaMinus } from 'react-icons/fa';
 import { Link, withRouter } from 'react-router-dom';
 import { EntryHistoryType } from 'types/entryHistory.types';
 import { setCurrentGameweekAction } from 'containers/GameweekHistory/actions';
+import Button from 'components/Button';
 
 const EntryHistory = withRouter(({ history }) => {
   const { t } = useTranslation();
@@ -79,7 +80,6 @@ const EntryHistory = withRouter(({ history }) => {
                 <div className={cn('w-1/6')}>GP</div>
                 <div className={cn('w-1/6')}>OP</div>
                 <div className={cn('w-1/6')}>OR</div>
-                <div className={cn('w-1/6')}>TR</div>
                 <div className={cn('w-1/6')}>#</div>
               </div>
               {gameweeksEntryHistoryData.gameweeksEntryHistory.map(
@@ -108,7 +108,6 @@ const EntryHistory = withRouter(({ history }) => {
                         .reduce((sum, current) => sum + Number(current.team_score), 0)}
                     </div>
                     <div className={cn('w-1/6')}>{item.gameweekUserRank}</div>
-                    <div className={cn('w-1/6')}>N/A</div>
                     <div className={cn('w-1/6', 'flex', 'items-center')}>
                       {index === 0 ||
                       array[index].gameweekUserRank ===
@@ -128,8 +127,8 @@ const EntryHistory = withRouter(({ history }) => {
           </div>
         </div>
         <div className={cn('page-go-back-btn')}>
-          <Link
-            to='/'
+          <Button
+            onClick={history.goBack}
             className={cn(
               'whitespace-no-wrap',
               'uppercase',
@@ -147,7 +146,7 @@ const EntryHistory = withRouter(({ history }) => {
             )}
           >
             {t('EntryHistory.goBackBtn')}
-          </Link>
+          </Button>
         </div>
       </div>
     </>
