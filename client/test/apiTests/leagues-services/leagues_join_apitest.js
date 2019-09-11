@@ -54,10 +54,11 @@ describe('Leagues services test suite', () => {
     data.joinLeagueScenarios.forEach((scenario) => {
         it(scenario.testCaseName, () => {
           const privacy = scenario.private ? 'private' : 'public';
+          const code = scenario.private ? inviteCode : scenario.code;
           path = `leagues/join/${privacy}`;
           payload = Object.assign(
             {},
-            leaguesPayload.joinLeaguePayload(scenario.code, scenario.private),
+            leaguesPayload.joinLeaguePayload(code, scenario.private),
           );
           return request(URL)
             .post(path)
