@@ -112,7 +112,7 @@ const TeamSelection = ({
                 playerItem.is_captain ||
                 playerItem.is_vice_captain
               ) {
-                feedback.warning('Captain or vice captain cannot sit on bench!');
+                feedback.warning(t('feedback.captainError'));
 
                 return;
               }
