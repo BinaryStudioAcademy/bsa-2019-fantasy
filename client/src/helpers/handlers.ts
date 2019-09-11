@@ -62,6 +62,38 @@ export default (socket) => {
     store.dispatch(setLiveStatus(status));
   });
   socket.on('event', (data) => {
+    if (data.name === 'endGame' || data.name === 'goal') {
+      const state = store.getState();
+      const { clubs } = state.clubs;
+      const { homeClubId, awayClubId, score } = state.currentGame.current;
+      const homeClub = clubs.find((club) => String(club.id) === homeClubId);
+      const awayClub = clubs.find((club) => String(club.id) === awayClubId);
+      if (data.name === 'endGame') {
+        score &&
+          homeClub &&
+          awayClub &&
+          store.dispatch(
+            addNotification(
+              `Match ${homeClub.name} - ${awayClub.name} ended with score ${score[0]}:${score[1]}`,
+            ),
+          );
+      }
+      if (data.name === 'goal') {
+        const player = data.player;
+        const newScore = data.score;
+        const elapsed = Math.round(data.elapsed / 1000 / 60);
+        newScore &&
+          player &&
+          homeClub &&
+          awayClub &&
+          store.dispatch(
+            addNotification(
+              `${elapsed}′ ${player.second_name} scores! ${homeClub.name} - ${awayClub.name} ${newScore[0]}:${newScore[1]}`,
+            ),
+          );
+      }
+    }
+
     store.dispatch(addLiveEvent(data));
   });
 };
