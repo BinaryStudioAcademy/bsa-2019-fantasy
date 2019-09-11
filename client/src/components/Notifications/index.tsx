@@ -66,9 +66,9 @@ const Notifications = () => {
   useOnClickOutside(ref, () => setVisible(false));
 
   return (
-    <div className='relative'>
+    <div className={cn('relative')}>
       <div
-        className='hover:text-white cursor-pointer'
+        className={cn('hover:text-white', 'cursor-pointer')}
         onClick={toggleVisible}
         role='button'
         tabIndex={-1}
@@ -76,12 +76,29 @@ const Notifications = () => {
         {notifications.find(
           (notification: NotificationType) => notification.isRead === false,
         ) ? (
-          <button className='fa-layers fa-fw text-secondary outline-none focus:outline-none relative'>
+          <button
+            className={cn(
+              'fa-layers',
+              'fa-fw',
+              'text-secondary',
+              'outline-none',
+              'focus:outline-none',
+              'relative',
+            )}
+          >
             <FaBell />
             <FaCircle className={styles.notification} />
           </button>
         ) : (
-          <button className='fa-layers fa-fw text-secondary outline-none focus:outline-none'>
+          <button
+            className={cn(
+              'fa-layers',
+              'fa-fw',
+              'text-secondary',
+              'outline-none',
+              'focus:outline-none',
+            )}
+          >
             <FaBell />
           </button>
         )}
@@ -94,32 +111,71 @@ const Notifications = () => {
             'flex flex-col justify-between absolute rounded shadow-figma left-0 p-2 bg-background w-64 h-56',
           )}
         >
-          <div className='notifications-list h-48 overflow-y-auto overflow-x-hidden'>
+          <div
+            className={cn(
+              'notifications-list',
+              'h-48',
+              'overflow-y-auto',
+              'overflow-x-hidden',
+            )}
+          >
             {notifications.map((notification: NotificationType) => (
               <div
-                className='notification flex flex-col border-b pr-2 pl-2'
+                className={cn(
+                  'notification',
+                  'flex',
+                  'flex-col',
+                  'border-b',
+                  'pr-2',
+                  'pl-2',
+                )}
                 key={notification.id}
               >
-                <div className='notification-top flex justify-between items-center'>
-                  <span className='notification-datetime text-xs text-gray-400'>
+                <div
+                  className={cn(
+                    'notification-top',
+                    'flex',
+                    'justify-between',
+                    'items-center',
+                  )}
+                >
+                  <span
+                    className={cn('notification-datetime', 'text-xs', 'text-gray-400')}
+                  >
                     {notification.time}
                   </span>
                   <button
-                    className='notification-close-btn outline-none focus:outline-none hover:text-gray-500'
+                    className={cn(
+                      'notification-close-btn',
+                      'outline-none',
+                      'focus:outline-none',
+                      'hover:text-gray-500',
+                    )}
                     onClick={() => handleRemoveNotification(notification.id)}
                   >
                     x
                   </button>
                 </div>
-                <div className='notification-text self-start leading-tight'>
+                <div className={cn('notification-text', 'self-start', 'leading-tight')}>
                   {notification.msg}
                 </div>
               </div>
             ))}
           </div>
-          <div className='notifications-control self-center'>
+          <div className={cn('notifications-control', 'self-center')}>
             <button
-              className='clear-btn uppercase font-semibold text-center text-gray-400 mt-2 mx-2 hover:text-gray-500 outline-none focus:outline-none'
+              className={cn(
+                'clear-btn',
+                'uppercase',
+                'font-semibold',
+                'text-center',
+                'text-gray-400',
+                'mt-2',
+                'mx-2',
+                'hover:text-gray-500',
+                'outline-none',
+                'focus:outline-none',
+              )}
               onClick={() => handleRemoveAllNotifications()}
             >
               {t('Notifications.navigation.clearAll')}

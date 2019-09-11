@@ -18,7 +18,7 @@ export const Field = ({ currentEvent }) => {
           <Fade
             {...event.direction}
             when={
-              currentEvent &&
+              currentEvent !== undefined &&
               currentEvent.name === event.name &&
               currentEvent.team === event.team
             }

@@ -5,6 +5,7 @@ import {
   SET_EMAIL_PREF,
   UserAction,
   SET_INVITE_CODE,
+  SET_CURRENT_SUBSCRIBE_LOADING,
 } from './action.type';
 import { User } from 'types/user.type';
 
@@ -14,6 +15,7 @@ type State = {
   isLoading: boolean;
   language: string;
   inviteCode: string;
+  currentSubscribeLoadingId: string;
 };
 
 const initialState: State = {
@@ -22,6 +24,7 @@ const initialState: State = {
   isLoading: true,
   language: 'en',
   inviteCode: '',
+  currentSubscribeLoadingId: '',
 };
 
 export default (state = initialState, action: UserAction) => {
@@ -49,6 +52,13 @@ export default (state = initialState, action: UserAction) => {
       return {
         ...state,
         inviteCode: action.payload,
+      };
+    }
+
+    case SET_CURRENT_SUBSCRIBE_LOADING: {
+      return {
+        ...state,
+        currentSubscribeLoadingId: action.payload,
       };
     }
 

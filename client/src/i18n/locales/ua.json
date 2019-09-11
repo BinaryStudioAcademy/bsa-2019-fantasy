@@ -141,6 +141,27 @@
     "gameweek": "Тур"
   },
 
+  "Commentary": {
+    "startGame": "Матч {{homeClubName}} - {{awayClubName}} розпочато.",
+    "endGame": "Матч {{homeClubName}} - {{awayClubName}} завершений із рахунком {{home}}:{{away}}.",
+    "startTime": "Початок тайму.",
+    "endTime": "Тайм завершився з рахунком {{home}}:{{away}}.",
+    "attack": "{{name}} із {{clubName}} атакує.",
+    "shot": "{{name}} здійснює удар по воротах.",
+    "foul": "{{name}} порушує правила.",
+    "goal": "{{name}} із {{clubName}} забиває гооол!!! Новий рахунок {{home}}:{{away}}.",
+    "save": "Воротар {{name}} рятує команду.",
+    "miss": "Удар повз ворота.",
+    "yellowCard": "{{name}} отримує жовту картку.",
+    "goalKick": "Удар від воріт {{clubName}}.",
+    "cornerKick": "{{name}} виконуватиме кутовий.",
+    "freeKick": "Штрафний удар у виконанні {{name}}.",
+    "penaltyKick": "Пенальті! {{name}} буде бити по воротах.",
+    "interception": "Яке чудове перехоплення м'яча від {{name}}.",
+    "out": "Аут від {{clubName}}",
+    "trauma": "{{name}} із {{clubName}} травмований."
+  },
+
   "NoTeamHome": {
     "leftTitle": "Обери свій склад",
     "leftMain": "Використовуй свій ігровий баланс в £100m для вибору 15 гравців з Premier League.",

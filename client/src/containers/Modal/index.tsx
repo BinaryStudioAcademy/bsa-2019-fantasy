@@ -14,7 +14,7 @@ class Modal extends React.Component<Props> {
     return ReactDOM.createPortal(
       <div className='font-sans'>
         <div
-          className='dimmer flex absolute inset-0 bg-modalDimmer'
+          className='dimmer flex absolute inset-0 bg-modalDimmer z-20'
           onClick={this.props.onDismiss}
           tabIndex={-1}
           role='presentation'

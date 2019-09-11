@@ -12,7 +12,7 @@ import validator from 'validator';
 import { RootState } from 'store/types';
 
 import Spinner from 'components/Spinner';
-import { forgotPassword, setLanguage } from 'containers/Profile/actions';
+import { setLanguage } from 'containers/Profile/actions';
 import { addNotification } from 'components/Notifications/actions';
 import * as imageService from 'services/imageService';
 import Button from 'components/Button';
@@ -35,9 +35,7 @@ export const usePersonalDetails = () => {
 
 const PersonalDetails = withRouter(({ history }) => {
   const { t, i18n } = useTranslation();
-
   const dispatch = useDispatch();
-
   const { user, language } = usePersonalDetails();
 
   const [initialUsername, initialEmail] = user ? [user.name, user.email] : ['', ''];
@@ -51,7 +49,6 @@ const PersonalDetails = withRouter(({ history }) => {
   const [email, setEmail] = useState<string>(initialEmail);
   const [isUsernameValid, setIsUsernameValid] = useState<boolean>(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
-
   const [toChangePassword, setToChangePassword] = useState<boolean>(false);
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
   const [currentLanguage, setCurrentLanguage] = useState<'ua' | 'en'>(language);
@@ -69,7 +66,9 @@ const PersonalDetails = withRouter(({ history }) => {
     }
   }, [username, email, imageId, currentLanguage]);
 
-  if (!user) return <Spinner />;
+  if (!user) {
+    return <Spinner />;
+  }
 
   const usernameChanged = (name: string) => {
     setUsername(name);
@@ -133,14 +132,13 @@ const PersonalDetails = withRouter(({ history }) => {
       );
     }
     dispatch(updateUser(imageId, username, email));
+    setCanSubmit(false);
   };
 
   const onPasswordClick = (e: React.MouseEvent) => {
     e.preventDefault();
 
-    setToChangePassword(true);
-    dispatch(forgotPassword({ email: user.email }));
-    // history.push('/profile/set/password');
+    history.push('/set/password');
   };
 
   const onUsernameChange = (e) => {
@@ -155,11 +153,11 @@ const PersonalDetails = withRouter(({ history }) => {
 
   return (
     <form className='flex flex-col' onSubmit={onSubmit}>
-      <h2 className='text-5xl font-bold mb-12'>{t('Profile.personalDetails.title')}</h2>
+      <h2 className='text-5xl font-bold mb-8'>{t('Profile.personalDetails.title')}</h2>
 
-      <div className='flex justify-end'>
+      <div className='mb-8'>
         <img
-          style={{ height: 180, width: 180 }}
+          style={{ height: 150, width: 150 }}
           className='rounded-full mb-2 '
           src={generateImageSrc(user, imageLink)}
           alt='avatar'

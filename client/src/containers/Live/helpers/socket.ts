@@ -1,6 +1,10 @@
 import socketIOClient from 'socket.io-client';
 
-const endpoint = `${process.env.REACT_APP_SOCKET_SERVER_PROTOCOL}://${process.env.REACT_APP_SOCKET_SERVER}/`;
+const port = process.env.REACT_APP_SOCKET_SERVER_PORT;
+
+const endpoint = `${process.env.REACT_APP_SOCKET_SERVER_PROTOCOL}://${
+  process.env.REACT_APP_SOCKET_SERVER
+}${port === '553' ? '' : `:${port}`}/`;
 const socket = socketIOClient(endpoint);
 
 export const simulate = ({ homeClubId, awayClubId }) => {

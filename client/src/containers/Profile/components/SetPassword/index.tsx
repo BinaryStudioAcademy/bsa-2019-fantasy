@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import cn from 'classnames';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'store/types';
+
+import { resetPassword, forgotPassword } from 'containers/Profile/actions';
 
 import styles from './styles.module.scss';
 import header from 'styles/header.module.scss';
@@ -12,6 +16,12 @@ const SetPassword = (props: any) => {
   const goBack = () => {
     props.history.goBack();
   };
+
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.profile.user);
+  useEffect(() => {
+    user && dispatch(forgotPassword({ email: user.email }));
+  }, [user]);
 
   return (
     <div className={styles['set-password']}>

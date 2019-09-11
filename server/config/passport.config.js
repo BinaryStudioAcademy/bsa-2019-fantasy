@@ -5,6 +5,7 @@ import { Strategy as FacebookStrategy } from 'passport-facebook';
 
 import userRepository from '../data/repositories/user.repository';
 import cryptoHelper from '../helpers/crypto.helper';
+import { joinGlobalLeague } from './../api/services/league.service';
 
 import { secret } from './jwt.config';
 
@@ -116,6 +117,7 @@ passport.use(
             email,
             name: userWithSuchName ? `${name} ${Math.random()}` : name,
           });
+          await joinGlobalLeague(user.id, 'Overall', false);
         } else if (user && !user.facebook_id) {
           await userRepository.updateById(user.id, { facebook_id: id })
         }
