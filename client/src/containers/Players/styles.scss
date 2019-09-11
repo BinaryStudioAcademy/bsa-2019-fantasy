@@ -1,0 +1,10 @@
+.ReactTable .-pagination .-pageJump input {
+  width: 60px;
+  padding-left: 20px;
+}
+
+.ReactTable .-pagination .-btn {
+  &:not([disabled]):hover {
+    background-color: #1ee3cf;
+  }
+}
