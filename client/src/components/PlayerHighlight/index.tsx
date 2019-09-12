@@ -153,7 +153,7 @@ const PlayerHighlight = ({ player, onInfoClick }: Props) => {
           {getClubNameById(club_id)}
         </h3>
 
-        <div className='actions mt-auto'>
+        <div className='actions mt-8 flex items-baseline'>
           <Button
             onClick={() => onInfoClick({ dialogInitialTab: 'history' })}
             styling='primary'
