@@ -78,7 +78,7 @@ const PlayersHighlights = (props: Props) => {
     labels: [
       'Goals',
       'Assists',
-      'Missed passes',
+      'Interceptions',
       'Goals conceded',
       'Saves',
       'Yellow cards',
@@ -246,8 +246,8 @@ const PlayersHighlights = (props: Props) => {
                   <div
                     key={index}
                     className={`${
-                      /* [0, 1, 4] are positive events indexes (goals, assists, saves) */
-                      [0, 1, 4].includes(index)
+                      /* [0, 1, 4] are positive events indexes (goals, assists, saves, missed_passes: interceptions) */
+                      [0, 1, 2, 4].includes(index)
                         ? field > secondPlayerSeasonDataset[index]
                           ? 'font-bold'
                           : ''
@@ -264,7 +264,7 @@ const PlayersHighlights = (props: Props) => {
               <div className='flex flex-col items-center font-semibold mx-12'>
                 <div>Goals</div>
                 <div>Assists</div>
-                <div>Misses Passes</div>
+                <div>Interceptions</div>
                 <div>Goals Conceded</div>
                 <div>Saves</div>
                 <div>Yellow Cards</div>
@@ -276,7 +276,7 @@ const PlayersHighlights = (props: Props) => {
                   <div
                     key={index}
                     className={`${
-                      [0, 1, 4].includes(index)
+                      [0, 1, 2, 4].includes(index)
                         ? field > firstPlayerSeasonDataset[index]
                           ? 'font-bold'
                           : ''

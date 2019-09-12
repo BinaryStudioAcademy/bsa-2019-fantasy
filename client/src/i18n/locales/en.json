@@ -402,7 +402,7 @@
     "PlayerHighlight": {
       "goals": "Goals",
       "assists": "Assists",
-      "missedPasses": "Missed passes",
+      "missedPasses": "Interceptions",
       "goalsConceded": "Goals conceded",
       "saves": "Saves",
       "yellowCards": "Yellow cards",

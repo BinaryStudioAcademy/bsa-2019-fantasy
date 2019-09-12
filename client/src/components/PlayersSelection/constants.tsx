@@ -6,7 +6,7 @@ export const sortedBy = [
   { value: 'player_price', label: 'Price' },
   { value: 'goals', label: 'Goals' },
   { value: 'assists', label: 'Assists' },
-  { value: 'missed_passes', label: 'Missed passes' },
+  { value: 'missed_passes', label: 'Interceptions' },
   { value: 'goals_conceded', label: 'Goals conceded' },
   { value: 'saves', label: 'Saves' },
   { value: 'yellow_cards', label: 'Yellow cards' },
