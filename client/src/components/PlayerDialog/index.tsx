@@ -133,6 +133,7 @@ const PlayerDialog = ({ playerDialogData, player, onDismiss, loading, tab }: Pro
         </div>
       );
     }
+
     history = [...history].sort((a, b) => a.gameweek.number - b.gameweek.number);
     const historyRows = history.map(
       ({
@@ -152,7 +153,7 @@ const PlayerDialog = ({ playerDialogData, player, onDismiss, loading, tab }: Pro
         { opponent: `${opp} ${res}` },
         { goals: goals === 0 ? '-' : goals },
         { assists: assists === 0 ? '-' : assists },
-        { missed_passes: missed_passes === 0 ? '-' : missed_passes },
+        { interceptions: missed_passes === 0 ? '-' : missed_passes },
         { goals_conceded: goals_conceded === 0 ? '-' : goals_conceded },
         { saves: saves === 0 ? '-' : saves },
         { yellow_cards: yellow_cards === 0 ? '-' : yellow_cards },

@@ -80,6 +80,7 @@
       "main": "Тур"
     },
     "currentPoints": "Бали за поточний тур",
+    "currentGameweek": "Поточний тур",
     "points": "балів",
     "overallRank": "Позиція у загальній лізі",
     "chart": {
@@ -402,7 +403,7 @@
     "PlayerHighlight": {
       "goals": "Голи",
       "assists": "Асисти",
-      "missedPasses": "Пропущені паси",
+      "missedPasses": "Перехоплення",
       "goalsConceded": "Пропущені голи",
       "saves": "Сейви",
       "yellowCards": "Жовті картки",
