@@ -80,6 +80,7 @@
       "main": "Тур"
     },
     "currentPoints": "Бали за поточний тур",
+    "currentGameweek": "Поточний тур",
     "points": "балів",
     "overallRank": "Позиція у загальній лізі",
     "chart": {

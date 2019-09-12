@@ -8,7 +8,9 @@ export const GameweekStatsSidebar = ({ gameweekHistory, userRank }) => {
   const { t } = useTranslation();
   return (
     <div className='flex-1 flex flex-col p-8 rounded bg-white shadow-figma'>
-      <h2 className='text-secondary font-bold text-3xl mb-4'>This Gameweek</h2>
+      <h2 className='text-secondary font-bold text-3xl mb-4'>
+        {t('GameweekHistoryPage.currentGameweek')}
+      </h2>
       <h3 className='text-secondary font-semibold text-xl mb-1'>
         {t('GameweekHistoryPage.currentPoints')}
       </h3>
