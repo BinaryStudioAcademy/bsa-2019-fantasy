@@ -419,9 +419,6 @@ class PlayersPage extends React.Component<Props, State> {
                   .map((p) => p.id)
                   .includes(rowInfo.original.id)
                   ? '#81e6d9'
-                  : rowInfo.index === this.state.rowSelect &&
-                    this.state.comparisonData.length !== 1
-                  ? '#81e6d9'
                   : '#fff',
 
                 color: '#000',

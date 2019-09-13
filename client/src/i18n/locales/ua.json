@@ -8,19 +8,6 @@
   "submit": "Відправити",
   "subscribe": "Підписатися",
   "unsubscribe": "Відписатися",
-  "feedback": {
-    "selectClub": "Вибери свій улюблений клуб щоб продовжити!",
-    "invalidMyTeam": "На полі не може бути менше 3 захисників, 3 півзахисників або 1 форварда!",
-    "captainError": "Капітан або віце-капітан не можуть сидіти на лавці!",
-    "createLeaguePart1": "Успішно створено нову лігу  під ім'ям",
-    "createLeaguePart2": "!",
-    "forgotApply": "Здається, Ви забули зберегти команду. Покваптесь, тур почнеться незабаром!",
-    "clubPlayInfo": "Ваш улюблений клуб буде грати",
-    "fixture": "Матч",
-    "finihsedOn": "закічився в",
-    "withResults": "з результатом",
-    "willPlayOn": "буде грати в"
-  },
   "roles": {
     "goalkeeper": "воротар",
     "goalkeeper_plural": "воротарі",
@@ -93,6 +80,7 @@
       "main": "Тур"
     },
     "currentPoints": "Бали за поточний тур",
+    "currentGameweek": "Поточний тур",
     "points": "балів",
     "overallRank": "Позиція у загальній лізі",
     "chart": {
@@ -415,7 +403,7 @@
     "PlayerHighlight": {
       "goals": "Голи",
       "assists": "Асисти",
-      "missedPasses": "Пропущені паси",
+      "missedPasses": "Перехоплення",
       "goalsConceded": "Пропущені голи",
       "saves": "Сейви",
       "yellowCards": "Жовті картки",

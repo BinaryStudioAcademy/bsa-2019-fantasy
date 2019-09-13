@@ -8,19 +8,6 @@
   "submit": "Submit",
   "subscribe": "Subscribe",
   "unsubscribe": "Unsubscribe",
-  "feedback": {
-    "selectClub": "Select your favorite club to proceed!",
-    "invalidMyTeam": "On pitch couldn't be less than 3 defenders, 3 midfielders or 1 forward!",
-    "captainError": "Captain or vice captain cannot sit on bench!",
-    "createLeaguePart1": "Successfully created a league with",
-    "createLeaguePart2": " name!",
-    "forgotApply": "Seems like you forgot to apply a team. Hurry up, the gameweek starts soon!",
-    "clubPlayInfo": "Your favorite club will play on",
-    "fixture": "Fixture",
-    "finihsedOn": "finished on",
-    "withResults": "with results",
-    "willPlayOn": "will play on"
-  },
   "roles": {
     "goalkeeper": "goalkeeper",
     "goalkeeper_plural": "goalkeepers",
@@ -93,6 +80,7 @@
       "main": "Gameweek"
     },
     "currentPoints": "Gameweek Points",
+    "currentGameweek": "Current Gameweek",
     "points": "points",
     "overallRank": "Rank in Overall League",
     "chart": {
@@ -415,7 +403,7 @@
     "PlayerHighlight": {
       "goals": "Goals",
       "assists": "Assists",
-      "missedPasses": "Missed passes",
+      "missedPasses": "Interceptions",
       "goalsConceded": "Goals conceded",
       "saves": "Saves",
       "yellowCards": "Yellow cards",

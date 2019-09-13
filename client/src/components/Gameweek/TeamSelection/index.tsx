@@ -345,7 +345,9 @@ const TeamSelection = ({
         let isAccept = validationPitch(playersOnPitch, index, item);
         isAccept
           ? handlePitchDrop(index, item, playerBenchIndex)
-          : feedback.error(t('feedback.invalidMyTeam'));
+          : feedback.error(
+              "On pitch couldn't be less than 3 defenders, 3 midfielders or 1 forward!",
+            );
         //when we move from the pitch
       } else if (
         playerPitchIndex > -1 &&
@@ -356,7 +358,9 @@ const TeamSelection = ({
         let isAccept = validationBench(playersOnPitch, playersOnBench, index, item);
         isAccept
           ? handleBenchDrop(index, item, playerPitchIndex)
-          : feedback.error(t('feedback.invalidMyTeam'));
+          : feedback.error(
+              "On pitch couldn't be less than 3 defenders, 3 midfielders or 1 forward!",
+            );
         //when we move from the list
       } else if (playerBenchIndex === -1 && playerPitchIndex === -1) {
         setPitch(

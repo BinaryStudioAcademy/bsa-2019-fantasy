@@ -11,7 +11,7 @@ interface MatchStatsI {
   res: string;
   goals: string;
   assists: string;
-  missed_passes: string;
+  interceptions: string;
   goals_conceded: string;
   saves: string;
   yellow_cards: string;
@@ -67,8 +67,8 @@ const PlayersComparisonPage: React.FC<PropsI> = (props: PropsI) => {
         ),
       },
       {
-        Header: () => <span className='table-title uppercase font-bold'>MSPS</span>,
-        accessor: 'missed_passes',
+        Header: () => <span className='table-title uppercase font-bold'>INS</span>,
+        accessor: 'interceptions',
         Cell: (props: { value: string }) => (
           <span className='flex justify-center items-center'>{props.value}</span>
         ),
@@ -126,7 +126,7 @@ const PlayersComparisonPage: React.FC<PropsI> = (props: PropsI) => {
       res: stats.game.res,
       goals: stats.stats.goals,
       assists: stats.stats.assists,
-      missed_passes: stats.stats.missed_passes,
+      interceptions: stats.stats.missed_passes,
       goals_conceded: stats.stats.goals_conceded,
       saves: stats.stats.saves,
       yellow_cards: stats.stats.yellow_cards,
@@ -143,7 +143,7 @@ const PlayersComparisonPage: React.FC<PropsI> = (props: PropsI) => {
       res: stats.game.res,
       goals: stats.stats.goals,
       assists: stats.stats.assists,
-      missed_passes: stats.stats.missed_passes,
+      interceptions: stats.stats.missed_passes,
       goals_conceded: stats.stats.goals_conceded,
       saves: stats.stats.saves,
       yellow_cards: stats.stats.yellow_cards,
