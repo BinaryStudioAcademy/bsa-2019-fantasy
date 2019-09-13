@@ -108,7 +108,6 @@ export const Play = ({
         <div className='flex flex-1 items-center'>{renderStatus()}</div>
         {fixture}
         <div className='flex flex-1 items-center justify-end'>
-          {renderReschedule()}
           {renderSimulate()}
           {renderMute()}
         </div>
