@@ -137,11 +137,14 @@ const PlayerHighlight = ({ player, onInfoClick }: Props) => {
             alt='Club logo'
           />
         </div>
-        {player.isPlayerOfTheWeek ? (
-          <div className='award text-secondary2 mt-12 flex items-center'>
-            <FaMedal className='mr-1' /> {t('Players.playerOfTheWeek')}
-          </div>
-        ) : null}
+
+        <div className='award text-secondary2 mt-12 flex items-center h-6'>
+          {player.isPlayerOfTheWeek && (
+            <>
+              <FaMedal className='mr-1' /> {t('Players.playerOfTheWeek')}
+            </>
+          )}
+        </div>
 
         <h2
           className='playerName font-bold text-3xl xl:text-5xl mt-4 leading-none'

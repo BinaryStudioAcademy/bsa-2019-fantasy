@@ -132,6 +132,7 @@ export const Sound = ({ currentEvent, isMuted }) => {
           const instance = (window as any).Howler._howls.find(
             (item) => item.src === sound.src,
           );
+          if (!instance) return;
           instance.once('fade', function() {
             stopSound(sound);
           });
