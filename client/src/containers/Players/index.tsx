@@ -23,6 +23,7 @@ import { Club } from 'types/club.type';
 
 import { FaPlus, FaTimes } from 'react-icons/fa';
 import { Option } from 'react-dropdown';
+import './styles.scss';
 
 type Props = {
   players: PlayerType[];
