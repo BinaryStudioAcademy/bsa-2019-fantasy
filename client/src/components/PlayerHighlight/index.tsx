@@ -174,7 +174,10 @@ const PlayerHighlight = ({ player, onInfoClick }: Props) => {
         </div>
       </div>
 
-      <div className='playerPhoto flex items-end px-0 xl:px-8 pt-4 -mb-8'>
+      <div
+        className='playerPhoto flex items-end px-0 xl:px-8 pt-4 -mb-8'
+        style={{ width: '40%' }}
+      >
         <img
           style={{ maxHeight: '28em' }}
           src={getPlayerImageUrl(player.code, 500)}
