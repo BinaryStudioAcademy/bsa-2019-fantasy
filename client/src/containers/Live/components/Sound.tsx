@@ -30,7 +30,7 @@ const eventSounds = {
     action: 'start',
     src: '/sounds/goal.ogg',
     loop: false,
-    volume: 0.5,
+    volume: 0.7,
   },
   shot: {
     name: 'shot',
